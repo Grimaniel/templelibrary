@@ -44,7 +44,7 @@ package temple.utils
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ObjectType 
+	public final class ObjectType 
 	{
 		public static const OBJECT:String = "object";
 		
@@ -53,5 +53,7 @@ package temple.utils
 		public static const NUMBER:String = "number";
 		
 		public static const STRING:String = "string";
+
+		public static const XML:String = "xml";
 	}
 }

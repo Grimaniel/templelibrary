@@ -55,7 +55,7 @@ package temple.destruction
 	public interface IDestructable 
 	{
 		/**
-		 * Destroys the objects, all intern listeners will be removed.
+		 * Destructs the object and makes it available for garbage collection.
 		 * 
 		 * <p>When overriding this method, always call super.destruct() at the end!</p>
 		 * 

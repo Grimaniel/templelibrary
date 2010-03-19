@@ -44,7 +44,7 @@ package temple.data.url
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class Target 
+	public final class Target 
 	{
 		/**
 		 * Open the linked document in a new window

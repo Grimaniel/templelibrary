@@ -52,7 +52,7 @@ package temple.debug.errors
 	 */
 	public function throwError(error:Error):void
 	{
-		if(!(error is ITempleError)) Log.error(error.message, 'temple.debug.errors.throwError');
+		if(!(error is ITempleError)) Log.error(error.message, Temple.displayFullPackageInToString ? 'temple.debug.errors.throwError' : 'throwError');
 		
 		if(!Temple.ignoreErrors)
 		{

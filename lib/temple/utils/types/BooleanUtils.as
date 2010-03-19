@@ -51,7 +51,7 @@ package temple.utils.types
 		 */
 		public static function getBoolean(value:*):Boolean 
 		{
-			if(typeof(value) == ObjectType.OBJECT)
+			if(typeof(value) == ObjectType.OBJECT || typeof(value) == ObjectType.XML)
 			{
 				value = String(value);
 			}

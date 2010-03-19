@@ -8,12 +8,9 @@
 package  
 {
 	import temple.core.CoreSprite;
-	import temple.utils.KeyCode;
-	import temple.utils.KeyMapper;
+	import temple.utils.keys.KeyCode;
+	import temple.utils.keys.KeyMapper;
 
-	/**
-	 * @author Thijs Broerse
-	 */
 	public class KeyMapperExample extends CoreSprite 
 	{
 		private var _sprite:CoreSprite;

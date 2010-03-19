@@ -134,7 +134,7 @@ package temple.core
 		/**
 		 * @inheritDoc
 		 */
-		public function get isDestructed():Boolean
+		public final function get isDestructed():Boolean
 		{
 			return this._isDestructed;
 		}

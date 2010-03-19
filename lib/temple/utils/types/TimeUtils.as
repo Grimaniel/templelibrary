@@ -106,7 +106,7 @@ package temple.utils.types
 		 */
 		public static function formatMinutesSeconds(miliseconds:Number):String
 		{
-			return StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0") + ':' + StringUtils.padLeft((Math.floor(miliseconds / 60000) % 60).toString(), 2, "0");
+			return StringUtils.padLeft(Math.floor(miliseconds / (60000)).toString(), 2, "0") + ':' + StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0");
 		}
 
 		/**
@@ -114,7 +114,7 @@ package temple.utils.types
 		 */
 		public static function formatMinutesSecondsAlt(miliseconds:Number):String
 		{
-			return (Math.floor(miliseconds / 60000)).toString() + ':' + StringUtils.padLeft((Math.floor(miliseconds / 60000) % 60).toString(), 2, "0");
+			return (Math.floor(miliseconds / 60000)).toString() + ':' + StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0");
 		}
 		
 		public static function toString():String

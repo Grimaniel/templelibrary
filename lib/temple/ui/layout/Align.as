@@ -76,7 +76,6 @@ package temple.ui.layout
 		 */
 		public static const BOTTOM:String = "bottom";
 		
-		
 		/**
 		 * Align to the top and the left
 		 */

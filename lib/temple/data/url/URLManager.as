@@ -38,6 +38,7 @@
  
  package temple.data.url 
 {
+	import temple.utils.types.ArrayUtils;
 	import temple.data.collections.HashMap;
 	import temple.data.loader.ILoader;
 	import temple.data.loader.preload.IPreloadable;
@@ -55,10 +56,15 @@
 	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
-
+	
+	/**
+	 * @eventType temple.data.url.URLEvent.OPEN
+	 */
+	[Event(name = "URLEvent.open", type = "temple.data.url.URLEvent")]
+	
 	/**
 	 * The URLManager handles all urls of a project. In most projects the urls will depend on the environment. The live application uses different urls as the development environment.
-	 * To handles this you can store the urls in an external xml file, 'urls.xml'. By changing the 'currentgroup' inside the XML you can easely switch between different urls.
+	 * To handle this you can store the urls in an external xml file, 'urls.xml'. By changing the 'currentgroup' inside the XML you can easely switch between different urls.
 	 * The 'urls.xml' uses the following syntax:
 	 * <listing version="3.0">
 	 * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -80,7 +86,7 @@
 	 * It is also possible to use variables inside the urls.xml. You can define a variable by using a 'var'-node, with a 'name' and 'value' attribute. You can use the variable inside a url with '{name-of-the-variable}', wich will be replaced with the value.
 	 * By defining the variable in different 'groups' the actual url will we different.</p>
 	 * 
-	 * <p>The 'currentgroup' can be overruled by code. This only works before the urls.xml is loaded and parsed!</p>
+	 * <p>The 'currentgroup' can be overruled by code. It is possible to supply different groups (comma-seperated).</p>
 	 * 
 	 * <p>The URLManager is a singleton and can be accessed by URLManager.getInstance() or by his static functions.</p>
 	 * 
@@ -102,7 +108,8 @@
 		 * Default name for urls.xml
 		 */
 		private static const _URLS:String = "urls";
-		
+		private var _rawData:XML;
+
 		/**
 		 * Get named url data
 		 * @param name name of data block
@@ -174,7 +181,7 @@
 		}
 		
 		/**
-		 * The used group in the urls.xml. When the xml is loaded, the group cannot be changed.
+		 * The used group in the urls.xml. When the xml is loaded, everything will be parsed again.
 		 */
 		public static function get group():String
 		{
@@ -186,14 +193,51 @@
 		 */
 		public static function set group(value:String):void
 		{
-			if(URLManager.getInstance()._loaded)
-			{
-				URLManager.getInstance().logError("group: URLs are already loaded, changing group does not affect anything anymore");
-			}
-			else
-			{
-				URLManager.getInstance()._group = value;
-			}
+			if (URLManager.getInstance()._group == value) return;
+			
+			URLManager.getInstance()._group = value;
+			
+			if (URLManager.getInstance()._loaded) URLManager.getInstance().processXml();
+		}
+		
+		/**
+		 * Adds a groupname to the urlgroups. Will process the xml again.
+		 * @param value The groupname to add
+		 */
+		public static function addGroup(value:String):void
+		{
+			URLManager.getInstance()._groups = URLManager.getInstance()._group.split(',');
+			URLManager.getInstance()._groups.push(value);
+			URLManager.getInstance()._groups = ArrayUtils.createUniqueCopy(URLManager.getInstance()._groups);
+			URLManager.getInstance()._group = URLManager.getInstance()._groups.join(',');
+			
+			if (URLManager.getInstance()._loaded) URLManager.getInstance().processXml();
+		}
+
+		/**
+		 * Removes a groupname from the urlgroups. Will process the xml again.
+		 * @param value The groupname to remove
+		 */
+		public static function removeGroup(value:String):void
+		{
+			URLManager.getInstance()._groups = URLManager.getInstance()._group.split(',');
+			ArrayUtils.removeValueFromArray(URLManager.getInstance()._groups, value);
+			URLManager.getInstance()._group = URLManager.getInstance()._groups.join(','); 
+			
+			if (URLManager.getInstance()._loaded) URLManager.getInstance().processXml();
+		}
+		
+		
+		/**
+		 * Adds a variable, and if the xml's are loaded they are parsed again
+		 * @param name the variable name
+		 * @param value the variable value
+		 */
+		public static function setVariable(name:String, value:String):void
+		{
+			URLManager.getInstance()._variables[name] = value;
+			
+			if (URLManager.getInstance().isLoaded()) URLManager.getInstance().processXml();
 		}
 		
 		/**
@@ -202,6 +246,14 @@
 		public static function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
 			URLManager.getInstance().addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+
+		/**
+		 * Wrapper function for URLManager.getInstance().addEventListenerOnce
+		 */
+		public static function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void 
+		{
+			URLManager.getInstance().addEventListenerOnce(type, listener, useCapture, priority);
 		}
 
 		/**
@@ -235,15 +287,18 @@
 		private var _loaded:Boolean = false;
 		private var _loading:Boolean = false;
 		private var _group:String;
+		private var _groups:Array;
+		private var _variables:HashMap;
 
 		/**
 		 * @private
 		 */
 		public function URLManager() 
 		{
-			super();
-
 			if (URLManager._instance) throwError(new TempleError(this, "Singleton, use URLManager.getInstance()"));
+			
+			this._variables = new HashMap("URLManager variables");
+			this._groups = new Array();
 			
 			DebugManager.add(this);
 		}
@@ -262,6 +317,16 @@
 		public function isLoading():Boolean
 		{
 			return this._loading;
+		}
+		
+		/**
+		 * HashMap with name-value pairs for variables inside the url's which should be replaced.
+		 * Variables are set as '{var}' and are only replaced onced, when the urls.xml is parsed.
+		 * So therefor is only usefull to set a variable before the URLManager is complete. 
+		 */
+		public function get variables():HashMap
+		{
+			return this._variables;
 		}
 
 		private function loadURLs(url:String, group:String):void 
@@ -339,6 +404,8 @@
 		{
 			if (url == null) throwError(new TempleArgumentError(this, "url can not be null"));
 			
+			this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target));
+			
 			try 
 			{
 				var request:URLRequest = new URLRequest(url);
@@ -374,70 +441,96 @@
 		 */
 		override protected function processData(data:XML, name:String):void 
 		{
-			if(this._group)
-			{
-				this.logInfo("processData: group is set to '" + this._group + "'");
-			}
-			else
-			{
-				this._group = data.@currentgroup; 
-			}
+			this._rawData = data;
 			
-			// variables
-			var variables:HashMap = new HashMap("URLManager variables");
-			
-			// get grouped variables
-			var groupedVars:XMLList = data.group.(@id == (this._group)).child('var');
-			
-			var leni:int;
-			var i:int;
-			var key:String;
-			
-			leni = groupedVars.length();
-			for (i = 0;i < leni; i++)
-			{
-				variables[groupedVars[i].@name] = groupedVars[i].@value;
-			}
-			
-			// add ungrouped variables
-			var ungroupedVars:XMLList = data.child('var');
-			
-			leni = ungroupedVars.length();
-			for (i = 0;i < leni; i++)
-			{
-				variables[ungroupedVars[i].@name] = ungroupedVars[i].@value;
-			}
-			
-			if(this._debug)
-			{
-				var s:String = "";
-				for (key in variables)
-				{
-					s += "\n" + key + ": " + variables[key];
-				}
-				this.logDebug("Current vars in URLManager: " + s);
-			}
+			this.processXml();
 
-			// get grouped urls
-			var groupedURLs:XMLList = data.group.(@id == (this._group)).url;
-			
-			this._urls = XMLParser.parseList(groupedURLs, URLData);
-
-			// check if currentgroup is valid
-			if (this._group && groupedURLs.length() == 0 && groupedVars.length() == 0)
-			{
-				this.logError("processData: group '" + this._group + "' not found, check urls.xml");
-			}
-
-			// add ungrouped urls
-			var ungroupedURLs:Array = XMLParser.parseList(data.url, URLData);
-			if (ungroupedURLs) this._urls = this._urls.concat(ungroupedURLs);
-			
 			this._loaded = true;
 			this._loading = false;
 			
 			this._loader.destruct();
 			this._loader = null;
+
+			// send event we're done
+			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name)); 
+			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.ALL_COMPLETE)); 
+		}
+		
+		private function processXml():void
+		{
+			if(this._group)
+			{
+				if (this._debug) this.logInfo("processData: group is set to '" + this._group + "'");
+			}
+			else
+			{
+				this._group = this._rawData.@currentgroup; 
+				if (this._debug) this.logInfo("processData: group is '" + this._group + "'");
+			}
+			
+			this._groups = this._group.split(',');
+			
+			var i:int;
+			
+			// get grouped variables
+			var vars:XMLList= new XMLList();
+			for (i = 0; i < this._groups.length; i++)
+			{
+				vars += this._rawData.group.(@id == (this._groups[i])).child('var');
+			}
+			
+			// add ungrouped variables
+			vars += this._rawData.child('var');
+			
+			var key:String;
+			
+			for (i = 0;i < vars.length(); i++)
+			{
+				if (!XML(vars[i]).hasOwnProperty('@name'))
+				{
+					this.logError("variable has no name attribute: " + vars[i].toXMLString());
+				}
+				else
+				{
+					if (!XML(vars[i]).hasOwnProperty('@value')) this.logWarn("variable '" + vars[i].@name + "' has no value attribute: " + vars[i].toXMLString());
+					if (!this._variables.hasOwnProperty(vars[i].@name)) this._variables[vars[i].@name] = vars[i].@value;
+				}
+			}
+			
+			
+			if(this._debug)
+			{
+				var s:String = "";
+				for (key in this._variables)
+				{
+					s += "\n\t" + key + ": " + this._variables[key];
+				}
+				this.logDebug("Current vars in URLManager: " + s);
+			}
+
+			
+			this._urls = new Array();
+			var urls:XMLList = new XMLList();
+			
+			// get grouped urls
+			for (i = 0; i < this._groups.length; i++)
+			{
+				// check if currentgroup is valid
+				if (this._groups[i] && this._rawData.group.(@id == (this._groups[i])) == undefined)
+				{
+					this.logError("processData: group '" + this._groups[i] + "' not found, check urls.xml");
+				}
+				else
+				{
+					urls += this._rawData.group.(@id == (this._groups[i])).url;
+				}
+			}
+
+			// add ungrouped urls
+			urls += this._rawData.url;
+			
+			this._urls = XMLParser.parseList(urls, URLData, false, this.debug);
+			
 			
 			var ud:URLData;
 			
@@ -446,20 +539,20 @@
 				s = "";
 				for each (ud in this._urls)
 				{
-					s += "\n" + ud.name + ": " + ud.url;
+					s += "\n\t" + ud.name + ": " + ud.url;
 				}
 				
 				this.logDebug("Current urls in XML: " + s);
 			}
 			
 			// replace vars in urls
-			if(ObjectUtils.hasValues(variables))
+			if(ObjectUtils.hasValues(this._variables))
 			{
 				for each (ud in this._urls)
 				{
-					for (key in variables)
+					for (key in this._variables)
 					{
-						ud.url = ud.url.replace('{' + key + '}', variables[key]);
+						ud.url = ud.url.replace('{' + key + '}', this._variables[key]);
 					}
 				}
 			}
@@ -469,15 +562,11 @@
 				s = "";
 				for each (ud in this._urls)
 				{
-					s += "\n" + ud.name + ": " + ud.url;
+					s += "\n\t" + ud.name + ": " + ud.url;
 				}
 				
 				this.logDebug("Current urls in URLManager: " + s);
 			}
-
-			// send event we're done
-			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name)); 
-			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.ALL_COMPLETE)); 
 		}
 
 		/**
@@ -487,6 +576,9 @@
 		{
 			URLManager._instance = null;
 			this._urls = null;
+			this._rawData = null;
+			this._group = null;
+			this._groups = null;
 			super.destruct();
 		}
 	}

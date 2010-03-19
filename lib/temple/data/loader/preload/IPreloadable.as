@@ -59,6 +59,6 @@ package temple.data.loader.preload
 		/**
 		 * @private
 		 */
-		function set preloader(preloader:IPreloader):void;
+		function set preloader(value:IPreloader):void;
 	}
 }

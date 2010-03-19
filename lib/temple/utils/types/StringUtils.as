@@ -86,7 +86,7 @@ package temple.utils.types
 		 */
 		public static function padLeft(string:String, length:int, fillChar:String = ' '):String
 		{
-			if (fillChar == null || fillChar.length == 0) throwError(new TempleArgumentError(StringUtils, "invalid value for fillChar: '" + fillChar + "'"))
+			if (fillChar == null || fillChar.length == 0) throwError(new TempleArgumentError(StringUtils, "invalid value for fillChar: '" + fillChar + "'"));
 			
 			if(string.length < length)
 			{
@@ -256,7 +256,48 @@ package temple.utils.types
 		{
 			return pattern.replace(/(\]|\[|\{|\}|\(|\)|\*|\+|\?|\.|\\)/g, '\\$1');
 		}
-
+		
+		/**
+		 * Escapes a UTF-8 string to unicode; e.g. "é" -> "\u00e9"
+		 * @param input The string to be escaped
+		 * @return An escaped UTF-8 String
+		 */
+		public static function escapeToUnicode(input:String):String
+		{
+			var inputCopy:String = input;
+			var escapedInput:String;
+			for (var i:int=0; i<inputCopy.length; i++)
+			{
+				escapedInput += StringUtils.escapeToUnicodeChar(inputCopy.substr(i,1));
+			}
+			return escapedInput;
+		}
+		
+		/**
+		 * Escapes a UTF-8 character to unicode; e.g. "é" -> "\u00e9"
+		 * @param inputChar The character to be escaped
+		 * @return An escaped UTF-8 String
+		 */
+		public static function escapeToUnicodeChar(inputChar:String):String
+		{
+			if ( inputChar < ' '  || inputChar > '}' )
+			{
+				// get the hex digit(s) of the character (either 1 or 2 digits)
+				var hexCode:String = inputChar.charCodeAt( 0 ).toString( 16 );
+				
+				// ensure that there are 4 digits by adjusting
+				// the # of zeros accordingly.
+				while( hexCode.length < 4 ) hexCode = "0"+hexCode;
+				
+				// create the unicode escape sequence with 4 hex digits
+				return "\\u" + hexCode;
+			}
+			else
+			{
+				return inputChar;
+			}
+		}
+		
 		/**
 		 * Replaces all instances of the replace string in the input string with the replaceWith string.
 		 * @param string The string that instances of replace string will be replaces with removeWith string.

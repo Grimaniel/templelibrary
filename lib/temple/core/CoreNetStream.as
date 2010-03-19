@@ -197,6 +197,14 @@ package temple.core
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 			this._eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
+		{
+			if (this._eventListenerManager) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+		}
 
 		/**
 		 * @inheritDoc
@@ -213,6 +221,14 @@ package temple.core
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
 			this._eventListenerManager.removeAllStrongEventListenersForType(type);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function removeAllOnceEventListenersForType(type:String):void
+		{
+			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**
@@ -296,7 +312,7 @@ package temple.core
 		/**
 		 * @inheritDoc
 		 */
-		public function get isDestructed():Boolean
+		public final function get isDestructed():Boolean
 		{
 			return this._isDestructed;
 		}

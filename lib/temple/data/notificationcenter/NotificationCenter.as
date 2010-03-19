@@ -99,7 +99,7 @@ package temple.data.notificationcenter
 	 * 
 	 * @see temple.data.notificationcenter.Notification
 	 */
-	public class NotificationCenter extends CoreObject implements IDebuggable
+	public final class NotificationCenter extends CoreObject implements IDebuggable
 	{
 		private static var _instances:HashMap;
 
@@ -156,6 +156,14 @@ package temple.data.notificationcenter
 		{
 			return this._name;
 		}
+		
+		/**
+		 * Wrapper for NotificationCenter.getInstance().addObserver(type, listener, useWeakReference);
+		 */
+		public static function addObserver(type:String, listener:Function, useWeakReference:Boolean = true):void
+		{
+			NotificationCenter.getInstance().addObserver(type, listener, useWeakReference);
+		}
 
 		/**
 		 * Registers observer to receive notifications of a specific type
@@ -172,6 +180,14 @@ package temple.data.notificationcenter
 		}
 		
 		/**
+		 * Wrapper for NotificationCenter.getInstance().removeObserver(type, listener);
+		 */
+		public static function removeObserver(type:String, listener:Function):void
+		{
+			NotificationCenter.getInstance().removeObserver(type, listener);
+		}
+		
+		/**
 		 * Removes the observer(s) for a specific type and/or listeners.
 		 * @param type notification identifier name
 		 * @param listener The observer's method that will be called when notification is posted.
@@ -179,6 +195,14 @@ package temple.data.notificationcenter
 		public function removeObserver(type:String, listener:Function):void
 		{
 			this._eventDispatcher.removeEventListener(type, listener);
+		}
+		
+		/**
+		 * Wrapper for NotificationCenter.getInstance().post(type, data);
+		 */
+		public static function post(type:String, data:* = null):void
+		{
+			NotificationCenter.getInstance().post(type, data);
 		}
 
 		/**

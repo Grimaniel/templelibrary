@@ -98,6 +98,13 @@ package temple.destruction
 					}
 				}
 			}
+			else if (object is Array)
+			{
+				while ((object as Array).length)
+				{
+					Destructor.destruct((object as Array).shift());
+				}
+			}
 		}
 
 		/**

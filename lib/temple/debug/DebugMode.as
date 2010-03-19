@@ -47,7 +47,7 @@ package temple.debug
 	 * @date 28 aug 2009 22:15:49
 	 * @author Arjan van Wijk (arjan at mediamonks dot com)
 	 */
-	public class DebugMode 
+	public final class DebugMode 
 	{
 		/**
 		 * Debug will be set to false on all debuggable object. So no debug messages will be logged.

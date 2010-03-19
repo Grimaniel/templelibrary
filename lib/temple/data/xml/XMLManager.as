@@ -52,14 +52,15 @@ package temple.data.xml
 	import flash.net.URLRequestMethod;
 
 	/**
-	 * The XMLManager loads XML files and parses them directly to typed DataObjects.
-	 * <p>The XMLManager makes use of the URLManager so you can (also) use names instead of url's. You don't have to load the URLManager
-	 * before using the XMLManager, the XMLManager automaticly detects if the URLManager is already loaded and loads it when if not.</p>
+	 * The XMLManager loads XML files and parses them directly to typed data objects.
+	 * <p>The XMLManager can use the URLManager for urls, so it's possible to use names instead of urls. The XMLManager automatically detects if the
+	 * URLManager has already loaded the urls.xml, and will call 'loadURLs' if it hasn't.</p>
 	 * 
 	 * <p>By setting the cache options (XMLManager.cacheXML and/or XMLManager.cacheObject) to true you can use the XMLManager as a DataManager,
 	 * since it will store loaded XML files and parsed object in cache. When loading and / or parsing a XML file again, it will take the data
-	 * from cache. This allows you to call a load method several times, without make it actually loads the XML's.
-	 * This will increase performance.</p>
+	 * from cache. This allows you to call a load method several times, without make it actually reloads the XML's. This will increase performance.</p>
+	 * 
+	 * @see temple.data.url.URLManager;
 	 * 
 	 * @example If you want "persons.xml" loaded and parsed to PersonData objects:
 	 * 
@@ -73,9 +74,21 @@ package temple.data.xml
 	 */
 	public final class XMLManager extends XMLService implements IDebuggable
 	{
-		// Cache options
+		/**
+		 * Use default cache settings.
+		 * @see #cacheXML()
+		 * @see #cacheObject()
+		 */
 		public static const DEFAULT_CACHE_SETTING:int = 0;
+		
+		/**
+		 * Cache XML or Objects
+		 */
 		public static const CACHE:int = 1;
+		
+		/**
+		 * Do not cache XML or Objects 
+		 */
 		public static const NO_CACHE:int = 2;
 
 		// Singleton
@@ -86,27 +99,32 @@ package temple.data.xml
 		private static var _CACHE_OBJECT:Boolean = false;
 
 		/**
-		 * Loads an XML and parses the result to a class. When ready the callback function is called with the parsed object as argument.
+		 * Loads a XML and parses the result to a class. When ready the callback function is called with the parsed object as argument.
 		 * 
 		 * @param url The URL of the XML file
 		 * @param objectClass the class which the xml is parses to. 
-		 * 		NOTE: Class must implement IXMLParsable!
-		 * @param node the node in the xml file. NOTE use '.' for nested nodes: "node.node.node"
+		 * 		<strong>NOTE:</strong> Class must implement IXMLParsable!
+		 * @param node the node in the xml file. Use '.' for nested nodes: "node.node.node"
 		 * @param callback the function that needs to be called when loading and parsing is complete. 
-		 * 		NOTE: the function must accept one (and only one) argument of type objectClass (2nd argument), since the parsed object is returned
+		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type objectClass (2nd argument), since the parsed object is returned
 		 * @param sendData an object (name - value) to send with the request
-		 * 		NOTE: sendData is not used by compaire previous loads. So allways set forceReload to true with a different sendData
+		 * 		<strong>NOTE:</strong> sendData is not used by compaire previous loads. So always set forceReload to true with a different sendData
 		 * @param method Method to send the sendData object (GET of POST)
 		 * @param forceReload if set to true the xml file is loaded even when it has been loaded before. If set to false, the xml file won't be loaded again
 		 * @param cacheXML indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true)
-		 * 		Possible values are:
-		 * 			XMLManager.CACHE = cache XML file
-		 * 			XMLManager.NO_CACHE = do not cache XML file
-		 * 			XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheXML)
+		 * 		<p>Possible values:</p>
+		 * 		<ul>
+		 * 			<li>XMLManager.CACHE = cache XML file</li>
+		 * 			<li>XMLManager.NO_CACHE = do not cache XML file</li>
+		 * 			<li>XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheXML)</li>
+		 * 		</ul>
 		 * @param cacheObject indicates if the Object should be keept in memory so won't be parsed again (unless forceReload is not true)
-		 * 			XMLManager.CACHE = cache object
-		 * 			XMLManager.NO_CACHE = do not cache object
-		 * 			XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheObject)
+		 * 		<p>Possible values:</p>
+		 * 		<ul>
+		 * 			<li>XMLManager.CACHE = cache object</li>
+		 * 			<li>XMLManager.NO_CACHE = do not cache object</li>
+		 * 			<li>XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheObject)</li>
+		 * 		</ul>
 		 * @param decoder an object that decodes the loaded data before parsing. Needed when de XML is encrypted.
 		 */
 		public static function loadObject(url:String, objectClass:Class, node:String = null, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = XMLManager.DEFAULT_CACHE_SETTING, cacheObject:int = XMLManager.DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
@@ -117,28 +135,32 @@ package temple.data.xml
 		}
 
 		/**
-		 * Loads an XML and parses the result to a list of objects. When ready the callback function is called with the parsed objects as array argument.
+		 * Loads a XML and parses the result to a list of objects. When ready the callback function is called with the parsed objects as array argument.
 		 * 
 		 * @param url The URL of the XML file
 		 * @param objectClass the class which the xml is parses to. 
-		 * 		NOTE: Class must implement IXMLParsable!
-		 * @param repeatingNode the repeating node in the xml file. NOTE use '.' for nested nodes: "node.node.node"
+		 * 		<strong>NOTE:</strong> Class must implement IXMLParsable!
+		 * @param repeatingNode the repeating node in the xml file. Use '.' for nested nodes: "node.node.node".
 		 * @param callback the function that needs to be called when loading and parsing is complete. 
-		 * 		NOTE: the function must accept one (and only one) argument of type array (2nd argument), since the parsed object is returned
-		 * @param sendData an object (name - value) to send with the request
-		 * 		NOTE: sendData is not used by compaire previous loads. So allways set forceReload to true with a different sendData
+		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type array (2nd argument), since the parsed object is returned
+		 * @param sendData an object (name - value) to send with the request.
+		 * 		<strong>NOTE:</strong> sendData is not used by compaire previous loads. So always set forceReload to true with a different sendData.
 		 * @param method Method to send the sendData object (GET of POST)
 		 * @param forceReload if set to true the xml file is loaded even when it has been loaded before. If set to false, the xml file won't be loaded again
-		 * @param cacheXML indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true)
-		 * 		Possible values are:
-		 * 			XMLManager.CACHE = cache XML file
-		 * 			XMLManager.NO_CACHE = do not cache XML file
-		 * 			XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheXML)
-		 * @param cacheObject indicates if the List should be keept in memory so won't be parsed again (unless forceReload is not true)
-		 * 		Possible values are:
-		 * 			XMLManager.CACHE = cache list
-		 * 			XMLManager.NO_CACHE = do not cache list
-		 * 			XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheObject)
+		 * @param cacheXML indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true).
+		 * 		<p>Possible values:</p>
+		 * 		<ul>
+		 * 			<li>XMLManager.CACHE = cache XML file.</li>
+		 * 			<li>XMLManager.NO_CACHE = do not cache XML file.</li>
+		 * 			<li>XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheXML).</li>
+		 * 		</ul>
+		 * @param cacheObject indicates if the List should be keept in memory so won't be parsed again (unless forceReload is not true).
+		 * 		<p>Possible values:</p>
+		 * 		<ul>
+		 * 			<li>XMLManager.CACHE = cache list.</li>
+		 * 			<li>XMLManager.NO_CACHE = do not cache list.</li>
+		 * 			<li>XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheObject).</li>
+		 * 		</ul>
 		 * @param decoder an object that decodes the loaded data before parsing. Needed when de XML is encrypted.
 		 */
 		public static function loadList(url:String, objectClass:Class, repeatingNode:String, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = XMLManager.DEFAULT_CACHE_SETTING, cacheList:int = XMLManager.DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
@@ -149,27 +171,32 @@ package temple.data.xml
 		}
 
 		/**
-		 * Loads an XML and parses the result to a class. When ready the callback function is called with the parsed object as argument.
+		 * Loads a XML and parses the result to a class. When ready the callback function is called with the parsed object as argument.
 		 * 
 		 * @param name The name as defined in de url.xml by the URLManager
 		 * @param objectClass: the class which the xml is parses to. 
-		 * 		NOTE Class must implement IXMLParsable!
-		 * @param node the node in the xml file. NOTE use '.' for nested nodes: "node.node.node"
+		 * 		<strong>NOTE:</strong> Class must implement IXMLParsable!
+		 * @param node the node in the xml file. Use '.' for nested nodes: "node.node.node"
 		 * @param callback the function that needs to be called when loading and parsing is complete. 
-		 * 		NOTE: the function must accept one (and only one) argument of type objectClass (2nd argument), since the parsed object is returned
+		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type objectClass (2nd argument), since the parsed object is returned
 		 * @param sendData an object (name - value) to send with the request
-		 * 		NOTE: sendData is not used by compaire previous loads. So allways set forceReload to true with a different sendData
+		 * 		<strong>NOTE:</strong> sendData is not used by compaire previous loads. So always set forceReload to true with a different sendData
 		 * @param method  Method to send the sendData object (GET of POST)
 		 * @param forceReload if set to true the xml file is loaded even when it has been loaded before. If set to false, the xml file won't be loaded again
 		 * @param cacheXML  indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true)
-		 * 		Possible values are:
-		 * 			XMLManager.CACHE = cache XML file
-		 * 			XMLManager.NO_CACHE = do not cache XML file
-		 * 			XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheXML)
+		 * 		<p>Possible values:</p>
+		 * 		<ul>
+		 * 			<li>XMLManager.CACHE = cache XML file.</li>
+		 * 			<li>XMLManager.NO_CACHE = do not cache XML file.</li>
+		 * 			<li>XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheXML).</li>
+		 * 		</ul>
 		 * @param cacheObject indicates if the Object should be keept in memory so won't be parsed again (unless forceReload is not true)
-		 * 			XMLManager.CACHE = cache object
-		 * 			XMLManager.NO_CACHE = do not cache object
-		 * 			XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheObject)
+		 * 		<p>Possible values are:</p>
+		 * 		<ul>
+		 * 			<li>XMLManager.CACHE = cache object.</li>
+		 * 			<li>XMLManager.NO_CACHE = do not cache object.</li>
+		 * 			<li>XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheObject).</li>
+		 * 		</ul>
 		 * @param decoder an object that decodes the loaded data before parsing. Needed when de XML is encrypted.
 		 */
 		public static function loadObjectByName(name:String, objectClass:Class, node:String = null, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = XMLManager.DEFAULT_CACHE_SETTING, cacheObject:int = XMLManager.DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
@@ -180,28 +207,32 @@ package temple.data.xml
 		}
 
 		/**
-		 * Loads an XML and parses the result to a list of objects. When ready the callback function is called with the parsed objects as array argument.
+		 * Loads a XML and parses the result to a list of objects. When ready the callback function is called with the parsed objects as array argument.
 		 * 
 		 * @param name The name as defined in de url.xml by the URLManager
 		 * @param objectClass the class which the xml is parses to. 
-		 * 		NOTE: Class must implement IXMLParsable!
-		 * @param repeatingNode the repeating node in the xml file. NOTE use '.' for nested nodes: "node.node.node"
+		 * 		<strong>NOTE:</strong> Class must implement IXMLParsable!
+		 * @param repeatingNode the repeating node in the xml file. Use '.' for nested nodes: "node.node.node"
 		 * @param callback the function that needs to be called when loading and parsing is complete. 
-		 * 		NOTE: the function must accept one (and only one) argument of type array (2nd argument), since the parsed object is returned
+		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type array (2nd argument), since the parsed object is returned
 		 * @param sendData an object (name - value) to send with the request
-		 * 		NOTE: sendData is not used by compaire previous loads. So allways set forceReload to true with a different sendData
+		 * 		<strong>NOTE:</strong> sendData is not used by compaire previous loads. So always set forceReload to true with a different sendData
 		 * @param method Method to send the sendData object (GET of POST)
 		 * @param forceReload if set to true the xml file is loaded even when it has been loaded before. If set to false, the xml file won't be loaded again
-		 * @param cacheXML indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true)
-		 * 		Possible values are:
-		 * 			XMLManager.CACHE = cache XML file
-		 * 			XMLManager.NO_CACHE = do not cache XML file
-		 * 			XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheXML)
+		 * @param cacheXML indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true).
+		 * 		<p>Possible values:</p>
+		 * 		<ul>
+		 * 			<li>XMLManager.CACHE = cache XML file.</li>
+		 * 			<li>XMLManager.NO_CACHE = do not cache XML file.</li>
+		 * 			<li>XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheXML).</li>
+		 * 		</ul>
 		 * @param cacheObject indicates if the List should be keept in memory so won't be parsed again (unless forceReload is not true)
-		 * 		Possible values are:
-		 * 			XMLManager.CACHE = cache list
-		 * 			XMLManager.NO_CACHE = do not cache list
-		 * 			XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheObject)
+		 * 		<p>Possible values:</p>
+		 * 		<ul>
+		 * 			<li>XMLManager.CACHE = cache list.</li>
+		 * 			<li>XMLManager.NO_CACHE = do not cache list.</li>
+		 * 			<li>XMLManager.DEFAULT_CACHE_SETTING = use the default setting (can be set using XMLManager.cacheObject).</li>
+		 * 		</ul>
 		 * @param decoder an object that decodes the loaded data before parsing. Needed when de XML is encrypted.
 		 */
 		public static function loadListByName(name:String, objectClass:Class, repeatingNode:String, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = XMLManager.DEFAULT_CACHE_SETTING, cacheList:int = XMLManager.DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
@@ -212,8 +243,8 @@ package temple.data.xml
 		}
 
 		/**
-		 * Returns true is cacheXML is on. CacheXML keeps the loaded XML file in cache and speeds up the process if this XML is used more once.
-		 * This is only the default, at every load call this value can be overruled.
+		 * Indicates if cacheXML is enabled. CacheXML keeps the loaded XML file in cache and speeds up the process if this XML is used more once.
+		 * This is only the default value and can can be overruled with every load.
 		 */
 		public static function get cacheXML():Boolean
 		{
@@ -221,18 +252,17 @@ package temple.data.xml
 		}
 
 		/**
-		 * Set default cacheXML on or off
+		 * @private
 		 */
 		public static function set cacheXML(value:Boolean):void
 		{
 			XMLManager._CACHE_XML = value;
-			
 			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("cacheXML: " + XMLManager._CACHE_XML);
 		}
 
 		/**
-		 * Returns true is cacheObject is on. CacheObject keeps the parsed object or list in cache and speeds up the process if this Object is used more once.
-		 * This is only the default, at every load call this value can be overruled.
+		 * Indicates if cacheObject is enabled. CacheObject keeps the parsed object or list in cache and speeds up the process if this Object is used more once.
+		 * This is only the default value and can can be overruled with every load.
 		 */
 		public static function get cacheObject():Boolean
 		{
@@ -240,17 +270,18 @@ package temple.data.xml
 		}
 
 		/**
-		 * Set default cacheObject on or off
+		 * @private
 		 */
 		public static function set cacheObject(value:Boolean):void
 		{
 			XMLManager._CACHE_OBJECT = value;
-			
 			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("cacheObject: " + XMLManager._CACHE_OBJECT);
 		}
 		
 		/**
 		 * Wrapper function for XMLManager.getInstance().dispatchEvent
+		 * 
+		 * @see temple.core.CoreEventDispatcher#dispatchEvent
 		 */
 		public static function dispatchEvent(event:Event):Boolean 
 		{
@@ -259,6 +290,8 @@ package temple.data.xml
 
 		/**
 		 * Wrapper function for XMLManager.getInstance().addEventListener
+		 * 
+		 * @see temple.core.CoreEventDispatcher#addEventListener
 		 */
 		public static function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
@@ -267,6 +300,8 @@ package temple.data.xml
 
 		/**
 		 * Wrapper function for XMLManager.getInstance().removeEventListener
+		 * 
+		 * @see temple.core.CoreEventDispatcher#removeEventListener
 		 */
 		public static function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
 		{
@@ -274,23 +309,9 @@ package temple.data.xml
 		}
 
 		/**
-		 * Wrapper function for XMLManager.getInstance().removeAllEventsForType
-		 */
-		public static function removeAllEventsForType(type:String):void 
-		{
-			XMLManager.getInstance().removeAllStrongEventListenersForType(type);
-		}
-
-		/**
-		 * Wrapper function for XMLManager.getInstance().removeAllEventsForListener
-		 */
-		public static function removeAllEventsForListener(listener:Function):void 
-		{
-			XMLManager.getInstance().removeAllStrongEventListenersForListener(listener);
-		}
-
-		/**
 		 * Wrapper function for XMLManager.getInstance().removeAllEventListeners
+		 * 
+		 * @see temple.core.CoreEventDispatcher#removeAllEventListeners
 		 */
 		public static function removeAllEventListeners():void 
 		{
@@ -338,6 +359,8 @@ package temple.data.xml
 		}
 
 		/**
+		 * @private
+		 * 
 		 * Data is loaded. If decoder is defined, decode data before parsing
 		 */
 		override protected function handleLoaderEvent(event:XMLLoaderEvent):void 
@@ -353,6 +376,9 @@ package temple.data.xml
 			super.handleLoaderEvent(event);
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function processData(data:XML, name:String):void 
 		{
 			if(this._debug) this.logDebug("processData: '" + name + "' " + data);
@@ -396,7 +422,7 @@ package temple.data.xml
 						}
 						case XMLObjectData.OBJECT:
 						{
-							xmlObjectData.setObject(XMLParser.parseXML(XML(object), xmlObjectData.objectClass));
+							xmlObjectData.setObject(XMLParser.parseXML(XML(object), xmlObjectData.objectClass, false, this.debug));
 							if (xmlObjectData.object == null)
 							{
 								this.onDataParseError(name);
@@ -438,6 +464,9 @@ package temple.data.xml
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		override protected function handleLoadError(event:XMLLoaderEvent):void 
 		{
 			super.handleLoadError(event);
@@ -480,7 +509,7 @@ package temple.data.xml
 							}
 							else
 							{
-								xmlObjectData.setObject(XMLParser.parseXML(xml, objectClass));
+								xmlObjectData.setObject(XMLParser.parseXML(xml, objectClass, false, this.debug));
 							}
 						}
 						if(callback != null && xmlObjectData.object) callback(xmlObjectData.object as objectClass);
@@ -498,7 +527,7 @@ package temple.data.xml
 							}
 							else
 							{
-								xmlObjectData.setList(XMLParser.parseList(xmlList, objectClass));
+								xmlObjectData.setList(XMLParser.parseList(xmlList, objectClass, false, this.debug));
 							}
 						}
 						if(callback != null && xmlObjectData.list) callback(xmlObjectData.list);
@@ -658,7 +687,7 @@ package temple.data.xml
 		}
 		
 		/**
-		 * @inheritDoc
+		 * Destructs the XMLManager
 		 */
 		override public function destruct():void
 		{
