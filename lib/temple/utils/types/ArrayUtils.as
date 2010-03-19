@@ -62,7 +62,6 @@ package temple.utils.types
 			{
 				if (i[field] == value) return true;
 			}
-			
 			return false;
 		}
 
@@ -109,7 +108,7 @@ package temple.utils.types
 		/**
 		 * 	potential better shuffle, slower but scalable, needs testing
 		 * 	
-		 * 	Bart
+		 * 	@author Bart van der Schoor
 		 */
 		public static function shuffleHard(array:Array):Array
 		{

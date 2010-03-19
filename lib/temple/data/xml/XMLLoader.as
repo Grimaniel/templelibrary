@@ -76,6 +76,8 @@ package temple.data.xml
 
 	/**
 	 * XMLLoader loads XML files 
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public class XMLLoader extends CoreEventDispatcher 
 	{

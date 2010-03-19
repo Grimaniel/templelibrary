@@ -46,6 +46,8 @@ package temple.data.flashvars
 	/**
 	 * A FlashVar is an internal class used by the FlashVars to store information about 
 	 * the loaderinfo.parameters.
+	 * 
+	 * @author Arjan van Wijk
 	 */
 	internal class FlashVar extends CoreObject
 	{ 

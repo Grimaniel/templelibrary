@@ -76,8 +76,9 @@ package temple.utils
 	 * <listing version="3.0">	
 	 * FramePulse.removeEnterFrameListener(handleEnterFrame);
 	 * </listing>
+	 * 
+	 * @author ASAPLibrary
 	 */
-
 	public final class FramePulse extends EventDispatcher 
 	{
 		private static var _sprite:Sprite;

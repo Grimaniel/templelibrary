@@ -46,7 +46,7 @@ package temple.utils.types
 	/**
 	 * This class contains some functions for Classes.
 	 *
-	 * @author Bart (bart at mediamonks dot com)
+	 * @author Bart van der Schoor
 	 * 
 	 */
 	public final class ClassUtils 

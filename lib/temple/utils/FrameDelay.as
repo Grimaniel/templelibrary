@@ -86,6 +86,8 @@ package temple.utils
 	 * 		shape[property] = value;
 	 * }
 	 * </listing>
+	 * 
+	 * @author ASAPLibrary, Thijs Broerse
 	 */
 	public final class FrameDelay extends CoreObject implements IPauseable
 	{

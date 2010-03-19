@@ -42,7 +42,7 @@ package temple.ui
 	/**
 	 * Interface for Objects that can be paused 
 	 * 
-	 * @author Bart
+	 * @author Bart van der Schoor
 	 */
 	public interface IPauseable 
 	{

@@ -66,6 +66,8 @@ package temple.core
 	 * </ul>
 	 * 
 	 * @see temple.Temple#registerObjectsInMemory()
+	 * 
+	 * @author Arjan van Wijk
 	 */
 	public class CoreNetStream extends NetStream implements ICoreLoader
 	{

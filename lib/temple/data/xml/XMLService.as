@@ -70,6 +70,8 @@ package temple.data.xml
 	 * Base class for loading XML data, with or without parameters. Extend this class to create a proper service for use in a MVCS-patterned application.
 	 * The base class provides functionality for transferring an Object with parameters to the request, loading the XML, a virtual function for parsing the result, parsing a list, and error handling on response &amp; parsing.
 	 * When extending this class, the function <code>protected function processData (inData:XML, inName:String) : void;</code> has to be overridden &amp; implemented to handle a successful load. When parsing a list of XMl nodes into an array of objects of one class, the <code>parseList()</code> function can be used.
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public class XMLService extends CoreEventDispatcher implements IDebuggable
 	{

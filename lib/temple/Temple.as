@@ -47,7 +47,9 @@ package temple
 	/**
 	 * This class contains information about the Temple Library and some global properties and settings.
 	 * 
-	 * <p>Note: This class contains only static properties. Therefore this class cannot be instantiated.</p> 
+	 * <p>Note: This class contains only static properties. Therefore this class cannot be instantiated.</p>
+	 * 
+	 * @author MediaMonks: Thijs Broerse, Arjan van Wijk, Quinten Beek, Bart van der Schoor
 	 */
 	public final class Temple 
 	{
@@ -64,7 +66,7 @@ package temple
 		/**
 		 * The Authors of the Temple
 		 */
-		public static const AUTHOR:String = "MediaMonks: Thijs Broerse, Arjan van Wijk, Quinten Beek";
+		public static const AUTHOR:String = "MediaMonks: Thijs Broerse, Arjan van Wijk, Quinten Beek, Bart van der Schoor";
 		
 		/**
 		 * Last modified date of the Temple

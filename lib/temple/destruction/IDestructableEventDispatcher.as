@@ -47,6 +47,8 @@ package temple.destruction
 
 	/**
 	 * IDestructableEventDispatcher will automatic removed all strong (non weak) listeners on the object when it is destructed.
+	 * 
+	 * @author Thijs Broerse
 	 */
 	public interface IDestructableEventDispatcher extends IEventDispatcher, IDestructable 
 	{

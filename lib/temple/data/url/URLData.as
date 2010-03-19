@@ -43,6 +43,8 @@
 
 	/**
 	 * Data object class to hold information about an url.
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public class URLData extends CoreObject implements IXMLParsable 
 	{

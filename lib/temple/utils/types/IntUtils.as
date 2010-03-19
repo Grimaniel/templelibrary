@@ -42,6 +42,8 @@ package temple.utils.types
 
 	/**
 	 * This class contains some functions for Integers.
+	 * 
+	 * @author Thijs Broerse, Arjan van Wijk, Bart van der Schoor
 	 */
 	public final class IntUtils 
 	{

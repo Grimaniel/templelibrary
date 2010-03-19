@@ -98,6 +98,8 @@ package temple.data.notificationcenter
 	 * </listing>
 	 * 
 	 * @see temple.data.notificationcenter.Notification
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public final class NotificationCenter extends CoreObject implements IDebuggable
 	{

@@ -49,7 +49,7 @@ package temple.destruction
 	 * Objects are stored using a weak-reference, so the DestructController will not block
 	 * objects for garbage collection.</p>
 	 * 
-	 * @author Bart, Thijs Broerse
+	 * @author Bart van der Schoor, Thijs Broerse
 	 */
 	public class DestructController extends CoreObject
 	{

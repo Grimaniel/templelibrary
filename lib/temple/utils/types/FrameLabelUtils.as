@@ -48,7 +48,7 @@ package temple.utils.types
 	/**
 	 * This class contains some functions for FrameLabels.
 	 * 
-	 * @author Bart (bart[at]mediamonks.com)
+	 * @author Bart van der Schoor
 	 */
 	public final class FrameLabelUtils 
 	{

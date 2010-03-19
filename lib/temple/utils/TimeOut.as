@@ -79,6 +79,7 @@ package temple.utils
 	 * }
 	 * </listing>
 	 * 
+	 * @author Thijs Broerse
 	 */
 	public class TimeOut extends CoreObject implements IPauseable
 	{

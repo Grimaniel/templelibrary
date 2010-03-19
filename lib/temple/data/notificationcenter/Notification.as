@@ -51,6 +51,8 @@ package temple.data.notificationcenter
 	 * is the only way to use weak references to functions.</p>
 	 * 
 	 * @see temple.data.notificationcenter.NotificationCenter
+	 * 
+	 * @author Thijs Broerse
 	 */
 	public final class Notification extends Event
 	{

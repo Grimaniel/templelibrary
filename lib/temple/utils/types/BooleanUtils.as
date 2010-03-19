@@ -43,6 +43,8 @@ package temple.utils.types
 
 	/**
 	 * This class contains some functions for Booleans.
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public final class BooleanUtils 
 	{

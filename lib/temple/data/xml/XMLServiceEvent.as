@@ -46,6 +46,8 @@ package temple.data.xml
 	 * Event class for use with the Service class. Listen to the generic event type to receive these events.
 	 * The event has room for both a list of objects as result of a load operation, or a single object.
 	 * It is left to the implementation of an extension of Service to determine which of these are used.
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public class XMLServiceEvent extends Event 
 	{

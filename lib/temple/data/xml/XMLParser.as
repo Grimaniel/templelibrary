@@ -86,6 +86,8 @@ package temple.data.xml
 	 * The parsing class determines if the data is valid or not, by returning true or false from parseObject().</p>
 	 * 
 	 * @see temple.data.xml.IXMLParsable#parseXML(xml);
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public final class XMLParser 
 	{

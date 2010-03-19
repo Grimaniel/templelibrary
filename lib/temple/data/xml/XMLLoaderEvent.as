@@ -44,6 +44,8 @@ package temple.data.xml
 
 	/**
 	 * Event dispatched by the XMLLoader
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public class XMLLoaderEvent extends Event 
 	{

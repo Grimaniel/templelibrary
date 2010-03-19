@@ -54,6 +54,8 @@ package temple.debug
 	 * - forcing garbage collection
 	 * - tracking objects being hold in the memory
 	 * - functions for outputting the memory info
+	 * 
+	 * @author Thijs Broerse, Arjan van Wijk
 	 */
 	public final class Memory
 	{

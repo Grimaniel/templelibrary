@@ -41,6 +41,8 @@ package temple.data.xml
 
 	/**
 	 * Interface to implement in DataValueObject classes that get their data through the XMLParser.
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public interface IXMLParsable 
 	{
