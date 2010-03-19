@@ -59,7 +59,7 @@ package temple
 		/**
 		 * The current version of the Temple Library
 		 */
-		public static const VERSION:String = "2.2.2";
+		public static const VERSION:String = "2.3.0";
 		
 		/**
 		 * The Authors of the Temple
@@ -69,7 +69,7 @@ package temple
 		/**
 		 * Last modified date of the Temple
 		 */
-		public static const DATE:String = "2010-01-27";
+		public static const DATE:String = "2010-03-19";
 
 		/**
 		 * The official website of the Temple.

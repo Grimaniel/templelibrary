@@ -226,7 +226,7 @@ package temple.data.xml
 		 */
 		protected function parseList(list:XMLList, objectClass:Class, name:String, sendEvent:Boolean = true):Array 
 		{
-			var a:Array = XMLParser.parseList(list, objectClass);
+			var a:Array = XMLParser.parseList(list, objectClass, false, this.debug);
 			
 			if (a == null) 
 			{

@@ -78,7 +78,7 @@ package temple.utils
 	 * </listing>
 	 */
 
-	public class FramePulse extends EventDispatcher 
+	public final class FramePulse extends EventDispatcher 
 	{
 		private static var _sprite:Sprite;
 

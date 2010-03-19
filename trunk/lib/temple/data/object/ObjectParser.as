@@ -38,6 +38,8 @@
 
 package temple.data.object 
 {
+	import temple.debug.getClassName;
+	import temple.debug.log.Log;
 	import temple.data.object.IObjectParsable;
 
 	/**
@@ -59,12 +61,13 @@ package temple.data.object
 		 * @param objectClass classname to be instanced; class must implement IObjectParsable
 		 * @param ignoreError if true, the return value of parseObject is always added to the array, and the array itself is
 		 * returned. Otherwise, an error in parsing will return null.
+		 * @param debug if true information is logged if the parsing failed
 		 * @return Array of new objects of the specified type, cast to IObjectParsable, or null if parsing returned false.
 		 *	
 		 * @see temple.data.object.IObjectParsable#parseObject(object);
 		 *	
 		 */
-		public static function parseList(list:Array, objectClass:Class, ignoreError:Boolean = false):Array 
+		public static function parseList(list:Array, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = true):Array 
 		{
 			var a:Array = new Array();
 			
@@ -73,7 +76,7 @@ package temple.data.object
 			var len:int = list.length;
 			for (var i:int = 0;i < len; i++) 
 			{
-				var ipa:IObjectParsable = parseObject(list[i], objectClass, ignoreError);
+				var ipa:IObjectParsable = ObjectParser.parseObject(list[i], objectClass, ignoreError, debug);
 				
 				if ((ipa == null) && !ignoreError)
 				{
@@ -94,22 +97,30 @@ package temple.data.object
 		 * @param object the object to parse
 		 * @param objectClass classname to be instanced; class must implement IObjectParsable
 		 * @param ignoreError if true, the return value of IObjectParsable is ignored, and the newly created object is always returned
+		 * @param debug if true information is logged if the parsing failed
 		 * @return a new object of the specified type, cast to IObjectParsable, or null if parsing returned false.
 		 *	
 		 * @see temple.data.object.IObjectParsable#parseObject(object);
 		 */
-		public static function parseObject(object:Object, objectClass:Class, ignoreError:Boolean = false):IObjectParsable 
+		public static function parseObject(object:Object, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = false):IObjectParsable 
 		{
-			var ipa:IObjectParsable = new objectClass();
+			var parsable:IObjectParsable = new objectClass();
 			
-			if (ipa.parseObject(object) || ignoreError) 
+			if (parsable.parseObject(object) || ignoreError) 
 			{
-				return ipa;
+				return parsable;
 			}
 			else 
 			{
+				if (debug) Log.error("Error parsing object: " + object + " to " + parsable, ObjectParser);
+				
 				return null;
 			}
+		}
+		
+		public static function toString():String
+		{
+			return getClassName(ObjectParser);
 		}
 	}
 }

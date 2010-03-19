@@ -110,7 +110,7 @@ package temple.ui.behaviors
 			this._newX = target.x;
 			this._newY = target.y;
 			
-			target.addEventListener(MouseEvent.MOUSE_WHEEL, handleMouseWheel);
+			target.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
 			
 			this._running = false;
 		}

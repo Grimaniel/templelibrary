@@ -38,6 +38,7 @@
 
 package temple.ui.behaviors 
 {
+	import flash.display.InteractiveObject;
 	import temple.ui.IEnableable;
 
 	import flash.display.DisplayObject;
@@ -108,11 +109,11 @@ package temple.ui.behaviors
 
 		/**
 		 * Create the possibility to drag an object
-		 * @param target: The DisplayObject to be dragged
+		 * @param target: The InteractiveObject to be dragged
 		 * @param bounds (optional): limits the dragging
-		 * @param dragButton (optional): a DisplayObject that does the dragging, if there is no dragButton, the dragObject does the dragging
+		 * @param dragButton (optional): a InteractiveObject that does the dragging, if there is no dragButton, the dragObject does the dragging
 		 */
-		public function DragBehavior(target:DisplayObject, bounds:Rectangle = null, dragButton:DisplayObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true) 
+		public function DragBehavior(target:InteractiveObject, bounds:Rectangle = null, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true) 
 		{
 			super(target, bounds);
 			

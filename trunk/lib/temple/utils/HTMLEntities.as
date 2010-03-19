@@ -154,9 +154,10 @@ package temple.utils
             entities["&yacute;"] = "\u00FD"; // Latin small letter y with acute
             entities["&thorn;"]  = "\u00FE"; // Latin small letter thorn
             entities["&yuml;"]   = "\u00FF"; // Latin small letter y with diaeresis
-            entities["&ndash;"]   = "-";
-            entities["&lsquo;"]   = "'";
-            entities["&rsquo;"]   = "'";
+            entities["&ndash;"]  = "-";
+            entities["&lsquo;"]  = "'";
+            entities["&rsquo;"]  = "'";
+            entities["&amp;"]    = "&";
            
             return entities;
         }

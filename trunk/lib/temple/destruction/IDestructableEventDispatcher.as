@@ -50,6 +50,15 @@ package temple.destruction
 	 */
 	public interface IDestructableEventDispatcher extends IEventDispatcher, IDestructable 
 	{
+		/**
+		 * Registers an event listening to the EventListenerManager which will only be called once. After the event is dispatched and all once listeners are called, the once listeners are removed.
+		 * 	
+		 * @param type The type of event.
+		 * @param listener The listener function that processes the event.
+		 * @param useCapture Determines whether the listener works in the capture phase or the target and bubbling phases.
+		 * @param priority The priority level of the event listener.
+		 */
+		function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void 
 
 		/**
 		 * Removes all strong (non-weak) EventListeners of a specific type.
@@ -57,6 +66,13 @@ package temple.destruction
 		 * @param type The type of event.
 		 */
 		function removeAllStrongEventListenersForType(type:String):void;
+
+		/**
+		 * Removes all once EventListeners of a specific type.
+		 * 	
+		 * @param type The type of event.
+		 */
+		function removeAllOnceEventListenersForType(type:String):void;
 
 		/**
 		 * Removes all strong (non weak) EventListeners that are handled by a specified listener.

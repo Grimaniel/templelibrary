@@ -92,7 +92,7 @@ package temple.behaviors
 			return this._target;
 		}
 		
-		temple function handleTargetDestructed(event:DestructEvent):void
+		temple final function handleTargetDestructed(event:DestructEvent):void
 		{
 			this.destruct();
 		}

@@ -39,10 +39,12 @@
 package temple.utils.types 
 {
 	import temple.Temple;
+	import temple.core.ICoreObject;
 	import temple.data.xml.XMLParser;
 	import temple.debug.getClassName;
 	import temple.utils.ObjectType;
 
+	import flash.display.DisplayObject;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -114,7 +116,7 @@ package temple.utils.types
 				{
 					openChar = "\u007B";
 				}
-				output += "TraceObject: " + ObjectUtils.objectToString(object) + " (" + getClassName(object) + ")";
+				output += ObjectUtils.objectToString(object) + " (" + getClassName(object) + ")";
 				output += "\n" + openChar;
 			}
 			
@@ -169,9 +171,12 @@ package temple.utils.types
 				switch (typeof(variable))
 				{
 					case ObjectType.STRING:
-						output += "\n" + tabs + vardata.name + " : \"" + variable + "\"";
+					{
+						output += "\n" + tabs + vardata.name + ": \"" + variable + "\"";
 						break;
+					}
 					case ObjectType.OBJECT:
+					{
 						// check to see if the variable is an array.
 						if (variable is Array) 
 						{
@@ -204,10 +209,13 @@ package temple.utils.types
 							}
 						}
 						break;
+					}
 					default:				
+					{
 						//variable is not an object or string, just trace it out normally
 						output += "\n" + tabs + vardata.name + " : " + variable;
 						break;
+					}
 				}
 			}
 			
@@ -295,13 +303,21 @@ package temple.utils.types
 		 */
 		public static function objectToString(object:*):String
 		{
-			if(typeof(object) == ObjectType.STRING)
+			if (object is ICoreObject)
+			{
+				return String(object as ICoreObject);
+			}
+			else if(typeof(object) == ObjectType.STRING)
 			{
 				return "\"" + object + "\"";
 			}
 			else if (object is XML)
 			{
 				return (object as XML).toXMLString();
+			}
+			else if (object is DisplayObject)
+			{
+				return getClassName(object) + ": \"" + (object as DisplayObject).name + "\"";
 			}
 			return String(object);
 		}

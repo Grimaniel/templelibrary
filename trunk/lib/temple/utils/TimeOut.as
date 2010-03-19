@@ -161,6 +161,14 @@ package temple.utils
 				}
 			}
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get paused():Boolean
+		{
+			return !this._timer.running;
+		}
 
 		/**
 		 * Stops the TimeOut

@@ -105,7 +105,7 @@ package temple.core
 	 */
 	public class CoreLoader extends Loader implements ICoreDisplayObject, ICoreLoader
 	{
-		private static const _DEFAULT_HANDLER : int = -50;
+		private static const _DEFAULT_HANDLER : int = 0;
 		
 		private namespace temple;
 		
@@ -369,6 +369,14 @@ package temple.core
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 			this._eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
+		{
+			if (this._eventListenerManager) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+		}
 
 		/**
 		 * @inheritDoc
@@ -385,6 +393,14 @@ package temple.core
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
 			this._eventListenerManager.removeAllStrongEventListenersForType(type);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function removeAllOnceEventListenersForType(type:String):void
+		{
+			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**
@@ -514,49 +530,49 @@ package temple.core
 			Log.warn(data, this, this._registryId);
 		}
 		
-		temple function handleUnload(event:Event):void
+		temple final function handleUnload(event:Event):void
 		{
 			this.destruct();
 		}
 		
-		temple function handleAdded(event:Event):void
+		temple final function handleAdded(event:Event):void
 		{
 			if (event.currentTarget == this) this._onParent = true;
 		}
 
-		temple function handleAddedToStage(event:Event):void
+		temple final function handleAddedToStage(event:Event):void
 		{
 			this._onStage = true;
 		}
 
-		temple function handleRemoved(event:Event):void
+		temple final function handleRemoved(event:Event):void
 		{
 			if (event.currentTarget == this) this._onParent = false;
 		}
 		
-		temple function handleRemovedFromStage(event:Event):void
+		temple final function handleRemovedFromStage(event:Event):void
 		{
 			this._onStage = false;
 		}
 
-		temple function handleLoadStart(event:Event):void
+		temple final function handleLoadStart(event:Event):void
 		{
 			this._preloadableBehavior.onLoadStart(this, this._url);
 			this.dispatchEvent(event.clone());
 		}
 
-		temple function handleLoadProgress(event:ProgressEvent):void
+		temple final function handleLoadProgress(event:ProgressEvent):void
 		{
 			this._preloadableBehavior.onLoadProgress();
 			this.dispatchEvent(event.clone());
 		}
 		
-		temple function handleLoadInit(event:Event):void
+		temple final function handleLoadInit(event:Event):void
 		{
 			this.dispatchEvent(event.clone());
 		}
 		
-		temple function handleLoadComplete(event:Event):void
+		temple final function handleLoadComplete(event:Event):void
 		{
 			this._isLoading = false;
 			this._isLoaded = true;
@@ -568,12 +584,12 @@ package temple.core
 		/**
 		 * Default IOError handler
 		 */
-		temple function handleIOError(event:IOErrorEvent):void
+		temple final function handleIOError(event:IOErrorEvent):void
 		{
 			this._isLoading = false;
 			this._preloadableBehavior.onLoadComplete(this);
 			
-			if (this._logErrors) this.logError(event.type + ': ' + event.text);
+			if (this._logErrors) this.logError(event.type + ': ' + event.text + ' (' + this._url + ')');
 			
 			this.dispatchEvent(event.clone());
 		}
@@ -582,7 +598,7 @@ package temple.core
 		 * Default SecurityError handler
 		 * <p>If logErrors is set to true, an error message is logged</p>
 		 */
-		temple function handleSecurityError(event:SecurityErrorEvent):void
+		temple final function handleSecurityError(event:SecurityErrorEvent):void
 		{
 			this._isLoading = false;
 			this._preloadableBehavior.onLoadComplete(this);
@@ -595,7 +611,7 @@ package temple.core
 		/**
 		 * @inheritDoc
 		 */
-		public function get isDestructed():Boolean
+		public final function get isDestructed():Boolean
 		{
 			return this._isDestructed;
 		}

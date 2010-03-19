@@ -277,6 +277,14 @@ package temple.core
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 			if (this._eventListenerManager) this._eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
+		{
+			if (this._eventListenerManager) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+		}
 
 		/**
 		 * @inheritDoc
@@ -293,6 +301,14 @@ package temple.core
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
 			if (this._eventListenerManager) this._eventListenerManager.removeAllStrongEventListenersForType(type);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function removeAllOnceEventListenersForType(type:String):void
+		{
+			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**
@@ -373,22 +389,22 @@ package temple.core
 			Log.warn(data, this, this._registryId);
 		}
 		
-		temple function handleUnload(event:Event):void
+		temple final function handleUnload(event:Event):void
 		{
 			this.destruct();
 		}
 		
-		temple function handleAdded(event:Event):void
+		temple final function handleAdded(event:Event):void
 		{
 			if (event.currentTarget == this) this._onParent = true;
 		}
 
-		temple function handleAddedToStage(event:Event):void
+		temple final function handleAddedToStage(event:Event):void
 		{
 			this._onStage = true;
 		}
 
-		temple function handleRemoved(event:Event):void
+		temple final function handleRemoved(event:Event):void
 		{
 			if (event.target == this)
 			{
@@ -397,7 +413,7 @@ package temple.core
 			}
 		}
 		
-		temple function handleDestructedFrameDelay(event:Event):void
+		temple final function handleDestructedFrameDelay(event:Event):void
 		{
 			this.removeEventListener(Event.ENTER_FRAME, temple::handleDestructedFrameDelay);
 			temple::checkParent();
@@ -407,12 +423,12 @@ package temple.core
 		 * Check objects parent, after being removed. If the object still has a parent, the object has been removed by a timeline animation.
 		 * If an object is removed by a timeline animation, the object is not used anymore and can be destructed
 		 */
-		temple function checkParent():void
+		temple final function checkParent():void
 		{
 			if (this.parent && !this._onParent) this.destruct();
 		}
 
-		temple function handleRemovedFromStage(event:Event):void
+		temple final function handleRemovedFromStage(event:Event):void
 		{
 			this._onStage = false;
 		}
@@ -420,7 +436,7 @@ package temple.core
 		/**
 		 * @inheritDoc
 		 */
-		public function get isDestructed():Boolean
+		public final function get isDestructed():Boolean
 		{
 			return this._isDestructed;
 		}

@@ -80,6 +80,11 @@ package temple.utils.types
 		public static const DAYS_IN_YEAR:int = 365;
 		public static const DAYS_IN_LEAP_YEAR:int = 366;
 		
+		private static const _MONTHS_TO_INTEGERS:Object = {
+			January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11,
+			Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11
+		};
+	
 		/**
 		 * Set language to Dutch
 		 */
@@ -993,6 +998,34 @@ package temple.utils.types
 			return DateUtils.getWeekDayAsText(date, true) + ", " + DateUtils.getDayOfMonth(date) + " " + DateUtils.getMonthAsText(date, true) + " " + DateUtils.getYear(date) + " " + DateUtils.getHours(date) + ":" + DateUtils.getMinutes(date) + ":" + DateUtils.getSeconds(date) + " " + DateUtils.getDifferenceBetweenGmt(date);
 		}
 
+		/**
+		* Translate RFC2822 date strings (used in RSS) to timestamp.
+		*
+		* @param string Date string to be parsed.
+		* @return Extracted timestamp.
+		**/
+		public static function parseRfc2822(string:String):Date
+		{
+			// Thu, 25 Feb 2010 15:49:25 +0100
+			
+			// split RFC2822 string
+			var darr:Array = string.split(' ');
+			
+			// set all data for date
+			var date:Number = parseInt(darr[1]);
+			var month:Number = _MONTHS_TO_INTEGERS[darr[2]];
+			var year:Number = parseInt(darr[3]);
+			
+			// also split time string
+			var tarr:Array = darr[4].split(':');
+			var hour:Number = parseInt(tarr[0]);
+			var minute:Number  = parseInt(tarr[1]);
+			var second:Number  = parseInt(tarr[2]);
+			
+			//TODO: timezone offset
+			return new Date(year,month,date,hour,minute,second);
+		}
+		
 		/**
 		 * returns the current timezone abbrevitation (such as EST, GMT, ... )
 		 * 

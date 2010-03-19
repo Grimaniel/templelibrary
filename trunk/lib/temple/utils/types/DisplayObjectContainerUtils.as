@@ -47,9 +47,13 @@ package temple.utils.types
 	import flash.display.InteractiveObject;
 	import flash.display.MovieClip;
 	import flash.text.TextField;
-
 	/**
 	 * This class contains some functions for DisplayObjectContainers.
+	 * 
+	 * 
+	 * var field:TextField = DisplayObjectContainerUtils.getTextField(this, 'mcLogo', 'mcInner', 'mcInnerNested', 'txtField');
+	 * 
+	 * will throw an error when a sub-contianer doenst exists, or child is bad type etc
 	 * 
 	 * @author Thijs Broerse
 	 */
@@ -93,16 +97,13 @@ package temple.utils.types
 		 * 
 		 * @return the child with the name
 		 */
-		public static function getChildByName(container:DisplayObjectContainer, name:String):DisplayObject
+		public static function getDisplayObject(container:DisplayObjectContainer, name:String, ...names):DisplayObject
 		{
 			if(container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
-
-			var child:DisplayObject = container.getChildByName(name);
-			if(child == null)
-			{
-				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'cannot find a child named \'' + name + '\' in container \'' + container + '\''));	
-			}
-			return child;
+			if(!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			names.unshift(name);
+			
+			return DisplayObjectContainerUtils.getDescendantByNames(container, names);
 		}
 
 		/**
@@ -110,36 +111,22 @@ package temple.utils.types
 		 * 
 		 * @param container the DisplayObjectContainer which contains the TextField
 		 * @param name the name of the TextField to find
+		 * @param optional arguments specify (unlimited) deeper nested containers (last name is the requested child)
 		 * 
 		 *  @return the TextField with the name
 		 */
-		public static function getTextField(container:DisplayObjectContainer, name:String):TextField
+		public static function getTextField(container:DisplayObjectContainer, name:String, ...names):TextField
 		{
-			var child:DisplayObject = DisplayObjectContainerUtils.getChildByName(container, name);
+			if(container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
+			if(!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			names.unshift(name);
+			
+			var child:DisplayObject = DisplayObjectContainerUtils.getDescendantByNames(container, names);
 			if(!(child is TextField))
 			{
-				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the child named \'' + name + '\' in container \'' + container + '\' is not a TextField'));
+				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the child named \'' + child.name + '\' is not a TextField'));
 			}
 			return child as TextField;
-		}
-
-		/**
-		 * Finds a TextField with a specific name. Throws an ArgumentError if no child is found or if the object is not a TextField
-		 * 
-		 * @param container the DisplayObjectContainer which contains the DisplayObjectContainer with holderName
-		 * @param holderName the name of the DisplayObjectContainer which contains the TextField
-		 * @param name the name of the TextField to find
-		 * 
-		 *  @return the TextField with the name
-		 */
-		public static function getNestedTextField(container:DisplayObjectContainer, holderName:String, name:String):TextField
-		{
-			var child:DisplayObject = DisplayObjectContainerUtils.getChildByName(container, holderName);
-			if(!(child is DisplayObjectContainer))
-			{
-				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the container named \'' + holderName + '\' in container \'' + container + '\' is not a DisplayObjectContainer'));
-			}
-			return DisplayObjectContainerUtils.getTextField(DisplayObjectContainer(child), name);
 		}
 
 		/**
@@ -147,17 +134,52 @@ package temple.utils.types
 		 * 
 		 * @param container the DisplayObjectContainer which contains the MovieClip
 		 * @param name the name of the MovieClip to find
+		 * @param optional arguments specify (unlimited) deeper nested containers (last name is the requested child)
 		 * 
 		 * @return the MovieClip with the name
 		 */
-		public static function getMovieClip(container:DisplayObjectContainer, name:String):MovieClip
+		public static function getMovieClip(container:DisplayObjectContainer, name:String, ...names):MovieClip
 		{
-			var child:DisplayObject = DisplayObjectContainerUtils.getChildByName(container, name);
+			if(container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
+			if(!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			names.unshift(name);
+			
+			var child:DisplayObject = DisplayObjectContainerUtils.getDescendantByNames(container, names);
 			if(!(child is MovieClip))
 			{
-				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the child named \'' + name + '\' in container \'' + container + '\' is not a MovieClip'));
+				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the child named \'' + name + '\' is not a MovieClip'));
 			}
 			return child as MovieClip;
+		}
+		
+		/**
+		 * Find a descendant in a container, recursive: var clip = getDescendantByNames(this, ['mcHolder', 'mcSub', 'mcNested', 'mcTarget']);
+		 * throwErrror() on each step for easy debugging
+		 * (helper for other getChild-types)
+		 */
+		private static function getDescendantByNames(container:DisplayObjectContainer, names:Array):DisplayObject
+		{
+			//no param checks for private
+			
+			var name:String = names.shift();
+			var child:DisplayObject = container.getChildByName(name);
+			if(child == null)
+			{
+				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'cannot find a child named \'' + name + '\' in container \'' + container.name + '\' (' + container + ')'));	
+			}
+			
+			if(names.length > 0)
+			{
+				if(!(child is DisplayObjectContainer))
+				{
+					throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the child named \'' + name + '\' in container \'' + container.name + '\' (' + container + ') is not a DisplayObjectContainerUtils'));
+				}
+				else
+				{
+					return DisplayObjectContainerUtils.getDescendantByNames(DisplayObjectContainer(child), names);
+				}
+			}
+			return child;
 		}
 
 		/**
@@ -172,7 +194,7 @@ package temple.utils.types
 			var child:DisplayObject;
 			
 			var leni:int = container.numChildren;
-			for (var i:int = 0;i < leni ;i++)
+			for (var i:int = 0;i < leni;i++)
 			{
 				child = container.getChildAt(i);
 				
@@ -195,7 +217,7 @@ package temple.utils.types
 		public static function resetScaling(container:DisplayObjectContainer):void
 		{
 			var len:int = container.numChildren;
-			for (var i:int = 0;i < len ;i++)
+			for (var i:int = 0;i < len;i++)
 			{
 				container.getChildAt(i).width *= container.scaleX;
 				container.getChildAt(i).height *= container.scaleY;

@@ -36,7 +36,7 @@
  *	
  */
 
-package temple.utils 
+package temple.utils.keys 
 {
 	import temple.core.CoreObject;
 	import temple.data.collections.HashMap;
@@ -93,7 +93,8 @@ package temple.utils
 		
 		private var _map:HashMap;
 		private var _stage:Stage;
-		
+		private var _keyboardEvent:String;
+
 		/**
 		 * Creates a new KeyMapper instance
 		 * @param stage a reference to the stage. Needed for handling KeyBoardEvents
@@ -110,7 +111,8 @@ package temple.utils
 			}
 			this._map = new HashMap("KeyMapper");
 			this._stage = stage;
-			this._stage.addEventListener(keyboardEvent, this.handleKeyEvent);
+			this._keyboardEvent = keyboardEvent;
+			this._stage.addEventListener(this._keyboardEvent, this.handleKeyEvent);
 		}
 
 		/**
@@ -138,7 +140,7 @@ package temple.utils
 			if(event.altKey) keyCode |= KeyMapper.ALT;
 			if(event.ctrlKey) keyCode |= KeyMapper.CONTROL;
 			
-			if (this._map[keyCode]) this._map[keyCode]();
+			if (this._map && this._map[keyCode]) this._map[keyCode]();
 		}
 
 		/**
@@ -148,8 +150,9 @@ package temple.utils
 		{
 			if(this._stage)
 			{
-				this._stage.removeEventListener(KeyboardEvent.KEY_UP, this.handleKeyEvent);
+				this._stage.removeEventListener(this._keyboardEvent, this.handleKeyEvent);
 				this._stage = null;
+				this._keyboardEvent = null;
 			}
 			
 			this._map = null;

@@ -49,8 +49,8 @@ package temple.data.flashvars
 	 */
 	internal class FlashVar extends CoreObject
 	{ 
+		internal var _value:*;
 		private var _name:String;
-		private var _value:*;
 		private var _defaultValue:*;
 		private var _type:Class;
 		private var _external:Boolean;
@@ -101,6 +101,11 @@ package temple.data.flashvars
 				case int:
 				{
 					return (this._value == '' || this._value == undefined) && this._defaultValue ? this._defaultValue : int(this._value);
+				}
+
+				case uint:
+				{
+					return (this._value == '' || this._value == undefined) && this._defaultValue ? this._defaultValue : uint(this._value);
 				}
 			
 				case Array:

@@ -36,7 +36,7 @@
  *	
  */
 
-package temple.utils 
+package temple.utils.keys 
 {
 	import flash.ui.Keyboard;
 

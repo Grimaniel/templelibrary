@@ -38,6 +38,7 @@
 
 package temple.data.xml 
 {
+	import temple.debug.log.Log;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
 	import temple.debug.getClassName;
@@ -86,7 +87,7 @@ package temple.data.xml
 	 * 
 	 * @see temple.data.xml.IXMLParsable#parseXML(xml);
 	 */
-	public class XMLParser 
+	public final class XMLParser 
 	{
 
 		/**
@@ -95,18 +96,19 @@ package temple.data.xml
 		 * @param objectClass classname to be instanced; class must implement IXMLParsable
 		 * @param ignoreError if true, the return value of parseXML is always added to the array, and the array itself is
 		 * returned. Otherwise, an error in parsing will return null.
+		 * @param debug if true information is logged if the parsing failed
 		 * @return Array of new objects of the specified type, cast to IXMLParsable, or null if parsing returned false.
 		 *	
 		 * @see temple.data.xml.IXMLParsable#parseXML(xml);
 		 */
-		public static function parseList(list:XMLList, objectClass:Class, ignoreError:Boolean = false):Array 
+		public static function parseList(list:XMLList, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = true):Array 
 		{
 			var a:Array = new Array();
 			
 			var len:Number = list.length();
 			for (var i:Number = 0;i < len; i++) 
 			{
-				var ipa:IXMLParsable = XMLParser.parseXML(list[i], objectClass, ignoreError);
+				var ipa:IXMLParsable = XMLParser.parseXML(list[i], objectClass, ignoreError, debug);
 				if ((ipa == null) && !ignoreError)
 				{
 					return null;
@@ -125,11 +127,12 @@ package temple.data.xml
 		 * @param xml XML document or node
 		 * @param objectClass classname to be instanced; class must implement IXMLParsable
 		 * @param ignoreError if true, the return value of IXMLParsable is ignored, and the newly created object is always returned
+		 * @param debug if true information is logged if the parsing failed
 		 * @return a new object of the specified type, cast to IXMLParsable, or null if parsing returned false.
 		 *	
 		 * @see temple.data.xml.IXMLParsable#parseXML(xml);
 		 */
-		public static function parseXML(xml:XML, objectClass:Class, ignoreError:Boolean = false):IXMLParsable 
+		public static function parseXML(xml:XML, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = false):IXMLParsable 
 		{
 			if (!xml) throwError(new TempleArgumentError(XMLParser, "xml can not be null"));
 			
@@ -143,6 +146,8 @@ package temple.data.xml
 			{
 				return parsable;
 			}
+			if (debug) Log.error("Error parsing xml: " + xml + " to " + parsable, XMLParser);
+			
 			return null;
 		}
 		

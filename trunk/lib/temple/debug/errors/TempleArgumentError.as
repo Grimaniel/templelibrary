@@ -1,4 +1,4 @@
-/*
+﻿/*
  *	 
  *	Temple Library for ActionScript 3.0
  *	Copyright © 2010 MediaMonks B.V.
@@ -61,7 +61,15 @@ package temple.debug.errors
 			this._sender = sender;
 			super(message, id);
 			
-			Log.error("TempleArgumentError: '" + message + "' id:" + id + "\n" + this.getStackTrace(), String(sender));
+			var stack:String = this.getStackTrace();
+			if(stack)
+			{
+				Log.error(stack + " id:" + id, String(sender));
+			}
+			else
+			{
+				Log.error("TempleArgumentError: '" + message + "' id:" + id, String(sender));
+			}
 		}
 		
 		/**

@@ -261,17 +261,26 @@ package temple.debug
 				
 				var arrListeners:Array = arrTmp[i].object is IDestructableEventDispatcher ? EventListenerManager.getDispatcherInfo(arrTmp[i].object as IDestructableEventDispatcher) : new Array();
 				
-				xml += '<memoryobject id="' + info.objectId + '" timestamp="'+ info.timestamp + '" object="' + String(arrTmp[i].object) + '" stackroot="' + (stackroot) + '" numlisteners="' + arrListeners.length + '" isdestructed="' + (arrTmp[i].object is IDestructable ? IDestructable(arrTmp[i].object).isDestructed : false) + '">' +
+				xml += '<memoryobject id="' + info.objectId + '" timestamp="'+ info.timestamp + '" object="' + String(arrTmp[i].object).split('"').join("'") + '" stackroot="' + (stackroot) + '" numlisteners="' + arrListeners.length + '" isdestructed="' + (arrTmp[i].object is IDestructable ? IDestructable(arrTmp[i].object).isDestructed : false) + '">' +
 					'<listeners>' + (arrListeners.join("\n")) + '</listeners>' +   
-					'<stack>' + (fullstacktrace ? info.stack : "enable 'fullstacktrace' to see this\n" + stackroot) + '</stack>' +   
-				'</memoryobject>'; 
+					'<stack><![CDATA[' + (fullstacktrace ? info.stack : "enable 'fullstacktrace' to see this\n" + stackroot) + ']]></stack>' +   
+				'</memoryobject>';
 			}
 			
 			xml += '</root>';
 			
-			return XML(xml);
+			try
+			{
+				return XML(xml);
+			}
+			catch (error:Error)
+			{
+				Log.error(error.getStackTrace(), "Memory");
+				Log.error(xml, "Memory");
+			}
 			
-		}	
+			return XML('');
+		}
 
 		/**
 		 * Get the total of registered objects in Memory

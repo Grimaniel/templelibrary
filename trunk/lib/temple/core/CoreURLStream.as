@@ -232,6 +232,14 @@ package temple.core
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 			this._eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
+		{
+			if (this._eventListenerManager) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+		}
 
 		/**
 		 * @inheritDoc
@@ -248,6 +256,14 @@ package temple.core
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
 			this._eventListenerManager.removeAllStrongEventListenersForType(type);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function removeAllOnceEventListenersForType(type:String):void
+		{
+			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**
@@ -290,17 +306,17 @@ package temple.core
 			this._preloadableBehavior.preloader = value;
 		}
 		
-		temple function handleLoadStart(event:Event):void
+		temple final function handleLoadStart(event:Event):void
 		{
 			this._preloadableBehavior.onLoadStart(this);
 		}
 
-		temple function handleLoadProgress(event:ProgressEvent):void
+		temple final function handleLoadProgress(event:ProgressEvent):void
 		{
 			this._preloadableBehavior.onLoadProgress();
 		}
 		
-		temple function handleLoadComplete(event:Event):void
+		temple final function handleLoadComplete(event:Event):void
 		{
 			this._preloadableBehavior.onLoadComplete(this);
 			this._isLoading = false;
@@ -311,7 +327,7 @@ package temple.core
 		 * Default IOError handler
 		 * If logErrors is set to true, an error message is logged
 		 */
-		temple function handleIOError(event:IOErrorEvent):void
+		temple final function handleIOError(event:IOErrorEvent):void
 		{
 			this._isLoading = false;
 			this._preloadableBehavior.onLoadComplete(this);
@@ -323,7 +339,7 @@ package temple.core
 		 * Default SecurityError handler
 		 * If logErrors is set to true, an error message is logged
 		 */
-		temple function handleSecurityError(event:SecurityErrorEvent):void
+		temple final function handleSecurityError(event:SecurityErrorEvent):void
 		{
 			this._isLoading = false;
 			this._preloadableBehavior.onLoadComplete(this);
@@ -362,7 +378,7 @@ package temple.core
 		/**
 		 * @inheritDoc
 		 */
-		public function get isDestructed():Boolean
+		public final function get isDestructed():Boolean
 		{
 			return this._isDestructed;
 		}

@@ -56,6 +56,7 @@ limitations under the License.
 
 package temple.utils 
 {
+	import temple.ui.IPauseable;
 	import temple.core.CoreObject;
 
 	import flash.events.Event;
@@ -86,12 +87,13 @@ package temple.utils
 	 * }
 	 * </listing>
 	 */
-	public final class FrameDelay extends CoreObject
+	public final class FrameDelay extends CoreObject implements IPauseable
 	{
 		private var _isDone:Boolean = false;
 		private var _currentFrame:int;
 		private var _callback:Function;
 		private var _params:Array;
+		private var _paused:Boolean;
 
 		/**
 		 * Creates a new FrameDelay. Starts the delay immediately.
@@ -105,9 +107,36 @@ package temple.utils
 			this._callback = callback;
 			this._params = params;
 			this._isDone = (isNaN(frameCount) || (frameCount <= 1));
-			FramePulse.addEnterFrameListener(handleEnterFrame);
+			FramePulse.addEnterFrameListener(this.handleEnterFrame);
 		}
-
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function pause():void
+		{
+			FramePulse.removeEnterFrameListener(this.handleEnterFrame);
+			this._paused = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function resume():void
+		{
+			if (!this.isDestructed && this._paused)
+			{
+				FramePulse.addEnterFrameListener(handleEnterFrame);
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get paused():Boolean
+		{
+			return this._paused;
+		}
 
 		/**
 		 * Handle the Event.ENTER_FRAME event.
@@ -127,6 +156,7 @@ package temple.utils
 				{
 					this._callback.apply(null, this._params);
 				}
+				this.destruct();
 			}
 			else 
 			{
@@ -141,7 +171,7 @@ package temple.utils
 		 */
 		override public function destruct():void 
 		{
-			FramePulse.removeEnterFrameListener(handleEnterFrame);
+			FramePulse.removeEnterFrameListener(this.handleEnterFrame);
 			
 			this._callback = null;
 			this._params = null;

@@ -55,5 +55,10 @@ package temple.ui
 		 * Resumes the player or object after pause
 		 */
 		function resume():void;
+
+		/**
+		 * Indicates if the player or object is currently paused
+		 */
+		function get paused():Boolean;
 	}
 }
