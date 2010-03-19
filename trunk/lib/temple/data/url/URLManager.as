@@ -98,7 +98,7 @@
 	 * 
 	 * @includeExample URLManagerExample.as
 	 * 
-	 * @author Thijs Broerse
+	 * @author Thijs Broerse, Arjan van Wijk
 	 */
 	public final class URLManager extends XMLService implements IDebuggable, ILoader, IPreloadable
 	{

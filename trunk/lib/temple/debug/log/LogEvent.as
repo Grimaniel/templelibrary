@@ -61,6 +61,8 @@ package temple.debug.log
 
 	/**
 	 * Event dispatched when someting is logged. You can listen for this Event if you want to create your own Logger.
+	 * 
+	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public class LogEvent extends Event 
 	{

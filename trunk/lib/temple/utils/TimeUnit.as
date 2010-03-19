@@ -41,6 +41,8 @@ package temple.utils
 
 	/**
 	 * A collection of constants for date and time units.
+	 * 
+	 * @author Thijs Broerse
 	 */
 	public final class TimeUnit
 	{

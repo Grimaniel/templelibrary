@@ -54,7 +54,7 @@ package temple.utils
 	 *		
 	 *		var havePageBranch:Boolean = allPages.indexOf(somePageBranch) > -1;
 	 *
-	 * @author Bart (bart[at]mediamonks.com)
+	 * @author Bart van der Schoor
 	 * 
 	 */
 	public final class Enum 
