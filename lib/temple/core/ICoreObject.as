@@ -38,7 +38,7 @@
 
 package temple.core 
 {
-	import temple.destruction.IDestructable;
+	import temple.destruction.IDestructible;
 
 	/**
 	 * Interface for all core classes of the Temple. The Temple’s core classes are 
@@ -46,7 +46,7 @@ package temple.core
 	 * of the Temple, like memory registration and event listener registration.
 	 * 
 	 * <p>Temple’s core classes are designed for easy destruction. ICoreObject extends 
-	 * IDestructable. Therefore are all objects enhanced with a destruction method.</p>
+	 * IDestructible. Therefore are all objects enhanced with a destruction method.</p>
 	 * 
 	 * <p>Since all core objects are registered in memory (if that feature is enabled) 
 	 * they can be tracked. After destructing the object and a garbage collection the 
@@ -59,7 +59,7 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface ICoreObject extends IDestructable
+	public interface ICoreObject extends IDestructible
 	{
 		/**
 		 * The unique identifier of the object. The id is generated and registered by the Registry class

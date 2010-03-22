@@ -43,7 +43,7 @@ package temple.core
 	import temple.debug.log.Log;
 	import temple.destruction.DestructEvent;
 	import temple.destruction.EventListenerManager;
-	import temple.destruction.IDestructableEventDispatcher;
+	import temple.destruction.IDestructibleEventDispatcher;
 
 	import flash.events.Event;
 	import flash.utils.Timer;
@@ -60,7 +60,7 @@ package temple.core
 	 * 	<li>Event dispatch optimization.</li>
 	 * 	<li>Easy remove of all EventListeners.</li>
 	 * 	<li>Wrapper for Log class for easy logging.</li>
-	 * 	<li>Completely destructable.</li>
+	 * 	<li>Completely destructible.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * </ul>
 	 * 
@@ -73,7 +73,7 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CoreTimer extends Timer implements IDestructableEventDispatcher, ICoreObject
+	public class CoreTimer extends Timer implements IDestructibleEventDispatcher, ICoreObject
 	{
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;

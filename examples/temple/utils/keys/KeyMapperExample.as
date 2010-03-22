@@ -32,56 +32,26 @@ package
 			var keyMapper:KeyMapper = new KeyMapper(this.stage);
 			
 			// Use cursor keys to move left, right, up and down
-			keyMapper.map(KeyCode.LEFT, this.moveLeft);
-			keyMapper.map(KeyCode.RIGHT, this.moveRight);
-			keyMapper.map(KeyCode.UP, this.moveUp);
-			keyMapper.map(KeyCode.DOWN, this.moveDown);
+			keyMapper.map(KeyCode.LEFT, this.moveHorizontal, -1);
+			keyMapper.map(KeyCode.RIGHT, this.moveHorizontal, 1);
+			keyMapper.map(KeyCode.UP, this.moveVertical, -1);
+			keyMapper.map(KeyCode.DOWN, this.moveVertical, 1);
 			
 			// use Shift key to move even faster
-			keyMapper.map(KeyCode.LEFT + KeyMapper.SHIFT, this.moveLeftFast);
-			keyMapper.map(KeyCode.RIGHT + KeyMapper.SHIFT, this.moveRightFast);
-			keyMapper.map(KeyCode.UP + KeyMapper.SHIFT, this.moveUpFast);
-			keyMapper.map(KeyCode.DOWN + KeyMapper.SHIFT, this.moveDownFast);
+			keyMapper.map(KeyCode.LEFT + KeyMapper.SHIFT, this.moveHorizontal, -20);
+			keyMapper.map(KeyCode.RIGHT + KeyMapper.SHIFT, this.moveHorizontal, 20);
+			keyMapper.map(KeyCode.UP + KeyMapper.SHIFT, this.moveVertical, -20);
+			keyMapper.map(KeyCode.DOWN + KeyMapper.SHIFT, this.moveVertical, 20);
 		}
 
-		private function moveLeft():void
+		private function moveHorizontal(speed:Number):void 
 		{
-			this._sprite.x -= 1;
+			this._sprite.x += speed;
 		}
 
-		private function moveRight():void
+		private function moveVertical(speed:Number):void 
 		{
-			this._sprite.x += 1;
-		}
-
-		private function moveUp():void
-		{
-			this._sprite.y -= 1;
-		}
-
-		private function moveDown():void
-		{
-			this._sprite.y += 1;
-		}
-	
-		private function moveLeftFast():void
-		{
-			this._sprite.x -= 20;
-		}
-
-		private function moveRightFast():void
-		{
-			this._sprite.x += 20;
-		}
-
-		private function moveUpFast():void
-		{
-			this._sprite.y -= 20;
-		}
-
-		private function moveDownFast():void
-		{
-			this._sprite.y += 20;
+			this._sprite.y += speed;
 		}
 	}
 }

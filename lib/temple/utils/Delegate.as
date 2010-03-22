@@ -38,7 +38,6 @@
 
 package temple.utils 
 {
-
 	/**
 	 * Allows you to delegate a function call (with arguments) to specific scopes and function.
 	 * 
@@ -46,22 +45,22 @@ package temple.utils
 	 * 
 	 * @includeExample DelegateExample.as
 	 * 
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public final class Delegate 
 	{
 		/**
 		 * Creates a function delegate
-		 * @param handler the function that needs to be delegated
+		 * @param method the function that needs to be delegated
 		 * @param scope the scope of the funtion
 		 * @param args a list of arguments to be passed to the function
 		 * @return a function
 		 */
-		public static function create(handler:Function, scope:Object = null,...args):Function
+		public static function create(method:Function, scope:Object = null,...args):Function
 		{
 			return function(...innerArgs):void
 			{
-				handler.apply(scope, (innerArgs as Array).concat(args));
+				method.apply(scope, (innerArgs as Array).concat(args));
 			};
 		}
 	}

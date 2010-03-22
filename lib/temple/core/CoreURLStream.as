@@ -45,7 +45,7 @@ package temple.core
 	import temple.debug.log.Log;
 	import temple.destruction.DestructEvent;
 	import temple.destruction.EventListenerManager;
-	import temple.destruction.IDestructableOnError;
+	import temple.destruction.IDestructibleOnError;
 
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -66,7 +66,7 @@ package temple.core
 	 * 	<li>Event dispatch optimization.</li>
 	 * 	<li>Easy remove of all EventListeners.</li>
 	 * 	<li>Wrapper for Log class for easy logging.</li>
-	 * 	<li>Completely destructable.</li>
+	 * 	<li>Completely destructible.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * 	<li>Logs IOErrorEvents and SecurityErrorEvents.</li>
 	 * </ul>
@@ -77,11 +77,11 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CoreURLStream extends URLStream implements ICoreLoader, IDestructableOnError
+	public class CoreURLStream extends URLStream implements ICoreLoader, IDestructibleOnError
 	{
 		private static const _DEFAULT_HANDLER : int = -50;
 		
-		private namespace temple;
+		private namespace temple = "http://code.google.com/p/templelibrary/";
 		
 		protected var _isLoading:Boolean;
 		protected var _isLoaded:Boolean;

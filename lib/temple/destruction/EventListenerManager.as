@@ -51,13 +51,13 @@ package temple.destruction
 	 * 
 	 * @author Thijs Broerse (adapted from CasaLib)
 	 */
-	public final class EventListenerManager extends CoreObject implements IEventDispatcher, IDestructableEventDispatcher 	{		private var _target:IEventDispatcher;		private var _events:Array;		private var _blockRequest:Boolean;
+	public final class EventListenerManager extends CoreObject implements IEventDispatcher, IDestructibleEventDispatcher 	{		private var _target:IEventDispatcher;		private var _events:Array;		private var _blockRequest:Boolean;
 
 		/**
 		 * Returns a list of all listeners of the dispatcher (registered by the EventListenerManager)
 		 * @param dispatcher The dispatcher you want info about
 		 */
-		public static function getDispatcherInfo(dispatcher:IDestructableEventDispatcher):Array
+		public static function getDispatcherInfo(dispatcher:IDestructibleEventDispatcher):Array
 		{
 			var list:Array = new Array();
 			var listenerManager:EventListenerManager = dispatcher.eventListenerManager;
@@ -70,8 +70,8 @@ package temple.destruction
 			}
 			return list;
 		}
-		/**		 * Creates a new instance of a EventListenerManager. Do not create more one EventListenerManager for each IDestructableEventDispatcher!
-		 * @param eventDispatcher the EventDispatcher of this EventListenerManager		 */		public function EventListenerManager(eventDispatcher:IDestructableEventDispatcher) 		{
+		/**		 * Creates a new instance of a EventListenerManager. Do not create more one EventListenerManager for each IDestructibleEventDispatcher!
+		 * @param eventDispatcher the EventDispatcher of this EventListenerManager		 */		public function EventListenerManager(eventDispatcher:IDestructibleEventDispatcher) 		{
 			this._target = eventDispatcher;			this._events = new Array();			
 			super();
 			

@@ -66,7 +66,7 @@ package temple.core
 	 * 	<li>Event dispatch optimization.</li>
 	 * 	<li>Easy remove of all EventListeners.</li>
 	 * 	<li>Wrapper for Log class for easy logging.</li>
-	 * 	<li>Completely destructable.</li>
+	 * 	<li>Completely destructible.</li>
 	 * 	<li>Automatic removes and destruct children, grant-children etc. on destruction.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * 	<li>Some usefull extra properties like autoAlpha, position and scale.</li>
@@ -80,7 +80,7 @@ package temple.core
 	 */
 	public class CoreSprite extends Sprite implements ICoreDisplayObject 
 	{
-		private namespace temple;
+		private namespace temple = "http://code.google.com/p/templelibrary/";
 		
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
