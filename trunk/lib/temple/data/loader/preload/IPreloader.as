@@ -38,7 +38,7 @@
 
 package temple.data.loader.preload 
 {
-	import temple.destruction.IDestructable;
+	import temple.destruction.IDestructible;
 	import temple.ui.IDisplayObject;
 
 	/**
@@ -50,7 +50,7 @@ package temple.data.loader.preload
 	 * @date 26 jan 2009 16:06:23
 	 * @author Arjan van Wijk (arjan at mediamonks dot com)
 	 */
-	public interface IPreloader extends IDisplayObject, IDestructable
+	public interface IPreloader extends IDisplayObject, IDestructible
 	{
 		/**
 		 * Called when the loading starts, make the preloader visible here

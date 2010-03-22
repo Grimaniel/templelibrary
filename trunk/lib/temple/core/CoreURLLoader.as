@@ -40,12 +40,13 @@ package temple.core
 {
 	import temple.data.loader.preload.IPreloader;
 	import temple.data.loader.preload.PreloadableBehavior;
+	import temple.debug.IDebuggable;
 	import temple.debug.Registry;
 	import temple.debug.getClassName;
 	import temple.debug.log.Log;
 	import temple.destruction.DestructEvent;
 	import temple.destruction.EventListenerManager;
-	import temple.destruction.IDestructableOnError;
+	import temple.destruction.IDestructibleOnError;
 
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -66,7 +67,7 @@ package temple.core
 	 * 	<li>Event dispatch optimization.</li>
 	 * 	<li>Easy remove of all EventListeners.</li>
 	 * 	<li>Wrapper for Log class for easy logging.</li>
-	 * 	<li>Completely destructable.</li>
+	 * 	<li>Completely destructible.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * 	<li>Logs IOErrorEvents and SecurityErrorEvents.</li>
 	 * </ul>
@@ -77,17 +78,18 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CoreURLLoader extends URLLoader implements ICoreLoader, IDestructableOnError
+	public class CoreURLLoader extends URLLoader implements ICoreLoader, IDestructibleOnError, IDebuggable
 	{
 		private static const _DEFAULT_HANDLER : int = 0;
 		
-		private namespace temple;
+		private namespace temple = "http://code.google.com/p/templelibrary/";
 		
 		protected var _isLoading:Boolean;
 		protected var _isLoaded:Boolean;
 		protected var _destructOnError:Boolean;
 		protected var _logErrors:Boolean;
 		protected var _preloadableBehavior:PreloadableBehavior;
+		protected var _debug:Boolean;
 		
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -136,13 +138,21 @@ package temple.core
 
 		/**
 		 * @inheritDoc
-		 */ 
+		 */
 		override public function load(request:URLRequest):void
 		{
-			super.load(request);
+			if (this._isDestructed)
+			{
+				this.logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
+				return;
+			}
+			
+			if (this._debug) this.logDebug("temple.core.CoreURLLoader::load(request = " + [request.url] + ")");
+			
 			this._url = request.url;
 			this._isLoading = true;
 			this._isLoaded = false;
+			super.load(request);
 		}
 
 		/**
@@ -208,6 +218,22 @@ package temple.core
 		public function set destructOnError(value:Boolean):void
 		{
 			this._destructOnError = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
 		}
 		
 		/**
@@ -309,16 +335,22 @@ package temple.core
 				
 		temple final function handleLoadStart(event:Event):void
 		{
+			if (this._debug) this.logDebug("handleLoadStart: url='" + this._url + "'");
+			
 			this._preloadableBehavior.onLoadStart(this);
 		}
 
 		temple final function handleLoadProgress(event:ProgressEvent):void
 		{
+			if (this._debug) this.logDebug("handleLoadProgress: url='" + this._url + "'");
+			
 			this._preloadableBehavior.onLoadProgress();
 		}
 		
 		temple final function handleLoadComplete(event:Event):void
 		{
+			if (this._debug) this.logDebug("handleLoadComplete: url='" + this._url + "'");
+			
 			this._preloadableBehavior.onLoadComplete(this);
 			this._isLoading = false;
 			this._isLoaded = true;

@@ -42,8 +42,8 @@ package temple.debug
 	import temple.debug.Registry;
 	import temple.debug.log.Log;
 	import temple.destruction.EventListenerManager;
-	import temple.destruction.IDestructable;
-	import temple.destruction.IDestructableEventDispatcher;
+	import temple.destruction.IDestructible;
+	import temple.destruction.IDestructibleEventDispatcher;
 
 	import flash.net.LocalConnection;
 	import flash.system.System;
@@ -261,9 +261,9 @@ package temple.debug
 				var stackroot:String = info.stack.substr(info.stack.lastIndexOf("\n") + String("\n").length);
 				if (excludeStackrootObjects && excludeStackrootObjects.indexOf(stackroot) != -1) continue;
 				
-				var arrListeners:Array = arrTmp[i].object is IDestructableEventDispatcher ? EventListenerManager.getDispatcherInfo(arrTmp[i].object as IDestructableEventDispatcher) : new Array();
+				var arrListeners:Array = arrTmp[i].object is IDestructibleEventDispatcher ? EventListenerManager.getDispatcherInfo(arrTmp[i].object as IDestructibleEventDispatcher) : new Array();
 				
-				xml += '<memoryobject id="' + info.objectId + '" timestamp="'+ info.timestamp + '" object="' + String(arrTmp[i].object).split('"').join("'") + '" stackroot="' + (stackroot) + '" numlisteners="' + arrListeners.length + '" isdestructed="' + (arrTmp[i].object is IDestructable ? IDestructable(arrTmp[i].object).isDestructed : false) + '">' +
+				xml += '<memoryobject id="' + info.objectId + '" timestamp="'+ info.timestamp + '" object="' + String(arrTmp[i].object).split('"').join("'") + '" stackroot="' + (stackroot) + '" numlisteners="' + arrListeners.length + '" isdestructed="' + (arrTmp[i].object is IDestructible ? IDestructible(arrTmp[i].object).isDestructed : false) + '">' +
 					'<listeners>' + (arrListeners.join("\n")) + '</listeners>' +   
 					'<stack><![CDATA[' + (fullstacktrace ? info.stack : "enable 'fullstacktrace' to see this\n" + stackroot) + ']]></stack>' +   
 				'</memoryobject>';

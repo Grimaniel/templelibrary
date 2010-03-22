@@ -60,7 +60,7 @@ package temple.data.xml
 	
 	import temple.core.CoreEventDispatcher;
 	import temple.core.CoreURLLoader;
-	import temple.data.collections.DestructableArray;
+	import temple.data.collections.DestructibleArray;
 	import temple.data.loader.preload.IPreloader;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
@@ -83,8 +83,8 @@ package temple.data.xml
 	{
 		protected var _preloader:IPreloader;
 
-		private var _waitingStack:DestructableArray;
-		private var _loadingStack:DestructableArray;
+		private var _waitingStack:DestructibleArray;
+		private var _loadingStack:DestructibleArray;
 
 		private var _loaderCount:uint;
 
@@ -95,8 +95,8 @@ package temple.data.xml
 		{
 			this._loaderCount = loaderCount;
 			
-			this._waitingStack = new DestructableArray();
-			this._loadingStack = new DestructableArray();
+			this._waitingStack = new DestructibleArray();
+			this._loadingStack = new DestructibleArray();
 		}
 		
 		/**
@@ -364,12 +364,12 @@ package temple.data.xml
 }
 
 import temple.core.CoreURLLoader;
-import temple.destruction.IDestructable;
+import temple.destruction.IDestructible;
 
 import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
 
-class XMLLoaderData implements IDestructable
+class XMLLoaderData implements IDestructible
 {
 	public var url:String;
 	public var name:String;

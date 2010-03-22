@@ -52,7 +52,7 @@ package temple.destruction
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IDestructable 
+	public interface IDestructible 
 	{
 		/**
 		 * Destructs the object and makes it available for garbage collection.
@@ -67,7 +67,7 @@ package temple.destruction
 		 * 	<li>Set all references to this object to null in other objects.</li>
 		 * </ul>
 		 * 
-		 * When a Temple object is destructed a DestructEvent.DESTRUCT is dispatched from the object (if the object implements IDestructableEventDispatcher).
+		 * When a Temple object is destructed a DestructEvent.DESTRUCT is dispatched from the object (if the object implements IDestructibleEventDispatcher).
 		 * 
 		 * <p>Note: Bear in mind that it is possible an object can be destructed more than once.</p>
 		 * 

@@ -61,9 +61,9 @@ package temple.destruction
 		{
 			if (!object) return;
 			
-			if (object is IDestructable)
+			if (object is IDestructible)
 			{
-				if (!IDestructable(object).isDestructed) IDestructable(object).destruct();
+				if (!IDestructible(object).isDestructed) IDestructible(object).destruct();
 			}
 			else if (object is DisplayObject)
 			{
@@ -82,7 +82,6 @@ package temple.destruction
 				}
 				else if (object is Bitmap && (object as Bitmap).bitmapData)
 				{
-					(object as Bitmap).bitmapData.dispose();
 					(object as Bitmap).bitmapData = null;
 				}
 				
@@ -120,7 +119,7 @@ package temple.destruction
 			
 			for (var i:int = object.numChildren-1; i >= 0 ; i--)
 			{
-				// if child is removed by another destructable, skip this index
+				// if child is removed by another destructible, skip this index
 				if (i >= object.numChildren) continue;
 				
 				Destructor.destruct(object.getChildAt(i));

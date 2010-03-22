@@ -1,4 +1,4 @@
-/*
+﻿/*
  *	 
  *	Temple Library for ActionScript 3.0
  *	Copyright © 2010 MediaMonks B.V.
@@ -38,6 +38,8 @@
 
 package temple.utils.keys 
 {
+	import temple.ui.IEnableable;
+	import temple.utils.ClosureArgs;
 	import temple.core.CoreObject;
 	import temple.data.collections.HashMap;
 	import temple.debug.errors.TempleArgumentError;
@@ -61,7 +63,7 @@ package temple.utils.keys
 	 * 
 	 * <listing version="3.0">
 	 * keyMapper = new KeyMapper(this.stage);
-	 * keyMapper.map(KeyCode.D | KeyMapper.CONTROL, Delegate.create(Destructor.destruct, null, this));
+	 * keyMapper.map(KeyCode.D | KeyMapper.CONTROL, Destructor.destruct, this);
 	 * keyMapper.map(KeyCode.R | KeyMapper.CONTROL, Memory.logRegistry);
 	 * </listing>
 	 * 
@@ -74,7 +76,7 @@ package temple.utils.keys
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class KeyMapper extends CoreObject 
+	public class KeyMapper extends CoreObject implements IEnableable
 	{
 		/**
 		 * Added when the shift-key is down while pressing a key
@@ -94,6 +96,7 @@ package temple.utils.keys
 		private var _map:HashMap;
 		private var _stage:Stage;
 		private var _keyboardEvent:String;
+		private var _enabled:Boolean = true;
 
 		/**
 		 * Creates a new KeyMapper instance
@@ -118,11 +121,11 @@ package temple.utils.keys
 		/**
 		 * Add a key to a function
 		 */
-		public function map(key:uint, method:Function):void 
+		public function map(key:uint, method:Function, ...args):void 
 		{
 			if(this._map[key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
 			
-			this._map[key] = method;
+			this._map[key] = new ClosureArgs(method, args);
 		}
 		
 		/**
@@ -132,15 +135,36 @@ package temple.utils.keys
 		{
 			delete this._map[key];
 		}
+		
+		/**
+		 * temporary enable/disable the mapper
+		 */
+		public function get enabled():Boolean
+		{
+			return this._enabled;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set enabled(value:Boolean):void
+		{
+			this._enabled = value;
+		}
 
 		private function handleKeyEvent(event:KeyboardEvent):void 
 		{
+			if(!this._enabled) return;
+			
 			var keyCode:uint = event.keyCode;
 			if(event.shiftKey) keyCode |= KeyMapper.SHIFT;
 			if(event.altKey) keyCode |= KeyMapper.ALT;
 			if(event.ctrlKey) keyCode |= KeyMapper.CONTROL;
 			
-			if (this._map && this._map[keyCode]) this._map[keyCode]();
+			if (this._map && this._map[keyCode])
+			{
+				ClosureArgs(this._map[keyCode]).call();
+			}
 		}
 
 		/**
@@ -155,7 +179,14 @@ package temple.utils.keys
 				this._keyboardEvent = null;
 			}
 			
-			this._map = null;
+			if(this._map)
+			{
+				for each(var call:ClosureArgs in this._map)
+				{
+					call.destruct();
+				}
+				this._map = null;
+			}
 			
 			super.destruct();
 		}

@@ -38,7 +38,7 @@
 
 package temple.core 
 {
-	import temple.destruction.IDestructableEventDispatcher;
+	import temple.destruction.IDestructibleEventDispatcher;
 	import temple.ui.IDisplayObject;
 
 	import flash.geom.Point;
@@ -61,7 +61,7 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface ICoreDisplayObject extends IDisplayObject, ICoreObject, IDestructableEventDispatcher
+	public interface ICoreDisplayObject extends IDisplayObject, ICoreObject, IDestructibleEventDispatcher
 	{
 		/**
 		 * Returns true if this object is on the Stage, false if not.

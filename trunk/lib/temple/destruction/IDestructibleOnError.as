@@ -36,53 +36,25 @@
  *	
  */
 
-package temple.data.collections 
+package temple.destruction 
 {
-	import Array;
-	import Boolean;
-	import temple.core.ICoreObject;
-	import temple.debug.Registry;
-	import temple.destruction.Destructor;
-
-	import uint;
 
 	/**
-	 * The DestructableArray is the same as a normal Array, but also destructs all elements on destruction.
+	 * Interface for object that can automatic be destructed if an Error occurs.
 	 * 
 	 * @author Thijs Broerse
 	 */
-	dynamic public class DestructableArray extends Array implements ICoreObject 
+	public interface IDestructibleOnError extends IDestructible
 	{
-		private var _registryId:uint;
-		
-		public function DestructableArray()
-		{
-			// Register object for destruction testing
-			this._registryId = Registry.add(this);
-		}
-
 		/**
-		 * @inheritDoc
+		 * if set to true this object wil automaticly be destructed when an Error occurs (IOError or SecurityError)
+		 * @default true
 		 */
-		public final function get registryId():uint
-		{
-			return this._registryId;
-		}
+		function get destructOnError():Boolean;
 		
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
-		public function get isDestructed():Boolean
-		{
-			return this.length == 0;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function destruct():void
-		{
-			while(this.length) Destructor.destruct(this.shift());
-		}
+		function set destructOnError(value:Boolean):void
 	}
 }

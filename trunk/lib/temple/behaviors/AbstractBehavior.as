@@ -60,7 +60,7 @@ package temple.behaviors
 	 */
 	public class AbstractBehavior extends CoreEventDispatcher implements IBehavior 
 	{
-		private namespace temple;
+		private namespace temple = "http://code.google.com/p/templelibrary/";
 		
 		private var _target:Object;
 		

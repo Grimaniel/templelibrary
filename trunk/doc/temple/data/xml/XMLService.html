@@ -14,13 +14,14 @@
 	 Base class for loading XML data, with or without parameters. Extend this class to create a proper service for use in a MVCS-patterned application.
 	 The base class provides functionality for transferring an Object with parameters to the request, loading the XML, a virtual function for parsing the result, parsing a list, and error handling on response & parsing.
 	 When extending this class, the function <code>protected function processData (inData:XML, inName:String) : void;</code> has to be overridden & implemented to handle a successful load. When parsing a list of XMl nodes into an array of objects of one class, the <code>parseList()</code> function can be used.
+	 
 	 <p></p><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><div class="showHideLinks"><div id="hideInheritedProperty" class="hideInheritedProperty"><a class="showHideLink" href="#propertySummary" onclick="javascript:setInheritedVisible(false,'Property');"><img class="showHideLinkImage" src="../../../images/expanded.gif"> Hide Inherited Public Properties</a></div><div id="showInheritedProperty" class="showInheritedProperty"><a class="showHideLink" href="#propertySummary" onclick="javascript:setInheritedVisible(true,'Property');"><img class="showHideLinkImage" src="../../../images/collapsed.gif"> Show Inherited Public Properties</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#debug" class="signatureLink">debug</a> : Boolean<div class="summaryTableDescription">
 		 
 		 Set or get the debug mode of the object
 		 If object is in debug mode more information is logged
 		 </div></td><td class="summaryTableOwnerCol">XMLService</td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../temple/core/CoreEventDispatcher.html#eventListenerManager" class="signatureLink">eventListenerManager</a> : <a href="../../../temple/destruction/EventListenerManager.html">EventListenerManager</a><div class="summaryTableDescription">[read-only] 
 		 
-		 Returns a reference to the EventListenerManager of the IDestructableEventDispatcher
+		 Returns a reference to the EventListenerManager of the IDestructibleEventDispatcher
 		 </div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../temple/core/CoreEventDispatcher.html#isDestructed" class="signatureLink">isDestructed</a> : Boolean<div class="summaryTableDescription">[read-only] 
 		 
 		 If an object is destructed, this property is set to true.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#loaderCount" class="signatureLink">loaderCount</a> : uint<div class="summaryTableDescription">
@@ -109,7 +110,7 @@
 		 	<li>Set all references to this object to null in other objects.</li>
 		 </ul>
 		 
-		 When a Temple object is destructed a DestructEvent.DESTRUCT is dispatched from the object (if the object implements IDestructableEventDispatcher).
+		 When a Temple object is destructed a DestructEvent.DESTRUCT is dispatched from the object (if the object implements IDestructibleEventDispatcher).
 		 
 		 <p>Note: Bear in mind that it is possible an object can be destructed more than once.</p>
 		 

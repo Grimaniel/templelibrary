@@ -38,6 +38,7 @@
 
 package temple.core 
 {
+	import temple.debug.IDebuggable;
 	import temple.data.loader.preload.IPreloader;
 	import temple.data.loader.preload.PreloadableBehavior;
 	import temple.debug.Registry;
@@ -72,7 +73,7 @@ package temple.core
 	 * 	<li>Event dispatch optimization.</li>
 	 * 	<li>Easy remove of all EventListeners.</li>
 	 * 	<li>Wrapper for Log class for easy logging.</li>
-	 * 	<li>Completely destructable.</li>
+	 * 	<li>Completely destructible.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * 	<li>Handles and logs error events.</li>
 	 * 	<li>Passes all contentLoaderInfo events.</li>
@@ -103,17 +104,18 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CoreLoader extends Loader implements ICoreDisplayObject, ICoreLoader
+	public class CoreLoader extends Loader implements ICoreDisplayObject, ICoreLoader, IDebuggable
 	{
 		private static const _DEFAULT_HANDLER : int = 0;
 		
-		private namespace temple;
+		private namespace temple = "http://code.google.com/p/templelibrary/";
 		
 		protected var _preloadableBehavior:PreloadableBehavior;
 		protected var _isLoading:Boolean;
 		protected var _isLoaded:Boolean;
 		protected var _logErrors:Boolean;
 		protected var _url:String;
+		protected var _debug:Boolean;
 		
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -212,6 +214,14 @@ package temple.core
 		 */ 
 		override public function load(request:URLRequest, context:LoaderContext = null):void
 		{
+			if (this._isDestructed)
+			{
+				this.logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
+				return;
+			}
+			
+			if (this._debug) this.logDebug("temple.core.CoreLoader::load(request = " + [request.url] + ")");
+			
 			this._isLoading = true;
 			this._isLoaded = false;
 			this._url = request.url;
@@ -223,6 +233,14 @@ package temple.core
 		 */ 
 		override public function loadBytes(bytes:ByteArray, context:LoaderContext = null):void
 		{
+			if (this._isDestructed)
+			{
+				this.logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
+				return;
+			}
+			
+			if (this._debug) this.logDebug("temple.core.CoreLoader::loadBytes(bytes, context = " + ['[bytes]', context] + ")");
+			
 			this._isLoading = true;
 			super.loadBytes(bytes, context);
 		}
@@ -344,6 +362,22 @@ package temple.core
 		public function set scale(value:Number):void
 		{
 			this.scaleX = this.scaleY = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
 		}
 
 		/**
@@ -472,7 +506,7 @@ package temple.core
 			}
 			else
 			{
-				this.logInfo('Nothing is loaded, so unloading is useless');
+				if (this._debug) this.logInfo('Nothing is loaded, so unloading is useless');
 			}
 		}
 		
@@ -557,12 +591,16 @@ package temple.core
 
 		temple final function handleLoadStart(event:Event):void
 		{
+			if (this._debug) this.logDebug("temple.core.CoreLoader::handleLoadStart(event = " + [this._url] + ")");
+			
 			this._preloadableBehavior.onLoadStart(this, this._url);
 			this.dispatchEvent(event.clone());
 		}
 
 		temple final function handleLoadProgress(event:ProgressEvent):void
 		{
+			if (this._debug) this.logDebug("temple.core.CoreLoader::handleLoadProgress(event = " + [this._url] + ")");
+			
 			this._preloadableBehavior.onLoadProgress();
 			this.dispatchEvent(event.clone());
 		}
@@ -574,6 +612,8 @@ package temple.core
 		
 		temple final function handleLoadComplete(event:Event):void
 		{
+			if (this._debug) this.logDebug("temple.core.CoreLoader::handleLoadComplete(event = " + [this._url] + ")");
+			
 			this._isLoading = false;
 			this._isLoaded = true;
 			this._preloadableBehavior.onLoadComplete(this);
@@ -589,7 +629,7 @@ package temple.core
 			this._isLoading = false;
 			this._preloadableBehavior.onLoadComplete(this);
 			
-			if (this._logErrors) this.logError(event.type + ': ' + event.text + ' (' + this._url + ')');
+			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text + ' (' + this._url + ')');
 			
 			this.dispatchEvent(event.clone());
 		}
@@ -603,7 +643,7 @@ package temple.core
 			this._isLoading = false;
 			this._preloadableBehavior.onLoadComplete(this);
 			
-			if (this._logErrors) this.logError(event.type + ': ' + event.text);
+			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
 			
 			this.dispatchEvent(event.clone());
 		}

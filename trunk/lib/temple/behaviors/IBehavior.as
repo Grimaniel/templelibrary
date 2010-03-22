@@ -38,7 +38,7 @@
 
 package temple.behaviors 
 {
-	import temple.destruction.IDestructableEventDispatcher;
+	import temple.destruction.IDestructibleEventDispatcher;
 
 	/**
 	 * A behavior adds functionality to an object, the object becomes the behaviors target.
@@ -47,7 +47,7 @@ package temple.behaviors
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IBehavior extends IDestructableEventDispatcher
+	public interface IBehavior extends IDestructibleEventDispatcher
 	{
 		/**
 		 * Get the target of the behavior.

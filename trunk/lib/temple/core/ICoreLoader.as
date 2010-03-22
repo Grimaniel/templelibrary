@@ -40,7 +40,7 @@ package temple.core
 {
 	import temple.data.loader.ILoader;
 	import temple.data.loader.preload.IPreloadable;
-	import temple.destruction.IDestructableEventDispatcher;
+	import temple.destruction.IDestructibleEventDispatcher;
 
 	/**
 	 * Implemented by all core-loader objects like CoreNetStream, CoreURLLoader, CoreURLStream and CoreLoader.
@@ -48,7 +48,7 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface ICoreLoader extends IPreloadable, ILoader, IDestructableEventDispatcher, ICoreObject
+	public interface ICoreLoader extends IPreloadable, ILoader, IDestructibleEventDispatcher, ICoreObject
 	{
 		/**
 		 * The URL that is currently loaded or being loaded

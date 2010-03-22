@@ -61,7 +61,7 @@ package temple.core
 	 * <ul>
 	 * 	<li>Registration to the Registry class.</li>
 	 * 	<li>Wrapper for Log class for easy logging.</li>
-	 * 	<li>Completely destructable.</li>
+	 * 	<li>Completely destructible.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * </ul>
 	 * 

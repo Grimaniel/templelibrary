@@ -51,8 +51,6 @@ package temple.debug
 	 * <p>Object(-trees) can be added so they can be listed and managed by external tools.</p>
 	 * <p>There also is a global setting to apply debugging to all added objects.</p>
 	 * 
-	 * @author Arjan van Wijk, Thijs Broerse
-	 * 
 	 * @example
 	 * <listing version="3.0">
 	 * // open the file in the browser:
@@ -70,6 +68,8 @@ package temple.debug
 	 * // set debugging globally ON
 	 * DebugManager.debugMode = DebugManager.ALL;
 	 * </listing>
+	 * 
+	 * @author Arjan van Wijk, Thijs Broerse
 	 */
 	public final class DebugManager extends CoreObject implements IDebuggable
 	{
@@ -248,6 +248,8 @@ package temple.debug
 				
 			}
 			
+			list.sortOn('id');
+			
 			return list;
 		}
 		
@@ -264,7 +266,8 @@ package temple.debug
 			for (var i:int = 0; i < children.length; ++i)
 			{
 				var object:IDebuggable = Registry.getObject(children[i]);
-				children[i] = {object: String(String(object).split('::').pop()).split(',').shift(), children:getDebuggableChildren(children[i]), debug:IDebuggable(object).debug, id: children[i]};
+				
+				children[i] = new DebuggableData(String(String(object).split('::').pop()).split(',').shift(), getDebuggableChildren(children[i]), IDebuggable(object).debug, children[i]);
 			}
 			
 			return children;
