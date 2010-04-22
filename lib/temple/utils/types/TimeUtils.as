@@ -98,7 +98,7 @@ package temple.utils.types
 		 */
 		public static function formatTime(miliseconds:Number):String
 		{
-			return StringUtils.padLeft(Math.floor(miliseconds / 60000).toString(), 2, "0") + ':' + StringUtils.padLeft((Math.floor(miliseconds * .001) % 60).toString(), 2, "0") + '.' + StringUtils.padLeft((Math.round(Math.floor(miliseconds % 1000))).toString(), 3, "0");;
+			return StringUtils.padLeft(Math.floor(miliseconds / 60000).toString(), 2, "0") + ':' + StringUtils.padLeft((Math.floor(miliseconds * .001) % 60).toString(), 2, "0") + '.' + StringUtils.padLeft((Math.round(Math.floor(miliseconds % 1000))).toString(), 3, "0");
 		}
 
 		/**

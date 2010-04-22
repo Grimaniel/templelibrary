@@ -49,6 +49,8 @@ package temple.utils.types
 	{
 		/**
 		 * Converts a function to a readable string
+		 * 
+		 * @includeExample FunctionUtilsExample.as
 		 */
 		public static function functionToString(func:Function):String 
 		{
