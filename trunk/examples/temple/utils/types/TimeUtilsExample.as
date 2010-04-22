@@ -3,7 +3,7 @@
  * 
  * <p>This is an example about the TimeUtils.</p>
  * 
- * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/TimeUtilsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/TimeUtilsExample.swf</a></p>
+ * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.swf</a></p>
  */
 package  
 {

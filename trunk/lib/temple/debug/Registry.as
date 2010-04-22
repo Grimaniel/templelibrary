@@ -67,7 +67,7 @@ package temple.debug
 	 */
 	public final class Registry 
 	{
-		private static var _objectList:Dictionary;
+		private static const _objectList:Dictionary = new Dictionary(true);
 		private static var _object_id:uint = 0;
 		
 		/**
@@ -92,11 +92,6 @@ package temple.debug
 		 */
 		public static function add(object:*):uint
 		{
-			if (!Registry._objectList)
-			{
-				Registry._objectList = new Dictionary(true);
-			}
-			
 			if (Registry._objectList[object])
 			{
 				Log.warn("add: object '" + object + "' is already registered in Registry", "temple.debug.Registry");
@@ -115,7 +110,6 @@ package temple.debug
 				{
 					Log.warn("Max value reached in Registry", Registry);
 				}
-				
 				return Registry._object_id;
 			}
 		}

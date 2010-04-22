@@ -3,14 +3,16 @@
  * 
  * <p>This is an example about the FunctionUtilsExample.</p>
  * 
- * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/FunctionUtilsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/FunctionUtilsExample.swf</a></p>
+ * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/FunctionUtilsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/FunctionUtilsExample.swf</a></p>
  */
 package  
 {
-	import flash.display.MovieClip;
 	import nl.acidcats.yalog.util.YaLogConnector;
+
 	import temple.core.CoreSprite;
 	import temple.utils.types.FunctionUtils;
+
+	import flash.display.MovieClip;
 
 	public class FunctionUtilsExample extends CoreSprite 
 	{

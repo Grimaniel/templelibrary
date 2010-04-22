@@ -110,14 +110,24 @@ package temple.utils.types
 				isInited = true;
 				output += ObjectUtils.objectToString(object) + " (" + getClassName(object) + ")";
 				
-				if (object is Array) 
+				if (object is String) 
+				{
+					output += " (" + (object as String).length + ")";
+					return output; 
+				}
+				else if (object is uint || object is int) 
+				{
+					output += " (0x" + Number(object).toString(16).toUpperCase() + ")";
+					return output; 
+				}
+				else if (object is Array) 
 				{
 					output += " (" + (object as Array).length + ")"; 
 					if ((object as Array).length) inOpenChar = openChar = "[";
 				}
-				else 
+				else if (!ObjectUtils.isPrimitive(object)) 
 				{
-					openChar = "\u007B";
+					inOpenChar = openChar = "\u007B";
 				}
 				if (openChar) output += "\n" + openChar;
 			}
@@ -179,7 +189,7 @@ package temple.utils.types
 				{
 					case ObjectType.STRING:
 					{
-						output += "\n" + tabs + vardata.name + ": \"" + variable + "\"";
+						output += "\n" + tabs + vardata.name + ": \"" + variable + "\" (" + vardata.type + ")";
 						break;
 					}
 					case ObjectType.OBJECT:
@@ -189,12 +199,12 @@ package temple.utils.types
 						{
 							if (ObjectUtils.hasValues(variable) && maxDepth)
 							{
-								output += "\n" + tabs + vardata.name + ": Array\n" + tabs + "[";
+								output += "\n" + tabs + vardata.name + ": Array(" + (variable as Array).length + ")\n" + tabs + "[";
 								output += ObjectUtils._traceObject(variable, maxDepth - 1, "[", isInited, openChar, tabs);
 							}
 							else
 							{
-								output += "\n" + tabs + vardata.name + ": Array []";
+								output += "\n" + tabs + vardata.name + ": Array(" + (variable as Array).length + ") []";
 							}
 						}
 						else 
@@ -220,7 +230,11 @@ package temple.utils.types
 					default:				
 					{
 						//variable is not an object or string, just trace it out normally
-						output += "\n" + tabs + vardata.name + ": " + variable;
+						output += "\n" + tabs + vardata.name + ": " + variable + " (" + vardata.type + ")";
+						
+						// add value as hex for uints
+						if (vardata.type == "uint") output += " 0x" + uint(variable).toString(16).toUpperCase();
+						
 						break;
 					}
 				}
