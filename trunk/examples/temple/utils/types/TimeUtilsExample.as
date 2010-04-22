@@ -17,6 +17,7 @@ package
 		{
 			super();
 			
+			// Connect to Yalog, so you can see all log message at: http://yala.acidcats.nl/
 			YaLogConnector.connect();
 			
 			this.logInfo(TimeUtils.formatMinutesSeconds(10 * 1000));
