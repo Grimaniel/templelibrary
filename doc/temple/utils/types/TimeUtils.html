@@ -14,9 +14,11 @@
 	 This class contains some functions for Time.
 	 
 	 <p></p><br/><hr></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#formatMinutesSeconds()" class="signatureLink">formatMinutesSeconds</a>(miliseconds:Number):String</div><div class="summaryTableDescription">[static] 
-		 Format miliseconds as mm:ss 
+		 Format miliseconds as mm:ss
+		 
 		 </div></td><td class="summaryTableOwnerCol">TimeUtils</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#formatMinutesSecondsAlt()" class="signatureLink">formatMinutesSecondsAlt</a>(miliseconds:Number):String</div><div class="summaryTableDescription">[static] 
-		 Format miliseconds as m:ss 
+		 Format miliseconds as m:ss
+		 
 		 </div></td><td class="summaryTableOwnerCol">TimeUtils</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#formatTime()" class="signatureLink">formatTime</a>(miliseconds:Number):String</div><div class="summaryTableDescription">[static] 
 		 Format miliseconds as mm:ss.mmm 
 		 </div></td><td class="summaryTableOwnerCol">TimeUtils</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#secondsToString()" class="signatureLink">secondsToString</a>(seconds:Number):String</div><div class="summaryTableDescription">[static]  
@@ -26,10 +28,80 @@
 		 </div></td><td class="summaryTableOwnerCol">TimeUtils</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#toString()" class="signatureLink">toString</a>():String</div><div class="summaryTableDescription">[static] </div></td><td class="summaryTableOwnerCol">TimeUtils</td></tr></table></div><script language="javascript" type="text/javascript"><!--
 										showHideInherited();
 										--></script><div class="MainContent"><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="formatMinutesSeconds()"></a><a name="formatMinutesSeconds(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">formatMinutesSeconds</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public static function formatMinutesSeconds(miliseconds:Number):String</code><p></p><p>
-		 Format miliseconds as mm:ss 
-		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">miliseconds</span>:Number</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><a name="formatMinutesSecondsAlt()"></a><a name="formatMinutesSecondsAlt(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">formatMinutesSecondsAlt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function formatMinutesSecondsAlt(miliseconds:Number):String</code><p></p><p>
-		 Format miliseconds as m:ss 
-		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">miliseconds</span>:Number</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><a name="formatTime()"></a><a name="formatTime(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">formatTime</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function formatTime(miliseconds:Number):String</code><p></p><p>
+		 Format miliseconds as mm:ss
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">miliseconds</span>:Number</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table><br/><span class="label"> Example </span><br/><br/><div class="detailBody"> 
+ <p>This is an example about the TimeUtils.</p>
+ 
+ <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/TimeUtilsExample.swf" target="external">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/TimeUtilsExample.swf</a></p>
+<div class="listing"><pre>
+package  
+{
+    import nl.acidcats.yalog.util.YaLogConnector;
+    import temple.utils.types.TimeUtils;
+    import temple.core.CoreSprite;
+
+    public class TimeUtilsExample extends CoreSprite 
+    {
+        public function TimeUtilsExample()
+        {
+            super();
+            
+            YaLogConnector.connect();
+            
+            this.logInfo(TimeUtils.formatMinutesSeconds(10 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSeconds(60 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSeconds(65 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSeconds(24260));
+
+            this.logInfo(TimeUtils.formatMinutesSecondsAlt(10 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSecondsAlt(60 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSecondsAlt(65 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSecondsAlt(24260));
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "TimeUtilsExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div></div><a name="formatMinutesSecondsAlt()"></a><a name="formatMinutesSecondsAlt(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">formatMinutesSecondsAlt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function formatMinutesSecondsAlt(miliseconds:Number):String</code><p></p><p>
+		 Format miliseconds as m:ss
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">miliseconds</span>:Number</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table><br/><span class="label"> Example </span><br/><br/><div class="detailBody"> 
+ <p>This is an example about the TimeUtils.</p>
+ 
+ <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/TimeUtilsExample.swf" target="external">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/TimeUtilsExample.swf</a></p>
+<div class="listing"><pre>
+package  
+{
+    import nl.acidcats.yalog.util.YaLogConnector;
+    import temple.utils.types.TimeUtils;
+    import temple.core.CoreSprite;
+
+    public class TimeUtilsExample extends CoreSprite 
+    {
+        public function TimeUtilsExample()
+        {
+            super();
+            
+            YaLogConnector.connect();
+            
+            this.logInfo(TimeUtils.formatMinutesSeconds(10 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSeconds(60 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSeconds(65 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSeconds(24260));
+
+            this.logInfo(TimeUtils.formatMinutesSecondsAlt(10 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSecondsAlt(60 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSecondsAlt(65 * 1000));
+            this.logInfo(TimeUtils.formatMinutesSecondsAlt(24260));
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "TimeUtilsExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div></div><a name="formatTime()"></a><a name="formatTime(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">formatTime</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function formatTime(miliseconds:Number):String</code><p></p><p>
 		 Format miliseconds as mm:ss.mmm 
 		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">miliseconds</span>:Number</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><a name="secondsToString()"></a><a name="secondsToString(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">secondsToString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function secondsToString(seconds:Number):String</code><p></p><p> 
 		 Convert number to MIN:SS string.
