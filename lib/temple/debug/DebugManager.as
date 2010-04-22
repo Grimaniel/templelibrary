@@ -38,6 +38,7 @@
 
 package temple.debug 
 {
+	import temple.debug.errors.TempleArgumentError;
 	import temple.Temple;
 	import temple.core.CoreObject;
 	import temple.debug.errors.TempleError;
@@ -88,7 +89,7 @@ package temple.debug
 		// pool of debuggable children with there parent Registry-id for quick lookup
 		private var _debuggableChildQueue:Dictionary;
 		
-		private var _debug:Boolean = false;
+		private static var _debug:Boolean = false;
 
 		public function DebugManager() 
 		{
@@ -116,14 +117,16 @@ package temple.debug
 		 */
 		public static function add(object:IDebuggable):void
 		{
-			if (DebugManager.getInstance()._debug) DebugManager.getInstance().logDebug("add(object = " + [object] + ")");
+			if (DebugManager._debug) DebugManager.getInstance().logDebug("add: " + object);
 			
 			// check via javascript if debug is set in the url
 			if (DebugManager._debugMode == 0 && ExternalInterface.available)
 			{
 				try
 				{
-					DebugManager.debugMode = int(ExternalInterface.call('function(){var arrParams = document.location.href.toString().split("?").pop().split("#").shift().split("&");var objParams = new Object();for (var i = 0; i < arrParams.length; ++i){var arrParam = arrParams[i].split("=");objParams[arrParam[0]] = arrParam[1];}return objParams["debug"];}'));
+					var debugMode:uint = uint(ExternalInterface.call('function(){var arrParams = document.location.href.toString().split("?").pop().split("#").shift().split("&");var objParams = new Object();for (var i = 0; i < arrParams.length; ++i){var arrParam = arrParams[i].split("=");objParams[arrParam[0]] = arrParam[1];}return objParams["debug"];}'));
+					if (DebugManager.debug) DebugManager.getInstance().logInfo("debugMode from query string: " + debugMode + ": '" + DebugMode.modeToString(debugMode) + "' (url='" + ExternalInterface.call('function(){ return document.location.href; }') + "')");
+					if (debugMode) DebugManager.debugMode = debugMode; 
 				}
 				catch (e:SecurityError)
 				{
@@ -166,7 +169,7 @@ package temple.debug
 		 */
 		public static function addAsChild(object:IDebuggable, parent:IDebuggable):void
 		{
-			if (DebugManager.getInstance()._debug) DebugManager.getInstance().logDebug("addAsChild(object, parent = " + [object, parent] + ")");
+			if (DebugManager._debug) DebugManager.getInstance().logDebug("addAsChild: " + object + " (parent=" + parent + ")");
 			
 			var parentId:uint = Registry.getId(parent);
 			var objectId:uint = Registry.getId(object);
@@ -238,7 +241,7 @@ package temple.debug
 		 */
 		public static function getDebuggables():Array
 		{
-			if (DebugManager.getInstance()._debug) DebugManager.getInstance().logDebug("getDebuggables");
+			if (DebugManager._debug) DebugManager.getInstance().logDebug("getDebuggables");
 			
 			var list:Array = new Array();
 			
@@ -401,15 +404,34 @@ package temple.debug
 		 *	<ul>
 		 * 	<li>DebugManager.NONE: debug nothing</li>
 		 * 	<li>DebugManager.CUSTOM: let the user decide what to debug</li>
-		 * 	<li>DebugManager.ALL: debug everything</li></ul>
+		 * 	<li>DebugManager.ALL: debug everything</li>
+		 * 	</ul>
 		 */
 		public static function set debugMode(value:uint):void
 		{
-			DebugManager._debugMode = value;
-			
-			for (var object:* in DebugManager.getInstance()._debuggables)
+			switch (value)
 			{
-				if (value != DebugMode.CUSTOM) IDebuggable(object).debug = (value == DebugMode.ALL);
+				case DebugMode.NONE:
+				case DebugMode.CUSTOM:
+				case DebugMode.ALL:
+				{
+					DebugManager._debugMode = value;
+					break;
+				}
+				default:
+				{
+					throwError(new TempleArgumentError(DebugManager, "Invalid value for debugMode: " + value));
+					break;
+				}
+			}
+			if (DebugManager._debugMode != DebugMode.CUSTOM)
+			{
+				var debug:Boolean = (DebugManager._debugMode == DebugMode.ALL);
+				
+				for (var object:* in DebugManager.getInstance()._debuggables)
+				{
+					IDebuggable(object).debug = debug;
+				}
 			}
 		}
 		
@@ -423,19 +445,41 @@ package temple.debug
 		
 		
 		/**
-		 *	For the DebugManager itself 
+		 *	Wrapper for DebugManager.getInstance().debug
 		 */
-		public function set debug(value:Boolean):void
+		public static function get debug():Boolean
 		{
-			this._debug = value;
+			return DebugManager._debug;
 		}
 		
 		/**
 		 * @private
 		 */
+		public static function set debug(value:Boolean):void
+		{
+			if (value != DebugManager._debug)
+			{
+				DebugManager._debug = value;
+				DebugManager.getInstance().logDebug("debug " + (DebugManager._debug ? "enabled" : "disabled"));
+			}
+		}
+
+		/**
+		 *	For the DebugManager itself
+		 *	
+		 *	@inheritDoc 
+		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return DebugManager._debug;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			DebugManager._debug = value;
 		}
 
 		/**

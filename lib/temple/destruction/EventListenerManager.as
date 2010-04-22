@@ -37,7 +37,8 @@
  */
 
 package temple.destruction 
-{	import temple.core.CoreObject;
+{
+	import temple.core.CoreObject;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
@@ -51,7 +52,11 @@ package temple.destruction
 	 * 
 	 * @author Thijs Broerse (adapted from CasaLib)
 	 */
-	public final class EventListenerManager extends CoreObject implements IEventDispatcher, IDestructibleEventDispatcher 	{		private var _target:IEventDispatcher;		private var _events:Array;		private var _blockRequest:Boolean;
+	public final class EventListenerManager extends CoreObject implements IEventDispatcher, IDestructibleEventDispatcher 
+	{
+		private var _target:IEventDispatcher;
+		private var _events:Array;
+		private var _blockRequest:Boolean;
 
 		/**
 		 * Returns a list of all listeners of the dispatcher (registered by the EventListenerManager)
@@ -69,10 +74,17 @@ package temple.destruction
 				}
 			}
 			return list;
-		}
-		/**		 * Creates a new instance of a EventListenerManager. Do not create more one EventListenerManager for each IDestructibleEventDispatcher!
-		 * @param eventDispatcher the EventDispatcher of this EventListenerManager		 */		public function EventListenerManager(eventDispatcher:IDestructibleEventDispatcher) 		{
-			this._target = eventDispatcher;			this._events = new Array();			
+		}
+
+		/**
+		 * Creates a new instance of a EventListenerManager. Do not create more one EventListenerManager for each IDestructibleEventDispatcher!
+		 * @param eventDispatcher the EventDispatcher of this EventListenerManager
+		 */
+		public function EventListenerManager(eventDispatcher:IDestructibleEventDispatcher) 
+		{
+			this._target = eventDispatcher;
+			this._events = new Array();
+			
 			super();
 			
 			if(eventDispatcher == null) throwError(new TempleArgumentError(this, "dispatcher can not be null"));
@@ -85,12 +97,25 @@ package temple.destruction
 		public function get target():IEventDispatcher
 		{
 			return this._target;
-		}		/**		 * Registers an event listening to the EventListenerManager
-		 * 			 * @param type The type of event.		 * @param listener The listener function that processes the event.		 * @param useCapture Determines whether the listener works in the capture phase or the target and bubbling phases.		 * @param priority The priority level of the event listener.		 * @param useWeakReference Determines whether the reference to the listener is strong or weak.		 */		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 		{
+		}
+
+		/**
+		 * Registers an event listening to the EventListenerManager
+		 * 	
+		 * @param type The type of event.
+		 * @param listener The listener function that processes the event.
+		 * @param useCapture Determines whether the listener works in the capture phase or the target and bubbling phases.
+		 * @param priority The priority level of the event listener.
+		 * @param useWeakReference Determines whether the reference to the listener is strong or weak.
+		 */
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
+		{
 			// Don't store weak reference info, since storing the listener will make it strong
 			if(useWeakReference) return;
-						var l:int = this._events.length;
-			var eventData:EventData;			while (l--)
+			
+			var l:int = this._events.length;
+			var eventData:EventData;
+			while (l--)
 			{
 				eventData = this._events[l] as EventData;
 				if ((eventData).equals(type, listener, useCapture))
@@ -98,7 +123,9 @@ package temple.destruction
 					eventData.once = false;
 					return;
 				}
-			}			this._events.push(new EventData(type, listener, useCapture, false, priority));		}
+			}
+			this._events.push(new EventData(type, listener, useCapture, false, priority));
+		}
 		
 		/**
 		 * @inheritDoc
@@ -118,23 +145,68 @@ package temple.destruction
 		/**
 		 * @inheritDoc
 		 */
-		public function dispatchEvent(event:Event):Boolean 		{
-			return this._target.dispatchEvent(event);		}		/**		 * @inheritDoc		 */		public function hasEventListener(type:String):Boolean 		{
-			return this._target.hasEventListener(type);		}		/**
+		public function dispatchEvent(event:Event):Boolean 
+		{
+			return this._target.dispatchEvent(event);
+		}
+
+		/**
 		 * @inheritDoc
 		 */
-		public function willTrigger(type:String):Boolean 		{
-			return this._target.willTrigger(type);		}		/**		 * Notifies the ListenerManager instance that a listener has been removed from the IEventDispatcher.		 * 			 * @param type The type of event.		 * @param listener The listener function that processes the event.		 * @param useCapture Determines whether the listener works in the capture phase or the target and bubbling phases.		 */		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 		{			if (this._blockRequest || !this._events) return;			var l:int = this._events.length;			while (l--)
-			{				if ((this._events[l] as EventData).equals(type, listener, useCapture))
-				{					EventData(this._events.splice(l, 1)[0]).destruct();
+		public function hasEventListener(type:String):Boolean 
+		{
+			return this._target.hasEventListener(type);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function willTrigger(type:String):Boolean 
+		{
+			return this._target.willTrigger(type);
+		}
+
+		/**
+		 * Notifies the ListenerManager instance that a listener has been removed from the IEventDispatcher.
+		 * 	
+		 * @param type The type of event.
+		 * @param listener The listener function that processes the event.
+		 * @param useCapture Determines whether the listener works in the capture phase or the target and bubbling phases.
+		 */
+		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
+		{
+			if (this._blockRequest || !this._events) return;
+			var l:int = this._events.length;
+			while (l--)
+			{
+				if ((this._events[l] as EventData).equals(type, listener, useCapture))
+				{
+					EventData(this._events.splice(l, 1)[0]).destruct();
 				}
-			}		}
+			}
+		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function removeAllStrongEventListenersForType(type:String):void 		{			this._blockRequest = true;						var l:int = this._events.length;			var eventData:EventData;			while (l--) 			{				eventData = this._events[l];				if (eventData.type == type) 				{					eventData = this._events.splice(l, 1)[0];					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
-					eventData.destruct();				}			}			this._blockRequest = false;		}
+		public function removeAllStrongEventListenersForType(type:String):void 
+		{
+			this._blockRequest = true;
+			
+			var l:int = this._events.length;
+			var eventData:EventData;
+			while (l--) 
+			{
+				eventData = this._events[l];
+				if (eventData.type == type) 
+				{
+					eventData = this._events.splice(l, 1)[0];
+					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+					eventData.destruct();
+				}
+			}
+			this._blockRequest = false;
+		}
 		
 		/**
 		 * @inheritDoc
@@ -155,19 +227,53 @@ package temple.destruction
 				}
 			}
 			this._blockRequest = false;
-		}		/**
+		}
+
+		/**
 		 * @inheritDoc
 		 */
-		public function removeAllStrongEventListenersForListener(listener:Function):void 		{			this._blockRequest = true;			var l:int = this._events.length;			var eventData:EventData;			while (l--) 			{				eventData = this._events[l];								if (eventData.listener == listener) 				{					eventData = this._events.splice(l, 1)[0];										if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+		public function removeAllStrongEventListenersForListener(listener:Function):void 
+		{
+			this._blockRequest = true;
+			var l:int = this._events.length;
+			var eventData:EventData;
+			while (l--) 
+			{
+				eventData = this._events[l];
+				
+				if (eventData.listener == listener) 
+				{
+					eventData = this._events.splice(l, 1)[0];
 					
-					eventData.destruct();				}			}			this._blockRequest = false;		}		/**
+					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+					
+					eventData.destruct();
+				}
+			}
+			this._blockRequest = false;
+		}
+
+		/**
 		 * @inheritDoc
 		 */
-		public function removeAllEventListeners():void 		{			this._blockRequest = true;			if (this._events)
-			{				var l:int = this._events.length;				var eventData:EventData;				while (l--) 				{					eventData = this._events.splice(l, 1)[0];										if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+		public function removeAllEventListeners():void 
+		{
+			this._blockRequest = true;
+			if (this._events)
+			{
+				var l:int = this._events.length;
+				var eventData:EventData;
+				while (l--) 
+				{
+					eventData = this._events.splice(l, 1)[0];
 					
-					eventData.destruct();				}
-			}			this._blockRequest = false;		}
+					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+					
+					eventData.destruct();
+				}
+			}
+			this._blockRequest = false;
+		}
 		
 		/**
 		 * @inheritDoc
@@ -195,11 +301,15 @@ package temple.destruction
 				}
 			}
 			this._blockRequest = false;
-		}		/**
+		}
+
+		/**
 		 * @inheritDoc
 		 */
-		override public function destruct():void 		{
-			this.removeAllEventListeners();			
+		override public function destruct():void 
+		{
+			this.removeAllEventListeners();
+			
 			for each (var eventData:EventData in this._events) eventData.destruct();
 			
 			this._target = null;
@@ -213,18 +323,35 @@ package temple.destruction
 		 */
 		override public function toString():String
 		{
-			return super.toString() + ": " + this._target;		}
-	}}
+			return super.toString() + ": " + this._target;
+		}
+	}
+}
 
 import temple.debug.getClassName;
 
-class EventData{	public var type:String;	public var listener:Function;	public var useCapture:Boolean;
+class EventData
+{
+	public var type:String;
+	public var listener:Function;
+	public var useCapture:Boolean;
 	public var once:Boolean;
-	public var priority:int;		public function EventData(type:String, listener:Function, useCapture:Boolean, once:Boolean, priority:int) 	{		this.type = type;
-		this.listener = listener;		this.useCapture = useCapture;
+	public var priority:int;
+	
+	public function EventData(type:String, listener:Function, useCapture:Boolean, once:Boolean, priority:int) 
+	{
+		this.type = type;
+		this.listener = listener;
+		this.useCapture = useCapture;
 		this.once = once;
 		this.priority = priority;
-		super();	}	public function equals(type:String, listener:Function, useCapture:Boolean):Boolean 	{		return this.type == type && this.listener == listener && this.useCapture == useCapture;	}
+		super();
+	}
+
+	public function equals(type:String, listener:Function, useCapture:Boolean):Boolean 
+	{
+		return this.type == type && this.listener == listener && this.useCapture == useCapture;
+	}
 
 	/**
 	 * Destructs the object
@@ -238,4 +365,5 @@ class EventData{	public var type:String;	public var listener:Function;	publi
 	public function toString():String
 	{
 		return getClassName(this) + ": " + this.type;
-	}}
+	}
+}

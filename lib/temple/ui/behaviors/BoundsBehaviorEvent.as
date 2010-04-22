@@ -40,8 +40,6 @@ package temple.ui.behaviors
 {
 	import temple.behaviors.AbstractBehaviorEvent;
 
-	import flash.display.DisplayObject;
-
 	/**
 	 * Event dispached by the BoundsBehavior.
 	 * 
@@ -61,12 +59,12 @@ package temple.ui.behaviors
 		/**
 		 * Creates a new BoundsBehaviorEvent
 		 * @param type The type of event.
-		 * @param target The target of the behavior (not of the event). This value will be the behaviorTarget
+		 * @param behavior the BoundsBehavior
 		 * @param direction The direction of the bounce. Valid values are 'top', 'right', 'bottom' and 'left'
 		 */
-		public function BoundsBehaviorEvent(type:String, target:DisplayObject, direction:String)
+		public function BoundsBehaviorEvent(type:String, behavior:BoundsBehavior, direction:String)
 		{
-			super(type, target);
+			super(type, behavior);
 			
 			this._direction = direction;
 		}

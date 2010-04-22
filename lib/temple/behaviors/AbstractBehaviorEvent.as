@@ -50,18 +50,26 @@ package temple.behaviors
 	 */
 	public class AbstractBehaviorEvent extends Event implements IBehaviorEvent
 	{
-		private var _target:Object;
+		private var _behavior:IBehavior;
 
 		/**
 		 * Creates a new AbstractBehaviorEvent
 		 * @param type The type of event.
-		 * @param target The target of the behavior (not of the event). This value will be the behaviorTarget
+		 * @param behavior The behavior
 		 */
-		public function AbstractBehaviorEvent(type:String, target:Object)
+		public function AbstractBehaviorEvent(type:String, behavior:IBehavior)
 		{
 			super(type);
 			
-			this._target = target;
+			this._behavior = behavior;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function behavior():IBehavior 
+		{
+			return this._behavior;
 		}
 
 		/**
@@ -69,7 +77,7 @@ package temple.behaviors
 		 */
 		public function get behaviorTarget():Object
 		{
-			return this._target;
+			return this._behavior.target;
 		}
 
 		/**
@@ -77,7 +85,7 @@ package temple.behaviors
 		 */
 		override public function toString():String
 		{
-			return getClassName(this) + " (type:'" + this.type + "', target:" + this._target + ")";
+			return getClassName(this) + " (type:'" + this.type + "', behaviorTarget:" + this.behaviorTarget + ")";
 		}
 	}
 }

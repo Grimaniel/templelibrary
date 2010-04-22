@@ -47,7 +47,7 @@ package temple.debug
 	 * @date 28 aug 2009 22:15:49
 	 * @author Arjan van Wijk (arjan at mediamonks dot com)
 	 */
-	public final class DebugMode 
+	public final class DebugMode
 	{
 		/**
 		 * Debug will be set to false on all debuggable object. So no debug messages will be logged.
@@ -63,5 +63,19 @@ package temple.debug
 		 * Debug will be set to true on all debuggable object. So debug messages will be logged.
 		 */
 		public static const ALL:uint = 4;
+
+		/**
+		 * Returns a readable string of the provided DebugMode
+		 */
+		public static function modeToString(debugMode:uint):String 
+		{
+			switch (debugMode)
+			{
+				case DebugMode.NONE: return "none";
+				case DebugMode.CUSTOM: return "custom";
+				case DebugMode.ALL: return "all";
+			}
+			return "invalid";
+		}
 	}
 }

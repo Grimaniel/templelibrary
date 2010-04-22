@@ -497,6 +497,24 @@
 				}
 			}
 			
+			// parse vars in vars
+			if(ObjectUtils.hasValues(this._variables))
+			{
+				do
+				{
+					var changed:Boolean = false;
+					for (var key1:String in this._variables)
+					{
+						for (var key2:String in this._variables)
+						{
+							var prevValue:String = this._variables[key1]; 
+							this._variables[key1] = this._variables[key1].split('{' + key2 + '}').join(this._variables[key2]);
+							if (prevValue != this._variables[key1]) changed = true;
+						}
+					}
+				}
+				while (changed);
+			}
 			
 			if(this._debug)
 			{
@@ -552,7 +570,7 @@
 				{
 					for (key in this._variables)
 					{
-						ud.url = ud.url.replace('{' + key + '}', this._variables[key]);
+						ud.url = ud.url.split('{' + key + '}').join(this._variables[key]);
 					}
 				}
 			}

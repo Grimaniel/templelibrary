@@ -388,7 +388,7 @@ class XMLLoaderData implements IDestructible
 	
 	public function get isDestructed():Boolean
 	{
-		return _isDestructed;
+		return this._isDestructed;
 	}
 	
 	public function destruct():void
