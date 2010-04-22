@@ -49,6 +49,11 @@ package temple.behaviors
 	public interface IBehaviorEvent
 	{
 		/**
+		 * A reference of the behavior
+		 */
+		function behavior():IBehavior;
+		
+		/**
 		 * Get the target of the behavior.
 		 * The behaviorTarget is the object that is influenced by the behavior
 		 */

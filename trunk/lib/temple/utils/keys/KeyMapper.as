@@ -38,6 +38,8 @@
 
 package temple.utils.keys 
 {
+	import temple.debug.IDebuggable;
+	import temple.destruction.IDestructible;
 	import temple.ui.IEnableable;
 	import temple.utils.ClosureArgs;
 	import temple.core.CoreObject;
@@ -76,7 +78,7 @@ package temple.utils.keys
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class KeyMapper extends CoreObject implements IEnableable
+	public class KeyMapper extends CoreObject implements IEnableable, IDebuggable
 	{
 		/**
 		 * Added when the shift-key is down while pressing a key
@@ -97,6 +99,7 @@ package temple.utils.keys
 		private var _stage:Stage;
 		private var _keyboardEvent:String;
 		private var _enabled:Boolean = true;
+		private var _debug:Boolean;
 
 		/**
 		 * Creates a new KeyMapper instance
@@ -125,7 +128,14 @@ package temple.utils.keys
 		{
 			if(this._map[key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
 			
-			this._map[key] = new ClosureArgs(method, args);
+			if (args.length)
+			{
+				this._map[key] = new ClosureArgs(method, args);
+			}
+			else
+			{
+				this._map[key] = method;
+			}
 		}
 		
 		/**
@@ -151,10 +161,30 @@ package temple.utils.keys
 		{
 			this._enabled = value;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
+		}
 
 		private function handleKeyEvent(event:KeyboardEvent):void 
 		{
-			if(!this._enabled) return;
+			if(!this._enabled)
+			{
+				if (this.debug) this.logDebug("KeyMapper disabled " + event);
+				return;
+			}
 			
 			var keyCode:uint = event.keyCode;
 			if(event.shiftKey) keyCode |= KeyMapper.SHIFT;
@@ -163,7 +193,20 @@ package temple.utils.keys
 			
 			if (this._map && this._map[keyCode])
 			{
-				ClosureArgs(this._map[keyCode]).call();
+				if (this.debug) this.logDebug("handleKeyEvent: " + event);
+				
+				if (this._map[keyCode] is ClosureArgs)
+				{
+					ClosureArgs(this._map[keyCode]).call();
+				}
+				else
+				{
+					this._map[keyCode]();
+				}
+			}
+			else
+			{
+				if (this.debug) this.logDebug("handleKeyEvent: unhandled key " + event);
 			}
 		}
 
@@ -181,9 +224,12 @@ package temple.utils.keys
 			
 			if(this._map)
 			{
-				for each(var call:ClosureArgs in this._map)
+				for each(var call:* in this._map)
 				{
-					call.destruct();
+					if (call is IDestructible)
+					{
+						IDestructible(call).destruct();
+					}
 				}
 				this._map = null;
 			}

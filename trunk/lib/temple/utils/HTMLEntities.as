@@ -158,6 +158,10 @@ package temple.utils
             entities["&lsquo;"]  = "'";
             entities["&rsquo;"]  = "'";
             entities["&amp;"]    = "&";
+            entities["&quot;"]   = '"';
+            entities["&apos;"]   = "'";
+            entities["&lt;"]     = "<";
+            entities["&gt;"]     = ">";
            
             return entities;
         }

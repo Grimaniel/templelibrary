@@ -40,8 +40,6 @@ package temple.ui.behaviors
 {
 	import temple.behaviors.AbstractBehaviorEvent;
 
-	import flash.display.DisplayObject;
-
 	/**
 	 * Event dispatched by the ZoomBehavior
 	 * 
@@ -69,11 +67,11 @@ package temple.ui.behaviors
 		/**
 		 * Creates a new ZoomBehaviorEvent
 		 * @param type the type of the ZoomBehaviorEvent
-		 * @param target the target of the ZoomBehavior
+		 * @param behavior the ZoomBehavior
 		 */
-		public function ZoomBehaviorEvent(type:String, target:DisplayObject)
+		public function ZoomBehaviorEvent(type:String, behavior:ZoomBehavior)
 		{
-			super(type, target);
+			super(type, behavior);
 		}
 	}
 }

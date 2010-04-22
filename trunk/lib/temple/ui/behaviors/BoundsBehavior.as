@@ -67,6 +67,9 @@ package temple.ui.behaviors
 			super(target);
 			
 			if(bounds) this.bounds = bounds;
+			
+			// dispath BoundsBehaviorEvent on target
+			this.addEventListener(BoundsBehaviorEvent.BOUNCED, target.dispatchEvent);
 		}
 		
 		/**
@@ -107,13 +110,13 @@ package temple.ui.behaviors
 					if(objectbounds.left < this._bounds.left)
 					{
 						target.x += this._bounds.left - objectbounds.left;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, target, BoundsBehavior.LEFT));
+						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.LEFT));
 					}
 				
 					else if(objectbounds.right > this._bounds.right)
 					{
 						target.x -= objectbounds.right - this._bounds.right;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, target, BoundsBehavior.RIGHT));
+						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.RIGHT));
 					}
 				}
 				// check larger
@@ -122,12 +125,12 @@ package temple.ui.behaviors
 					if(objectbounds.left > this._bounds.left)
 					{
 						target.x += this._bounds.left - objectbounds.left;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, target, BoundsBehavior.LEFT));
+						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.LEFT));
 					}
 					else if(objectbounds.right < this._bounds.right)
 					{
 						target.x -= objectbounds.right - this._bounds.right;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, target, BoundsBehavior.RIGHT));
+						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.RIGHT));
 					}
 				}
 				
@@ -138,12 +141,12 @@ package temple.ui.behaviors
 					if(objectbounds.top < this._bounds.top)
 					{
 						target.y += this._bounds.top - objectbounds.top;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, target, BoundsBehavior.TOP));
+						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.TOP));
 					}
 					else if(objectbounds.bottom > this._bounds.bottom)
 					{
 						target.y -= objectbounds.bottom - this._bounds.bottom;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, target, BoundsBehavior.BOTTOM));
+						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.BOTTOM));
 					}
 				}
 				// check larger
@@ -152,12 +155,12 @@ package temple.ui.behaviors
 					if(objectbounds.top > this._bounds.top)
 					{
 						target.y += this._bounds.top - objectbounds.top;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, target, BoundsBehavior.TOP));
+						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.TOP));
 					}
 					else if(objectbounds.bottom < this._bounds.bottom)
 					{
 						target.y -= objectbounds.bottom - this._bounds.bottom;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, target, BoundsBehavior.BOTTOM));
+						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.BOTTOM));
 					}
 				}
 			}

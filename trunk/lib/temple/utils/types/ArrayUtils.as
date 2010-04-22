@@ -53,18 +53,17 @@ package temple.utils.types
 		public static function inArray(array:Array, value:*):Boolean
 		{
 			return (array.indexOf(value) != -1);
-		}
-		/**
+		}		/**
 		 * Checks if an element in the array has a field with a specific value
 		 */
-		public static function inArrayField(array:Array, field:String, value:*):Boolean		{
+		public static function inArrayField(array:Array, field:String, value:*):Boolean
+		{
 			for each (var i:* in array) 
 			{
 				if (i[field] == value) return true;
 			}
 			return false;
-		}
-
+		}
 		/**
 		 * Get a random element form the array
 		 */

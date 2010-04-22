@@ -40,10 +40,8 @@ package temple.ui.behaviors
 {
 	import temple.behaviors.AbstractBehaviorEvent;
 
-	import flash.display.DisplayObject;
-
 	/**
-	 * Event dispached by the DragBehavior
+	 * Event dispached by the DragBehavior. These events are also dispatched by the object that is dragged (behaviors target)
 	 * 
 	 * @see temple.ui.behaviors.DragBehavior
 	 * 
@@ -69,11 +67,11 @@ package temple.ui.behaviors
 		/**
 		 * Creates a new DragBehaviorEvent
 		 * @param type the type of the DragBehaviorEvent
-		 * @param target the target of the DragBehavior
+		 * @param behavior the DragBehavior
 		 */
-		public function DragBehaviorEvent(type:String, target:DisplayObject) 
+		public function DragBehaviorEvent(type:String, behavior:DragBehavior) 
 		{
-			super(type, target);
+			super(type, behavior);
 		}
 	}
 }

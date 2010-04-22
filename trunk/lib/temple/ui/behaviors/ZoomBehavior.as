@@ -113,6 +113,11 @@ package temple.ui.behaviors
 			target.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
 			
 			this._running = false;
+			
+			// dispath ZoomBehaviorEvent on target
+			this.addEventListener(ZoomBehaviorEvent.ZOOM_START, target.dispatchEvent);
+			this.addEventListener(ZoomBehaviorEvent.ZOOM_STOP, target.dispatchEvent);
+			this.addEventListener(ZoomBehaviorEvent.ZOOMING, target.dispatchEvent);
 		}
 
 		/**
@@ -135,7 +140,7 @@ package temple.ui.behaviors
 			{
 				this._running = false;
 				this.displayObject.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_STOP, this.displayObject));
+				this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_STOP, this));
 			}
 		}
 
@@ -202,7 +207,7 @@ package temple.ui.behaviors
 			this.displayObject.x += (this._newX - this.displayObject.x) / 5;
 			this.displayObject.y += (this._newY - this.displayObject.y) / 5;
 			
-			this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOMING, this.displayObject));
+			this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOMING, this));
 			
 			if(Math.abs(this.displayObject.scaleX - this._newScale) < .01)
 			{
@@ -240,7 +245,7 @@ package temple.ui.behaviors
 			{
 				this._running = true;
 				this.displayObject.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame, false, 0, true);
-				this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_START, this.displayObject));
+				this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_START, this));
 			}
 			this.dispatchEvent(new Event(Event.CHANGE));
 		}

@@ -66,7 +66,7 @@ package temple.utils.types
 		 */
 		public static function isPrimitive(value:*):Boolean
 		{
-			if(value is String || value is Number || value is int || value is uint || value == null)
+			if (value is String || value is Number || value is int || value is uint || value == null)
 			{
 				return true;	
 			}
@@ -81,16 +81,16 @@ package temple.utils.types
 		 * 
 		 * @return the object tree as String
 		 */
-		public static function traceObject(object:Object, maxDepth:Number = 3, doTrace:Boolean = true):String
+		public static function traceObject(object:Object, maxDepth:uint = 3, doTrace:Boolean = true):String
 		{
 			var output:String = ObjectUtils._traceObject(object, maxDepth);
 			
-			if(doTrace) trace(output);
+			if (doTrace) trace(output);
 			
 			return output;
 		}
 
-		private static function _traceObject(object:Object, maxDepth:Number = 3, inOpenChar:String = null, isInited:Boolean = false, openChar:String = null, tabs:String = ""):String
+		private static function _traceObject(object:Object, maxDepth:uint = 3, inOpenChar:String = null, isInited:Boolean = false, openChar:String = null, tabs:String = ""):String
 		{
 			var output:String = "";
 			
@@ -98,7 +98,7 @@ package temple.utils.types
 			// tab to the indention in the output window
 			tabs += "\t";
 			
-			if(maxDepth < 0 )
+			if (maxDepth < 0 )
 			{
 				output += tabs + "\n(...)";
 				output += "\n" + tabs + ((inOpenChar == "[") ? "]" : "}");
@@ -108,22 +108,24 @@ package temple.utils.types
 			if (!isInited) 
 			{
 				isInited = true;
+				output += ObjectUtils.objectToString(object) + " (" + getClassName(object) + ")";
+				
 				if (object is Array) 
 				{
-					openChar = "[";
+					output += " (" + (object as Array).length + ")"; 
+					if ((object as Array).length) inOpenChar = openChar = "[";
 				}
 				else 
 				{
 					openChar = "\u007B";
 				}
-				output += ObjectUtils.objectToString(object) + " (" + getClassName(object) + ")";
-				output += "\n" + openChar;
+				if (openChar) output += "\n" + openChar;
 			}
 			
 			var variables:Array;
 			var key:*;
 
-			if(object is Array)
+			if (object is Array)
 			{
 				
 				variables = new Array();
@@ -151,18 +153,23 @@ package temple.utils.types
 			
 			var variable:*;
 			
+			// an object for temporary storing the key. Needed to prefend duplicates
+			var keys:Object = {};
+			
 			var leni:int = variables.length;
 			for (var i:int = 0;i < leni; i++) 
 			{
 				var vardata:ObjectVariableData = variables[i] as ObjectVariableData;
 				
-				if(vardata.name == "textSnapshot" || vardata.name == null) continue;
+				if (vardata.name == "textSnapshot" || vardata.name == null || keys[vardata.name]) continue;
+				
+				keys[vardata.name] = true;
 				
 				try
 				{
 					variable = object[vardata.name];
 				}
-				catch(e:Error)
+				catch (e:Error)
 				{
 					variable = e.message;
 				}
@@ -182,12 +189,12 @@ package temple.utils.types
 						{
 							if (ObjectUtils.hasValues(variable) && maxDepth)
 							{
-								output += "\n" + tabs + vardata.name + " : Array\n" + tabs + "[";
+								output += "\n" + tabs + vardata.name + ": Array\n" + tabs + "[";
 								output += ObjectUtils._traceObject(variable, maxDepth - 1, "[", isInited, openChar, tabs);
 							}
 							else
 							{
-								output += "\n" + tabs + vardata.name + " : Array []";
+								output += "\n" + tabs + vardata.name + ": Array []";
 							}
 						}
 						else 
@@ -196,7 +203,7 @@ package temple.utils.types
 							if (variable && maxDepth && (ObjectUtils.subTraceDate || !(variable is Date)))
 							{
 								// recursive call
-								output += "\n" + tabs + vardata.name + " : " + variable;
+								output += "\n" + tabs + vardata.name + ": " + variable;
 								if (ObjectUtils.hasValues(variable))
 								{
 									output += "\n" + tabs + "\u007B";
@@ -205,7 +212,7 @@ package temple.utils.types
 							}
 							else
 							{
-								output += "\n" + tabs + vardata.name + " : " + variable + (vardata.type ? " (" + ((Temple.displayFullPackageInToString || vardata.type.indexOf('::') == -1) ? vardata.type : vardata.type.split('::')[1]) + ")" : "");
+								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + ((Temple.displayFullPackageInToString || vardata.type.indexOf('::') == -1) ? vardata.type : vardata.type.split('::')[1]) + ")": "");
 							}
 						}
 						break;
@@ -213,7 +220,7 @@ package temple.utils.types
 					default:				
 					{
 						//variable is not an object or string, just trace it out normally
-						output += "\n" + tabs + vardata.name + " : " + variable;
+						output += "\n" + tabs + vardata.name + ": " + variable;
 						break;
 					}
 				}
@@ -224,7 +231,7 @@ package temple.utils.types
 			// closing char, then display it in the output window
 			tabs = tabs.substr(0, tabs.length - 1);
 			 
-			output += "\n" + tabs + ((inOpenChar == "[") ? "]" : "}");
+			if (inOpenChar) output += "\n" + tabs + ((inOpenChar == "[") ? "]" : "}");
 			
 			return output;
 		}
@@ -242,7 +249,7 @@ package temple.utils.types
 		 */
 		public static function hasValues(object:Object):Boolean
 		{
-			if(object is Array) return (object as Array).length > 0;
+			if (object is Array) return (object as Array).length > 0;
 			
 			for(var key:* in object) return true;
 			key;
@@ -307,9 +314,9 @@ package temple.utils.types
 			{
 				return String(object as ICoreObject);
 			}
-			else if(typeof(object) == ObjectType.STRING)
+			else if (typeof(object) == ObjectType.STRING)
 			{
-				return "\"" + object + "\"";
+				return object == null ? "null" : "\"" + object + "\"";
 			}
 			else if (object is XML)
 			{
@@ -317,7 +324,7 @@ package temple.utils.types
 			}
 			else if (object is DisplayObject)
 			{
-				return getClassName(object) + ": \"" + (object as DisplayObject).name + "\"";
+				return getClassName(object) + ": " + ObjectUtils.objectToString((object as DisplayObject).name);
 			}
 			return String(object);
 		}

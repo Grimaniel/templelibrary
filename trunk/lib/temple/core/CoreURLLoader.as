@@ -306,7 +306,7 @@ package temple.core
 		 */
 		public function removeAllEventListeners():void 
 		{
-			this._eventListenerManager.removeAllEventListeners();
+			if (this._eventListenerManager) this._eventListenerManager.removeAllEventListeners();
 		}
 		
 		/**

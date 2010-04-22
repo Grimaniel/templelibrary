@@ -269,7 +269,7 @@ package temple.data.notificationcenter
 		 */
 		override public function toString():String
 		{
-			return super.toString() + " : " + this._name;
+			return super.toString() + ": '" + this._name + "'";
 		}
 	}
 }

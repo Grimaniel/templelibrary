@@ -38,10 +38,10 @@
 
 package temple.ui.behaviors 
 {
-	import flash.display.InteractiveObject;
 	import temple.ui.IEnableable;
 
 	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -128,6 +128,11 @@ package temple.ui.behaviors
 			this.enabled = true;
 			this.dragHorizontal = dragHorizontal;
 			this.dragVertical = dragVertical;
+			
+			// dispath DragBehaviorEvent on target
+			this.addEventListener(DragBehaviorEvent.DRAG_START, target.dispatchEvent);
+			this.addEventListener(DragBehaviorEvent.DRAG_STOP, target.dispatchEvent);
+			this.addEventListener(DragBehaviorEvent.DRAGGING, target.dispatchEvent);
 		}
 
 		/**
@@ -205,7 +210,7 @@ package temple.ui.behaviors
 			this.displayObject.stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp, false, 0, true);
 			this.displayObject.stage.addEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave, false, 0, true);
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this.displayObject as DisplayObject));
+			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
 		}
 
 		protected function handleMouseMove(event:MouseEvent):void 
@@ -222,7 +227,7 @@ package temple.ui.behaviors
 			
 			this.keepInBounds();
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this.displayObject as DisplayObject));
+			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
 		}
 
 		protected function handleMouseUp(event:MouseEvent):void 
@@ -238,7 +243,7 @@ package temple.ui.behaviors
 			this.displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
 			this.displayObject.stage.removeEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave);
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this.displayObject as DisplayObject));
+			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
 		}
 
 		private function handleMouseLeave(event:Event):void

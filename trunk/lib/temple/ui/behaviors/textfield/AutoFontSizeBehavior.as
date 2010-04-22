@@ -36,8 +36,9 @@
  *	
  */
 
-package temple.ui.behaviors 
+package temple.ui.behaviors.textfield 
 {
+	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
 

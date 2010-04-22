@@ -1376,6 +1376,28 @@ package temple.utils.types
 			return String(date.getDate());
 		}
 		
+		/**
+		 * Gets the next date in the week for the given time and day. Usefull for weekly countdowns
+		 * @param day The day for the countdown. 0 starts at sunday, so every monday at 20:00 is: getNextInWeekDateFor(1, 20);
+		 * @param hours The hours of the time
+		 * @param minutes The minutes of the time
+		 * @param seconds The seconds of the time
+		 */
+		public static function getNextInWeekDateFor(day:int, hours:int, minutes:int = 0, seconds:int = 0):Date
+		{
+			var d:Date = new Date();
+			var targetDate:Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hours, minutes, seconds);
+			if (targetDate.getDay() != day)
+			{
+				targetDate.setDate(targetDate.getDate() + (((day + 7) - targetDate.getDay()) % 7));
+			}
+			else if(d.time > targetDate.time)
+			{
+				targetDate.setDate(targetDate.getDate() + 7);
+			}
+			return targetDate;
+		}
+		
 		public static function toString():String
 		{
 			return getClassName(DateUtils);

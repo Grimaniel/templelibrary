@@ -47,29 +47,32 @@ package temple.utils.types
 	 */
 	public final class URLUtils 
 	{
-		 /**
-         * Provides the value of a specific query parameter.
-         * @param param Parameter name.
-         */
-        public static function getParameter(url:String, param:String):String
-        {
-            var index:Number = url.indexOf('?');
-            if (index != -1) {
-                url = url.substr(index + 1);
-                var params:Array = url.split('&');
-                var p:Array;
-                var i:Number = params.length;
-                while(i--) {
-                    p = params[i].split('=');
-                    if (p[0] == param) {
-                        return p[1];
-                    }
-                }
-            }
-            return '';
-        }
+		/**
+		 * Provides the value of a specific query parameter.
+		 * @param param Parameter name.
+		 */
+		public static function getParameter(url:String, param:String):String
+		{
+			var index:Number = url.indexOf('?');
+			if (index != -1)
+			{
+				url = url.substr(index + 1);
+				var params:Array = url.split('&');
+				var p:Array;
+				var i:Number = params.length;
+				while (i--)
+				{
+					p = String(params[i]).split('=');
+					if (p[0] == param)
+					{
+						return p[1];
+					}
+				}
+			}
+			return '';
+		}
         
-        public static function toString():String
+		public static function toString():String
 		{
 			return getClassName(URLUtils);
 		}
