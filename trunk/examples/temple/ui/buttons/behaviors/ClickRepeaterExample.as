@@ -17,9 +17,6 @@ package
 
 	import flash.events.MouseEvent;
 
-	/**
-	 * @author Thijs Broerse
-	 */
 	public class ClickRepeaterExample extends CoreSprite 
 	{
 		private var _button:BaseButton;

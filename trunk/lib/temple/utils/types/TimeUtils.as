@@ -102,7 +102,9 @@ package temple.utils.types
 		}
 
 		/**
-		 * Format miliseconds as mm:ss 
+		 * Format miliseconds as mm:ss
+		 * 
+		 * @includeExample TimeUtilsExample.as
 		 */
 		public static function formatMinutesSeconds(miliseconds:Number):String
 		{
@@ -110,7 +112,9 @@ package temple.utils.types
 		}
 
 		/**
-		 * Format miliseconds as m:ss 
+		 * Format miliseconds as m:ss
+		 * 
+		 * @includeExample TimeUtilsExample.as
 		 */
 		public static function formatMinutesSecondsAlt(miliseconds:Number):String
 		{

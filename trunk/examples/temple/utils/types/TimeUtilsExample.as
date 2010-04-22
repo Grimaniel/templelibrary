@@ -11,9 +11,6 @@ package
 	import temple.utils.types.TimeUtils;
 	import temple.core.CoreSprite;
 
-	/**
-	 * @author Thijs Broerse
-	 */
 	public class TimeUtilsExample extends CoreSprite 
 	{
 		public function TimeUtilsExample()

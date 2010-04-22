@@ -111,7 +111,45 @@ package
 
     import flash.events.MouseEvent;
 
-   </pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "ClickRepeaterExample", "width", "100%",
+    public class ClickRepeaterExample extends CoreSprite 
+    {
+        private var _button:BaseButton;
+
+        public function ClickRepeaterExample()
+        {
+            super();
+            
+            // Connect to Yalog, so you can see all log message at: http://yala.acidcats.nl/
+            YaLogConnector.connect();
+            
+            // set stage properties
+            new StageSettings(this);
+            
+            // Create a new BaseButton, give it rectangle a so we can see something
+            this._button = new BaseButton();
+            this._button.graphics.beginFill(0x8888FF);
+            this._button.graphics.drawRect(-50, -25, 100, 50);
+            this._button.graphics.endFill();
+            
+            this._button.x = 150;
+            this._button.y = 75;
+            
+            this.addChild(this._button);
+            
+            // add click listener
+            this._button.addEventListener(MouseEvent.CLICK, this.handleClick);
+            
+            // create a ClickRepeater for the button
+            new ClickRepeater(this._button);
+        }
+
+        private function handleClick(event:MouseEvent):void 
+        {
+            this.logInfo("Click");
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "ClickRepeaterExample", "width", "100%",
 					"height","400px", "salign", "TL", "id", "example2", "quality", "high", "bgcolor", "", "name",
 						"example2", "flashvars","", "allowScriptAccess","sameDomain", "type",
 					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div><br/><br/><hr><br/><p></p><center class="copyright"><footer> </footer><br/> </center></div></body></html><!-- <br/> -->
