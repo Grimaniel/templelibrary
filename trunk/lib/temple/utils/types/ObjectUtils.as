@@ -340,6 +340,10 @@ package temple.utils.types
 			{
 				return getClassName(object) + ": " + ObjectUtils.objectToString((object as DisplayObject).name);
 			}
+			else if (object is Function)
+			{
+				return FunctionUtils.functionToString(object);
+			}
 			return String(object);
 		}
 
