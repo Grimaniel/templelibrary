@@ -48,7 +48,8 @@ package temple.utils.types
 	public final class FunctionUtils 
 	{
 		/**
-		 * Converts a function to a readable string
+		 * Converts a function to a readable string.
+		 * Note: only works in the debug player.
 		 * 
 		 * @includeExample FunctionUtilsExample.as
 		 */
@@ -61,15 +62,19 @@ package temple.utils.types
 			catch (error:Error)
 			{
 				var regExp:RegExp = /MC{(?:.*) (.*)}/g;
-				var s:String = String(regExp.exec(String(error.message))[1]).replace("/", ".").replace("$", "");
+				var s:String = String(regExp.exec(String(error.message))[1]);
+				var i:int = s.indexOf("/");
+				var className:String = s.substr(0, i);
+				var functionName:String = s.substr(i);
+				functionName = functionName.substr(functionName.indexOf("::") + 2);
 				
-				if (Temple.displayFullPackageInToString ||  s.indexOf('::') == -1)
+				if (Temple.displayFullPackageInToString || className.indexOf('::') == -1)
 				{
-					return s;
+					return className + "." + functionName;
 				}
 				else
 				{
-					return s.split('::')[1];
+					return className.split('::')[1] + "." + functionName;
 				}
 			}
 			return null;
