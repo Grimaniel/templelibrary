@@ -47,6 +47,8 @@ package temple.ui.slider
 	import flash.geom.Rectangle;
 
 	/**
+	 * @includeExample StepSliderExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class StepSlider extends Slider 

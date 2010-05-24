@@ -74,6 +74,8 @@ package temple.ui.slider
 	[Event(name="SliderEvent.slideStop", type="temple.ui.slider.SliderEvent")]
 
 	/**
+	 * @includeExample SliderExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class Slider extends AbstractBehavior implements IBehavior
