@@ -38,7 +38,8 @@
 		 </td></tr></table></p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/debug/errors/TempleArgumentError.html">TempleArgumentError</a> </code> &mdash; When defaultValue is not of type
 		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20"></td><td><code><a href="../../../temple/debug/errors/TempleError.html">TempleError</a> </code> &mdash; When not initialized
 		 
-		 </td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+		 </td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody">
+		 <div class="listing" version="3.0"><pre>
          FlashVars.configurateVar(FlashVarNames.LANGUAGE, 'nl', String);
          FlashVars.configurateVar(FlashVarNames.VERSION, 1, int);
          FlashVars.configurateVar(FlashVarNames.IS_DEMO, true, Boolean);
@@ -46,7 +47,8 @@
 		 </div></div><a name="dump()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dump</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function dump():String</code><p></p><p>
 		 Returns information about all the flashvars
 		 
-		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody">
+		 <div class="listing" version="3.0"><pre>
          FlashVars.dump();
          
          // output:
@@ -63,7 +65,8 @@
 		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code> &mdash; The flashvar name (use FlashVarNames.NAME)
 		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>*</code></td></tr></table><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/debug/errors/TempleError.html">TempleError</a> </code> &mdash; When not initialized
 		 
-		 </td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+		 </td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody">
+		 <div class="listing" version="3.0"><pre>
          FlashVars.getValue(FlashVarNames.LANGUAGE);
          </pre></div>
 		 </div></div><a name="hasValue()"></a><a name="hasValue(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">hasValue</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function hasValue(name:String):Boolean</code><p></p><p>
@@ -72,7 +75,8 @@
 		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code> &mdash; The flashvar name (use FlashVarNames.NAME)
 		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/debug/errors/TempleError.html">TempleError</a> </code> &mdash; When not initialized
 		 
-		 </td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+		 </td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody">
+		 <div class="listing" version="3.0"><pre>
          FlashVars.hasValue(FlashVarNames.LANGUAGE);
          </pre></div>
 		 </div></div><a name="initialize()"></a><a name="initialize(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">initialize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function initialize(parameters:Object):void</code><p></p><p>
@@ -81,7 +85,8 @@
 		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">parameters</span>:Object</code> &mdash; The parameters object (this.stage.loaderInfo.parameters)
 		 </td></tr></table></p></div><a name="isInitialized()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isInitialized</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function isInitialized():Boolean</code><p></p><p>
 		 returns true if the static initialize function is called before
-		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="toString()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function toString():String</code><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="detailBody"><div class="listing" version="3.0"><pre>
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="toString()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function toString():String</code><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="detailBody">
+	 <div class="listing" version="3.0"><pre>
      FlashVars.initialize(this.stage.loaderInfo.parameters);
      
      FlashVars.configurateVar(FlashVarNames.LANGUAGE, 'nl', String);
