@@ -39,9 +39,7 @@
 package temple.debug
 {
 	import temple.Temple;
-	import temple.debug.Registry;
 	import temple.debug.log.Log;
-	import temple.destruction.EventListenerManager;
 	import temple.destruction.IDestructible;
 	import temple.destruction.IDestructibleEventDispatcher;
 
@@ -150,23 +148,23 @@ package temple.debug
 		/**
 		 * Logs all objects that are currently registered by the memory and are not deleted by the Garbage Collector
 		 * This function uses getRegistryObjects to get this objects
-		 * @param traceTimestamp if set to true, the time when the object was registered is traced as wel
-		 * @param traceStack if set to true, the stack when the object was registered is traced as wel, this comes in handy to check which object created the current object
+		 * @param includeTimestamp if set to true, the time when the object was registered is traced as wel
+		 * @param includeStack if set to true, the stack when the object was registered is traced as wel, this comes in handy to check which object created the current object
 		 * @param excludeFirstStacktraceLines Used mostly by tools; the array with stack-roots are excluded from the trace
 		 * @return the log message
 		 */
-		public static function logRegistry(traceTimestamp:Boolean = false, traceStack:Boolean = false, excludeFirstStacktraceLines:Array = null):String
+		public static function logRegistry(includeTimestamp:Boolean = false, includeStack:Boolean = false,  excludeFirstStacktraceLines:Array = null):String
 		{
 			var message:String = "Current objects are registered and not cleaned by the Garbage Collector:\n";
 			
-			var arrMemoryObjects:Array = Memory.getRegistryObjects(traceTimestamp, traceStack, excludeFirstStacktraceLines);
+			var objects:Array = Memory.getRegistryObjects(includeTimestamp, includeStack, excludeFirstStacktraceLines);
 			
-			for (var i:int = 0; i < arrMemoryObjects.length; ++i)
+			for (var i:int = 0; i < objects.length; ++i)
 			{
-				message += arrMemoryObjects[i].value + "\n";
+				message += objects[i].value + "\n";
 			}
 			
-			message += "Total objects: " + arrMemoryObjects.length;
+			message += "Total objects: " + objects.length;
 			
 			Log.info(message, Memory);
 			
@@ -184,7 +182,7 @@ package temple.debug
 		 */
 		public static function getRegistryObjects(traceTimestamp:Boolean = false, traceStack:Boolean = false, excludeFirstStacktraceLines:Array = null):Array
 		{
-			var arrTmp:Array = new Array();
+			var temp:Array = new Array();
 			
 			for (var object:* in Memory._registry)
 			{
@@ -201,19 +199,19 @@ package temple.debug
 				{
 					if (excludeFirstStacktraceLines.indexOf(value.stack.substr(value.stack.lastIndexOf("\n") + String("\n").length)) == -1)
 					{
-						arrTmp.push({timestamp: value.timestamp, value: str});
+						temp.push({timestamp: value.timestamp, value: str});
 					}
 				}
 				else
 				{
-					arrTmp.push({timestamp: value.timestamp, value: str});
+					temp.push({timestamp: value.timestamp, value: str});
 				}
 				
 			}
 			
-			arrTmp.sortOn('timestamp', Array.NUMERIC);
+			temp.sortOn('timestamp', Array.NUMERIC);
 			
-			return arrTmp;
+			return temp;
 		}
 		
 		/**
@@ -244,27 +242,34 @@ package temple.debug
 		public static function getRegistryObjectsAsXml(excludeStackrootObjects:Array = null, fullstacktrace:Boolean = true):XML
 		{
 			var xml:String = '<root>';
-			var arrTmp:Array = new Array();
+			var temp:Array = new Array();
 			
 			for (var object:* in Memory._registry)
 			{
 				var value:RegisteryInfo = Memory._registry[object];
-				arrTmp.push({timestamp: value.timestamp, info: value, object:object});
+				temp.push({timestamp: value.timestamp, info: value, object:object});
 			}
 			
-			arrTmp.sortOn('timestamp', Array.NUMERIC);
+			temp.sortOn('timestamp', Array.NUMERIC);
 			
-			for (var i:int = 0; i < arrTmp.length; ++i)
+			for (var i:int = 0; i < temp.length; ++i)
 			{
-				var info:RegisteryInfo = arrTmp[i].info;
+				var info:RegisteryInfo = temp[i].info;
 				
 				var stackroot:String = info.stack.substr(info.stack.lastIndexOf("\n") + String("\n").length);
 				if (excludeStackrootObjects && excludeStackrootObjects.indexOf(stackroot) != -1) continue;
 				
-				var arrListeners:Array = arrTmp[i].object is IDestructibleEventDispatcher ? EventListenerManager.getDispatcherInfo(arrTmp[i].object as IDestructibleEventDispatcher) : new Array();
+				var listenerInfo:String = "";
+				var numListeners:uint;
 				
-				xml += '<memoryobject id="' + info.objectId + '" timestamp="'+ info.timestamp + '" object="' + String(arrTmp[i].object).split('"').join("'") + '" stackroot="' + (stackroot) + '" numlisteners="' + arrListeners.length + '" isdestructed="' + (arrTmp[i].object is IDestructible ? IDestructible(arrTmp[i].object).isDestructed : false) + '">' +
-					'<listeners>' + (arrListeners.join("\n")) + '</listeners>' +   
+				if (temp[i].object is IDestructibleEventDispatcher)
+				{
+					numListeners = (temp[i].object as IDestructibleEventDispatcher).eventListenerManager.numListeners;
+					listenerInfo = (temp[i].object as IDestructibleEventDispatcher).eventListenerManager.getInfo().join("\n");
+				}
+				
+				xml += '<memoryobject id="' + info.objectId + '" timestamp="'+ info.timestamp + '" object="' + String(temp[i].object).split('"').join("'") + '" stackroot="' + (stackroot) + '" numlisteners="' + numListeners + '" isdestructed="' + (temp[i].object is IDestructible ? IDestructible(temp[i].object).isDestructed : false) + '">' +
+					'<listeners>' + listenerInfo + '</listeners>' +   
 					'<stack><![CDATA[' + (fullstacktrace ? info.stack : "enable 'fullstacktrace' to see this\n" + stackroot) + ']]></stack>' +   
 				'</memoryobject>';
 			}

@@ -64,8 +64,8 @@ package temple.utils
 			{
 				string = string.replace(new RegExp(entity, 'g'), HTMLEntities._ENTITIES[entity]);
 			}
-            return string;
-        }
+            return String(XML('<node>' + string + '</node>'));
+		}
        
         private static function getEntities(): Object
         {

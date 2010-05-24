@@ -131,7 +131,7 @@ package temple.debug.log
 		/**
 		 * Creates a copy of an existing LogEvent.
 		 */
-		public override function clone():Event 
+		override public function clone():Event 
 		{
 			return new LogEvent(this._level, this._data, this._sender, this._objectId);
 		}
@@ -139,7 +139,7 @@ package temple.debug.log
 		/**
 		 * @inheritDoc
 		 */
-		public override function toString():String 
+		override public function toString():String 
 		{
 			return getClassName(this) + ": level=" + this._level + "; data=" + this._data + "; sender=" + this._sender + "; objetId=" + this.objectId;
 		} 

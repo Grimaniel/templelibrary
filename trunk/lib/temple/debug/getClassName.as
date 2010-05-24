@@ -59,7 +59,23 @@ package temple.debug
 		}
 		else
 		{
-			return qualifiedClassName.split('::')[1];
+			if (qualifiedClassName.indexOf('<') != -1)
+			{
+				// Vector exception
+				var a:Array = qualifiedClassName.match(/(?<=::)\w+/g);
+				var s:String = a.shift();
+				var e:String = "";
+				while (a.length)
+				{
+					s += ".<" + a.shift();
+					e += ">";
+				}
+				return s + e;
+			}
+			else
+			{
+				return qualifiedClassName.split('::')[1];
+			}
 		}
 	}
 }

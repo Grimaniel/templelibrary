@@ -63,12 +63,23 @@ package temple.utils
 	 */
 	public class ClosureArgs extends CoreObject
 	{
+		/**
+		 * Creates a function reference to the ClosureArgs
+		 * @param method the method to be calles
+		 * @param arguments the arguments to be passed to the method
+		 * @param destructAfterCall if set to true, to ClosureArgs is destructed after the call.
+		 */
+		public static function create(method:Function, arguments:Array = null, destructAfterCall:Boolean = false):Function
+		{
+			return new ClosureArgs(method, arguments, destructAfterCall).call;	
+		}
+		
 		private var _method:Function;
 		private var _arguments:Array;		private var _destructAfterCall:Boolean;
 
 		/**
 		 * Creates a new ClosureArgs
-		 * @param method the method to be calles
+		 * @param method the method to be called
 		 * @param arguments the arguments to be passed to the method
 		 * @param destructAfterCall if set to true, to ClosureArgs is destructed after the call.
 		 */
@@ -105,17 +116,6 @@ package temple.utils
 		}
 
 		/**
-		 * Creates a function reference to the ClosureArgs
-		 * @param method the method to be calles
-		 * @param arguments the arguments to be passed to the method
-		 * @param destructAfterCall if set to true, to ClosureArgs is destructed after the call.
-		 */
-		public static function create(method:Function, arguments:Array = null, destructAfterCall:Boolean = false):Function
-		{
-			return new ClosureArgs(method, arguments, destructAfterCall).call;	
-		}
-
-		/**
 		 * Indicates if the ClosureArgs should be destructed after call
 		 */
 		public function get destructAfterCall():Boolean
@@ -129,6 +129,22 @@ package temple.utils
 		public function set destructAfterCall(value:Boolean):void
 		{
 			this._destructAfterCall = value;
+		}
+		
+		/**
+		 * Returns a reference to the method 
+		 */
+		public function get method():Function
+		{
+			return this._method;
+		}
+		
+		/**
+		 * Returns a reference to the arguments
+		 */
+		public function get arguments():Array
+		{
+			return this._arguments;
 		}
 
 		/**

@@ -38,15 +38,17 @@
 
 package temple.utils.keys 
 {
-	import temple.debug.IDebuggable;
-	import temple.destruction.IDestructible;
-	import temple.ui.IEnableable;
-	import temple.utils.ClosureArgs;
 	import temple.core.CoreObject;
 	import temple.data.collections.HashMap;
+	import temple.debug.IDebuggable;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
+	import temple.destruction.IDestructible;
+	import temple.ui.IEnableable;
+	import temple.utils.ClosureArgs;
+	import temple.utils.types.FunctionUtils;
+	import temple.utils.types.ObjectUtils;
 
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
@@ -122,15 +124,18 @@ package temple.utils.keys
 		}
 
 		/**
-		 * Add a key to a function
+		 * Map a key to a function
+		 * @param key keyCode of the key to map
+		 * @param method the method to be called when the key is pressed
+		 * @param arguments the argument to be passed to the method when called
 		 */
-		public function map(key:uint, method:Function, ...args):void 
+		public function map(key:uint, method:Function, arguments:Array = null):void 
 		{
 			if(this._map[key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
 			
-			if (args.length)
+			if (arguments && arguments.length)
 			{
-				this._map[key] = new ClosureArgs(method, args);
+				this._map[key] = new ClosureArgs(method, arguments);
 			}
 			else
 			{
@@ -161,6 +166,55 @@ package temple.utils.keys
 		{
 			this._enabled = value;
 		}
+
+		/**
+		 * Returns information about the key mapping.
+		 * Note: only works in the debug player
+		 */
+		public function getInfo():String 
+		{
+			var info:String = "";
+			var shift:uint;
+			var control:uint;
+			var alt:uint;
+			var keyCode:uint;
+			for (var key:String in this._map)
+			{
+				keyCode =  uint(key);
+				keyCode -= shift = keyCode & KeyMapper.SHIFT;
+				keyCode -= control = keyCode & KeyMapper.CONTROL;
+				keyCode -= alt = keyCode & KeyMapper.ALT;
+				
+				info += String.fromCharCode(keyCode);
+				
+				info += shift || control || alt ? " +" : "\t";
+				info += shift ? "S" : "";
+				info += control ? "C" : "";
+				info += alt ? "A" : "";
+				info += "\t";
+				
+				if (this._map[key] is ClosureArgs)
+				{
+					info += FunctionUtils.functionToString(ClosureArgs(this._map[key]).method).substr(0, -2);
+					info += "(";
+					var arguments:Array = ClosureArgs(this._map[key]).arguments;
+					var leni:int = arguments.length;
+					for (var i:int = 0; i < leni; i++)
+					{
+						if (i) info += ", ";
+						info += ObjectUtils.objectToString(arguments[i]);
+					}
+					info += ")";
+				}
+				else
+				{
+					info += FunctionUtils.functionToString(this._map[key]);
+				}
+				info += "\n";
+			}
+			return info;
+		}
+
 		
 		/**
 		 * @inheritDoc

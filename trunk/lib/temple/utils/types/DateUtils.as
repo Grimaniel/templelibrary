@@ -80,10 +80,7 @@ package temple.utils.types
 		public static const DAYS_IN_YEAR:int = 365;
 		public static const DAYS_IN_LEAP_YEAR:int = 366;
 		
-		private static const _MONTHS_TO_INTEGERS:Object = {
-			January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11,
-			Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11
-		};
+		private static const _MONTHS_TO_INTEGERS:Object = {January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11,Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
 	
 		/**
 		 * Set language to Dutch
@@ -99,10 +96,7 @@ package temple.utils.types
 		 * The number of days appearing in each month. May be used for easy index lookups.
 		 * The stored value for February corresponds to a standard year--not a leap year.
 		 */
-		public static var DAYS_IN_MONTHS:Array = [DAYS_IN_JANUARY, DAYS_IN_FEBRUARY, DAYS_IN_MARCH, DAYS_IN_APRIL,
-			DAYS_IN_MAY, DAYS_IN_JUNE, DAYS_IN_JULY, DAYS_IN_AUGUST, DAYS_IN_SEPTEMBER,
-			DAYS_IN_OCTOBER, DAYS_IN_NOVEMBER, DAYS_IN_DECEMBER];
-
+		public static const DAYS_IN_MONTHS:Array = [DAYS_IN_JANUARY, DAYS_IN_FEBRUARY, DAYS_IN_MARCH, DAYS_IN_APRIL,DAYS_IN_MAY, DAYS_IN_JUNE, DAYS_IN_JULY, DAYS_IN_AUGUST, DAYS_IN_SEPTEMBER,DAYS_IN_OCTOBER, DAYS_IN_NOVEMBER, DAYS_IN_DECEMBER];
 		
 		/**
 		 * timezone abbrevitation

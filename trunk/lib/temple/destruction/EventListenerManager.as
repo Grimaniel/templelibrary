@@ -42,6 +42,7 @@ package temple.destruction
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
+	import temple.utils.types.FunctionUtils;
 
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
@@ -57,24 +58,6 @@ package temple.destruction
 		private var _target:IEventDispatcher;
 		private var _events:Array;
 		private var _blockRequest:Boolean;
-
-		/**
-		 * Returns a list of all listeners of the dispatcher (registered by the EventListenerManager)
-		 * @param dispatcher The dispatcher you want info about
-		 */
-		public static function getDispatcherInfo(dispatcher:IDestructibleEventDispatcher):Array
-		{
-			var list:Array = new Array();
-			var listenerManager:EventListenerManager = dispatcher.eventListenerManager;
-			if (listenerManager && listenerManager._events.length)
-			{
-				for each (var eventData:EventData in listenerManager._events)
-				{
-					list.push(eventData.type);
-				}
-			}
-			return list;
-		}
 
 		/**
 		 * Creates a new instance of a EventListenerManager. Do not create more one EventListenerManager for each IDestructibleEventDispatcher!
@@ -283,13 +266,38 @@ package temple.destruction
 			return this;
 		}
 		
+		/**
+		 * Returns a list of all listeners of the target (registered by the EventListenerManager)
+		 */
+		public function getInfo():Array
+		{
+			var list:Array = new Array();
+			if (this._events &&  this._events.length)
+			{
+				for each (var eventData:EventData in this._events)
+				{
+					list.push(eventData.type + ": " + FunctionUtils.functionToString(eventData.listener));
+				}
+			}
+			return list;
+		}
+
+		/**
+		 * Returns the total amount of (strong) event listeners on the target of the EventListenerManager
+		 */
+		public function get numListeners():uint 
+		{
+			return this._events ? this._events.length : 0;
+		}
+		
 		private function handleOnceEvent(event:Event):void 
 		{
 			this._blockRequest = true;
-			var l:int = this._events.length;
+			var l:int = this._events ? this._events.length : 0;
 			var eventData:EventData;
 			while (l--) 
 			{
+				if (this._events == null) break;
 				eventData = this._events[l];
 				if (eventData && eventData.type == event.type && eventData.once) 
 				{
@@ -330,7 +338,7 @@ package temple.destruction
 
 import temple.debug.getClassName;
 
-class EventData
+final class EventData
 {
 	public var type:String;
 	public var listener:Function;

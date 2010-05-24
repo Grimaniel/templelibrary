@@ -47,6 +47,7 @@ package temple.data.xml
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
 	import temple.utils.FrameDelay;
+	import temple.utils.types.FunctionUtils;
 
 	import flash.events.Event;
 	import flash.net.URLRequestMethod;
@@ -129,7 +130,7 @@ package temple.data.xml
 		 */
 		public static function loadObject(url:String, objectClass:Class, node:String = null, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = XMLManager.DEFAULT_CACHE_SETTING, cacheObject:int = XMLManager.DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
 		{
-			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("loadObject: '" + url + "' to " + objectClass + ", callback:" + callback + ", sendData:" + sendData + ", method: '" + method + "', forceReload:" + forceReload + ", cacheXML:" + cacheXML + ", cacheObject:" + cacheObject + ", decoder:" + decoder);
+			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("loadObject: '" + url + "' to " + objectClass + ", callback:" + FunctionUtils.functionToString(callback) + ", sendData:" + sendData + ", method: '" + method + "', forceReload:" + forceReload + ", cacheXML:" + cacheXML + ", cacheObject:" + cacheObject + ", decoder:" + decoder);
 			
 			return XMLManager.getInstance()._load(XMLObjectData.OBJECT, url, url, objectClass, node, callback, sendData, method, forceReload, cacheXML, cacheObject, decoder);
 		}
@@ -165,7 +166,7 @@ package temple.data.xml
 		 */
 		public static function loadList(url:String, objectClass:Class, repeatingNode:String, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = XMLManager.DEFAULT_CACHE_SETTING, cacheList:int = XMLManager.DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
 		{
-			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("loadList: '" + url + "' to " + objectClass + ", callback:" + callback + ", sendData:" + sendData + ", method: '" + method + "', forceReload:" + forceReload + ", cacheXML:" + cacheXML + ", cacheObject:" + cacheList + ", decoder:" + decoder);
+			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("loadList: '" + url + "' to " + objectClass + ", callback:" + FunctionUtils.functionToString(callback) + ", sendData:" + sendData + ", method: '" + method + "', forceReload:" + forceReload + ", cacheXML:" + cacheXML + ", cacheObject:" + cacheList + ", decoder:" + decoder);
 			
 			return XMLManager.getInstance()._load(XMLObjectData.LIST, url, url, objectClass, repeatingNode, callback, sendData, method, forceReload, cacheXML, cacheList, decoder);
 		}
@@ -201,7 +202,7 @@ package temple.data.xml
 		 */
 		public static function loadObjectByName(name:String, objectClass:Class, node:String = null, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = XMLManager.DEFAULT_CACHE_SETTING, cacheObject:int = XMLManager.DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
 		{
-			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("loadObjectByName: '" + name + "' to " + objectClass + ", callback:" + callback + ", sendData:" + sendData + ", method: '" + method + "', forceReload:" + forceReload + ", cacheXML:" + cacheXML + ", cacheObject:" + cacheObject + ", decoder:" + decoder);
+			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("loadObjectByName: '" + name + "' to " + objectClass + ", callback:" + FunctionUtils.functionToString(callback) + ", sendData:" + sendData + ", method: '" + method + "', forceReload:" + forceReload + ", cacheXML:" + cacheXML + ", cacheObject:" + cacheObject + ", decoder:" + decoder);
 			
 			return XMLManager.getInstance()._load(XMLObjectData.OBJECT, name, null, objectClass, node, callback, sendData, method, forceReload, cacheXML, cacheObject, decoder);
 		}
@@ -237,7 +238,7 @@ package temple.data.xml
 		 */
 		public static function loadListByName(name:String, objectClass:Class, repeatingNode:String, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = XMLManager.DEFAULT_CACHE_SETTING, cacheList:int = XMLManager.DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
 		{
-			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("loadListByName: '" + name + "' to " + objectClass + ", callback:" + callback + ", sendData:" + sendData + ", method: '" + method + "', forceReload:" + forceReload + ", cacheXML:" + cacheXML + ", cacheObject:" + cacheList + ", decoder:" + decoder);
+			if(XMLManager.getInstance()._debug) XMLManager.getInstance().logDebug("loadListByName: '" + name + "' to " + objectClass + ", callback:" + FunctionUtils.functionToString(callback) + ", sendData:" + sendData + ", method: '" + method + "', forceReload:" + forceReload + ", cacheXML:" + cacheXML + ", cacheObject:" + cacheList + ", decoder:" + decoder);
 			
 			return XMLManager.getInstance()._load(XMLObjectData.LIST, name, null, objectClass, repeatingNode, callback, sendData, method, forceReload, cacheXML, cacheList, decoder);
 		}

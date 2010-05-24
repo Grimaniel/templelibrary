@@ -53,15 +53,17 @@ package temple.data.url
 		
 		private var _url:String;
 		private var _targetFrame:String;
+		private var _name:String;
 
-		public function URLEvent(type:String, url:String, targetFrame:String) 
+		public function URLEvent(type:String, url:String, targetFrame:String, name:String) 
 		{
 			super(type);
 			
 			this._url = url;
 			this._targetFrame = targetFrame;
+			this._name = name;
 		}
-		
+
 		/**
 		 * The URL that is navigated to
 		 */
@@ -93,13 +95,21 @@ package temple.data.url
 		{
 			this._targetFrame = value;
 		}
+		
+		/**
+		 * The name of the url (if available)
+		 */
+		public function get name():String
+		{
+			return this._name;
+		}
 
 		/**
 		 * @inheritDoc
 		 */
 		override public function clone():Event 
 		{
-			return new URLEvent(this.type, this.url, this.targetFrame);
+			return new URLEvent(this.type, this.url, this.targetFrame, this.name);
 		}
 	}
 }

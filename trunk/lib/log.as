@@ -9,15 +9,19 @@ package
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function log(message:*, object:* = null, maxDepth:uint = 1, level:String = "info"):void 
+	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 1, level:String = "info"):void 
 	{
-		if (object == null)
+		if (object == "__UNLOGGABLE_STRING__")
 		{
-			// do nothinh
+			// do nothing
+		}
+		else if (object == null || object == undefined)
+		{
+			message += ": " + object;
 		}
 		else if (object is String || object is Number || object is Boolean || object is uint || object is int)
 		{
-			message += ": " + object;
+			message += ": " + ObjectUtils.objectToString(object);
 		}
 		else
 		{

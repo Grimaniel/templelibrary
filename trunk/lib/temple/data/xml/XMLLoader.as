@@ -369,7 +369,7 @@ import temple.destruction.IDestructible;
 import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
 
-class XMLLoaderData implements IDestructible
+final class XMLLoaderData implements IDestructible
 {
 	public var url:String;
 	public var name:String;
