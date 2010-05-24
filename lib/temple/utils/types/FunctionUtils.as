@@ -62,7 +62,9 @@ package temple.utils.types
 			catch (error:Error)
 			{
 				var regExp:RegExp = /MC{(?:.*) (.*)}/g;
-				var s:String = String(regExp.exec(String(error.message))[1]);
+				var result:Array = regExp.exec(String(error.message));
+				if (!result || !result[1]) return "function()";
+				var s:String = String(result[1]);
 				var i:int = s.indexOf("/");
 				var className:String = s.substr(0, i);
 				var functionName:String = s.substr(i);

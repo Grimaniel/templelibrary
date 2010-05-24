@@ -38,6 +38,7 @@
  
  package temple.data.url 
 {
+	import temple.utils.types.StringUtils;
 	import temple.utils.types.ArrayUtils;
 	import temple.data.collections.HashMap;
 	import temple.data.loader.ILoader;
@@ -132,10 +133,12 @@
 
 		/**
 		 * Open a browser window for url with specified name
+		 * @param name the name of the url
+		 * @param variables an object with name-value pairs that replaces {}-var in the URL
 		 */
-		public static function openURLByName(name:String):void 
+		public static function openURLByName(name:String, variables:Object = null):void 
 		{
-			URLManager.getInstance().openURLByName(name);
+			URLManager.getInstance().openURLByName(name, variables);
 		}
 
 		/**
@@ -366,7 +369,6 @@
 				if (ud.name == name) return ud;
 			}
 			this.logError("getURLDataByName: url with name '" + name + "' not found. Check urls.xml!");
-			
 			this.logError(TraceUtils.stackTrace());
 			
 			return null;
@@ -392,19 +394,23 @@
 			return null;
 		}
 
-		private function openURLByName(name:String):void 
+		private function openURLByName(name:String, variables:Object = null):void 
 		{
 			var ud:URLData = URLManager.getURLDataByName(name);
 			if (!ud) return;
 			
-			this.openURL(ud.url, ud.target);
+			var url:String = ud.url;
+			
+			if (variables) url = StringUtils.replaceVars(url, variables);
+			
+			this.openURL(url, ud.target, name);
 		}
 
-		private function openURL(url:String, target:String):void 
+		private function openURL(url:String, target:String, name:String = null):void 
 		{
 			if (url == null) throwError(new TempleArgumentError(this, "url can not be null"));
 			
-			this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target));
+			this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
 			
 			try 
 			{
@@ -416,9 +422,9 @@
 				} 
 				else 
 				{
-					var strUserAgent:String = String(ExternalInterface.call("function() {return navigator.userAgent;}")).toLowerCase();
+					var userAgent:String = String(ExternalInterface.call("function() {return navigator.userAgent;}")).toLowerCase();
 					
-					if (strUserAgent.indexOf("firefox") != -1 || (strUserAgent.indexOf("msie") != -1 && uint(strUserAgent.substr(strUserAgent.indexOf("msie") + 5, 3)) >= 7)) 
+					if (userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7)) 
 					{
 						ExternalInterface.call("window.open", request.url, target);
 					} 

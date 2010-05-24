@@ -38,9 +38,9 @@
 
 package temple.core 
 {
-	import temple.debug.IDebuggable;
 	import temple.data.loader.preload.IPreloader;
 	import temple.data.loader.preload.PreloadableBehavior;
+	import temple.debug.IDebuggable;
 	import temple.debug.Registry;
 	import temple.debug.getClassName;
 	import temple.debug.log.Log;
@@ -591,7 +591,7 @@ package temple.core
 
 		temple final function handleLoadStart(event:Event):void
 		{
-			if (this._debug) this.logDebug("temple.core.CoreLoader::handleLoadStart(event = " + [this._url] + ")");
+			if (this.debug) this.logDebug("handleLoadStart");
 			
 			this._preloadableBehavior.onLoadStart(this, this._url);
 			this.dispatchEvent(event.clone());
@@ -599,7 +599,7 @@ package temple.core
 
 		temple final function handleLoadProgress(event:ProgressEvent):void
 		{
-			if (this._debug) this.logDebug("temple.core.CoreLoader::handleLoadProgress(event = " + [this._url] + ")");
+			if (this.debug) this.logDebug("handleLoadProgress");
 			
 			this._preloadableBehavior.onLoadProgress();
 			this.dispatchEvent(event.clone());
@@ -612,7 +612,7 @@ package temple.core
 		
 		temple final function handleLoadComplete(event:Event):void
 		{
-			if (this._debug) this.logDebug("temple.core.CoreLoader::handleLoadComplete(event = " + [this._url] + ")");
+			if (this.debug) this.logDebug("handleLoadComplete");
 			
 			this._isLoading = false;
 			this._isLoaded = true;
@@ -629,7 +629,7 @@ package temple.core
 			this._isLoading = false;
 			this._preloadableBehavior.onLoadComplete(this);
 			
-			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text + ' (' + this._url + ')');
+			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
 			
 			this.dispatchEvent(event.clone());
 		}
@@ -737,7 +737,7 @@ package temple.core
 		 */
 		override public function toString():String
 		{
-			return getClassName(this) + ": \"" + this.name + "\"";
+			return getClassName(this) + ": \"" + this.name + "\"" + (this._url ? ", url=\"" + this._url + "\"" : "");
 		}
 	}
 }

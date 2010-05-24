@@ -38,13 +38,19 @@
 
 package temple.debug 
 {
-	import temple.debug.errors.TempleArgumentError;
+	import temple.debug.log.Log;
 	import temple.Temple;
 	import temple.core.CoreObject;
+	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
+	import temple.utils.BuildMode;
+	import temple.utils.Environment;
+	import temple.utils.StageProvider;
+	import temple.utils.types.DateUtils;
 
 	import flash.external.ExternalInterface;
+	import flash.system.Capabilities;
 	import flash.utils.Dictionary;
 
 	/**
@@ -75,7 +81,7 @@ package temple.debug
 	public final class DebugManager extends CoreObject implements IDebuggable
 	{
 		private static var _instance:DebugManager;
-		private static var _debugMode:uint;
+		private static var _debugMode:String;
 
 		// pool of debuggables with there Registry-id
 		private var _debuggables:Dictionary;
@@ -120,12 +126,12 @@ package temple.debug
 			if (DebugManager._debug) DebugManager.getInstance().logDebug("add: " + object);
 			
 			// check via javascript if debug is set in the url
-			if (DebugManager._debugMode == 0 && ExternalInterface.available)
+			if (!DebugManager._debugMode && ExternalInterface.available)
 			{
 				try
 				{
-					var debugMode:uint = uint(ExternalInterface.call('function(){var arrParams = document.location.href.toString().split("?").pop().split("#").shift().split("&");var objParams = new Object();for (var i = 0; i < arrParams.length; ++i){var arrParam = arrParams[i].split("=");objParams[arrParam[0]] = arrParam[1];}return objParams["debug"];}'));
-					if (DebugManager.debug) DebugManager.getInstance().logInfo("debugMode from query string: " + debugMode + ": '" + DebugMode.modeToString(debugMode) + "' (url='" + ExternalInterface.call('function(){ return document.location.href; }') + "')");
+					var debugMode:String = ExternalInterface.call('function(){var arrParams = document.location.href.toString().split("?").pop().split("#").shift().split("&");var objParams = new Object();for (var i = 0; i < arrParams.length; ++i){var arrParam = arrParams[i].split("=");objParams[arrParam[0]] = arrParam[1];}return objParams["debug"];}');
+					if (DebugManager.debug) DebugManager.getInstance().logInfo("debugMode from query string: '" + debugMode + "' (url='" + ExternalInterface.call('function(){ return document.location.href; }') + "')");
 					if (debugMode) DebugManager.debugMode = debugMode; 
 				}
 				catch (e:SecurityError)
@@ -134,8 +140,8 @@ package temple.debug
 				}
 			}
 			
-			// if no debugsetting in url, set to custom
-			if (DebugManager._debugMode == 0)
+			// if no debugsetting in url, set to default
+			if (!DebugManager._debugMode)
 			{
 				DebugManager.debugMode = Temple.defaultDebugMode;
 			}
@@ -407,7 +413,7 @@ package temple.debug
 		 * 	<li>DebugManager.ALL: debug everything</li>
 		 * 	</ul>
 		 */
-		public static function set debugMode(value:uint):void
+		public static function set debugMode(value:String):void
 		{
 			switch (value)
 			{
@@ -428,6 +434,8 @@ package temple.debug
 			{
 				var debug:Boolean = (DebugManager._debugMode == DebugMode.ALL);
 				
+				if (debug) DebugManager.logInfo();
+				
 				for (var object:* in DebugManager.getInstance()._debuggables)
 				{
 					IDebuggable(object).debug = debug;
@@ -438,7 +446,7 @@ package temple.debug
 		/**
 		 * @private
 		 */
-		public static function get debugMode():uint
+		public static function get debugMode():String
 		{
 			return DebugManager._debugMode;
 		}
@@ -481,6 +489,32 @@ package temple.debug
 		{
 			DebugManager._debug = value;
 		}
+		
+		/**
+		 * Logs some debug info, like Temple version and current date
+		 */
+		public static function logInfo():String 
+		{
+			var info:String = "Debug info:";
+			
+			info += "\n\tTemple version: " + Temple.VERSION;
+			info += "\n\tTemple date: " + Temple.DATE;
+			info += "\n\tCurrent date: " + DateUtils.format("Y-m-d");
+			info += "\n\tPlayer version: " + Capabilities.version;
+			info += "\n\tEnvironment: " + Environment.getEnvironment();
+			info += "\n\tOperation System: " + Capabilities.os;
+			info += "\n\tManufacturer: " + Capabilities.manufacturer;
+			info += "\n\tisDebugger: " + Capabilities.isDebugger;
+			info += "\n\tBuildMode: " + (BuildMode.isDebugBuild() ? "debug" : "release");
+			info += "\n\tDebugMode: " + DebugManager.debugMode;
+			if (StageProvider.stage)
+			{
+				info += "\n\tURL: " + StageProvider.stage.loaderInfo.url;
+			}
+			Log.debug(info, DebugManager);
+			
+			return info;
+		}
 
 		/**
 		 * @inheritDoc
@@ -494,6 +528,11 @@ package temple.debug
 			this._debuggableChildQueue = null;
 			
 			super.destruct();
+		}
+
+		public static function toString():String 
+		{
+			return getClassName(DebugManager);
 		}
 	}
 }

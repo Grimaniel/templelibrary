@@ -128,7 +128,13 @@ package temple.utils.types
 				else if (!ObjectUtils.isPrimitive(object)) 
 				{
 					inOpenChar = openChar = "\u007B";
+					
+					if (ObjectUtils.isDynamic(object))
+					{
+						output += " (dynamic)";
+					}
 				}
+				
 				if (openChar) output += "\n" + openChar;
 			}
 			
@@ -189,7 +195,7 @@ package temple.utils.types
 				{
 					case ObjectType.STRING:
 					{
-						output += "\n" + tabs + vardata.name + ": \"" + variable + "\" (" + vardata.type + ")";
+						output += "\n" + tabs + vardata.name + ": \"" + variable + "\" (" + (vardata.type ? vardata.type : getClassName(variable)) + ")" ;
 						break;
 					}
 					case ObjectType.OBJECT:
@@ -209,13 +215,18 @@ package temple.utils.types
 						}
 						else 
 						{
-							// object, make exepction for Date, we do not 
+							// object, make exception for Date
 							if (variable && maxDepth && (ObjectUtils.subTraceDate || !(variable is Date)))
 							{
 								// recursive call
 								output += "\n" + tabs + vardata.name + ": " + variable;
 								if (ObjectUtils.hasValues(variable))
 								{
+									if (ObjectUtils.isDynamic(variable))
+									{
+										output += " (dynamic)";
+									}
+									
 									output += "\n" + tabs + "\u007B";
 									output += ObjectUtils._traceObject(variable, maxDepth - 1, "\u007B", isInited, openChar, tabs);
 								}
@@ -229,8 +240,8 @@ package temple.utils.types
 					}
 					default:				
 					{
-						//variable is not an object or string, just trace it out normally
-						output += "\n" + tabs + vardata.name + ": " + variable + " (" + vardata.type + ")";
+						//variable is not an object nor string, just trace it out normally
+						output += "\n" + tabs + vardata.name + ": " + variable + " (" + (vardata.type ? vardata.type : getClassName(variable)) + ")" ;
 						
 						// add value as hex for uints
 						if (vardata.type == "uint") output += " 0x" + uint(variable).toString(16).toUpperCase();

@@ -90,11 +90,11 @@ package temple.core
 		protected var _logErrors:Boolean;
 		protected var _preloadableBehavior:PreloadableBehavior;
 		protected var _debug:Boolean;
+		protected var _url:String;
 		
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
 		private var _registryId:uint;
-		private var _url:String;
 
 		/**
 		 * Creates a CoreURLLoader
@@ -146,8 +146,7 @@ package temple.core
 				this.logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
 				return;
 			}
-			
-			if (this._debug) this.logDebug("temple.core.CoreURLLoader::load(request = " + [request.url] + ")");
+			if (this.debug) this.logDebug("load: " + request.url);
 			
 			this._url = request.url;
 			this._isLoading = true;
@@ -335,22 +334,19 @@ package temple.core
 				
 		temple final function handleLoadStart(event:Event):void
 		{
-			if (this._debug) this.logDebug("handleLoadStart: url='" + this._url + "'");
-			
+			if (this._debug) this.logDebug("handleLoadStart");
 			this._preloadableBehavior.onLoadStart(this);
 		}
 
 		temple final function handleLoadProgress(event:ProgressEvent):void
 		{
-			if (this._debug) this.logDebug("handleLoadProgress: url='" + this._url + "'");
-			
+			if (this._debug) this.logDebug("handleLoadProgress");
 			this._preloadableBehavior.onLoadProgress();
 		}
 		
 		temple final function handleLoadComplete(event:Event):void
 		{
-			if (this._debug) this.logDebug("handleLoadComplete: url='" + this._url + "'");
-			
+			if (this._debug) this.logDebug("handleLoadComplete");
 			this._preloadableBehavior.onLoadComplete(this);
 			this._isLoading = false;
 			this._isLoaded = true;
@@ -365,7 +361,7 @@ package temple.core
 		{
 			this._isLoading = false;
 			this._preloadableBehavior.onLoadComplete(this);
-			if (this._logErrors) this.logError(event.type + ': ' + event.text + ' (' + this._url + ')');
+			if (this._logErrors) this.logError(event.type + ': ' + event.text);
 			if (this._destructOnError) this.destruct();
 		}
 		
@@ -455,7 +451,17 @@ package temple.core
 			
 			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			if (this._isLoading) this.close();
+			if (this._isLoading)
+			{
+				try
+				{
+					this.close();
+				}
+				catch(error:Error)
+				{
+					if (this.debug) this.logWarn("destruct: " + error.message);
+				}
+			}
 			
 			if (this._eventListenerManager)
 			{
@@ -472,7 +478,7 @@ package temple.core
 		 */
 		override public function toString():String
 		{
-			return getClassName(this);
+			return getClassName(this) + (this._url ? ": url=\"" + this._url + "\"" : "");;
 		}
 	}
 }

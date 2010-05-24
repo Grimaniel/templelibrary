@@ -161,15 +161,13 @@ package temple.utils.types
 		 */		
 		public static function removeValueFromArray(array:Array, value:Object):void
 		{
-			var len:uint = array.length;
-			
-			for(var i:Number = len;i > -1; i--)
+			for(var i:Number = array.length - 1;i > -1; i--)
 			{
 				if(array[i] === value)
 				{
 					array.splice(i, 1);
 				}
-			}					
+			}
 		}
 
 		/**

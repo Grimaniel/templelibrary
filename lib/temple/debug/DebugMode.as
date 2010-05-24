@@ -52,30 +52,16 @@ package temple.debug
 		/**
 		 * Debug will be set to false on all debuggable object. So no debug messages will be logged.
 		 */
-		public static const NONE:uint = 1;
+		public static const NONE:String = 'none';
 		
 		/**
 		 * Debug can be set to each debuggable object individually.
 		 */
-		public static const CUSTOM:uint = 2;
+		public static const CUSTOM:String = 'custom';
 		
 		/**
 		 * Debug will be set to true on all debuggable object. So debug messages will be logged.
 		 */
-		public static const ALL:uint = 4;
-
-		/**
-		 * Returns a readable string of the provided DebugMode
-		 */
-		public static function modeToString(debugMode:uint):String 
-		{
-			switch (debugMode)
-			{
-				case DebugMode.NONE: return "none";
-				case DebugMode.CUSTOM: return "custom";
-				case DebugMode.ALL: return "all";
-			}
-			return "invalid";
-		}
+		public static const ALL:String = 'all';
 	}
 }

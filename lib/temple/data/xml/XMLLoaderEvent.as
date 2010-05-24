@@ -144,7 +144,7 @@ package temple.data.xml
 		/**
 		 * Creates a copy of an existing XMLLoaderEvent.
 		 */
-		public override function clone():Event 
+		override public function clone():Event 
 		{
 			return new XMLLoaderEvent(this.type, this.name, this.data);
 		}
