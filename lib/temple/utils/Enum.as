@@ -41,21 +41,21 @@ package temple.utils
 
 	/**
 	 * 
-	 *	Reads the values of all constants (optionally of specified type) to an Array or Object
+	 *	Reads the values of all constants (optionally of specified type) to an Array or Object.
 	 *
 	 *		var myConstantValues:Array = Enum.getEnumArray(MyVarsClass, Enum.STRING);
 	 *	
 	 *	or
 	 *		 *		var myConstantNameValues:Object = Enum.getEnumHash(MyVarsClass, Enum.STRING);
 	 *		
-	 *	example:
-	 *	
-	 *		var allPages:Array = Enum.getEnumArray(PageBranches);
+	 *	@example
+	 *	<listing version="3.0">
+	 *	var allPages:Array = Enum.getEnumArray(PageBranches);
 	 *		
-	 *		var havePageBranch:Boolean = allPages.indexOf(somePageBranch) > -1;
-	 *
+	 *	var havePageBranch:Boolean = allPages.indexOf(somePageBranch) > -1;
+	 *	</listing>
+	 *	
 	 * @author Bart van der Schoor
-	 * 
 	 */
 	public final class Enum 
 	{

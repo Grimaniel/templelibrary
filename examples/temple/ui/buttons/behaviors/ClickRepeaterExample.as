@@ -7,12 +7,11 @@
  */
 package  
 {
-	import temple.ui.buttons.behaviors.ClickRepeater;
 	import nl.acidcats.yalog.util.YaLogConnector;
 
 	import temple.core.CoreSprite;
-	import temple.debug.log.Log;
 	import temple.ui.buttons.BaseButton;
+	import temple.ui.buttons.behaviors.ClickRepeater;
 	import temple.utils.StageSettings;
 
 	import flash.events.MouseEvent;
