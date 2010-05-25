@@ -1,9 +1,9 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about the Slider.</p>
+ * <p>This is an example about the StepSlider.</p>
  * 
- * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/SliderExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/SliderExample.swf</a></p>
+ * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/StepSliderExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/StepSliderExample.swf</a></p>
  */
 package  
 {
