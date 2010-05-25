@@ -83,7 +83,7 @@ package temple.media.image
 imageLoaderExample.preloader = new (getDefinitionByName("PreloaderClip"))();
 imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/2007_juli/model.jpg");</listing>
 	 * 	
-	 * 	Load the image from an byteArray
+	 * 	Load the image from a ByteArray
 	 * 	<listing version="3.0">var imageLoaderExample:ImageLoader = new ImageLoader(pngByteArray, 100, 200, ScaleMode.NO_SCALE, null, true);</listing>
 	 * 
 	 * @author Arjan van Wijk, Thijs Broerse
