@@ -87,6 +87,7 @@ package temple.core
 		private var _onStage:Boolean;
 		private var _onParent:Boolean;
 		private var _registryId:uint;
+		private var _destructOnUnload:Boolean = true;
 
 		public function CoreMovieClip()
 		{
@@ -236,6 +237,22 @@ package temple.core
 		
 		/**
 		 * @inheritDoc
+		 */
+		public function get destructOnUnload():Boolean
+		{
+			return this._destructOnUnload;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set destructOnUnload(value:Boolean):void
+		{
+			this._destructOnUnload = value;
+		}
+		
+		/**
+		 * @inheritDoc
 		 * 
 		 * Check implemented if object hasEventListener, must speed up the application
 		 * http://www.gskinner.com/blog/archives/2008/12/making_dispatch.html
@@ -371,7 +388,7 @@ package temple.core
 		
 		temple final function handleUnload(event:Event):void
 		{
-			this.destruct();
+			if (this._destructOnUnload) this.destruct();
 		}
 		
 		temple final function handleAdded(event:Event):void

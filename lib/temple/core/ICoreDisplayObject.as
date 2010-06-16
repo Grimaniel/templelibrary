@@ -110,7 +110,16 @@ package temple.core
 		 * @private
 		 */
 		function set scale(value:Number):void;
-		
-		
+
+		/**
+		 * A Boolean which indicates if the object must be destructed if the loader from which it is loaded is unloaded.
+		 * Default: true
+		 */
+		function get destructOnUnload():Boolean;
+
+		/**
+		 * @private
+		 */
+		function set destructOnUnload(value:Boolean):void;
 	}
 }

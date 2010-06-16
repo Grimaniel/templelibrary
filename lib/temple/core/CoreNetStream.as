@@ -329,6 +329,8 @@ package temple.core
 			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
 			this.removeAllEventListeners();
+			this.client = this;
+			this.close();
 			
 			if (this._framePulseSprite)
 			{
