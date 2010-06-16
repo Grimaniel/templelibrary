@@ -263,7 +263,7 @@ package temple.ui.buttons.behaviors
 
 		/**
 		 * Indicates if the animation should play the 'in' animation backwards (true) when the 'over' state is not reached.
-		 * Otherwise (false) animation continues to 'over' state and that does 'out' state. Default: true.
+		 * Otherwise (false) animation continues to 'over' state and than does 'out' state. Default: true.
 		 */
 		public function get playBackwardsBeforeOver():Boolean
 		{
@@ -280,7 +280,7 @@ package temple.ui.buttons.behaviors
 		
 		/**
 		 * Indicates if the animation should play the 'press' animation backwards (true) when the 'down' state is not reached.
-		 * Otherwise (false) animation continues to 'down' state and that does 'release' state. Default: true.
+		 * Otherwise (false) animation continues to 'down' state and than does 'release' state. Default: true.
 		 */
 		public function get playBackwardsBeforeDown():Boolean
 		{
@@ -297,7 +297,7 @@ package temple.ui.buttons.behaviors
 
 		/**
 		 * Indicates if the animation should play the 'select' animation backwards (true) when the 'selected' state is not reached.
-		 * Otherwise (false) animation continues to 'selected' state and that does 'deselect' state. Default: true.
+		 * Otherwise (false) animation continues to 'selected' state and than does 'deselect' state. Default: true.
 		 */
 		public function get playBackwardsBeforeSelected():Boolean
 		{
@@ -314,7 +314,7 @@ package temple.ui.buttons.behaviors
 
 		/**
 		 * Indicates if the animation should play the 'disable' animation backwards (true) when the 'disabled' state is not reached,
-		 * otherwise (false) animation continues to 'disabled' state and that does 'enable' state. Default: true.
+		 * otherwise (false) animation continues to 'disabled' state and than does 'enable' state. Default: true.
 		 */
 		public function get playBackwardsBeforeDisabled():Boolean
 		{

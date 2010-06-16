@@ -38,6 +38,8 @@
 
 package temple.utils.types 
 {
+	import temple.utils.FrameDelay;
+	import flash.text.StyleSheet;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
 	import temple.debug.getClassName;
@@ -74,6 +76,28 @@ package temple.utils.types
 				text += abbreviatedString;
 				textField.text = text;
 			}
+		}
+
+		/**
+		 * Trims the htmlText to fit a given textfield.  
+		 * @param textField the TextField to set the new text to
+		 * @param abbreviatedString the text that indicates that trimming has occurred; commonly this is "..."  
+		 */  
+		public static function trimTextFieldHTMLText(textField:TextField, abbreviatedString:String = "..."):void 
+		{
+			var styleSheet:StyleSheet = textField.styleSheet;
+			textField.styleSheet = null;
+			var text:String;
+			var closeTag:uint;
+			
+			while (textField.multiline && textField.textHeight > textField.height || !textField.multiline && textField.textWidth + TextFieldUtils._MAGICAL_TEXTWIDTH_PADDING > textField.width)
+			{
+				text = textField.getXMLText(0, textField.text.length - 1 - abbreviatedString.length);
+				closeTag = text.lastIndexOf(')</textformat>');
+				text = text.substr(0, closeTag) + abbreviatedString + text.substr(closeTag);
+				textField.insertXMLText(0, textField.text.length, text);
+			}
+			new FrameDelay(function():void { textField.styleSheet = styleSheet; }, 5);
 		}
 
 		/**
@@ -210,8 +234,8 @@ package temple.utils.types
 		public static function getFontSize(textField:TextField):Number
 		{
 			if (textField.text == "") return 0;
-			var usesStyleSheet:Boolean = usesStyleSheet(textField);
-			var usesOneTextFormat:Boolean = usesTextFormat(textField);
+			var usesStyleSheet:Boolean = TextFieldUtils.usesStyleSheet(textField);
+			var usesOneTextFormat:Boolean = TextFieldUtils.usesTextFormat(textField);
 
 			if (!usesOneTextFormat && !usesStyleSheet)
 			{
@@ -242,10 +266,10 @@ package temple.utils.types
 		/**
 		 * Set the fontsize on a TextField
 		 */
-		public static function setFontSize(fontSize:Number, textField:TextField):void
+		public static function setFontSize(textField:TextField, fontSize:Number):void
 		{
-			var usesStyleSheet:Boolean = usesStyleSheet(textField);
-			var usesOneTextFormat:Boolean = usesTextFormat(textField);
+			var usesStyleSheet:Boolean = TextFieldUtils.usesStyleSheet(textField);
+			var usesOneTextFormat:Boolean = TextFieldUtils.usesTextFormat(textField);
 			if(!usesOneTextFormat && !usesStyleSheet)
 			{
 				throwError(new TempleError(TextField, "setting fontSize only works when you use one TextFormat or a StyleSheet"));				

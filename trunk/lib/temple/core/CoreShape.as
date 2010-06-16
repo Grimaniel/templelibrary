@@ -85,6 +85,7 @@ package temple.core
 		private var _onStage:Boolean;
 		private var _onParent:Boolean;
 		private var _registryId:uint;
+		private var _destructOnUnload:Boolean = true;
 
 		public function CoreShape(name:String = null)
 		{
@@ -92,7 +93,7 @@ package temple.core
 			if (name) this.name = name;
 			super();
 			
-			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, temple::handleCoreUnload, false, 0, true);
+			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, temple::handleUnload, false, 0, true);
 			
 			// Register object for destruction testing
 			this._registryId = Registry.add(this);
@@ -232,6 +233,22 @@ package temple.core
 		{
 			this.scaleX = this.scaleY = value;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get destructOnUnload():Boolean
+		{
+			return this._destructOnUnload;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set destructOnUnload(value:Boolean):void
+		{
+			this._destructOnUnload = value;
+		}
 
 		/**
 		 * @inheritDoc
@@ -368,9 +385,9 @@ package temple.core
 			Log.warn(data, this, this._registryId);
 		}
 		
-		temple final function handleCoreUnload(event:Event):void
+		temple final function handleUnload(event:Event):void
 		{
-			this.destruct();
+			if (this._destructOnUnload)  this.destruct();
 		}
 		
 		temple final function handleAdded(event:Event):void
@@ -437,7 +454,7 @@ package temple.core
 			// clear mask, so it won't keep a reference to an other object
 			this.mask = null;
 			
-			if (this.loaderInfo) this.loaderInfo.removeEventListener(Event.UNLOAD, temple::handleCoreUnload);
+			if (this.loaderInfo) this.loaderInfo.removeEventListener(Event.UNLOAD, temple::handleUnload);
 			
 			this.removeEventListener(Event.ENTER_FRAME, temple::handleDestructedFrameDelay);
 			

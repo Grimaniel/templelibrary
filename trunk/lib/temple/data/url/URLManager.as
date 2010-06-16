@@ -209,12 +209,14 @@
 		 */
 		public static function addGroup(value:String):void
 		{
-			URLManager.getInstance()._groups = URLManager.getInstance()._group.split(',');
-			URLManager.getInstance()._groups.push(value);
-			URLManager.getInstance()._groups = ArrayUtils.createUniqueCopy(URLManager.getInstance()._groups);
-			URLManager.getInstance()._group = URLManager.getInstance()._groups.join(',');
+			var instance:URLManager = URLManager.getInstance();
 			
-			if (URLManager.getInstance()._loaded) URLManager.getInstance().processXml();
+			instance._groups = instance._group.split(',');
+			instance._groups.push(value);
+			instance._groups = ArrayUtils.createUniqueCopy(instance._groups);
+			instance._group = instance._groups.join(',');
+			
+			if (instance._loaded) instance.processXml();
 		}
 
 		/**

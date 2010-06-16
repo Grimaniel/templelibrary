@@ -87,6 +87,7 @@ package temple.core
 		private var _onStage:Boolean;
 		private var _onParent:Boolean;
 		private var _registryId:uint;
+		private var _destructOnUnload:Boolean = true;
 
 		public function CoreSprite()
 		{
@@ -233,6 +234,22 @@ package temple.core
 		{
 			this.scaleX = this.scaleY = value;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get destructOnUnload():Boolean
+		{
+			return this._destructOnUnload;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set destructOnUnload(value:Boolean):void
+		{
+			this._destructOnUnload = value;
+		}
 
 		/**
 		 * @inheritDoc
@@ -371,7 +388,7 @@ package temple.core
 		
 		temple final function handleUnload(event:Event):void
 		{
-			this.destruct();
+			if (this._destructOnUnload) this.destruct();
 		}
 		
 		temple final function handleAdded(event:Event):void

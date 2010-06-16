@@ -165,7 +165,7 @@ package temple.data.flashvars
 		 */
 		override public function toString():String
 		{
-			return super.toString() + "(name='" + this._name + "', default='" + this._defaultValue + "', value='" + this._value + "', type='" + this._type + "', external=" + this._external + ")";
+			return super.toString() + " (name='" + this._name + "', default='" + this._defaultValue + "', value='" + this._value + "', type='" + this._type + "', external=" + this._external + ")";
 		}
 	}
 }

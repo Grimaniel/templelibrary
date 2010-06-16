@@ -49,7 +49,17 @@ package temple.ui.buttons
 	import temple.ui.focus.IFocusable;
 
 	/**
+	 * A MultiStateButton is a MovieClip which automaticly set mouse-over and mouse-down  effects/animation, based on framelabels on the timeline, or state clips on the display list.
+	 * 
+	 * <p>You can easily create up-states, over-states, down-states etc. by placing framelabels on the timeline.</p>
+	 * 
+	 * @see temple.ui.buttons.behaviors.ButtonTimelineLabels
+	 * @see temple.ui.buttons.behaviors.ButtonTimelineBehavior
+	 * @see temple.ui.buttons.behaviors.ButtonStateBehavior
+	 * 
 	 * @author Thijs Broerse
+	 * 
+	 * @includeExample MultiStateButtonFrameLabelsExample.as
 	 */
 	public class MultiStateButton extends BaseButton implements IDebuggable, IEnableable, IFocusable, INestableButton
 	{
@@ -70,7 +80,7 @@ package temple.ui.buttons
 		}
 		
 		/**
-		 * Returns a reference to the ButtonBehavior
+		 * Returns a reference to the ButtonBehavior.
 		 */
 		public function get buttonBehavior():ButtonBehavior
 		{
@@ -78,7 +88,7 @@ package temple.ui.buttons
 		}
 
 		/**
-		 * Returns a reference to the ButtonTimelineBehavior
+		 * Returns a reference to the ButtonTimelineBehavior.
 		 */
 		public function get buttonTimelineBehavior():ButtonTimelineBehavior
 		{
@@ -86,7 +96,7 @@ package temple.ui.buttons
 		}
 
 		/**
-		 * Returns a reference to the ButtonTimelineBehavior
+		 * Returns a reference to the ButtonTimelineBehavior.
 		 */
 		public function get buttonStateBehavior():ButtonStateBehavior
 		{
@@ -139,7 +149,7 @@ package temple.ui.buttons
 
 		/**
 		 * Indicates if button should go in out state (true) when dragging (mouse out while mouse down) out the target
-		 * If set to false, buttons stays in down state when dragging out. Default: true
+		 * If set to false, buttons stays in down state when dragging out. Default: true.
 		 */
 		public function get outOnDragOut():Boolean
 		{

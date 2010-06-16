@@ -53,8 +53,8 @@ package temple.debug
 	public interface IDebuggable
 	{
 		/**
-		 * Set or get the debug mode of the object
-		 * If object is in debug mode more information is logged
+		 * A Boolean which indicates the debug mode of the object.
+		 * If object is in debug mode more information is logged.
 		 */
 		function get debug():Boolean;
 
