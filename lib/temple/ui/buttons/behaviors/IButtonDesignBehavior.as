@@ -34,6 +34,10 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
 
 package temple.ui.buttons.behaviors 
@@ -41,12 +45,17 @@ package temple.ui.buttons.behaviors
 	import temple.behaviors.IBehavior;
 
 	/**
+	 * IButtonDesignBehavior is an interface for ButtonDesignBehaviors. ButtonDesignBehaviors listens for ButtonEvents
+	 * on a DisplayObject and changes the design if the DisplayObject corresponding to the status of the ButtonEvent.
+	 * 
+	 * @see temple.ui.buttons.behaviors.ButtonEvent
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public interface IButtonDesignBehavior extends IBehavior, INestableButton
 	{
 		/**
-		 * Updates the IButtonDesignBehavior to the status
+		 * Updates the IButtonDesignBehavior to the status.
 		 */
 		function update(status:IButtonStatus):void;
 	}

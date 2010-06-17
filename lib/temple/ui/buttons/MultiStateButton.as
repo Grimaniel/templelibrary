@@ -34,6 +34,10 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
 
 package temple.ui.buttons 
@@ -49,6 +53,11 @@ package temple.ui.buttons
 	import temple.ui.focus.IFocusable;
 
 	/**
+	 * @eventType temple.ui.buttons.behaviors.ButtonEvent.UPDATE
+	 */
+	[Event(name = "ButtonEvent.update", type = "temple.ui.buttons.behaviors.ButtonEvent")]
+	
+	/**
 	 * A MultiStateButton is a MovieClip which automaticly set mouse-over and mouse-down  effects/animation, based on framelabels on the timeline, or state clips on the display list.
 	 * 
 	 * <p>You can easily create up-states, over-states, down-states etc. by placing framelabels on the timeline.</p>
@@ -60,6 +69,7 @@ package temple.ui.buttons
 	 * @author Thijs Broerse
 	 * 
 	 * @includeExample MultiStateButtonFrameLabelsExample.as
+	 * @includeExample behaviors/NestedMultiStateButtonsExample.as
 	 */
 	public class MultiStateButton extends BaseButton implements IDebuggable, IEnableable, IFocusable, INestableButton
 	{

@@ -34,8 +34,11 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
-
 
 package temple 
 {
@@ -61,7 +64,7 @@ package temple
 		/**
 		 * The current version of the Temple Library
 		 */
-		public static const VERSION:String = "2.4.1";
+		public static const VERSION:String = "2.5.0";
 		
 		/**
 		 * The Authors of the Temple
@@ -71,7 +74,7 @@ package temple
 		/**
 		 * Last modified date of the Temple
 		 */
-		public static const DATE:String = "2010-06-16";
+		public static const DATE:String = "2010-06-17";
 
 		/**
 		 * The official website of the Temple.

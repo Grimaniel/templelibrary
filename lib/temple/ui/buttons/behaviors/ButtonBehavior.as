@@ -34,6 +34,10 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
 
 package temple.ui.buttons.behaviors 
@@ -58,6 +62,22 @@ package temple.ui.buttons.behaviors
 	import flash.utils.Dictionary;
 
 	/**
+	 * @eventType temple.ui.buttons.behaviors.ButtonEvent.UPDATE
+	 */
+	[Event(name = "ButtonEvent.update", type = "temple.ui.buttons.behaviors.ButtonEvent")]
+	
+
+	/**
+	 * The ButtonBehavior can make every DisplayObject act like a button. The ButtonBehavior keeps track of status of the button.
+	 * The status of the button indicates if the mouse is currently up, over or down the button or if the button is selected of disabled.
+	 * The the reaction of mouseOver and mouseOut Events can be delayed.
+	 * 
+	 * <p>The status of the buttons is dispatch in a tunneled ButtonEvent on all the children (and grant-children etc.) of the button.
+	 * This Button is used by ButtonDesignBehaviors to show the current status.</p> 
+	 * 
+	 * @see temple.ui.eventtunneling.EventTunneler
+	 * @see temple.ui.buttons.behaviors.IButtonDesignBehavior
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ButtonBehavior extends AbstractButtonBehavior

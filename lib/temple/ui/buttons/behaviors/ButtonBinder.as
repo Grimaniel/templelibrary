@@ -34,6 +34,10 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
 
 package temple.ui.buttons.behaviors 
@@ -68,7 +72,7 @@ package temple.ui.buttons.behaviors
 		}
 		
 		// List of Events to bind
-		protected static const _EVENT_TYPES:Array = [	MouseEvent.CLICK,
+		private static const _EVENT_TYPES:Array = [	MouseEvent.CLICK,
 												MouseEvent.DOUBLE_CLICK,
 												MouseEvent.MOUSE_DOWN,
 												MouseEvent.MOUSE_OUT,
@@ -78,8 +82,8 @@ package temple.ui.buttons.behaviors
 												MouseEvent.ROLL_OUT,
 												MouseEvent.ROLL_OVER];
 
-		protected var _buttons:Dictionary;
-		protected var _blockRequest:Boolean;
+		private var _buttons:Dictionary;
+		private var _blockRequest:Boolean;
 		
 		/**
 		 * Creates a new ButtonBinding
@@ -148,7 +152,7 @@ package temple.ui.buttons.behaviors
 			}
 		}
 
-		protected function handleEvent(event:Event):void
+		private function handleEvent(event:Event):void
 		{
 			if (this._blockRequest) return;
 			this._blockRequest = true;
@@ -160,7 +164,7 @@ package temple.ui.buttons.behaviors
 			this._blockRequest = false;
 		}
 		
-		protected function handleButtonDestructed(event:DestructEvent):void
+		private function handleButtonDestructed(event:DestructEvent):void
 		{
 			this.remove(event.target as DisplayObject);
 		}
