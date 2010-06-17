@@ -34,6 +34,10 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
 
 package temple.ui.buttons.behaviors 
@@ -48,6 +52,8 @@ package temple.ui.buttons.behaviors
 		 * A Boolean that indicates if the button should update on a (tunneled) ButtonEvent from his parent (or other ancestors).
 		 * Only applicable when this button is nested inside an other button. If set to true the button will show the same state as his parent.
 		 * If set to false, this button will only react on his own states. Default: true
+		 * 
+		 * @includeExample NestedMultiStateButtonsExample.as
 		 * 
 		 * @default true
 		 */

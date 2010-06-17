@@ -34,6 +34,10 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
 
 package temple.ui.eventtunneling 
@@ -50,6 +54,8 @@ package temple.ui.eventtunneling
 	/**
 	 * An EventTunneler will automaticly dispatch TunnelEvents on all children (and grant-children) of a Sprite if there
 	 * is a TunnelEvent dispatched on the Sprite.
+	 * 
+	 * @includeExample ../buttons/behaviors/NestedMultiStateButtonsExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */

@@ -9,7 +9,7 @@ package
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 1, level:String = "info"):void 
+	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 0, level:String = "info"):void 
 	{
 		if (object == "__UNLOGGABLE_STRING__")
 		{

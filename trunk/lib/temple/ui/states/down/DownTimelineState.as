@@ -34,6 +34,10 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
 
 package temple.ui.states.down 
@@ -41,9 +45,9 @@ package temple.ui.states.down
 	import temple.ui.states.BaseTimelineState;
 
 	/**
-	 * @author Tim Ruiters (tim[at]mediamonks[dot]com)
+	 * @author Thijs Broerse
 	 */
-	public class DownTimelineState extends BaseTimelineState 
+	public class DownTimelineState extends BaseTimelineState implements IDownState
 	{
 		public function DownTimelineState()
 		{

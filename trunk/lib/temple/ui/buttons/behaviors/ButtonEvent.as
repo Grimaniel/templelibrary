@@ -34,6 +34,10 @@
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
  *	
+ *	
+ *	Note: This license does not apply to 3rd party classes inside the Temple
+ *	repository with their own license!
+ *	
  */
 
 package temple.ui.buttons.behaviors 
@@ -43,10 +47,15 @@ package temple.ui.buttons.behaviors
 	import flash.events.Event;
 
 	/**
+	 * @includeExample NestedMultiStateButtonsExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ButtonEvent extends TunnelingEvent
 	{
+		/**
+		 * Dispatches when the status of a Button changes.
+		 */
 		public static const UPDATE:String = "ButtonEvent.update";
 		
 		private var _status:IButtonStatus;
@@ -59,7 +68,7 @@ package temple.ui.buttons.behaviors
 		}
 		
 		/**
-		 * The status object of the button
+		 * The status object of the button.
 		 */
 		public function get status():IButtonStatus
 		{
