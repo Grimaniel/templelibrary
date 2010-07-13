@@ -40,22 +40,34 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.video.net 
 {
+	import temple.media.video.cuepoints.VideoCuePoint;
+	import temple.media.video.cuepoints.CuePointEvent;
+	import temple.media.video.metadata.VideoMetaDataEvent;
+	import temple.media.video.metadata.VideoMetaData;
+	import temple.core.CoreNetStream;
+
+	import flash.net.NetConnection;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	dynamic public class VideoNetStream extends CoreNetStream 
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
-		
-		/**
-		 * move from a higher to a lower place
-		 */
-		public static const DESCENDING:String = "descending"; 
+		public function VideoNetStream(nc:NetConnection) 
+		{
+			super(nc);
+		}
+
+		public function onMetaData(info:Object):void 
+		{
+			this.dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.METADATA, new VideoMetaData(info)));
+		}
+
+		public function onCuePoint(info:Object):void 
+		{
+			this.dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, new VideoCuePoint(info)));
+		}
 	}
 }

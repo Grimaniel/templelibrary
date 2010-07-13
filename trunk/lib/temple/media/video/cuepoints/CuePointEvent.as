@@ -40,22 +40,42 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.video.cuepoints 
 {
+	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Arjan van Wijk (arjan at mediamonks dot com)
 	 */
-	public final class Direction 
+	public class CuePointEvent extends Event 
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
+		public static const CUEPOINT:String = "CuePointEvent.cuepoint";
+
+		private var _cuepoint:VideoCuePoint;
+
+		public function CuePointEvent(type:String, cuepoint:VideoCuePoint, bubbles:Boolean = false):void
+		{
+			super(type, bubbles);
+			
+			this._cuepoint = cuepoint;
+		}
 		
+		public function get cuepoint():VideoCuePoint
+		{
+			return this._cuepoint;
+		}
+
 		/**
-		 * move from a higher to a lower place
+		 * Creates a copy
 		 */
-		public static const DESCENDING:String = "descending"; 
+		override public function clone():Event 
+		{
+			return new CuePointEvent(this.type, this.cuepoint, this.bubbles);
+		}
+
+		override public function toString():String 
+		{
+			return super.toString() + " " + this.cuepoint;
+		}
 	}
 }

@@ -40,22 +40,41 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.sound 
 {
+	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public class SoundEvent extends Event 
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
+		public static const VOLUME_CHANGE:String = "SoundEvent.volumeChange";
+		public static const SOUND_COMPLETE:String = "SoundEvent.soundComplete";
+		
+		private var _name:String;
+
+		public function SoundEvent(type:String, name:String = null) 
+		{
+			super(type);
+			
+			this._name = name;
+		}
 		
 		/**
-		 * move from a higher to a lower place
+		 * The name of the Sound
 		 */
-		public static const DESCENDING:String = "descending"; 
+		public function get name():String
+		{
+			return this._name;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function clone():Event 
+		{
+			return new SoundEvent(this.type, this._name);
+		}
 	}
 }

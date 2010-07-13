@@ -40,22 +40,31 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.player 
 {
+	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public class PlayerEvent extends Event 
 	{
 		/**
-		 * move from a lower to a higher place
+		 * Event sent when the player starts playing video
 		 */
-		public static const ASCENDING:String = "ascending"; 
+		public static const PLAY_STARTED:String = "PlayerEvent.playStarted"; 
+		
+		public function PlayerEvent(type:String, bubbles:Boolean = false)
+		{
+			super(type, bubbles);
+		}
 		
 		/**
-		 * move from a higher to a lower place
+		 * Creates a copy
 		 */
-		public static const DESCENDING:String = "descending"; 
+		override public function clone():Event 
+		{
+			return new PlayerEvent(this.type);
+		}
 	}
 }

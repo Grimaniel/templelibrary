@@ -42,12 +42,13 @@
 
 package temple.ui.states 
 {
+	import temple.ui.IDisplayObject;
 	import temple.ui.IEnableable;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IState extends IEnableable
+	public interface IState extends IEnableable, IDisplayObject
 	{
 		/**
 		 * Show the state

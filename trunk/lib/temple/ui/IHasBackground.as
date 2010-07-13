@@ -40,22 +40,44 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.ui 
 {
-
+	import temple.ui.IDisplayObject;
+	
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public interface IHasBackground extends IDisplayObject 
 	{
 		/**
-		 * move from a lower to a higher place
+		 * A Boolean which indicates if background filling is enabled.
+		 * If set to true the background of the object will be filled which the color and alpha set by backgroundColor and backgroundAlpha.
 		 */
-		public static const ASCENDING:String = "ascending"; 
+		function get background():Boolean;
 		
 		/**
-		 * move from a higher to a lower place
+		 * @private
 		 */
-		public static const DESCENDING:String = "descending"; 
+		function set background(value:Boolean):void;
+		
+		/**
+		 * The color of the background of the object, if background is enabled.
+		 */
+		function get backgroundColor():uint;
+		
+		/**
+		 * @private
+		 */
+		function set backgroundColor(value:uint):void;
+		
+		/**
+		 * The Number (between 0 and 1) which indicates the alpha of the background of the object, if background is enabled.
+		 */
+		function get backgroundAlpha():Number;
+		
+		/**
+		 * @private
+		 */
+		function set backgroundAlpha(value:Number):void;
 	}
 }

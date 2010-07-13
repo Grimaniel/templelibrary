@@ -1,4 +1,4 @@
-/*
+﻿/*
  *	 
  *	Temple Library for ActionScript 3.0
  *	Copyright © 2010 MediaMonks B.V.
@@ -183,6 +183,16 @@ package temple.utils
 			this._params = null;
 			
 			super.destruct();
+		}
+		
+		/**
+		 * Make frame-delayed callback: (eg: a closure to .resume() of a paused FrameDelay)
+		 */
+		public static function closure(callback:Function, frameCount:int = 1, params:Array = null):Function
+		{
+			var fd:FrameDelay = new FrameDelay(callback, frameCount, params);
+			fd.pause();
+			return fd.resume;
 		}
 	}
 }

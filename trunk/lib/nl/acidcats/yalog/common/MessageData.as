@@ -16,21 +16,65 @@ limitations under the License.
 
 package nl.acidcats.yalog.common 
 { 
-
 	public class MessageData 
 	{
-		public var text:String;			// the message
-		public var level:Number;		// the level of importance
-		public var time:Number;			// the time of dispatch
-		public var sender:String;		// name of sender
-		public var channelID:Number;	// id of the channel 
+		/**
+		 * the message
+		 */
+		public var text:String; 
+		
+		/**
+		 * the level of importance
+		 */
+		public var level:uint; 
+		
+		/**
+		 * the time of dispatch
+		 */
+		public var time:Number; 
+		
+		/**
+		 * name of sender
+		 */
+		public var sender:String; 
+		
+		/**
+		 * RegistryID of the sender
+		 */
+		public var senderId:uint;
+		
+		/**
+		 * The stackTrace of the message
+		 */
+		public var stackTrace:String;
 
-		public function MessageData(text:String, level:Number, time:Number = Number.NaN, sender:String = null) 
+		/**
+		 * id of the connection 
+		 */
+		public var connectionId:Number;
+
+		/**
+		 * Name of the connection 
+		 */
+		public var connectionName:String;
+		
+		/**
+		 * ID of the channel
+		 */
+		public var channelID:Number;
+		
+
+		public function MessageData(text:String, level:uint, time:Number = Number.NaN, sender:String = null, senderId:uint = 0, stackTrace:String = null, connectionId:Number = NaN) 
 		{
+			if (text == null) throw new Error("text can not be null");
+			
 			this.text = text;
 			this.level = level;
 			this.time = time;
 			this.sender = sender;
+			this.senderId = senderId;
+			this.stackTrace = stackTrace;
+			this.connectionId = connectionId;
 		}
 
 		public function toString():String 

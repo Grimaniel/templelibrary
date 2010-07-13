@@ -59,7 +59,7 @@ package temple.ui.behaviors
 		}
 		
 		/**
-		 * Returns a reference to the DisplayObject. Same value as target, but typed as DisplayObject
+		 * Returns a reference to the DisplayObject. Same value as target, but typed as DisplayObject.
 		 */
 		public function get displayObject():DisplayObject
 		{

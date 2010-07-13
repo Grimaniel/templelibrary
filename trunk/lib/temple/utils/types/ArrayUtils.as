@@ -255,7 +255,22 @@ package temple.utils.types
 			
 			return true;
 		}
-		
+
+		/**
+		 * Returns the amount of (not empty) items in an Array.
+		 */
+		public static function filledLength(array:Array):uint 
+		{
+			var length:uint;
+			
+			var leni:int = array.length;
+			for (var i:int = 0; i < leni; i++)
+			{
+				if (array[i] != undefined) length++;
+			}
+			return length;
+		}
+
 		public static function toString():String
 		{
 			return getClassName(ArrayUtils);
