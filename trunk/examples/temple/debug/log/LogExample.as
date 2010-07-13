@@ -1,3 +1,10 @@
+/**
+ * @exampleText
+ * 
+ * <p>This is an example about how to use Log.</p>
+ * 
+ * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/debug/log/LogExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/debug/log/LogExample.swf</a></p>
+ */
 package  
 {
 	import temple.debug.log.Log;
@@ -8,10 +15,8 @@ package
 	{
 		public function LogExample()
 		{
-			super();
-			
-			// Connect to Yala, so we can see the output of the log in Yala: http://yala.acidcats.nl/
-			YaLogConnector.connect();
+			// Connect to Yalog, so we can see the output of the log in Yalala: http://yalala.tyz.nl/
+			YaLogConnector.connect("Temple - LogExample");
 			
 			// log an info message
 			Log.info("This is an info message", this);
@@ -27,6 +32,11 @@ package
 			this.logDebug("This is a debug message");
 			this.logFatal("This is a fatal message");
 			
+			// quick way to log
+			log("quick way to log");
+			
+			// log has also the ability to add an object which will be trace using ObjectUtils.traceObject
+			log("this", this);
 			
 		}
 	}

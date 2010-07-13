@@ -18,8 +18,6 @@ package
 		
 		public function CacheLoaderExample()
 		{
-			super();
-			
 			new StageSettings(this);
 			
 			// create a new CacheLoader

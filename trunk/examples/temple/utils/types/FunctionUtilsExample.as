@@ -18,10 +18,8 @@ package
 	{
 		public function FunctionUtilsExample()
 		{
-			super();
-			
-			// Connect to Yalog, so you can see all log message at: http://yala.acidcats.nl/
-			YaLogConnector.connect();
+			// Connect to Yalog, so you can see all log message at: http://yalala.tyz.nl/
+			YaLogConnector.connect("Temple - FunctionUtilsExample");
 			
 			log(myPrivateFunction); // function Function() {}
 			

@@ -16,10 +16,8 @@ package
 	{
 		public function URLManagerExample()
 		{
-			super();
-			
-			// Connect to Yalog, so you can see all log message at: http://yala.acidcats.nl/
-			YaLogConnector.connect();
+			// Connect to Yalog, so you can see all log message at: http://yalala.tyz.nl/
+			YaLogConnector.connect("Temple - URLManagerExample");
 			
 			// set debug mode to get debug log messages from the URLManager
 			URLManager.getInstance().debug = true; 

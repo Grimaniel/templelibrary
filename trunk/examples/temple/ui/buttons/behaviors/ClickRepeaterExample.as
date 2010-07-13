@@ -22,10 +22,8 @@ package
 
 		public function ClickRepeaterExample()
 		{
-			super();
-			
-			// Connect to Yalog, so you can see all log message at: http://yala.acidcats.nl/
-			YaLogConnector.connect();
+			// Connect to Yalog, so you can see all log message at: http://yalala.tyz.nl/
+			YaLogConnector.connect("Temple - ClickRepeaterExample");
 			
 			// set stage properties
 			new StageSettings(this);

@@ -16,8 +16,6 @@ package
 	{
 		public function DragBehaviorExample()
 		{
-			super();
-			
 			// Create a new Sprite
 			var sprite:Sprite = new Sprite();
 			
