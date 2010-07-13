@@ -49,32 +49,34 @@ package nl.acidcats.yalog.util
 			switch (event.level) 
 			{
 				case LogLevels.DEBUG: 
-					Yalog.debug(event.data, event.sender); 
+					Yalog.debug(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
 				case LogLevels.ERROR: 
-					Yalog.error(event.data, event.sender); 
+					Yalog.error(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
 				case LogLevels.FATAL: 
-					Yalog.fatal(event.data, event.sender); 
+					Yalog.fatal(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
 				case LogLevels.INFO: 
-					Yalog.info(event.data, event.sender); 
+					Yalog.info(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
 				case LogLevels.STATUS: 
-					Yalog.info(event.data, event.sender); 
+					Yalog.info(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
 				case LogLevels.WARN: 
-					Yalog.warn(event.data, event.sender); 
+					Yalog.warn(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
 			}
 		}
 
 		/**
-		 *	Connect to the Log
+		 * Connect to the Log.
+		 * @param name optional name that is used to identify the connection. The name is displayed in Yalala.
 		 */
-		public static function connect():void 
+		public static function connect(name:String = null):void 
 		{
 			YaLogConnector.getInstance();
+			Yalog.connectionName = name;
 		}
 	}
 }

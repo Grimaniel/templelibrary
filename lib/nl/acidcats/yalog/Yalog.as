@@ -16,6 +16,7 @@ limitations under the License.
 
 package nl.acidcats.yalog 
 {
+	import temple.debug.errors.throwError;
 	import nl.acidcats.yalog.common.Functions;
 	import nl.acidcats.yalog.common.Levels;
 	import nl.acidcats.yalog.common.MessageData;
@@ -25,24 +26,38 @@ package nl.acidcats.yalog
 	import flash.events.Event;
 	import flash.events.StatusEvent;
 	import flash.net.LocalConnection;
+	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
 
+	/**
+	 * View your debug messages at: http://yalala.tyz.nl/
+	 * 
+	 * @author Stephan Bezoen
+	 * 
+	 * Modified by Thijs Broerse
+	 */
 	public class Yalog 
 	{
-		private static const BUFFER_SIZE:Number = 250;
+		private static const _BUFFER_SIZE:Number = 250;
+		private static const _MAX_PACKAGE_BYTES:uint = 40000;
 
 		private static var _instance:Yalog;
-		private static var _bufferSize:Number = Yalog.BUFFER_SIZE;
+		private static var _bufferSize:Number = Yalog._BUFFER_SIZE;
 		private static var _showTrace:Boolean = true;
+		private static var _sendAsByteArray:Boolean = true;
+		
+		// Identifiers for this connection
+		private static const _connectionId:Number = new Date().time;
+		private static var _connectionName:String;
 
 		private var _sender:LocalConnection;
-		private var _senderConnected:Boolean = false;
+		private var _senderConnected:Boolean;
 
 		private var _receiver:PongConnection;
 
 		private var _buffer:Array;
 		private var _writePointer:Number;
-		private var _fullCircle:Boolean = false;
+		private var _fullCircle:Boolean;
 		
 		/**
 		 * The instance of this class is only used in static functions, so not accessible from the outside
@@ -59,6 +74,8 @@ package nl.acidcats.yalog
 		 */
 		function Yalog() 
 		{
+			if (Yalog._instance) throwError(new Error(this, "Singleton, use Yalog.getInstance()"));
+			
 			// create send connection
 			this._sender = new LocalConnection();
 			this._sender.addEventListener(StatusEvent.STATUS, this.handleSenderStatus, false, 0, true);
@@ -68,7 +85,7 @@ package nl.acidcats.yalog
 			this._writePointer = 0;
 
 			// send a "ping" on the main channel to check for availability of any viewer application		
-			ping();
+			this.ping();
 		}
 
 		/**
@@ -76,13 +93,13 @@ package nl.acidcats.yalog
 		 */
 		private function ping():void 
 		{
-			if (createReceiver()) 
+			if (this.createReceiver()) 
 			{
 				try 
 				{
-					this._sender.send(Functions.CHANNEL, Functions.FUNC_PING, this._receiver.getReceiverChannel());
+					this._sender.send(Functions.CHANNEL, Functions.FUNC_PING, this._receiver.receiverChannel + ";" + Yalog._connectionId);
 				}
-				catch (e:ArgumentError) 
+				catch (error:ArgumentError) 
 				{
 				}
 			}
@@ -103,7 +120,7 @@ package nl.acidcats.yalog
 		/**
 		 *	Handle event from receiver connection that a pong was received
 		 */
-		private function handlePong(e:Event):void 
+		private function handlePong(event:Event):void 
 		{
 			// flag we're connected to viewer
 			this._senderConnected = true;
@@ -116,70 +133,70 @@ package nl.acidcats.yalog
 		 *	Set the number of messages to be kept as history.
 		 *	Note: this will clear the current buffer, so make sure this is the first thing you do!
 		 */
-		public static function setBufferSize(inSize:Number):void 
+		public static function setBufferSize(size:Number):void 
 		{
-			Yalog.getInstance().setBufSize(inSize);
+			Yalog.getInstance().setBufSize(size);
 		}
 
 		/**
 		 *	Send a debug message to Yala
-		 *	@param inText: the message
-		 *	@param inSender: a String denoting the sender (p.e. the classname)
+		 *	@param text: the message
+		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function debug(inText:String, inSender:String):void 
+		public static function debug(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
 		{
-			sendToConsole(inText, Levels.DEBUG, inSender);
+			Yalog.sendToConsole(text, Levels.DEBUG, sender, objectId, stackTrace);
 		}
 
 		/**
 		 *	Send an informational message to Yala
-		 *	@param inText: the message
-		 *	@param inSender: a String denoting the sender (p.e. the classname)
+		 *	@param text: the message
+		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function info(inText:String, inSender:String):void 
+		public static function info(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
 		{
-			Yalog.sendToConsole(inText, Levels.INFO, inSender);
+			Yalog.sendToConsole(text, Levels.INFO, sender, objectId, stackTrace);
 		}
 
 		/**
 		 *	Send an error message to Yala
-		 *	@param inText: the message
-		 *	@param inSender: a String denoting the sender (p.e. the classname)
+		 *	@param text: the message
+		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function error(inText:String, inSender:String):void 
+		public static function error(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
 		{
-			Yalog.sendToConsole(inText, Levels.ERROR, inSender);
+			Yalog.sendToConsole(text, Levels.ERROR, sender, objectId, stackTrace);
 		}
 
 		/**
 		 *	Send a warning message to Yala
-		 *	@param inText: the message
-		 *	@param inSender: a String denoting the sender (p.e. the classname)
+		 *	@param text: the message
+		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function warn(inText:String, inSender:String):void 
+		public static function warn(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
 		{
-			Yalog.sendToConsole(inText, Levels.WARN, inSender);
+			Yalog.sendToConsole(text, Levels.WARN, sender, objectId, stackTrace);
 		}
 
 		/**
 		 *	Send a fatal message to Yala
-		 *	@param inText: the message
-		 *	@param inSender: a String denoting the sender (p.e. the classname)
+		 *	@param text: the message
+		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function fatal(inText:String, inSender:String):void 
+		public static function fatal(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
 		{
-			Yalog.sendToConsole(inText, Levels.FATAL, inSender);
+			Yalog.sendToConsole(text, Levels.FATAL, sender, objectId, stackTrace);
 		}
 
 		/**
 		 *	Send a text to Yala with a certain level of importance
-		 *	@param inText: the message
-		 *	@param inLevel: the level of importance
-		 *	@param inSender: a String denoting the sender (p.e. the classname)
+		 *	@param text: the message
+		 *	@param level: the level of importance
+		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		private static function sendToConsole(text:String, level:Number, sender:String):void 
+		private static function sendToConsole(text:String, level:uint, sender:String, objectId:uint, stackTrace:String):void 
 		{
-			var md:MessageData = new MessageData(text, level, getTimer(), sender);
+			var md:MessageData = new MessageData(text, level, getTimer(), sender, objectId, stackTrace);
 			
 			if(Yalog._showTrace) trace(md.toString());
 
@@ -207,13 +224,53 @@ package nl.acidcats.yalog
 		{
 			Yalog._showTrace = value;
 		}
+		
+		/**
+		 * If set to true the data will be send as ByteArray (recommanded).
+		 */
+		public static function get sendAsByteArray():Boolean
+		{
+			return Yalog._sendAsByteArray;
+		}
+		
+		/**
+		 * @private
+		 */
+		public static function set sendAsByteArray(value:Boolean):void
+		{
+			Yalog._sendAsByteArray = value;
+		}
+		
+		/**
+		 * The id for the connection. Used to easely identify the connection.
+		 */
+		public static function get connectionId():Number
+		{
+			return Yalog._connectionId;
+		}
 
+		/**
+		 * The name for the connection. Used to easely identify the connection.
+		 */
+		public static function get connectionName():String
+		{
+			return Yalog._connectionName;
+		}
+		
+		/**
+		 * @private
+		 */
+		public static function set connectionName(value:String):void
+		{
+			Yalog._connectionName = value;
+		}
+		
 		/**
 		 *	Process message data
 		 */
 		private function handleData(data:MessageData):void 
 		{
-			if (!_senderConnected) 
+			if (!this._senderConnected) 
 			{
 				this.storeData(data);
 			} 
@@ -228,18 +285,99 @@ package nl.acidcats.yalog
 		 */
 		private function sendData(data:MessageData):void 
 		{
-			data.channelID = _receiver.getReceiverChannelID();
-			this._sender.send(Functions.CHANNEL, Functions.FUNC_WRITELOG, data);
+			data.channelID = this._receiver.channelID;
+			data.connectionId = Yalog.connectionId;
+			data.connectionName = Yalog.connectionName;
+			
+			if (!Yalog._sendAsByteArray)
+			{
+				this._sender.send(Functions.CHANNEL, Functions.FUNC_WRITELOG, data);
+			}
+			else
+			{
+				/**
+				 * Following code is copied from the MonserDebugger
+				 * 
+				 * author: Ferdi Koomen, Joost Harts
+ 				 * company: De Monsters
+ 				 * link: http://www.deMonsterDebugger.com
+				 */
+				
+				// Compress the data
+				var item:ByteArray = new ByteArray();
+				item.writeObject(data);
+				item.compress();
+				
+				// Array to hold the data packages
+				var dataPackages:Array = new Array();
+				
+				// Counter for the loops
+				var i:int = 0;
+				
+				// Check if the data should be splitted
+				// The max size for localconnection = 40kb = 40960b
+				// We use 960b for the package definition
+				if (item.length > _MAX_PACKAGE_BYTES)
+				{
+					// Save the length
+					var bytesAvailable:int = item.length;
+					var offset:int = 0;
+					
+					// Calculate the total package count
+					var total:int = Math.ceil(item.length / _MAX_PACKAGE_BYTES);
+					
+					// Loop through the bytes / chunks
+					for (i = 0; i < total; i++)
+					{
+						// Set the length to read
+						var length:int = bytesAvailable;
+						if (length > _MAX_PACKAGE_BYTES)
+						{
+							length = _MAX_PACKAGE_BYTES;
+						}
+						
+						// Read a chunk of data
+						var tmp:ByteArray = new ByteArray();
+						tmp.writeBytes(item, offset, length);
+						
+						// Create a data package
+						dataPackages.push({total:total, nr:(i + 1), bytes:tmp});
+						
+						// Update the bytes available and offset
+						bytesAvailable -= length;
+						offset += length;
+					}		
+				} 
+				else
+				{
+					// The data size is under 40kb, so just send one package
+					dataPackages.push({total:1, nr:1, bytes:item});
+				}
+				
+				// send the data packages through the line out
+				for (i = 0; i < dataPackages.length; i++)
+				{
+					try
+					{
+						this._sender.send(Functions.CHANNEL, Functions.FUNC_WRITELOG, dataPackages[i]);
+					}
+					catch(error:Error)
+					{
+						trace(error.message);
+						break;
+					}
+				}
+			}
 		}
-
+		
 		/**
 		 *	Store message
 		 */
-		private function storeData(inData:MessageData):void 
+		private function storeData(data:MessageData):void 
 		{
-			this._buffer[_writePointer++] = inData;
+			this._buffer[this._writePointer++] = data;
 			
-			if (this._writePointer >= BUFFER_SIZE) 
+			if (this._writePointer >= _BUFFER_SIZE) 
 			{
 				this._fullCircle = true;
 				this._writePointer = 0;
@@ -257,7 +395,7 @@ package nl.acidcats.yalog
 			
 			if (_fullCircle) 
 			{
-				this.dumpRange(_writePointer, BUFFER_SIZE - 1);
+				this.dumpRange(_writePointer, _BUFFER_SIZE - 1);
 			}
 			this.dumpRange(0, _writePointer - 1);
 
@@ -290,17 +428,17 @@ package nl.acidcats.yalog
 			this._fullCircle = false;
 		}
 
-		private function handleReceiverStatus(e:StatusEvent):void 
+		private function handleReceiverStatus(event:StatusEvent):void 
 		{
 		}
 
-		private function handleSenderStatus(e:StatusEvent):void 
+		private function handleSenderStatus(event:StatusEvent):void 
 		{
 		}
 
 		public function toString():String 
 		{
-			return getClassName(Yalog);
+			return getClassName(this);
 		}
 	}
 }
@@ -323,7 +461,7 @@ dynamic class PongConnection extends LocalConnection
 {
 	public static var EVENT_PONG_RECEIVED:String = "onPongReceived";
 
-	private var _channelID:Number;
+	private var _channelID:int;
 	private var _receiverChannel:String;
 
 	/**
@@ -365,24 +503,20 @@ dynamic class PongConnection extends LocalConnection
 		
 		if (receiverConnected) 
 		{
-			this[Functions.FUNC_PONG] = handlePong;
+			this[Functions.FUNC_PONG] = this.onPong;
 		}
-		
 		return receiverConnected;
 	}
 
 	/**
 	 * @return the full name of the receiver channel
 	 */
-	public function getReceiverChannel():String 
+	public function get receiverChannel():String 
 	{
 		return this._receiverChannel;
 	}
-
-	/**
-	 * @return the ID of the receiver channel
-	 */
-	public function getReceiverChannelID():Number 
+	
+	public function get channelID():int
 	{
 		return this._channelID;
 	}
@@ -390,10 +524,9 @@ dynamic class PongConnection extends LocalConnection
 	/**
 	 * Handle call from a viewer application via local connection 
 	 */
-	private function handlePong():void 
+	private function onPong():void 
 	{
 		this.close();
-		
 		this.dispatchEvent(new Event(EVENT_PONG_RECEIVED));
 	}
 }

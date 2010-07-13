@@ -40,22 +40,28 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.video.net 
 {
+	import temple.core.CoreNetConnection;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public class VideoNetConnection extends CoreNetConnection 
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
+		public function VideoNetConnection()
+		{
+			super();
+		}
 		
-		/**
-		 * move from a higher to a lower place
-		 */
-		public static const DESCENDING:String = "descending"; 
+		public function onBWDone(...args):void 
+		{
+			// do nothing
+		}
+
+		public function onStatus(...args):void 
+		{
+			// do nothing
+		}
 	}
 }

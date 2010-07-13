@@ -1,6 +1,6 @@
 /**
- * VERSION: 2.2
- * DATE: 10/19/2009
+ * VERSION: 2.21
+ * DATE: 2010-06-23
  * ACTIONSCRIPT VERSION: 3.0 
  * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
@@ -218,6 +218,7 @@ package com.greensock.plugins
 		override public function set changeFactor(n:Number):void 
 		{
 			var i:int, p:String, b:Object, t:Number, segments:uint, val:Number;
+			_changeFactor = n;
 			if (n == 1) 
 			{ //to make sure the end values are EXACTLY what they need to be.
 				for (p in _beziers) 

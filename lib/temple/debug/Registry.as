@@ -98,7 +98,7 @@ package temple.debug
 		{
 			if (Registry._objectList[object])
 			{
-				Log.warn("add: object '" + object + "' is already registered in Registry", "temple.debug.Registry");
+				Log.warn("add: object '" + object + "' is already registered in Registry", Registry);
 				
 				return Registry._objectList[object];
 			}
@@ -162,6 +162,11 @@ package temple.debug
 		public static function destructAll():void
 		{
 			for (var object:Object in Registry._objectList) Destructor.destruct(object);
+		}
+		
+		public static function toString() : String
+		{
+			return getClassName(Registry);
 		}
 	}
 }

@@ -10,7 +10,6 @@ package com.greensock
 	import com.greensock.events.TweenEvent;
 
 	import flash.events.*;
-	import flash.utils.*;
 
 	/**
 	 *  @private

@@ -40,22 +40,46 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.ui 
 {
+	import flash.display.DisplayObject;
+	import flash.geom.Point;
+	import flash.text.TextSnapshot;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public interface IDisplayObjectContainer extends IDisplayObject
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
+		function addChild(child:DisplayObject):DisplayObject;
+		function addChildAt(child:DisplayObject, index:int):DisplayObject;
 		
-		/**
-		 * move from a higher to a lower place
-		 */
-		public static const DESCENDING:String = "descending"; 
+		function areInaccessibleObjectsUnderPoint(point:Point):Boolean;
+		
+		function contains(child:DisplayObject):Boolean;
+		
+		function getChildAt(index:int):DisplayObject;
+		function getChildByName(name:String):DisplayObject;
+		function getChildIndex(child:DisplayObject):int;
+		
+		function getObjectsUnderPoint(point:Point):Array;
+		
+		function get mouseChildren():Boolean;
+		function set mouseChildren(enable:Boolean):void;
+		
+		function get numChildren():int;
+		
+		function removeChild(child:DisplayObject):DisplayObject;
+		function removeChildAt(index:int):DisplayObject;
+		
+		function setChildIndex(child:DisplayObject, index:int):void;
+		
+		function swapChildren(child1:DisplayObject, child2:DisplayObject):void;
+		function swapChildrenAt(index1:int, index2:int):void;
+		
+		function get tabChildren():Boolean;
+		function set tabChildren(enable:Boolean):void;
+		
+		function get textSnapshot():TextSnapshot;
 	}
 }

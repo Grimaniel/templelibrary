@@ -242,6 +242,20 @@ package temple.core
 		/**
 		 * @inheritDoc
 		 */
+		public function get children():Array
+		{
+			var children:Array = [];
+			var leni:int = this.numChildren;
+			for (var i:int = 0; i < leni; i++)
+			{
+				children[i] = this.getChildAt(i);
+			}
+			return children;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function get destructOnUnload():Boolean
 		{
 			return this._destructOnUnload;

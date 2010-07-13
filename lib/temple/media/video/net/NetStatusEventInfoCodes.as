@@ -40,22 +40,33 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.video.net 
 {
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public class NetStatusEventInfoCodes 
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
+		public static const NETSTREAM_BUFFER_EMPTY:String = "NetStream.Buffer.Empty";
+		public static const NETSTREAM_BUFFER_FULL:String = "NetStream.Buffer.Full";
+		public static const NETSTREAM_BUFFER_FLUSH:String = "NetStream.Buffer.Flush";
+
+		public static const NETSTREAM_PLAY_START:String = "NetStream.Play.Start";
+		public static const NETSTREAM_PLAY_STOP:String = "NetStream.Play.Stop";
+		public static const NETSTREAM_PLAY_STREAM_NOT_FOUND:String = "NetStream.Play.StreamNotFound";
+		public static const NETSTREAM_PLAY_RESET:String = "NetStream.Play.Reset";
+
+		public static const NETSTREAM_SEEK_INVALID_TIME:String = "NetStream.Seek.InvalidTime";
+		public static const NETSTREAM_SEEK_NOTIFY:String = "NetStream.Seek.Notify";
+
+		public static const NETSTREAM_PAUSE_NOTIFY:String = "NetStream.Pause.Notify";
+		public static const NETSTREAM_UNPAUSE_NOTIFY:String = "NetStream.Unpause.Notify";
 		
-		/**
-		 * move from a higher to a lower place
-		 */
-		public static const DESCENDING:String = "descending"; 
+		public static const NETCONNECTION_CONNECT_SUCCESS:String = "NetConnection.Connect.Success";
+		public static const NETCONNECTION_CONNECT_CLOSED:String = "NetConnection.Connect.Closed";
+		public static const NETCONNECTION_CONNECT_REJECTED:String = "NetConnection.Connect.Rejected";
+		public static const NETCONNECTION_CONNECT_FAILED:String = "NetConnection.Connect.Failed";
+		
 	}
 }

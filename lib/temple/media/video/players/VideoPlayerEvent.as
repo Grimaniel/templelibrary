@@ -40,22 +40,42 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.video.players 
 {
+	import temple.media.player.PlayerEvent;
+
+	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public class VideoPlayerEvent extends PlayerEvent 
 	{
-		/**
-		 * move from a lower to a higher place
+		public static const BUFFER_EMPTY:String = "VideoPlayerEvent.bufferEmpty";
+		public static const BUFFER_FLUSH:String = "VideoPlayerEvent.bufferFlush";
+		public static const MOVIE_NOTFOUND:String = "VideoPlayerEvent.movieNotFound";
+		public static const SECURITY_ERROR:String = "VideoPlayerEvent.securityError";
+		public static const SEEK_INVALID:String = "VideoPlayerEvent.seekInvalid";
+		public static const MOVIE_LOADED:String = "VideoPlayerEvent.movieLoaded";
+		public static const SEEK_NOTIFY:String = "VideoPlayerEvent.seekNotify";
+
+		/** 
+		 * Dispatched when do a loadMovie and movie is visible and paused on first frame
 		 */
-		public static const ASCENDING:String = "ascending"; 
-		
+		public static const LOAD_READY:String = "VideoPlayerEvent.loadReady";
+
+
+		public function VideoPlayerEvent(type:String, bubbles:Boolean = false) 
+		{
+			super(type, bubbles);
+		}
+
 		/**
-		 * move from a higher to a lower place
+		 * Creates a copy
 		 */
-		public static const DESCENDING:String = "descending"; 
+		override public function clone():Event 
+		{
+			return new VideoPlayerEvent(this.type, this.bubbles);
+		}
 	}
 }

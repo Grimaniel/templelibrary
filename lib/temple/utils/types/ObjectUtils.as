@@ -42,6 +42,8 @@
 
 package temple.utils.types 
 {
+	import flash.utils.ByteArray;
+
 	import temple.Temple;
 	import temple.core.ICoreObject;
 	import temple.data.xml.XMLParser;
@@ -216,6 +218,10 @@ package temple.utils.types
 							{
 								output += "\n" + tabs + vardata.name + ": Array(" + (variable as Array).length + ") []";
 							}
+						}
+						else if (variable is ByteArray)
+						{
+							output += "\n" + tabs + vardata.name + ": " + uint(ByteArray(variable).bytesAvailable / 1024) + "KB " + (['AMF0',,,'AMF3'][(ByteArray(variable).objectEncoding)]) + " position:" + ByteArray(variable).position + " (ByteArray)";
 						}
 						else 
 						{

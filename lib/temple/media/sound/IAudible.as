@@ -40,22 +40,23 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.sound 
 {
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public interface IAudible 
 	{
 		/**
-		 * move from a lower to a higher place
+		 * The sound volume between 0 and 1, where 0 means no sound
+		 * The (relative) sound level of the object. If the object has an other IAmplifier the actual sound level (gain) will depend on the gain of the IAmplifier
 		 */
-		public static const ASCENDING:String = "ascending"; 
-		
+		function get volume():Number;
+
 		/**
-		 * move from a higher to a lower place
+		 * @private
 		 */
-		public static const DESCENDING:String = "descending"; 
+		function set volume(value:Number):void;
 	}
 }

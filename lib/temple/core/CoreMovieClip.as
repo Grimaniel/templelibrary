@@ -82,7 +82,7 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CoreMovieClip extends MovieClip implements ICoreDisplayObject
+	public class CoreMovieClip extends MovieClip implements ICoreDisplayObjectContainer
 	{
 		private namespace temple = "http://code.google.com/p/templelibrary/";
 		
@@ -237,6 +237,20 @@ package temple.core
 		public function set scale(value:Number):void
 		{
 			this.scaleX = this.scaleY = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get children():Array
+		{
+			var children:Array = [];
+			var leni:int = this.numChildren;
+			for (var i:int = 0; i < leni; i++)
+			{
+				children[i] = this.getChildAt(i);
+			}
+			return children;
 		}
 		
 		/**

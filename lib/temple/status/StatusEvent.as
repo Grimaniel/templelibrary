@@ -40,22 +40,34 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.status 
 {
+	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public class StatusEvent extends Event implements IHasStatus
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
+		public static const STATUS_CHANGE:String = "StatusEvent.statusChange";
 		
-		/**
-		 * move from a higher to a lower place
-		 */
-		public static const DESCENDING:String = "descending"; 
+		private var _status:String;
+
+		public function StatusEvent(type:String, status:String, bubbles:Boolean = false)
+		{
+			super(type, bubbles);
+			
+			this._status = status;
+		}
+		
+		public function get status():String
+		{
+			return this._status;
+		}
+
+		override public function clone():Event
+		{
+			return new StatusEvent(this.type, this._status, this.bubbles);
+		}
 	}
 }

@@ -40,22 +40,38 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.video.metadata 
 {
+	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Arjan van Wijk (arjan at mediamonks dot com)
 	 */
-	public final class Direction 
+	public class VideoMetaDataEvent extends Event 
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
+		public static const METADATA:String = "VideoMetaDataEvent.metadata";
+		public static const NOT_FOUND:String = "VideoMetaDataEvent.notFound";
+
+		private var _metadata:VideoMetaData;
+
+		public function VideoMetaDataEvent(type:String, metadata:VideoMetaData = null, bubbles:Boolean = false):void
+		{
+			super(type, bubbles);
+			
+			this._metadata = metadata;
+		}
 		
+		public function get metadata():VideoMetaData
+		{
+			return this._metadata;
+		}
+
 		/**
-		 * move from a higher to a lower place
+		 * @inheritDoc
 		 */
-		public static const DESCENDING:String = "descending"; 
+		override public function clone():Event 
+		{
+			return new VideoMetaDataEvent(this.type, this.metadata, this.bubbles);
+		}
 	}
 }

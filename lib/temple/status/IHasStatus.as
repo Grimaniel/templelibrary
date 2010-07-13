@@ -40,22 +40,22 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.status 
 {
+	/**
+	 * Dispatched when the status is changed
+	 * @eventType temple.status.StatusEvent.STATUS_CHANGE
+	 */
+	[Event(name = "StatusEvent.statusChange", type = "temple.status.StatusEvent")]
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public interface IHasStatus 
 	{
 		/**
-		 * move from a lower to a higher place
+		 * The current status of the object
 		 */
-		public static const ASCENDING:String = "ascending"; 
-		
-		/**
-		 * move from a higher to a lower place
-		 */
-		public static const DESCENDING:String = "descending"; 
+		function get status():String;
 	}
 }

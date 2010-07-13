@@ -40,22 +40,22 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.player 
 {
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public interface IProgressiveDownloadPlayer extends IPlayer 
 	{
 		/**
-		 * move from a lower to a higher place
+		 *	The loading progress of the movie.
 		 */
-		public static const ASCENDING:String = "ascending"; 
-		
+		function get bytesLoaded():Number;
+
 		/**
-		 * move from a higher to a lower place
+		 *	The total size of the movie in bytes.
 		 */
-		public static const DESCENDING:String = "descending"; 
+		function get bytesTotal():Number;
 	}
 }

@@ -40,22 +40,17 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.media.player 
 {
 
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public class PlayerStatus 
 	{
-		/**
-		 * move from a lower to a higher place
-		 */
-		public static const ASCENDING:String = "ascending"; 
-		
-		/**
-		 * move from a higher to a lower place
-		 */
-		public static const DESCENDING:String = "descending"; 
+		public static const STOPPED:String = "stopped";
+		public static const PLAYING:String = "playing";	
+		public static const PAUSED:String = "paused";
+		public static const LOADING:String = "loading";
 	}
 }

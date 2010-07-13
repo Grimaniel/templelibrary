@@ -123,7 +123,7 @@ package temple.debug.log
 		private static var _instance:Log;
 
 		private var _showTrace:Boolean = true;
-
+		private var _stackTrace:Boolean = false;
 		
 		/**
 		 *	Log a message with debug level
@@ -236,11 +236,34 @@ package temple.debug.log
 		 */
 		private function send(data:*, sender:String, level:*, objectId:uint = 0):void 
 		{
+			var stack:String;
+			
+			if (this._stackTrace)
+			{
+				stack = new Error().getStackTrace();
+				
+				if (stack)
+				{
+					var lines:Array = stack.split("\n");
+					var line:uint = 3;
+					if (String(lines[line]).indexOf('temple.core::Core') == 4) line++;
+					stack = String(lines[line]).substr(4);
+					var i:int = stack.indexOf('::');
+					if (i != -1) stack = stack.substr(i+2);
+					stack = stack.replace("/", ".");
+					i = stack.lastIndexOf(':');
+					if (i != -1)
+					{
+						stack = stack.substr(0, stack.indexOf('()') + 2) + stack.substring(i, stack.length - 1);
+					}
+				}
+			}
+			
 			if (this._showTrace) 
 			{
-				trace(TimeUtils.formatTime(getTimer()) + "\t" + level + ": " + String(data) + " -- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#"));
+				trace(TimeUtils.formatTime(getTimer()) + " \t" + level + ": \t" + String(data) + " \t-- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#") + (stack ? " " + stack : ""));
 			}
-			this.dispatchEvent(new LogEvent(level, data, sender ? sender.toString() : 'null', objectId));
+			this.dispatchEvent(new LogEvent(level, data, sender ? sender.toString() : 'null', objectId, stack));
 		}
 
 		/**
@@ -288,6 +311,19 @@ package temple.debug.log
 		public static function set showTrace(value:Boolean):void 
 		{
 			Log.getInstance()._showTrace = value;
+		}
+
+		public static function get stackTrace():Boolean 
+		{
+			return Log.getInstance()._stackTrace;
+		}
+		
+		/**
+		 * @private
+		 */
+		public static function set stackTrace(value:Boolean):void 
+		{
+			Log.getInstance()._stackTrace = value;
 		}
 
 		/**

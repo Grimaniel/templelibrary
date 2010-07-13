@@ -40,22 +40,19 @@
  *	
  */
 
-package temple.ui.layout 
+package temple.core 
 {
-
+	import temple.core.ICoreDisplayObject;
+	import temple.ui.IDisplayObjectContainer;
+	
 	/**
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public final class Direction 
+	public interface ICoreDisplayObjectContainer extends ICoreDisplayObject, IDisplayObjectContainer 
 	{
 		/**
-		 * move from a lower to a higher place
+		 * Returns all children as array. The Array is generated on demand. Modifying the array does not changes the object.
 		 */
-		public static const ASCENDING:String = "ascending"; 
-		
-		/**
-		 * move from a higher to a lower place
-		 */
-		public static const DESCENDING:String = "descending"; 
+		function get children():Array;
 	}
 }
