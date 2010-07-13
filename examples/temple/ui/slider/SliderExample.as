@@ -22,8 +22,6 @@ package
 
 		public function SliderExample()
 		{
-			super();
-			
 			new StageSettings(this);
 			
 			var track:Track = new Track();

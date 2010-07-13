@@ -16,11 +16,11 @@ package
 	{
 		public function DelegateExample()
 		{
-			// Connect to Yala, so we can see the output of the log in Yala: http://yala.acidcats.nl/
-			YaLogConnector.connect();
+			// Connect to Yala, so we can see the output of the log in Yala: http://yalala.tyz.nl/
+			YaLogConnector.connect("Temple- DelegateExample");
 			
 			// create a delegate, you can store the delegate in a variable so you can call is later
-			var delegate:Function = Delegate.create(this.myFunction, this, "some data");
+			var delegate:Function = Delegate.create(this.myFunction, this, ["some data"]);
 			
 			// call delegate
 			Log.info("Call delegate:", this);

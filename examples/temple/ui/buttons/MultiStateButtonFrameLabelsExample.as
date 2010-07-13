@@ -7,7 +7,7 @@
  * 
  * <p>This example uses an .fla file which can be fond at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla</a></p>
  */
-package  
+package
 {
 	import temple.ui.buttons.MultiStateButton;
 	import temple.core.CoreSprite;
@@ -64,8 +64,6 @@ package
 		
 		public function MultiStateButtonFrameLabelsExample()
 		{
-			super();
-			
 			// Switch off playing backwards.
 			this.mcButton6.buttonTimelineBehavior.playBackwardsBeforeOver = false;
 			this.mcButton6.buttonTimelineBehavior.playBackwardsBeforeDown = false;

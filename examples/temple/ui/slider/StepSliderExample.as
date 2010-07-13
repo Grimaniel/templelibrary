@@ -22,8 +22,6 @@ package
 
 		public function StepSliderExample()
 		{
-			super();
-			
 			new StageSettings(this);
 			
 			var track:Track = new Track();

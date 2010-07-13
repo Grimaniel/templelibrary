@@ -17,8 +17,6 @@ package
 	{
 		public function BoundsBehaviorExample()
 		{
-			super();
-			
 			// Create a new Sprite
 			var sprite:Sprite = new Sprite();
 			

@@ -15,10 +15,8 @@ package
 	{
 		public function TimeUtilsExample()
 		{
-			super();
-			
-			// Connect to Yalog, so you can see all log message at: http://yala.acidcats.nl/
-			YaLogConnector.connect();
+			// Connect to Yalog, so you can see all log message at: http://yalala.tyz.nl/
+			YaLogConnector.connect("Temple - TimeUtilsExample");
 			
 			this.logInfo(TimeUtils.formatMinutesSeconds(10 * 1000));
 			this.logInfo(TimeUtils.formatMinutesSeconds(60 * 1000));
