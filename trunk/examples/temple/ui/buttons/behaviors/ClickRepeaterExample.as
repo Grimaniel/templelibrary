@@ -1,9 +1,13 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about the ClickRepeater.</p>
+ * <h1>ClickRepeater</h1>
+ * 
+ * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/behaviors/ClickRepeater.html">ClickRepeater</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/ClickRepeaterExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/ClickRepeaterExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/ClickRepeaterExample.swf" target="_blank">Download source</a></p>
  */
 package  
 {

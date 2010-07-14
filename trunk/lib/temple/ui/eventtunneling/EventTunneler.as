@@ -57,6 +57,8 @@ package temple.ui.eventtunneling
 	 * 
 	 * @includeExample ../buttons/behaviors/NestedMultiStateButtonsExample.as
 	 * 
+	 * @see temple.ui.eventtunneling.TunnelingEvent
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class EventTunneler extends AbstractDisplayObjectBehavior implements IDebuggable

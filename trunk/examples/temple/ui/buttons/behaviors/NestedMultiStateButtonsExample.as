@@ -1,9 +1,13 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about how to nest MultiStateButtons and how EventTunneling is used.</p>
+ * <h1>Nested MultiStateButtons and EventTunneling</h1>
+ * 
+ * <p>This is an example about how to nest <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/MultiStateButton.html">MultiStateButtons</a> and how <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/eventtunneling/EventTunneler.html">EventTunneling</a> is used.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/NestedMultiStateButtonsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/NestedMultiStateButtonsExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/NestedMultiStateButtonsExample.as" target="_blank">Download source</a></p>
  */
 package  
 {

@@ -1,9 +1,13 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about how to implement the DragBehavior.</p>
+ * <h1>DragBehavior</h1>
+ * 
+ * <p>This is an example about how to implement the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/DragBehavior.html">DragBehavior</a>.</p>
  *  
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/DragBehaviorExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/DragBehaviorExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/DragBehaviorExample.as" target="_blank">Download source</a></p>
  */
 package  
 {

@@ -1,9 +1,13 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about the CacheLoader.</p>
+ * <h1>CacheLoader</h1>
+ * 
+ * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/loader/cache/CacheLoader.html">CacheLoader</a>. The CacheLoader stores the data (as ByteArray) in the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/loader/cache/LoaderCache.html">LoaderCache</a> with the url as key. The next time a CacheLoader needs to load the same url it gets the data directly from the LoaderCache.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/loader/cache/CacheLoaderExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/loader/cache/CacheLoaderExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/loader/cache/CacheLoaderExample.as" target="_blank">Download source</a></p>
  */
 package  
 {
