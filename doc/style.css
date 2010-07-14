@@ -465,7 +465,6 @@ a:active {
 
 /* Headings */
 h1, h2, h3, h4, h5, h6	{
-	font-family: "Trebuchet MS", "Bitstream Vera Sans", verdana, lucida, arial, helvetica, sans-serif;
 	font-weight: bold;
 	margin-top: 3px;
 	margin-bottom: 3px;
