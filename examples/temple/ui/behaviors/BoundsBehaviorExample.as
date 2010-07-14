@@ -1,9 +1,13 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about how to the BoundsBehavior works.</p>
+ * <h1>BoundsBehavior</h1>
+ * 
+ * <p>This is an example about how to the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/BoundsBehavior.html">BoundsBehavior</a> works.</p>
  *  
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.as" target="_blank">Download source</a></p>
  */
 package  
 {

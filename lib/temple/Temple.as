@@ -74,7 +74,7 @@ package temple
 		/**
 		 * Last modified date of the Temple
 		 */
-		public static const DATE:String = "2010-07-13";
+		public static const DATE:String = "2010-07-14";
 
 		/**
 		 * The official website of the Temple.

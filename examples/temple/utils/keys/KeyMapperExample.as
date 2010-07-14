@@ -1,9 +1,13 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about how to use the KeyMapper</p>
+ * <h1>KeyMapper</h1>
+ * 
+ * <p>This is an example about how to use the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/keys/KeyMapper.html">KeyMapper</a>.</p>
  *  
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/keys/KeyMapperExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/keys/KeyMapperExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/keys/KeyMapperExample.as" target="_blank">Download source</a></p>
  */
 package  
 {

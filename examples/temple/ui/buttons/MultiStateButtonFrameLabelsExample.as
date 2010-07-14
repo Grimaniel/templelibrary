@@ -1,11 +1,15 @@
 ﻿/**
  * @exampleText
  * 
- * <p>This is an example about how to use frame labels in a MultiStateButton.</p>
+ * <h1>MultiStateButton</h1>
+ * 
+ * <p>This is an example about how to use frame labels in a <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/MultiStateButton.html">MultiStateButton</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf</a></p>
  * 
  * <p>This example uses an .fla file which can be fond at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.as" target="_blank">Download source</a></p>
  */
 package
 {

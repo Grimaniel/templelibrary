@@ -1,9 +1,13 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about the TimeUtils.</p>
+ * <h1>TimeUtils</h1>
+ * 
+ * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/TimeUtils.html">TimeUtils</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.as" target="_blank">Download source</a></p>
  */
 package  
 {

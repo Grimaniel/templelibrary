@@ -1,9 +1,15 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about the URLManager.</p>
+ * <h1>URLManager</h1>
+ * 
+ * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/url/URLManager.html">URLManager</a>. The URLManager is used to manage the URL's of a project in an XML file. With this XML file you can easily switch between different groups groups of URL's (for different environments).</p>
+ * 
+ * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/url/URLManagerExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/url/URLManagerExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/url/URLManagerExample.as" target="_blank">Download source</a></p>
  */
 package  
 {

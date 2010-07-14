@@ -1,9 +1,15 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about the FunctionUtilsExample.</p>
+ * <h1>FunctionUtils</h1>
+ * 
+ * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/FunctionUtils.html">FunctionUtils</a>.</p>
+ * 
+ * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/FunctionUtilsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/FunctionUtilsExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/FunctionUtilsExample.as" target="_blank">Download source</a></p>
  */
 package  
 {

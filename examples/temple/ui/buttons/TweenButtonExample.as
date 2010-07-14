@@ -1,9 +1,13 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about how the TweenButton.</p>
+ * <h1>TweenButton</h1>
+ * 
+ * <p>This is an example about how the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/TweenButton.html">TweenButton</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf" target="_blank">Download source</a></p>
  */
 package  
 {
@@ -16,8 +20,6 @@ package
 	{
 		public function TweenButtonExample()
 		{
-			super();
-			
 			// Create a new TweenButton
 			var button:TweenButton = new TweenButton();
 			

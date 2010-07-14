@@ -1,9 +1,15 @@
 /**
  * @exampleText
  * 
- * <p>This is an example about how to use Log.</p>
+ * <h1>Log</h1>
+ * 
+ * <p>This is an example about how to use <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/debug/log/Log.html">Log</a>.</p>
+ * 
+ * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/debug/log/LogExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/debug/log/LogExample.swf</a></p>
+ * 
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/debug/log/LogExample.as" target="_blank">Download source</a></p>
  */
 package  
 {
