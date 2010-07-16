@@ -40,75 +40,34 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.validation.rules 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class Restrictions 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
-		}
+
+		public static const NUMMERIC:String = "0-9";
+		public static const DASH:String = "\\-";
+		public static const INTEGERS:String = Restrictions.NUMMERIC + Restrictions.DASH;
+		public static const NUMBERS:String = Restrictions.INTEGERS + ".";
+		public static const LOWERCASE:String = "a-z";
+		public static const UPPERCASE:String = "A-Z";
+		public static const ALPHABETIC:String = Restrictions.LOWERCASE + Restrictions.UPPERCASE;
+		public static const ALPHANUMERIC:String = Restrictions.ALPHABETIC + Restrictions.NUMMERIC;
+		public static const SPACE:String = " ";
+		public static const BACK_SLASH:String = "\\\\";
+		public static const FORWARD_SLASH:String = "/";
 
 		/**
-		 * @inheritDoc
+		 * Cannot be used in conjunction with other restrictions
 		 */
-		override public function destruct():void
-		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
-		}
+		public static const NO_SPECIAL_CHARS:String = "^#$\^|;\<>{}[]";
+		
+		public static const EMAIL:String = Restrictions.INTEGERS + Restrictions.ALPHABETIC + Restrictions.SPACE + Restrictions.DASH + "@._";
+		public static const DUTCH_POSTALCODE:String = Restrictions.NUMMERIC + Restrictions.UPPERCASE;
+		public static const DATE:String = Restrictions.NUMMERIC + Restrictions.SPACE + Restrictions.DASH + Restrictions.BACK_SLASH + Restrictions.FORWARD_SLASH;
 	}
 }

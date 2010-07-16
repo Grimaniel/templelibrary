@@ -40,75 +40,52 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.result 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.debug.getClassName;
+	import temple.data.xml.IXMLParsable;
+	import temple.data.result.Result;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class FormFieldError extends Result implements IFormFieldError, IXMLParsable 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		protected var _field:String;
+
+		public function FormFieldError(field:String = null, message:String = null, code:String = null)
 		{
-			super(target);
+			super(false, message, code);
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			this._field = field;
 		}
 		
 		/**
-		 * @inheritDoc
+		 * @inheritDoc 
 		 */
-		public function get updateByParent():Boolean
+		public function parseXML(xml:XML):Boolean
 		{
-			return this._updateByParent;
+			this._field = xml.@field;
+			this._code = xml.@code;
+			this._message = xml;
+			
+			return true;
 		}
 		
 		/**
-		 * @inheritDoc
+		 * @inheritDoc 
 		 */
-		public function set updateByParent(value:Boolean):void
+		public function get field():String
 		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			return this._field;
 		}
 
 		/**
-		 * @inheritDoc
+		 * @inheritDoc 
 		 */
-		override public function destruct():void
+		override public function toString():String
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			return getClassName(this) + ": " + this._field + (this.message != null ? ", message='" + this.message + "'" : "") + (this.code ? ", code=" + this.code : "");
 		}
 	}
 }

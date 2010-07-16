@@ -49,7 +49,7 @@ package temple.data.xml
 	 * 
 	 * @author Thijs Broerse
 	 */
-	internal class XMLObjectData extends CoreObject
+	internal final class XMLObjectData extends CoreObject
 	{
 		public static var OBJECT:int = 1;
 		public static var LIST:int = 2;

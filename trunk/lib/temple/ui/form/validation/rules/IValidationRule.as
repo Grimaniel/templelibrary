@@ -40,73 +40,22 @@
  *	
  */
 
-package 
+package temple.ui.form.validation.rules 
 {
-	import temple.debug.log.LogLevels;
-	import temple.debug.log.Log;
-	import temple.utils.types.ObjectUtils;
-	
+	import temple.destruction.IDestructible;
+	import temple.ui.form.validation.IHasValue;
+	import temple.ui.form.validation.IValidatable;
+
 	/**
-	 * Creates a log message
+	 * Interface to be implemented in order to be used by the Validator class, for validation of IValidatable objects
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 0, level:String = "info"):void 
+	public interface IValidationRule extends IValidatable, IDestructible
 	{
-		if (object == "__UNLOGGABLE_STRING__")
-		{
-			// do nothing
-		}
-		else if (object == null || object == undefined)
-		{
-			message += ": " + object;
-		}
-		else if (object is String || object is Number || object is Boolean || object is uint || object is int)
-		{
-			message += ": " + ObjectUtils.objectToString(object);
-		}
-		else
-		{
-			message += ": " + ObjectUtils.traceObject(object, maxDepth, false);
-		}
-		
-		switch (level)
-		{
-			case LogLevels.DEBUG:
-			{
-				Log.debug(message, 'log');
-				break;
-			}
-			case LogLevels.ERROR:
-			{
-				Log.error(message, 'log');
-				break;
-			}
-			case LogLevels.FATAL:
-			{
-				Log.fatal(message, 'log');
-				break;
-			}
-			case LogLevels.INFO:
-			{
-				Log.info(message, 'log');
-				break;
-			}
-			case LogLevels.STATUS:
-			{
-				Log.status(message, 'log');
-				break;
-			}
-			case LogLevels.WARN:
-			{
-				Log.warn(message, 'log');
-				break;
-			}
-			default:
-			{
-				Log.info(message, 'log');
-				Log.error("Invalid value for level: '" + level + "'", "log");
-			}
-		}
+		/**
+		 * @return the target for validation
+		 */
+		function get target():IHasValue;
 	}
 }

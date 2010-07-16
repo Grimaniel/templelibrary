@@ -40,66 +40,32 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.validation.rules 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.core.CoreObject;
+	import temple.ui.form.validation.IHasValue;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class AbstractValidationRule extends CoreObject
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
+		private var _target:IHasValue;
+
 		/**
-		 * @inheritDoc
+		 *
 		 */
-		public function get updateByParent():Boolean
+		public function AbstractValidationRule(target:IHasValue):void 
 		{
-			return this._updateByParent;
+			this._target = target;
 		}
-		
+
 		/**
-		 * @inheritDoc
+		 * @return the target for validation
 		 */
-		public function set updateByParent(value:Boolean):void
+		public function get target():IHasValue 
 		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			return this._target;
 		}
 
 		/**
@@ -107,8 +73,16 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			this._target = null;
 			super.destruct();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function toString():String
+		{
+			return super.toString() + ": " + this._target;
 		}
 	}
 }

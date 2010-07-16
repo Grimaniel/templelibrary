@@ -40,75 +40,33 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.validation.rules 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.ui.form.validation.IHasValue;
 
 	/**
+	 * Validation rule that returns the value of target.getValue() as Boolean, so the value is valid if true
+	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class BooleanValidationRule extends AbstractValidationRule implements IValidationRule 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+
+		/**
+		 * Constructor
+		 * @param target IHasValue object
+		 */
+		public function BooleanValidationRule(target:IHasValue):void 
 		{
 			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function destruct():void
+		public function isValid():Boolean 
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			return this.target.value as Boolean;
 		}
 	}
 }

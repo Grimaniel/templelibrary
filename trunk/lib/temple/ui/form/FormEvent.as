@@ -40,75 +40,54 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
+	import temple.ui.form.result.IFormResult;
 
-	import flash.display.DisplayObject;
+	import flash.events.Event;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class FormEvent extends Event 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
+		/**
+		 * Dispatched when the form is validated and is valid
+		 */
+		public static const VALIDATE_SUCCESS:String = "FormEvent.validateSuccess";
 		
 		/**
-		 * @inheritDoc
+		 * Dispatched when the form is validated and the form is invalid
 		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
+		public static const VALIDATE_ERROR:String = "FormEvent.validateError";
 		
 		/**
-		 * @inheritDoc
+		 * Dispatched when the form is submitted successful
 		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
+		public static const SUBMIT_SUCCESS:String = "FormEvent.submitSuccess";
 		
 		/**
-		 * @inheritDoc
+		 * Dispatched when the form is submitted unsuccessful
 		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
-		}
+		public static const SUBMIT_ERROR:String = "FormEvent.submitError";
 
 		/**
-		 * @inheritDoc
+		 * Dispatched when the form is reset
 		 */
-		override public function destruct():void
+		public static const RESET:String = "FormEvent.reset";
+
+		public var result:IFormResult;
+
+		public function FormEvent(type:String, result:IFormResult = null, bubbles:Boolean = false) 
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			super(type, bubbles);
+			
+			this.result = result;
+		}
+
+		override public function clone():Event
+		{
+			return new FormEvent(this.type, this.result);
 		}
 	}
 }

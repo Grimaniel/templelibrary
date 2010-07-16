@@ -157,12 +157,17 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.displayObject) this.displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleTargetMouseDown);
+			if (this.displayObject)
+			{
+				this.displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleTargetMouseDown);
+				this.displayObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+			}
 			
 			if(this._stage)
 			{
 				this._stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
 				this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
+				this._stage = null;
 			}
 			super.destruct();
 		}

@@ -143,7 +143,7 @@ package temple.debug
 						}
 						
 						// store info about the object
-						Memory._registry[object] = new RegisteryInfo(stacktrace ? stackList.join("\n") : '', Registry.getId(object));
+						Memory._registry[object] = new RegistryInfo(stacktrace ? stackList.join("\n") : '', Registry.getId(object));
 					}
 				}
 			}
@@ -190,7 +190,7 @@ package temple.debug
 			
 			for (var object:* in Memory._registry)
 			{
-				var value:RegisteryInfo = Memory._registry[object];
+				var value:RegistryInfo = Memory._registry[object];
 				var str:String = '';
 				str += " " + String(object) + (traceTimestamp ? " --- created:" + value.timestamp : "");
 				if (traceStack)
@@ -250,7 +250,7 @@ package temple.debug
 			
 			for (var object:* in Memory._registry)
 			{
-				var value:RegisteryInfo = Memory._registry[object];
+				var value:RegistryInfo = Memory._registry[object];
 				temp.push({timestamp: value.timestamp, info: value, object:object});
 			}
 			
@@ -258,7 +258,7 @@ package temple.debug
 			
 			for (var i:int = 0; i < temp.length; ++i)
 			{
-				var info:RegisteryInfo = temp[i].info;
+				var info:RegistryInfo = temp[i].info;
 				
 				var stackroot:String = info.stack.substr(info.stack.lastIndexOf("\n") + String("\n").length);
 				if (excludeStackrootObjects && excludeStackrootObjects.indexOf(stackroot) != -1) continue;
@@ -308,43 +308,17 @@ package temple.debug
 			return total;
 		}
 		
+		/**
+		 * Internal reference to the registry
+		 */
+		internal static function get registry():Dictionary
+		{
+			return Memory._registry;
+		}
+		
 		public static function toString():String
 		{
 			return getClassName(Memory);
 		}
-	}
-}
-
-import flash.utils.getTimer;
-
-class RegisteryInfo
-{
-	private var _stack:String;
-	private var _timestamp:int;
-	private var _objectId:uint;
-
-	/**
-	 * Internal class to store information about an object registration
-	 */
-	public function RegisteryInfo(stack:String, objectId:uint) 
-	{
-		this._timestamp = getTimer();
-		this._stack = stack;
-		this._objectId = objectId;
-	}
-
-	public function get stack():String
-	{
-		return this._stack;
-	}
-	
-	public function get timestamp():int
-	{
-		return this._timestamp;
-	}
-	
-	public function get objectId():uint
-	{
-		return this._objectId;
 	}
 }

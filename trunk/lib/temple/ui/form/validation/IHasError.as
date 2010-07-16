@@ -40,75 +40,24 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.validation 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
 
 	/**
+	 * Interface to be implemented by UI components that can have an error state
+	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public interface IHasError 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
 		/**
-		 * @inheritDoc
+		 * Show the error state
 		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
-		}
+		function showError(message:String = null):void;
 
 		/**
-		 * @inheritDoc
+		 * Hide the error state
 		 */
-		override public function destruct():void
-		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
-		}
+		function hideError():void;
 	}
 }

@@ -40,75 +40,39 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.services 
 {
+	import temple.core.CoreEventDispatcher;
 	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class FormAbstractService extends CoreEventDispatcher implements IDebuggable 
 	{
-		private var _updateByParent:Boolean = true;
+		protected var _debug:Boolean;
 		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		public function FormAbstractService(debug:Boolean = false)
 		{
-			super(target);
+			super();
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			this.debug = debug;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function get updateByParent():Boolean
+		public function get debug():Boolean
 		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			return this._debug;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function destruct():void
+		public function set debug(value:Boolean):void
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			this._debug = value;
 		}
 	}
 }

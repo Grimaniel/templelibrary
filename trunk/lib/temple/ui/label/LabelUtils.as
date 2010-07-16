@@ -40,75 +40,33 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.label 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
+	import temple.utils.types.DisplayObjectContainerUtils;
 
-	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.text.TextField;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class LabelUtils 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		/**
+		 * Finds a label for a DisplayObjectContainer. First searches for an ILabelled, if not found looks for a TextField to use as label
+		 */
+		public static function findLabel(container:DisplayObjectContainer):ILabel
 		{
-			super(target);
+			// Check if we have a label, first check for an ILabelled clip on DisplayList
+			var label:ILabel = DisplayObjectContainerUtils.findChildOfType(container, ILabel, false) as ILabel;
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
+			// No ILabelled found, check for TextField
+			if(label == null)
 			{
-				this.update(event.status);
+				var textField:TextField = DisplayObjectContainerUtils.findChildOfType(container, TextField, false) as TextField;
+				if(textField) label = new TextFieldLabel(textField);
 			}
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function destruct():void
-		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			return label;
 		}
 	}
 }

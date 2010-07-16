@@ -40,75 +40,54 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.services 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
+	import temple.debug.errors.TempleArgumentError;
+	import temple.debug.errors.throwError;
+	import temple.ui.form.result.IFormResult;
 
-	import flash.display.DisplayObject;
+	import flash.events.Event;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class FormServiceEvent extends Event 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
 		/**
-		 * @inheritDoc
+		 * Dispatched when a submit was successful. There is no need to check the result.
 		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
-		}
+		public static const SUCCESS:String = "FormServiceEvent.success";
 
 		/**
-		 * @inheritDoc
+		 * Dispatched after submit is complete. Check the result to see if the submit was successful.
 		 */
-		override public function destruct():void
+		public static const RESULT:String = "FormServiceEvent.result";
+		
+		/**
+		 * Dispatched when and error occurs during submission.
+		 */
+		public static const ERROR:String = "FormServiceEvent.error";
+		
+		private var _result:IFormResult;
+
+		public function FormServiceEvent(type:String, result:IFormResult = null)
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			super(type);
+			
+			this._result = result;
+			
+			if (type == FormServiceEvent.RESULT && result == null)
+			{
+				throwError(new TempleArgumentError(this, "result can not be null if type equals '" + FormServiceEvent.RESULT + "'"));
+			}
+		}
+		
+		/**
+		 * The result of the event.
+		 */
+		public function get result():IFormResult
+		{
+			return this._result;
 		}
 	}
 }

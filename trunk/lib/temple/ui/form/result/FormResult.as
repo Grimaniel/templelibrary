@@ -40,75 +40,63 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.result 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.data.result.DataResult;
+	import temple.data.xml.XMLParser;
 
 	/**
-	 * @author Thijs Broerse
+	 * @author Thijs
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class FormResult extends DataResult implements IFormResult
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		protected var _errors:Array;
+
+		public function FormResult(success:Boolean = false, message:String = null, code:String = null, data:* = null, errors:Array = null) 
 		{
-			super(target);
+			super(data, success, message, code);
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			this._errors = errors;
 		}
 
 		/**
-		 * @inheritDoc
+		 * Default parser
+		 * Result XML is formed as:
+		 * 
+		 * success:
+		 * 	<result>
+		 *		<success>true</success>
+		 *		<message code='A'>success message</message>
+		 *	</result>
+		 *	
+		 * error:
+		 *	<result>
+		 *		<success>false</success>
+		 *		<message code='B'>error message</message>
+		 *		<errors>
+		 *			<error field='email' code='ABC'>Invalid Emailaddress</error>
+		 *			<error field='name' code='DEF'>User already in database</error>
+		 *		</errors>
+		 *	</result>
+		 * 
+		 * 
 		 */
-		override public function destruct():void
+		public function parseXML(xml:XML):Boolean 
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			this._success = xml.child('success') == "true" || xml.child('success') == "1";
+			this._message = xml.child('message');
+			this._code = xml.child('message').@code;
+			this._errors = XMLParser.parseList(xml.errors.error, FormFieldError);
+			
+			return true;
+		}
+
+		/**
+		 * @inheritDoc 
+		 */
+		public function get errors():Array
+		{
+			return this._errors;
 		}
 	}
 }

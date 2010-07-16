@@ -40,73 +40,20 @@
  *	
  */
 
-package 
+package temple.ui.form.validation.rules 
 {
-	import temple.debug.log.LogLevels;
-	import temple.debug.log.Log;
-	import temple.utils.types.ObjectUtils;
-	
+	import temple.ui.form.validation.IHasValue;
+
 	/**
-	 * Creates a log message
+	 * Validation rule to check for a valid Dutch type postcode. This validation rule will return false for isValid() if the return value of target.value is an invalid postal code.
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 0, level:String = "info"):void 
+	public class DutchPostalcodeValidationRule extends RegExpValidationRule implements IValidationRule 
 	{
-		if (object == "__UNLOGGABLE_STRING__")
+		public function DutchPostalcodeValidationRule(target:IHasValue) 
 		{
-			// do nothing
-		}
-		else if (object == null || object == undefined)
-		{
-			message += ": " + object;
-		}
-		else if (object is String || object is Number || object is Boolean || object is uint || object is int)
-		{
-			message += ": " + ObjectUtils.objectToString(object);
-		}
-		else
-		{
-			message += ": " + ObjectUtils.traceObject(object, maxDepth, false);
-		}
-		
-		switch (level)
-		{
-			case LogLevels.DEBUG:
-			{
-				Log.debug(message, 'log');
-				break;
-			}
-			case LogLevels.ERROR:
-			{
-				Log.error(message, 'log');
-				break;
-			}
-			case LogLevels.FATAL:
-			{
-				Log.fatal(message, 'log');
-				break;
-			}
-			case LogLevels.INFO:
-			{
-				Log.info(message, 'log');
-				break;
-			}
-			case LogLevels.STATUS:
-			{
-				Log.status(message, 'log');
-				break;
-			}
-			case LogLevels.WARN:
-			{
-				Log.warn(message, 'log');
-				break;
-			}
-			default:
-			{
-				Log.info(message, 'log');
-				Log.error("Invalid value for level: '" + level + "'", "log");
-			}
+			super(target, /[1-9][0-9]{3} {0,1}[a-zA-Z]{2}/);
 		}
 	}
 }

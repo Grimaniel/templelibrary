@@ -40,75 +40,35 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.label 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
+	import temple.destruction.IDestructibleEventDispatcher;
+	import temple.ui.label.IHTMLLabel;
 
-	import flash.display.DisplayObject;
+	import flash.text.TextField;
+
+	/**
+	 * Dispatched after the text in the TextField is changed
+	 * Event will also be dispatched from the TextField
+	 * @eventType flash.events.Event.CHANGE
+	 */
+	[Event(name = "change", type = "flash.events.Event")]
+
+	/**
+	 * Dispatched after size of the TextField is changed
+	 * Event will also be dispatched from the TextField
+	 * @eventType flash.events.Event.RESIZE
+	 */
+	[Event(name = "resize", type = "flash.events.Event")]
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public interface ITextFieldLabel extends IHTMLLabel, IAutoSizableLabel, IDestructibleEventDispatcher
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
 		/**
-		 * @inheritDoc
+		 * Get the TextField of the Label
 		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function destruct():void
-		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
-		}
+		function get textField():TextField;
 	}
 }
