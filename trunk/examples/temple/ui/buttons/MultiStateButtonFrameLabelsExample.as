@@ -7,7 +7,7 @@
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf</a></p>
  * 
- * <p>This example uses an .fla file which can be fond at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla</a></p>
+ * <p>This example uses an .fla file which can be found at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla</a></p>
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.as" target="_blank">Download source</a></p>
  */
