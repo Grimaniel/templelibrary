@@ -53,7 +53,7 @@ package temple.data.flashvars
 	 * 
 	 * @author Arjan van Wijk
 	 */
-	internal class FlashVar extends CoreObject
+	internal final class FlashVar extends CoreObject
 	{ 
 		internal var _value:*;
 		private var _name:String;

@@ -112,15 +112,35 @@ package temple.ui.buttons.behaviors
 		/**
 		 * @inheritDoc
 		 */
+		override public function set enabled(value:Boolean):void 
+		{
+			if (super.enabled != value)
+			{
+				super.enabled = value;
+				
+				if (value)
+				{
+					this.update(this);
+				}
+				else
+				{
+					this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				}
+			}
+		}
+
+		/**
+		 * @inheritDoc
+		 */
 		override public function update(status:IButtonStatus):void
 		{
-			if(!this.enabled) return;
-			
 			super.update(status);
 			
-			if(this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down + ", focus=" + this.focus + ", currentLabel=" + this._currentLabel);
+			if (!this.enabled) return;
 			
-			switch(true)
+			if(this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down + ", focus=" + this.focus + ", currentLabel='" + this._currentLabel + "', currentFrame='" + this.movieClip.currentFrame + "'");
+			
+			switch (true)
 			{
 				case this.selected:
 				{
@@ -146,6 +166,7 @@ package temple.ui.buttons.behaviors
 						default:
 						{
 							this.downState();
+							break;
 						}
 					}
 					break;
@@ -344,6 +365,14 @@ package temple.ui.buttons.behaviors
 			return this._labels;
 		}
 		
+		/**
+		 * Returns the name of the current (or last reached) frame
+		 */
+		public function get currentLabel():String
+		{
+			return this._currentLabel;
+		}
+		
 		private function animateTo(start:String, enter:String, goal:String, exit:String, backwardsBeforeGoal:Boolean):void
 		{
 			if (this.debug) this.logDebug("animateTo: start='" + start + "', enter='" + enter + "', goal='" + goal + "', exit='" + exit + "', backwardsBeforeGoal=" + backwardsBeforeGoal);
@@ -360,12 +389,21 @@ package temple.ui.buttons.behaviors
 				if (this.debug) this.logDebug("animateTo: goal '" + goal + "' reached");
 				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
 			}
-			// check for backwards: we are currently in the exit state 
-			else if(backwardsBeforeGoal && this._labels[exit] && FrameLabelData(this._labels[exit]).isActiveAt(this.movieClip.currentFrame))
+			// check if we are currently in the exit state 
+			else if(this._labels[exit] && FrameLabelData(this._labels[exit]).isActiveAt(this.movieClip.currentFrame))
 			{
-				this._currentLabel = goal;
-				if (this.debug) this.logDebug("animateTo: play backwards");
-				this.gotoFrame(FrameLabelData(this._labels[exit]).startframe);
+				// backwards?
+				if (backwardsBeforeGoal)
+				{
+					// ok, play backwards
+					this._currentLabel = goal;
+					if (this.debug) this.logDebug("animateTo: play backwards");
+					this.gotoFrame(FrameLabelData(this._labels[exit]).startframe);
+				}
+				else
+				{
+					// do nothing
+				}
 			}
 			// check if there are no enter and exit states, but we have a start
 			else if (!this._labels[enter] && !this._labels[exit] && start && this._labels[start])
@@ -411,7 +449,7 @@ package temple.ui.buttons.behaviors
 			{
 				this._currentLabel = enter;
 				
-				if (this.debug) this.logDebug("animateTo: currentLabel='" + enter + "'");
+				if (this.debug) this.logDebug("animateTo: currentLabel='" + enter + "', currentFrame=" + this.movieClip.currentFrame);
 				
 				// check if enter is currently active
 				if (!FrameLabelData(this._labels[enter]).isActiveAt(this.movieClip.currentFrame))
@@ -669,6 +707,8 @@ package temple.ui.buttons.behaviors
 			this.movieClip.gotoAndStop(FrameLabelData(this._labels[this._currentLabel]).startframe);
 			
 			this.update(this);
+			
+			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		/**
@@ -708,7 +748,7 @@ class FrameLabelData
 	 */
 	public function isActiveAt(frame:int):Boolean
 	{
-		return this.startframe <= frame && frame < this.endframe;
+		return this.startframe <= frame && frame <= this.endframe;
 	}
 	
 	public function toString():String

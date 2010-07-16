@@ -40,75 +40,49 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.components 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
+	import temple.destruction.IDestructibleEventDispatcher;
 	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public interface IRadioGroup extends IDestructibleEventDispatcher
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
+		/**
+		 * Get the name of the group
+		 */
+		function get name():String;
 		
 		/**
-		 * @inheritDoc
+		 *	Add a button to the group
+		 *	@param item the ISelectable to add
+		 *	@param value value of the button. When the button is selected this will be the value of the group
+		 *	@param selected set if the buttons should be selected
+		 *	@param tabIndex the order of the button in tabbing, -1 means at the end
 		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
+		function add(item:ISelectable, value:* = null, selected:Boolean = false, tabIndex:int = -1):void;
 		
 		/**
-		 * @inheritDoc
+		 * Removes an item from the group
+		 * @param item the ISelectable item to remove
 		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
+		function remove(item:ISelectable):void
 		
 		/**
-		 * @inheritDoc
+		 *	Get or set the specified button (can be null to deselect current selection)
 		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
-		}
+		function get selected():ISelectable;
 
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
-		override public function destruct():void
-		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
-		}
+		function set selected(value:ISelectable):void;
+		
+		/**
+		 * @return all items in this group; objects of type ISelectable
+		 */
+		function get items():Array;
 	}
 }

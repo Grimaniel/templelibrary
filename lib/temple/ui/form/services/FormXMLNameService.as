@@ -40,75 +40,43 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.services 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.data.url.URLManager;
+	import temple.ui.form.result.IFormResult;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class FormXMLNameService extends FormXMLService 
 	{
-		private var _updateByParent:Boolean = true;
+		private var _urlName:String;
 		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		public function FormXMLNameService(urlName:String = null, resultClass:Class = null, debug:Boolean = false)
 		{
-			super(target);
+			super(null, resultClass, debug);
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			this.urlName = urlName;
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
-		public function get updateByParent():Boolean
+		public function get urlName():String
 		{
-			return this._updateByParent;
+			return this._urlName;
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
+		public function set urlName(value:String):void
 		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			this._urlName = value;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function destruct():void
+		override public function submit(data:Object):IFormResult 
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			this._urlData = URLManager.getURLDataByName(this._urlName);
+			
+			return super.submit(data);
 		}
 	}
 }

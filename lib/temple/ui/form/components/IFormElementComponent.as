@@ -40,75 +40,60 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.components 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
+	import temple.ui.IDisplayObject;
 	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.ui.form.validation.IHasValue;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public interface IFormElementComponent extends IHasValue, IDisplayObject, IFocusable
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
+		/**
+		 * The data property this component will fill
+		 */
+		function get dataName():String;
 		
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
+		function set dataName(value:String):void;
+	
+		/**
+		 * Name of the validation rule
+		 */
+		function get validationRule():Class;
 		
 		/**
-		 * @inheritDoc
+		 * Order of tabbing
 		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
+		function get tabIndex():int;
 		
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
+		function set tabIndex(value:int):void;
 		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
-		}
-
 		/**
-		 * @inheritDoc
+		 * The error message that is shown when value is not valid
 		 */
-		override public function destruct():void
-		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
-		}
+		function get errorMessage():String;
+		
+		/**
+		 * @private
+		 */
+		function set errorMessage(value:String):void;
+		
+		/**
+		 * Indicates if this value should be submitted to the service (true) or should be ignored (false)
+		 */
+		function get submit():Boolean;
+		
+		/**
+		 * @private
+		 */
+		function set submit(value:Boolean):void;
 	}
 }

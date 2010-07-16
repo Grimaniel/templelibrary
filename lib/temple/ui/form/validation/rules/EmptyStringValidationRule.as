@@ -40,75 +40,32 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.validation.rules 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.debug.errors.TempleError;
+	import temple.debug.errors.throwError;
+	import temple.ui.form.validation.IHasValue;
 
 	/**
+	 * Validation rule to check for empty strings. This validation rule will return false for isValid() if the return value of target.value is an empty String.
+	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class EmptyStringValidationRule extends RegExpValidationRule 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		public function EmptyStringValidationRule(target:IHasValue) 
 		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			super(target, /.+/);
 		}
 
 		/**
 		 * @inheritDoc
+		 * 
+		 * EmptyStringValidationRule can not be set as optional
 		 */
-		override public function destruct():void
+		override public function set optional(value:Boolean):void 
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			if (value) throwError(new TempleError(this, "EmptyStringValidationRule can not be set as optional."));
 		}
 	}
 }

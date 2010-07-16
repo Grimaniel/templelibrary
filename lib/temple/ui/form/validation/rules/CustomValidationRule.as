@@ -40,74 +40,55 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.validation.rules 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.ui.form.validation.IHasValue;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class CustomValidationRule extends AbstractValidationRule implements IValidationRule 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		private var _rule:Function;
+		private var _params:Array;
+
+		/**
+		 * Create your own custom validation.
+		 * This validation rule can not be added to the form bij using the 'addFormElement' method, since the 2nd argument is mandetory
+		 * For adding a CustomValidationRule to the form, use form.validator.addValidationRule
+		 * 
+		 * @param target: The form element with needs to be validated (ig an InputField), target must implement IValidatable
+		 * @param rule: The funtion that need be called on validation. The function needs to return a Boolean, where true means valid and false not valid.
+		 * @param params (optional): the arguments for the rule that are applied on the function when called
+		 */
+		public function CustomValidationRule(target:IHasValue, rule:Function, params:Array = null)
 		{
 			super(target);
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			this._rule = rule;
+			this._params = params;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function destruct():void
+		public function isValid():Boolean
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			if(this._params)
+			{
+				return this._rule.apply(null, this._params);
+			}
+			return this._rule();
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void 
+		{
+			this._rule = null;
+			this._params = null;
+			
 			super.destruct();
 		}
 	}

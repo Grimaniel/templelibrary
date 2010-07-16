@@ -40,75 +40,37 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.data.result 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class DataResult extends Result implements IDataResult 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		protected var _data:*;
+
+		public function DataResult(data:*, success:Boolean = true, message:String = null, code:String = null)
 		{
-			super(target);
+			super(success, message, code);
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			this._data = data;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function get updateByParent():Boolean
+		public function get data():*
 		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			return this._data;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function destruct():void
+		override public function toString():String 
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
+			return super.toString() + ", data=" + this._data;
 		}
 	}
 }

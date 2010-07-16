@@ -40,74 +40,69 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.validation.rules 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.ui.form.validation.IHasValue;
 
 	/**
+	 * IValidationRule implementation that checks whether or not a string matches a regular expression. Use this with the Validator class and IValidatable implementations that return a String.
+	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public class RegExpValidationRule extends AbstractValidationRule implements IOptionalValidationRule 
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
+		private var _regExp:RegExp;
+		private var _isValidIfMatch:Boolean;
+		private var _optional:Boolean;
+
+		/**
+		 * Constructor
+		 * @param target IHasValue object
+		 * @param expression regular expression to validate with.
+		 * @param validIfMatch if true, value of IValidatable is considered valid if it matches the regular expression; otherwise it is considered invalid
+		 */
+		public function RegExpValidationRule(target:IHasValue, expression:RegExp = null, validIfMatch:Boolean = true):void 
 		{
 			super(target);
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
+			this._regExp = expression;
+			this._isValidIfMatch = validIfMatch;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function destruct():void
+		public function isValid():Boolean 
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			var value:String = this.target.value as String;
+			if (this._optional && !value) return true;
+			var testResult:Boolean = this._regExp.test(value);
+			return this._isValidIfMatch ? testResult : !testResult;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get optional():Boolean
+		{
+			return this._optional;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set optional(value:Boolean):void
+		{
+			this._optional = value;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void 
+		{
+			this._regExp = null;
+			
 			super.destruct();
 		}
 	}

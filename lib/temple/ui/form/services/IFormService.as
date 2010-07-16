@@ -40,75 +40,40 @@
  *	
  */
 
-package temple.ui.buttons.behaviors 
+package temple.ui.form.services 
 {
-	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
-	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
-
-	import flash.display.DisplayObject;
+	import temple.destruction.IDestructibleEventDispatcher;
+	import temple.ui.form.result.IFormResult;
 
 	/**
+	 * @eventType temple.ui.form.services.FormServiceEvent.SUCCESS
+	 */
+	[Event(name = "FormServiceEvent.success", type = "temple.ui.form.services.FormServiceEvent")]
+
+	/**
+	 * @eventType temple.ui.form.services.FormServiceEvent.RESULT
+	 */
+	[Event(name = "FormServiceEvent.result", type = "temple.ui.form.services.FormServiceEvent")]
+
+	/**
+	 * @eventType temple.ui.form.services.FormServiceEvent.ERROR
+	 */
+	[Event(name = "FormServiceEvent.error", type = "temple.ui.form.services.FormServiceEvent")]
+
+	/**
+	 * A IFormService handles the data of a Form. When a Form is submitted it send his data to a IFormService, using the 'submit' method.
+	 * After the IFormService handled the data is returns an IFormResult (only if the data is handled synchronously, otherwise null is returned) and dispatched an FormServiceEvent. 
+	 * 
+	 * @see temple.ui.form.Form
+	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonDesignBehavior extends AbstractButtonBehavior implements IButtonDesignBehavior, IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable 
+	public interface IFormService extends IDestructibleEventDispatcher
 	{
-		private var _updateByParent:Boolean = true;
-		
-		public function AbstractButtonDesignBehavior(target:DisplayObject)
-		{
-			super(target);
-			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-		}
-		
 		/**
-		 * @inheritDoc
+		 * Handles the form data. If the data is handled synchronously an IFormResult is returned. If the data is handled asynchronously, null is returned.
+		 * After submit is complete a FormServiceEvent is dispatched.
 		 */
-		public function get updateByParent():Boolean
-		{
-			return this._updateByParent;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set updateByParent(value:Boolean):void
-		{
-			this._updateByParent = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(status:IButtonStatus):void
-		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
-			this.over = status.over;
-			this.down = status.down;
-		}
-		
-		private function handleButtonEvent(event:ButtonEvent):void
-		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
-			{
-				this.update(event.status);
-			}
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function destruct():void
-		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
-			super.destruct();
-		}
+		function submit(data:Object):IFormResult;
 	}
 }
