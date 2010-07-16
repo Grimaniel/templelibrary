@@ -10,9 +10,9 @@
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/FormExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/FormExample.swf</a></p>
  * 
- * <p>This example uses an .fla file which can be found at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/Form/FormExample.fla" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/Form/FormExample.fla</a></p>
+ * <p>This example uses an .fla file which can be found at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/FormExample.fla" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/FormExample.fla</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/Form/FormExample.as" target="_blank">Download source</a></p>   
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/FormExample.as" target="_blank">Download source</a></p>   
  */
 package  
 {
