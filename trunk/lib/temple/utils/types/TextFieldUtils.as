@@ -62,6 +62,17 @@ package temple.utils.types
 	public final class TextFieldUtils 
 	{
 		private static const _MAGICAL_TEXTWIDTH_PADDING:Number = 3;
+		
+		/**
+		 * Inits the give textfield with an autoFormat and sets the defaultTextFormat so you can change the text without losing its formatting
+		 * @param textField The TextField to init
+		 * @param autoSize The autosize to set
+		 */
+		public static function init(textField:TextField, autoSize:String = null):void 
+		{
+			textField.defaultTextFormat = textField.getTextFormat();
+			if (autoSize) textField.autoSize = autoSize;
+		}
 
 		/**
 		 * Trims the text to fit a given textfield.  
@@ -302,7 +313,20 @@ package temple.utils.types
 				textField.styleSheet = textField.styleSheet;
 			}
 		}
-
+		
+		/**
+		 * Sets the font (textFormat and defaultTextFormat) for the given TextField
+		 * @param textField The TextField to set the font on
+		 * @param fontName The name of the font to apply on the TextField
+		 */
+		public static function setFont(textField:TextField, fontName:String):void
+		{
+			var textFormat:TextFormat = textField.getTextFormat();
+			textFormat.font = fontName;
+			textField.setTextFormat(textFormat);
+			textField.defaultTextFormat = textFormat;
+		}
+		
 		public static function toString():String
 		{
 			return getClassName(TextFieldUtils);

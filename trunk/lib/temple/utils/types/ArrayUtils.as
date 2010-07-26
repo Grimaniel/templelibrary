@@ -271,6 +271,43 @@ package temple.utils.types
 			return length;
 		}
 
+		/**
+		 * Returs the items that are unique in the first array
+		 */
+		public static function getUniqueFirst(array1:Array, array2:Array):Array
+		{
+			var ret:Array = new Array();
+			
+			for (var i:int = 0; i < array1.length; i++)
+			{
+				if (array2.indexOf(array1[i]) == -1) ret.push(array1[i]);
+			}
+			
+			return ret;
+		}
+		
+		/**
+		 * Returs the items that are in both arrays
+		 */
+		public static function intersect(array1:Array, array2:Array):Array
+		{
+			var ret:Array = new Array();
+			var i:int;
+			
+			for (i = 0; i < array1.length; i++)
+			{
+				if (array2.indexOf(array1[i]) != -1) ret.push(array1[i]);
+			}
+			for (i = 0; i < array2.length; i++)
+			{
+				if (array1.indexOf(array2[i]) != -1) ret.push(array2[i]);
+			}
+			
+			ret = ArrayUtils.createUniqueCopy(ret);
+			
+			return ret;
+		}
+		
 		public static function toString():String
 		{
 			return getClassName(ArrayUtils);

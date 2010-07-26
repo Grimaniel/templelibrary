@@ -55,9 +55,9 @@ package temple.utils.types
 		 * Convert a string to seconds, with these formats supported:
 		 * 00:03:00.1 / 03:00.1 / 180.1s / 3.2m / 3.2h / 00:01:53,800
 		 **/
-		public static function stringToSeconds(string:String):Number 
+		public static function stringToSeconds(string:String, delimiter:String = ':'):Number 
 		{
-			var arr:Array = string.split(':');
+			var arr:Array = string.split(delimiter);
 			var sec:Number = 0;
 			if (string.substr(-1) == 's') 
 			{
@@ -92,17 +92,17 @@ package temple.utils.types
 		/** 
 		 * Convert number to MIN:SS string.
 		 */
-		public static function secondsToString(seconds:Number):String 
+		public static function secondsToString(seconds:Number, delimiter:String = ':'):String 
 		{
-			return StringUtils.padLeft(Math.floor(seconds / 60).toString(), 2, "0") + ":" + StringUtils.padLeft(Math.floor(seconds % 60).toString(), 2, "0");
+			return StringUtils.padLeft(Math.floor(seconds / 60).toString(), 2, "0") + delimiter + StringUtils.padLeft(Math.floor(seconds % 60).toString(), 2, "0");
 		}
 
 		/**
 		 * Format miliseconds as mm:ss.mmm 
 		 */
-		public static function formatTime(miliseconds:Number):String
+		public static function formatTime(miliseconds:Number, delimiter:String = ':'):String
 		{
-			return StringUtils.padLeft(Math.floor(miliseconds / 60000).toString(), 2, "0") + ':' + StringUtils.padLeft((Math.floor(miliseconds * .001) % 60).toString(), 2, "0") + '.' + StringUtils.padLeft((Math.round(Math.floor(miliseconds % 1000))).toString(), 3, "0");
+			return StringUtils.padLeft(Math.floor(miliseconds / 60000).toString(), 2, "0") + delimiter + StringUtils.padLeft((Math.floor(miliseconds * .001) % 60).toString(), 2, "0") + '.' + StringUtils.padLeft((Math.round(Math.floor(miliseconds % 1000))).toString(), 3, "0");
 		}
 
 		/**
@@ -110,9 +110,9 @@ package temple.utils.types
 		 * 
 		 * @includeExample TimeUtilsExample.as
 		 */
-		public static function formatMinutesSeconds(miliseconds:Number):String
+		public static function formatMinutesSeconds(miliseconds:Number, delimiter:String = ':'):String
 		{
-			return StringUtils.padLeft(Math.floor(miliseconds / (60000)).toString(), 2, "0") + ':' + StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0");
+			return StringUtils.padLeft(Math.floor(miliseconds / (60000)).toString(), 2, "0") + delimiter + StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0");
 		}
 
 		/**
@@ -120,9 +120,9 @@ package temple.utils.types
 		 * 
 		 * @includeExample TimeUtilsExample.as
 		 */
-		public static function formatMinutesSecondsAlt(miliseconds:Number):String
+		public static function formatMinutesSecondsAlt(miliseconds:Number, delimiter:String = ':'):String
 		{
-			return (Math.floor(miliseconds / 60000)).toString() + ':' + StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0");
+			return (Math.floor(miliseconds / 60000)).toString() + delimiter + StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0");
 		}
 		
 		public static function toString():String

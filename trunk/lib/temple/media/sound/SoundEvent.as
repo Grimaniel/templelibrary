@@ -51,6 +51,7 @@ package temple.media.sound
 	{
 		public static const VOLUME_CHANGE:String = "SoundEvent.volumeChange";
 		public static const SOUND_COMPLETE:String = "SoundEvent.soundComplete";
+		public static const GLOBAL_VOLUME_CHANGE:String = "SoundEvent.globalVolumeChange";
 		
 		private var _name:String;
 

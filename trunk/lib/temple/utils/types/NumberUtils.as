@@ -42,6 +42,8 @@
 
 package temple.utils.types 
 {
+	import temple.debug.errors.TempleArgumentError;
+	import temple.debug.errors.throwError;
 	import temple.debug.getClassName;
 
 	/**
@@ -353,6 +355,37 @@ package temple.utils.types
 				return base + range;
 			}
 			return base + input;
+		}
+		
+		/**
+		 * Get English suffix for an ordinal number: 1 -> 'st' ('1st'), 2 -> 'nd' ('2nd'), 3 -> 'rd' ('3rd'), 4 -> 'th' ('4th')
+		 */
+		public static function ordinalSuffix(position:int):String
+		{
+			if(position < 0 ) throwError(new TempleArgumentError(NumberUtils, 'ordinal number less then zero'));
+			
+			//exceptions
+			switch(position)
+			{
+				case 0:
+					return '';
+				case 11:
+				case 12:
+				case 13:
+					return 'th';
+			}
+			//rule
+			var rest:int = position % 10;
+			switch(rest)
+			{
+				case 1:
+					return 'st';
+				case 2:
+					return 'nd';
+				case 3:
+					return 'rd';
+			}
+			return 'th';
 		}
 
 		public static function toString():String

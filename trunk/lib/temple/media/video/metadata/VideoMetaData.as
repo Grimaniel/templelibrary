@@ -42,6 +42,7 @@
 
 package temple.media.video.metadata 
 {
+	import temple.data.object.IObjectParsable;
 	import temple.media.video.cuepoints.VideoCuePoint;
 	import temple.data.object.ObjectParser;
 	import temple.core.CoreObject;
@@ -49,7 +50,7 @@ package temple.media.video.metadata
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class VideoMetaData extends CoreObject
+	public class VideoMetaData extends CoreObject implements IObjectParsable
 	{
 		private var _audiocodecid:Number;
 		private var _audiodatarate:Number;
@@ -67,19 +68,30 @@ package temple.media.video.metadata
 		 * Constructor.
 		 * @param data Object to parse, this should be a raw NetStream.onMetaData data object.   
 		 */
-		public function VideoMetaData(data:Object) 
+		public function VideoMetaData(data:Object = null) 
 		{
-			this._audiocodecid = isNaN(data.audiocodecid) ? null : data.audiocodecid;
-			this._audiodatarate = isNaN(data.audiodatarate) ? null : data.audiodatarate;
-			this._audiodelay = isNaN(data.audiodelay) ? null : data.audiodelay;
-			this._canSeekToEnd = (data.canSeekToEnd == undefined) ? false : data.canSeekToEnd;
-			this._duration = isNaN(data.duration) ? null : data.duration;
-			this._framerate = isNaN(data.framerate) ? null : data.framerate;
-			this._height = isNaN(data.height) ? null : data.height;
-			this._videocodecid = (data.videocodecid == undefined) ? null : data.videocodecid;
-			this._videodatarate = isNaN(data.videodatarate) ? null : data.videodatarate;
-			this._width = isNaN(data.width) ? null : data.width;
-			this._cuePoints = ObjectParser.parseList(data.cuePoints, VideoCuePoint);
+			if (data) this.parseObject(data);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function parseObject(object:Object):Boolean
+		{
+			this._audiocodecid = isNaN(object.audiocodecid) ? null : object.audiocodecid;
+			this._audiodatarate = isNaN(object.audiodatarate) ? null : object.audiodatarate;
+			this._audiodelay = isNaN(object.audiodelay) ? null : object.audiodelay;
+			this._canSeekToEnd = (object.canSeekToEnd == undefined) ? false : object.canSeekToEnd;
+			this._duration = isNaN(object.duration) ? null : object.duration;
+			this._framerate = isNaN(object.framerate) ? null : object.framerate;
+			this._height = isNaN(object.height) ? null : object.height;
+			this._videocodecid = (object.videocodecid == undefined) ? null : object.videocodecid;
+			this._videodatarate = isNaN(object.videodatarate) ? null : object.videodatarate;
+			this._width = isNaN(object.width) ? null : object.width;
+			
+			this._cuePoints = ObjectParser.parseList(object.cuePoints, VideoCuePoint);
+			
+			return true;
 		}
 
 		/**

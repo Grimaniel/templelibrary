@@ -45,6 +45,8 @@ package temple.utils
 	import temple.utils.types.ObjectUtils;
 
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.display.InteractiveObject;
 
 	/**
 	 * This utils are only for debugging purposes.
@@ -99,7 +101,17 @@ package temple.utils
 		
 		private static function _rootTrace(object:DisplayObject, index:int):String
 		{
-			var output:String = "   " + index + ": " + object + " : " + object.name + "\n";
+			var extra:String = ''; 
+			if(object is InteractiveObject)
+			{
+				extra += ', mouseEnabled=' + InteractiveObject(object).mouseEnabled;
+				if(object is DisplayObjectContainer)
+				{
+					extra += ', mouseChildren=' + DisplayObjectContainer(object).mouseChildren;
+				}
+			}
+			
+			var output:String = "   " + index + ": " + object + ":" + object.name + ' (visible=' + object.visible + ', alpha=' + object.alpha + extra + ")\n" ;
 			if(object.parent) output += TraceUtils._rootTrace(object.parent, ++index);
 			
 			return output;

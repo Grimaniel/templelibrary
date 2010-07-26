@@ -42,16 +42,18 @@
 
 package temple.utils.types 
 {
-	import temple.debug.log.Log;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
 	import temple.debug.getClassName;
+	import temple.debug.log.Log;
 
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.InteractiveObject;
 	import flash.display.MovieClip;
+	import flash.geom.Point;
 	import flash.text.TextField;
+
 	/**
 	 * This class contains some functions for DisplayObjectContainers.
 	 * 
@@ -230,6 +232,25 @@ package temple.utils.types
 				container.getChildAt(i).height *= container.scaleY;
 			}
 			container.scaleX = container.scaleY = 1;
+		}
+		
+		/**
+		 * Moves a displayobject from one container to another and keeps its position
+		 */
+		public static function moveToContainer(target:DisplayObject, container:DisplayObjectContainer):void
+		{
+			if(target.parent != container)
+			{
+				var p:Point = new Point(target.x, target.y);
+				if(target.parent)
+				{
+					p = target.parent.localToGlobal(p); 
+				}
+				p = container.globalToLocal(p); 
+				container.addChild(target);
+				target.x = p.x;
+				target.y = p.y;
+			}
 		}
 
 		public static function toString():String

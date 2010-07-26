@@ -138,7 +138,7 @@ package temple.ui.form
 			
 			DebugManager.add(this);
 			
-			if(service) this.service = service;
+			if (service) this.service = service;
 		}
 
 		/**
@@ -154,7 +154,7 @@ package temple.ui.form
 		 */
 		public function set service(value:IFormService):void
 		{
-			if(this._service)
+			if (this._service)
 			{
 				this._service.removeEventListener(FormServiceEvent.SUCCESS, this.handleFormServiceEvent);
 				this._service.removeEventListener(FormServiceEvent.RESULT, this.handleFormServiceEvent);
@@ -162,11 +162,11 @@ package temple.ui.form
 			}
 			this._service = value;
 			
-			if(this._service)
+			if (this._service)
 			{
 				if (this._service is IDebuggable) DebugManager.addAsChild(value as IDebuggable, this);
 			}
-			if(this._debug) this.logDebug("service: " + this._service);
+			if (this._debug) this.logDebug("service: " + this._service);
 		}
 
 		/**
@@ -181,9 +181,9 @@ package temple.ui.form
 		 */
 		public function addElement(element:IHasValue, name:String = null, validator:Class = null, errorMessage:String = null, tabIndex:int = -1, submit:Boolean = true):IHasValue 
 		{
-			if(this._debug)
+			if (this._debug)
 			{
-				if(submit && name != null)
+				if (submit && name != null)
 				{
 					this.logDebug("addFormElement: " + element + (name ? " '" + name + "'" : ""));
 				}
@@ -199,12 +199,12 @@ package temple.ui.form
 				this._elementIndex++;
 			}
 			
-			if(element == null)
+			if (element == null)
 			{
 				throwError(new TempleArgumentError(this, "element can not be null"));
 			}
 			
-			if(this._elements[name])
+			if (this._elements[name])
 			{
 				throwError(new TempleArgumentError(this, "element with name '" + name + "' already exists"));
 			}
@@ -212,24 +212,24 @@ package temple.ui.form
 			this._elements[name] = new FormElementData(name, element, tabIndex == -1 ? ObjectUtils.length(this._elements) : tabIndex, submit);
 			if (element is IDebuggable) DebugManager.addAsChild(element as IDebuggable, this);
 			
-			if(validator)
+			if (validator)
 			{
 				this._validator.addValidationRule(new validator(element), errorMessage);
 			}
 			
-			if(element is IFocusable) this._tabFocusManager.add(element as IFocusable);
+			if (element is IFocusable) this._tabFocusManager.add(element as IFocusable);
 			
-			if(element is ISetValue && this._prefillData && this._prefillData.hasOwnProperty(name))
+			if (element is ISetValue && this._prefillData && this._prefillData.hasOwnProperty(name))
 			{
 				ISetValue(element).value = this._prefillData[name];
 			}
 			
-			if(this._debug && element is IDebuggable)
+			if (this._debug && element is IDebuggable)
 			{
 				IDebuggable(element).debug = this._debug;
 			}
 
-			if(element is IEventDispatcher) (element as IEventDispatcher).addEventListener(FormElementEvent.SUBMIT, this.handleFormElementSubmit);
+			if (element is IEventDispatcher) (element as IEventDispatcher).addEventListener(FormElementEvent.SUBMIT, this.handleFormElementSubmit);
 			
 			return element;
 		}
@@ -240,12 +240,12 @@ package temple.ui.form
 		 */
 		public function removeElement(element:IHasValue):void 
 		{
-			if(this._debug) this.logDebug("removeFormElement: " + element);
+			if (this._debug) this.logDebug("removeFormElement: " + element);
 			
 			// remove from _componentsList
-			for each(var fed:FormElementData in this._elements)
+			for each (var fed:FormElementData in this._elements)
 			{
-				if(fed.element == element)
+				if (fed.element == element)
 				{
 					delete this._elements[fed.name];
 					break;
@@ -253,12 +253,12 @@ package temple.ui.form
 			}
 			
 			// remove from validator
-			if(this._validator) this._validator.removeElement(element);
+			if (this._validator) this._validator.removeElement(element);
 			
 			// remove from focusManager
-			if(this._tabFocusManager && element is IFocusable) this._tabFocusManager.remove(element as IFocusable);
+			if (this._tabFocusManager && element is IFocusable) this._tabFocusManager.remove(element as IFocusable);
 			
-			if(element is IEventDispatcher) (element as IEventDispatcher).removeEventListener(FormElementEvent.SUBMIT, this.handleFormElementSubmit);
+			if (element is IEventDispatcher) (element as IEventDispatcher).removeEventListener(FormElementEvent.SUBMIT, this.handleFormElementSubmit);
 		}
 
 		public function hasElement(name:String):Boolean
@@ -271,9 +271,12 @@ package temple.ui.form
 		 */
 		public function removeAllElements():void 
 		{
-			if(this._debug) this.logDebug("removeAllFormElements: ");
+			if (this._debug) this.logDebug("removeAllFormElements: ");
 			
-			for each(var fed:FormElementData in this._elements) this.removeElement(fed.element);
+			var elements:Array = [];
+			for each (var fed:FormElementData in this._elements) elements.push(fed.element);
+			while (elements.length) this.removeElement(elements.shift());
+
 		}
 
 		/**
@@ -281,7 +284,7 @@ package temple.ui.form
 		 */
 		public function addSubmitButton(button:DisplayObject, tabIndex:int = -1, tabEnabled:Boolean = true):void 
 		{
-			if(this._debug) this.logDebug("addSubmitButton: " + button);
+			if (this._debug) this.logDebug("addSubmitButton: " + button);
 			
 			this._submitButtons[button] = 'submitbutton';
 			button.addEventListener(MouseEvent.CLICK, handleSubmitButtonClicked, false, 0, true);
@@ -293,7 +296,7 @@ package temple.ui.form
 		 */
 		public function removeSubmitButton(button:DisplayObject):void 
 		{
-			if(this._debug) this.logDebug("removeSubmitButton: " + button);
+			if (this._debug) this.logDebug("removeSubmitButton: " + button);
 			
 			delete this._submitButtons[button];
 			button.removeEventListener(MouseEvent.CLICK, handleSubmitButtonClicked);
@@ -305,7 +308,7 @@ package temple.ui.form
 		 */
 		public function addResetButton(button:DisplayObject, tabIndex:int = -1, tabEnabled:Boolean = true):void 
 		{
-			if(this._debug) this.logDebug("addCancelButton: " + button);
+			if (this._debug) this.logDebug("addCancelButton: " + button);
 			
 			this._resetButtons[button] = 'cancelbutton';
 			button.addEventListener(MouseEvent.CLICK, handleResetButtonClicked, false, 0, true);
@@ -317,7 +320,7 @@ package temple.ui.form
 		 */
 		public function removeCancelButton(button:DisplayObject):void 
 		{
-			if(this._debug) this.logDebug("removeCancelButton: " + button);
+			if (this._debug) this.logDebug("removeCancelButton: " + button);
 			
 			delete this._resetButtons[button];
 			button.removeEventListener(MouseEvent.CLICK, handleResetButtonClicked);
@@ -331,20 +334,20 @@ package temple.ui.form
 		 */
 		public function submit():void 
 		{
-			if(this._debug) this.logDebug("submit:");
+			if (this._debug) this.logDebug("submit:");
 			
-			if(this.enabled)
+			if (this.enabled)
 			{
 				// validate
-				if(this.validate())
+				if (this.validate())
 				{
-					if(this._debug) this.logDebug(ObjectUtils.traceObject(this.getModelData(), 1, false));
+					if (this._debug) this.logDebug(ObjectUtils.traceObject(this.getModelData(), 1, false));
 					this.send();
 				}
 			}
 			else
 			{
-				if(this._debug) this.logDebug("submit: Form is disabled!");
+				if (this._debug) this.logDebug("submit: Form is disabled!");
 			}
 		}
 
@@ -353,7 +356,7 @@ package temple.ui.form
 		 */
 		public function insertModelData(name:String, data:*):void 
 		{
-			if(this._debug) this.logDebug("insertModelData: " + name + "=" + data);
+			if (this._debug) this.logDebug("insertModelData: " + name + "=" + data);
 			
 			this._dataModel[name] = data;
 		}
@@ -366,12 +369,12 @@ package temple.ui.form
 		 */
 		public function reset():void 
 		{
-			if(this._debug) this.logDebug("clear: ");
+			if (this._debug) this.logDebug("clear: ");
 			
-			for each(var fed:FormElementData in this._elements)
+			for each (var fed:FormElementData in this._elements)
 			{
-				if(fed.element is IHasError) IHasError(fed.element).hideError();
-				if(fed.element is IResettable) IResettable(fed.element).reset();
+				if (fed.element is IHasError) IHasError(fed.element).hideError();
+				if (fed.element is IResettable) IResettable(fed.element).reset();
 			}
 			this._validator.stopRealtimeValidating();
 			
@@ -386,24 +389,24 @@ package temple.ui.form
 		 */
 		public function validate(keepValidating:Boolean = true, showErrors:Boolean = true):Boolean
 		{
-			if(this._debug) this.logDebug("validate");
+			if (this._debug) this.logDebug("validate");
 			
-			if(!this._enabled)
+			if (!this._enabled)
 			{
-				if(this._debug) this.logWarn("Form is disabled");
+				if (this._debug) this.logWarn("Form is disabled");
 				return false;
 			}
 			
-			if(this._validator.isValid(keepValidating, showErrors))
+			if (this._validator.isValid(keepValidating, showErrors))
 			{
-				if(this._debug) this.logInfo("Form is valid");
+				if (this._debug) this.logInfo("Form is valid");
 				this.dispatchEvent(new FormEvent(FormEvent.VALIDATE_SUCCESS));
 				return true;
 			}
-			if(this._debug)
+			if (this._debug)
 			{
 				this.logError("Form is invalid: " + this._validator.validate());
-				if(this._validator.getErrorMessages().length) this.logError("Error messages: " + this._validator.getErrorMessages());
+				if (this._validator.getErrorMessages().length) this.logError("Error messages: " + this._validator.getErrorMessages());
 			}
 			
 			this.dispatchEvent(new FormEvent(FormEvent.VALIDATE_ERROR, new FormResult(false, this._validator.getErrorMessage())));
@@ -416,12 +419,12 @@ package temple.ui.form
 		 */
 		public function getModelData():Object
 		{
-			for each(var fed:FormElementData in this._elements)
+			for each (var fed:FormElementData in this._elements)
 			{
-				if(fed.submit) this._dataModel[fed.name] = fed.element.value;
+				if (fed.submit) this._dataModel[fed.name] = fed.element.value;
 			}
 			
-			if(this._debug)
+			if (this._debug)
 			{
 				for (var key : String in this._dataModel) 
 				{
@@ -441,13 +444,13 @@ package temple.ui.form
 		{
 			this._prefillData = data;
 			
-			if(this._debug) this.logDebug("prefillData: " + ObjectUtils.traceObject(data, 0, false));
+			if (this._debug) this.logDebug("prefillData: " + ObjectUtils.traceObject(data, 0, false));
 			
-			if(this._prefillData != null)
+			if (this._prefillData != null)
 			{
-				for each(var fed:FormElementData in this._elements)
+				for each (var fed:FormElementData in this._elements)
 				{
-					if(this._prefillData.hasOwnProperty(fed.name) && fed.element is ISetValue)
+					if (this._prefillData.hasOwnProperty(fed.name) && fed.element is ISetValue)
 					{
 						ISetValue(fed.element).value = data[fed.name];
 						if (this._debug) this.logDebug("prefillData: " + fed.name + " is set to " + data[fed.name]);
@@ -487,7 +490,7 @@ package temple.ui.form
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			if(this._debug) this.logDebug("enabled: " + value);
+			if (this._debug) this.logDebug("enabled: " + value);
 			
 			this._enabled = value;
 			
@@ -550,16 +553,16 @@ package temple.ui.form
 		public function set debug(value:Boolean):void
 		{
 			this._debug = value;
-			if(this._debug) this.logWarn("Form is running in debug mode!");
+			if (this._debug) this.logWarn("Form is running in debug mode!");
 			
 			DebugManager.setDebugForChilds(this, value);
 		}
 
 		protected function send():void
 		{
-			if(this._debug) this.logDebug("send: ");
+			if (this._debug) this.logDebug("send: ");
 			
-			if(this._service != null)
+			if (this._service != null)
 			{
 				this.enabled = false;
 				
@@ -648,7 +651,7 @@ package temple.ui.form
 				
 				var element:FormElementData;
 				var focussed:Boolean;
-				for each(var error:IFormFieldError in result.errors)
+				for each (var error:IFormFieldError in result.errors)
 				{
 					element = this._elements[error.field];
 					if (element)
@@ -685,13 +688,13 @@ package temple.ui.form
 		 */
 		override public function destruct():void
 		{
-			if(this._debug) this.logDebug("destruct: ");
+			if (this._debug) this.logDebug("destruct: ");
 			
 			this._submitButtons = null;
 			this._resetButtons = null;
 			
 			// Destruct service
-			if(this._service)
+			if (this._service)
 			{
 				// first set this._service to null, to prefend infinite loop
 				var service:IFormService = this._service;
@@ -700,23 +703,23 @@ package temple.ui.form
 			}
 			
 			// Destruct validator
-			if(this._validator)
+			if (this._validator)
 			{
 				this._validator.destruct();
 				this._validator = null;
 			}
 			
 			// Destruct focusmanager
-			if(this._tabFocusManager)
+			if (this._tabFocusManager)
 			{
 				this._tabFocusManager.destruct();
 				this._tabFocusManager = null;
 			}
 			
 			// Destruct elements
-			if(this._elements)
+			if (this._elements)
 			{
-				for each(var fed:FormElementData in this._elements)
+				for each (var fed:FormElementData in this._elements)
 				{
 					if (fed is IDestructible) IDestructible(fed).destruct();
 				}
