@@ -43,7 +43,6 @@
 package temple.ui.focus 
 {
 	import temple.core.CoreEventDispatcher;
-	import temple.data.collections.DestructibleArray;
 	import temple.debug.DebugManager;
 	import temple.debug.IDebuggable;
 	import temple.debug.errors.TempleError;
@@ -71,7 +70,7 @@ package temple.ui.focus
 	 */
 	public class TabFocusManager extends CoreEventDispatcher implements IFocusable, IDebuggable
 	{
-		private var _focusList:DestructibleArray;
+		private var _focusList:Array;
 		private var _loop:Boolean;
 		private var _debug:Boolean;
 
@@ -81,7 +80,7 @@ package temple.ui.focus
 		public function TabFocusManager(loop:Boolean = true) 
 		{
 			this._loop = loop;
-			this.clear();
+			this._focusList = new Array();
 			DebugManager.add(this);
 		}
 
@@ -90,7 +89,7 @@ package temple.ui.focus
 		 */
 		public function clear():void 
 		{
-			this._focusList = new DestructibleArray();
+			while (this._focusList.length) this.remove(this._focusList.shift());
 		}
 
 		/**
@@ -168,7 +167,7 @@ package temple.ui.focus
 			}
 			for (var i:int = this._focusList.length - 1;i >= 0; i--) 
 			{
-				if(ItemData(this._focusList[i]).item == item)
+				if (ItemData(this._focusList[i]).item == item)
 				{
 					ItemData(this._focusList.splice(i, 1)[0]).destruct();
 					return;
@@ -357,6 +356,8 @@ package temple.ui.focus
 		 */
 		private function getCurrentFocusIndex():int 
 		{
+			if (!this._focusList) return -1;
+			
 			var len:uint = this._focusList.length;
 			for (var i:int = 0;i < len; ++i) 
 			{
@@ -397,7 +398,7 @@ package temple.ui.focus
 		{
 			if (this._focusList)
 			{
-				this._focusList.destruct();
+				this.clear();
 				this._focusList = null;
 			}
 			

@@ -56,7 +56,7 @@ package temple.utils.types
 	public final class DateUtils 
 	{
 		public static const WEEKDAYS_NL:Array = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
-		public static const WEEKDAYS_EN:Array = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saterday'];
+		public static const WEEKDAYS_EN:Array = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 		public static const WEEKDAYS_SHORT_NL:Array = ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'];
 		public static const WEEKDAYS_SHORT_EN:Array = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -114,14 +114,25 @@ package temple.utils.types
 		
 		/**
 		 * Parse a SQL-DATETIME (YYYY-MM-DD HH:MM:SS) to a Date
+		 * @param dateTime an SQL-DATETIME (YYYY-MM-DD HH:MM:SS)
+		 * @return null of dateTime is null or the date is invalid
 		 */
 		public static function parseFromSqlDateTime(dateTime:String):Date
 		{
 			if(dateTime == null)
 			{
-				return new Date();	
+				return null;
 			}
-			return new Date(Date.parse(dateTime.split('-').join('/')));
+			var date:Date = new Date(Date.parse(dateTime.split('-').join('/')));
+			
+			if (date.toString() == 'Invalid Date')
+			{
+				return null;
+			}
+			else
+			{
+				return date;
+			}
 		}
 		
 		/**
@@ -653,6 +664,14 @@ package temple.utils.types
 					return "UTC-1200";
 			}
 			return "UTC+0000";
+		}
+		
+		public static function isSameDay(compare:Date, to:Date):Boolean
+		{
+			if(compare.getFullYear() != to.getFullYear()) return false;
+			if(compare.getMonth() != to.getMonth()) return false;
+			if(compare.getDate() != to.getDate()) return false;
+			return true;
 		}
 
 		/**

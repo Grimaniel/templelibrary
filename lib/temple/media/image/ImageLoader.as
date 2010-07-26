@@ -44,8 +44,6 @@ package temple.media.image
 {
 	import flash.events.SecurityErrorEvent;
 	import temple.core.CoreSprite;
-	import temple.data.encoding.image.JPGEncoder;
-	import temple.data.encoding.image.PNGEncoder;
 	import temple.data.loader.ILoader;
 	import temple.data.loader.cache.CacheLoader;
 	import temple.data.loader.cache.ICacheable;
@@ -100,6 +98,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		private var _clipping:Boolean;
 		private var _scaleMode:String;
 		private var _align:String;
+		private var _upscaleEnabled:Boolean;
 		private var _smoothing:Boolean;
 		private var _context:LoaderContext;
 		private var _preloaderMode:String;
@@ -252,7 +251,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		}
 		
 		/**
-		 * @param width The width of the image container (is masked and fitted)
+		 * The width of the image container (is masked and fitted)
 		 */
 		override public function get width():Number
 		{
@@ -269,7 +268,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		}
 		
 		/**
-		 * @param height The height of the image container (is masked and fitted)
+		 * The height of the image container (is masked and fitted)
 		 */
 		override public function get height():Number
 		{
@@ -286,7 +285,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		}
 		
 		/**
-		 * @param scaleMode The scaleMode for fitting the image (use ScaleMode class as values)
+		 * The scaleMode for fitting the image (use ScaleMode class as values)
 		 */
 		public function get scaleMode():String
 		{
@@ -305,7 +304,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		}
 		
 		/**
-		 * @param align The align mode for the image in the clipped area (use Align class as values)
+		 * The align mode for the image in the clipped area (use Align class as values)
 		 */
 		public function get align():String
 		{
@@ -321,6 +320,24 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			this._align = value;
 			
 			this.layoutImage();
+		}
+		
+		/**
+		 * When you set the scaleMode to a property other than NO_SCALE, and clipping mode is enabled, every image is scaled.
+		 * When you set upscaleEnabled to false, images that are smaller than the clippingRect are not scaled.
+		 */
+		
+		public function get upscaleEnabled():Boolean
+		{
+			return this._upscaleEnabled;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set upscaleEnabled(value:Boolean):void
+		{
+			this._upscaleEnabled = value;
 		}
 		
 		/**
@@ -370,7 +387,23 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		}
 		
 		/**
-		 *	returns the BitmapData of the loaded image
+		 *	Returns the Bitmap of the loaded image.
+		 *	
+		 *	Use the bitmapdata to get the JPG or PNG byteArray of the loaded data:
+		 *	new JPGEncoder(quality).encode(imageLoader.bitmapData);
+		 *	PNGEncoder.encode(imageLoader.bitmapData);
+		 */
+		public function get bitmap():Bitmap 
+		{
+			return this.content ? Bitmap(this.content) : null;
+		}
+		
+		/**
+		 *	Returns the BitmapData of the loaded image.
+		 *	
+		 *	You can use this to get the JPG or PNG byteArray of th eloaded data:
+		 *	new JPGEncoder(quality).encode(imageLoader.bitmapData);
+		 *	PNGEncoder.encode(imageLoader.bitmapData);
 		 */
 		public function get bitmapData():BitmapData 
 		{
@@ -378,51 +411,20 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		}
 		
 		/**
-		 *	returns the original image as JPG encoded ByteArray
-		 *	@param quality encoding quality
+		 *	Returns the clipped image as JPG encoded ByteArray.
+		 *	
+		 *	You can use this to get the JPG or PNG byteArray of th eloaded data:
+		 *	new JPGEncoder(quality).encode(imageLoader.clippedBitmapData);
+		 *	PNGEncoder.encode(imageLoader.clippedBitmapData);
 		 */
-		public function getDataAsJPG(quality:Number = 50):ByteArray 
-		{
-			if (!this.isLoaded()) return null;
-			
-			return new JPGEncoder(quality).encode(Bitmap(this.content).bitmapData);
-		}
-		
-		/**
-		 *	returns the original image as PNG encoded ByteArray
-		 */
-		public function getDataAsPNG():ByteArray 
-		{
-			if (!this.isLoaded()) return null;
-			
-			return PNGEncoder.encode(Bitmap(this.content).bitmapData);
-		}
-		
-		/**
-		 *	returns the clipped image as JPG encoded ByteArray
-		 *	@param quality encoding quality
-		 */
-		public function getClippedDataAsJPG(quality:Number = 50):ByteArray 
+		public function get clippedBitmapData():BitmapData 
 		{
 			if (!this.isLoaded()) return null;
 			
 			var bmd:BitmapData = new BitmapData(this.width, this.height, true, 0x00FFFFFF);
 			bmd.draw(this);
 			
-			return new JPGEncoder(quality).encode(bmd);
-		}
-		
-		/**
-		 *	returns the clipped image as PNG encoded ByteArray
-		 */
-		public function getClippedDataAsPNG():ByteArray 
-		{
-			if (!this.isLoaded()) return null;
-			
-			var bmd:BitmapData = new BitmapData(this.width, this.height, true, 0x00FFFFFF);
-			bmd.draw(this);
-			
-			return PNGEncoder.encode(bmd);
+			return bmd;
 		}
 
 		/**
@@ -541,6 +543,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			// calculate scale ratios
 			var ratioX:Number = this._width / (this._loader.width * (1 / this._loader.scaleX));
 			var ratioY:Number = this._height / (this._loader.height * (1 / this._loader.scaleY));
+			var scale:Number;
 			
 			// scale
 			switch(this._scaleMode)
@@ -554,13 +557,15 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 				}
 				case ScaleMode.SHOW_ALL:
 				{
-					this._loader.scaleX = this._loader.scaleY = ratioX < ratioY ? ratioX : ratioY;
+					scale = ratioX < ratioY ? ratioX : ratioY;
+					this._loader.scaleX = this._loader.scaleY = this._upscaleEnabled ? scale : Math.min(1, scale);
 					
 					break;
 				}
 				case ScaleMode.NO_BORDER:
 				{
-					this._loader.scaleX = this._loader.scaleY = ratioX > ratioY ? ratioX : ratioY;
+					scale = ratioX > ratioY ? ratioX : ratioY;
+					this._loader.scaleX = this._loader.scaleY = this._upscaleEnabled ? scale : Math.min(1, scale);
 					
 					break;
 				}

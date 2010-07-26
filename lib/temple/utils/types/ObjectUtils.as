@@ -339,6 +339,26 @@ package temple.utils.types
 			}
 			return copy;
 		}
+		
+		public static function getKeys(object:Object):Array
+		{
+			var ret:Array = new Array();			
+			for (var key:String in object)
+			{
+				ret.push(key);
+			}			
+			return ret;
+		}
+					
+		public static function getValues(object:Object):Array
+		{
+			var ret:Array = new Array();			
+			for each (var value:* in object)
+			{
+				ret.push(value);
+			}			
+			return ret;
+		}
 
 		/**
 		 * Converts an object to a readable String

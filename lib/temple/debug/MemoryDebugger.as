@@ -124,7 +124,7 @@ package temple.debug
 				if (object is IDestructible && (object as IDestructible).isDestructed)
 				{
 					totalDestructed++;
-					destructed += "\n" + String(object);
+					destructed += "\n\t" + String(object);
 					if (this._includeCreationStack) destructed += "\n" + RegistryInfo(Memory.registry[object]).stack;
 				}
 			}

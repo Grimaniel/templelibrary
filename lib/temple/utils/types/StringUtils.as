@@ -357,7 +357,7 @@ package temple.utils.types
 			if(string == null) throwError(new TempleArgumentError(StringUtils, "String can not be null"));
 			if(object == null) throwError(new TempleArgumentError(StringUtils, "Object can not be null"));
 			
-			return string.replace(/\{\w*\}/gi, function ():String
+			return string.replace(/\{[@#$%&\w]*\}/gi, function ():String
 			{
 				var prop:String = (arguments[0] as String).substr(1, (arguments[0] as String).length - 2);
 				if(object != null && object.hasOwnProperty(prop) && object[prop] != null) return object[prop];

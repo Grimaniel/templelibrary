@@ -142,7 +142,7 @@ package temple.utils
 		{
 			if(this._timer != null && this._timer.running == true)
 			{
-				this._remainingMiliseconds = getTimer() - this._startMiliseconds;
+				this._remainingMiliseconds = this._timer.delay - (getTimer() - this._startMiliseconds);
 				this._timer.stop();
 			}
 		}
@@ -164,6 +164,8 @@ package temple.utils
 					this._timer = new CoreTimer(this._remainingMiliseconds, 1);
 					this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);	
 				}
+				
+				this._startMiliseconds = getTimer();
 			}
 		}
 		
@@ -206,6 +208,16 @@ package temple.utils
 				if(this._callback != null) this._callback();
 			}
 			this.destruct();
+		}
+		
+		public function get timeElapsed():Number
+		{
+			return this._intervalMiliseconds - this.timeLeft;
+		}
+
+		public function get timeLeft():Number
+		{
+			return this._timer ? (this._timer.running ? this._timer.delay - (getTimer() - this._startMiliseconds) : this._remainingMiliseconds) : 0;
 		}
 		
 		/**

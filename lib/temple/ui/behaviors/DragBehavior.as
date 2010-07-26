@@ -84,7 +84,7 @@ package temple.ui.behaviors
 	 * 
 	 * @example
 	 * <listing version="3.0">
-	 * new DragBehavior(mcClip, new Reactangle(100, 100, 200, 200);
+	 * new DragBehavior(mcClip, new Rectangle(100, 100, 200, 200);
 	 * </listing>
 	 *
 	 * <p>It's also possible to define a child object as a 'DragButton'. A DragButton is a DisplayObject

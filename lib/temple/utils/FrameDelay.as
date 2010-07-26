@@ -154,13 +154,16 @@ package temple.utils
 			if (this._isDone) 
 			{
 				FramePulse.removeEnterFrameListener(this.handleEnterFrame);
-				if (this._params == null) 
+				if(this._callback != null)
 				{
-					this._callback();
-				}
-				else 
-				{
-					this._callback.apply(null, this._params);
+					if (this._params == null) 
+					{
+						this._callback();
+					}
+					else 
+					{
+						this._callback.apply(null, this._params);
+					}
 				}
 				this.destruct();
 			}

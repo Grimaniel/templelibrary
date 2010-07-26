@@ -159,9 +159,6 @@ package temple.core
 			this.contentLoaderInfo.addEventListener(IOErrorEvent.NETWORK_ERROR, temple::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
 			this.contentLoaderInfo.addEventListener(IOErrorEvent.VERIFY_ERROR, temple::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
 			this.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, temple::handleSecurityError, false, CoreLoader._DEFAULT_HANDLER, true);
-			
-			// preloader support
-			this._preloadableBehavior = new PreloadableBehavior(this);
 		}
 		
 		/**
@@ -487,7 +484,7 @@ package temple.core
 		 */
 		public function get preloader():IPreloader
 		{
-			return this._preloadableBehavior.preloader;
+			return this._preloadableBehavior ? this._preloadableBehavior.preloader : null;
 		}
 		
 		/**
@@ -495,6 +492,7 @@ package temple.core
 		 */
 		public function set preloader(value:IPreloader):void
 		{
+			if (value && !this._preloadableBehavior) this._preloadableBehavior = new PreloadableBehavior(this);
 			this._preloadableBehavior.preloader = value;
 		}
 		
@@ -614,7 +612,7 @@ package temple.core
 		{
 			if (this.debug) this.logDebug("handleLoadStart");
 			
-			this._preloadableBehavior.onLoadStart(this, this._url);
+			if (this._preloadableBehavior) this._preloadableBehavior.onLoadStart(this, this._url);
 			this.dispatchEvent(event.clone());
 		}
 
@@ -622,7 +620,7 @@ package temple.core
 		{
 			if (this.debug) this.logDebug("handleLoadProgress");
 			
-			this._preloadableBehavior.onLoadProgress();
+			if (this._preloadableBehavior) this._preloadableBehavior.onLoadProgress();
 			this.dispatchEvent(event.clone());
 		}
 		
@@ -637,7 +635,7 @@ package temple.core
 			
 			this._isLoading = false;
 			this._isLoaded = true;
-			this._preloadableBehavior.onLoadComplete(this);
+			if (this._preloadableBehavior) this._preloadableBehavior.onLoadComplete(this);
 			
 			this.dispatchEvent(event.clone());
 		}
@@ -648,7 +646,7 @@ package temple.core
 		temple final function handleIOError(event:IOErrorEvent):void
 		{
 			this._isLoading = false;
-			this._preloadableBehavior.onLoadComplete(this);
+			if (this._preloadableBehavior) this._preloadableBehavior.onLoadComplete(this);
 			
 			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
 			
@@ -662,7 +660,7 @@ package temple.core
 		temple final function handleSecurityError(event:SecurityErrorEvent):void
 		{
 			this._isLoading = false;
-			this._preloadableBehavior.onLoadComplete(this);
+			if (this._preloadableBehavior) this._preloadableBehavior.onLoadComplete(this);
 			
 			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
 			
@@ -686,7 +684,11 @@ package temple.core
 			
 			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			this._preloadableBehavior.destruct();
+			if (this._preloadableBehavior)
+			{
+				this._preloadableBehavior.destruct();
+				this._preloadableBehavior = null;
+			}
 			
 			if (this._eventListenerManager)
 			{

@@ -106,6 +106,8 @@ package temple.utils
 		
 		private function apply():void
 		{
+			StageProvider.stage = this._displayObject.stage;
+			
 			this._displayObject.stage.align = this._stageAlign;
 			this._displayObject.stage.scaleMode = this._stageScaleMode;
 			
