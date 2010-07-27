@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary The StageProvider stores a global reference to the stage.
 
 = Introduction =
 
