@@ -7,5 +7,5 @@ The StageProvider stores a global reference to the stage. The stage is automatic
 
 = Details =
 
-[http://code.google.com/p/templelibrary/source/browse/trunk/lib/temple/utils/StageProvider.as Source]
-[http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/StageProvider.html Documentation]
+ * [http://code.google.com/p/templelibrary/source/browse/trunk/lib/temple/utils/StageProvider.as Source]
+ * [http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/StageProvider.html Documentation]
