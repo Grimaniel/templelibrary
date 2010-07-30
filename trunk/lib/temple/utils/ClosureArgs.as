@@ -46,7 +46,7 @@ package temple.utils
 
 	/**
 	 * ClosureArgs
-	 * AS3-style DelegateArgs: usefull to pass parameters to a callback when you can't.
+	 * AS3-style DelegateArgs: useful to pass parameters to a callback when you can't.
 	 * 		
 	 * @example
 	 * <listing version="3.0">	

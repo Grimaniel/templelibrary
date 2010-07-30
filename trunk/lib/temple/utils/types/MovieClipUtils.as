@@ -203,7 +203,7 @@ package temple.utils.types
 		/**
 		 * Recursively nextFrames all nested MovieClips through all children DisplayObjectContianers), with option for looping
 		 * 
-		 * Usefull in a enterFrame if a gotoAndStop on parent timeline stops nested anims
+		 * Useful in a enterFrame if a gotoAndStop on parent timeline stops nested anims
 		 * 
 		 * Last-resort util: may screw up synced nested anims
 		 * 

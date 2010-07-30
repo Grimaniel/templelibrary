@@ -73,7 +73,7 @@ package temple.core
 	 * 	<li>Completely destructible.</li>
 	 * 	<li>Automatic removes and destruct children, grant-children etc. on destruction.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
-	 * 	<li>Some usefull extra properties like autoAlpha, position and scale.</li>
+	 * 	<li>Some useful extra properties like autoAlpha, position and scale.</li>
 	 * </ul>
 	 * 
 	 * <p>You should always use and/or extend the CoreMovieClip instead of MovieClip if you want to make use of the Temple features.</p>

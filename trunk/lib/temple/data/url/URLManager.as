@@ -164,7 +164,7 @@
 		}
 		
 		/**
-		 * Directly set the XML data instead of loading is. Usefull if you already loaded the XML file with an external loader. Or when you use inline XML
+		 * Directly set the XML data instead of loading is. Useful if you already loaded the XML file with an external loader. Or when you use inline XML
 		 */
 		public static function parseXML(xml:XML, group:String = null):void
 		{
@@ -331,7 +331,7 @@
 		/**
 		 * HashMap with name-value pairs for variables inside the url's which should be replaced.
 		 * Variables are set as '{var}' and are only replaced onced, when the urls.xml is parsed.
-		 * So therefor is only usefull to set a variable before the URLManager is complete. 
+		 * So therefor is only useful to set a variable before the URLManager is complete. 
 		 */
 		public function get variables():HashMap
 		{

@@ -290,7 +290,7 @@ package temple.utils.types
 
 		/**
 		 * Get the Number out of a string. Can handle . or , as decimal separator (will not match thousand delimitters)
-		 * Usefull for unit values like '€ 49.95' or '1000 KM'
+		 * Useful for unit values like '€ 49.95' or '1000 KM'
 		 */
 		public static function getNumberFromString(string:String):Number
 		{

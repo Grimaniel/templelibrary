@@ -55,7 +55,7 @@ package temple.utils
 	/**
 	 * The StageProvider stores a global reference to the stage.
 	 * 
-	 * The stage is automaticly set by the CoreSprite and the CoreMovieClip
+	 * The stage is automatically set by the CoreSprite and the CoreMovieClip.
 	 * 
 	 * @author Thijs Broerse
 	 */

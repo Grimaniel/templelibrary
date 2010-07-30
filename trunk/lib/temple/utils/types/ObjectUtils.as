@@ -243,7 +243,7 @@ package temple.utils.types
 							}
 							else
 							{
-								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + ((Temple.displayFullPackageInToString || vardata.type.indexOf('::') == -1) ? vardata.type : vardata.type.split('::')[1]) + ")": "");
+								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable) + ")" : "");
 							}
 						}
 						break;
