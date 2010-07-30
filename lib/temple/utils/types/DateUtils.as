@@ -1394,7 +1394,7 @@ package temple.utils.types
 		}
 		
 		/**
-		 * Gets the next date in the week for the given time and day. Usefull for weekly countdowns
+		 * Gets the next date in the week for the given time and day. Useful for weekly countdowns
 		 * @param day The day for the countdown. 0 starts at sunday, so every monday at 20:00 is: getNextInWeekDateFor(1, 20);
 		 * @param hours The hours of the time
 		 * @param minutes The minutes of the time

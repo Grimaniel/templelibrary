@@ -81,7 +81,7 @@ package temple.core
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * 	<li>Handles and logs error events.</li>
 	 * 	<li>Passes all contentLoaderInfo events.</li>
-	 * 	<li>Some usefull extra properties like autoAlpha, position and scale.</li>
+	 * 	<li>Some useful extra properties like autoAlpha, position and scale.</li>
 	 * </ul>
 	 * 
 	 * <p>The CoreLoader passes all events of the contentLoaderInfo. You should always set the EventListeners on the 

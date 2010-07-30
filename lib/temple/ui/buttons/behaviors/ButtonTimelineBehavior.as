@@ -358,7 +358,7 @@ package temple.ui.buttons.behaviors
 		}
 		
 		/**
-		 * Returns the HashMap with all labels. Usefull for debugging.
+		 * Returns the HashMap with all labels. Useful for debugging.
 		 */
 		public function get labels():HashMap
 		{

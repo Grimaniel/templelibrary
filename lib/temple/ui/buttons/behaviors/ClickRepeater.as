@@ -55,7 +55,7 @@ package temple.ui.buttons.behaviors
 
 	/**
 	 * The ClickRepeater class makes an InteractiveObject repeating the MouseEvent.CLICK event, while the user hold down the mouse button on the object.
-	 * Usefull for srollButtons to make a ScrollPane scroll while pressing the button.
+	 * Useful for srollButtons to make a ScrollPane scroll while pressing the button.
 	 * 
 	 * You can set the delay of the first repeating and all other repeatings. You can also enable the 'highSpeed' by passing the delay.
 	 * 

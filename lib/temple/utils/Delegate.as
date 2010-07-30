@@ -45,7 +45,7 @@ package temple.utils
 	/**
 	 * Allows you to delegate a function call (with arguments) to specific scopes and function.
 	 * 
-	 * <p>Usefull when you need to wrap arguments inside a function.</p> 
+	 * <p>Useful when you need to wrap arguments inside a function.</p> 
 	 * 
 	 * @includeExample DelegateExample.as
 	 * 

@@ -71,7 +71,7 @@ package temple.core
 	 * 	<li>Completely destructible.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * 	<li>Automatic disposes BitmapData on destruction (can be disabled).</li>
-	 * 	<li>Some usefull extra properties like autoAlpha, position and scale.</li>
+	 * 	<li>Some useful extra properties like autoAlpha, position and scale.</li>
 	 * </ul>
 	 * 
 	 * <p>Note: The CoreBitmap will automatic dispose the BitmapData on destruction. If you do not want that you should set disposeBitmapDataOnDestruct to false.</p>
