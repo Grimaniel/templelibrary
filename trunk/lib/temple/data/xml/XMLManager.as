@@ -113,7 +113,7 @@ package temple.data.xml
 		 * @param callback the function that needs to be called when loading and parsing is complete. 
 		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type objectClass (2nd argument), since the parsed object is returned
 		 * @param sendData an object (name - value) to send with the request
-		 * 		<strong>NOTE:</strong> sendData is not used by compaire previous loads. So always set forceReload to true with a different sendData
+		 * 		<strong>NOTE:</strong> sendData is not used by compare previous loads. So always set forceReload to true with a different sendData
 		 * @param method Method to send the sendData object (GET of POST)
 		 * @param forceReload if set to true the xml file is loaded even when it has been loaded before. If set to false, the xml file won't be loaded again
 		 * @param cacheXML indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true)
@@ -149,7 +149,7 @@ package temple.data.xml
 		 * @param callback the function that needs to be called when loading and parsing is complete. 
 		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type array (2nd argument), since the parsed object is returned
 		 * @param sendData an object (name - value) to send with the request.
-		 * 		<strong>NOTE:</strong> sendData is not used by compaire previous loads. So always set forceReload to true with a different sendData.
+		 * 		<strong>NOTE:</strong> sendData is not used by compare previous loads. So always set forceReload to true with a different sendData.
 		 * @param method Method to send the sendData object (GET of POST)
 		 * @param forceReload if set to true the xml file is loaded even when it has been loaded before. If set to false, the xml file won't be loaded again
 		 * @param cacheXML indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true).
@@ -185,7 +185,7 @@ package temple.data.xml
 		 * @param callback the function that needs to be called when loading and parsing is complete. 
 		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type objectClass (2nd argument), since the parsed object is returned
 		 * @param sendData an object (name - value) to send with the request
-		 * 		<strong>NOTE:</strong> sendData is not used by compaire previous loads. So always set forceReload to true with a different sendData
+		 * 		<strong>NOTE:</strong> sendData is not used by compare previous loads. So always set forceReload to true with a different sendData
 		 * @param method  Method to send the sendData object (GET of POST)
 		 * @param forceReload if set to true the xml file is loaded even when it has been loaded before. If set to false, the xml file won't be loaded again
 		 * @param cacheXML  indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true)
@@ -221,7 +221,7 @@ package temple.data.xml
 		 * @param callback the function that needs to be called when loading and parsing is complete. 
 		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type array (2nd argument), since the parsed object is returned
 		 * @param sendData an object (name - value) to send with the request
-		 * 		<strong>NOTE:</strong> sendData is not used by compaire previous loads. So always set forceReload to true with a different sendData
+		 * 		<strong>NOTE:</strong> sendData is not used by compare previous loads. So always set forceReload to true with a different sendData
 		 * @param method Method to send the sendData object (GET of POST)
 		 * @param forceReload if set to true the xml file is loaded even when it has been loaded before. If set to false, the xml file won't be loaded again
 		 * @param cacheXML indicates if the XML should be keept in memory so won't be loaded again (unless forceReload is not true).

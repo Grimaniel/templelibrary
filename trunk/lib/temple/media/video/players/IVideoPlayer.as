@@ -42,6 +42,7 @@
 
 package temple.media.video.players 
 {
+	import flash.media.Video;
 	import temple.data.loader.preload.IPreloadable;
 	import temple.debug.IDebuggable;
 	import temple.media.player.IProgressiveDownloadPlayer;
@@ -55,17 +56,6 @@ package temple.media.video.players
 	public interface IVideoPlayer extends IProgressiveDownloadPlayer, IDisplayObject, IDebuggable, IAudible, IPreloadable
 	{
 		/**
-		 * Plays the video on a URL
-		 * This video player can handle local files, web files (http) and RTMP Streaming
-		 * 
-		 * When using RTMP streaming pass url as:
-		 * rtmp:[//host][:port]/[appname]/[video filename]
-		 */
-		/**
-		 * Loads a movie, but does not play it. Stops movie on first frame
-		 */
-
-		/**
 		 * The path of the current video
 		 */
 		function get videoPath():String;
@@ -74,7 +64,7 @@ package temple.media.video.players
 		 * @private
 		 */
 		function set videoPath(value:String):void
-
+		
 		/**
 		 *	Returns metadata of loaded movie
 		 */
@@ -110,5 +100,16 @@ package temple.media.video.players
 		 * @private
 		 */
 		function set smoothing(value:Boolean):void;
+		
+		/**
+		 * Return the domain + the application name
+		 * (Substring of begin till 2nd "/" after "rtmp://"
+		 */
+		function get rtmpConnection():String;
+		
+		/**
+		 * @inheritDoc
+		 */
+		function set rtmpConnection(value:String):void;
 	}
 }
