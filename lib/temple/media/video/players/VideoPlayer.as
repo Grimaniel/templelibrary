@@ -887,28 +887,11 @@ package temple.media.video.players
 		}
 		
 		/**
-		 * @inheritDoc
+		 * Returns a reference to the Video object of the VideoPlayer.
 		 */
-		public function get debug():Boolean
+		public function get video():Video
 		{
-			return this._debug;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
-		public function set debug(value:Boolean):void
-		{
-			this._debug = value;
-			
-			if (this._debug)
-			{
-				this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				
-				this.createDebugInfo();
-			}
+			return this._video;
 		}
 		
 		/**
@@ -964,6 +947,31 @@ package temple.media.video.players
 		{
 			this._backgroundAlpha = Math.min(Math.max(value, 0), 1);
 			this.setBackground();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
+			
+			if (this._debug)
+			{
+				this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				
+				this.createDebugInfo();
+			}
 		}
 
 		/**
@@ -1351,8 +1359,9 @@ package temple.media.video.players
 			}
 			this._metaData = null;
 			
+			if (this._video.parent && this._video.parent == this)
 			{
-				if (this._video.parent && this._video.parent == this) this.removeChild(this._video);
+				this.removeChild(this._video);
 				this._video = null;
 			}
 			

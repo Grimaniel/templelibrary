@@ -42,6 +42,8 @@
 
 package temple.utils.types 
 {
+	import flash.text.TextLineMetrics;
+
 	import temple.utils.FrameDelay;
 	import flash.text.StyleSheet;
 	import temple.debug.errors.TempleError;
@@ -326,6 +328,25 @@ package temple.utils.types
 			textField.setTextFormat(textFormat);
 			textField.defaultTextFormat = textFormat;
 		}
+		
+		/**
+         * Descreases the fontSize of the TextField till the text has the specified amount of lines.
+         */
+        public static function fitToLines(field:TextField, lines:int = 1, affectTextFieldHeight:Boolean = false):void 
+        {
+            var size:Number = Number(field.getTextFormat().size);
+            
+            while (field.numLines > lines && size)
+            {
+                TextFieldUtils.setFontSize(field, size--);
+            }
+            
+            if(affectTextFieldHeight)
+            {
+                var lineMetrics:TextLineMetrics = field.getLineMetrics(0);
+                field.height = lineMetrics.height + 4 + lineMetrics.leading * (lines - 1);
+            }
+        }
 		
 		public static function toString():String
 		{

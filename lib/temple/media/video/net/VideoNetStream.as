@@ -67,7 +67,9 @@ package temple.media.video.net
 
 		public function onCuePoint(info:Object):void 
 		{
-			this.dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, new VideoCuePoint(info)));
+			var cuepoint:VideoCuePoint = new VideoCuePoint();
+			cuepoint.parseObject(info);
+			this.dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, cuepoint));
 		}
 	}
 }

@@ -234,7 +234,7 @@ package temple.debug.log
 		 *	@param level the level of the message
 		 *	@param objectId the Registry objectId that is stored in Core Objects;
 		 */
-		private function send(data:*, sender:String, level:*, objectId:uint = 0):void 
+		private function send(data:*, sender:String, level:String, objectId:uint = 0):void 
 		{
 			var stack:String;
 			

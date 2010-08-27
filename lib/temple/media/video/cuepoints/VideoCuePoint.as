@@ -59,15 +59,12 @@ package temple.media.video.cuepoints
 		 * Constructor.
 		 * @param data Object to parse, this should be a raw NetStream.onCuePoint data object.   
 		 */
-		public function VideoCuePoint(data:Object = null)
+		public function VideoCuePoint(name:String = null, time:Number = NaN, type:String = "event", parameters:Object = null)
 		{
-			if(data != null)
-			{
-				this._name = (data.name == undefined) ? null : data.name;
-				this._parameters = data.parameters;
-				this._time = isNaN(data.time) ? null : data.time;
-				this._type = (data.type == undefined) ? 'event' : data.type;
-			}
+			this._name = name;
+			this._time = time;
+			this._type = type;
+			this._parameters = parameters;
 		}
 
 		/**
@@ -117,7 +114,7 @@ package temple.media.video.cuepoints
 		
 		override public function toString():String
 		{
-			return super.toString() + " : " + this._type + ": '" + this._name + "' (" + this._time + ") " + this._parameters;
+			return super.toString() + " : " + this._type + ": '" + this._name + "' (" + this._time + ")";
 		}
 	}
 }

@@ -186,7 +186,7 @@ package temple.ui.behaviors.textfield
 					this.displayObject.y = this._bottom - this.displayObject.height;
 					break;
 				case Align.MIDDLE:
-					this.displayObject.y = this._top + (this._bottom - this._top) * .5 - this.displayObject.height * .5;
+					this.displayObject.y = this._middle - .5 * this.displayObject.height;
 					break;
 			}
 			this.dispatchEvent(new Event(Event.CHANGE));
