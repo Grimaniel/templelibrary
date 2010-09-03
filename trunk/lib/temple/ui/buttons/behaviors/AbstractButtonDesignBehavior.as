@@ -100,6 +100,10 @@ package temple.ui.buttons.behaviors
 			{
 				this.update(event.status);
 			}
+			else
+			{
+				event.stopTunneling();
+			}
 		}
 
 		/**

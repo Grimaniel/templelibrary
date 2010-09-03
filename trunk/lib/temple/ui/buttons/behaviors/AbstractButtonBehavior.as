@@ -123,7 +123,7 @@ package temple.ui.buttons.behaviors
 		/**
 		 * @inheritDoc
 		 * 
-		 * Enables or disables the Buttoon, not the ButtonBehavior. Use 'enable' to enable or disable the ButtonBehavior
+		 * Enables or disables the Button, not the ButtonBehavior. Use 'enable' to enable or disable the ButtonBehavior
 		 */
 		public function get disabled():Boolean
 		{

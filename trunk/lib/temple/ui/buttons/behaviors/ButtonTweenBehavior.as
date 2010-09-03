@@ -84,11 +84,20 @@ package temple.ui.buttons.behaviors
 		
 		private var _state:String;
 		
-		public function ButtonTweenBehavior(target:DisplayObject)
+		public function ButtonTweenBehavior(target:DisplayObject, upDuration:Number = NaN, upVars:Object = null, overDuration:Number = NaN, overVars:Object = null, downDuration:Number = NaN, downVars:Object = null)
 		{
 			super(target);
 			
 			OverwriteManager.init();
+			
+			this.upDuration = upDuration;
+			this.upVars = upVars;
+			
+			this.overDuration = overDuration;
+			this.overVars = overVars;
+			
+			this.downDuration = downDuration;
+			this.downVars = downVars;
 		}
 
 		public function get upVars():Object
