@@ -89,7 +89,7 @@ package temple.ui.focus
 		 */
 		public function clear():void 
 		{
-			while (this._items.length) this.remove(this._items.shift());
+			while (this._items.length) this.remove(ItemData(this._items.shift()).item);
 		}
 
 		/**

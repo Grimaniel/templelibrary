@@ -118,16 +118,17 @@ package temple.ui.buttons.behaviors
 				if(target is DisplayObjectContainer)
 				{
 					(target as DisplayObjectContainer).mouseChildren = false;
-					if (target is Sprite) this._eventTunneler = new EventTunneler(target as Sprite, ButtonEvent.UPDATE);
 
 					// act as button
 					if(target is Sprite)
 					{
+						this._eventTunneler = new EventTunneler(target as Sprite, ButtonEvent.UPDATE);
+						
 						(target as Sprite).buttonMode = true;
-						if(target.hasOwnProperty(ButtonBehavior.HIT_AREA_NAME) && target[HIT_AREA_NAME] is Sprite)
+						if(target.hasOwnProperty(ButtonBehavior.HIT_AREA_NAME) && target[ButtonBehavior.HIT_AREA_NAME] is Sprite)
 						{
-							(target as Sprite).hitArea = target[HIT_AREA_NAME] as Sprite;
-							(target[HIT_AREA_NAME] as Sprite).visible = false;
+							(target as Sprite).hitArea = target[ButtonBehavior.HIT_AREA_NAME] as Sprite;
+							(target[ButtonBehavior.HIT_AREA_NAME] as Sprite).visible = false;
 						}
 					}
 				}

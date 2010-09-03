@@ -142,12 +142,12 @@ package temple.ui.buttons.behaviors
 			
 			switch (true)
 			{
-				case this.selected:
+				case (this.selected && this._labels.hasOwnProperty(ButtonTimelineLabels.SELECTED)):
 				{
 					this.selectedState();
 					break;
 				}
-				case this.disabled:
+				case this.disabled && this._labels.hasOwnProperty(ButtonTimelineLabels.DISABLED):
 				{
 					this.disabledState();
 					break;
@@ -183,7 +183,7 @@ package temple.ui.buttons.behaviors
 						}
 						case ButtonTimelineLabels.SELECT:
 						case ButtonTimelineLabels.SELECTED:
-						case ButtonTimelineLabels.DESELECT:
+//						case ButtonTimelineLabels.DESELECT:
 						{
 							this.animateTo(ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, ButtonTimelineLabels.OVER, ButtonTimelineLabels.SELECT, this._playBackwardsBeforeSelected);
 							break;
@@ -501,13 +501,13 @@ package temple.ui.buttons.behaviors
 		private function selectedState():void
 		{
 			if (this.debug) this.logDebug("selectedState");
-			this.animateTo(null, ButtonTimelineLabels.SELECT, ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, this._playBackwardsBeforeSelected);
+			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.SELECT, ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, this._playBackwardsBeforeSelected);
 		}
 		
 		private function disabledState():void
 		{
 			if (this.debug) this.logDebug("disabledState");
-			this.animateTo(null, ButtonTimelineLabels.DISABLE, ButtonTimelineLabels.DISABLED, ButtonTimelineLabels.ENABLE, this._playBackwardsBeforeDisabled);
+			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.DISABLE, ButtonTimelineLabels.DISABLED, ButtonTimelineLabels.ENABLE, this._playBackwardsBeforeDisabled);
 		}
 		
 		private function focusState():void
@@ -606,10 +606,9 @@ package temple.ui.buttons.behaviors
 			}
 			else
 			{
-				// no labels found. Use first frame as up and lastframe as 'over' and 'selected'
+				// no labels found. Use first frame as up and lastframe as 'over'
 				this._labels[1] = this._labels[ButtonTimelineLabels.UP] = new FrameLabelData(ButtonTimelineLabels.UP, 1);
 				this._labels[this.movieClip.totalFrames] = this._labels[ButtonTimelineLabels.OVER] = new FrameLabelData(ButtonTimelineLabels.OVER, this.movieClip.totalFrames);
-				this._labels[ButtonTimelineLabels.SELECTED] = new FrameLabelData(ButtonTimelineLabels.SELECTED, this.movieClip.totalFrames);
 			}
 			
 			if (this.debug) this.logInfo("Labels: " + ObjectUtils.traceObject(this._labels, 3, false));

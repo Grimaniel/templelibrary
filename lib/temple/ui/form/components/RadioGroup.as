@@ -457,6 +457,18 @@ package temple.ui.form.components
 			DebugManager.setDebugForChilds(this, value);
 		}
 
+		/**
+		 * Checks if one of the buttons has the given value
+		 */
+		public function hasValue(value:*):Boolean 
+		{
+			for each (var selection:Selection in this._buttons)
+			{
+				if (selection.value == value) return true;
+			}
+			return false;
+		}
+
 		protected function handleButtonChange(event:Event):void
 		{
 			if (!(event.target is ISelectable)) return;

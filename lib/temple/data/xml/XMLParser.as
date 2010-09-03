@@ -146,7 +146,7 @@ package temple.data.xml
 			
 			if (parsable == null)
 			{
-				throwError(new TempleArgumentError(XMLParser.toString(), "Class '" + objectClass + "' does not implement IXMLParsable"));
+				throwError(new TempleArgumentError(XMLParser, "Class '" + objectClass + "' does not implement IXMLParsable"));
 			}
 			else if (parsable.parseXML(xml) || ignoreError) 
 			{
