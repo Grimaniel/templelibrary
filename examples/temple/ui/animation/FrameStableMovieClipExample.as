@@ -19,6 +19,7 @@
  */
 package  
 {
+	import temple.utils.StageSettings;
 	import flash.events.Event;
 	import temple.ui.form.validation.rules.Restrictions;
 	import temple.utils.FrameRateKiller;
@@ -52,6 +53,8 @@ package
 
 		public function FrameStableMovieClipExample()
 		{
+			new StageSettings(this);
+			
 			this.mcNormalTimelineAnimation.stop();
 			this.mcFrameStableTimelineAnimation.stop();
 			
