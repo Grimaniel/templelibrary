@@ -52,13 +52,15 @@ package temple.ui.states
 	{
 		/**
 		 * Show the state
+		 * @param instant if set to true animation will be skipped.
 		 */
-		function show():void;
+		function show(instant:Boolean = false):void;
 		
 		/**
 		 * Hide the state
+		 * @param instant if set to true animation will be skipped.
 		 */
-		function hide():void;
+		function hide(instant:Boolean = false):void;
 		
 		/**
 		 * Getter/setter wapper for show and hide method. Where shown=true mains show() and shown=false means hide()

@@ -200,7 +200,7 @@ package temple.ui.form.validation
 		}
 		
 		/**
-		 * Checks if a single element is valid and shows error if the element has an erro and showError is set to true (default: false). Return true if form is valid.
+		 * Checks if a single element is valid and shows error if the element has an error and showError is set to true (default: false). Return true if form is valid.
 		 * @param showError if set to true the element will show an ErrorState if the element is not valid.
 		 */
 		public function isElementValid(element:IHasValue, showError:Boolean = false):Boolean 

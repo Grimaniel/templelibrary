@@ -53,66 +53,69 @@ package temple.ui.states
 	 */
 	public class StateHelper 
 	{
-		public static function showFocus(object:DisplayObjectContainer):void
+		public static function showFocus(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
-			StateHelper.showState(object, IFocusState);
+			StateHelper.showState(object, IFocusState, instant);
 		}
 		
-		public static function hideFocus(object:DisplayObjectContainer):void
+		public static function hideFocus(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
-			StateHelper.hideState(object, IFocusState);
+			StateHelper.hideState(object, IFocusState, instant);
 		}
 		
-		public static function showError(object:DisplayObjectContainer, message:String):void
+		public static function showError(object:DisplayObjectContainer, message:String, instant:Boolean = false):void
 		{
 			var len:int = object.numChildren;
-			for (var i:int = 0; i < len; i++) {
-				if(object.getChildAt(i) is IErrorState)
+			for (var i:int = 0; i < len; i++)
+			{
+				if (object.getChildAt(i) is IErrorState)
 				{
 					var errorState:IErrorState = IErrorState(object.getChildAt(i));
-					errorState.show();
+					errorState.show(instant);
 					errorState.message = message;
 				}
 			}
 		}
 		
-		public static function hideError(object:DisplayObjectContainer):void
+		public static function hideError(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
-			StateHelper.hideState(object, IErrorState);
+			StateHelper.hideState(object, IErrorState, instant);
 		}
 		
-		public static function showSelected(object:DisplayObjectContainer):void
+		public static function showSelected(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
-			StateHelper.showState(object, ISelectState);
+			StateHelper.showState(object, ISelectState, instant);
 		}
 		
-		public static function hideSelected(object:DisplayObjectContainer):void
+		public static function hideSelected(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
-			StateHelper.hideState(object, ISelectState);
+			StateHelper.hideState(object, ISelectState, instant);
 		}
 		
-		public static function showState(object:DisplayObjectContainer, state:Class):void
+		public static function showState(object:DisplayObjectContainer, state:Class, instant:Boolean = false):void
 		{
-			if(object is state) IState(object).show();
+			if (object is state) IState(object).show(instant);
 			
 			var len:int = object.numChildren;
 			for (var i:int = 0; i < len; i++) 
 			{
-				if(object.getChildAt(i) is state)
+				if (object.getChildAt(i) is state)
 				{
-					IState(object.getChildAt(i)).show();
+					IState(object.getChildAt(i)).show(instant);
 				}
 			}
 		}
 		
-		public static function hideState(object:DisplayObjectContainer, state:Class):void
+		public static function hideState(object:DisplayObjectContainer, state:Class, instant:Boolean = false):void
 		{
-			if(object is state) IState(object).hide();
+			if (object is state) IState(object).hide(instant);
 			
 			var len:int = object.numChildren;
-			for (var i:int = 0; i < len; i++) {
-				if(object.getChildAt(i) is state){
-					IState(object.getChildAt(i)).hide();
+			for (var i:int = 0; i < len; i++)
+			{
+				if (object.getChildAt(i) is state)
+				{
+					IState(object.getChildAt(i)).hide(instant);
 				}
 			}
 		}

@@ -98,7 +98,7 @@ package temple.data.flashvars
 		}
 
 		/**
-		 * Use this to configurate the flashvars with a default value and a type.
+		 * Use this to configure the flashvars with a default value and a type.
 		 * 
 		 * @param name The flashvar name (use FlashVarNames.NAME)
 		 * @param defaultValue The defaultValue if the flashvar does not exists or is empty
@@ -112,9 +112,10 @@ package temple.data.flashvars
 		 * FlashVars.configurateVar(FlashVarNames.LANGUAGE, 'nl', String);
 		 * FlashVars.configurateVar(FlashVarNames.VERSION, 1, int);
 		 * FlashVars.configurateVar(FlashVarNames.IS_DEMO, true, Boolean);
+		 * FlashVars.configurateVar(FlashVarNames.ALIGN, Align.LEFT, String, Align);
 		 * </listing>
 		 */
-		public static function configurateVar(name:String, defaultValue:* = null, type:Class = null, enum:Class = null):void
+		public static function configureVar(name:String, defaultValue:* = null, type:Class = null, enum:Class = null):void
 		{
 			if (!FlashVars._flashvars) throwError(new TempleError(FlashVar, 'FlashVars is not initialized yet!'));
 			

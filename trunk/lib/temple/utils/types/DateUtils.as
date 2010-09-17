@@ -1223,17 +1223,10 @@ package temple.utils.types
 		 */
 		private static function getHours(date:Date, leadingZero:Boolean = true, twelfHours:Boolean = false ):String
 		{
-			var hours:int;
+			var hours:int = date.getHours();
 			if (twelfHours == true )
 			{
-				if(date.getHours() > 12 )
-				{
-					hours = date.getHours() - 12;
-				}
-			}
-			else
-			{
-				hours = date.getHours();
+				hours = hours % 12;
 			}
 			
 			if( leadingZero == true && hours <= 9 )
