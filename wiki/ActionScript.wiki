@@ -1,0 +1,7 @@
+#summary ActionScript is a scripting language developed by Adobe
+
+= Introduction =
+
+ActionScript is a scripting language developed by Adobe. It is a dialect of ECMAScript (meaning it has the same syntax and semantics of the more widely known JavaScript), and is used primarily for the development of websites and software targeting the Adobe Flash Player platform, used on Web pages in the form of embedded SWF files. 
+
+http://en.wikipedia.org/wiki/ActionScript
