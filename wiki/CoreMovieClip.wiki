@@ -1,3 +1,12 @@
+#summary Base class for all Sprites in the Temple.
+
+= Introduction =
+
+Base class for all MovieClips in the Temple. The CoreMovieClip handles some core features of the Temple.
+
+
+= Details =
+ 
  * 	Registration to the Registry class.
  * 	Global reference to the stage trough the StageProvider.
  * 	Corrects a timeline bug in Flash (see http://www.tyz.nl/2009/06/23/weird-parent-thing-bug-in-flash/).
