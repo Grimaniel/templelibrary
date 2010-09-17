@@ -45,8 +45,7 @@ package temple.data.url
 	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk (arjan [at] mediamonks [dot] com)
-	 * @date 17 mrt 2010
+	 * @author Arjan van Wijk
 	 */
 	public class URLEvent extends Event 
 	{

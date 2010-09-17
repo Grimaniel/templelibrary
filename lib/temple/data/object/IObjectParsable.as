@@ -48,8 +48,7 @@ package temple.data.object
 	 * 
 	 * @see temple.data.object.ObjectParser
 	 * 
-	 * @date 12 nov 2008 16:14:57
-	 * @author Arjan van Wijk (arjan[at]mediamonks.com)
+	 * @author Arjan van Wijk
 	 */
 	public interface IObjectParsable 
 	{

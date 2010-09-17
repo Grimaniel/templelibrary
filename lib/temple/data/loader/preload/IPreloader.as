@@ -51,8 +51,7 @@ package temple.data.loader.preload
 	 * 
 	 * @see temple.data.loader.IPreloadable
 	 * 
-	 * @date 26 jan 2009 16:06:23
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public interface IPreloader extends IDisplayObject, IDestructible
 	{

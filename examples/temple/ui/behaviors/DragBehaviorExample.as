@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="DragBehavior"></a>
  * <h1>DragBehavior</h1>
  * 
  * <p>This is an example about how to implement the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/DragBehavior.html">DragBehavior</a>.</p>

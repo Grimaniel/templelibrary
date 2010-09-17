@@ -67,8 +67,7 @@ package temple.data.flashvars
 	 * FlashVars.getValue(FlashVarNames.LANGUAGE);
 	 * </listing>
 	 * 
-	 * @date 06 okt 2009 11:33:15
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public final class FlashVars
 	{

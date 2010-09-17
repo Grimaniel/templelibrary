@@ -66,8 +66,7 @@ package temple.debug
 	 *
 	 * @see temple.Temple#registerObjectsInMemory
 	 * 
-	 * @date 9 jun 2009 15:05:27
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public final class Registry 
 	{

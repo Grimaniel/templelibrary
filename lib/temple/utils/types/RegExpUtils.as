@@ -46,8 +46,7 @@ package temple.utils.types
 	/**
 	 * This class contains some functions for Regular Expressions.
 	 * 
-	 * @date 3 dec 2008 10:13:51
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk 
 	 */
 	public final class RegExpUtils 
 	{

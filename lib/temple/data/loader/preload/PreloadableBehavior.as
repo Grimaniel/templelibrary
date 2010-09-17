@@ -53,8 +53,7 @@ package temple.data.loader.preload
 	 * and call the 'onLoadStart', 'onLoadProgress' and 'onLoadComplete' methods</p>
 	 * <p>When multiple instances of this class use the same preloader, the loading progress is shared</p>
 	 * 
-	 * @date 28 aug 2009 15:25:13
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public class PreloadableBehavior extends AbstractBehavior
 	{

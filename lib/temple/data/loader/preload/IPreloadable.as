@@ -50,8 +50,7 @@ package temple.data.loader.preload
 	 * @see temple.data.loader.IPreloader
 	 * @see temple.data.loader.IPreloadable
 	 * 
-	 * @date 1 sep 2009 12:47:59
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public interface IPreloadable 
 	{
