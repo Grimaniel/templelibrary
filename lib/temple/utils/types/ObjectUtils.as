@@ -42,15 +42,13 @@
 
 package temple.utils.types 
 {
-	import flash.utils.ByteArray;
-
-	import temple.Temple;
 	import temple.core.ICoreObject;
 	import temple.data.xml.XMLParser;
 	import temple.debug.getClassName;
 	import temple.utils.ObjectType;
 
 	import flash.display.DisplayObject;
+	import flash.utils.ByteArray;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;

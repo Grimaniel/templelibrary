@@ -42,11 +42,12 @@
 
 package temple.data.result 
 {
+	import temple.data.object.IObjectParsable;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class DataResult extends Result implements IDataResult 
+	public class DataResult extends Result implements IDataResult, IObjectParsable 
 	{
 		protected var _data:*;
 
@@ -63,6 +64,21 @@ package temple.data.result
 		public function get data():*
 		{
 			return this._data;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function parseObject(object:Object):Boolean
+		{
+			if (!object || !object.hasOwnProperty('success')) return false;
+			
+			this._success = object.success;
+			this._message = object.message;
+			this._code = object.code;
+			this._data = object.data;
+			
+			return true;
 		}
 
 		/**

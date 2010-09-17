@@ -67,21 +67,37 @@ package temple.ui.states
 		/**
 		 * @inheritDoc
 		 */
-		override public function show():void
+		override public function show(instant:Boolean = false):void
 		{
 			if (this.enabled == false || this._shown) return;
 			this._shown = true;
-			TweenLite.to(this, this._showDuration, {autoAlpha:1});
+			
+			if (instant)
+			{
+				this.autoAlpha = 1;
+			}
+			else
+			{
+				TweenLite.to(this, this._showDuration, {autoAlpha:1});
+			}
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function hide():void
+		override public function hide(instant:Boolean = false):void
 		{
 			if (this.enabled == false || !this._shown) return;
 			this._shown = false;
-			TweenLite.to(this, this._hideDuration, {autoAlpha:0});
+			
+			if (instant)
+			{
+				this.autoAlpha = 0;
+			}
+			else
+			{
+				TweenLite.to(this, this._hideDuration, {autoAlpha:0});
+			}
 		}
 		
 		/**

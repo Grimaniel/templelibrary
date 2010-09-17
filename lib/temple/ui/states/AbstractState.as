@@ -65,7 +65,7 @@ package temple.ui.states
 		/**
 		 * @inheritDoc
 		 */
-		public function show():void
+		public function show(instant:Boolean = false):void
 		{
 			throwError(new TempleError(this, "Abstract class, override this method"));
 		}
@@ -73,7 +73,7 @@ package temple.ui.states
 		/**
 		 * @inheritDoc
 		 */
-		public function hide():void
+		public function hide(instant:Boolean = false):void
 		{
 			throwError(new TempleError(this, "Abstract class, override this method"));
 		}

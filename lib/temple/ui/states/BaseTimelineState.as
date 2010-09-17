@@ -61,7 +61,7 @@ package temple.ui.states
 		{
 			// init labels
 			this._labels = new HashMap("TimelineState Labels");
-			this.currentScene.labels.map(addLabelHashEntry);
+			this.currentScene.labels.map(this.addLabelHashEntry);
 			this.addFrameScript(this.totalFrames - 1, this.onLastFrame);
 			if(this._labels[BaseTimelineState._LABEL_HIDE])
 			{
@@ -82,38 +82,68 @@ package temple.ui.states
 		/**
 		 * @inheritDoc
 		 */
-		override public function show():void
+		override public function show(instant:Boolean = false):void
 		{
 			if (this.enabled == false || this._shown) return;
 			this._shown = true;
 			MovieClipUtils.stop(this);
-			if(this._labels[BaseTimelineState._LABEL_SHOW])
+			
+			if (instant)
 			{
-				this.gotoAndStop(BaseTimelineState._LABEL_SHOW);
+				if (this._labels[BaseTimelineState._LABEL_HIDE])
+				{
+					this.gotoAndStop(FrameLabel(this._labels[BaseTimelineState._LABEL_HIDE]).frame - 1);
+				}
+				else
+				{
+					this.gotoAndStop(this.totalFrames);
+				}
 			}
-			MovieClipUtils.play(this);
+			else
+			{
+				if (this._labels[BaseTimelineState._LABEL_SHOW])
+				{
+					this.gotoAndStop(BaseTimelineState._LABEL_SHOW);
+				}
+				MovieClipUtils.play(this);
+			}
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function hide():void
+		override public function hide(instant:Boolean = false):void
 		{
 			if (this.enabled == false || !this._shown) return;
 			this._shown = false;
 			MovieClipUtils.stop(this);
-			if(this._labels[BaseTimelineState._LABEL_HIDE])
+			
+			if (instant)
 			{
-				this.gotoAndStop(BaseTimelineState._LABEL_HIDE);
-				MovieClipUtils.play(this);
+				if (this._labels[BaseTimelineState._LABEL_HIDE])
+				{
+					this.gotoAndStop(this.totalFrames);
+				}
+				else
+				{
+					this.gotoAndStop(1);
+				}
 			}
 			else
 			{
-				MovieClipUtils.playBackwards(this);
+				if (this._labels[BaseTimelineState._LABEL_HIDE])
+				{
+					this.gotoAndStop(BaseTimelineState._LABEL_HIDE);
+					MovieClipUtils.play(this);
+				}
+				else
+				{
+					MovieClipUtils.playBackwards(this);
+				}
 			}
 		}
 		
-		protected function addLabelHashEntry(item:FrameLabel, index:int, array:Array):void 
+		private function addLabelHashEntry(item:FrameLabel, index:int, array:Array):void 
 		{
 			var frameLabel:FrameLabel = FrameLabel(item);
 			this._labels[frameLabel.frame] = frameLabel;
@@ -124,7 +154,7 @@ package temple.ui.states
 			array;
 		}
 
-		protected function onLastFrame():void
+		private function onLastFrame():void
 		{
 			MovieClipUtils.stop(this);
 			if(this._shown)

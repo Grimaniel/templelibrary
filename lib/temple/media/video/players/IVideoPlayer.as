@@ -42,7 +42,6 @@
 
 package temple.media.video.players 
 {
-	import flash.media.Video;
 	import temple.data.loader.preload.IPreloadable;
 	import temple.debug.IDebuggable;
 	import temple.media.player.IProgressiveDownloadPlayer;
