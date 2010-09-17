@@ -53,8 +53,7 @@ package temple.data.object
 	 * 
 	 * @see temple.data.object.IObjectParsable
 	 * 
-	 * @date 12 nov 2008 16:10:20
-	 * @author Arjan van Wijk (arjan[at]mediamonks.com)
+	 * @author Arjan van Wijk
 	 */
 	public class ObjectParser 
 	{

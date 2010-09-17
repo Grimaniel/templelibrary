@@ -45,7 +45,7 @@ package temple.media.video.cuepoints
 	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public class CuePointEvent extends Event 
 	{

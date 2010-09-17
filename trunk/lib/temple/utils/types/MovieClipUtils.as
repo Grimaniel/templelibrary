@@ -57,7 +57,7 @@ package temple.utils.types
 	/**
 	 * This class contains some functions for MovieClips.
 	 * 
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public final class MovieClipUtils 
 	{

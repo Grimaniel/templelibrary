@@ -55,7 +55,7 @@ package temple.ui.behaviors
 	 * 
 	 * @includeExample BoundsBehaviorExample.as
 	 * 
-	 * @author Arjan (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public class BoundsBehavior extends AbstractDisplayObjectBehavior 
 	{

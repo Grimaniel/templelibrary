@@ -84,7 +84,7 @@ package temple.ui.behaviors
 	 * <p>It is not nessessary to store a reference to the ZoomBehavior since the ZoomBehavior is automaticly destructed
 	 * if the DisplayObject is destructed.</p>
 	 * 
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public class ZoomBehavior extends BoundsBehavior 
 	{

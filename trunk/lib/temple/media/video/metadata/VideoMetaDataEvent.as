@@ -45,7 +45,7 @@ package temple.media.video.metadata
 	import flash.events.Event;
 
 	/**
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public class VideoMetaDataEvent extends Event 
 	{

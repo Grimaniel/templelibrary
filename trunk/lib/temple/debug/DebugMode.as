@@ -48,8 +48,7 @@ package temple.debug
 	 * 
 	 * @see temple.debug.DebugManager
 	 * 
-	 * @date 28 aug 2009 22:15:49
-	 * @author Arjan van Wijk (arjan at mediamonks dot com)
+	 * @author Arjan van Wijk
 	 */
 	public final class DebugMode
 	{
