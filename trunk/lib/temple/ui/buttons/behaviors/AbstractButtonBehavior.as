@@ -159,6 +159,22 @@ package temple.ui.buttons.behaviors
 		/**
 		 * @inheritDoc
 		 */
+		public function enable():void
+		{
+			this.enabled = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this.enabled = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function get focus():Boolean
 		{
 			return this._focus;

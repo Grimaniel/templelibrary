@@ -45,6 +45,7 @@ package temple.core
 	import temple.debug.Registry;
 	import temple.debug.getClassName;
 	import temple.debug.log.Log;
+	import temple.debug.log.LogLevels;
 	import temple.destruction.Destructor;
 
 	/**
@@ -87,7 +88,7 @@ package temple.core
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.debug(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.DEBUG, this._registryId);
 		}
 
 		/**
@@ -96,7 +97,7 @@ package temple.core
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.error(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.ERROR, this._registryId);
 		}
 
 		/**
@@ -105,7 +106,7 @@ package temple.core
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.fatal(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.FATAL, this._registryId);
 		}
 
 		/**
@@ -114,7 +115,7 @@ package temple.core
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.info(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.INFO, this._registryId);
 		}
 
 		/**
@@ -123,7 +124,7 @@ package temple.core
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.status(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.STATUS, this._registryId);
 		}
 
 		/**
@@ -132,7 +133,7 @@ package temple.core
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.warn(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.WARN, this._registryId);
 		}
 
 		/**

@@ -72,7 +72,7 @@ package temple.ui.buttons.behaviors
 	 * The status of the button indicates if the mouse is currently up, over or down the button or if the button is selected of disabled.
 	 * The the reaction of mouseOver and mouseOut Events can be delayed.
 	 * 
-	 * <p>The status of the buttons is dispatch in a tunneled ButtonEvent on all the children (and grant-children etc.) of the button.
+	 * <p>The status of the buttons is dispatch in a tunneled ButtonEvent on all the children (and grandchildren etc.) of the button.
 	 * This Button is used by ButtonDesignBehaviors to show the current status.</p> 
 	 * 
 	 * @see temple.ui.eventtunneling.EventTunneler

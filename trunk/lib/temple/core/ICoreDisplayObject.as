@@ -58,8 +58,8 @@ package temple.core
 	 * reference to the stage.</p>
 	 * 
 	 * <p>ICoreDisplayObject are automaticly destructed when the SWF is unloaded. When a 
-	 * ICoreDisplayObject is destructed we will call also destruct its children, 
-	 * grant-children etcetera.</p>
+	 * ICoreDisplayObject is destructed we will call also destruct its children,
+	 * grandchildren etcetera.</p>
 	 * 
 	 * @see temple.utils.StageProvider
 	 * 

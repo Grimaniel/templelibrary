@@ -100,5 +100,21 @@ package temple.ui.states
 				this.hide();
 			}
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			this.enabled = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this.enabled = false;
+		}
 	}
 }

@@ -51,6 +51,16 @@ package temple.media.video.net
 	import flash.net.NetConnection;
 
 	/**
+	 * @eventType temple.media.video.metadata.VideoMetaDataEvent.METADATA
+	 */
+	[Event(name = "VideoMetaDataEvent.metadata", type = "temple.media.video.metadata.VideoMetaDataEvent")]
+
+	/**
+	 * @eventType temple.media.video.cuepoints.CuePointEvent.CUEPOINT
+	 */
+	[Event(name = "CuePointEvent.cuepoint", type = "temple.media.video.cuepoints.CuePointEvent")]
+
+	/**
 	 * @author Thijs Broerse
 	 */
 	dynamic public class VideoNetStream extends CoreNetStream 

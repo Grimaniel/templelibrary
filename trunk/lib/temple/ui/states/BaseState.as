@@ -44,6 +44,8 @@ package temple.ui.states
 {
 
 	/**
+	 * This class uses the visible property to show and hide the state object.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class BaseState extends AbstractState implements IState 

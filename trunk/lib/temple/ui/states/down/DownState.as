@@ -45,6 +45,8 @@ package temple.ui.states.down
 	import temple.ui.states.BaseState;
 
 	/**
+	 * Set visible to true or false to show or hide the down state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class DownState extends BaseState implements IDownState 

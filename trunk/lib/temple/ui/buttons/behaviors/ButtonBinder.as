@@ -42,6 +42,7 @@
 
 package temple.ui.buttons.behaviors 
 {
+	import flash.display.InteractiveObject;
 	import temple.core.CoreObject;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
@@ -54,8 +55,8 @@ package temple.ui.buttons.behaviors
 	import flash.utils.Dictionary;
 
 	/**
-	 * The ButtonBinder binds to (or more) DisplayObjects together and pass their MouseEvents to eachother. 
-	 * With the ButtonBinder you can set a TextField as a hitarea for a CheckBox
+	 * The ButtonBinder binds two (or more) DisplayObjects together to pass their MouseEvents to eachother. 
+	 * With the ButtonBinder you can set a TextField as a hitarea for a CheckBox or set a hitarea for a button which is not a child of the button.
 	 * 
 	 * @author Thijs Broerse
 	 */
@@ -84,14 +85,16 @@ package temple.ui.buttons.behaviors
 
 		private var _buttons:Dictionary;
 		private var _blockRequest:Boolean;
+		private var _ignoreMouseEnabled:Boolean;
 		
 		/**
 		 * Creates a new ButtonBinding
 		 * @param button1 the first button to bind
 		 * @param button2 the second button to bind
 		 * @param weakReference indicates if weakReferences are used to bind the buttons
+		 * @param ignoreMouseEnabled indicates if the mouseEnable must be ignored. If the set to true MouseEvents will be dispatched even if the mouseEnabled of the object is false.
 		 */
-		public function ButtonBinder(button1:DisplayObject, button2:DisplayObject, useWeakReference:Boolean = true)
+		public function ButtonBinder(button1:DisplayObject, button2:DisplayObject, useWeakReference:Boolean = true, ignoreMouseEnabled:Boolean = false)
 		{
 			if(button1 == null) throwError(new TempleArgumentError(this, "button1 can not be null"));
 			if(button2 == null) throwError(new TempleArgumentError(this, "button2 can not be null"));
@@ -100,6 +103,8 @@ package temple.ui.buttons.behaviors
 			
 			this.add(button1);
 			this.add(button2);
+			
+			this.ignoreMouseEnabled = ignoreMouseEnabled;
 		}
 		
 		/**
@@ -133,7 +138,7 @@ package temple.ui.buttons.behaviors
 			
 			button.removeEventListener(DestructEvent.DESTRUCT, this.handleButtonDestructed);
 			
-			if(ButtonBinder._dictionary && ButtonBinder._dictionary[button])
+			if (ButtonBinder._dictionary && ButtonBinder._dictionary[button])
 			{
 				ArrayUtils.removeValueFromArray(ButtonBinder._dictionary[button], this);
 			}
@@ -151,6 +156,22 @@ package temple.ui.buttons.behaviors
 				this.logWarn("remove: ButtonBinder has no button '" + button + "'");
 			}
 		}
+		
+		/**
+		 * Indicates if the mouseEnable must be ignored. If the set to true MouseEvents will be dispatched even if the mouseEnabled of the object is false.
+		 */
+		public function get ignoreMouseEnabled():Boolean
+		{
+			return this._ignoreMouseEnabled;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set ignoreMouseEnabled(value:Boolean):void
+		{
+			this._ignoreMouseEnabled = value;
+		}
 
 		private function handleEvent(event:Event):void
 		{
@@ -159,7 +180,7 @@ package temple.ui.buttons.behaviors
 			
 			for (var button:Object in this._buttons)
 			{
-				if (button != event.target) (button as DisplayObject).dispatchEvent(event.clone());
+				if (button != event.target && (this._ignoreMouseEnabled || button is InteractiveObject && InteractiveObject(button).mouseEnabled)) (button as DisplayObject).dispatchEvent(event.clone());
 			}
 			this._blockRequest = false;
 		}

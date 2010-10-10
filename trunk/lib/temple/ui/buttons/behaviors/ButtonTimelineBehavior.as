@@ -54,6 +54,23 @@ package temple.ui.buttons.behaviors
 	import flash.utils.Dictionary;
 
 	/**
+	 * @eventType flash.events.Event.COMPLETE
+	 */
+	[Event(name = "complete", type = "flash.events.Event")]
+
+	/**
+	 * The ButtonTimelineBehavior usses the timeline of the button to display the state of the button.
+	 * 
+	 * <p>Use framelabels to define the specific states on the timeline. See ButtonTimelineLabels class for all possible labels.
+	 * Every state has a 'show' label and and 'hide' label. Like 'in' is the show label for over and 'out' is the hide label.
+	 * If you don't use a show and/or hide label for a state the timeline will be played forward (show) and backwards (hide).</p>
+	 * 
+	 * <p>If you do not use framelabels, the first frame of the timeline will be set as 'up' state, the last frame will be the 'over' state.
+	 * The timeline will be player forward and backwords to toggle between these states.</p>
+	 * 
+	 * <p>It's possible to put multiple labels on a single frame. You need create a different layer for each label.</p>
+	 * 
+	 * @see temple.ui.buttons.behaviors.ButtonTimelineLabels
 	 * 
 	 * @includeExample ../MultiStateButtonFrameLabelsExample.as
 	 * 

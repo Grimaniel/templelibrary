@@ -10,7 +10,7 @@
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("CoreMovieClip"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,false,false	,false,false,false,false,false);}	
 				-->
-			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">temple.core</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  CoreMovieClip</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">CoreMovieClip  <img src="../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> flash.display.MovieClip</td></tr><tr><td class="classHeaderTableLabel">Implements</td><td> <a href="../../temple/core/ICoreDisplayObjectContainer.html">ICoreDisplayObjectContainer</a></td></tr><tr><td class="classHeaderTableLabel">Subclasses</td><td> <a href="../../temple/ui/states/AbstractState.html">AbstractState</a>,  <a href="../../temple/ui/buttons/BaseButton.html">BaseButton</a>,  <a href="../../temple/ui/animation/FrameStableMovieClip.html">FrameStableMovieClip</a>,  <a href="../../temple/ui/buttons/MultiStateElement.html">MultiStateElement</a></td></tr></table><p></p><p></p>
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">temple.core</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  CoreMovieClip</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">CoreMovieClip  <img src="../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> flash.display.MovieClip</td></tr><tr><td class="classHeaderTableLabel">Implements</td><td> <a href="../../temple/core/ICoreDisplayObjectContainer.html">ICoreDisplayObjectContainer</a></td></tr><tr><td class="classHeaderTableLabel">Subclasses</td><td> <a href="../../temple/ui/states/AbstractState.html">AbstractState</a>,  <a href="../../temple/ui/buttons/BaseButton.html">BaseButton</a>,  <a href="../../temple/ui/animation/FrameStableMovieClip.html">FrameStableMovieClip</a>,  <a href="../../temple/ui/layout/liquid/LiquidMovieClip.html">LiquidMovieClip</a>,  <a href="../../temple/ui/buttons/MultiStateElement.html">MultiStateElement</a></td></tr></table><p></p><p></p>
 	 Base class for all MovieClips in the Temple. The CoreMovieClip handles some core features of the Temple:
 	 <ul>
 	 	               <li>Registration to the Registry class.</li>
@@ -20,7 +20,7 @@
 	 	               <li>Easy remove of all EventListeners.</li>
 	 	               <li>Wrapper for Log class for easy logging.</li>
 	 	               <li>Completely destructible.</li>
-	 	               <li>Automatic removes and destruct children, grant-children etc. on destruction.</li>
+	 	               <li>Automatic removes and destruct children, grandchildren etc. on destruction.</li>
 	 	               <li>Tracked in Memory (of this feature is enabled).</li>
 	 	               <li>Some useful extra properties like autoAlpha, position and scale.</li>
 	              </ul>

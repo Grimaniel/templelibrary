@@ -40,39 +40,10 @@
  *	
  */
 
-package temple.ui.form.services 
+package temple.core 
 {
-	import temple.core.CoreEventDispatcher;
-	import temple.debug.IDebuggable;
-
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class FormAbstractService extends CoreEventDispatcher implements IDebuggable 
-	{
-		protected var _debug:Boolean;
-		
-		public function FormAbstractService(debug:Boolean = false)
-		{
-			super();
-			
-			this.debug = debug;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get debug():Boolean
-		{
-			return this._debug;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function set debug(value:Boolean):void
-		{
-			this._debug = value;
-		}
-	}
+	public namespace temple = "http://code.google.com/p/templelibrary/";
 }

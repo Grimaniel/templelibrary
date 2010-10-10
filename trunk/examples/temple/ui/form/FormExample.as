@@ -3,7 +3,7 @@
  * 
  * <h1>Form</h1>
  * 
- * <p>This is an Example about the Form. In this case we have a form for submitting personal data. 
+ * <p>This is an example about the Form. In this case we have a form for submitting personal data. 
  * When the form is submitted the data is stored in a PersonData object.</p>
  * 
  * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>

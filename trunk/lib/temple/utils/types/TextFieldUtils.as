@@ -152,7 +152,7 @@ package temple.utils.types
 		 * Searches for TextField in a DisplayObject and set the TextFormat as Default. In this way the textformat won't changes, when you change the text
 		 * 
 		 * @param displayObject The displayObject that contains the TextFields
-		 * @param recursive if set to true all childrens TextFields (and grantchildrens etc) will also be formatted
+		 * @param recursive if set to true all childrens TextFields (and grandchildrens etc) will also be formatted
 		 * @param debug if set to true, debug information of the formatted TextFields will be logged
 		 */
 		public static function formatTextFields(container:DisplayObjectContainer, recursive:Boolean = true, debug:Boolean = false):void
@@ -183,7 +183,7 @@ package temple.utils.types
 		 * Searches for TextField in a DisplayObject and set the text to ''.
 		 * 
 		 * @param displayObject The displayObject that contains the TextFields
-		 * @param recursive if set to true all childrens TextFields (and grantchildrens etc) will also be formatted
+		 * @param recursive if set to true all childrens TextFields (and grandchildrens etc) will also be formatted
 		 * @param debug if set to true, debug information of the formatted TextFields will be logged
 		 */
 		public static function emptyTextFields(container:DisplayObjectContainer, recursive:Boolean = true, debug:Boolean = false):void

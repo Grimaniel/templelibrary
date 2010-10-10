@@ -84,6 +84,8 @@ package temple.data.loader.cache
 			this._cacheURLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.dispatchEvent);
 			this._cacheURLLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.dispatchEvent);
 			
+			this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			
 			DebugManager.addAsChild(this._cacheURLLoader, this);
 			
 			this.cache = cache;
@@ -146,6 +148,16 @@ package temple.data.loader.cache
 		private function handleURLLoaderComplete(event:Event):void
 		{
 			this.loadBytes(this._cacheURLLoader.data);
+		}
+		
+		private function handleSecurityError(event:SecurityErrorEvent):void 
+		{
+			if (this.cache)
+			{
+				this.logWarn("handleSecurityError: switch off cache and try to reload");
+				this.cache = false;
+				this.load(new URLRequest(this.url));
+			}
 		}
 		
 		/**

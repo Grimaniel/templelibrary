@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../override.css" type="text/css"><meta name="keywords" content="BoundsBehavior,temple.ui.behaviors.BoundsBehavior,BOTTOM,BOUNCED,DRAGGING,DRAG_START,DRAG_STOP,LEFT,RIGHT,TOP,ZOOMING,ZOOM_START,ZOOM_STOP,_bounds,_dragButton,_dragHorizontal,_dragVertical,_enabled,_isDragging,_maxZoom,_minZoom,_newScale,_newX,_newY,_running,_startDragMousePoint,_startDragObjectPoint,_zoom,bounds,direction,displayObject,dragHorizontal,dragVertical,enabled,isDragging,maxZoom,minZoom,zoom,zoomLevel,destruct,destruct,destruct,handleEnterFrame,handleMouseDown,handleMouseMove,handleMouseUp,handleMouseWheel,keepInBounds,stopZoom,updateZoom,zoomTo"><title>temple.ui.behaviors.BoundsBehavior</title><script src="../../../AC_OETags.js" type="text/javascript"></script></head><body><script language="javascript" type="text/javascript" src="../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../override.css" type="text/css"><meta name="keywords" content="BoundsBehavior,temple.ui.behaviors.BoundsBehavior,BOTTOM,BOUNCED,DRAGGING,DRAG_START,DRAG_STOP,LEFT,RIGHT,TOP,ZOOMING,ZOOM_START,ZOOM_STOP,_bounds,_dragButton,_dragHorizontal,_dragVertical,_enabled,_isDragging,_maxZoom,_minZoom,_newScale,_newX,_newY,_running,_startDragMousePoint,_startDragObjectPoint,_zoom,bounds,direction,displayObject,dragHorizontal,dragVertical,enabled,isDragging,maxZoom,minZoom,zoom,zoomLevel,destruct,destruct,destruct,disable,enable,handleEnterFrame,handleMouseDown,handleMouseMove,handleMouseUp,handleMouseWheel,keepInBounds,stopZoom,updateZoom,zoomTo"><title>temple.ui.behaviors.BoundsBehavior</title><script src="../../../AC_OETags.js" type="text/javascript"></script></head><body><script language="javascript" type="text/javascript" src="../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
 				asdocTitle = 'BoundsBehavior - Temple API Documentation';
 				var baseRef = '../../../';
 				window.onload = configPage;
@@ -95,6 +95,8 @@
   
  <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.swf" target="external">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.swf</a></p>
  
+ <p>The Sprite (blue square) can only be dragged within the bounds (red rectangle).</p>
+ 
  <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.as" target="external">Download source</a></p>
 <div class="listing"><pre>
 package  
@@ -113,15 +115,24 @@ package
             var sprite:Sprite = new Sprite();
             
             // Draw a rectangle so we can see something
-            sprite.graphics.beginFill(0x000000);
+            sprite.graphics.beginFill(0x0000ff, .2);
+            sprite.graphics.lineStyle(1, 0x0000ff);
             sprite.graphics.drawRect(0, 0, 50, 50);
             sprite.graphics.endFill();
             
             // add to stage
             this.addChild(sprite);
             
+            // create the bounds
+            var bounds:Rectangle = new Rectangle(100, 100, 200, 200);
+            
             // add DragBehavior with bounds to make te sprite draggable within the bounds
-            new DragBehavior(sprite, new Rectangle(100, 100, 200, 200));
+            new DragBehavior(sprite, bounds);
+            
+            // draw the bounds so we can see something
+            this.graphics.lineStyle(1, 0xff0000);
+            this.graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+            this.graphics.endFill();
         }
     }
 }

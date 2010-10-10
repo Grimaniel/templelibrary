@@ -59,5 +59,15 @@ package temple.ui
 		 * @private
 		 */
 		function set enabled(value:Boolean):void;
+
+		/**
+		 * Enables the Object
+		 */
+		function enable():void;
+
+		/**
+		 * Disables the Object
+		 */
+		function disable():void;
 	}
 }

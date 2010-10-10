@@ -45,6 +45,8 @@ package temple.ui.states.down
 	import temple.ui.states.BaseTimelineState;
 
 	/**
+	 * Uses a timeline animation to display or hide the down state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class DownTimelineState extends BaseTimelineState implements IDownState

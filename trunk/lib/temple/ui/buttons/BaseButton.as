@@ -82,6 +82,22 @@
 		{
 			this.mouseEnabled = super.enabled = value;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			this.enabled = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this.enabled = false;
+		}
 
 		/**
 		 * @inheritDoc

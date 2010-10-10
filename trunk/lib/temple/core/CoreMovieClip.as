@@ -45,6 +45,7 @@ package temple.core
 	import temple.debug.Registry;
 	import temple.debug.getClassName;
 	import temple.debug.log.Log;
+	import temple.debug.log.LogLevels;
 	import temple.destruction.DestructEvent;
 	import temple.destruction.Destructor;
 	import temple.destruction.EventListenerManager;
@@ -71,7 +72,7 @@ package temple.core
 	 * 	<li>Easy remove of all EventListeners.</li>
 	 * 	<li>Wrapper for Log class for easy logging.</li>
 	 * 	<li>Completely destructible.</li>
-	 * 	<li>Automatic removes and destruct children, grant-children etc. on destruction.</li>
+	 * 	<li>Automatic removes and destruct children, grandchildren etc. on destruction.</li>
 	 * 	<li>Tracked in Memory (of this feature is enabled).</li>
 	 * 	<li>Some useful extra properties like autoAlpha, position and scale.</li>
 	 * </ul>
@@ -84,8 +85,6 @@ package temple.core
 	 */
 	public class CoreMovieClip extends MovieClip implements ICoreDisplayObjectContainer
 	{
-		private namespace temple = "http://code.google.com/p/templelibrary/";
-		
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
 		private var _onStage:Boolean;
@@ -356,7 +355,7 @@ package temple.core
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.debug(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.DEBUG, this._registryId);
 		}
 		
 		/**
@@ -365,7 +364,7 @@ package temple.core
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.error(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.ERROR, this._registryId);
 		}
 		
 		/**
@@ -374,7 +373,7 @@ package temple.core
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.fatal(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.FATAL, this._registryId);
 		}
 		
 		/**
@@ -383,7 +382,7 @@ package temple.core
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.info(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.INFO, this._registryId);
 		}
 		
 		/**
@@ -392,7 +391,7 @@ package temple.core
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.status(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.STATUS, this._registryId);
 		}
 		
 		/**
@@ -401,7 +400,7 @@ package temple.core
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.warn(data, this, this._registryId);
+			Log.temple::send(data, this.toString(), LogLevels.WARN, this._registryId);
 		}
 		
 		temple final function handleUnload(event:Event):void

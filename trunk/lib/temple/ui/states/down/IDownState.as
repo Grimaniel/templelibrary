@@ -45,6 +45,14 @@ package temple.ui.states.down
 	import temple.ui.states.IState;
 
 	/**
+	 * A DisplayObject that implements IDownState represents the down state of his parent.
+	 * 
+	 * <p>A DisplayObject is in 'down state' when the Mouse hovers the DisplayObject and the button is down.</p>
+	 * 
+	 * @includeExample ../StatesExample.as
+	 * 
+	 * @see temple.ui.states.IState
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public interface IDownState extends IState

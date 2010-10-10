@@ -42,13 +42,15 @@
 
 package temple.utils.types 
 {
+	import flash.utils.ByteArray;
+
+	import temple.Temple;
 	import temple.core.ICoreObject;
 	import temple.data.xml.XMLParser;
 	import temple.debug.getClassName;
 	import temple.utils.ObjectType;
 
 	import flash.display.DisplayObject;
-	import flash.utils.ByteArray;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -156,11 +158,13 @@ package temple.utils.types
 			}
 			else
 			{
+				var description:XML = describeType(object);
+				
 				// variables
-				variables = XMLParser.parseList(describeType(object).variable, ObjectVariableData, true);
+				variables = XMLParser.parseList(description.variable, ObjectVariableData, true);
 				
 				// getters
-				variables = variables.concat(XMLParser.parseList(describeType(object).accessor, ObjectVariableData, true));
+				variables = variables.concat(XMLParser.parseList(description.accessor, ObjectVariableData, true));
 				
 				// dynamic values
 				for (key in object)
@@ -338,24 +342,55 @@ package temple.utils.types
 			return copy;
 		}
 		
+		/**
+		 * Get the keys of an object.
+		 * @return an Array of all the keys
+		 */
 		public static function getKeys(object:Object):Array
 		{
-			var ret:Array = new Array();			
-			for (var key:String in object)
+			var keys:Array = new Array();
+			var key:*;
+			
+			for (key in object)
 			{
-				ret.push(key);
-			}			
-			return ret;
+				keys.push(key);
+			}
+			if (!(object is Array))
+			{
+				var description:XML = describeType(object);
+				
+				// variables
+				var leni:int = description.variable.length();
+				for (var i:int = 0; i < leni; i++)
+				{
+					keys.push(String(description.variable[i].@name));
+				}
+				
+				// getters
+				var getters:XMLList = description.accessor.(@access != "writeonly");
+				
+				leni = getters.length();
+				
+				for (i = 0; i < leni; i++)
+				{
+					keys.push(String(getters[i].@name));
+				}
+			}
+			return keys;
 		}
 					
+		/**
+		 * Get the values of an object.
+		 * @return an Array of all values.
+		 */
 		public static function getValues(object:Object):Array
 		{
-			var ret:Array = new Array();			
+			var values:Array = new Array();			
 			for each (var value:* in object)
 			{
-				ret.push(value);
+				values.push(value);
 			}			
-			return ret;
+			return values;
 		}
 
 		/**

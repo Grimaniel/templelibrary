@@ -70,7 +70,7 @@ package temple.ui.form.components
 	/**
 	 * Class for implementing radio button groups.
 	 * @example
-	 * Assume 3 objects of type SimpleCheckBox are placed on the stage, with instance names "mcRadio1", "mcRadio2", "mcRadio3"
+	 * Assume 3 objects of type CheckBox are placed on the stage, with instance names "mcRadio1", "mcRadio2", "mcRadio3"
 	 * <listing version="3.0">
 	 * // create new group, add radio buttons, select first button, listen to change event
 	 * var rg:RadioGroup = new RadioGroup();

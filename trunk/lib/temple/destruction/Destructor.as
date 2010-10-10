@@ -111,7 +111,7 @@ package temple.destruction
 		}
 
 		/**
-		 * Recursivly destructs all children, grantchildren, grantgrantchildren, etc. of an displayobject
+		 * Recursivly destructs all children, grandchildren, grand-grandchildren, etc. of an displayobject
 		 */
 		public static function destructChildren(object:DisplayObjectContainer):void
 		{

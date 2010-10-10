@@ -12,7 +12,7 @@
 				-->
 			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">temple.ui.eventtunneling</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  TunnelingEvent</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">TunnelingEvent  <img src="../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> flash.events.Event</td></tr><tr><td class="classHeaderTableLabel">Subclasses</td><td> <a href="../../../temple/ui/buttons/behaviors/ButtonEvent.html">ButtonEvent</a></td></tr></table><p></p><p></p>
 	 A TunnelEvent is the opposite of a bubbling Event.
-	 If a TunnelEvent is dispatched on a DisplayObjectContainer the event will also be dispatched on all his children (and grant-children etc.)
+	 If a TunnelEvent is dispatched on a DisplayObjectContainer the event will also be dispatched on all his children (and grandchildren etc.)
 	 
 	 The actual tunning (dispatching) of the event is done by the EventTunneler. In order to make Event tunneling work you need to create
 	 an EventTunneler for the object.

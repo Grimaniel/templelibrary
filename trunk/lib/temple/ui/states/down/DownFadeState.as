@@ -45,6 +45,8 @@ package temple.ui.states.down
 	import temple.ui.states.BaseFadeState;
 
 	/**
+	 * Uses a TweenLite autoAlpha fade to show or hide the down state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class DownFadeState extends BaseFadeState implements IDownState

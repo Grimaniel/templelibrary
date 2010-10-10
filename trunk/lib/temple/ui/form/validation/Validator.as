@@ -43,6 +43,8 @@
 package temple.ui.form.validation 
 {
 	import temple.core.CoreObject;
+	import temple.debug.DebugManager;
+	import temple.debug.IDebuggable;
 	import temple.ui.IEnableable;
 	import temple.ui.focus.IFocusable;
 	import temple.ui.form.validation.rules.IValidationRule;
@@ -73,13 +75,19 @@ package temple.ui.form.validation
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class Validator extends CoreObject
+	public class Validator extends CoreObject implements IDebuggable
 	{
 		/** Objects of type RuleData */
 		[ArrayElementType("RuleData")]
 		private var _rules:Array = new Array();
 		private var _errorMessage:String;
 		private var _errorMessages:Array;
+		private var _debug:Boolean;
+
+		public function Validator() 
+		{
+			DebugManager.add(this);
+		}
 
 		/**
 		 * Add a validation rule
@@ -127,7 +135,14 @@ package temple.ui.form.validation
 				// check if target is enabled
 				if(rule.target is IEnableable && IEnableable(rule.target).enabled == false) continue;
 				
-				if (!rule.isValid()) errors.push(rule);
+				if (!rule.isValid())
+				{
+					errors.push(rule);
+					
+					if (this.debug) this.logDebug("Not valid: " + rule);
+				}
+				else if (this.debug) this.logDebug("Valid: " + rule);
+				
 			}
 			return errors;
 		}
@@ -149,6 +164,9 @@ package temple.ui.form.validation
 			var dictionary:Dictionary = new Dictionary(true);
 			
 			var leni:uint = this._rules.length;
+			
+			if (this.debug) this.logDebug("isValid: validator has " + leni + " rules");
+			
 			for (var i:uint = 0;i < leni; i++) 
 			{
 				var ruleData:RuleData = RuleData(this._rules[i]);
@@ -156,6 +174,8 @@ package temple.ui.form.validation
 				// check if target is enabled
 				if(ruleData.rule.target is IEnableable && IEnableable(ruleData.rule.target).enabled == false)
 				{
+					if (this.debug) this.logDebug("Target is not enabled, skip: " + ruleData);
+					
 					continue;
 				}
 				
@@ -164,7 +184,11 @@ package temple.ui.form.validation
 					if(this._errorMessage == null) this._errorMessage = ruleData.message;
 					if(ruleData.message != null) this._errorMessages.push(ruleData.message);
 					valid = false;
+					
+					if (this.debug) this.logDebug("Not valid: " + ruleData);
 				}
+				else if (this.debug) this.logDebug("Valid: " + ruleData);
+				
 				var target:IHasValue = ruleData.rule.target;
 				if(target is IHasError)
 				{
@@ -275,6 +299,22 @@ package temple.ui.form.validation
 		public function getErrorMessages():Array
 		{
 			return this._errorMessages;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
 		}
 
 		private function handleErrorInputFieldChange(event:Event):void 

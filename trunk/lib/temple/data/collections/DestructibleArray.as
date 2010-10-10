@@ -86,7 +86,7 @@ package temple.data.collections
 		 */
 		public function destruct():void
 		{
-			while(this.length) Destructor.destruct(this.shift());
+			while (this.length) Destructor.destruct(this.shift());
 		}
 	}
 }

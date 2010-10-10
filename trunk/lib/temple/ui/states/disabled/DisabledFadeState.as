@@ -45,6 +45,8 @@ package temple.ui.states.disabled
 	import temple.ui.states.BaseFadeState;
 
 	/**
+	 * Uses a TweenLite autoAlpha fade to show or hide the disabled state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class DisabledFadeState extends BaseFadeState implements IDisabledState

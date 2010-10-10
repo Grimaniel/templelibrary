@@ -45,6 +45,8 @@ package temple.ui.states.disabled
 	import temple.ui.states.BaseTimelineState;
 
 	/**
+	 * Uses a timeline animation to display or hide the disabled state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class DisabledTimelineState extends BaseTimelineState implements IDisabledState 

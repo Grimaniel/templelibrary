@@ -56,6 +56,12 @@ package temple.ui.buttons.behaviors
 	import flash.utils.Dictionary;
 
 	/**
+	 * A ButtonDesignBehavior which uses States to dispay the state of a button.
+	 * 
+	 * @see temple.ui.states.IState
+	 * 
+	 * @includeExample ../../states/StatesExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ButtonStateBehavior extends AbstractButtonDesignBehavior

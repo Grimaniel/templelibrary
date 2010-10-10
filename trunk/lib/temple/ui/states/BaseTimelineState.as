@@ -48,6 +48,20 @@ package temple.ui.states
 	import flash.display.FrameLabel;
 
 	/**
+	 * This class uses a timeline animation to display the state object.
+	 * 
+	 * <p>The timeline can be used using framelabels or without framelabels</p>
+	 * 
+	 * <p><strong>With framelabel</strong><br/>
+	 * Use 'show' as label to define the show animation. Use 'hide' to define the hide animation.
+	 * The animation will automaticly stop on the last frame of the animation. DO NOT use frame scripts to stop the animation!!! 
+	 * </p>
+	 * 
+	 * <p><strong>Withoutframelabel</strong><br/>
+	 * The first frame of the animation is use as hide, the last frame for show. The timeline animation will be played forward and backwards
+	 * to toggle between these states. 
+	 * </p>
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class BaseTimelineState extends AbstractState implements IState 

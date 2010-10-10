@@ -42,12 +42,17 @@
 
 package temple.ui.form.services 
 {
-	import temple.ui.form.result.IFormResult;
+	import temple.core.CoreEventDispatcher;
 	import temple.data.object.IObjectParsable;
 	import temple.ui.form.result.FormResult;
-	import temple.ui.form.services.IFormService;
+	import temple.ui.form.result.IFormResult;
 	import temple.utils.types.ObjectUtils;
 
+	/**
+	 * @eventType temple.ui.form.services.FormServiceEvent.RESULT
+	 */
+	[Event(name = "FormServiceEvent.result", type = "temple.ui.form.services.FormServiceEvent")]
+	
 	/**
 	 * A FormObjectService stores the submit data in an object. The object must be set in the FormObjectService.
 	 * If the object implements IObjectParsable, the submitted data will be parsed to the object with the 'parseObject' method.
@@ -57,9 +62,10 @@ package temple.ui.form.services
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FormObjectService extends FormAbstractService implements IFormService 
+	public class FormObjectService extends CoreEventDispatcher implements IFormService 
 	{
-		protected var _object:Object;
+		private var _debug:Boolean;
+		private var _object:Object;
 
 		/**
 		 * Creates a new FormObjectService
@@ -127,6 +133,22 @@ package temple.ui.form.services
 		public function set object(value:Object):void
 		{
 			this._object = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
 		}
 
 		/**

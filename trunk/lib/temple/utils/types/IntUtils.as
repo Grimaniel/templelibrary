@@ -54,31 +54,23 @@ package temple.utils.types
 
 		/**
 		 * Rotates x left n bits
-		 *
-		 * @langversion ActionScript 3.0
-		 * @playerversion Flash 9.0
-		 * @tiptext
 		 */
-		public static function rol( x:int, n:int ):int 
+		public static function rol(x:int, n:int):int 
 		{
-			return ( x << n ) | ( x >>> ( 32 - n ) );
+			return (x << n) | (x >>> (32 - n));
 		}
 
 		/**
 		 * Rotates x right n bits
-		 *
-		 * @langversion ActionScript 3.0
-		 * @playerversion Flash 9.0
-		 * @tiptext
 		 */
-		public static function ror( x:int, n:int ):uint 
+		public static function ror(x:int, n:int):uint 
 		{
 			var nn:int = 32 - n;
 			return ( x << nn ) | ( x >>> ( 32 - nn ) );
 		}
 
 		/** String for quick lookup of a hex character based on index */
-		private static var hexChars:String = "0123456789abcdef";
+		private static const _HEX_CHARS:String = "0123456789abcdef";
 
 		/**
 		 * Outputs the hex value of a int, allowing the developer to specify
@@ -86,33 +78,30 @@ package temple.utils.types
 		 *
 		 * @param n The int value to output as hex
 		 * @param bigEndian Flag to output the int as big or little endian
-		 * @return A string of length 8 corresponding to the 
-		 *		hex representation of n ( minus the leading "0x" )
-		 * @langversion ActionScript 3.0
-		 * @playerversion Flash 9.0
-		 * @tiptext
+		 * @return A string of length 8 corresponding to the hex representation of n ( minus the leading "0x" )
 		 */
-		public static function toHex( n:int, bigEndian:Boolean = false ):String 
+		public static function toHex(n:int, bigEndian:Boolean = false):String 
 		{
 			var s:String = "";
 			
-			if ( bigEndian ) 
+			if (bigEndian) 
 			{
-				for ( var i:int = 0;i < 4; i++ ) 
+				for (var i:int = 0;i < 4; i++) 
 				{
-					s += hexChars.charAt(( n >> ( ( 3 - i ) * 8 + 4 ) ) & 0xF) + hexChars.charAt(( n >> ( ( 3 - i ) * 8 ) ) & 0xF);
+					s += IntUtils._HEX_CHARS.charAt(( n >> ( ( 3 - i ) * 8 + 4 ) ) & 0xF) + IntUtils._HEX_CHARS.charAt(( n >> ( ( 3 - i ) * 8 ) ) & 0xF);
 				}
-			} else 
+			}
+			else 
 			{
-				for ( var x:int = 0;x < 4; x++ ) 
+				for (var x:int = 0;x < 4; x++) 
 				{
-					s += hexChars.charAt(( n >> ( x * 8 + 4 ) ) & 0xF) + hexChars.charAt(( n >> ( x * 8 ) ) & 0xF);
+					s += IntUtils._HEX_CHARS.charAt(( n >> ( x * 8 + 4 ) ) & 0xF) + IntUtils._HEX_CHARS.charAt(( n >> ( x * 8 ) ) & 0xF);
 				}
 			}
 			
 			return s;
 		}
-		
+
 		public static function toString():String
 		{
 			return getClassName(IntUtils);

@@ -49,20 +49,40 @@ package temple.ui.states
 	import flash.display.DisplayObjectContainer;
 
 	/**
+	 * A helper class for showing or hiding a specific state.
+	 * 
+	 * @see temple.ui.states.IState
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class StateHelper 
 	{
+		/**
+		 * Call show() on all children of the object which implements IFocusState.
+		 * @param object the DisplayObjectContainer which contains the state clips.
+		 * @param instant a Boolean which indicates if the states must use an animation to show itself or do it instantly
+		 */
 		public static function showFocus(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
 			StateHelper.showState(object, IFocusState, instant);
 		}
 		
+		/**
+		 * Call hide() on all children of the object which implements IFocusState.
+		 * @param object the DisplayObjectContainer which contains the state clips.
+		 * @param instant a Boolean which indicates if the states must use an animation to hide itself or do it instantly
+		 */
 		public static function hideFocus(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
 			StateHelper.hideState(object, IFocusState, instant);
 		}
 		
+		/**
+		 * Call show() on all children of the object which implements IErrorState and set an error message.
+		 * @param object the DisplayObjectContainer which contains the state clips.
+		 * @param message an error message to put in the state.
+		 * @param instant a Boolean which indicates if the states must use an animation to show itself or do it instantly
+		 */
 		public static function showError(object:DisplayObjectContainer, message:String, instant:Boolean = false):void
 		{
 			var len:int = object.numChildren;
@@ -77,21 +97,42 @@ package temple.ui.states
 			}
 		}
 		
+		/**
+		 * Call hide() on all children of the object which implements IErrorStat.
+		 * @param object the DisplayObjectContainer which contains the state clips.
+		 * @param instant a Boolean which indicates if the states must use an animation to hide itself or do it instantly
+		 */
 		public static function hideError(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
 			StateHelper.hideState(object, IErrorState, instant);
 		}
 		
+		/**
+		 * Call show() on all children of the object which implements ISelectState.
+		 * @param object the DisplayObjectContainer which contains the state clips.
+		 * @param instant a Boolean which indicates if the states must use an animation to show itself or do it instantly
+		 */
 		public static function showSelected(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
 			StateHelper.showState(object, ISelectState, instant);
 		}
 		
+		/**
+		 * Call hide() on all children of the object which implements ISelectState.
+		 * @param object the DisplayObjectContainer which contains the state clips.
+		 * @param instant a Boolean which indicates if the states must use an animation to hide itself or do it instantly
+		 */
 		public static function hideSelected(object:DisplayObjectContainer, instant:Boolean = false):void
 		{
 			StateHelper.hideState(object, ISelectState, instant);
 		}
 		
+		/**
+		 * Call show() on all children of the object which implements a specified state.
+		 * @param object the DisplayObjectContainer which contains the state clips.
+		 * @param state a state interface (must extend IState) to show.
+		 * @param instant a Boolean which indicates if the states must use an animation to show itself or do it instantly
+		 */
 		public static function showState(object:DisplayObjectContainer, state:Class, instant:Boolean = false):void
 		{
 			if (object is state) IState(object).show(instant);
@@ -106,6 +147,12 @@ package temple.ui.states
 			}
 		}
 		
+		/**
+		 * Call hide() on all children of the object which implements IFocusState.
+		 * @param object the DisplayObjectContainer which contains the state clips.
+		 * @param state a state interface (must extend IState) to hide.
+		 * @param instant a Boolean which indicates if the states must use an animation to hide itself or do it instantly
+		 */
 		public static function hideState(object:DisplayObjectContainer, state:Class, instant:Boolean = false):void
 		{
 			if (object is state) IState(object).hide(instant);
