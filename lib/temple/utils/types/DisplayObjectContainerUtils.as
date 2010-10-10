@@ -71,7 +71,7 @@ package temple.utils.types
 		 * 
 		 * @param container The DisplayObjectContainer that has the child
 		 * @param type the Class of the child to find
-		 * @param recursive is set to true also children (and grantchildren etc) will be searched for the type
+		 * @param recursive is set to true also children (and grandchildren etc) will be searched for the type
 		 * 
 		 * @return the first child of the type
 		 */

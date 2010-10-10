@@ -170,6 +170,22 @@ package temple.utils.keys
 		{
 			this._enabled = value;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			this.enabled = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this.enabled = false;
+		}
 
 		/**
 		 * Returns information about the key mapping.

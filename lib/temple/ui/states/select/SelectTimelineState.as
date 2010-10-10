@@ -45,6 +45,8 @@ package temple.ui.states.select
 	import temple.ui.states.BaseTimelineState;
 
 	/**
+	 * Uses a timeline animation to display or hide the select state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class SelectTimelineState extends BaseTimelineState implements ISelectState 

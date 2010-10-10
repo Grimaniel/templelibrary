@@ -98,7 +98,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		private var _clipping:Boolean;
 		private var _scaleMode:String;
 		private var _align:String;
-		private var _upscaleEnabled:Boolean;
+		private var _upscaleEnabled:Boolean = true;
 		private var _smoothing:Boolean;
 		private var _context:LoaderContext;
 		private var _preloaderMode:String;
@@ -325,8 +325,8 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		/**
 		 * When you set the scaleMode to a property other than NO_SCALE, and clipping mode is enabled, every image is scaled.
 		 * When you set upscaleEnabled to false, images that are smaller than the clippingRect are not scaled.
+		 * @default true
 		 */
-		
 		public function get upscaleEnabled():Boolean
 		{
 			return this._upscaleEnabled;
@@ -527,6 +527,8 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		private function layoutImage():void
 		{
 			if (!this._loader.isLoaded()) return;
+			
+			if (this.debug) this.logDebug("layoutImage: clipping=" + this._clipping + ", scaleMode='" + this._scaleMode + "', align='" + this._align + "', upscaleEnabled:" + this._upscaleEnabled);
 			
 			if (this._clipping)
 			{

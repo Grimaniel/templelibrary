@@ -52,7 +52,7 @@ package temple.ui
 	{
 		/**
 		 * Cancel call
-		 * @return true is cancel was successful
+		 * @return true if cancel was successful
 		 */
 		function cancel():Boolean;
 	}

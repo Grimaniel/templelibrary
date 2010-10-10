@@ -285,6 +285,22 @@ package temple.ui.form.components
 			this._textField.type = value ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
 			if (value) this._textField.styleSheet = null;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			this.enabled = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this.enabled = false;
+		}
 
 		/**
 		 * @inheritDoc 

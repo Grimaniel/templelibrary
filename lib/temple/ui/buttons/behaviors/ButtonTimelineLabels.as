@@ -44,6 +44,10 @@ package temple.ui.buttons.behaviors
 {
 
 	/**
+	 * This class contains all possible values for timeline labels used by the ButtonTimelineBehavior.
+	 * 
+	 * @see temple.ui.buttons.behaviors.ButtonTimelineBehavior
+	 * 
 	 * @includeExample ../MultiStateButtonFrameLabelsExample.as
 	 * 
 	 * @author Thijs Broerse
@@ -51,7 +55,7 @@ package temple.ui.buttons.behaviors
 	public class ButtonTimelineLabels 
 	{
 		/**
-		 * Normal status of a button. Displayed when the mouse is not over the button.
+		 * Default status of a button. Displayed when the mouse is not over the button.
 		 * <p>This is a non-animated state and uses only one frame.</p>
 		 * <p>If there is no 'up' defined, the first frame is used for 'up'.</p>
 		 */
@@ -105,7 +109,7 @@ package temple.ui.buttons.behaviors
 		/**
 		 * Displayed when the button is selected.
 		 * <p>This is a non-animated state and uses only one frame.</p>
-		 * <p>If there is no 'selected' defined, the last frame is used for 'selected'. If there are no 'select' and 'deselect' defined, the ButtonTimelineBehavior will animatie between 'up' and 'select' label</p>
+		 * <p>If there are no 'select' and 'deselect' defined, the ButtonTimelineBehavior will animatie between 'up' and 'select' label</p>
 		 */
 		public static const SELECTED:String = 'selected';
 

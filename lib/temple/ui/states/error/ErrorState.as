@@ -48,6 +48,8 @@ package temple.ui.states.error
 	import flash.text.TextField;
 
 	/**
+	 * Set visible to true or false to show or hide the error state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ErrorState extends BaseState implements IErrorState 

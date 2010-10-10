@@ -45,6 +45,8 @@ package temple.ui.states.select
 	import temple.ui.states.BaseState;
 
 	/**
+	 * Set visible to true or false to show or hide the select state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class SelectState extends BaseState implements ISelectState 

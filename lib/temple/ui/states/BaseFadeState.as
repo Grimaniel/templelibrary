@@ -48,6 +48,10 @@ package temple.ui.states
 	import com.greensock.TweenLite;
 
 	/**
+	 * This class uses a TweenLite fade (autoAlpha) to show and hide the object. This class is used as base for several states.
+	 * 
+	 * @includeExample StatesExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class BaseFadeState extends AbstractState implements IState 

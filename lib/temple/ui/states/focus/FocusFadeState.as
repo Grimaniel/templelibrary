@@ -45,6 +45,8 @@ package temple.ui.states.focus
 	import temple.ui.states.BaseFadeState;
 
 	/**
+	 * Uses a TweenLite autoAlpha fade to show or hide the focus state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class FocusFadeState extends BaseFadeState implements IFocusState 

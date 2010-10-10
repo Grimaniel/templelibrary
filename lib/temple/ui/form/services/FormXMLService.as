@@ -53,6 +53,21 @@ package temple.ui.form.services
 	import flash.net.URLRequestMethod;
 
 	/**
+	 * @eventType temple.ui.form.services.FormServiceEvent.SUCCESS
+	 */
+	[Event(name = "FormServiceEvent.success", type = "temple.ui.form.services.FormServiceEvent")]
+
+	/**
+	 * @eventType temple.ui.form.services.FormServiceEvent.RESULT
+	 */
+	[Event(name = "FormServiceEvent.result", type = "temple.ui.form.services.FormServiceEvent")]
+
+	/**
+	 * @eventType temple.ui.form.services.FormServiceEvent.ERROR
+	 */
+	[Event(name = "FormServiceEvent.error", type = "temple.ui.form.services.FormServiceEvent")]
+	
+	/**
 	 * @author Thijs Broerse
 	 */
 	public class FormXMLService extends XMLService implements IFormService

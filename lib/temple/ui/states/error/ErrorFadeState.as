@@ -48,6 +48,8 @@ package temple.ui.states.error
 	import flash.text.TextField;
 
 	/**
+	 * Uses a TweenLite autoAlpha fade to show or hide the error state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ErrorFadeState extends BaseFadeState implements IErrorState 

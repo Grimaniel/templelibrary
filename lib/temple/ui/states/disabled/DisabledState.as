@@ -45,6 +45,8 @@ package temple.ui.states.disabled
 	import temple.ui.states.BaseState;
 
 	/**
+	 * Set visible to true or false to show or hide the disabled state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class DisabledState extends BaseState implements IDisabledState

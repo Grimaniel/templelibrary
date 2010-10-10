@@ -52,8 +52,8 @@ package temple.ui.buttons.behaviors
 	import flash.display.DisplayObject;
 
 	/**
-	 * The ButtonTweenBehavior uses TweenMax to tween to a state. The define a state you just add
-	 * an Object with properties as you would do for a 'normal' TweenMax tween. 
+	 * The ButtonTweenBehavior uses TweenMax to tween to a state. To define a state you just add
+	 * an object with properties as you would do for a 'normal' TweenMax tween. 
 	 * 
 	 * @includeExample ../TweenButtonExample.as
 	 * 

@@ -54,6 +54,11 @@ package temple.ui.buttons.behaviors
 	import flash.events.TimerEvent;
 
 	/**
+	 * @eventType flash.events.MouseEvent.CLICK
+	 */
+	[Event(name = "click", type = "flash.events.MouseEvent")]
+	
+	/**
 	 * The ClickRepeater class makes an InteractiveObject repeating the MouseEvent.CLICK event, while the user hold down the mouse button on the object.
 	 * Useful for srollButtons to make a ScrollPane scroll while pressing the button.
 	 * 

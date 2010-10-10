@@ -42,6 +42,7 @@
 
 package temple.media.video.players 
 {
+	import temple.core.temple;
 	import temple.ui.IHasBackground;
 	import temple.core.CoreSprite;
 	import temple.data.loader.preload.IPreloader;
@@ -341,21 +342,32 @@ package temple.media.video.players
 		}
 
 		/**
+		 * @inheritDoc
+		 * 
 		 * Loads a movie, but does not play it. Stops movie on first frame
 		 */
 		public function loadUrl(url:String):void
 		{
 			if (this._debug) this.logDebug("loadUrl: " + url);
 			
-			if (this._videoPath)this.clear();
+			if (this._videoPath) this.clear();
 			
 			this._status = PlayerStatus.LOADING;
 			this._playAfterLoaded = false;
 			
 			// first hide player, so we can't see him playing, show it after playing and seek to 0.
 			this._video.visible = false;
-			if (this._netStream) this._netStream.soundTransform = new SoundTransform(0);
-			
+			if (this._netStream)
+			{
+				try
+				{
+					this._netStream.soundTransform = new SoundTransform(0);
+				}
+				catch (error:Error)
+				{
+					this.logError(error.message);
+				}
+			}
 			this.playUrl(url);
 		}
 
@@ -605,8 +617,17 @@ package temple.media.video.players
 			if (this._volume != value)
 			{
 				this._volume = value;
-				if (this._netStream)	this._netStream.soundTransform = new SoundTransform(this._volume);
-				
+				if (this._netStream)
+				{
+					try
+					{
+						this._netStream.soundTransform = new SoundTransform(this._volume);
+					}
+					catch (error:Error)
+					{
+						this.logError(error.message);
+					}
+				}
 				this.dispatchEvent(new SoundEvent(SoundEvent.VOLUME_CHANGE));
 			}
 		}

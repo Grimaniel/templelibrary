@@ -59,6 +59,9 @@ limitations under the License.
 
 package temple.debug.log 
 {
+	import temple.core.temple;
+	import temple.debug.errors.TempleError;
+	import temple.debug.errors.throwError;
 	import temple.utils.types.TimeUtils;
 
 	import flash.events.EventDispatcher;
@@ -116,14 +119,13 @@ package temple.debug.log
 	 * 
 	 * @includeExample LogExample.as
 	 * 
-	 * @author stephan.bezoen
+	 * @author Stephan Bezoen, Thijs Broerse
 	 */
 	public final class Log extends EventDispatcher 
 	{
 		private static var _instance:Log;
-
-		private var _showTrace:Boolean = true;
-		private var _stackTrace:Boolean = false;
+		private static var _showTrace:Boolean = true;
+		private static var _stackTrace:Boolean = false;
 		
 		/**
 		 *	Log a message with debug level
@@ -139,7 +141,7 @@ package temple.debug.log
 		 */
 		public static function debug(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.getInstance().send(data, sender, LogLevels.DEBUG, objectId);
+			Log.temple::send(data, sender, LogLevels.DEBUG, objectId);
 		}
 
 		/**
@@ -156,7 +158,7 @@ package temple.debug.log
 		 */
 		public static function info(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.getInstance().send(data, sender, LogLevels.INFO, objectId);
+			Log.temple::send(data, sender, LogLevels.INFO, objectId);
 		}
 
 		/**
@@ -173,7 +175,7 @@ package temple.debug.log
 		 */
 		public static function error(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.getInstance().send(data, sender, LogLevels.ERROR, objectId);
+			Log.temple::send(data, sender, LogLevels.ERROR, objectId);
 		}
 
 		/**
@@ -190,7 +192,7 @@ package temple.debug.log
 		 */
 		public static function warn(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.getInstance().send(data, sender, LogLevels.WARN, objectId);
+			Log.temple::send(data, sender, LogLevels.WARN, objectId);
 		}
 
 		/**
@@ -207,7 +209,7 @@ package temple.debug.log
 		 */
 		public static function fatal(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.getInstance().send(data, sender, LogLevels.FATAL, objectId);
+			Log.temple::send(data, sender, LogLevels.FATAL, objectId);
 		}
 
 		/**
@@ -224,7 +226,7 @@ package temple.debug.log
 		 */
 		public static function status(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.getInstance().send(data, sender, LogLevels.STATUS, objectId);
+			Log.temple::send(data, sender, LogLevels.STATUS, objectId);
 		}
 
 		/**
@@ -233,21 +235,20 @@ package temple.debug.log
 		 *	@param sender a reference denoting the source of the message
 		 *	@param level the level of the message
 		 *	@param objectId the Registry objectId that is stored in Core Objects;
+		 *	@param stackLine the line of the stackTrace that must be used as stack. Only works if stackTrace is enabled.
 		 */
-		private function send(data:*, sender:String, level:String, objectId:uint = 0):void 
+		temple static function send(data:*, sender:String, level:String, objectId:uint = 0, stackLine:uint = 3):void 
 		{
 			var stack:String;
 			
-			if (this._stackTrace)
+			if (Log._stackTrace)
 			{
 				stack = new Error().getStackTrace();
 				
 				if (stack)
 				{
 					var lines:Array = stack.split("\n");
-					var line:uint = 3;
-					if (String(lines[line]).indexOf('temple.core::Core') == 4) line++;
-					stack = String(lines[line]).substr(4);
+					stack = String(lines[stackLine]).substr(4);
 					var i:int = stack.indexOf('::');
 					if (i != -1) stack = stack.substr(i+2);
 					stack = stack.replace("/", ".");
@@ -259,13 +260,13 @@ package temple.debug.log
 				}
 			}
 			
-			if (this._showTrace) 
+			if (Log._showTrace) 
 			{
 				trace(TimeUtils.formatTime(getTimer()) + " \t" + level + ": \t" + String(data) + " \t-- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#") + (stack ? " " + stack : ""));
 			}
-			this.dispatchEvent(new LogEvent(level, data, sender ? sender.toString() : 'null', objectId, stack));
+			Log.getInstance().dispatchEvent(new LogEvent(level, data, sender ? sender.toString() : 'null', objectId, stack));
 		}
-
+		
 		/**
 		 *	Add a function as listener to LogEvent events
 		 *	@param handler the function to handle LogEvents
@@ -302,7 +303,7 @@ package temple.debug.log
 		 */
 		public static function get showTrace():Boolean 
 		{
-			return Log.getInstance()._showTrace;
+			return Log._showTrace;
 		}
 		
 		/**
@@ -310,12 +311,12 @@ package temple.debug.log
 		 */
 		public static function set showTrace(value:Boolean):void 
 		{
-			Log.getInstance()._showTrace = value;
+			Log._showTrace = value;
 		}
 
 		public static function get stackTrace():Boolean 
 		{
-			return Log.getInstance()._stackTrace;
+			return Log._stackTrace;
 		}
 		
 		/**
@@ -323,7 +324,7 @@ package temple.debug.log
 		 */
 		public static function set stackTrace(value:Boolean):void 
 		{
-			Log.getInstance()._stackTrace = value;
+			Log._stackTrace = value;
 		}
 
 		/**
@@ -331,8 +332,12 @@ package temple.debug.log
 		 */
 		private static function getInstance():Log 
 		{
-			if (Log._instance == null) Log._instance = new Log();
-			return Log._instance;
+			return Log._instance ||= new Log();
+		}
+		
+		public function Log()
+		{
+			if (Log._instance) throwError(new TempleError(this, "Singleton, please use static methods"));
 		}
 
 		/**

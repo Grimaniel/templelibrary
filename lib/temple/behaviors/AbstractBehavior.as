@@ -41,6 +41,7 @@
 
 package temple.behaviors 
 {
+	import temple.core.temple;
 	import temple.core.CoreEventDispatcher;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
@@ -63,8 +64,6 @@ package temple.behaviors
 	 */
 	public class AbstractBehavior extends CoreEventDispatcher implements IBehavior 
 	{
-		private namespace temple = "http://code.google.com/p/templelibrary/";
-		
 		private var _target:Object;
 		
 		/**

@@ -308,8 +308,8 @@ package temple.utils.types
 		public static function getNearestRotationIndex(index:int, newIndex:int, total:uint = 360):int
 		{
 			var curIndex:int = index;
-			while(curIndex < 0) curIndex += total;
-			while(newIndex < 0) newIndex += total;
+			while (curIndex < 0) curIndex += total;
+			while (newIndex < 0) newIndex += total;
 			
 			var diff:int = Math.abs(curIndex - newIndex);
 			
@@ -346,11 +346,11 @@ package temple.utils.types
 			
 			input -= base;
 			
-			if(input < 0 && input < -range)
+			if (input < 0 && input < -range)
 			{
 				return base - range;
 			}
-			else if(input > 0 && input > range)
+			else if (input > 0 && input > range)
 			{
 				return base + range;
 			}
@@ -362,10 +362,10 @@ package temple.utils.types
 		 */
 		public static function ordinalSuffix(position:int):String
 		{
-			if(position < 0 ) throwError(new TempleArgumentError(NumberUtils, 'ordinal number less then zero'));
+			if (position < 0 ) throwError(new TempleArgumentError(NumberUtils, 'ordinal number less then zero'));
 			
 			//exceptions
-			switch(position)
+			switch (position)
 			{
 				case 0:
 					return '';
@@ -376,7 +376,7 @@ package temple.utils.types
 			}
 			//rule
 			var rest:int = position % 10;
-			switch(rest)
+			switch (rest)
 			{
 				case 1:
 					return 'st';

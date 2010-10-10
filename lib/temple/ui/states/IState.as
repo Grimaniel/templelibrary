@@ -46,18 +46,32 @@ package temple.ui.states
 	import temple.ui.IEnableable;
 
 	/**
+	 * A 'IState' is a DisplayObject which visualize a specific state of his parent, like 'over', 'down' or 'selected'.
+	 * 
+	 * <p>If the parent gets this specific state all children which represents this state will be shown, by calling the 'show()' method.
+	 * If the parent object loses the state all children of this state will be hidden, by calling the 'hide()' method.</p>
+	 * 
+	 * <p>Note that the parent object can have multiple states at once and that a single state can be represented by multiple 'state' children.</p>
+	 * 
+	 * <p>You need to call the show() and hide() method yourself or you could use the StateHelper to do it for you.
+	 * Some Temple classes like buttons and form components do this automatically.</p>
+	 * 
+	 * @see temple.ui.states.StateHelper
+	 * 
+	 * @includeExample StatesExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public interface IState extends IEnableable, IDisplayObject
 	{
 		/**
-		 * Show the state
+		 * Show this state
 		 * @param instant if set to true animation will be skipped.
 		 */
 		function show(instant:Boolean = false):void;
 		
 		/**
-		 * Hide the state
+		 * Hide this state
 		 * @param instant if set to true animation will be skipped.
 		 */
 		function hide(instant:Boolean = false):void;

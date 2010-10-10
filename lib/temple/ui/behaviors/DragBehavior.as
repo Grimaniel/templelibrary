@@ -170,6 +170,22 @@ package temple.ui.behaviors
 				this._dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
 			}
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			this.enabled = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this.enabled = false;
+		}
 
 		/**
 		 * Get or set horizontal dragging on (true) or off (false)
@@ -270,6 +286,5 @@ package temple.ui.behaviors
 			this._startDragMousePoint = null;
 			super.destruct();
 		}
-		
 	}
 }

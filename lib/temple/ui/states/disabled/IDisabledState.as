@@ -45,6 +45,8 @@ package temple.ui.states.disabled
 	import temple.ui.states.IState;
 
 	/**
+	 * A DisplayObject that implements IDisabledState is shown when it's parent is disabled.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public interface IDisabledState extends IState 

@@ -58,6 +58,12 @@ package temple.ui.label
 	[Event(name = "change", type = "flash.events.Event")]
 
 	/**
+	 * Dispatched after the text in the TextField is resized
+	 * @eventType flash.events.Event.RESIZE
+	 */
+	[Event(name = "resize", type = "flash.events.Event")]
+
+	/**
 	 * @author Thijs Broerse
 	 */
 	public class TextFieldLabel extends AbstractBehavior implements ITextFieldLabel

@@ -42,9 +42,8 @@
 
 package temple.core 
 {
-	import temple.core.ICoreDisplayObject;
 	import temple.ui.IDisplayObjectContainer;
-	
+
 	/**
 	 * @author Thijs Broerse
 	 */

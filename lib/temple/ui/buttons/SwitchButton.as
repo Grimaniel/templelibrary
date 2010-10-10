@@ -48,6 +48,11 @@ package temple.ui.buttons
 	import flash.events.MouseEvent;
 
 	/**
+	 * @eventType flash.events.Event.CHANGE
+	 */
+	[Event(name = "change", type = "flash.events.Event")]
+
+	/**
 	 * @author Thijs Broerse
 	 */
 	public class SwitchButton extends MultiStateButton implements ISelectable

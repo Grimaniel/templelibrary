@@ -50,6 +50,67 @@ package temple.media.video.players
 	import temple.ui.IDisplayObject;
 
 	/**
+	 * Dispatched when the status is changed
+	 * @eventType temple.status.StatusEvent.STATUS_CHANGE
+	 */
+	[Event(name = "StatusEvent.statusChange", type = "temple.status.StatusEvent")]
+	
+	/**
+	 * @eventType temple.media.video.players.VideoPlayerEvent.BUFFER_EMPTY
+	 */
+	[Event(name = "VideoPlayerEvent.bufferEmpty", type = "temple.media.video.players.VideoPlayerEvent")]
+	
+	/**
+	 * @eventType temple.media.video.players.VideoPlayerEvent.BUFFER_FLUSH
+	 */
+	[Event(name = "VideoPlayerEvent.bufferFlush", type = "temple.media.video.players.VideoPlayerEvent")]
+
+	/**
+	 * @eventType temple.media.video.players.VideoPlayerEvent.MOVIE_NOTFOUND
+	 */
+	[Event(name = "VideoPlayerEvent.movieNotFound", type = "temple.media.video.players.VideoPlayerEvent")]
+
+	/**
+	 * @eventType temple.media.video.players.VideoPlayerEvent.SECURITY_ERROR
+	 */
+	[Event(name = "VideoPlayerEvent.securityError", type = "temple.media.video.players.VideoPlayerEvent")]
+
+	/**
+	 * @eventType temple.media.video.players.VideoPlayerEvent.SEEK_INVALID
+	 */
+	[Event(name = "VideoPlayerEvent.seekInvalid", type = "temple.media.video.players.VideoPlayerEvent")]
+
+	/**
+	 * @eventType temple.media.video.players.VideoPlayerEvent.MOVIE_LOADED
+	 */
+	[Event(name = "VideoPlayerEvent.movieLoaded", type = "temple.media.video.players.VideoPlayerEvent")]
+	
+	/**
+	 * @eventType temple.media.video.players.VideoPlayerEvent.SEEK_NOTIFY
+	 */
+	[Event(name = "VideoPlayerEvent.seekNotify", type = "temple.media.video.players.VideoPlayerEvent")]
+
+	/**
+	 * @eventType temple.media.sound.SoundEvent.VOLUME_CHANGE
+	 */
+	[Event(name = "SoundEvent.volumeChange", type = "temple.media.sound.SoundEvent")]
+
+	/**
+	 * @eventType flash.events.NetStatusEvent.NET_STATUS
+	 */
+	[Event(name = "netStatus", type = "flash.events.NetStatusEvent")]
+
+	/**
+	 * @eventType temple.media.video.metadata.VideoMetaDataEvent.METADATA
+	 */
+	[Event(name = "VideoMetaDataEvent.metadata", type = "temple.media.video.metadata.VideoMetaDataEvent")]
+	
+	/**
+	 * @eventType temple.media.video.cuepoints.CuePointEvent.CUEPOINT
+	 */
+	[Event(name = "CuePointEvent.cuepoint", type = "temple.media.video.cuepoints.CuePointEvent")]
+
+	/**
 	 * @author Thijs Broerse
 	 */
 	public interface IVideoPlayer extends IProgressiveDownloadPlayer, IDisplayObject, IDebuggable, IAudible, IPreloadable

@@ -43,6 +43,7 @@
 package 
 {
 	import temple.debug.log.LogLevels;
+	import temple.core.temple;
 	import temple.debug.log.Log;
 	import temple.utils.types.ObjectUtils;
 	
@@ -73,40 +74,22 @@ package
 		switch (level)
 		{
 			case LogLevels.DEBUG:
-			{
-				Log.debug(message, 'log');
-				break;
-			}
 			case LogLevels.ERROR:
-			{
-				Log.error(message, 'log');
-				break;
-			}
 			case LogLevels.FATAL:
-			{
-				Log.fatal(message, 'log');
-				break;
-			}
 			case LogLevels.INFO:
-			{
-				Log.info(message, 'log');
-				break;
-			}
 			case LogLevels.STATUS:
-			{
-				Log.status(message, 'log');
-				break;
-			}
 			case LogLevels.WARN:
 			{
-				Log.warn(message, 'log');
+				Log.temple::send(message, "log", level);
 				break;
 			}
 			default:
 			{
-				Log.info(message, 'log');
+				Log.temple::send(message, "log", LogLevels.INFO);
 				Log.error("Invalid value for level: '" + level + "'", "log");
 			}
 		}
+		
+		
 	}
 }

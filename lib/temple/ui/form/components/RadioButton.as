@@ -48,12 +48,15 @@ package temple.ui.form.components
 	import flash.events.MouseEvent;
 
 	/**
+	 * <p>This class can be used as component by setting this class as 'Component Definition' in the Flash IDE.
+	 * You can set different properties in the Flash IDE in the 'Component Inspector'</p>
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class RadioButton extends CheckBox implements IRadioButton, IDebuggable
 	{
-		protected var _group:IRadioGroup;
-		protected var _toggle:Boolean;
+		private var _group:IRadioGroup;
+		private var _toggle:Boolean;
 		
 		public function RadioButton()
 		{

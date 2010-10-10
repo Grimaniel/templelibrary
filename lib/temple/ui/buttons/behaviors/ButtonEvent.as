@@ -47,6 +47,11 @@ package temple.ui.buttons.behaviors
 	import flash.events.Event;
 
 	/**
+	 * An tunneled Event which contains the status of the button.
+	 * The ButtonEvent is dispatched by the ButtonBehavior on the button. ButtonDesignBehavior listen for this event to display the correct state. 
+	 * 
+	 * @see temple.ui.buttons.behaviors.ButtonBehavior
+	 * 
 	 * @includeExample NestedMultiStateButtonsExample.as
 	 * 
 	 * @author Thijs Broerse

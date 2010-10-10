@@ -63,25 +63,39 @@ package temple.ui.form.components
 	import flash.events.Event;
 
 	/**
+	 * @eventType flash.events.Event.CHANGE
+	 */
+	[Event(name = "change", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType temple.ui.form.components.FormElementEvent.SUBMIT
+	 */
+	[Event(name = "FormElementEvent.submit", type = "temple.ui.form.components.FormElementEvent")]
+	
+	/**
+	 * A DisplayObject which can be selected.
+	 * 
+	 * <p>This class can be used as component by setting this class as 'Component Definition' in the Flash IDE.
+	 * You can set different properties in the Flash IDE in the 'Component Inspector'</p>
+	 * 
+	 * @includeExample ../FormExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class CheckBox extends SwitchButton implements ISelectable, IHasError, IHasValue, IResettable, IFormElementComponent, ITextFieldLabel, ISetValue
 	{
-		protected var _selectedValue:* = true;
-		protected var _unselectedValue:* = false;
-		protected var _hasFocus:Boolean;
-		protected var _dataName:String;
-		protected var _validator:Class;
-		protected var _errorMessage:String;
-		protected var _tabIndex:int;
-		protected var _label:ILabel;
-		protected var _submit:Boolean = true;
+		private var _selectedValue:* = true;
+		private var _unselectedValue:* = false;
+		private var _dataName:String;
+		private var _validator:Class;
+		private var _errorMessage:String;
+		private var _tabIndex:int;
+		private var _label:ILabel;
+		private var _submit:Boolean = true;
 		private var _submitOnChange:Boolean;
 
 		public function CheckBox()
 		{
-			super();
-			
 			this._label = LabelUtils.findLabel(this);
 			this.addEventListener(Event.CHANGE, this.handleChange);
 		}
@@ -147,7 +161,7 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Reset the checkbox by deselecting &amp; enabling it
+		 * Reset the checkbox by deselecting &amp; enabling it.
 		 */
 		public function reset():void 
 		{
@@ -155,12 +169,20 @@ package temple.ui.form.components
 			this.selected = false;
 		}
 
+		/**
+		 * Set the value of the CheckBox.
+		 * @param selectedValue the value of the CheckBox when it is selected.
+		 * @param unselectedValue the value of the CheckBox when it is not selected.
+		 */
 		public function setValue(selectedValue:*, unselectedValue:* = false):void 
 		{
 			this._selectedValue = selectedValue;
 			this._unselectedValue = unselectedValue;
 		}
 		
+		/**
+		 * The value of the CheckBox when it is selected.
+		 */
 		public function get selectedValue():*
 		{
 			return this._selectedValue;
@@ -175,6 +197,9 @@ package temple.ui.form.components
 			this._selectedValue = value;
 		}
 		
+		/**
+		 * The value of the CheckBox when it is selected.
+		 */
 		public function get unselectedValue():*
 		{
 			return this._unselectedValue;

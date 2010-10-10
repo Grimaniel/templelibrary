@@ -506,6 +506,22 @@ package temple.ui.form
 				if (cancelbutton is IEnableable) IEnableable(cancelbutton).enabled = value;
 			}
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			this.enabled = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this.enabled = false;
+		}
 
 		/**
 		 * If set to true, the form can be submitted by an Element if the Element dispatches a FormElementEvent.SUBMIT event

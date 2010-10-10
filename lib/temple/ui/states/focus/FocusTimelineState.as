@@ -45,6 +45,8 @@ package temple.ui.states.focus
 	import temple.ui.states.BaseTimelineState;
 
 	/**
+	 * Uses a timeline animation to display or hide the focus state of his parent.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class FocusTimelineState extends BaseTimelineState implements IFocusState

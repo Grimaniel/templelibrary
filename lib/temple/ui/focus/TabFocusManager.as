@@ -56,6 +56,11 @@ package temple.ui.focus
 	import flash.ui.Keyboard;
 
 	/**
+	 * @eventType flash.events.KeyboardEvent.KEY_DOWN
+	 */
+	[Event(name = "keyDown", type = "flash.events.KeyboardEvent")]
+
+	/**
 	 * Class for managing focus on UI components that implement IFocusable.
 	 * Use of this class overrides default tab button behavior. Only UI components added to an instance of this class can get focus through use of the tab key. Consecutive presses on the TAB key will cycle through the list of items in order of addition, unless a specific tab index has been set on any of them. With SHIFT-TAB the list is cycled in reversed order.
 	 * @example

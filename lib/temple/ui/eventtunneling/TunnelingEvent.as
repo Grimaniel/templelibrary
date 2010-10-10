@@ -46,7 +46,7 @@ package temple.ui.eventtunneling
 
 	/**
 	 * A TunnelEvent is the opposite of a bubbling Event.
-	 * If a TunnelEvent is dispatched on a DisplayObjectContainer the event will also be dispatched on all his children (and grant-children etc.)
+	 * If a TunnelEvent is dispatched on a DisplayObjectContainer the event will also be dispatched on all his children (and grandchildren etc.)
 	 * 
 	 * The actual tunning (dispatching) of the event is done by the EventTunneler. In order to make Event tunneling work you need to create
 	 * an EventTunneler for the object.
