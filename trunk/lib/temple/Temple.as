@@ -64,7 +64,7 @@ package temple
 		/**
 		 * The current version of the Temple Library
 		 */
-		public static const VERSION:String = "2.6.6";
+		public static const VERSION:String = "2.7.0";
 		
 		/**
 		 * The Authors of the Temple
