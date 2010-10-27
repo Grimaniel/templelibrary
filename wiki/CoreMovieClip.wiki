@@ -1,4 +1,4 @@
-#summary Base class for all Sprites in the Temple.
+#summary Base class for all MovieClips in the Temple.
 
 = Introduction =
 
