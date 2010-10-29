@@ -54,7 +54,7 @@ package temple.behaviors
 		/**
 		 * A reference of the behavior
 		 */
-		function behavior():IBehavior;
+		function get behavior():IBehavior;
 		
 		/**
 		 * Get the target of the behavior.

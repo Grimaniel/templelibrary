@@ -190,9 +190,9 @@ package temple.utils.types
 		}
 
 		/**
-		 * Disables the mouse on all children, works the quite same as mouseChildren = false, but you can enable some children after this
+		 * Disables the mouse on all children, works quite the same as mouseChildren = false, but you can enable some children after this
 		 */
-		public static function mouseDisableChildren(container:DisplayObjectContainer, recursive:Boolean = true, debug:Boolean = false):void
+		public static function mouseChildren(container:DisplayObjectContainer, recursive:Boolean = true, enabled:Boolean = false, debug:Boolean = false):void
 		{
 			if(container == null) return;
 			
@@ -209,12 +209,12 @@ package temple.utils.types
 				
 				if(child is InteractiveObject)
 				{
-					InteractiveObject(child).mouseEnabled = false;
+					InteractiveObject(child).mouseEnabled = enabled;
 					
 					if(recursive && child is DisplayObjectContainer)
 					{
 						DisplayObjectContainer(child).mouseChildren = true;
-						DisplayObjectContainerUtils.mouseDisableChildren(DisplayObjectContainer(child), recursive, debug);
+						DisplayObjectContainerUtils.mouseChildren(DisplayObjectContainer(child), recursive, enabled, debug);
 					}
 				}
 			}

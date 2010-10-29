@@ -51,7 +51,7 @@ package
 			
 			// reset mouseEnabled and mouseChildren on the buttons to let the nestedButton3 receive MouseEvents.
 			container.mouseChildren = true;
-			DisplayObjectContainerUtils.mouseDisableChildren(container);
+			DisplayObjectContainerUtils.mouseChildren(container);
 			nestedButton3.mouseEnabled = true;
 		}
 	}

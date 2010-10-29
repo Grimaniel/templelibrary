@@ -104,7 +104,6 @@ package temple.ui.behaviors
 	 */
 	public class DragBehavior extends BoundsBehavior implements IEnableable
 	{
-		protected var _startDragObjectPoint:Point;
 		protected var _startDragMousePoint:Point;
 		
 		private var _dragButton:DisplayObject;
@@ -246,51 +245,68 @@ package temple.ui.behaviors
 			this._positionProxy = value;
 		}
 		
+		/**
+		 * Update position of the target
+		 */
+		public function update():void
+		{
+			if(this._dragHorizontal)
+			{
+				var newX:Number = this.displayObject.parent.mouseX - (this._startDragMousePoint.x * this.displayObject.scaleX);
+				if (this._positionProxy)
+				{
+					this._positionProxy.setValue(this.displayObject, "x", newX);
+				}
+				else
+				{
+					this.displayObject.x = newX;
+				}
+				
+			}
+			if(this.dragVertical)
+			{
+				var newY:Number = this.displayObject.parent.mouseY - (this._startDragMousePoint.y * this.displayObject.scaleY);
+				if (this._positionProxy)
+				{
+					this._positionProxy.setValue(this.displayObject, "y", newY);
+				}
+				else
+				{
+					this.displayObject.y = newY;
+				}
+			}
+			this.keepInBounds();
+		}
+		
+		/**
+		 * @private
+		 */
 		protected function handleMouseDown(event:MouseEvent):void 
 		{
 			this._isDragging = true;
 			
-			this._startDragMousePoint = new Point(this.displayObject.parent.mouseX, this.displayObject.parent.mouseY);
-			this._startDragObjectPoint = new Point(this.displayObject.x, this.displayObject.y);
+			this._startDragMousePoint = new Point(this.displayObject.mouseX, this.displayObject.mouseY);
 			
 			this.displayObject.stage.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove, false, 0, true);
 			this.displayObject.stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp, false, 0, true);
 			this.displayObject.stage.addEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave, false, 0, true);
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this, true));
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleMouseMove(event:MouseEvent):void 
 		{
-			if(this._dragHorizontal)
-			{
-				if (this._positionProxy)
-				{
-					this._positionProxy.setValue(this.displayObject, "x", this._startDragObjectPoint.x + this.displayObject.parent.mouseX - this._startDragMousePoint.x);
-				}
-				else
-				{
-					this.displayObject.x = this._startDragObjectPoint.x + this.displayObject.parent.mouseX - this._startDragMousePoint.x;
-				}
-				
-			}
-			
-			if(this.dragVertical)
-			{
-				if (this._positionProxy)
-				{
-					this._positionProxy.setValue(this.displayObject, "y", this._startDragObjectPoint.y + this.displayObject.parent.mouseY - this._startDragMousePoint.y);
-				}
-				else
-				{
-					this.displayObject.y = this._startDragObjectPoint.y + this.displayObject.parent.mouseY - this._startDragMousePoint.y;
-				}
-			}
-			this.keepInBounds();
+			this.update();
 			
 			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleMouseUp(event:MouseEvent):void 
 		{
 			this.stopDrag();
@@ -304,11 +320,12 @@ package temple.ui.behaviors
 			this.displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
 			this.displayObject.stage.removeEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave);
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this, true));
 		}
 
 		private function handleMouseLeave(event:Event):void
 		{
+			// doesn't work in wmode opaque or transparent ?
 			this.stopDrag();
 		}
 
@@ -323,7 +340,6 @@ package temple.ui.behaviors
 				this._dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
 				this._dragButton = null;
 			}
-			this._startDragObjectPoint = null;
 			this._startDragMousePoint = null;
 			super.destruct();
 		}

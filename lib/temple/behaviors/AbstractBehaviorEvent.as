@@ -60,9 +60,9 @@ package temple.behaviors
 		 * @param type The type of event.
 		 * @param behavior The behavior
 		 */
-		public function AbstractBehaviorEvent(type:String, behavior:IBehavior)
+		public function AbstractBehaviorEvent(type:String, behavior:IBehavior, bubbles:Boolean = false)
 		{
-			super(type);
+			super(type, bubbles);
 			
 			this._behavior = behavior;
 		}
@@ -70,7 +70,7 @@ package temple.behaviors
 		/**
 		 * @inheritDoc
 		 */
-		public function behavior():IBehavior 
+		public function get behavior():IBehavior 
 		{
 			return this._behavior;
 		}
