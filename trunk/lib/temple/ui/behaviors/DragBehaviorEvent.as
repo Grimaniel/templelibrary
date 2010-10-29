@@ -42,6 +42,7 @@
 
 package temple.ui.behaviors 
 {
+	import flash.events.Event;
 	import temple.behaviors.AbstractBehaviorEvent;
 
 	/**
@@ -51,7 +52,7 @@ package temple.ui.behaviors
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class DragBehaviorEvent extends AbstractBehaviorEvent 
+	public class DragBehaviorEvent extends AbstractBehaviorEvent
 	{
 		/**
 		 * Dispatched while dragging
@@ -72,10 +73,20 @@ package temple.ui.behaviors
 		 * Creates a new DragBehaviorEvent
 		 * @param type the type of the DragBehaviorEvent
 		 * @param behavior the DragBehavior
+		 * @param bubbles indicates if the event should bubble
 		 */
-		public function DragBehaviorEvent(type:String, behavior:DragBehavior) 
+		public function DragBehaviorEvent(type:String, behavior:DragBehavior, bubbles:Boolean = false) 
 		{
-			super(type, behavior);
+			super(type, behavior, bubbles);
 		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function clone():Event
+		{
+			return new DragBehaviorEvent(this.type, this.behavior as DragBehavior, this.bubbles);
+		}
+
 	}
 }

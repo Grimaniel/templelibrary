@@ -58,6 +58,8 @@ package temple.ui.buttons.behaviors
 	 * The ButtonBinder binds two (or more) DisplayObjects together to pass their MouseEvents to eachother. 
 	 * With the ButtonBinder you can set a TextField as a hitarea for a CheckBox or set a hitarea for a button which is not a child of the button.
 	 * 
+	 * @includeExample ButtonBinderExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ButtonBinder extends CoreObject 

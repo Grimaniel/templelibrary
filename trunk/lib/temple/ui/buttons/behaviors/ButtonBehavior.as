@@ -341,7 +341,14 @@ package temple.ui.buttons.behaviors
 			if (this.over)
 			{
 				super.over = false;
-				this._outDelayTimer.start();
+				if (this._outDelayTimer.delay > 0)
+				{
+					this._outDelayTimer.start();
+				}
+				else
+				{
+					this.onOutDelay();
+				}
 			}
 		}
 
@@ -373,6 +380,11 @@ package temple.ui.buttons.behaviors
 		}
 		
 		private function handleOutDelay(event:TimerEvent):void
+		{
+			this.onOutDelay();
+		}
+		
+		private function onOutDelay():void
 		{
 			this.resetTimers();
 			

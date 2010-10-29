@@ -42,13 +42,12 @@
 
 package temple.ui.buttons 
 {
-	import temple.ui.buttons.behaviors.INestableButton;
 	import temple.debug.IDebuggable;
 	import temple.ui.IEnableable;
-	import temple.ui.buttons.BaseButton;
 	import temple.ui.buttons.behaviors.ButtonBehavior;
 	import temple.ui.buttons.behaviors.ButtonStateBehavior;
 	import temple.ui.buttons.behaviors.ButtonTimelineBehavior;
+	import temple.ui.buttons.behaviors.INestableButton;
 	import temple.ui.focus.FocusManager;
 	import temple.ui.focus.IFocusable;
 
@@ -85,10 +84,10 @@ package temple.ui.buttons
 			this.stop();
 			
 			this._buttonBehavior = new ButtonBehavior(this);
-			if(this.totalFrames > 1) this._timelineBehavior = new ButtonTimelineBehavior(this);
+			if (this.totalFrames > 1) this._timelineBehavior = new ButtonTimelineBehavior(this);
 			this._stateBehavior = new ButtonStateBehavior(this);
 		}
-		
+
 		/**
 		 * Returns a reference to the ButtonBehavior.
 		 */
@@ -190,7 +189,7 @@ package temple.ui.buttons
 		[Inspectable(name="Play Backwards Before Over", type="Boolean", defaultValue="true")]
 		public function set playBackwardsBeforeOver(value:Boolean):void
 		{
-			if(this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeOver = value;
+			if (this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeOver = value;
 		}
 		
 		/**
@@ -208,7 +207,7 @@ package temple.ui.buttons
 		[Inspectable(name="Play Backwards Before Down", type="Boolean", defaultValue="true")]
 		public function set playBackwardsBeforeDown(value:Boolean):void
 		{
-			if(this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeDown = value;
+			if (this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeDown = value;
 		}
 
 		/**
@@ -226,7 +225,7 @@ package temple.ui.buttons
 		[Inspectable(name="Play Backwards Before Selected", type="Boolean", defaultValue="true")]
 		public function set playBackwardsBeforeSelected(value:Boolean):void
 		{
-			if(this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeSelected = value;
+			if (this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeSelected = value;
 		}
 
 		/**
@@ -244,9 +243,25 @@ package temple.ui.buttons
 		[Inspectable(name="Play Backwards Before Disabled", type="Boolean", defaultValue="true")]
 		public function set playBackwardsBeforeDisabled(value:Boolean):void
 		{
-			if(this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeSelected = value;
+			if (this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeSelected = value;
 		}
-		
+
+		/**
+		 * Play the intro timeline animation of the button (if the button has one).
+		 */
+		public function playIntro():void 
+		{
+			if (this._timelineBehavior) this._timelineBehavior.playIntro();
+		}
+
+		/**
+		 * Play the outro timeline animation of the button (if the button has one).
+		 */
+		public function playOutro():void 
+		{
+			if (this._timelineBehavior) this._timelineBehavior.playOutro();
+		}
+
 		/**
 		 * @inheritDoc
 		 */

@@ -153,5 +153,15 @@ package temple.ui.buttons.behaviors
 		 * <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
 		 */
 		public static const BLUR:String = 'blur';
+		
+		/**
+		 * Intro animation for the button.
+		 */
+		public static const INTRO:String = 'intro';
+
+		/**
+		 * Outro animation for the button.
+		 */
+		public static const OUTRO:String = 'outro';
 	}
 }

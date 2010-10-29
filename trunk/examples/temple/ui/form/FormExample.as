@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="Form"></a>
  * <h1>Form</h1>
  * 
  * <p>This is an example of the Form. In this case we have a form for submitting personal data. 

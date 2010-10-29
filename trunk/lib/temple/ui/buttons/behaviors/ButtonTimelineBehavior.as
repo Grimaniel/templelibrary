@@ -108,14 +108,21 @@ package temple.ui.buttons.behaviors
 		{
 			super(target);
 			
-			if(ButtonTimelineBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has ButtonTimelineBehavior"));
+			if (ButtonTimelineBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has ButtonTimelineBehavior"));
 			
 			ButtonTimelineBehavior._dictionary[target] = this;
 			
 			this.debug = debug;
 			target.stop();
 			this.initLabels();
-			this.upState();
+			if (this._labels[ButtonTimelineLabels.INTRO])
+			{
+				this.preIntroState();
+			}
+			else
+			{
+				this.upState();
+			}
 		}
 		
 		/**
@@ -200,7 +207,6 @@ package temple.ui.buttons.behaviors
 						}
 						case ButtonTimelineLabels.SELECT:
 						case ButtonTimelineLabels.SELECTED:
-//						case ButtonTimelineLabels.DESELECT:
 						{
 							this.animateTo(ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, ButtonTimelineLabels.OVER, ButtonTimelineLabels.SELECT, this._playBackwardsBeforeSelected);
 							break;
@@ -373,7 +379,43 @@ package temple.ui.buttons.behaviors
 		{
 			this._playBackwardsBeforeSelected = value;
 		}
-		
+
+		/**
+		 * Play the intro animation (if available).
+		 */
+		public function playIntro():void 
+		{
+			if (this.debug) this.logDebug("playIntro: ");
+			
+			if (this._labels[ButtonTimelineLabels.INTRO] && this._currentLabel == null)
+			{
+				this.preIntroState();
+				this._currentLabel = ButtonTimelineLabels.INTRO;
+				this.gotoFrame(FrameLabelData(this._labels[ButtonTimelineLabels.INTRO]).endframe);
+			}
+			else
+			{
+				this.logError("playIntro: no intro found");
+			}
+		}
+
+		/**
+		 * Play the outro animation (if available).
+		 */
+		public function playOutro():void 
+		{
+			if (this.debug) this.logDebug("playOutro: " + this._currentLabel);
+			
+			// if we have an 'intro' frame stop at the beginning of the intro frame and disable the button
+			if (this._labels[ButtonTimelineLabels.OUTRO] && this._currentLabel != null)
+			{
+				this.disable();
+				this._currentLabel = ButtonTimelineLabels.OUTRO;
+				this.movieClip.gotoAndStop(ButtonTimelineLabels.OUTRO);
+				this.gotoFrame(FrameLabelData(this._labels[ButtonTimelineLabels.OUTRO]).endframe);
+			}
+		}
+
 		/**
 		 * Returns the HashMap with all labels. Useful for debugging.
 		 */
@@ -392,7 +434,7 @@ package temple.ui.buttons.behaviors
 		
 		private function animateTo(start:String, enter:String, goal:String, exit:String, backwardsBeforeGoal:Boolean):void
 		{
-			if (this.debug) this.logDebug("animateTo: start='" + start + "', enter='" + enter + "', goal='" + goal + "', exit='" + exit + "', backwardsBeforeGoal=" + backwardsBeforeGoal);
+			if (this.debug) this.logDebug("animateTo: start='" + start + "', enter='" + enter + "', goal='" + goal + "', exit='" + exit + "', backwardsBeforeGoal=" + backwardsBeforeGoal + ", currentFrame=" + this.movieClip.currentFrame + ", currentLabel='" + this._currentLabel + "'");
 			
 			if(!this._labels[goal])
 			{
@@ -501,7 +543,6 @@ package temple.ui.buttons.behaviors
 			this.movieClip.gotoAndStop(FrameLabelData(this._labels[ButtonTimelineLabels.UP]).startframe);
 			RenderUtils.update();
 		}
-		
 
 		private function overState():void
 		{
@@ -532,7 +573,20 @@ package temple.ui.buttons.behaviors
 			if(this.debug) this.logDebug("focusState");
 			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.FOCUS, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.BLUR, this._playBackwardsBeforeOver);
 		}
-		
+
+		private function preIntroState():void 
+		{
+			if (this.debug) this.logDebug("preIntroState: ");
+			
+			// if we have an 'intro' frame stop at the beginning of the intro frame and disable the button
+			if (this._labels[ButtonTimelineLabels.INTRO])
+			{
+				this.disable();
+				this._currentLabel = null;
+				this.movieClip.gotoAndStop(ButtonTimelineLabels.INTRO);
+			}
+		}
+
 		private function initLabels():void
 		{
 			this._labels = new HashMap("ButtonTimelineBehavior labels");
@@ -569,6 +623,8 @@ package temple.ui.buttons.behaviors
 						case ButtonTimelineLabels.ENABLE:
 						case ButtonTimelineLabels.FOCUS:
 						case ButtonTimelineLabels.BLUR:
+						case ButtonTimelineLabels.INTRO:
+						case ButtonTimelineLabels.OUTRO:
 						{
 							j = 0;
 							do
@@ -718,10 +774,22 @@ package temple.ui.buttons.behaviors
 					this._currentLabel = this.over ? ButtonTimelineLabels.OVER : ButtonTimelineLabels.UP;
 					break;
 				}
+				case ButtonTimelineLabels.INTRO:
+				{
+					this.enable();
+					this._currentLabel = ButtonTimelineLabels.UP;
+					break;
+				}
+				case ButtonTimelineLabels.OUTRO:
+				{
+					this._currentLabel = null;
+					// break
+				}
 			}
 			this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-			this.movieClip.gotoAndStop(FrameLabelData(this._labels[this._currentLabel]).startframe);
 			
+			if (this._currentLabel) this.movieClip.gotoAndStop(FrameLabelData(this._labels[this._currentLabel]).startframe);
+				
 			this.update(this);
 			
 			this.dispatchEvent(new Event(Event.COMPLETE));
