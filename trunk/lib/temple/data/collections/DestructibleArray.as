@@ -58,6 +58,7 @@ package temple.data.collections
 	dynamic public class DestructibleArray extends Array implements ICoreObject 
 	{
 		private var _registryId:uint;
+		private var _isDestructed:Boolean;
 		
 		public function DestructibleArray()
 		{
@@ -78,7 +79,7 @@ package temple.data.collections
 		 */
 		public function get isDestructed():Boolean
 		{
-			return this.length == 0;
+			return this.length == 0 && this._isDestructed;
 		}
 		
 		/**
@@ -87,6 +88,7 @@ package temple.data.collections
 		public function destruct():void
 		{
 			while (this.length) Destructor.destruct(this.shift());
+			this._isDestructed = true;
 		}
 	}
 }

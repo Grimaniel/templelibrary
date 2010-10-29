@@ -295,22 +295,22 @@ package temple.ui.buttons.behaviors
 			
 			switch(true)
 			{
-				case this.selected:
+				case (this.selected && !!this._selectedVars):
 				{
 					this.selectedState();
 					break;
 				}
-				case this.disabled:
+				case (this.disabled && !!this._disabledVars):
 				{
 					this.disabledState();
 					break;
 				}
-				case this.down:
+				case (this.down && !!this._downVars):
 				{
 					this.downState();
 					break;
 				}
-				case this.over:
+				case (this.over && !!this._overVars):
 				{
 					this.overState();
 					break;

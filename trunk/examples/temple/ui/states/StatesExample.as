@@ -4,7 +4,7 @@
  * <a name="States"></a>
  * <h1>States</h1>
  * 
- * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/states/package-detail.html">states</a>.</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/states/package-detail.html">states</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/states/StatesExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/states/StatesExample.swf</a></p>
  * 
@@ -12,20 +12,22 @@
  */
 package  
 {
-	import temple.ui.states.select.SelectState;
-	import temple.core.CoreSprite;
 	import temple.ui.buttons.SwitchButton;
 	import temple.ui.states.down.DownState;
 	import temple.ui.states.focus.FocusFadeState;
 	import temple.ui.states.over.OverFadeState;
+	import temple.ui.states.select.SelectState;
 
 	import flash.filters.BevelFilter;
 	import flash.filters.GlowFilter;
 
-	public class StatesExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class StatesExample extends DocumentClassExample 
 	{
 		public function StatesExample()
 		{
+			super("Temple - StatesExample");
+			
 			// create a button
 			var button:SwitchButton = new SwitchButton();
 			this.addChild(button);

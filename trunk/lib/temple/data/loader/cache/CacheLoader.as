@@ -42,6 +42,8 @@
 
 package temple.data.loader.cache 
 {
+	import temple.data.loader.preload.IPreloader;
+
 	import flash.events.HTTPStatusEvent;
 	import temple.core.CoreLoader;
 	import temple.debug.DebugManager;
@@ -85,7 +87,7 @@ package temple.data.loader.cache
 			this._cacheURLLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.dispatchEvent);
 			
 			this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
-			
+						
 			DebugManager.addAsChild(this._cacheURLLoader, this);
 			
 			this.cache = cache;
@@ -128,6 +130,7 @@ package temple.data.loader.cache
 			if (this.cache)
 			{
 				if (this.debug) this.logDebug("load: cache enabled ");
+				this.unload();
 				this._cacheURLLoader.load(request);
 			}
 			else
@@ -144,6 +147,22 @@ package temple.data.loader.cache
 		{
 			this._cacheURLLoader.close();
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get preloader():IPreloader
+		{
+			return this._cacheURLLoader.preloader;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function set preloader(value:IPreloader):void
+		{
+			this._cacheURLLoader.preloader = value;
+		}
 
 		private function handleURLLoaderComplete(event:Event):void
 		{
@@ -154,12 +173,12 @@ package temple.data.loader.cache
 		{
 			if (this.cache)
 			{
-				this.logWarn("handleSecurityError: switch off cache and try to reload");
+				this.logWarn("SecurityError: Cache is switched off. Reload...");
 				this.cache = false;
 				this.load(new URLRequest(this.url));
 			}
 		}
-		
+
 		/**
 		 * @inheritDoc
 		 */

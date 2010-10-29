@@ -239,8 +239,7 @@ package temple.core
 				this.logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
 				return;
 			}
-			
-			if (this._debug) this.logDebug("temple.core.CoreLoader::loadBytes(bytes, context = " + ['[bytes]', context] + ")");
+			if (this._debug) this.logDebug("loadBytes, context:" + context);
 			
 			this._isLoading = true;
 			super.loadBytes(bytes, context);
@@ -617,7 +616,7 @@ package temple.core
 
 		temple final function handleLoadProgress(event:ProgressEvent):void
 		{
-			if (this.debug) this.logDebug("handleLoadProgress");
+			if (this.debug) this.logDebug("handleLoadProgress: " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
 			
 			if (this._preloadableBehavior) this._preloadableBehavior.onLoadProgress();
 			this.dispatchEvent(event.clone());

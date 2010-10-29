@@ -37,9 +37,22 @@
 		</table>
 		<div class="MainContent"><div class='example' >
 
+<h1>Document class</h1>
+
+<p>This is an example of a document class with the Temple.
+This class configures some Temple settings, connects to Yalog (for debug messages) and handles Google Analytics tracking (which is not part of the Temple of course).</p>
+
+<p>You can use this class as template for your document class. This class is used as base class for all Temple examples.
+Since this class makes use of Google Analytics tracking, 'analytics.swc' must be added to the classpath to get it working.</p>
+
+<p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/templates/DocumentClassExample.as" target="_blank">Download source</a></p>
+<hr/></div>
+
+<div class='example' >
+
 <h1>CacheLoader</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/loader/cache/CacheLoader.html">CacheLoader</a>. The CacheLoader stores the data (as ByteArray) in the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/loader/cache/LoaderCache.html">LoaderCache</a> with the url as key. The next time a CacheLoader needs to load the same url it gets the data directly from the LoaderCache.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/loader/cache/CacheLoader.html">CacheLoader</a>. The CacheLoader stores the data (as ByteArray) in the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/loader/cache/LoaderCache.html">LoaderCache</a> with the url as key. The next time a CacheLoader needs to load the same url it gets the data directly from the LoaderCache.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/loader/cache/CacheLoaderExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/loader/cache/CacheLoaderExample.swf</a></p>
 
@@ -49,7 +62,7 @@
 
 <h1>URLManager</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/url/URLManager.html">URLManager</a>. The URLManager is used to manage the URL's of a project in an XML file. With this XML file you can easily switch between different groups groups of URL's (for different environments).</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/url/URLManager.html">URLManager</a>. The URLManager is used to manage the URL's of a project in an XML file. With this XML file you can easily switch between different groups groups of URL's (for different environments).</p>
 
 <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
 
@@ -61,7 +74,7 @@
 
 <h1>XMLManager</h1>
 
-<p>This is an example about how to use the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/xml/XMLManager.html">XMLManager</a>. The XMLManager is used for easily loading and parsing XML files to typed objects.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/xml/XMLManager.html">XMLManager</a>. The XMLManager is used for easily loading and parsing XML files to typed objects.</p>
 
 <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
 
@@ -73,7 +86,7 @@
 
 <h1>Log</h1>
 
-<p>This is an example about how to use <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/debug/log/Log.html">Log</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/debug/log/Log.html">Log</a>.</p>
 
 <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
 
@@ -85,7 +98,7 @@
 
 <h1>VideoPlayer</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/media/video/players/VideoPlayer.html">VideoPlayer</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/media/video/players/VideoPlayer.html">VideoPlayer</a>.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/media/video/players/VideoPlayerExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/media/video/players/VideoPlayerExample.swf</a></p>
 
@@ -96,7 +109,7 @@
 <a name="FrameStableMovieClip-FrameRateKiller"></a>
 <h1>FrameStableMovieClip &amp; FrameRateKiller</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/animation/FrameStableMovieClip.html">FrameStableMovieClip</a> and <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/FrameRateKiller.html">FrameRateKiller</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/animation/FrameStableMovieClip.html">FrameStableMovieClip</a> and <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/FrameRateKiller.html">FrameRateKiller</a>.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/animation/FrameStableMovieClipExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/animation/FrameStableMovieClipExample.swf</a></p>
 
@@ -114,7 +127,7 @@ The frame rate is throttled using the FrameRateKiller. You can change the fps in
 <a name="BoundsBehavior"></a>
 <h1>BoundsBehavior</h1>
 
-<p>This is an example about how the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/BoundsBehavior.html">BoundsBehavior</a> works.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/BoundsBehavior.html">BoundsBehavior</a> works.</p>
  
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.swf</a></p>
 
@@ -127,7 +140,7 @@ The frame rate is throttled using the FrameRateKiller. You can change the fps in
 <a name="DragBehavior"></a>
 <h1>DragBehavior</h1>
 
-<p>This is an example about how to implement the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/DragBehavior.html">DragBehavior</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/DragBehavior.html">DragBehavior</a>.</p>
  
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/DragBehaviorExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/DragBehaviorExample.swf</a></p>
 
@@ -137,7 +150,7 @@ The frame rate is throttled using the FrameRateKiller. You can change the fps in
 
 <h1>MultiStateButton</h1>
 
-<p>This is an example about how to use frame labels in a <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/MultiStateButton.html">MultiStateButton</a>.</p>
+<p>This is an example about the usage of frame labels in a <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/MultiStateButton.html">MultiStateButton</a>.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf</a></p>
 
@@ -149,7 +162,7 @@ The frame rate is throttled using the FrameRateKiller. You can change the fps in
 
 <h1>TweenButton</h1>
 
-<p>This is an example about how the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/TweenButton.html">TweenButton</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/TweenButton.html">TweenButton</a>.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf</a></p>
 
@@ -159,7 +172,7 @@ The frame rate is throttled using the FrameRateKiller. You can change the fps in
 
 <h1>ClickRepeater</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/behaviors/ClickRepeater.html">ClickRepeater</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/behaviors/ClickRepeater.html">ClickRepeater</a>.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/ClickRepeaterExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/ClickRepeaterExample.swf</a></p>
 
@@ -179,7 +192,7 @@ The frame rate is throttled using the FrameRateKiller. You can change the fps in
 
 <h1>Form</h1>
 
-<p>This is an example about the Form. In this case we have a form for submitting personal data. 
+<p>This is an example of the Form. In this case we have a form for submitting personal data. 
 When the form is submitted the data is stored in a PersonData object.</p>
 
 <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
@@ -192,9 +205,10 @@ When the form is submitted the data is stored in a PersonData object.</p>
 <hr/></div>
 <div class='example' >
 
+<a name="Liquid"></a>
 <h1>Liquid</h1>
 
-<p>This is an example about Liquid. Resize the browser (or FlashPlayer) to see how all objects will be scaled and positioned.</p>
+<p>This is an example of Liquid. Resize the browser or FlashPlayer to see how all objects will be scaled and positioned.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/layout/liquid/LiquidExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/layout/liquid/LiquidExample.swf</a></p>
 
@@ -204,7 +218,7 @@ When the form is submitted the data is stored in a PersonData object.</p>
 
 <h1>Slider</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/slider/Slider.html">Slider</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/slider/Slider.html">Slider</a>.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/SliderExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/SliderExample.swf</a></p>
 
@@ -214,7 +228,7 @@ When the form is submitted the data is stored in a PersonData object.</p>
 
 <h1>StepSlider</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/slider/StepSlider.html">StepSlider</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/slider/StepSlider.html">StepSlider</a>.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/StepSliderExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/StepSliderExample.swf</a></p>
 
@@ -225,11 +239,11 @@ When the form is submitted the data is stored in a PersonData object.</p>
 <a name="States"></a>
 <h1>States</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/states/<div class='example' >
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/states/<div class='example' >
 
 <h1>Delegate</h1>
 
-<p>This is an example about how to use the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/Delegate.html">Delegate</a> class.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/Delegate.html">Delegate</a> class.</p>
 
 <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
  
@@ -241,7 +255,7 @@ When the form is submitted the data is stored in a PersonData object.</p>
 
 <h1>KeyMapper</h1>
 
-<p>This is an example about how to use the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/keys/KeyMapper.html">KeyMapper</a>.</p>
+<p>This is an example of how to use the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/keys/KeyMapper.html">KeyMapper</a>.</p>
  
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/keys/KeyMapperExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/keys/KeyMapperExample.swf</a></p>
 
@@ -251,7 +265,7 @@ When the form is submitted the data is stored in a PersonData object.</p>
 
 <h1>FunctionUtils</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/FunctionUtils.html">FunctionUtils</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/FunctionUtils.html">FunctionUtils</a>.</p>
 
 <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
 
@@ -263,7 +277,7 @@ When the form is submitted the data is stored in a PersonData object.</p>
 
 <h1>TimeUtils</h1>
 
-<p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/TimeUtils.html">TimeUtils</a>.</p>
+<p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/TimeUtils.html">TimeUtils</a>.</p>
 
 <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.swf</a></p>
 

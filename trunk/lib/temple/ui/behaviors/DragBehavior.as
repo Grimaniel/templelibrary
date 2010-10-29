@@ -42,6 +42,7 @@
 
 package temple.ui.behaviors 
 {
+	import temple.utils.propertyproxy.IPropertyProxy;
 	import temple.ui.IEnableable;
 
 	import flash.display.DisplayObject;
@@ -103,19 +104,21 @@ package temple.ui.behaviors
 	 */
 	public class DragBehavior extends BoundsBehavior implements IEnableable
 	{
-		protected var _dragButton:DisplayObject;
 		protected var _startDragObjectPoint:Point;
 		protected var _startDragMousePoint:Point;
-		protected var _isDragging:Boolean;
-		protected var _enabled:Boolean;
-		protected var _dragVertical:Boolean = true;
-		protected var _dragHorizontal:Boolean = true;
+		
+		private var _dragButton:DisplayObject;
+		private var _isDragging:Boolean;
+		private var _enabled:Boolean;
+		private var _dragVertical:Boolean = true;
+		private var _dragHorizontal:Boolean = true;
+		private var _positionProxy:IPropertyProxy;
 
 		/**
 		 * Create the possibility to drag an object
 		 * @param target: The InteractiveObject to be dragged
 		 * @param bounds (optional): limits the dragging
-		 * @param dragButton (optional): a InteractiveObject that does the dragging, if there is no dragButton, the dragObject does the dragging
+		 * @param dragButton (optional): an InteractiveObject that does the dragging, if there is no dragButton, the dragObject does the dragging
 		 */
 		public function DragBehavior(target:InteractiveObject, bounds:Rectangle = null, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true) 
 		{
@@ -137,6 +140,14 @@ package temple.ui.behaviors
 			this.addEventListener(DragBehaviorEvent.DRAG_START, target.dispatchEvent);
 			this.addEventListener(DragBehaviorEvent.DRAG_STOP, target.dispatchEvent);
 			this.addEventListener(DragBehaviorEvent.DRAGGING, target.dispatchEvent);
+		}
+		
+		/**
+		 * An InteractiveObject that does the dragging, if there is no dragButton, the dragObject does the dragging
+		 */
+		public function get dragButton():DisplayObject
+		{
+			return this._dragButton;
 		}
 
 		/**
@@ -219,6 +230,22 @@ package temple.ui.behaviors
 			this._dragVertical = value;
 		}
 		
+		/**
+		 * Optional IPropertyProxy for setting the position of the target. Useful if you want to animate the target to it's new position.
+		 */
+		public function get positionProxy():IPropertyProxy
+		{
+			return this._positionProxy;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set positionProxy(value:IPropertyProxy):void
+		{
+			this._positionProxy = value;
+		}
+		
 		protected function handleMouseDown(event:MouseEvent):void 
 		{
 			this._isDragging = true;
@@ -237,14 +264,28 @@ package temple.ui.behaviors
 		{
 			if(this._dragHorizontal)
 			{
-				this.displayObject.x = this._startDragObjectPoint.x + this.displayObject.parent.mouseX - this._startDragMousePoint.x;
+				if (this._positionProxy)
+				{
+					this._positionProxy.setValue(this.displayObject, "x", this._startDragObjectPoint.x + this.displayObject.parent.mouseX - this._startDragMousePoint.x);
+				}
+				else
+				{
+					this.displayObject.x = this._startDragObjectPoint.x + this.displayObject.parent.mouseX - this._startDragMousePoint.x;
+				}
+				
 			}
 			
 			if(this.dragVertical)
 			{
-				this.displayObject.y = this._startDragObjectPoint.y + this.displayObject.parent.mouseY - this._startDragMousePoint.y;
+				if (this._positionProxy)
+				{
+					this._positionProxy.setValue(this.displayObject, "y", this._startDragObjectPoint.y + this.displayObject.parent.mouseY - this._startDragMousePoint.y);
+				}
+				else
+				{
+					this.displayObject.y = this._startDragObjectPoint.y + this.displayObject.parent.mouseY - this._startDragMousePoint.y;
+				}
 			}
-			
 			this.keepInBounds();
 			
 			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));

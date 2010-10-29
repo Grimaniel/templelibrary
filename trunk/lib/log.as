@@ -52,7 +52,7 @@ package
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 0, level:String = "info"):void 
+	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 0, traceDuplicates:Boolean = false, level:String = "info"):void 
 	{
 		if (object == "__UNLOGGABLE_STRING__")
 		{
@@ -68,7 +68,7 @@ package
 		}
 		else
 		{
-			message += ": " + ObjectUtils.traceObject(object, maxDepth, false);
+			message += ": " + ObjectUtils.traceObject(object, maxDepth, false, traceDuplicates);
 		}
 		
 		switch (level)

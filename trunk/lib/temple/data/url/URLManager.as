@@ -286,7 +286,7 @@
 		 */
 		public static function getInstance():URLManager 
 		{
-			if(URLManager._instance == null) URLManager._instance = new URLManager();
+			if (URLManager._instance == null) URLManager._instance = new URLManager();
 			
 			return URLManager._instance;
 		}
@@ -340,21 +340,21 @@
 
 		private function loadURLs(url:String, group:String):void 
 		{
-			if(this._loaded) throwError(new TempleError(this, "Data is already loaded"));
-			if(this._loading) throwError(new TempleError(this, "Data is already loading"));
+			if (this._loaded) throwError(new TempleError(this, "Data is already loaded"));
+			if (this._loading) throwError(new TempleError(this, "Data is already loading"));
 			
 			this._loading = true;
-			if(group) this._group = group;
+			if (group) this._group = group;
 			this.load(new URLData(URLManager._URLS, url));
 		}
 		
 		private function parseXML(xml:XML, group:String):void
 		{
-			if(this._loaded) throwError(new TempleError(this, "Data is already loaded"));
-			if(this._loading) throwError(new TempleError(this, "Data is already loading"));
+			if (this._loaded) throwError(new TempleError(this, "Data is already loaded"));
+			if (this._loading) throwError(new TempleError(this, "Data is already loading"));
 			
 			this._loaded = true;
-			if(group) this._group = group;
+			if (group) this._group = group;
 			this.processData(xml, URLManager._URLS);
 		}
 
@@ -362,7 +362,7 @@
 		{
 			if (name == null) throwError(new TempleArgumentError(this, "name can not be null"));
 			
-			if(!this._loaded)
+			if (!this._loaded)
 			{
 				this.logError("getURLDataByName: URLs are not loaded yet");
 				return null;
@@ -384,7 +384,7 @@
 		{
 			if (name == null) throwError(new TempleArgumentError(this, "name can not be null"));
 			
-			if(!this._loaded)
+			if (!this._loaded)
 			{
 				this.logError("getURLByName: URLs are not loaded yet");
 				return null;
@@ -470,14 +470,14 @@
 		
 		private function processXml():void
 		{
-			if(this._group)
+			if (this._group)
 			{
-				if (this._debug) this.logInfo("processData: group is set to '" + this._group + "'");
+				if (this.debug) this.logInfo("processData: group is set to '" + this._group + "'");
 			}
 			else
 			{
 				this._group = this._rawData.@currentgroup; 
-				if (this._debug) this.logInfo("processData: group is '" + this._group + "'");
+				if (this.debug) this.logInfo("processData: group is '" + this._group + "'");
 			}
 			
 			this._groups = this._group.split(',');
@@ -510,7 +510,7 @@
 			}
 			
 			// parse vars in vars
-			if(ObjectUtils.hasValues(this._variables))
+			if (ObjectUtils.hasValues(this._variables))
 			{
 				do
 				{
@@ -528,7 +528,7 @@
 				while (changed);
 			}
 			
-			if(this._debug)
+			if (this.debug)
 			{
 				var s:String = "";
 				for (key in this._variables)
@@ -564,7 +564,7 @@
 			
 			var ud:URLData;
 			
-			if(this._debug)
+			if (this.debug)
 			{
 				s = "";
 				for each (ud in this._urls)
@@ -576,7 +576,7 @@
 			}
 			
 			// replace vars in urls
-			if(ObjectUtils.hasValues(this._variables))
+			if (ObjectUtils.hasValues(this._variables))
 			{
 				for each (ud in this._urls)
 				{
@@ -587,7 +587,7 @@
 				}
 			}
 			
-			if(this._debug)
+			if (this.debug)
 			{
 				s = "";
 				for each (ud in this._urls)

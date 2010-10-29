@@ -3,7 +3,7 @@
  * 
  * <h1>Log</h1>
  * 
- * <p>This is an example about how to use <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/debug/log/Log.html">Log</a>.</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/debug/log/Log.html">Log</a>.</p>
  * 
  * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
  * 
@@ -14,15 +14,14 @@
 package  
 {
 	import temple.debug.log.Log;
-	import nl.acidcats.yalog.util.YaLogConnector;
-	import temple.core.CoreSprite;
 
-	public class LogExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class LogExample extends DocumentClassExample 
 	{
 		public function LogExample()
 		{
-			// Connect to Yalog, so we can see the output of the log in Yalala: http://yalala.tyz.nl/
-			YaLogConnector.connect("Temple - LogExample");
+			// The super class connects to Yalog, so we can see the output of the log in Yalala: http://yalala.tyz.nl/
+			super("Temple - LogExample");
 			
 			// log an info message
 			Log.info("This is an info message", this);

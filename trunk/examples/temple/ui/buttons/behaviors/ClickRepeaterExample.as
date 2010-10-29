@@ -3,7 +3,7 @@
  * 
  * <h1>ClickRepeater</h1>
  * 
- * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/behaviors/ClickRepeater.html">ClickRepeater</a>.</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/behaviors/ClickRepeater.html">ClickRepeater</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/ClickRepeaterExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/behaviors/ClickRepeaterExample.swf</a></p>
  * 
@@ -11,26 +11,20 @@
  */
 package  
 {
-	import nl.acidcats.yalog.util.YaLogConnector;
-
-	import temple.core.CoreSprite;
 	import temple.ui.buttons.BaseButton;
 	import temple.ui.buttons.behaviors.ClickRepeater;
-	import temple.utils.StageSettings;
 
 	import flash.events.MouseEvent;
 
-	public class ClickRepeaterExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class ClickRepeaterExample extends DocumentClassExample 
 	{
 		private var _button:BaseButton;
 
 		public function ClickRepeaterExample()
 		{
-			// Connect to Yalog, so you can see all log message at: http://yalala.tyz.nl/
-			YaLogConnector.connect("Temple - ClickRepeaterExample");
-			
-			// set stage properties
-			new StageSettings(this);
+			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
+			super("Temple - ClickRepeaterExample");
 			
 			// Create a new BaseButton, give it rectangle a so we can see something
 			this._button = new BaseButton();

@@ -3,7 +3,7 @@
  * 
  * <h1>Slider</h1>
  * 
- * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/slider/Slider.html">Slider</a>.</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/slider/Slider.html">Slider</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/SliderExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/slider/SliderExample.swf</a></p>
  * 
@@ -11,22 +11,21 @@
  */
 package  
 {
-	import flash.text.TextFieldAutoSize;
-	import temple.ui.slider.SliderEvent;
 	import temple.ui.slider.Slider;
-	import temple.core.CoreSprite;
-	import temple.utils.StageSettings;
+	import temple.ui.slider.SliderEvent;
 
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 
-	public class SliderExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class SliderExample extends DocumentClassExample 
 	{
 		private var _textField:TextField;
 		private var _slider:Slider;
 
 		public function SliderExample()
 		{
-			new StageSettings(this);
+			super("Temple - SliderExample");
 			
 			var track:Track = new Track();
 			this.addChild(track);

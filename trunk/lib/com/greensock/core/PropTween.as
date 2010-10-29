@@ -4,20 +4,17 @@
  * ACTIONSCRIPT VERSION: 3.0 (AS2 version is also available)
  * UPDATES AND DOCUMENTATION AT: http://www.TweenLite.com
  **/
-package com.greensock.core 
-{
-
-	/**
-	 * @private
-	 * 
-	 * Stores information about an individual property tween. There is no reason to use this class directly - TweenLite, TweenMax, and some plugins use it internally.<br /><br />
-	 * 
-	 * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
-	 * 
-	 * @author Jack Doyle, jack@greensock.com
-	 */	
-	public class PropTween 
-	{
+package com.greensock.core {
+/**
+ * @private
+ * 
+ * Stores information about an individual property tween. There is no reason to use this class directly - TweenLite, TweenMax, and some plugins use it internally.<br /><br />
+ * 
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * 
+ * @author Jack Doyle, jack@greensock.com
+ */	
+	public class PropTween {
 		/** Target object **/
 		public var target:Object;
 		/** Name of the property that is being tweened **/
@@ -36,7 +33,7 @@ package com.greensock.core
 		public var nextNode:PropTween;
 		/** Previous PropTween in the linked list **/
 		public var prevNode:PropTween;
-
+		
 		/**
 		 * Constructor
 		 * 
@@ -49,16 +46,14 @@ package com.greensock.core
 		 * @param nextNode Next PropTween in the linked list
 		 * @param priority Priority in the rendering queue. The lower the value the later it will be tweened. Typically all PropTweens get a priority of 0, but some plugins must be rendered later (or earlier)
 		 */
-		public function PropTween(target:Object, property:String, start:Number, change:Number, name:String, isPlugin:Boolean, nextNode:PropTween = null, priority:int = 0) 
-		{
+		public function PropTween(target:Object, property:String, start:Number, change:Number, name:String, isPlugin:Boolean, nextNode:PropTween=null, priority:int=0) {
 			this.target = target;
 			this.property = property;
 			this.start = start;
 			this.change = change;
 			this.name = name;
 			this.isPlugin = isPlugin;
-			if (nextNode) 
-			{
+			if (nextNode) {
 				nextNode.prevNode = this;
 				this.nextNode = nextNode;
 			}

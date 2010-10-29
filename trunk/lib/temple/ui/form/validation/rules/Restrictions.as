@@ -49,14 +49,14 @@ package temple.ui.form.validation.rules
 	public class Restrictions 
 	{
 
-		public static const NUMMERIC:String = "0-9";
+		public static const NUMERIC:String = "0-9";
 		public static const DASH:String = "\\-";
-		public static const INTEGERS:String = Restrictions.NUMMERIC + Restrictions.DASH;
+		public static const INTEGERS:String = Restrictions.NUMERIC + Restrictions.DASH;
 		public static const NUMBERS:String = Restrictions.INTEGERS + ".";
 		public static const LOWERCASE:String = "a-z";
 		public static const UPPERCASE:String = "A-Z";
 		public static const ALPHABETIC:String = Restrictions.LOWERCASE + Restrictions.UPPERCASE;
-		public static const ALPHANUMERIC:String = Restrictions.ALPHABETIC + Restrictions.NUMMERIC;
+		public static const ALPHANUMERIC:String = Restrictions.ALPHABETIC + Restrictions.NUMERIC;
 		public static const SPACE:String = " ";
 		public static const BACK_SLASH:String = "\\\\";
 		public static const FORWARD_SLASH:String = "/";
@@ -67,7 +67,7 @@ package temple.ui.form.validation.rules
 		public static const NO_SPECIAL_CHARS:String = "^#$\^|;\<>{}[]";
 		
 		public static const EMAIL:String = Restrictions.INTEGERS + Restrictions.ALPHABETIC + Restrictions.SPACE + Restrictions.DASH + "@._";
-		public static const DUTCH_POSTALCODE:String = Restrictions.NUMMERIC + Restrictions.UPPERCASE;
-		public static const DATE:String = Restrictions.NUMMERIC + Restrictions.SPACE + Restrictions.DASH + Restrictions.BACK_SLASH + Restrictions.FORWARD_SLASH;
+		public static const DUTCH_POSTALCODE:String = Restrictions.NUMERIC + Restrictions.UPPERCASE;
+		public static const DATE:String = Restrictions.NUMERIC + Restrictions.SPACE + Restrictions.DASH + Restrictions.BACK_SLASH + Restrictions.FORWARD_SLASH;
 	}
 }

@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - version 2.7.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/buttons/behaviors/ButtonTweenBehavior.html&amp;temple/ui/buttons/behaviors/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ButtonTweenBehavior</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - version 2.7.1</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/buttons/behaviors/ButtonTweenBehavior.html&amp;temple/ui/buttons/behaviors/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ButtonTweenBehavior</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("ButtonTweenBehavior"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -152,7 +152,7 @@
 		 </td></tr></table></p></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="exampleHeader">TweenButtonExample.as</div><br/><div class="detailBody"> 
  
  
- <p>This is an example about how the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/TweenButton.html" target="">TweenButton</a>.</p>
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/TweenButton.html" target="">TweenButton</a>.</p>
  
  <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf" target="external">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf</a></p>
  
@@ -160,15 +160,19 @@
 <div class="listing"><pre>
 package  
 {
-    import com.greensock.easing.Elastic;
-    import flash.display.LineScaleMode;
     import temple.ui.buttons.TweenButton;
-    import temple.core.CoreSprite;
-    
-    public class TweenButtonExample extends CoreSprite 
+
+    import com.greensock.easing.Elastic;
+
+    import flash.display.LineScaleMode;
+
+    // This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+    public class TweenButtonExample extends DocumentClassExample 
     {
         public function TweenButtonExample()
         {
+            super("Temple - TweenButtonExample");
+            
             // Create a new TweenButton
             var button:TweenButton = new TweenButton();
             

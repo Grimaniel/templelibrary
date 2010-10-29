@@ -42,7 +42,7 @@
 
 package temple.media.image 
 {
-	import flash.events.SecurityErrorEvent;
+	import temple.ui.IHasBackground;
 	import temple.core.CoreSprite;
 	import temple.data.loader.ILoader;
 	import temple.data.loader.cache.CacheLoader;
@@ -61,6 +61,7 @@ package temple.media.image
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
@@ -90,7 +91,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 	 * 
 	 * @author Arjan van Wijk, Thijs Broerse
 	 */
-	public class ImageLoader extends CoreSprite implements ILoader, IPreloadable, IDebuggable, ICacheable
+	public class ImageLoader extends CoreSprite implements ILoader, IDebuggable, ICacheable, IPreloadable, IHasBackground
 	{
 		private var _loader:CacheLoader;
 		private var _width:Number;
@@ -101,8 +102,11 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		private var _upscaleEnabled:Boolean = true;
 		private var _smoothing:Boolean;
 		private var _context:LoaderContext;
+		private var _preloader:IPreloader;
 		private var _preloaderMode:String;
-		
+		private var _background:Boolean;
+		private var _backgroundColor:uint;
+		private var _backgroundAlpha:Number = 1;
 		private var _debug:Boolean;
 
 		/**
@@ -147,7 +151,15 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			this.clipping = clipping;
 			
 			this._preloaderMode = preloaderMode;
-			if (preloader) this.preloader = preloader;
+			
+			if (preloader)
+			{
+				this.preloader = preloader;
+			}
+			else if (this._preloader)
+			{
+				this._loader.preloader = this._preloader;
+			}
 			if (url)
 			{
 				if(url is ByteArray)
@@ -164,7 +176,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 				}
 			}
 		}
-		
+
 		/**
 		 * @param url The url of the image to load
 		 * @param context Used for securety settings
@@ -195,12 +207,12 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		/**
 		 * Get or set the IPreloader.
 		 * Use a DisplayObject that implements the IPreloader interface.
-		 * If preloaderMode is set to PreloaderMode.OWN_PRELOADER, the preloader is addChilded in the ImageLoder
+		 * If preloaderMode is set to PreloaderMode.OWN_PRELOADER, the preloader is addChilded in the ImageLoader
 		 * and centered in the width-height-rectangle.
 		 */
 		public function get preloader():IPreloader
 		{
-			return this._loader.preloader;
+			return this._preloader;
 		}
 		
 		/**
@@ -208,7 +220,8 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 */
 		public function set preloader(value:IPreloader):void
 		{
-			this._loader.preloader = value;
+			this._preloader = value;
+			if (this._loader) this._loader.preloader = value;
 		}
 		
 		/**
@@ -235,18 +248,10 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 *	@param height new height of the image
 		 *	@param fillcolor the color to fill up the background, use NaN for no bckground
 		 */
-		public function resize(width:Number, height:Number, fillcolor:Number = 0x000000):void 
+		public function resize(width:Number, height:Number):void 
 		{
 			this._width = width;
 			this._height = height;
-			
-			if(!isNaN(fillcolor))
-			{
-				this.graphics.clear();
-				this.graphics.beginFill(fillcolor);
-				this.graphics.drawRect(0, 0, width, height);
-				this.graphics.endFill();
-			}
 			this.layoutImage();
 		}
 		
@@ -490,6 +495,57 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		/**
 		 * @inheritDoc
 		 */
+		public function get background():Boolean
+		{
+			return this._background;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set background(value:Boolean):void
+		{
+			this._background = value;
+			this.setBackground();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get backgroundColor():uint
+		{
+			return this._backgroundColor;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set backgroundColor(value:uint):void
+		{
+			this._backgroundColor = value;
+			this.setBackground();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get backgroundAlpha():Number
+		{
+			return this._backgroundAlpha;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set backgroundAlpha(value:Number):void
+		{
+			this._backgroundAlpha = value;
+			this.setBackground();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function get debug():Boolean
 		{
 			return this._debug;
@@ -645,6 +701,8 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			}
 			if (this._loader.isLoading()) this.layoutPreloader();
 			
+			this.setBackground();
+			
 			this.dispatchEvent(new Event(Event.RESIZE));
 		}
 		
@@ -662,6 +720,17 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 					this._loader.preloader.x = (this._width - this._loader.preloader.width) * 0.5;
 					this._loader.preloader.y = (this._height - this._loader.preloader.height) * 0.5;
 				}
+			}
+		}
+		
+		private function setBackground():void 
+		{
+			this.graphics.clear();
+			if (this._background)
+			{
+				this.graphics.beginFill(this._backgroundColor, this._backgroundAlpha);
+				this.graphics.drawRect(0, 0, this.width, this.height);
+				this.graphics.endFill();
 			}
 		}
 
@@ -683,6 +752,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 				this._loader.destruct();
 				this._loader = null;
 			}
+			this._preloader = null;
 			this._scaleMode = null;
 			this._align = null;
 			

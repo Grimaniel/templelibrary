@@ -4,7 +4,7 @@
  * <a name="Liquid"></a>
  * <h1>Liquid</h1>
  * 
- * <p>This is an example about Liquid. Resize the browser or FlashPlayer to see how all objects will be scaled and positioned.</p>
+ * <p>This is an example of Liquid. Resize the browser or FlashPlayer to see how all objects will be scaled and positioned.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/layout/liquid/LiquidExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/layout/liquid/LiquidExample.swf</a></p>
  * 
@@ -12,9 +12,6 @@
  */
 package  
 {
-	import nl.acidcats.yalog.util.YaLogConnector;
-
-	import temple.core.CoreSprite;
 	import temple.debug.PerformanceStat;
 	import temple.ui.layout.ScaleMode;
 	import temple.ui.layout.liquid.LiquidBehavior;
@@ -22,12 +19,13 @@ package
 	import temple.ui.layout.liquid.LiquidStage;
 
 	[SWF(backgroundColor="#000000", frameRate="31", width="640", height="480")]
-	public class LiquidExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class LiquidExample extends DocumentClassExample 
 	{
-		YaLogConnector.connect("Temple - LiquidExample");
-		
 		public function LiquidExample()
 		{
+			super("Temple - LiquidExample");
+			
 			// set a minimal size on stage
 			if (!LiquidStage.getInstance()) new LiquidStage(this.stage);
 			LiquidStage.getInstance().minimalHeight = 200;

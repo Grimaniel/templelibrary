@@ -3,7 +3,7 @@
  * 
  * <h1>KeyMapper</h1>
  * 
- * <p>This is an example about how to use the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/keys/KeyMapper.html">KeyMapper</a>.</p>
+ * <p>This is an example of how to use the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/keys/KeyMapper.html">KeyMapper</a>.</p>
  *  
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/keys/KeyMapperExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/keys/KeyMapperExample.swf</a></p>
  * 
@@ -15,12 +15,15 @@ package
 	import temple.utils.keys.KeyCode;
 	import temple.utils.keys.KeyMapper;
 
-	public class KeyMapperExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class KeyMapperExample extends DocumentClassExample 
 	{
 		private var _sprite:CoreSprite;
 		
 		public function KeyMapperExample()
 		{
+			super("Temple - KeyMapperExample");
+			
 			// Create a new Sprite
 			this._sprite = new CoreSprite();
 			this._sprite.graphics.beginFill(0x000000);

@@ -42,15 +42,14 @@
 
 package temple.utils.types 
 {
-	import flash.utils.ByteArray;
-
-	import temple.Temple;
+	import flash.utils.Dictionary;
 	import temple.core.ICoreObject;
 	import temple.data.xml.XMLParser;
 	import temple.debug.getClassName;
 	import temple.utils.ObjectType;
 
 	import flash.display.DisplayObject;
+	import flash.utils.ByteArray;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -87,16 +86,16 @@ package temple.utils.types
 		 * 
 		 * @return the object tree as String
 		 */
-		public static function traceObject(object:Object, maxDepth:uint = 3, doTrace:Boolean = true):String
+		public static function traceObject(object:Object, maxDepth:uint = 3, doTrace:Boolean = true, traceDuplicates:Boolean = true):String
 		{
-			var output:String = ObjectUtils._traceObject(object, maxDepth);
+			var output:String = ObjectUtils._traceObject(object, maxDepth, traceDuplicates ? null : new Dictionary(true));
 			
 			if (doTrace) trace(output);
 			
 			return output;
 		}
 
-		private static function _traceObject(object:Object, maxDepth:uint = 3, inOpenChar:String = null, isInited:Boolean = false, openChar:String = null, tabs:String = ""):String
+		private static function _traceObject(object:Object, maxDepth:uint = 3, objects:Dictionary = null, inOpenChar:String = null, isInited:Boolean = false, openChar:String = null, tabs:String = ""):String
 		{
 			var output:String = "";
 			
@@ -211,10 +210,12 @@ package temple.utils.types
 						// check to see if the variable is an array.
 						if (variable is Array) 
 						{
-							if (ObjectUtils.hasValues(variable) && maxDepth)
+							if ((objects == null || !objects[variable]) && ObjectUtils.hasValues(variable) && maxDepth)
 							{
+								if (objects) objects[variable] = true;
+								
 								output += "\n" + tabs + vardata.name + ": Array(" + (variable as Array).length + ")\n" + tabs + "[";
-								output += ObjectUtils._traceObject(variable, maxDepth - 1, "[", isInited, openChar, tabs);
+								output += ObjectUtils._traceObject(variable, maxDepth - 1, objects, "[", isInited, openChar, tabs);
 							}
 							else
 							{
@@ -228,8 +229,10 @@ package temple.utils.types
 						else 
 						{
 							// object, make exception for Date
-							if (variable && maxDepth && (ObjectUtils.subTraceDate || !(variable is Date)))
+							if ((objects == null || !objects[variable]) && (variable && maxDepth && (ObjectUtils.subTraceDate || !(variable is Date))))
 							{
+								if (objects) objects[variable] = true;
+								
 								// recursive call
 								output += "\n" + tabs + vardata.name + ": " + variable;
 								if (ObjectUtils.hasValues(variable))
@@ -240,7 +243,7 @@ package temple.utils.types
 									}
 									
 									output += "\n" + tabs + "\u007B";
-									output += ObjectUtils._traceObject(variable, maxDepth - 1, "\u007B", isInited, openChar, tabs);
+									output += ObjectUtils._traceObject(variable, maxDepth - 1, objects, "\u007B", isInited, openChar, tabs);
 								}
 							}
 							else

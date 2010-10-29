@@ -1,42 +1,40 @@
 /**
- * VERSION: 1.382
- * DATE: 2010-05-25
- * ACTIONSCRIPT VERSION: 3.0 (AS2 version is also available)
- * UPDATES AND DOCUMENTATION AT: http://www.TweenLite.com
+ * VERSION: 1.392
+ * DATE: 2010-10-13
+ * AS3 (AS2 version is also available)
+ * UPDATES AND DOCS AT: http://www.greensock.com
  **/
 
 package com.greensock.core 
 {
 	import temple.destruction.IDestructible;
+
 	import com.greensock.*;
 
 	/**
 	 * @private
 	 * 
 	 * TweenCore is the base class for all TweenLite, TweenMax, TimelineLite, and TimelineMax classes and 
-	 * provides core functionality and properties. There is no reason to use this class directly.<br /><br />
-	 * 
-	 * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
-	 * 
-	 * @author Jack Doyle, jack@greensock.com
-	 */
-	public class TweenCore implements IDestructible
-	{
+ * provides core functionality and properties. There is no reason to use this class directly.<br /><br />
+ * 
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * 
+ * @author Jack Doyle, jack@greensock.com
+ */
+	public class TweenCore implements IDestructible {
 		/** @private **/
-		public static const version:Number = 1.382;
-
+		public static const version:Number = 1.392;
+		
 		/** @private **/
 		protected static var _classInitted:Boolean;
-
+		
 		/** @private Delay in seconds (or frames for frames-based tweens/timelines) **/
 		protected var _delay:Number; 
 		/** @private Has onUpdate. Tracking this as a Boolean value is faster than checking this.vars.onUpdate != null. **/
 		protected var _hasUpdate:Boolean;
 		/** @private Primarily used for zero-duration tweens to determine the direction/momentum of time which controls whether the starting or ending values should be rendered. For example, if a zero-duration tween renders and then its timeline reverses and goes back before the startTime, the zero-duration tween must render the starting values. Otherwise, if the render time is zero or later, it should always render the ending values. **/
 		protected var _rawPrevTime:Number = -1;
-		/** @private **/
-		protected var _pauseTime:Number;
-
+		
 		/** Stores variables (things like alpha, y or whatever we're tweening as well as special properties like "onComplete"). **/
 		public var vars:Object; 
 		/** @private The tween has begun and is now active **/
@@ -45,7 +43,7 @@ package com.greensock.core
 		public var gc:Boolean; 
 		/** @private Indicates whether or not init() has been called (where all the tween property start/end value information is recorded) **/
 		public var initted:Boolean; 
-		/** The parent timeline on which the tween/timeline is placed. By default, it uses the TweenLite.rootTimeline (or TweenLite.rootFramesTimeline for frames-based tweens/timelines). **/
+		 /** The parent timeline on which the tween/timeline is placed. By default, it uses the TweenLite.rootTimeline (or TweenLite.rootFramesTimeline for frames-based tweens/timelines). **/
 		public var timeline:SimpleTimeline;
 		/** @private Start time in seconds (or frames for frames-based tweens/timelines), according to its position on its parent timeline **/
 		public var cachedStartTime:Number; 
@@ -59,6 +57,8 @@ package com.greensock.core
 		public var cachedTotalDuration:Number; 
 		/** @private timeScale allows you to slow down or speed up a tween/timeline. 1 = normal speed, 0.5 = half speed, 2 = double speed, etc. It is prefaced with "cached" because using a public property like this is faster than using the getter which is essentially a function call. If you want to update the value, you should always use the normal property, like myTween.timeScale = 2**/
 		public var cachedTimeScale:Number;
+		/** @private parent timeline's rawTime at which the tween/timeline was paused (so that we can place it at the appropriate time when it is unpaused). NaN when the tween/timeline isn't paused. **/
+		public var cachedPauseTime:Number;
 		/** @private Indicates whether or not the tween is reversed. **/ 
 		public var cachedReversed:Boolean;
 		/** @private Next TweenCore object in the linked list.**/
@@ -73,9 +73,8 @@ package com.greensock.core
 		public var cachedPaused:Boolean; 
 		/** Place to store any data you want.**/
 		public var data:*; 
-
-		public function TweenCore(duration:Number = 0, vars:Object = null) 
-		{
+		
+		public function TweenCore(duration:Number=0, vars:Object=null) {
 			this.vars = (vars != null) ? vars : {};
 			this.cachedDuration = this.cachedTotalDuration = duration;
 			_delay = (this.vars.delay) ? Number(this.vars.delay) : 0;
@@ -84,15 +83,11 @@ package com.greensock.core
 			this.cachedTotalTime = this.cachedTime = 0;
 			this.data = this.vars.data;
 			
-			if (!_classInitted) 
-			{
-				if (isNaN(TweenLite.rootFrame)) 
-				{
+			if (!_classInitted) {
+				if (isNaN(TweenLite.rootFrame)) {
 					TweenLite.initClass();
 					_classInitted = true;
-				} 
-				else 
-				{
+				} else {
 					return;
 				}
 			}
@@ -100,48 +95,42 @@ package com.greensock.core
 			var tl:SimpleTimeline = (this.vars.timeline is SimpleTimeline) ? this.vars.timeline : (this.vars.useFrames) ? TweenLite.rootFramesTimeline : TweenLite.rootTimeline;
 			this.cachedStartTime = tl.cachedTotalTime + _delay;
 			tl.addChild(this);
-			if (this.vars.reversed) 
-			{
+			if (this.vars.reversed) {
 				this.cachedReversed = true;
 			}
-			if (this.vars.paused) 
-			{
+			if (this.vars.paused) {
 				this.paused = true;
 			}
 		}
-
+		
 		/** Starts playing forward from the current position. (essentially unpauses and makes sure that it is not reversed) **/
-		public function play():void 
-		{
+		public function play():void {
 			this.reversed = false;
 			this.paused = false;
 		}
-
+		
 		/** Pauses the tween/timeline **/
-		public function pause():void 
-		{
+		public function pause():void {
 			this.paused = true;
 		}
-
+		
 		/** Starts playing from the current position without altering direction (forward or reversed). **/
-		public function resume():void 
-		{
+		public function resume():void {
 			this.paused = false;
 		}
-
+		
 		/**
 		 * Restarts and begins playing forward.
 		 * 
 		 * @param includeDelay Determines whether or not the delay (if any) is honored in the restart()
 		 * @param suppressEvents If true, no events or callbacks will be triggered as the "virtual playhead" moves to the new position (onComplete, onUpdate, onReverseComplete, etc. of this tween/timeline and any of its child tweens/timelines won't be triggered, nor will any of the associated events be dispatched) 
 		 */
-		public function restart(includeDelay:Boolean = false, suppressEvents:Boolean = true):void 
-		{
+		public function restart(includeDelay:Boolean=false, suppressEvents:Boolean=true):void {
 			this.reversed = false;
 			this.paused = false;
 			this.setTotalTime((includeDelay) ? -_delay : 0, suppressEvents);
 		}
-
+		
 		/**
 		 * Reverses smoothly, adjusting the startTime to avoid any skipping. After being reversed,
 		 * it will play backwards, exactly opposite from its forward orientation, meaning that, for example, a
@@ -150,18 +139,15 @@ package com.greensock.core
 		 * 
 		 * @param forceResume If true, it will resume() immediately upon reversing. Otherwise its paused state will remain unchanged.
 		 */
-		public function reverse(forceResume:Boolean = true):void 
-		{
+		public function reverse(forceResume:Boolean=true):void {
 			this.reversed = true;
-			if (forceResume) 
-			{
+			if (forceResume) {
 				this.paused = false;
-			} else if (this.gc) 
-			{
+			} else if (this.gc) {
 				this.setEnabled(true, false);
 			}
 		}
-
+		
 		/**
 		 * @private
 		 * Renders the tween/timeline at a particular time (or frame number for frames-based tweens)
@@ -172,44 +158,35 @@ package com.greensock.core
 		 * @param suppressEvents If true, no events or callbacks will be triggered for this render (like onComplete, onUpdate, onReverseComplete, etc.)
 		 * @param force Normally the tween will skip rendering if the time matches the cachedTotalTime (to improve performance), but if force is true, it forces a render. This is primarily used internally for tweens with durations of zero in TimelineLite/Max instances.
 		 */
-		public function renderTime(time:Number, suppressEvents:Boolean = false, force:Boolean = false):void 
-		{
+		public function renderTime(time:Number, suppressEvents:Boolean=false, force:Boolean=false):void {
+			
 		}
-
+		
 		/**
 		 * Forces the tween/timeline to completion.
 		 * 
 		 * @param skipRender to skip rendering the final state of the tween, set skipRender to true. 
 		 * @param suppressEvents If true, no events or callbacks will be triggered for this render (like onComplete, onUpdate, onReverseComplete, etc.)
 		 */
-		public function complete(skipRender:Boolean = false, suppressEvents:Boolean = false):void 
-		{
-			if (!skipRender) 
-			{
+		public function complete(skipRender:Boolean=false, suppressEvents:Boolean=false):void {
+			if (!skipRender) {
 				renderTime(this.totalDuration, suppressEvents, false); //just to force the final render
 				return; //renderTime() will call complete() again, so just return here.
 			}
-			if (this.timeline.autoRemoveChildren) 
-			{
+			if (this.timeline.autoRemoveChildren) {
 				this.setEnabled(false, false);
-			} 
-			else 
-			{
+			} else {
 				this.active = false;
 			}
-			if (!suppressEvents) 
-			{
-				if (this.vars.onComplete && this.cachedTotalTime == this.cachedTotalDuration && !this.cachedReversed) 
-				{ 
-					//note: remember that tweens can have a duration of zero in which case their cachedTime and cachedDuration would always match.
+			if (!suppressEvents) {
+				if (this.vars.onComplete && this.cachedTotalTime >= this.cachedTotalDuration && !this.cachedReversed) { //note: remember that tweens can have a duration of zero in which case their cachedTime and cachedDuration would always match. Also, TimelineLite/Max instances with autoRemoveChildren may have a cachedTotalTime that exceeds cachedTotalDuration because the children were removed after the last render.
 					this.vars.onComplete.apply(null, this.vars.onCompleteParams);
-				} else if (this.cachedReversed && this.cachedTotalTime == 0 && this.vars.onReverseComplete) 
-				{
+				} else if (this.cachedReversed && this.cachedTotalTime == 0 && this.vars.onReverseComplete) {
 					this.vars.onReverseComplete.apply(null, this.vars.onReverseCompleteParams);
 				}
 			}
 		}
-
+		
 		/** 
 		 * Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
 		 * you want to restart it without reverting to any previously recorded starting values. When you invalidate() 
@@ -221,10 +198,10 @@ package com.greensock.core
 		 * (where they started when the tween originally began). When you invalidate a timeline, it automatically invalidates 
 		 * all of its children.
 		 **/
-		public function invalidate():void 
-		{
+		public function invalidate():void {
+			
 		}
-
+		
 		/**
 		 * @private
 		 * If a tween/timeline is enabled, it is eligible to be rendered (unless it is paused). Setting enabled to
@@ -234,34 +211,27 @@ package com.greensock.core
 		 * @param ignoreTimeline By default, the tween/timeline will remove itself from its parent timeline when it is disabled, and add itself when it is enabled, but this parameter allows you to override that behavior.
 		 * @return Boolean value indicating whether or not important properties may have changed when the TweenCore was enabled/disabled. For example, when a motionBlur (plugin) is disabled, it swaps out a BitmapData for the target and may alter the alpha. We need to know this in order to determine whether or not a new tween that is overwriting this one should be re-initted() with the changed properties. 
 		 **/
-		public function setEnabled(enabled:Boolean, ignoreTimeline:Boolean = false):Boolean 
-		{
+		public function setEnabled(enabled:Boolean, ignoreTimeline:Boolean=false):Boolean {
 			this.gc = !enabled;
-			if (enabled) 
-			{
+			if (enabled) {
 				this.active = Boolean(!this.cachedPaused && this.cachedTotalTime > 0 && this.cachedTotalTime < this.cachedTotalDuration);
-				if (!ignoreTimeline && this.cachedOrphan) 
-				{
+				if (!ignoreTimeline && this.cachedOrphan) {
 					this.timeline.addChild(this);
 				}
-			} 
-			else 
-			{
+			} else {
 				this.active = false;
-				if (!ignoreTimeline && !this.cachedOrphan) 
-				{
+				if (!ignoreTimeline && !this.cachedOrphan) {
 					this.timeline.remove(this, true);
 				}
 			}
 			return false;
 		}
-
+		
 		/** Kills the tween/timeline, stopping it immediately. **/
-		public function kill():void 
-		{
+		public function kill():void {
 			setEnabled(false, false);
 		}
-
+		
 		/**
 		 * @private
 		 * Sets the cacheIsDirty property of all anscestor timelines (and optionally this tween/timeline too). Setting
@@ -272,16 +242,14 @@ package com.greensock.core
 		 * 
 		 * @param includeSelf indicates whether or not this tween's cacheIsDirty property should be affected.
 		 */
-		protected function setDirtyCache(includeSelf:Boolean = true):void 
-		{
+		protected function setDirtyCache(includeSelf:Boolean=true):void {
 			var tween:TweenCore = (includeSelf) ? this : this.timeline;
-			while (tween) 
-			{
+			while (tween) {
 				tween.cacheIsDirty = true;
 				tween = tween.timeline;
 			}
 		}
-
+		
 		/**
 		 * @private
 		 * Sort of like placing the local "playhead" at a particular totalTime and then aligning it with
@@ -291,80 +259,66 @@ package com.greensock.core
 		 * @param time Time that should be rendered (includes any repeats and repeatDelays for TimelineMax)
 		 * @param suppressEvents If true, no events or callbacks will be triggered for this render (like onComplete, onUpdate, onReverseComplete, etc.)
 		 **/
-		protected function setTotalTime(time:Number, suppressEvents:Boolean = false):void 
-		{
-			if (this.timeline) 
-			{
-				var tlTime:Number = (_pauseTime || _pauseTime == 0) ? _pauseTime : this.timeline.cachedTotalTime;
-				if (this.cachedReversed) 
-				{
+		protected function setTotalTime(time:Number, suppressEvents:Boolean=false):void {
+			if (this.timeline) {
+				var tlTime:Number = (this.cachedPauseTime || this.cachedPauseTime == 0) ? this.cachedPauseTime : this.timeline.cachedTotalTime;
+				if (this.cachedReversed) {
 					var dur:Number = (this.cacheIsDirty) ? this.totalDuration : this.cachedTotalDuration;
 					this.cachedStartTime = tlTime - ((dur - time) / this.cachedTimeScale);
-				} 
-				else 
-				{
+				} else {
 					this.cachedStartTime = tlTime - (time / this.cachedTimeScale);
 				}
-				if (!this.timeline.cacheIsDirty) 
-				{ 
-					//for performance improvement. If the parent's cache is already dirty, it already took care of marking the anscestors as dirty too, so skip the function call here.
+				if (!this.timeline.cacheIsDirty) { //for performance improvement. If the parent's cache is already dirty, it already took care of marking the anscestors as dirty too, so skip the function call here.
 					setDirtyCache(false);
 				}
-				if (this.cachedTotalTime != time) 
-				{
+				if (this.cachedTotalTime != time) {
 					renderTime(time, suppressEvents, false);
 				}
 			}
 		}
-
 		
-		//---- GETTERS / SETTERS ------------------------------------------------------------
+		
+//---- GETTERS / SETTERS ------------------------------------------------------------
 		
 		/** 
 		 * Length of time in seconds (or frames for frames-based tweens/timelines) before the tween should begin. 
 		 * The tween's starting values are not determined until after the delay has expired (except in from() tweens) 
 		 **/
-		public function get delay():Number 
-		{
+		public function get delay():Number {
 			return _delay;
 		}
-
-		public function set delay(n:Number):void 
-		{
+		
+		public function set delay(n:Number):void {
 			this.startTime += (n - _delay);
 			_delay = n;
 		}
-
+		
 		/**
 		 * Duration of the tween in seconds (or frames for frames-based tweens/timelines) not including any repeats
 		 * or repeatDelays. <code>totalDuration</code>, by contrast, does include repeats and repeatDelays.
 		 **/
-		public function get duration():Number 
-		{
+		public function get duration():Number {
 			return this.cachedDuration;
 		}
-
-		public function set duration(n:Number):void 
-		{
+		
+		public function set duration(n:Number):void {
 			this.cachedDuration = this.cachedTotalDuration = n;
 			setDirtyCache(false);
 		}
-
+		
 		/**
 		 * Duration of the tween in seconds (or frames for frames-based tweens/timelines) including any repeats
 		 * or repeatDelays (which are only available on TweenMax and TimelineMax). <code>duration</code>, by contrast, does 
 		 * <b>NOT</b> include repeats and repeatDelays. So if a TweenMax's <code>duration</code> is 1 and it has a repeat of 2, the <code>totalDuration</code> would be 3.
 		 **/ 
-		public function get totalDuration():Number 
-		{
+		public function get totalDuration():Number {
 			return this.cachedTotalDuration;
 		}
-
-		public function set totalDuration(n:Number):void 
-		{
+		
+		public function set totalDuration(n:Number):void {
 			this.duration = n;
 		}
-
+		
 		/**
 		 * Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
 		 * <code>duration</code>. <code>totalTime</code>, by contrast, is based on its <code>totalDuration</code> 
@@ -377,16 +331,14 @@ package com.greensock.core
 		 * properties over the course of the tween, you'd see <code>currentTime</code> go from 0 to 5 twice (one for each
 		 * cycle) in the same time it takes <code>totalTime</code> go from 0 to 10.
 		 **/
-		public function get currentTime():Number 
-		{
+		public function get currentTime():Number {
 			return this.cachedTime;
 		}
-
-		public function set currentTime(n:Number):void 
-		{
+		
+		public function set currentTime(n:Number):void {
 			setTotalTime(n, false);
 		}
-
+		
 		/**
 		 * Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
 		 * <code>totalDuration</code>. <code>currentTime</code>, by contrast, is based on its <code>duration</code> 
@@ -399,72 +351,57 @@ package com.greensock.core
 		 * properties over the course of the tween, you'd see <code>currentTime</code> go from 0 to 5 twice (one for each
 		 * cycle) in the same time it takes <code>totalTime</code> go from 0 to 10.
 		 **/
-		public function get totalTime():Number 
-		{
+		public function get totalTime():Number {
 			return this.cachedTotalTime;
 		}
-
-		public function set totalTime(n:Number):void 
-		{
+		
+		public function set totalTime(n:Number):void {
 			setTotalTime(n, false);
 		}
-
+		
 		/** Start time in seconds (or frames for frames-based tweens/timelines), according to its position on its parent timeline **/
-		public function get startTime():Number 
-		{
+		public function get startTime():Number {
 			return this.cachedStartTime;
 		}
-
-		public function set startTime(n:Number):void 
-		{
+		
+		public function set startTime(n:Number):void {
 			var adjust:Boolean = Boolean(this.timeline != null && (n != this.cachedStartTime || this.gc));
 			this.cachedStartTime = n;
-			if (adjust) 
-			{
+			if (adjust) {
 				this.timeline.addChild(this); //ensures that any necessary re-sequencing of TweenCores in the timeline occurs to make sure the rendering order is correct.
 			}
 		}
-
+		
 		/** Indicates the reversed state of the tween/timeline. This value is not affected by <code>yoyo</code> repeats and it does not take into account the reversed state of anscestor timelines. So for example, a tween that is not reversed might appear reversed if its parent timeline (or any ancenstor timeline) is reversed. **/
-		public function get reversed():Boolean 
-		{
+		public function get reversed():Boolean {
 			return this.cachedReversed;
 		}
-
-		public function set reversed(b:Boolean):void 
-		{
-			if (b != this.cachedReversed) 
-			{
+		
+		public function set reversed(b:Boolean):void {
+			if (b != this.cachedReversed) {
 				this.cachedReversed = b;
 				setTotalTime(this.cachedTotalTime, true);
 			}
 		}
-
+		
 		/** Indicates the paused state of the tween/timeline. This does not take into account anscestor timelines. So for example, a tween that is not paused might appear paused if its parent timeline (or any ancenstor timeline) is paused. **/
-		public function get paused():Boolean 
-		{
+		public function get paused():Boolean {
 			return this.cachedPaused;
 		}
-
-		public function set paused(b:Boolean):void 
-		{
-			if (b != this.cachedPaused && this.timeline) 
-			{
-				if (b) 
-				{
-					_pauseTime = this.timeline.rawTime;
-				} 
-				else 
-				{
-					this.cachedStartTime += this.timeline.rawTime - _pauseTime;
-					_pauseTime = NaN;
+		
+		public function set paused(b:Boolean):void {
+			if (b != this.cachedPaused && this.timeline) {
+				if (b) {
+					this.cachedPauseTime = this.timeline.rawTime;
+				} else {
+					this.cachedStartTime += this.timeline.rawTime - this.cachedPauseTime;
+					this.cachedPauseTime = NaN;
 					setDirtyCache(false);
 				}
 				this.cachedPaused = b;
 				this.active = Boolean(!this.cachedPaused && this.cachedTotalTime > 0 && this.cachedTotalTime < this.cachedTotalDuration);
 			}
-			if (!b && this.gc) 
-			{
+			if (!b && this.gc) {
 				this.setTotalTime(this.cachedTotalTime, false);
 				this.setEnabled(true, false);
 			}

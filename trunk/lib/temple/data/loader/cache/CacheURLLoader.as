@@ -82,17 +82,24 @@ package temple.data.loader.cache
 		 */
 		override public function load(request:URLRequest):void
 		{
+			// check if our current load is competed
+			if (this._owner && this._cacheData && this._cacheData.isLoading())
+			{
+				// we didn't finished the current load, delete it
+				LoaderCache.clear(this._url);
+			}
+			
 			this._url = request.url;
 			this._isLoading = true;
 			this._isLoaded = false;
 			this._owner = false;
 			this.clearCacheData();
-			if (this._cache && (this._cacheData = LoaderCache.get(request.url)))
+			if (this._cache && (this._cacheData = LoaderCache.get(this._url)))
 			{
 				if (this._cacheData.isLoaded())
 				{
-					if (this._debug) this.logDebug("load: get data from cache, url:" + request.url);
-					this.data = LoaderCache.get(request.url).bytes;
+					if (this._debug) this.logDebug("load: get data from cache, url:" + this._url);
+					this.data = LoaderCache.get(this._url).bytes;
 					this._isLoaded = true;
 					this._isLoading = false;
 					this.dispatchEvent(new Event(Event.COMPLETE));
@@ -110,6 +117,7 @@ package temple.data.loader.cache
 					this._cacheData.addEventListener(IOErrorEvent.VERIFY_ERROR, this.handleCacheDataError);
 					this._cacheData.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleCacheDataError);
 					this._cacheData.addEventListener(DestructEvent.DESTRUCT, this.handleCacheDataDestuct);
+					this.dispatchEvent(new Event(Event.OPEN));
 				}
 			}
 			else

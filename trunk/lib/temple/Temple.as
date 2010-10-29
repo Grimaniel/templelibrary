@@ -52,6 +52,8 @@ package temple
 	 * 
 	 * <p>Note: This class contains only static properties. Therefore this class cannot be instantiated.</p>
 	 * 
+	 * @includeExample ../templates/DocumentClassExample.as
+	 * 
 	 * @author MediaMonks: Thijs Broerse, Arjan van Wijk, Quinten Beek, Bart van der Schoor
 	 */
 	public final class Temple 
@@ -64,7 +66,7 @@ package temple
 		/**
 		 * The current version of the Temple Library
 		 */
-		public static const VERSION:String = "2.7.0";
+		public static const VERSION:String = "2.7.1";
 		
 		/**
 		 * The Authors of the Temple
@@ -74,7 +76,7 @@ package temple
 		/**
 		 * Last modified date of the Temple
 		 */
-		public static const DATE:String = "2010-10-10";
+		public static const DATE:String = "2010-10-29";
 
 		/**
 		 * The official website of the Temple.

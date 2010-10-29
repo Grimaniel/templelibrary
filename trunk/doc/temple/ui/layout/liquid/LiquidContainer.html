@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - version 2.7.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/layout/liquid/LiquidContainer.html&amp;temple/ui/layout/liquid/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">LiquidContainer</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - version 2.7.1</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/layout/liquid/LiquidContainer.html&amp;temple/ui/layout/liquid/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">LiquidContainer</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("LiquidContainer"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -160,7 +160,7 @@
  <a></a>
  
  
- <p>This is an example about Liquid. Resize the browser or FlashPlayer to see how all objects will be scaled and positioned.</p>
+ <p>This is an example of Liquid. Resize the browser or FlashPlayer to see how all objects will be scaled and positioned.</p>
  
  <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/layout/liquid/LiquidExample.swf" target="external">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/layout/liquid/LiquidExample.swf</a></p>
  
@@ -168,9 +168,6 @@
 <div class="listing"><pre>
 package  
 {
-    import nl.acidcats.yalog.util.YaLogConnector;
-
-    import temple.core.CoreSprite;
     import temple.debug.PerformanceStat;
     import temple.ui.layout.ScaleMode;
     import temple.ui.layout.liquid.LiquidBehavior;
@@ -178,12 +175,13 @@ package
     import temple.ui.layout.liquid.LiquidStage;
 
     [SWF(backgroundColor="#000000", frameRate="31", width="640", height="480")]
-    public class LiquidExample extends CoreSprite 
+    // This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+    public class LiquidExample extends DocumentClassExample 
     {
-        YaLogConnector.connect("Temple - LiquidExample");
-        
         public function LiquidExample()
         {
+            super("Temple - LiquidExample");
+            
             // set a minimal size on stage
             if (!LiquidStage.getInstance()) new LiquidStage(this.stage);
             LiquidStage.getInstance().minimalHeight = 200;

@@ -4,7 +4,7 @@
  * <a name="BoundsBehavior"></a>
  * <h1>BoundsBehavior</h1>
  * 
- * <p>This is an example about how the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/BoundsBehavior.html">BoundsBehavior</a> works.</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/behaviors/BoundsBehavior.html">BoundsBehavior</a> works.</p>
  *  
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/behaviors/BoundsBehaviorExample.swf</a></p>
  * 
@@ -14,16 +14,18 @@
  */
 package  
 {
-	import flash.geom.Rectangle;
 	import temple.ui.behaviors.DragBehavior;
-	import temple.core.CoreSprite;
 
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 
-	public class BoundsBehaviorExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class BoundsBehaviorExample extends DocumentClassExample 
 	{
 		public function BoundsBehaviorExample()
 		{
+			super("Temple - BoundsBehaviorExample");
+			
 			// Create a new Sprite
 			var sprite:Sprite = new Sprite();
 			

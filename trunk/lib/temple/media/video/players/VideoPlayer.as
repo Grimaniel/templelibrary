@@ -42,8 +42,6 @@
 
 package temple.media.video.players 
 {
-	import temple.core.temple;
-	import temple.ui.IHasBackground;
 	import temple.core.CoreSprite;
 	import temple.data.loader.preload.IPreloader;
 	import temple.debug.DebugManager;
@@ -60,6 +58,7 @@ package temple.media.video.players
 	import temple.media.video.net.VideoNetConnection;
 	import temple.media.video.net.VideoNetStream;
 	import temple.status.StatusEvent;
+	import temple.ui.IHasBackground;
 	import temple.ui.layout.ScaleMode;
 	import temple.utils.FrameDelay;
 
@@ -278,6 +277,7 @@ package temple.media.video.players
 				if (this._status != PlayerStatus.LOADING)
 				{
 					this._status = PlayerStatus.LOADING;
+					this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
 				
 					// first hide player, so we can't see him playing, show it after playing and seek to 0 and start play again
 					this._video.visible = false;
@@ -303,6 +303,8 @@ package temple.media.video.players
 					if (this._netConnection.connected)
 					{
 						this.addChild(this._video);
+						
+						if (this.debug) this.addChild(this._txtDebug);
 						
 						if (this._status == PlayerStatus.PAUSED)
 						{
@@ -335,7 +337,11 @@ package temple.media.video.players
 					this.createNetStream();
 				}
 				this.addChild(this._video);
-				if (this._debug) this.logDebug("playUrl: play '" + this._videoPath + "'");
+				if (this._debug) 
+				{
+					this.logDebug("playUrl: play '" + this._videoPath + "'");
+					this.addChild(this._txtDebug);
+				}
 				this._netStream.play(this._videoPath);
 				this._isClosed = false;
 			}
@@ -353,6 +359,7 @@ package temple.media.video.players
 			if (this._videoPath) this.clear();
 			
 			this._status = PlayerStatus.LOADING;
+			this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
 			this._playAfterLoaded = false;
 			
 			// first hide player, so we can't see him playing, show it after playing and seek to 0.
@@ -387,6 +394,7 @@ package temple.media.video.players
 			else
 			{
 				this.addChild(this._video);
+				if (this.debug) this.addChild(this._txtDebug);
 				
 				if (this.isRTMPStream(this._videoPath))
 				{
@@ -489,7 +497,11 @@ package temple.media.video.players
 				this.removeChild(this._video);
 			}
 			
-			this._status = PlayerStatus.STOPPED;
+			if (this._status != PlayerStatus.STOPPED)
+			{
+				this._status = PlayerStatus.STOPPED;
+				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+			}
 		}
 
 		/**
@@ -499,7 +511,8 @@ package temple.media.video.players
 		{
 			if (this._debug) this.logDebug("seek: " + seconds);
 			
-			if (this._metaData || seconds == 0){
+			if (this._netStream && (this._metaData || seconds == 0))
+			{
 				if (seconds == 0 || seconds >= 0 && seconds < this._metaData.duration)
 				{
 					this._netStream.seek(seconds);
@@ -788,6 +801,7 @@ package temple.media.video.players
 				}
 				this._video = video;
 				this.addChild(this._video);
+				if (this.debug) this.addChild(this._txtDebug);
 			}
 			if (this._screenShot) this._screenShot.dispose();
 		}
@@ -1235,11 +1249,12 @@ package temple.media.video.players
 			if (this.debug) this.logDebug("createNetStream: ");
 			
 			this.addChild(this._video);
+			if (this.debug) this.addChild(this._txtDebug);
 		}
 		
 		private function createDebugInfo():void
 		{
-			this._txtDebug = this.addChild(new TextField()) as TextField;
+			this._txtDebug = this.addChild(this._txtDebug || new TextField()) as TextField;
 			this._txtDebug.background = true;
 			this._txtDebug.border = true;
 			this._txtDebug.multiline = true;
