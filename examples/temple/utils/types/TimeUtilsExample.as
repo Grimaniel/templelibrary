@@ -3,7 +3,7 @@
  * 
  * <h1>TimeUtils</h1>
  * 
- * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/TimeUtils.html">TimeUtils</a>.</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/TimeUtils.html">TimeUtils</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/utils/types/TimeUtilsExample.swf</a></p>
  * 
@@ -11,16 +11,15 @@
  */
 package  
 {
-	import nl.acidcats.yalog.util.YaLogConnector;
 	import temple.utils.types.TimeUtils;
-	import temple.core.CoreSprite;
 
-	public class TimeUtilsExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class TimeUtilsExample extends DocumentClassExample 
 	{
 		public function TimeUtilsExample()
 		{
-			// Connect to Yalog, so you can see all log message at: http://yalala.tyz.nl/
-			YaLogConnector.connect("Temple - TimeUtilsExample");
+			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
+			super("Temple - TimeUtilsExample");
 			
 			this.logInfo(TimeUtils.formatMinutesSeconds(10 * 1000));
 			this.logInfo(TimeUtils.formatMinutesSeconds(60 * 1000));

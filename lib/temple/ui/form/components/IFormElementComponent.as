@@ -77,7 +77,12 @@ package temple.ui.form.components
 		function set tabIndex(value:int):void;
 		
 		/**
-		 * The error message that is shown when value is not valid
+		 * The error message that is shown when value is not valid.
+		 * This property is only used by the FormComponent. When this element is set as component this propery can be set in Component Inspector.
+		 * 
+		 * <p>Note: this property is not used if you add the element to a Form with the 'addElement' method of the Form.</p> 
+		 * 
+		 * @see temple.ui.form.components.FormComponent  
 		 */
 		function get errorMessage():String;
 		

@@ -1,22 +1,19 @@
-package com.greensock.easing 
-{
-
-	/**
-	 * @private
-	 * 
-	 * EaseLookup enables you to find the easing function associated with a particular name (String), 
-	 * like "strongEaseOut" which can be useful when loading in XML data that comes in as Strings but 
-	 * needs to be translated to native function references.
-	 * 
-	 * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
-	 * 
-	 * @author Jack Doyle, jack@greensock.com
-	 */
-	public class EaseLookup 
-	{
+package com.greensock.easing {
+/**
+ * @private
+ * 
+ * EaseLookup enables you to find the easing function associated with a particular name (String), 
+ * like "strongEaseOut" which can be useful when loading in XML data that comes in as Strings but 
+ * needs to be translated to native function references.
+ * 
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * 
+ * @author Jack Doyle, jack@greensock.com
+ */
+	public class EaseLookup {
 		/** @private **/
 		private static var _lookup:Object;
-
+		
 		/**
 		 * Finds the easing function associated with a particular name (String), like "strongEaseOut". This can be useful when
 		 * loading in XML data that comes in as Strings but needs to be translated to native function references. You can pass in
@@ -31,18 +28,15 @@ package com.greensock.easing
 		 * @param name The name of the easing function, with or without the period and case insensitive (i.e. "Strong.easeOut" or "strongEaseOut")
 		 * @return The easing function associated with the name
 		 */
-		public static function find(name:String):Function 
-		{
-			if (_lookup == null) 
-			{
+		public static function find(name:String):Function {
+			if (_lookup == null) {
 				buildLookup();
 			}
 			return _lookup[name.toLowerCase()];
 		}
-
+		
 		/** @private **/
-		private static function buildLookup():void 
-		{
+		private static function buildLookup():void {
 			_lookup = {};
 			
 			addInOut(Back, ["back"]);
@@ -59,19 +53,19 @@ package com.greensock.easing
 			
 			_lookup["linear.easenone"] = _lookup["lineareasenone"] = Linear.easeNone;
 		}
-
+		
 		/** @private **/
-		private static function addInOut(easeClass:Class, names:Array):void 
-		{
+		private static function addInOut(easeClass:Class, names:Array):void {
 			var name:String;
 			var i:int = names.length;
-			while (i-- > 0) 
-			{
+			while (i-- > 0) {
 				name = names[i].toLowerCase();
 				_lookup[name + ".easein"] = _lookup[name + "easein"] = easeClass.easeIn;
 				_lookup[name + ".easeout"] = _lookup[name + "easeout"] = easeClass.easeOut;
 				_lookup[name + ".easeinout"] = _lookup[name + "easeinout"] = easeClass.easeInOut;
 			}
 		}
+		
+		
 	}
 }

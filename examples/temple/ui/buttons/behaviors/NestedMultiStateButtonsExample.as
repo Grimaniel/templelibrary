@@ -11,15 +11,17 @@
  */
 package  
 {
-	import temple.core.CoreSprite;
 	import temple.utils.types.DisplayObjectContainerUtils;
 
 	import flash.display.Sprite;
 
-	public class NestedMultiStateButtonsExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class NestedMultiStateButtonsExample extends DocumentClassExample 
 	{
 		public function NestedMultiStateButtonsExample()
 		{
+			super("Temple - NestedMultiStateButtonsExample");
+			
 			// create the container buttons
 			var container:Button = new Button(325, 125);
 			container.x = 50;

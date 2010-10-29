@@ -82,26 +82,27 @@ package temple.ui.form.components
 	 */
 	public class InputField extends FormElementComponent implements IHasError, IResettable, ISetValue, IEnableable, IDebuggable
 	{
-		protected var _textField:TextField;
-		protected var _text:String;
-		protected var _hintText:String;
-		protected var _prefillText:String;
+		private var _textField:TextField;
+		private var _text:String;
+		private var _hintText:String;
+		private var _prefillText:String;
 		protected var _showsHint:Boolean;
-		protected var _textColor:uint;
-		protected var _hintTextColor:uint;
-		protected var _errorTextColor:uint;
-		protected var _trimValue:Boolean = true;
-		protected var _displayAsPassword:Boolean;
-		protected var _hasError:Boolean;
-		protected var _debug:Boolean;
-		protected var _debugValue:*;
-		protected var _submitOnEnter:Boolean = true;
-		protected var _submitOnChange:Boolean;
-		protected var _previousText:String;
-		protected var _limitInputToDesign:Boolean;
-		protected var _normalFontSize:Number;
-		protected var _minimalFontSize:Number;
-		protected var _selectTextOnFocus:Boolean = true;
+		private var _textColor:uint;
+		private var _hintTextColor:uint;
+		private var _errorTextColor:uint;
+		private var _trimValue:Boolean = true;
+		private var _displayAsPassword:Boolean;
+		private var _hasError:Boolean;
+		private var _debug:Boolean;
+		private var _debugValue:*;
+		private var _submitOnEnter:Boolean = true;
+		private var _submitOnChange:Boolean;
+		private var _previousText:String;
+		private var _limitInputToDesign:Boolean;
+		private var _normalFontSize:Number;
+		private var _minimalFontSize:Number;
+		private var _selectTextOnFocus:Boolean = true;
+		private var _enabled:Boolean = true;
 
 		/**
 		 * Constructor
@@ -118,7 +119,7 @@ package temple.ui.form.components
 			this._textColor = this._hintTextColor = this._errorTextColor = this._textField.textColor;
 			this._normalFontSize = this.fontSize;
 			
-			if(this._textField.multiline) this._submitOnEnter = false;
+			if (this._textField.multiline) this._submitOnEnter = false;
 
 			// Register TextField for destruction testing
 			Registry.add(this._textField);
@@ -271,7 +272,7 @@ package temple.ui.form.components
 		 */
 		public function get enabled():Boolean 
 		{
-			return this._textField.mouseEnabled;
+			return this._enabled;
 		}
 
 		/**
@@ -280,7 +281,7 @@ package temple.ui.form.components
 		[Inspectable(name="Enabled", type="Boolean", defaultValue=true)]
 		public function set enabled(value:Boolean):void 
 		{
-			this.mouseChildren = this.mouseEnabled = value;
+			this._enabled = this.mouseChildren = this.mouseEnabled = value;
 			this._textField.mouseEnabled = value;
 			this._textField.type = value ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
 			if (value) this._textField.styleSheet = null;
@@ -377,7 +378,7 @@ package temple.ui.form.components
 				}
 				case "numeric":
 				{
-					this._textField.restrict = Restrictions.NUMMERIC;
+					this._textField.restrict = Restrictions.NUMERIC;
 					break;
 				}
 				case "numbers":

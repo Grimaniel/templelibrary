@@ -4,7 +4,7 @@
  * <a name="FrameStableMovieClip-FrameRateKiller"></a>
  * <h1>FrameStableMovieClip &amp; FrameRateKiller</h1>
  * 
- * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/animation/FrameStableMovieClip.html">FrameStableMovieClip</a> and <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/FrameRateKiller.html">FrameRateKiller</a>.</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/animation/FrameStableMovieClip.html">FrameStableMovieClip</a> and <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/FrameRateKiller.html">FrameRateKiller</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/animation/FrameStableMovieClipExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/animation/FrameStableMovieClipExample.swf</a></p>
  * 
@@ -19,22 +19,22 @@
  */
 package  
 {
-	import temple.utils.StageSettings;
-	import flash.events.Event;
-	import temple.ui.form.validation.rules.Restrictions;
-	import temple.utils.FrameRateKiller;
-	import flash.text.TextField;
-	import com.greensock.easing.Linear;
-	import com.greensock.TweenLite;
 	import temple.debug.PerformanceStat;
-	import temple.core.CoreSprite;
 	import temple.ui.animation.FrameStableMovieClip;
 	import temple.ui.buttons.MultiStateButton;
+	import temple.ui.form.validation.rules.Restrictions;
+	import temple.utils.FrameRateKiller;
+
+	import com.greensock.TweenLite;
+	import com.greensock.easing.Linear;
 
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
 
-	public class FrameStableMovieClipExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class FrameStableMovieClipExample extends DocumentClassExample 
 	{
 		// MovieClip with an ordinary timeline animation over 62 frames (would normally take 2 seconds at 31 fps)
 		public var mcNormalTimelineAnimation:MovieClip;
@@ -53,7 +53,7 @@ package
 
 		public function FrameStableMovieClipExample()
 		{
-			new StageSettings(this);
+			super("Temple - FrameStableMovieClipExample");
 			
 			this.mcNormalTimelineAnimation.stop();
 			this.mcFrameStableTimelineAnimation.stop();
@@ -73,13 +73,6 @@ package
 
 		private function handlePlayButtonClick(event:MouseEvent):void 
 		{
-			this.play();
-		}
-
-		private function play():void 
-		{
-			trace("play");
-			
 			this.mcNormalTimelineAnimation.gotoAndPlay(1);
 			this.mcFrameStableTimelineAnimation.gotoAndPlay(1);
 			

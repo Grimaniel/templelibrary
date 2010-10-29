@@ -83,7 +83,7 @@ package temple.core
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CoreSprite extends Sprite implements ICoreDisplayObject 
+	public class CoreSprite extends Sprite implements ICoreDisplayObjectContainer
 	{
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;

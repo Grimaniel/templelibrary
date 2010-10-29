@@ -3,7 +3,7 @@
  * 
  * <h1>FunctionUtils</h1>
  * 
- * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/FunctionUtils.html">FunctionUtils</a>.</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/FunctionUtils.html">FunctionUtils</a>.</p>
  * 
  * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
  * 
@@ -13,19 +13,17 @@
  */
 package  
 {
-	import nl.acidcats.yalog.util.YaLogConnector;
-
-	import temple.core.CoreSprite;
 	import temple.utils.types.FunctionUtils;
 
 	import flash.display.MovieClip;
 
-	public class FunctionUtilsExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class FunctionUtilsExample extends DocumentClassExample 
 	{
 		public function FunctionUtilsExample()
 		{
-			// Connect to Yalog, so you can see all log message at: http://yalala.tyz.nl/
-			YaLogConnector.connect("Temple - FunctionUtilsExample");
+			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
+			super("Temple - FunctionUtilsExample");
 			
 			log(myPrivateFunction); // function Function() {}
 			

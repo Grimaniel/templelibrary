@@ -3,7 +3,7 @@
  * 
  * <h1>URLManager</h1>
  * 
- * <p>This is an example about the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/url/URLManager.html">URLManager</a>. The URLManager is used to manage the URL's of a project in an XML file. With this XML file you can easily switch between different groups groups of URL's (for different environments).</p>
+ * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/url/URLManager.html">URLManager</a>. The URLManager is used to manage the URL's of a project in an XML file. With this XML file you can easily switch between different groups groups of URL's (for different environments).</p>
  * 
  * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
  * 
@@ -13,23 +13,22 @@
  */
 package  
 {
-	import temple.data.xml.XMLServiceEvent;
-	import nl.acidcats.yalog.util.YaLogConnector;
 	import temple.data.url.URLManager;
-	import temple.core.CoreSprite;
+	import temple.data.xml.XMLServiceEvent;
 
-	public class URLManagerExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class URLManagerExample extends DocumentClassExample 
 	{
 		public function URLManagerExample()
 		{
-			// Connect to Yalog, so you can see all log message at: http://yalala.tyz.nl/
-			YaLogConnector.connect("Temple - URLManagerExample");
+			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
+			super("Temple - URLManagerExample");
 			
 			// set debug mode to get debug log messages from the URLManager
 			URLManager.getInstance().debug = true; 
 			
 			// add EventListenr
-			URLManager.addEventListener(XMLServiceEvent.COMPLETE, this.handleURLManagerComplete);
+			URLManager.addEventListenerOnce(XMLServiceEvent.COMPLETE, this.handleURLManagerComplete);
 			
 			// load urls.xml
 			URLManager.loadURLs("xml/urls.xml");

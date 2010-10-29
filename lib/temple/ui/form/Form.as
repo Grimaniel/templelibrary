@@ -574,6 +574,9 @@ package temple.ui.form
 			DebugManager.setDebugForChilds(this, value);
 		}
 
+		/**
+		 * @private
+		 */
 		protected function send():void
 		{
 			if (this._debug) this.logDebug("send: ");
@@ -608,16 +611,25 @@ package temple.ui.form
 			}
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleSubmitButtonClicked(event:MouseEvent):void 
 		{
 			this.submit();
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleResetButtonClicked(event:MouseEvent):void 
 		{
 			this.reset();
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleFormServiceEvent(event:FormServiceEvent):void 
 		{
 			switch(event.type)
@@ -691,7 +703,9 @@ package temple.ui.form
 					
 		}
 
-		
+		/**
+		 * @private
+		 */
 		protected function handleFormElementSubmit(event:FormElementEvent):void
 		{
 			if (this._submitByElement) this.submit();

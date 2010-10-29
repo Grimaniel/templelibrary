@@ -3,7 +3,7 @@
  * 
  * <h1>Form</h1>
  * 
- * <p>This is an example about the Form. In this case we have a form for submitting personal data. 
+ * <p>This is an example of the Form. In this case we have a form for submitting personal data. 
  * When the form is submitted the data is stored in a PersonData object.</p>
  * 
  * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
@@ -16,9 +16,6 @@
  */
 package  
 {
-	import nl.acidcats.yalog.util.YaLogConnector;
-
-	import temple.core.CoreSprite;
 	import temple.ui.buttons.MultiStateButton;
 	import temple.ui.form.Form;
 	import temple.ui.form.FormEvent;
@@ -32,12 +29,12 @@ package
 	import temple.ui.form.validation.rules.EmptyStringValidationRule;
 	import temple.ui.form.validation.rules.NullValidationRule;
 	import temple.ui.form.validation.rules.Restrictions;
-	import temple.utils.StageSettings;
 	import temple.utils.types.ObjectUtils;
 
 	import flash.text.TextFieldAutoSize;
 
-	public class FormExample extends CoreSprite 
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class FormExample extends DocumentClassExample 
 	{
 		// timeline elements
 		public var mcNameField:InputField;
@@ -58,9 +55,7 @@ package
 
 		public function FormExample()
 		{
-			new StageSettings(this);
-			
-			YaLogConnector.connect("Temple - FormExample");
+			super("Temple - FormExample");
 			
 			// create a PersonData object in which we store the data after submitting.
 			this._data = new PersonData();

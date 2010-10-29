@@ -131,7 +131,6 @@ package temple.data.loader.preload
 					total += t;
 					loaded += t;
 				}
-				
 				for each (target in PreloadableBehavior._loadingList[this._preloader])
 				{
 					total += this.getBytesTotalForTarget(target);
@@ -191,7 +190,6 @@ package temple.data.loader.preload
 			{
 				total = Object(target)['bytesTotal'];
 			}
-			
 			return total;
 		}
 		

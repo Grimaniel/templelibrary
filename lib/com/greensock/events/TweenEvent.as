@@ -6,13 +6,12 @@ package com.greensock.events
 	 * @private
 	 * 
 	 * Used for dispatching events from the GreenSock Tweening Platform. <br /><br />
-	 * 	  
-	 * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
-	 * 
-	 * @author Jack Doyle, jack@greensock.com
-	 */
-	public class TweenEvent extends Event 
-	{
+ * 	  
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * 
+ * @author Jack Doyle, jack@greensock.com
+ */
+	public class TweenEvent extends Event {
 		/** @private **/
 		public static const VERSION:Number = 1.1;
 		public static const START:String = "start";
@@ -21,15 +20,15 @@ package com.greensock.events
 		public static const REVERSE_COMPLETE:String = "reverseComplete";
 		public static const REPEAT:String = "repeat";
 		public static const INIT:String = "init";
-
-		public function TweenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false) 
-		{
+		
+		public function TweenEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) {
 			super(type, bubbles, cancelable);
 		}
-
-		override public function clone():Event 
-		{
+		
+		public override function clone():Event {
 			return new TweenEvent(this.type, this.bubbles, this.cancelable);
 		}
+	
 	}
+	
 }

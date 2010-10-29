@@ -80,16 +80,16 @@ package temple.data.xml
 	public class XMLService extends CoreEventDispatcher implements IDebuggable
 	{
 		protected var _loader:XMLLoader;
-		protected var _debug:Boolean;
+		private var _debug:Boolean;
 
 		public function XMLService()
 		{
 			super();
 			
 			this._loader = new XMLLoader();
-			this._loader.addEventListener(XMLLoaderEvent.COMPLETE, handleLoaderEvent);
-			this._loader.addEventListener(XMLLoaderEvent.ALL_COMPLETE, handleLoaderEvent);
-			this._loader.addEventListener(XMLLoaderEvent.ERROR, handleLoadError);
+			this._loader.addEventListener(XMLLoaderEvent.COMPLETE, this.handleLoaderEvent);
+			this._loader.addEventListener(XMLLoaderEvent.ALL_COMPLETE, this.handleLoaderEvent);
+			this._loader.addEventListener(XMLLoaderEvent.ERROR, this.handleLoadError);
 		}
 
 		/**

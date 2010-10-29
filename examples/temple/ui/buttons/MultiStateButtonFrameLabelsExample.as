@@ -3,7 +3,7 @@
  * 
  * <h1>MultiStateButton</h1>
  * 
- * <p>This is an example about how to use frame labels in a <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/MultiStateButton.html">MultiStateButton</a>.</p>
+ * <p>This is an example about the usage of frame labels in a <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/MultiStateButton.html">MultiStateButton</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf</a></p>
  * 
@@ -14,9 +14,9 @@
 package
 {
 	import temple.ui.buttons.MultiStateButton;
-	import temple.core.CoreSprite;
-	
-	public class MultiStateButtonFrameLabelsExample extends CoreSprite 
+
+	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+	public class MultiStateButtonFrameLabelsExample extends DocumentClassExample 
 	{
 		
 		// A MultiStateButton with 'up', 'in', 'over', 'out', 'press', 'down' and 'release' framelabels.
@@ -68,6 +68,8 @@ package
 		
 		public function MultiStateButtonFrameLabelsExample()
 		{
+			super("Temple - MultiStateButtonFrameLabelsExample");
+			
 			// Switch off playing backwards.
 			this.mcButton6.buttonTimelineBehavior.playBackwardsBeforeOver = false;
 			this.mcButton6.buttonTimelineBehavior.playBackwardsBeforeDown = false;
