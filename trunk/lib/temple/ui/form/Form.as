@@ -261,9 +261,35 @@ package temple.ui.form
 			if (element is IEventDispatcher) (element as IEventDispatcher).removeEventListener(FormElementEvent.SUBMIT, this.handleFormElementSubmit);
 		}
 
+		/**
+		 * Checks if the Form has an element with a specific name
+		 */
 		public function hasElement(name:String):Boolean
 		{
 			return (this._elements[name]) ? true : false;
+		}
+
+		/**
+		 * Returns the element with the specific name
+		 */
+		public function getElement(name:String):IHasValue
+		{
+			return this._elements[name] ? FormElementData(this._elements[name]).element : null;
+		}
+		
+		/**
+		 * Set if an element with a specific name should be send on submit
+		 */
+		public function updateElement(name:String, submit:Boolean):void 
+		{
+			if (this.hasElement(name))
+			{
+				FormElementData(this._elements[name]).submit = submit;
+			}
+			else
+			{
+				throwError(new TempleArgumentError(this, "No element found with name '" + name + "'"));
+			}
 		}
 
 		/**
@@ -574,9 +600,6 @@ package temple.ui.form
 			DebugManager.setDebugForChilds(this, value);
 		}
 
-		/**
-		 * @private
-		 */
 		protected function send():void
 		{
 			if (this._debug) this.logDebug("send: ");
@@ -611,25 +634,16 @@ package temple.ui.form
 			}
 		}
 
-		/**
-		 * @private
-		 */
 		protected function handleSubmitButtonClicked(event:MouseEvent):void 
 		{
 			this.submit();
 		}
 
-		/**
-		 * @private
-		 */
 		protected function handleResetButtonClicked(event:MouseEvent):void 
 		{
 			this.reset();
 		}
 
-		/**
-		 * @private
-		 */
 		protected function handleFormServiceEvent(event:FormServiceEvent):void 
 		{
 			switch(event.type)
@@ -703,9 +717,7 @@ package temple.ui.form
 					
 		}
 
-		/**
-		 * @private
-		 */
+		
 		protected function handleFormElementSubmit(event:FormElementEvent):void
 		{
 			if (this._submitByElement) this.submit();

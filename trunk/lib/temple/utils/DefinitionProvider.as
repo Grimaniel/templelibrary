@@ -213,7 +213,7 @@ package temple.utils
 			DefinitionProvider.init();
 			if (DefinitionProvider._domainRegister[appDomain])
 			{
-				Log.info(appDomain + 'allready registerd', DefinitionProvider.toString());
+				Log.info(appDomain + 'allready registered', DefinitionProvider.toString());
 				return;
 			}
 			if (DefinitionProvider.debug) Log.debug("registerApplicationDomain " + appDomain, DefinitionProvider);

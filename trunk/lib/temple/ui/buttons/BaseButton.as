@@ -55,20 +55,22 @@
 	public class BaseButton extends CoreMovieClip implements IEnableable
 	{
 		/**
-		 * Optional display list item to act as hitarea for the button
+		 * Instance name of a child which acts as hitArea for the button.
 		 */
-		public var mcHitArea:Sprite;
-
+		public static var HIT_AREA_NAME:String = "mcHitArea";
+		
 		public function BaseButton() 
 		{
 			// act as button
 			this.buttonMode = true;
 			
 			// set and hide hit area
-			if (this.mcHitArea != null) 
+			var hitArea:Sprite = this.getChildByName(BaseButton.HIT_AREA_NAME) as Sprite;
+			
+			if (hitArea != null) 
 			{
-				this.hitArea = this.mcHitArea;
-				this.mcHitArea.visible = false;
+				this.hitArea = hitArea;
+				hitArea.visible = false;
 			}
 			
 			// don't handle mouse events on children
@@ -104,7 +106,6 @@
 		 */
 		override public function destruct():void
 		{
-			this.mcHitArea = null;
 			this.hitArea = null;
 			
 			super.destruct();

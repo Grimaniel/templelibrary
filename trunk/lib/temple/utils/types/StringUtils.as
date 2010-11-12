@@ -810,8 +810,36 @@ package temple.utils.types
 				}
 				trunc += suffix;
 			}
-
 			return trunc;
+		}
+
+		/**
+		 * Removes all instances of word in string.
+		 * @param string the original string.
+		 * @param word the word to remove from string.
+		 * @param caseSensitive indicates in removing is case sensative.
+		 * @return the string without the word
+		 */
+		public static function removeWord(string:String, word:String, caseSensitive:Boolean = true):String 
+		{
+			return string.replace(new RegExp("^" + word + "(\\W)|(\\W)" + word + "$|\\W" + word + "(?=\\W)", "g" + (caseSensitive ? "" : "i")), "");
+		}
+
+		/**
+		 * Removes all instances of all words in string
+		 * @param string the original string
+		 * @param word the word to remove from string
+		 * @param caseSensitive indicates in removing is case sensative.
+		 * @return the string without the word
+		 */
+		public static function removeWords(string:String, words:Array, caseSensitive:Boolean = true):String 
+		{
+			var leni:int = words.length;
+			for (var i:int = 0; i < leni; i++)
+			{
+				string = StringUtils.removeWord(string, words[i], caseSensitive);
+			}
+			return string;
 		}
 
 		public static function toString():String

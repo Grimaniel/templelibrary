@@ -87,9 +87,9 @@ package temple.ui.buttons.behaviors
 		 */
 		public function update(status:IButtonStatus):void
 		{
-			if(status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if(status is ISelectable) this.selected = (status as ISelectable).selected;
-			if(status is IFocusable) this.focus = (status as IFocusable).focus;
+			if (status is IDisableable) this.disabled = (status as IDisableable).disabled;
+			if (status is ISelectable) this.selected = (status as ISelectable).selected;
+			if (status is IFocusable) this.focus = (status as IFocusable).focus;
 			this.over = status.over;
 			this.down = status.down;
 		}

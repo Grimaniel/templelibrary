@@ -40,7 +40,7 @@
  *	
  */
 
-package temple.utils 
+package temple.utils.color 
 {
 	import temple.utils.types.NumberUtils;
 

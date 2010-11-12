@@ -75,6 +75,15 @@ package temple.utils.types
 			}
 			return '';
 		}
+		
+		/**
+		 * Add a parameter to the url
+		 */
+		public static function addParameter(url:String, param:String, value:String):String
+		{
+			return url + (url.indexOf("?") == -1 ? "?" : "&") + param + "=" + value;
+		}
+		
         
 		public static function toString():String
 		{

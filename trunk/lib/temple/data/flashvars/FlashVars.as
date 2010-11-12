@@ -58,11 +58,13 @@ package temple.data.flashvars
 	 * <listing version="3.0">
 	 * FlashVars.initialize(this.stage.loaderInfo.parameters);
 	 * 
-	 * FlashVars.configurateVar(FlashVarNames.LANGUAGE, 'nl', String);
-	 * FlashVars.configurateVar(FlashVarNames.VERSION, 1, int);
-	 * FlashVars.configurateVar(FlashVarNames.IS_DEMO, true, Boolean);
+	 * FlashVars.configureVar(FlashVarNames.LANGUAGE, 'nl', String);
+	 * FlashVars.configureVar(FlashVarNames.VERSION, 1, int);
+	 * FlashVars.configureVar(FlashVarNames.IS_DEMO, true, Boolean);
 	 * 
-	 * FlashVars.hasValue(FlashVarNames.VERSION);
+	 * FlashVars.isExternal(FlashVarNames.VERSION);
+	 * FlashVars.isSet(FlashVarNames.VERSION);
+	 * FlashVars.isEmpty(FlashVarNames.VERSION);
 	 * 
 	 * FlashVars.getValue(FlashVarNames.LANGUAGE);
 	 * </listing>
@@ -75,6 +77,7 @@ package temple.data.flashvars
 
 		/**
 		 * Use this in the Main.as to initialize the flashvars.
+		 * If you don't use an HTML file, but still want to use the FlashVars class for configuration, use {}
 		 * 
 		 * @param parameters The parameters object (this.stage.loaderInfo.parameters)
 		 */
@@ -100,18 +103,19 @@ package temple.data.flashvars
 		 * Use this to configure the flashvars with a default value and a type.
 		 * 
 		 * @param name The flashvar name (use FlashVarNames.NAME)
-		 * @param defaultValue The defaultValue if the flashvar does not exists or is empty
+		 * @param defaultValue The defaultValue if the flashvar is not set or is empty
 		 * @param type The class to cast this FlashVar to. Array will use split(',').
 		 * @param enum a class which contains possible values as 'public static const'. If value is not in the enum class, the default will be used.
+		 * 
 		 * @throws temple.debug.errors.TempleArgumentError When defaultValue is not of type
 		 * @throws temple.debug.errors.TempleError When not initialized
 		 * 
 		 * @example
 		 * <listing version="3.0">
-		 * FlashVars.configurateVar(FlashVarNames.LANGUAGE, 'nl', String);
-		 * FlashVars.configurateVar(FlashVarNames.VERSION, 1, int);
-		 * FlashVars.configurateVar(FlashVarNames.IS_DEMO, true, Boolean);
-		 * FlashVars.configurateVar(FlashVarNames.ALIGN, Align.LEFT, String, Align);
+		 * FlashVars.configureVar(FlashVarNames.LANGUAGE, 'nl', String);
+		 * FlashVars.configureVar(FlashVarNames.VERSION, 1, int);
+		 * FlashVars.configureVar(FlashVarNames.IS_DEMO, true, Boolean);
+		 * FlashVars.configureVar(FlashVarNames.ALIGN, Align.LEFT, String, Align);
 		 * </listing>
 		 */
 		public static function configureVar(name:String, defaultValue:* = null, type:Class = null, enum:Class = null):void
@@ -120,7 +124,7 @@ package temple.data.flashvars
 			
 			var flashVar:FlashVar = FlashVars._flashvars[name];
 			
-			if (!flashVar) flashVar = FlashVars._flashvars[name] = new FlashVar(name, '');
+			if (!flashVar) flashVar = FlashVars._flashvars[name] = new FlashVar(name, null);
 			
 			flashVar.type = type;
 			flashVar.defaultValue = defaultValue;
@@ -133,12 +137,70 @@ package temple.data.flashvars
 		}
 
 		/**
-		 * Returns the flashvar value.
-		 * If the flashvar is empty or not given it will return the defaultValue.
-		 * If a class is given it will be casted to that class.
-		 * <p>If name is not in the flashvar-pool, a warning is logged and an empty String is returned</p>
+		 * Checks if the flashvar is external (added via initialize)
 		 * 
 		 * @param name The flashvar name (use FlashVarNames.NAME)
+		 * 
+		 * @throws temple.debug.errors.TempleError When not initialized
+		 * 
+		 * @example
+		 * <listing version="3.0">
+		 * FlashVars.isExternal(FlashVarNames.LANGUAGE);
+		 * </listing>
+		 */
+		public static function isExternal(name:String):Boolean
+		{
+			if (!FlashVars._flashvars) throwError(new TempleError(FlashVar, 'FlashVars is not initialized yet!'));
+			
+			return FlashVars._flashvars[name] && FlashVar(FlashVars._flashvars[name]).external;
+		}
+
+		/**
+		 * Checks if the flashvar is available in the pool (added via initialize or configureVar)
+		 * 
+		 * @param name The flashvar name (use FlashVarNames.NAME)
+		 * 
+		 * @throws temple.debug.errors.TempleError When not initialized
+		 * 
+		 * @example
+		 * <listing version="3.0">
+		 * FlashVars.isSet(FlashVarNames.LANGUAGE);
+		 * </listing>
+		 */
+		public static function isSet(name:String):Boolean
+		{
+			if (!FlashVars._flashvars) throwError(new TempleError(FlashVar, 'FlashVars is not initialized yet!'));
+			
+			return FlashVars._flashvars[name] != null;
+		}
+
+		/**
+		 * Checks if the flashvar has a value (null or undefined or "")
+		 * 
+		 * @param name The flashvar name (use FlashVarNames.NAME)
+		 * 
+		 * @throws temple.debug.errors.TempleError When not initialized
+		 * 
+		 * @example
+		 * <listing version="3.0">
+		 * FlashVars.isEmpty(FlashVarNames.LANGUAGE);
+		 * </listing>
+		 */
+		public static function isEmpty(name:String):Boolean
+		{
+			if (!FlashVars._flashvars) throwError(new TempleError(FlashVar, 'FlashVars is not initialized yet!'));
+
+			return (FlashVars._flashvars[name] == null || FlashVar(FlashVars._flashvars[name]).value == "" || FlashVar(FlashVars._flashvars[name]).value == undefined);
+		}
+
+		/**
+		 * Returns the flashvar value.
+		 * If the flashvar is empty or not set it will return the defaultValue.
+		 * If a class is given it will be casted to that class.
+		 * <p>If name is not in the flashvar-pool, a warning is logged and null is returned</p>
+		 * 
+		 * @param name The flashvar name (use FlashVarNames.NAME)
+		 * 
 		 * @throws temple.debug.errors.TempleError When not initialized
 		 * 
 		 * @example
@@ -150,31 +212,13 @@ package temple.data.flashvars
 		{
 			if (!FlashVars._flashvars) throwError(new TempleError(FlashVar, 'FlashVars is not initialized yet!'));
 			
-			if (!FlashVars.hasValue(name))
+			if (!FlashVars.isSet(name))
 			{
 				Log.warn('No such flashvar : ' + name, FlashVars);
-				return '';
+				return null;
 			}
 			
 			return FlashVar(FlashVars._flashvars[name]).value;
-		}
-
-		/**
-		 * Checks if the flashvar is available in the pool (added via initialize or configurateVar)
-		 * 
-		 * @param name The flashvar name (use FlashVarNames.NAME)
-		 * @throws temple.debug.errors.TempleError When not initialized
-		 * 
-		 * @example
-		 * <listing version="3.0">
-		 * FlashVars.hasValue(FlashVarNames.LANGUAGE);
-		 * </listing>
-		 */
-		public static function hasValue(name:String):Boolean
-		{
-			if (!FlashVars._flashvars) throwError(new TempleError(FlashVar, 'FlashVars is not initialized yet!'));
-			
-			return FlashVars._flashvars[name] != null;
 		}
 
 		/**
@@ -196,7 +240,7 @@ package temple.data.flashvars
 			
 			for (var name:String in FlashVars._flashvars)
 			{
-				str += "\t" + name + ' : ' + FlashVar(FlashVars._flashvars[name]) + "\n";
+				str += "\t" + name + ': ' + FlashVar(FlashVars._flashvars[name]).value + " \t" + FlashVar(FlashVars._flashvars[name]) + "\n";
 			}
 			return str;
 		}

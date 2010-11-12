@@ -52,7 +52,7 @@ package temple.utils
 	 */
 	public final class HTMLEntities 
 	{
-		private static var _ENTITIES:Object;
+		private static var _entities:Object;
 
 		/**
 		 * Replaces HTML Entities codes to Flash codes in a String
@@ -61,14 +61,11 @@ package temple.utils
 		 */
 		public static function decode(string:String):String
 		{
-			if(HTMLEntities._ENTITIES == null)
-			{
-				HTMLEntities._ENTITIES = HTMLEntities.getEntities();
-			}
+			HTMLEntities._entities ||= HTMLEntities.getEntities();
         	
-			for(var entity:String in HTMLEntities._ENTITIES)
+			for(var entity:String in HTMLEntities._entities)
 			{
-				string = string.replace(new RegExp(entity, 'g'), HTMLEntities._ENTITIES[entity]);
+				string = string.replace(new RegExp(entity, 'g'), HTMLEntities._entities[entity]);
 			}
 			try
 			{

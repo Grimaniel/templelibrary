@@ -45,6 +45,7 @@ package temple.ui.buttons.behaviors
 	import temple.core.CoreTimer;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
+	import temple.ui.buttons.BaseButton;
 	import temple.ui.eventtunneling.EventTunneler;
 	import temple.ui.focus.FocusManager;
 	import temple.utils.keys.KeyCode;
@@ -82,8 +83,6 @@ package temple.ui.buttons.behaviors
 	 */
 	public class ButtonBehavior extends AbstractButtonBehavior
 	{
-		public static var HIT_AREA_NAME:String = "mcHitArea";
-		
 		private static const _dictionary:Dictionary = new Dictionary(true);
 		
 		/**
@@ -125,10 +124,10 @@ package temple.ui.buttons.behaviors
 						this._eventTunneler = new EventTunneler(target as Sprite, ButtonEvent.UPDATE);
 						
 						(target as Sprite).buttonMode = true;
-						if(target.hasOwnProperty(ButtonBehavior.HIT_AREA_NAME) && target[ButtonBehavior.HIT_AREA_NAME] is Sprite)
+						if(target.hasOwnProperty(BaseButton.HIT_AREA_NAME) && target[BaseButton.HIT_AREA_NAME] is Sprite)
 						{
-							(target as Sprite).hitArea = target[ButtonBehavior.HIT_AREA_NAME] as Sprite;
-							(target[ButtonBehavior.HIT_AREA_NAME] as Sprite).visible = false;
+							(target as Sprite).hitArea = target[BaseButton.HIT_AREA_NAME] as Sprite;
+							(target[BaseButton.HIT_AREA_NAME] as Sprite).visible = false;
 						}
 					}
 				}

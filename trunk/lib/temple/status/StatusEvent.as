@@ -42,6 +42,7 @@
 
 package temple.status 
 {
+	import temple.debug.getClassName;
 	import flash.events.Event;
 
 	/**
@@ -68,6 +69,11 @@ package temple.status
 		override public function clone():Event
 		{
 			return new StatusEvent(this.type, this._status, this.bubbles);
+		}
+
+		override public function toString():String
+		{
+			return getClassName(this) + ": status=\"" + this.status + "\"";
 		}
 	}
 }
