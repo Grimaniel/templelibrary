@@ -61,10 +61,11 @@ package temple.debug
 	 */
 	public final class Memory
 	{
-		private static var _registry:Dictionary; 
+		private static var _registry:Dictionary;
+		private static var _debug:Boolean; 
 
 		/**
-		 * Forces the Garbage Collector to run
+		 * Forces the Garbage Collector to run.
 		 */
 		public static function forceGarbageCollection():void
 		{
@@ -77,7 +78,7 @@ package temple.debug
 		}
 		
 		/**
-		 * Returns the totalMemory used by Flash
+		 * Returns the totalMemory used by Flash.
 		 * @return The totalMemory used by Flash
 		 */
 		public static function get used():uint
@@ -144,6 +145,8 @@ package temple.debug
 						
 						// store info about the object
 						Memory._registry[object] = new RegistryInfo(stacktrace ? stackList.join("\n") : '', Registry.getId(object));
+
+						if (Memory._debug) Log.debug("New object registered, id=" + registryId + ", object=" + object, Memory);
 					}
 				}
 			}
@@ -306,6 +309,22 @@ package temple.debug
 				value;
 			}
 			return total;
+		}
+		
+		/**
+		 * If set to true, the Memory logs a message everytime an object is registered.
+		 */
+		public static function get debug():Boolean
+		{
+			return Memory._debug;
+		}
+
+		/**
+		 * @private
+		 */
+		public static function set debug(value:Boolean):void
+		{
+			Memory._debug = value;
 		}
 		
 		/**

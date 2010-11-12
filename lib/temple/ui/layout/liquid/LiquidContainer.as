@@ -42,6 +42,8 @@
 
 package temple.ui.layout.liquid 
 {
+	import flash.display.DisplayObject;
+
 	import temple.ui.IHasBackground;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
@@ -415,6 +417,15 @@ package temple.ui.layout.liquid
 		override public function get offset():Point 
 		{
 			return new Point(0,0);
+		}
+
+		override public function getBounds(targetCoordinateSpace:DisplayObject):Rectangle 
+		{
+			if (targetCoordinateSpace == this.parent)
+			{
+				return new Rectangle(this.x, this.y, this.width, this.height);
+			}
+			return super.getBounds(targetCoordinateSpace);
 		}
 
 		private function layout():void 

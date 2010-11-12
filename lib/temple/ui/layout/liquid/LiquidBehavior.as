@@ -46,7 +46,6 @@ package temple.ui.layout.liquid
 	import temple.behaviors.IBehavior;
 	import temple.core.CoreShape;
 	import temple.core.ICoreDisplayObject;
-	import temple.debug.DebugManager;
 	import temple.debug.IDebuggable;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
@@ -54,9 +53,9 @@ package temple.ui.layout.liquid
 	import temple.debug.getClassName;
 	import temple.debug.log.Log;
 	import temple.ui.IEnableable;
-	import temple.utils.ColorUtils;
 	import temple.utils.PropertyApplier;
 	import temple.utils.StageProvider;
+	import temple.utils.color.ColorUtils;
 
 	import flash.display.CapsStyle;
 	import flash.display.DisplayObject;
@@ -68,7 +67,7 @@ package temple.ui.layout.liquid
 	import flash.utils.Dictionary;
 
 	/**
-	 * Dispatched when the init() is called, after initialization
+	 * Dispatched when the init() is called, after initialization.
 	 * @eventType flash.events.Event.INIT
 	 */
 	[Event(name = "init", type = "flash.events.Event")]
@@ -206,8 +205,6 @@ package temple.ui.layout.liquid
 			target.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
 			
 			this._debugColor = ColorUtils.getRandomColor();
-			
-			DebugManager.add(this);
 			
 			if (initObject)
 			{

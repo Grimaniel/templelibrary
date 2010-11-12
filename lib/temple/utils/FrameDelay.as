@@ -60,6 +60,7 @@ limitations under the License.
 
 package temple.utils 
 {
+	import temple.utils.types.FunctionUtils;
 	import temple.ui.IPauseable;
 	import temple.core.CoreObject;
 
@@ -95,6 +96,16 @@ package temple.utils
 	 */
 	public final class FrameDelay extends CoreObject implements IPauseable
 	{
+		/**
+		 * Make frame-delayed callback: (eg: a closure to .resume() of a paused FrameDelay)
+		 */
+		public static function closure(callback:Function, frameCount:int = 1, params:Array = null):Function
+		{
+			var fd:FrameDelay = new FrameDelay(callback, frameCount, params);
+			fd.pause();
+			return fd.resume;
+		}
+		
 		private var _isDone:Boolean = false;
 		private var _currentFrame:int;
 		private var _callback:Function;
@@ -187,15 +198,10 @@ package temple.utils
 			
 			super.destruct();
 		}
-		
-		/**
-		 * Make frame-delayed callback: (eg: a closure to .resume() of a paused FrameDelay)
-		 */
-		public static function closure(callback:Function, frameCount:int = 1, params:Array = null):Function
+
+		override public function toString():String
 		{
-			var fd:FrameDelay = new FrameDelay(callback, frameCount, params);
-			fd.pause();
-			return fd.resume;
+			return super.toString() + ": " + (this._callback != null ? FunctionUtils.functionToString(this._callback) + "(" + (this._params ? this._params : "") + ")" : "");
 		}
 	}
 }

@@ -69,7 +69,7 @@ package temple.behaviors
 		/**
 		 * Creates a new AbstractBehavior
 		 * @param target The target of this behavior, preferable an IEventDispatcher so 
-		 * the behavior will be destructed when the target is destructed
+		 * the behavior will be destructed when the target is destructed.
 		 */
 		public function AbstractBehavior(target:Object)
 		{

@@ -248,7 +248,7 @@ package temple.utils.types
 							}
 							else
 							{
-								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable) + ")" : "");
+								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable) + ")" : "") + (maxDepth && objects && objects[variable] ? " (duplicate)" : "");
 							}
 						}
 						break;
@@ -291,7 +291,10 @@ package temple.utils.types
 		{
 			if (object is Array) return (object as Array).length > 0;
 			
-			for(var key:* in object) return true;
+			for(var key:* in object)
+			{
+				return true;
+			}
 			key;
 			
 			var description:XML = describeType(object);
@@ -305,7 +308,10 @@ package temple.utils.types
 		public static function length(object:Object):int
 		{
 			var count:int = 0;
-			for(var key:String in object) count++;
+			for(var key:* in object)
+			{
+				count++;
+			}
 			key;
 			return count;
 		}
@@ -328,7 +334,7 @@ package temple.utils.types
 			for each (var node : XML in describeType(object).accessor.(@access == 'readwrite' || @access == 'readonly'))
 			{
 				result[node.@name] = object[node.@name];
-			};
+			}
 			return result;
 		}
 		
@@ -338,7 +344,7 @@ package temple.utils.types
 		public static function clone(object:Object):Object
 		{
 			var copy:Object = new Object();
-			for (var key : String in object)
+			for (var key:* in object)
 			{
 				copy[key] = object[key];
 			}
@@ -346,10 +352,10 @@ package temple.utils.types
 		}
 		
 		/**
-		 * Get the keys of an object.
+		 * Get the keys and properties of an object.
 		 * @return an Array of all the keys
 		 */
-		public static function getKeys(object:Object):Array
+		public static function getProperties(object:Object):Array
 		{
 			var keys:Array = new Array();
 			var key:*;
@@ -378,6 +384,20 @@ package temple.utils.types
 				{
 					keys.push(String(getters[i].@name));
 				}
+			}
+			return keys;
+		}
+		
+		/**
+		 * Get the keys of an object.
+		 * @return an Array of all the keys
+		 */
+		public static function getKeys(object:Object):Array
+		{
+			var keys:Array = new Array();
+			for (var key:* in object)
+			{
+				keys.push(key);
 			}
 			return keys;
 		}
