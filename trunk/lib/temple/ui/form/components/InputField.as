@@ -78,6 +78,8 @@ package temple.ui.form.components
 	[Event(name = "FormElementEvent.submit", type = "temple.ui.form.components.FormElementEvent")]
 	
 	/**
+	 * @includeExample ../services/FormXMLServiceExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class InputField extends FormElementComponent implements IHasError, IResettable, ISetValue, IEnableable, IDebuggable

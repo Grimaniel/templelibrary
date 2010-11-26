@@ -6,9 +6,9 @@
  * 
  * <p>This is an example of the FormXMLService. In this case we send the submitted data to an XML file, which acts as the result of a possible backend server.</p>
  * 
- * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLService.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLService.swf</a></p>
+ * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLService.as" target="_blank">Download source</a></p>   
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.as" target="_blank">Download source</a></p>   
  */
 package
 {
