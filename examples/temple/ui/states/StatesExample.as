@@ -4,7 +4,7 @@
  * <a name="States"></a>
  * <h1>States</h1>
  * 
- * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/states/package-detail.html">states</a>.</p>
+ * <p>This is an example about <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/states/IState.html">states</a>.</p>
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/states/StatesExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/states/StatesExample.swf</a></p>
  * 

@@ -54,7 +54,6 @@ package temple.utils.propertyproxy
 	{
 		public function SimplePropertyProxy()
 		{
-			super();
 		}
 		
 		/**
@@ -63,6 +62,14 @@ package temple.utils.propertyproxy
 		public function setValue(target:Object, property:String, value:*):void
 		{
 			target[property] = value;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function cancel():Boolean
+		{
+			return true;
 		}
 	}
 }

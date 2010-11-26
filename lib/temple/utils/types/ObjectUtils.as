@@ -248,7 +248,7 @@ package temple.utils.types
 							}
 							else
 							{
-								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable) + ")" : "") + (maxDepth && objects && objects[variable] ? " (duplicate)" : "");
+								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + (variable != null ? getClassName(variable) : vardata.type) + ")" : "") + (objects && objects[variable] ? " (duplicate)" : "");
 							}
 						}
 						break;

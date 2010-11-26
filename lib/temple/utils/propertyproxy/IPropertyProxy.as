@@ -42,6 +42,7 @@
 
 package temple.utils.propertyproxy 
 {
+	import temple.ui.ICancellable;
 	import temple.destruction.IDestructible;
 
 	/**
@@ -52,7 +53,7 @@ package temple.utils.propertyproxy
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IPropertyProxy extends IDestructible
+	public interface IPropertyProxy extends IDestructible, ICancellable
 	{
 		/**
 		 * Set the value of a property through the proxy
@@ -61,5 +62,7 @@ package temple.utils.propertyproxy
 		 * @param value the value to be set
 		 */
 		function setValue(target:Object, property:String, value:*):void;
+		
+		
 	}
 }

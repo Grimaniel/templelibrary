@@ -124,10 +124,10 @@ package temple.ui.buttons.behaviors
 						this._eventTunneler = new EventTunneler(target as Sprite, ButtonEvent.UPDATE);
 						
 						(target as Sprite).buttonMode = true;
-						if(target.hasOwnProperty(BaseButton.HIT_AREA_NAME) && target[BaseButton.HIT_AREA_NAME] is Sprite)
+						if(target.hasOwnProperty(BaseButton.HITAREA_INSTANCENAME) && target[BaseButton.HITAREA_INSTANCENAME] is Sprite)
 						{
-							(target as Sprite).hitArea = target[BaseButton.HIT_AREA_NAME] as Sprite;
-							(target[BaseButton.HIT_AREA_NAME] as Sprite).visible = false;
+							(target as Sprite).hitArea = target[BaseButton.HITAREA_INSTANCENAME] as Sprite;
+							(target[BaseButton.HITAREA_INSTANCENAME] as Sprite).visible = false;
 						}
 					}
 				}

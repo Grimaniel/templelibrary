@@ -54,19 +54,22 @@ package temple.ui.states.error
 	 */
 	public class ErrorFadeState extends BaseFadeState implements IErrorState 
 	{
-		protected var _txtError:TextField;
+		private var _errorTextField:TextField;
 		
-		public function ErrorFadeState(showDuration:Number = .5, hideDuration:Number = .5)
+		public function ErrorFadeState(showDuration:Number = .5, hideDuration:Number = .5, errorTextField:TextField = null)
 		{
 			super(showDuration, hideDuration);
 			
-			this._txtError = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
-			if(this._txtError) this._txtError.text = "";
+			this._errorTextField = errorTextField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
+			if (this._errorTextField) this._errorTextField.text = "";
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set message(value:String):void
 		{
-			if(this._txtError) this._txtError.text = value ? value : '';
+			if (this._errorTextField) this._errorTextField.text = value ? value : '';
 		}
 	}
 }

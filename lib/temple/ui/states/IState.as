@@ -42,6 +42,7 @@
 
 package temple.ui.states 
 {
+	import temple.ui.IShowable;
 	import temple.ui.IDisplayObject;
 	import temple.ui.IEnableable;
 
@@ -62,28 +63,7 @@ package temple.ui.states
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IState extends IEnableable, IDisplayObject
+	public interface IState extends IEnableable, IDisplayObject, IShowable
 	{
-		/**
-		 * Show this state
-		 * @param instant if set to true animation will be skipped.
-		 */
-		function show(instant:Boolean = false):void;
-		
-		/**
-		 * Hide this state
-		 * @param instant if set to true animation will be skipped.
-		 */
-		function hide(instant:Boolean = false):void;
-		
-		/**
-		 * Getter/setter wapper for show and hide method. Where shown=true mains show() and shown=false means hide()
-		 */
-		function get shown():Boolean;
-
-		/**
-		 * @private 
-		 */
-		function set shown(value:Boolean):void;
 	}
 }

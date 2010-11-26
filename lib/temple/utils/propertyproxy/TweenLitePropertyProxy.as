@@ -59,6 +59,7 @@ package temple.utils.propertyproxy
 	{
 		private var _duration:Number;
 		private var _vars:Object;
+		private var _tween:TweenLite;
 
 		/**
 		 * Creates a new TweenLitePropertyProxy
@@ -76,7 +77,7 @@ package temple.utils.propertyproxy
 		 */
 		public function get duration():Number
 		{
-			return _duration;
+			return this._duration;
 		}
 		
 		/**
@@ -115,7 +116,17 @@ package temple.utils.propertyproxy
 			
 			vars[property] = value;
 			
-			TweenLite.to(target, this._duration, vars);
+			this._tween = TweenLite.to(target, this._duration, vars);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function cancel():Boolean
+		{
+			if (this._tween) this._tween.destruct();
+			this._tween = null;
+			return true;
 		}
 
 		/**
@@ -123,6 +134,7 @@ package temple.utils.propertyproxy
 		 */
 		override public function destruct():void
 		{
+			this.cancel();
 			this._vars = null;
 			
 			super.destruct();

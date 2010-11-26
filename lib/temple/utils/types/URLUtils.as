@@ -83,7 +83,16 @@ package temple.utils.types
 		{
 			return url + (url.indexOf("?") == -1 ? "?" : "&") + param + "=" + value;
 		}
-		
+
+		/**
+		 * Get the file extension of an URL
+		 */
+		public static function getFileExtension(url:String):String
+		{
+			if (url.indexOf('?') != -1) url = StringUtils.beforeFirst(url, '?');
+			return StringUtils.afterLast(url, ".");
+		}
+
         
 		public static function toString():String
 		{

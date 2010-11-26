@@ -49,6 +49,8 @@ package temple.ui.form.services
 	import flash.events.Event;
 
 	/**
+	 * Event dispatched by a FormService when the FormService is ready submitting the data. The FormServiceEvent indicates if the submit was successful or not.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class FormServiceEvent extends Event 

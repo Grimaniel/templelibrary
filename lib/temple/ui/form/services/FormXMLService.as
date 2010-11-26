@@ -68,26 +68,30 @@ package temple.ui.form.services
 	[Event(name = "FormServiceEvent.error", type = "temple.ui.form.services.FormServiceEvent")]
 	
 	/**
+	 * The FormXMLService send the submitted data to a URL, the URL response is an XML file which contains data about the success (or fail) or the submit.
+	 * 
+	 * @includeExample FormXMLServiceExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class FormXMLService extends XMLService implements IFormService
 	{
-		protected var _resultClass:Class;
-		protected var _urlData:URLData;
-		protected var _method:String = URLRequestMethod.POST;
+		private var _resultClass:Class;
+		private var _url:String;
+		private var _method:String = URLRequestMethod.POST;
 
 		/**
 		 * Creates a new FormXMLService object.
 		 * The FormXMLService post the form data to a URL that returns a XML file. The XML file contains the result of the submission
-		 * @param urlData the URLData to post to. There is no default, so it must be set before calling submit.
+		 * @param url the URL to post to. There is no default, so it must be set before calling submit.
 		 * @param resultClass the Class that parses the result XML, default is FormResult
 		 * @param debug indicates if the service is in debug mode
 		 */
-		public function FormXMLService(urlData:URLData = null, resultClass:Class = null, debug:Boolean = false) 
+		public function FormXMLService(url:String = null, resultClass:Class = null, debug:Boolean = false) 
 		{
 			super();
 			
-			if(urlData) this.urlData = urlData;
+			this._url = url;
 			
 			this.resultClass = resultClass ? resultClass : FormResult;
 			
@@ -100,28 +104,30 @@ package temple.ui.form.services
 		
 		/**
 		 * @inheritDoc
+		 * 
+		 * This method will always return null, since the data is send to a URL and will be handle asynchronously.
 		 */
 		public function submit(data:Object):IFormResult
 		{
-			this.load(this._urlData, data, this._method);
+			this.load(new URLData(this._url, this._url), data, this._method);
 			
 			return null;
 		}
 		
 		/**
-		 * The URLData to post to
+		 * The URL to post to
 		 */
-		public function get urlData():URLData
+		public function get url():String
 		{
-			return this._urlData;
+			return this._url;
 		}
 		
 		/**
 		 * @private
 		 */
-		public function set urlData(urlData:URLData):void
+		public function set url(value:String):void
 		{
-			this._urlData = urlData;
+			this._url = value;
 		}
 
 		/**
@@ -172,7 +178,7 @@ package temple.ui.form.services
 		
 		private function handleXMLServiceEvent(event:XMLServiceEvent):void
 		{
-			switch(event.type)
+			switch (event.type)
 			{
 				case XMLServiceEvent.COMPLETE:
 				{
@@ -194,7 +200,8 @@ package temple.ui.form.services
 		override public function destruct():void
 		{
 			this._resultClass = null;
-			this._urlData = null;
+			this._url = null;
+			this._method = null;
 			
 			super.destruct();
 		}

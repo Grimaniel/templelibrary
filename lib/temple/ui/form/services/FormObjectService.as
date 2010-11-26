@@ -60,6 +60,8 @@ package temple.ui.form.services
 	 * 
 	 * @see temple.data.object.IObjectParsable
 	 * 
+	 * @includeExample FormExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class FormObjectService extends CoreEventDispatcher implements IFormService 
