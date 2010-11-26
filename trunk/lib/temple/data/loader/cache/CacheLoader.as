@@ -162,6 +162,7 @@ package temple.data.loader.cache
 		override public function set preloader(value:IPreloader):void
 		{
 			this._cacheURLLoader.preloader = value;
+			super.preloader = value;
 		}
 
 		private function handleURLLoaderComplete(event:Event):void

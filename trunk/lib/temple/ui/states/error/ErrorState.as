@@ -54,19 +54,20 @@ package temple.ui.states.error
 	 */
 	public class ErrorState extends BaseState implements IErrorState 
 	{
-		protected var _txtError:TextField;
+		private var _errorTextField:TextField;
 		
-		public function ErrorState()
+		public function ErrorState(errorTextField:TextField = null)
 		{
-			super();
-			
-			this._txtError = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
-			if(this._txtError) this._txtError.text = "";
+			this._errorTextField = errorTextField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
+			if(this._errorTextField) this._errorTextField.text = "";
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set message(value:String):void
 		{
-			if(this._txtError) this._txtError.text = value ? value : '';
+			if(this._errorTextField) this._errorTextField.text = value ? value : '';
 		}
 	}
 }

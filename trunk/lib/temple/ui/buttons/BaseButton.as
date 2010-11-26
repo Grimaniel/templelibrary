@@ -57,7 +57,7 @@
 		/**
 		 * Instance name of a child which acts as hitArea for the button.
 		 */
-		public static var HIT_AREA_NAME:String = "mcHitArea";
+		public static var HITAREA_INSTANCENAME:String = "mcHitArea";
 		
 		public function BaseButton() 
 		{
@@ -65,7 +65,7 @@
 			this.buttonMode = true;
 			
 			// set and hide hit area
-			var hitArea:Sprite = this.getChildByName(BaseButton.HIT_AREA_NAME) as Sprite;
+			var hitArea:Sprite = this.getChildByName(BaseButton.HITAREA_INSTANCENAME) as Sprite;
 			
 			if (hitArea != null) 
 			{

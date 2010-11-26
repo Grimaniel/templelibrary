@@ -73,11 +73,12 @@ package temple.ui.focus
 	 * 	
 	 * 	@author Thijs Broerse
 	 */
-	public class TabFocusManager extends CoreEventDispatcher implements IFocusable, IDebuggable
+	public class TabFocusManager extends CoreEventDispatcher implements IFocusable, IDebuggable, IEnableable
 	{
 		private var _items:Array;
 		private var _loop:Boolean;
 		private var _debug:Boolean;
+		private var _enabled:Boolean = true;
 
 		/**
 		 * Constructor
@@ -230,6 +231,37 @@ package temple.ui.focus
 			this._loop = value;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			this._enabled = true;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this._enabled = false;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get enabled():Boolean
+		{
+			return this._enabled;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set enabled(value:Boolean):void
+		{
+			this._enabled = value;
+		}
 		
 		/**
 		 * @inheritDoc
@@ -249,7 +281,7 @@ package temple.ui.focus
 		
 		private function handleKeyDown(event:KeyboardEvent):void
 		{
-			if (event.keyCode == Keyboard.TAB)
+			if (this._enabled && event.keyCode == Keyboard.TAB)
 			{
 				if (this.debug) this.logDebug("handleKeyDown: tab received from: " + event.target + ", through: " + event.currentTarget);
 				

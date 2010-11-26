@@ -47,6 +47,8 @@ package temple.ui.form.validation.rules
 	/**
 	 * Validation rule to check for a valid email address. This validation rule will return false for isValid() if the return value of target.value is an invalid email address.
 	 * 
+	 * @includeExample ../../services/FormXMLServiceExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class EmailValidationRule extends RegExpValidationRule 

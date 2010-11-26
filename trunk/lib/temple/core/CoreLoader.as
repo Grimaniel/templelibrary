@@ -221,7 +221,7 @@ package temple.core
 				return;
 			}
 			
-			if (this._debug) this.logDebug("temple.core.CoreLoader::load(request = " + [request.url] + ")");
+			if (this._debug) this.logDebug("load");
 			
 			this._isLoading = true;
 			this._isLoaded = false;

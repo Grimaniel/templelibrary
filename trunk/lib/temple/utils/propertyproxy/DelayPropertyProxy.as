@@ -53,15 +53,38 @@ package temple.utils.propertyproxy
 	public class DelayPropertyProxy extends SimplePropertyProxy implements IPropertyProxy 
 	{
 		private var _miliseconds:Number;
+		private var _timeOut:TimeOut;
 		
 		public function DelayPropertyProxy(miliseconds:Number = 500)
 		{
 			this._miliseconds = miliseconds;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function setValue(target:Object, property:String, value:*):void
 		{
-			new TimeOut(super.setValue, this._miliseconds, [target, property, value]);
+			this._timeOut = new TimeOut(super.setValue, this._miliseconds, [target, property, value]);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function cancel():Boolean
+		{
+			if (this._timeOut) this._timeOut.destruct();
+			this._timeOut = null;
+			return true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void
+		{
+			this.cancel();
+			super.destruct();
 		}
 	}
 }

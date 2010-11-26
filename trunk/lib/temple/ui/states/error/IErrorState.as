@@ -49,6 +49,9 @@ package temple.ui.states.error
 	 */
 	public interface IErrorState extends IState 
 	{
+		/**
+		 * The error message to display in the ErrorState.
+		 */
 		function set message(value:String):void;
 	}
 }

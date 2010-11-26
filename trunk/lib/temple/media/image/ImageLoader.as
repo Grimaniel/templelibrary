@@ -755,6 +755,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			this._preloader = null;
 			this._scaleMode = null;
 			this._align = null;
+			this._context = null;
 			
 			super.destruct();
 		}

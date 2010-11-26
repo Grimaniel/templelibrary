@@ -1018,11 +1018,11 @@ package temple.media.video.players
 			{
 				if (event.info.level == "error")
 				{
-					this.logError("handleNetStatusEvent: '" + event.info.code + "' " + event.info.description);
+					this.logError("handleNetStatusEvent: '" + event.info.code + "' " + event.info.description + ", status=" + this._status);
 				}
 				else
 				{
-					this.logDebug("handleNetStatusEvent: '" + event.info.code + "' " + event.info.description);
+					this.logDebug("handleNetStatusEvent: '" + event.info.code + "' " + event.info.description + ", status=" + this._status);
 				}
 			}
 			
@@ -1050,7 +1050,7 @@ package temple.media.video.players
 				{
 					if (this._status != PlayerStatus.LOADING)
 					{
-						if (this._delayedPause != true)
+						if (!this._delayedPause)
 						{
 							this._status = PlayerStatus.PLAYING;
 							this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));

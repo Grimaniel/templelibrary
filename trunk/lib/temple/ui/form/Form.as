@@ -99,6 +99,8 @@ package temple.ui.form
 	/**
 	 * @includeExample FormExample.as
 	 * 
+	 * @includeExample services/FormXMLServiceExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class Form extends CoreEventDispatcher implements IDebuggable, IEnableable, IResettable, IFocusable

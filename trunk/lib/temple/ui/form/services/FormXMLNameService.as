@@ -61,12 +61,23 @@ package temple.ui.form.services
 	[Event(name = "FormServiceEvent.error", type = "temple.ui.form.services.FormServiceEvent")]
 	
 	/**
+	 * The FormXMLNameService extends the FormXMLService but instead of supplying the URL, you just pass the name of the URL.
+	 * The FormXMLService uses the URLManager to retrieve the actual URL.
+	 * 
+	 * @see temple.data.url.URLManager
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class FormXMLNameService extends FormXMLService 
 	{
 		private var _urlName:String;
 		
+		/**
+		 * Create a new FormXMLNameService
+		 * @param urlName the name of the URL as defined in the urls.xml and the URLManager
+		 * @param resultClass the class which is used to parse the XML result. This class must implement IFormResult. If set to null FormResult will be used.
+		 * @param debug a Boolean which indicates if debugging is enabled.
+		 */
 		public function FormXMLNameService(urlName:String = null, resultClass:Class = null, debug:Boolean = false)
 		{
 			super(null, resultClass, debug);
@@ -74,11 +85,17 @@ package temple.ui.form.services
 			this.urlName = urlName;
 		}
 		
+		/**
+		 * The name of the URL as defined in the urls.xml and the URLManager
+		 */
 		public function get urlName():String
 		{
 			return this._urlName;
 		}
 		
+		/**
+		 * @private
+		 */
 		public function set urlName(value:String):void
 		{
 			this._urlName = value;
@@ -89,9 +106,19 @@ package temple.ui.form.services
 		 */
 		override public function submit(data:Object):IFormResult 
 		{
-			this._urlData = URLManager.getURLDataByName(this._urlName);
+			this.load(URLManager.getURLDataByName(this._urlName), data, this.method);
 			
-			return super.submit(data);
+			return null;
 		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void
+		{
+			this._urlName = null;
+			super.destruct();
+		}
+
 	}
 }
