@@ -164,6 +164,8 @@ package temple.ui.form.services
 		}
 		
 		/**
+		 * @private
+		 * 
 		 * Process loaded XML
 		 * @param data loaded XML data
 		 * @param name name of load operation

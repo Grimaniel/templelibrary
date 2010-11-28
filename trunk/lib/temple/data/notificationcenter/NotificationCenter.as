@@ -112,7 +112,7 @@ package temple.data.notificationcenter
 		/**
 		 * Static function to get instances by name. Multiton implementation
 		 * @param name the name of the NotificationCenter
-		 * @param createIfNull if set to true automaticly creates a new NotificationCenter if no NotificationCenter is found
+		 * @param createIfNull if set to true automatically creates a new NotificationCenter if no NotificationCenter is found
 		 * 
 		 * @return a NotificationCenter instance
 		 */

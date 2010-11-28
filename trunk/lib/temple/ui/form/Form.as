@@ -97,6 +97,14 @@ package temple.ui.form
 	[Event(name = "FormEvent.reset", type = "temple.ui.form.FormEvent")]
 
 	/**
+	 * A Form is used to get information about the user. The form uses form elements, like InputField, CheckBoxes or 
+	 * RadioButtons, to let the user fill in the data. By adding the elements to the Form, the Form can handle the validation, tabbing, clearing, prefilling and submit of the elements and the data.
+	 * 
+	 * @see temple.ui.form.components.InputField
+	 * @see temple.ui.form.components.CheckBox
+	 * @see temple.ui.form.components.RadioButton
+	 * @see temple.ui.form.components.RadioGroup
+	 * 
 	 * @includeExample FormExample.as
 	 * 
 	 * @includeExample services/FormXMLServiceExample.as
@@ -602,6 +610,9 @@ package temple.ui.form
 			DebugManager.setDebugForChilds(this, value);
 		}
 
+		/**
+		 * @private
+		 */
 		protected function send():void
 		{
 			if (this._debug) this.logDebug("send: ");
@@ -636,16 +647,25 @@ package temple.ui.form
 			}
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleSubmitButtonClicked(event:MouseEvent):void 
 		{
 			this.submit();
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleResetButtonClicked(event:MouseEvent):void 
 		{
 			this.reset();
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleFormServiceEvent(event:FormServiceEvent):void 
 		{
 			switch(event.type)
@@ -654,7 +674,7 @@ package temple.ui.form
 				{
 					this.enabled = true;
 					if (this._debug) this.logDebug("handleFormServiceEvent: " + event.type);
-					this.dispatchEvent(new FormEvent(FormEvent.SUBMIT_SUCCESS));
+					this.dispatchEvent(new FormEvent(FormEvent.SUBMIT_SUCCESS, event.result));
 					break;
 				}
 				case FormServiceEvent.RESULT:
@@ -720,6 +740,9 @@ package temple.ui.form
 		}
 
 		
+		/**
+		 * @private
+		 */
 		protected function handleFormElementSubmit(event:FormElementEvent):void
 		{
 			if (this._submitByElement) this.submit();

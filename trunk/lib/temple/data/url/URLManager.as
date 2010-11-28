@@ -68,8 +68,8 @@
 	[Event(name = "URLEvent.open", type = "temple.data.url.URLEvent")]
 	
 	/**
-	 * The URLManager handles all urls of a project. In most projects the urls will depend on the environment. The live application uses different urls as the development environment.
-	 * To handle this you can store the urls in an external xml file, 'urls.xml'. By changing the 'currentgroup' inside the XML you can easely switch between different urls.
+	 * The URLManager handles all URLs of a project. In most projects the URLs will depend on the environment. The live application uses different URLs as the development environment.
+	 * To handle this you can store the urls in an external XML file, 'urls.xml'. By changing the 'currentgroup' inside the XML you can easily switch between different URLs.
 	 * The 'urls.xml' uses the following syntax:
 	 * <listing version="3.0">
 	 * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -87,11 +87,11 @@
 	 * &lt;/urls&gt;
 	 * </listing>
 	 * 
-	 * <p>Every 'url'-node has a 'name', 'url' and (optional) 'target' attribute. Environment-dependent urls are place inside a 'group'-node, global-urls are placed outside a group-node.
-	 * It is also possible to use variables inside the urls.xml. You can define a variable by using a 'var'-node, with a 'name' and 'value' attribute. You can use the variable inside a url with '{name-of-the-variable}', wich will be replaced with the value.
-	 * By defining the variable in different 'groups' the actual url will we different.</p>
+	 * <p>Every 'url'-node has a 'name', 'url' and (optional) 'target' attribute. Environment-dependent URLs are place inside a 'group'-node, global-urls are placed outside a group-node.
+	 * It is also possible to use variables inside the urls.xml. You can define a variable by using a 'var'-node, with a 'name' and 'value' attribute. You can use the variable inside a URL with '{name-of-the-variable}', which will be replaced with the value.
+	 * By defining the variable in different 'groups' the actual URL will we different.</p>
 	 * 
-	 * <p>The 'currentgroup' can be overruled by code. It is possible to supply different groups (comma-seperated).</p>
+	 * <p>The 'currentgroup' can be overruled by code. It is possible to supply different groups (comma-separated).</p>
 	 * 
 	 * <p>The URLManager is a singleton and can be accessed by URLManager.getInstance() or by his static functions.</p>
 	 * 
@@ -116,7 +116,7 @@
 		private var _rawData:XML;
 
 		/**
-		 * Get named url data
+		 * Get named URL data
 		 * @param name name of data block
 		 * @return the data block, or null if none was found
 		 */
@@ -126,9 +126,9 @@
 		}
 
 		/**
-		 * Get named url 
+		 * Get named URL 
 		 * @param name name of data block
-		 * @return url as string or null if none was found
+		 * @return URL as string or null if none was found
 		 */
 		public static function getURLByName(name:String):String 
 		{
@@ -136,8 +136,8 @@
 		}
 
 		/**
-		 * Open a browser window for url with specified name
-		 * @param name the name of the url
+		 * Open a browser window for URL with specified name
+		 * @param name the name of the URL
 		 * @param variables an object with name-value pairs that replaces {}-var in the URL
 		 */
 		public static function openURLByName(name:String, variables:Object = null):void 
@@ -146,7 +146,7 @@
 		}
 
 		/**
-		 * Open a browser window for specified url
+		 * Open a browser window for specified URL
 		 */
 		public static function openURL(url:String, target:String = ""):void 
 		{
@@ -154,9 +154,9 @@
 		}
 		
 		/**
-		 * Load settings from specified url if provided, or from default url
-		 * @param url url to load settings from
-		 * @param group set wich group is used in the url.xml
+		 * Load settings from specified URL if provided, or from default URL
+		 * @param url URL to load settings from
+		 * @param group set which group is used in the url.xml
 		 */
 		public static function loadURLs(url:String = "xml/urls.xml", group:String = null):void 
 		{
@@ -180,7 +180,7 @@
 		}
 
 		/**
-		 * Indicates if the urls.xml is beeing loaded, but not loaded yet
+		 * Indicates if the urls.xml is being loaded, but not loaded yet
 		 */
 		public static function isLoading():Boolean
 		{
@@ -188,7 +188,7 @@
 		}
 		
 		/**
-		 * The used group in the urls.xml. When the xml is loaded, everything will be parsed again.
+		 * The used group in the urls.xml. When the XML is loaded, everything will be parsed again.
 		 */
 		public static function get group():String
 		{
@@ -208,7 +208,7 @@
 		}
 		
 		/**
-		 * Adds a groupname to the urlgroups. Will process the xml again.
+		 * Adds a groupname to the urlgroups. Will process the XML again.
 		 * @param value The groupname to add
 		 */
 		public static function addGroup(value:String):void
@@ -291,10 +291,9 @@
 			return URLManager._instance;
 		}
 
-		private var _urls:Array = [];
-
-		private var _loaded:Boolean = false;
-		private var _loading:Boolean = false;
+		private var _urls:Array;
+		private var _loaded:Boolean;
+		private var _loading:Boolean;
 		private var _group:String;
 		private var _groups:Array;
 		private var _variables:HashMap;
@@ -306,6 +305,7 @@
 		{
 			if (URLManager._instance) throwError(new TempleError(this, "Singleton, use URLManager.getInstance()"));
 			
+			this._urls = new Array();
 			this._variables = new HashMap("URLManager variables");
 			this._groups = new Array();
 			
@@ -447,9 +447,7 @@
 		}
 
 		/**
-		 * Process loaded XML
-		 * @param data loaded XML data
-		 * @param name name of load operation
+		 * @private
 		 */
 		override protected function processData(data:XML, name:String):void 
 		{

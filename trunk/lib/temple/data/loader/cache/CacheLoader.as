@@ -135,7 +135,7 @@ package temple.data.loader.cache
 			}
 			else
 			{
-				if (this._debug) this.logDebug("load: cache disabled");
+				if (this.debug) this.logDebug("load: cache disabled");
 				super.load(request, context);
 			}
 		}

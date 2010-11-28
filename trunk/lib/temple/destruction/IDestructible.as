@@ -94,7 +94,7 @@ package temple.destruction
 		 *		// also remove event listeners to other object
 		 *		// if (this.stage) this.stage.removeEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp);
 		 *		
-		 *		// It is not necessary to destruct DisplayObject, they get destructed automaticly. Only set the reference to null
+		 *		// It is not necessary to destruct DisplayObject, they get destructed automatically. Only set the reference to null
 		 *		this.mcMovieClip = null; 
 		 * 
 		 *		// always calls super.destruct() in the end!

@@ -52,7 +52,7 @@ package temple.ui.eventtunneling
 	import flash.events.Event;
 
 	/**
-	 * An EventTunneler will automaticly dispatch TunnelEvents on all children (and grandchildren) of a Sprite if there
+	 * An EventTunneler will automatically dispatch TunnelEvents on all children (and grandchildren) of a Sprite if there
 	 * is a TunnelEvent dispatched on the Sprite.
 	 * 
 	 * @includeExample ../buttons/behaviors/NestedMultiStateButtonsExample.as

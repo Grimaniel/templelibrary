@@ -81,6 +81,8 @@ package temple.ui.form.components
 	 * rg.addEventListener(Event.CHANGE, handleRadioGroupChanged);
 	 * </listing>
 	 * 
+	 * @see temple.ui.form.Form
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class RadioGroup extends CoreEventDispatcher implements IRadioGroup, IHasValue, IHasError, IResettable, IFocusable, ISetValue, IDebuggable 
@@ -92,7 +94,7 @@ package temple.ui.form.components
 		/**
 		 * Static function to get instances by name. Multiton implementation
 		 * @param name the name of the RadioGroup
-		 * @param createIfNull if set to true automaticly creates a new RadioGroup if no 
+		 * @param createIfNull if set to true automatically creates a new RadioGroup if no 
 		 */
 		public static function getInstance(name:String, createIfNull:Boolean = true):RadioGroup
 		{
@@ -114,9 +116,9 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Static function to check if an instance with a specific name excists
+		 * Static function to check if an instance with a specific name exists
 		 * @param name the name of the RadioGroup
-		 * @param createIfNull if set to true automaticly creates a new RadioGroup if no 
+		 * @param createIfNull if set to true automatically creates a new RadioGroup if no 
 		 */
 		public static function hasInstance(name:String):Boolean
 		{
@@ -127,15 +129,19 @@ package temple.ui.form.components
 			return false;
 		}
 		
+		/** @private */
+		protected var _selected:ISelectable;
+		/** @private */
+		protected var _dispatchChangeEvent:Boolean = true;
+
 		/** objects of type Selection */
 		private var _buttons:Array = new Array();
-		protected var _selected:ISelectable;
 		private var _focus:Boolean;
 		private var _name:String;
 		private var _prefillValue:*;
 		private var _debug:Boolean;
 		private var _keyboardTabbingEnabled:Boolean = true;
-		protected var _dispatchChangeEvent:Boolean = true;
+
 		
 		public function RadioGroup(name:String = null)
 		{
@@ -469,6 +475,9 @@ package temple.ui.form.components
 			return false;
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleButtonChange(event:Event):void
 		{
 			if (!(event.target is ISelectable)) return;
@@ -495,6 +504,9 @@ package temple.ui.form.components
 			}
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleKeyDown(event:KeyboardEvent):void
 		{
 			if(this._keyboardTabbingEnabled)
@@ -559,12 +571,18 @@ package temple.ui.form.components
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		protected function handleButtonFocusIn(event:FocusEvent):void
 		{
 			this._focus = true;
 			this.dispatchEvent(event.clone());
 		}
 		
+		/**
+		 * @private
+		 */
 		protected function handleButtonFocusOut(event:FocusEvent):void
 		{
 			this._focus = false;

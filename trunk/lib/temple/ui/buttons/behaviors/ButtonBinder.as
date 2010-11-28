@@ -110,7 +110,7 @@ package temple.ui.buttons.behaviors
 		}
 		
 		/**
-		 * Adds a new button to the binder. The 2 buttons in the constructor are automaticly added, so you do not need to call this method for those buttons
+		 * Adds a new button to the binder. The 2 buttons in the constructor are automatically added, so you do not need to call this method for those buttons
 		 * @param button the button to add
 		 * @param weakReference indicates if weakReference is used to bind the button
 		 */

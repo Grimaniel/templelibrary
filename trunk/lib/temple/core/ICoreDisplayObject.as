@@ -57,7 +57,7 @@ package temple.core
 	 * Since he get his stage reference from the StageProvider who holds a global 
 	 * reference to the stage.</p>
 	 * 
-	 * <p>ICoreDisplayObject are automaticly destructed when the SWF is unloaded. When a 
+	 * <p>ICoreDisplayObject are automatically destructed when the SWF is unloaded. When a 
 	 * ICoreDisplayObject is destructed we will call also destruct its children,
 	 * grandchildren etcetera.</p>
 	 * 
@@ -83,7 +83,7 @@ package temple.core
 		function get hasParent():Boolean;
 	
 		/**
-		 * Same as alpha, but the visible property will automaticly be set. 
+		 * Same as alpha, but the visible property will automatically be set. 
 		 * 
 		 * <p>When value is 0 visible will be false, else visible will be true.
 		 * If alpha > 0, but visible == false, then autoAlpha will return 0</p>

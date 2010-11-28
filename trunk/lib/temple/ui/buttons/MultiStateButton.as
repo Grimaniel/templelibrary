@@ -57,7 +57,7 @@ package temple.ui.buttons
 	[Event(name = "ButtonEvent.update", type = "temple.ui.buttons.behaviors.ButtonEvent")]
 	
 	/**
-	 * A MultiStateButton is a MovieClip which automaticly set mouse-over and mouse-down  effects/animation, based on framelabels on the timeline, or state clips on the display list.
+	 * A MultiStateButton is a MovieClip which automatically set mouse-over and mouse-down  effects/animation, based on framelabels on the timeline, or state clips on the display list.
 	 * 
 	 * <p>You can easily create up-states, over-states, down-states etc. by placing framelabels on the timeline.</p>
 	 * 

@@ -54,7 +54,7 @@ package temple.ui.states
 	 * 
 	 * <p><strong>With framelabel</strong><br/>
 	 * Use 'show' as label to define the show animation. Use 'hide' to define the hide animation.
-	 * The animation will automaticly stop on the last frame of the animation. DO NOT use frame scripts to stop the animation!!! 
+	 * The animation will automatically stop on the last frame of the animation. DO NOT use frame scripts to stop the animation!!! 
 	 * </p>
 	 * 
 	 * <p><strong>Withoutframelabel</strong><br/>
@@ -69,7 +69,7 @@ package temple.ui.states
 		protected static var _LABEL_SHOW:String = 'show';
 		protected static var _LABEL_HIDE:String = 'hide';
 
-		protected var _labels:HashMap;
+		private var _labels:HashMap;
 
 		public function BaseTimelineState()
 		{

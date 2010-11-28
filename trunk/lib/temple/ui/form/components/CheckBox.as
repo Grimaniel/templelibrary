@@ -76,7 +76,9 @@ package temple.ui.form.components
 	 * A DisplayObject which can be selected.
 	 * 
 	 * <p>This class can be used as component by setting this class as 'Component Definition' in the Flash IDE.
-	 * You can set different properties in the Flash IDE in the 'Component Inspector'</p>
+	 * You can set different properties in the Flash IDE in the 'Component Inspector'.</p>
+	 * 
+	 * @see temple.ui.form.Form
 	 * 
 	 * @includeExample ../FormExample.as
 	 * 

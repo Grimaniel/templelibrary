@@ -50,6 +50,8 @@ package temple.ui.states.error
 	/**
 	 * Uses a TweenLite autoAlpha fade to show or hide the error state of his parent.
 	 * 
+	 * @includeExample ../../form/services/FormXMLServiceExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ErrorFadeState extends BaseFadeState implements IErrorState 

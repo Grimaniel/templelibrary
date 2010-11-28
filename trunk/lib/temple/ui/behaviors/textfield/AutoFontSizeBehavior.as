@@ -56,7 +56,7 @@ package temple.ui.behaviors.textfield
 	/**
 	 * Autosize the font to fit in a TextField. 
 	 * 
-	 * <p>The AutoFontSizeBehavior is automaticly triggered if an Event.CHANGE event dispatched by the TextField.
+	 * <p>The AutoFontSizeBehavior is automatically triggered if an Event.CHANGE event dispatched by the TextField.
 	 * You can also update the AutoFontSizeBehavior manually by calling update().</p>
 	 * 
 	 * <p>If the TextField is destructed the AutoFontSizeBehavior will automatic be destructed.</p>

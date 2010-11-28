@@ -104,6 +104,7 @@ package temple.ui.behaviors
 	 */
 	public class DragBehavior extends BoundsBehavior implements IEnableable
 	{
+		/** @private */
 		protected var _startDragMousePoint:Point;
 		
 		private var _dragButton:DisplayObject;

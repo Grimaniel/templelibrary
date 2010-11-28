@@ -52,9 +52,9 @@ package temple.ui.buttons
 	 */
 	public class MultiStateElement extends CoreMovieClip implements IDebuggable
 	{
-		protected var _timelineBehavior:ButtonTimelineBehavior;
-		protected var _stateBehavior:ButtonStateBehavior;
-		protected var _debug:Boolean;
+		private var _timelineBehavior:ButtonTimelineBehavior;
+		private var _stateBehavior:ButtonStateBehavior;
+		private var _debug:Boolean;
 
 		public function MultiStateElement()
 		{

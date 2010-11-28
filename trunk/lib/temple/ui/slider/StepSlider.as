@@ -89,7 +89,7 @@ package temple.ui.slider
 		}
 		
 		/**
-		 * Set the range of the values of the slider, so we can automaticly calculate the outcome value
+		 * Set the range of the values of the slider, so we can automatically calculate the outcome value
 		 * @param min The lowest value of the slider
 		 * @param max The highest value of the slider
 		 */
@@ -147,6 +147,9 @@ package temple.ui.slider
 			this._stepSize = value;
 		}
 		
+		/**
+		 * @private
+		 */
 		override protected function handleDragging(event:DragBehaviorEvent):void
 		{
 			// assign to self to snap

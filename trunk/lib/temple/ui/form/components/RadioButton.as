@@ -51,6 +51,9 @@ package temple.ui.form.components
 	 * <p>This class can be used as component by setting this class as 'Component Definition' in the Flash IDE.
 	 * You can set different properties in the Flash IDE in the 'Component Inspector'</p>
 	 * 
+	 * @see temple.ui.form.Form
+	 * @see temple.ui.form.components.RadioGroup
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class RadioButton extends CheckBox implements IRadioButton, IDebuggable
@@ -169,6 +172,9 @@ package temple.ui.form.components
 			this._toggle = value;
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function handleClick(event:MouseEvent):void
 		{
 			this.selected = this._toggle ? !this.selected : true;

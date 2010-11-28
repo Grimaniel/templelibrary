@@ -46,15 +46,15 @@
 	import temple.data.xml.IXMLParsable;
 
 	/**
-	 * Data object class to hold information about an url.
+	 * Data object class to hold information about a URL.
 	 * 
 	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
 	public class URLData extends CoreObject implements IXMLParsable 
 	{
-		protected var _name:String;
-		protected var _url:String;
-		protected var _target:String;
+		private var _name:String;
+		private var _url:String;
+		private var _target:String;
 
 		/**
 		 * Creates a new URLData.

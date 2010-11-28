@@ -59,7 +59,7 @@ package temple.ui.layout.liquid
 	 * Singleton class for wrapping the Stage as a LiquidObject for aligning other LiquidObject to the stage.
 	 * The LiquidStage is not actually a Stage, but has the Stage (composition).
 	 * 
-	 * <p>Note: The LiquidStage automaticly sets the stageScaleMode to 'noScale' and the stageAlign to 'topLeft'.</p>
+	 * <p>Note: The LiquidStage automatically sets the stageScaleMode to 'noScale' and the stageAlign to 'topLeft'.</p>
 	 * 
 	 * @includeExample LiquidExample.as
 	 * 

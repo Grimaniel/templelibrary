@@ -45,7 +45,7 @@ package temple.debug.errors
 
 	/**
 	 * A TempleError extends the 'normal' Error classes with some extra features.
-	 * TempleErrors are automaticly logged, so it's possible so 'see' the Error even
+	 * TempleErrors are automatically logged, so it's possible so 'see' the Error even
 	 * when you do not have the Flash debug player.
 	 * 
 	 * TempleErrors also have a reference to the sender (the object that causes the Error)

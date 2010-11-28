@@ -82,6 +82,9 @@ package temple.ui.buttons
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		protected function handleClick(event:MouseEvent):void 
 		{
 			this.selected = !this.selected;
