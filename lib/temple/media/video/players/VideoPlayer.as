@@ -160,7 +160,9 @@ package temple.media.video.players
 	 */
 	public class VideoPlayer extends CoreSprite implements IVideoPlayer, IHasBackground
 	{
+		/** @private */
 		protected var _netStream:VideoNetStream;
+		/** @private */
 		protected var _metaData:VideoMetaData;
 		
 		// if pausing when status is between connected<>playing, the video is paused but the NetStream.Play.Start is still broadcasted (so the UI is updated)
@@ -1010,6 +1012,8 @@ package temple.media.video.players
 		}
 
 		/**
+		 * @private
+		 * 
 		 *	Flash Player dispatches NetStatusEvent objects when  NetStream reports its status
 		 */
 		protected function handleNetStatusEvent(event:NetStatusEvent):void 

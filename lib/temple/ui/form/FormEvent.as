@@ -47,47 +47,62 @@ package temple.ui.form
 	import flash.events.Event;
 
 	/**
+	 * Event dispatched by the Form. The FormEvent is used to inform about the result of the validation of the form and to inform about the result of the submit of the form.
+	 * 
+	 * @includeExample services/FormXMLServiceExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class FormEvent extends Event 
 	{
 		/**
-		 * Dispatched when the form is validated and is valid
+		 * Dispatched when the form is validated and is valid.
 		 */
 		public static const VALIDATE_SUCCESS:String = "FormEvent.validateSuccess";
 		
 		/**
-		 * Dispatched when the form is validated and the form is invalid
+		 * Dispatched when the form is validated and the form is invalid.
 		 */
 		public static const VALIDATE_ERROR:String = "FormEvent.validateError";
 		
 		/**
-		 * Dispatched when the form is submitted successful
+		 * Dispatched when the form is submitted successful.
 		 */
 		public static const SUBMIT_SUCCESS:String = "FormEvent.submitSuccess";
 		
 		/**
-		 * Dispatched when the form is submitted unsuccessful
+		 * Dispatched when the form is submitted unsuccessful.
 		 */
 		public static const SUBMIT_ERROR:String = "FormEvent.submitError";
 
 		/**
-		 * Dispatched when the form is reset
+		 * Dispatched when the form is reset.
 		 */
 		public static const RESET:String = "FormEvent.reset";
 
-		public var result:IFormResult;
+		private var _result:IFormResult;
 
 		public function FormEvent(type:String, result:IFormResult = null, bubbles:Boolean = false) 
 		{
 			super(type, bubbles);
 			
-			this.result = result;
+			this._result = result;
+		}
+		
+		/**
+		 * A data object which contains information about the result
+		 */
+		public function get result():IFormResult
+		{
+			return this._result;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function clone():Event
 		{
-			return new FormEvent(this.type, this.result);
+			return new FormEvent(this.type, this.result, bubbles);
 		}
 	}
 }

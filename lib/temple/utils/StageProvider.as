@@ -72,7 +72,7 @@ package temple.utils
 		}
 		
 		/**
-		 * Set the stage. The stage is automaticly set by the CoreMovieClip and CoreSprite
+		 * Set the stage. The stage is automatically set by the CoreMovieClip and CoreSprite
 		 */
 		public static function set stage(value:Stage):void
 		{

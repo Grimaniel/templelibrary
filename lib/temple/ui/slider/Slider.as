@@ -264,17 +264,26 @@ package temple.ui.slider
 			this.value = val;
 		}
 		
+		/**
+		 * @private
+		 */
 		protected function handleDragging(event:DragBehaviorEvent):void
 		{
 			this.dispatchEvent(new SliderEvent(SliderEvent.SLIDING, this.value));
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleDragStart(event:DragBehaviorEvent):void
 		{
 			this._sliding = true;
 			this.dispatchEvent(new SliderEvent(SliderEvent.SLIDE_START, this.value));
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleDragStop(event:DragBehaviorEvent):void
 		{
 			this._sliding = false;

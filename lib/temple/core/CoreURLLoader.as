@@ -87,22 +87,28 @@ package temple.core
 	{
 		private static const _DEFAULT_HANDLER : int = 0;
 		
+		/** @private */
 		protected var _isLoading:Boolean;
+		/** @private */
 		protected var _isLoaded:Boolean;
+		/** @private */
 		protected var _destructOnError:Boolean;
+		/** @private */
 		protected var _logErrors:Boolean;
+		/** @private */
 		protected var _preloadableBehavior:PreloadableBehavior;
-		protected var _debug:Boolean;
+		/** @private */
 		protected var _url:String;
 		
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
 		private var _registryId:uint;
+		private var _debug:Boolean;
 
 		/**
 		 * Creates a CoreURLLoader
 		 * @param request optional URLRequest to load
-		 * @param destructOnError if set to true (default) this object wil automaticly be destructed on an Error (IOError or SecurityError)
+		 * @param destructOnError if set to true (default) this object wil automatically be destructed on an Error (IOError or SecurityError)
 		 * @param logErrors if set to true an error message wil be logged on an Error (IOError or SecurityError)
 		 */
 		public function CoreURLLoader(request:URLRequest = null, destructOnError:Boolean = true, logErrors:Boolean = true)

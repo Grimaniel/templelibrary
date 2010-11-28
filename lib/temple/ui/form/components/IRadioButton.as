@@ -50,7 +50,7 @@ package temple.ui.form.components
 	public interface IRadioButton extends ISelectable
 	{
 		/**
-		 * Get or set the groupname for automaticly create a RadioGroup
+		 * Get or set the groupname for automatically create a RadioGroup
 		 */
 		function get groupName():String;
 

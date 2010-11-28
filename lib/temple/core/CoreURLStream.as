@@ -86,10 +86,15 @@ package temple.core
 	{
 		private static const _DEFAULT_HANDLER : int = -50;
 		
+		/** @private */
 		protected var _isLoading:Boolean;
+		/** @private */
 		protected var _isLoaded:Boolean;
+		/** @private */
 		protected var _destructOnError:Boolean;
+		/** @private */
 		protected var _logErrors:Boolean;
+		/** @private */
 		protected var _preloadableBehavior:PreloadableBehavior;
 		
 		private var _eventListenerManager:EventListenerManager;
@@ -99,7 +104,7 @@ package temple.core
 
 		/**
 		 * Creates a CoreURLStream
-		 * @param destructOnError if set to true (default) this object wil automaticly be destructed on an Error (IOError or SecurityError)
+		 * @param destructOnError if set to true (default) this object will automatically be destructed on an Error (IOError or SecurityError)
 		 * @param logErrors if set to true an error message wil be logged on an Error (IOError or SecurityError)
 		 */
 		public function CoreURLStream(destructOnError:Boolean = true, logErrors:Boolean = true)

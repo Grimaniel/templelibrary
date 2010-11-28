@@ -52,6 +52,8 @@ package temple.ui.form.components
 	import flash.events.FocusEvent;
 
 	/**
+	 * Base component class for form elements.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class FormElementComponent extends CoreSprite implements IFormElementComponent 
@@ -183,12 +185,18 @@ package temple.ui.form.components
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		protected function handleFocusIn(event:FocusEvent):void 
 		{
 			this._focus = true;
 			StateHelper.showFocus(this);
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleFocusOut(event:FocusEvent):void 
 		{
 			this._focus = false;

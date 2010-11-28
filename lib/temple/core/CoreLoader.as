@@ -113,13 +113,18 @@ package temple.core
 	{
 		private static const _DEFAULT_HANDLER : int = 0;
 		
+		/** @private */
 		protected var _preloadableBehavior:PreloadableBehavior;
+		/** @private */
 		protected var _isLoading:Boolean;
+		/** @private */
 		protected var _isLoaded:Boolean;
+		/** @private */
 		protected var _logErrors:Boolean;
+		/** @private */
 		protected var _url:String;
-		protected var _debug:Boolean;
 		
+		private var _debug:Boolean;
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
 		private var _onStage:Boolean;

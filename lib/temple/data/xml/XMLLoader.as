@@ -85,11 +85,9 @@ package temple.data.xml
 	 */
 	public class XMLLoader extends CoreEventDispatcher 
 	{
-		protected var _preloader:IPreloader;
-
+		private var _preloader:IPreloader;
 		private var _waitingStack:DestructibleArray;
 		private var _loadingStack:DestructibleArray;
-
 		private var _loaderCount:uint;
 
 		/**

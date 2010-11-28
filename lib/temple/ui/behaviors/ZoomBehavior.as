@@ -81,20 +81,20 @@ package temple.ui.behaviors
 	 * new ZoomBehavior(mcClip, new Reactangle(100, 100, 200, 200);
 	 * </listing>
 	 *
-	 * <p>It is not nessessary to store a reference to the ZoomBehavior since the ZoomBehavior is automaticly destructed
+	 * <p>It is not nessessary to store a reference to the ZoomBehavior since the ZoomBehavior is automatically destructed
 	 * if the DisplayObject is destructed.</p>
 	 * 
 	 * @author Arjan van Wijk
 	 */
 	public class ZoomBehavior extends BoundsBehavior 
 	{
-		protected var _zoom:Number;
-		protected var _minZoom:Number;
-		protected var _maxZoom:Number;
-		protected var _newScale:Number;
-		protected var _newX:Number;
-		protected var _newY:Number;
-		protected var _running:Boolean;
+		private var _zoom:Number;
+		private var _minZoom:Number;
+		private var _maxZoom:Number;
+		private var _newScale:Number;
+		private var _newX:Number;
+		private var _newY:Number;
+		private var _running:Boolean;
 
 		/**
 		 * @param target The target to zoom
@@ -205,6 +205,9 @@ package temple.ui.behaviors
 			return this._zoom;
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleEnterFrame(event:Event):void
 		{
 			this.displayObject.scaleX = this.displayObject.scaleY += (this._newScale - this.displayObject.scaleY) / 5;
@@ -223,12 +226,18 @@ package temple.ui.behaviors
 			this.keepInBounds();
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleMouseWheel(event:MouseEvent):void
 		{
 			this._zoom += (event.delta / 3) / 4;
 			this.updateZoom();
 		}
 
+		/**
+		 * @private
+		 */
 		protected function updateZoom(useCenter:Boolean = false):void
 		{
 			var rect:Rectangle = this.displayObject.getRect(this.target as DisplayObject);

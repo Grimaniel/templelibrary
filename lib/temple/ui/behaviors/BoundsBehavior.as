@@ -64,7 +64,7 @@ package temple.ui.behaviors
 		public static const BOTTOM:String = "bottom";
 		public static const LEFT:String = "left";
 		
-		protected var _bounds:Rectangle;
+		private var _bounds:Rectangle;
 
 		public function BoundsBehavior(target:DisplayObject, bounds:Rectangle = null)
 		{

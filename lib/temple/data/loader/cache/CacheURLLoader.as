@@ -98,7 +98,7 @@ package temple.data.loader.cache
 			{
 				if (this._cacheData.isLoaded())
 				{
-					if (this._debug) this.logDebug("load: get data from cache, url:" + this._url);
+					if (this.debug) this.logDebug("load: get data from cache, url:" + this._url);
 					this.data = LoaderCache.get(this._url).bytes;
 					this._isLoaded = true;
 					this._isLoading = false;
@@ -106,7 +106,7 @@ package temple.data.loader.cache
 				}
 				else
 				{
-					if (this._debug) this.logDebug("load: data is currently loading, wait...");
+					if (this.debug) this.logDebug("load: data is currently loading, wait...");
 					this._cacheData.addEventListener(Event.COMPLETE, this.handleCacheDataComplete);
 					this._cacheData.addEventListener(Event.OPEN, this.dispatchEvent);
 					this._cacheData.addEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
@@ -162,7 +162,7 @@ package temple.data.loader.cache
 		{
 			if (this._cache)
 			{
-				if (this._debug) this.logDebug("handleURLLoaderComplete: store data in cache, url:" + this.url);
+				if (this.debug) this.logDebug("handleURLLoaderComplete: store data in cache, url:" + this.url);
 				LoaderCache.set(this.url, this.data);
 			}
 			this.clearCacheData();

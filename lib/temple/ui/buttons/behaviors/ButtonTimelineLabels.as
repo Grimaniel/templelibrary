@@ -62,7 +62,7 @@ package temple.ui.buttons.behaviors
 		public static const UP:String = 'up';
 		
 		/**
-		 * Displayed when the mouse enters the buttons. The 'in' status is automaticly followed by the 'over' status.
+		 * Displayed when the mouse enters the buttons. The 'in' status is automatically followed by the 'over' status.
 		 * <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
 		 */
 		public static const IN:String = 'in';
@@ -76,13 +76,13 @@ package temple.ui.buttons.behaviors
 		public static const OVER:String = 'over';
 		
 		/**
-		 * Displayed when the mouse leaves the button. The 'out' status is automaticly followed by the 'up' status.
+		 * Displayed when the mouse leaves the button. The 'out' status is automatically followed by the 'up' status.
 		 * <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
 		 */
 		public static const OUT:String = 'out';
 		
 		/**
-		 * Displayed when the left mouse button is pressed over the button. The 'press' status is automaticly followed by the 'down' status.
+		 * Displayed when the left mouse button is pressed over the button. The 'press' status is automatically followed by the 'down' status.
 		 * <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
 		 */
 		public static const PRESS:String = 'press';
@@ -95,13 +95,13 @@ package temple.ui.buttons.behaviors
 		public static const DOWN:String = 'down';
 		
 		/**
-		 * Displayed when the left mouse button is released. The 'release' status is automaticly followed by the 'over' status.
+		 * Displayed when the left mouse button is released. The 'release' status is automatically followed by the 'over' status.
 		 * <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
 		 */
 		public static const RELEASE:String = 'release';
 		
 		/**
-		 * Animation state before the selected state. The 'select' status is automaticly followed by the 'selected' status.
+		 * Animation state before the selected state. The 'select' status is automatically followed by the 'selected' status.
 		 * <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
 		 */
 		public static const SELECT:String = 'select';
@@ -120,7 +120,7 @@ package temple.ui.buttons.behaviors
 		public static const DESELECT:String = 'deselect';
 		
 		/**
-		 * Animation state before the disable state. The 'disable' status is automaticly followed by the 'disabled' status.
+		 * Animation state before the disable state. The 'disable' status is automatically followed by the 'disabled' status.
 		 * <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
 		 */
 		public static const DISABLE:String = 'disable';
@@ -138,7 +138,7 @@ package temple.ui.buttons.behaviors
 		public static const ENABLE:String = 'enable';
 		
 		/**
-		 * Animation state when the buttons gets focus. The 'focus' state is automaticly followed by the 'focused' state.
+		 * Animation state when the buttons gets focus. The 'focus' state is automatically followed by the 'focused' state.
 		 * <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
 		 */
 		public static const FOCUS:String = 'focus';

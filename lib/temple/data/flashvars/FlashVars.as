@@ -69,6 +69,8 @@ package temple.data.flashvars
 	 * FlashVars.getValue(FlashVarNames.LANGUAGE);
 	 * </listing>
 	 * 
+	 * @includeExample ../../ui/form/services/FormXMLServiceExample.as
+	 * 
 	 * @author Arjan van Wijk
 	 */
 	public final class FlashVars

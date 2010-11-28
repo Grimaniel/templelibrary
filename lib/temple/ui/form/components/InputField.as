@@ -78,7 +78,10 @@ package temple.ui.form.components
 	[Event(name = "FormElementEvent.submit", type = "temple.ui.form.components.FormElementEvent")]
 	
 	/**
+	 * @see temple.ui.form.Form
+	 * 
 	 * @includeExample ../services/FormXMLServiceExample.as
+	 * @includeExample ../FormExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */
@@ -717,7 +720,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * The minimal size of the font when the font is automaticly adjusted to de design.
+		 * The minimal size of the font when the font is automatically adjusted to de design.
 		 * If set to NaN, auto fontsize is not used. Values of 0 of lower will automiticly set to NaN.
 		 * 
 		 * Based on the AutomaticFontSizeBehaviour of Jankees van Woezik
@@ -755,6 +758,9 @@ package temple.ui.form.components
 			this._selectTextOnFocus = value;
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function handleFocusIn(event:FocusEvent):void 
 		{
 			super.handleFocusIn(event);
@@ -767,12 +773,18 @@ package temple.ui.form.components
 			}
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function handleFocusOut(event:FocusEvent):void 
 		{
 			super.handleFocusOut(event);
 			this.updateHint();
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleTextFieldChange(event:Event):void
 		{
 			if(!isNaN(this._minimalFontSize))
@@ -812,6 +824,9 @@ package temple.ui.form.components
 			}
 		}
 
+		/**
+		 * @private
+		 */
 		protected function updateHint():void 
 		{
 			if (this._focus && this._showsHint) 
@@ -839,6 +854,9 @@ package temple.ui.form.components
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		protected function handleKeyDown(event:KeyboardEvent):void
 		{
 			if(this._submitOnEnter && event.keyCode == KeyCode.ENTER)
@@ -848,11 +866,17 @@ package temple.ui.form.components
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		protected function handleTextFieldScroll(event:Event):void
 		{
 			if(this._limitInputToDesign) this._textField.scrollH = this._textField.scrollV = 0;
 		}
 
+		/**
+		 * @private
+		 */
 		protected function handleTextInput(event:TextEvent):void
 		{
 			this._previousText = this._textField.text;

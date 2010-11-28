@@ -4,33 +4,47 @@
  * <a name="FormXMLService"></a>
  * <h1>FormXMLService</h1>
  * 
- * <p>This is an example of the FormXMLService. In this case we send the submitted data to an XML file, which acts as the result of a possible backend server.</p>
+ * <p>This is an example of the FormXMLService. In this case we send the submitted data to an XML file, which acts as the result of a possible backend server.
+ * By setting the Flash var "success" to true, we fake a successful submit, otherwise we fake an error.</p>
  * 
- * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf</a></p>
+ * <p>View this example online at: 
+ * 	<ul>
+ * 		<li>Error result: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf?success=false" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf?success=false</a></li>
+ * 		<li>Success result: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf?success=true" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf?success=true</a></li>
+ * 	</ul>	
+ * 	</p>
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.as" target="_blank">Download source</a></p>   
  */
 package
 {
-	import flash.net.URLRequestMethod;
+	import temple.data.flashvars.FlashVars;
 	import temple.ui.form.Form;
+	import temple.ui.form.FormEvent;
 	import temple.ui.form.services.FormXMLService;
 	import temple.ui.form.validation.rules.EmailValidationRule;
 	import temple.ui.form.validation.rules.EmptyStringValidationRule;
+	import temple.utils.color.Colors;
 
+	import flash.net.URLRequestMethod;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 
 	public class FormXMLServiceExample extends DocumentClassExample
 	{
+		private var _label:TextField;
+		
 		public function FormXMLServiceExample()
 		{
+			// By setting the flash var "success" to true, we fake a successful submit.
+			FlashVars.initialize(this.loaderInfo.parameters);
+			FlashVars.configureVar("success",  false, Boolean);
+			
 			// Create a FormXMLService which handles our form.
 			// For this case we just submit the data to an XML file, normally you would send it to a backend server.
 			// The XML file acts as the result of the backend server.
-			
-			// XML which contains an error
-			var service:FormXMLService = new FormXMLService('submit_error.xml'); 
+			// If the Flash var "success" is set to true, we use an XML file without errors, otherwise we use an XML with an error.
+			var service:FormXMLService = new FormXMLService(FlashVars.getValue("success") ? "submit_success.xml" : "submit_error.xml"); 
 			
 			// we set method to GET, since Google Code doesn't allow us to send POST data to an XML file.
 			service.method = URLRequestMethod.GET;
@@ -74,17 +88,65 @@ package
 			// Create a submit button
 			var button:Button = new Button();
 			button.x = 20;
-			button.y = 90;
+			button.y = 104;
 			this.addChild(button);
 			
 			form.addSubmitButton(button);
 			
+			// Create a label for displaying error or success messages
+			this._label = new TextField();
+			this._label.autoSize = TextFieldAutoSize.LEFT;
+			this._label.x = 20;
+			this._label.y = 82;
+			this.addChild(this._label);
+			
+			form.addEventListener(FormEvent.RESET, this.handleFormEvent);
+			form.addEventListener(FormEvent.VALIDATE_SUCCESS, this.handleFormEvent);
+			form.addEventListener(FormEvent.VALIDATE_ERROR, this.handleFormEvent);
+			form.addEventListener(FormEvent.SUBMIT_SUCCESS, this.handleFormEvent);
+			form.addEventListener(FormEvent.SUBMIT_ERROR, this.handleFormEvent);
+			
 			form.reset();
+		}
+
+		private function handleFormEvent(event:FormEvent):void
+		{
+			switch (event.type)
+			{
+				case FormEvent.RESET:
+				{
+					this._label.text = "";
+					this._label.textColor = Colors.BLACK;
+					break;
+				}
+				case FormEvent.VALIDATE_SUCCESS:
+				{
+					this._label.text = "";
+					this._label.textColor = Colors.BLACK;
+					break;
+				}
+				case FormEvent.VALIDATE_ERROR:
+				{
+					this._label.text = event.result.message;
+					this._label.textColor = Colors.RED;
+					break;
+				}
+				case FormEvent.SUBMIT_SUCCESS:
+				{
+					this._label.text = event.result.message;
+					this._label.textColor = Colors.BLACK;
+					break;
+				}
+				case FormEvent.SUBMIT_ERROR:
+				{
+					this._label.text = event.result.message;
+					this._label.textColor = Colors.RED;
+					break;
+				}
+			}
 		}
 	}
 }
-import flash.text.TextFormatAlign;
-import flash.text.TextFormat;
 import temple.ui.buttons.MultiStateButton;
 import temple.ui.form.components.InputField;
 import temple.ui.states.error.ErrorFadeState;
@@ -96,6 +158,8 @@ import flash.filters.DropShadowFilter;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFieldType;
+import flash.text.TextFormat;
+import flash.text.TextFormatAlign;
 
 class Input extends InputField
 {
