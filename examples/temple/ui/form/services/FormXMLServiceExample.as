@@ -12,6 +12,7 @@
  */
 package
 {
+	import flash.net.URLRequestMethod;
 	import temple.ui.form.Form;
 	import temple.ui.form.services.FormXMLService;
 	import temple.ui.form.validation.rules.EmailValidationRule;
@@ -30,6 +31,9 @@ package
 			
 			// XML which contains an error
 			var service:FormXMLService = new FormXMLService('submit_error.xml'); 
+			
+			// we set method to GET, since Google Code doesn't allow us to send POST data to an XML file.
+			service.method = URLRequestMethod.GET;
 
 			// XML when the submit was successful
 			//var service:FormXMLService = new FormXMLService('submit_success.xml'); 
