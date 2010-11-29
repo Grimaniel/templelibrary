@@ -36,6 +36,8 @@ package
 		
 		public function FormXMLServiceExample()
 		{
+			super("Temple - FormXMLServiceExample");
+			
 			// By setting the flash var "success" to true, we fake a successful submit.
 			FlashVars.initialize(this.loaderInfo.parameters);
 			FlashVars.configureVar("success",  false, Boolean);
