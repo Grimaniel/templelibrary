@@ -1,7 +1,7 @@
 /**
  * @exampleText
  * 
- * <a name="ScrollComponentExample"></a>
+ * <a name="ScrollComponent"></a>
  * <h1>ScrollComponentExample</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/scroll/ScrollComponent.html">ScrollComponent</a>.</p>
