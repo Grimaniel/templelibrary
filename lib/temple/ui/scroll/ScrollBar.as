@@ -60,6 +60,11 @@ package temple.ui.scroll
 	import flash.events.MouseEvent;
 
 	/**
+	 * A ScrollBar is used to control the scrolling of a ScrollPane or ScrollComponent.
+	 * 
+	 * <p>A ScrollBar need at least a button and a track which can be set in the Flash IDE or by code. If set in the IDE
+	 * name the object which must act as track 'track' or 'mcTrack'. The button must be called 'button' or 'mcButton'.</p>
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ScrollBar extends LiquidContainer implements IScrollable, IShowable 
@@ -590,7 +595,7 @@ package temple.ui.scroll
 		}
 		
 		/**
-		 * Returns a reference to the ClickRepeater of the rightButton 
+		 * Returns a reference to the ClickRepeater of the rightButton .
 		 */
 		public function get rightRepeater():ClickRepeater
 		{
@@ -598,7 +603,7 @@ package temple.ui.scroll
 		}
 		
 		/**
-		 * IPropertyProxy that is used for scrolling
+		 * IPropertyProxy that is used for scrolling.
 		 */
 		public function get scrollProxy():IPropertyProxy
 		{
@@ -614,7 +619,7 @@ package temple.ui.scroll
 		}
 		
 		/**
-		 * IPropertyProxy that is used for showing and hiding the ScrollBar
+		 * IPropertyProxy that is used for showing and hiding the ScrollBar.
 		 */
 		public function get showProxy():IPropertyProxy
 		{
@@ -630,7 +635,8 @@ package temple.ui.scroll
 		}
 	
 		/**
-		 * @inheritDoc
+		 * A Boolean which indicates if the size of the buttons should we changed according to the size of the
+		 * content height and visible height (scrollFactor) of the ScrollPane.
 		 */
 		public function get autoSizeButton():Boolean
 		{
@@ -638,7 +644,7 @@ package temple.ui.scroll
 		}
 
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		[Inspectable(name="Auto Size Button", type="Boolean", defaultValue="false")]
 		public function set autoSizeButton(value:Boolean):void
@@ -648,7 +654,7 @@ package temple.ui.scroll
 		}
 		
 		/**
-		 * @inheritDoc
+		 * The minimal size of the button. This value is only used when 'autoSizeButton' is set to true.
 		 */
 		public function get minimalButtonSize():Number
 		{
@@ -656,7 +662,7 @@ package temple.ui.scroll
 		}
 
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		[Inspectable(name="Minimal Button Size", type="Number")]
 		public function set minimalButtonSize(value:Number):void
@@ -685,7 +691,7 @@ package temple.ui.scroll
 		}
 		
 		/**
-		 * @inheritDoc
+		 * A Boolean which indicates if the ScrollBar should be hidden when no scrolling is needed.
 		 */
 		public function get autoHide():Boolean
 		{
@@ -693,7 +699,7 @@ package temple.ui.scroll
 		}
 
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		[Inspectable(name="Auto Hide", type="Boolean", defaultValue="true")]
 		public function set autoHide(value:Boolean):void
@@ -915,7 +921,9 @@ package temple.ui.scroll
 			this._debug = value;
 		}
 		
-
+		/**
+		 * @private
+		 */
 		override protected function initLiquid():void
 		{
 			super.initLiquid();
@@ -932,6 +940,9 @@ package temple.ui.scroll
 			this.rightButton = this.rightButton;
 		}
 
+		/**
+		 * @private
+		 */
 		protected function updateToScrollPane():void
 		{
 			if (this._scrollPane)

@@ -55,10 +55,15 @@ package temple.ui.scroll
 	[Event(name = "resize", type = "flash.events.Event")]
 
 	/**
+	 * Basic implementation of scrollable DisplayObject.
+	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ScrollPane extends LiquidMovieClip implements IScrollPane
+	public class ScrollPane extends LiquidMovieClip implements IScrollPane, IScrollable
 	{
+		/**
+		 * @private
+		 */
 		protected var _scrollBehavior:ScrollBehavior;
 		
 		private var _targetScrollH:Number;

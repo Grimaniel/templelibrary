@@ -47,9 +47,19 @@ package temple.ui.scroll
 	import flash.geom.Rectangle;
 
 	/**
+	 * A scrollable object for usage in the Flash IDE.
+	 * <p>Set this class a base class in the IDE for the object. Add an object called 'content' of 'mcContent' on the stage
+	 * which contains the content that must be scrolled. Add an ScrollBar on the stage called 'scrollbar' or 'mcScrollBar' which
+	 * act as ScrollBar for this component. Add an object called 'mask' or 'mcMask' which size will be used a scrollRect (visible
+	 * area) for the ScrollComponent.</p>
+	 * 
+	 * @see temple.ui.scroll.ScrollBar
+	 * 
+	 * @exampleText ScrollComponentExample
+	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ScrollComponent extends ScrollPane 
+	public class ScrollComponent extends ScrollPane implements IScrollable 
 	{
 		/**
 		 * Instance name of a child which acts as content for the ScrollComponent.
