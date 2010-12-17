@@ -74,6 +74,9 @@ package temple.ui.scroll
 			this.displayObject.scrollRect = scrollRect;
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function handleMouseDown(event:MouseEvent):void
 		{
 			super.handleMouseDown(event);
@@ -81,6 +84,9 @@ package temple.ui.scroll
 			this._startDragMousePoint = this.displayObject.scrollRect.topLeft;
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function handleMouseMove(event:MouseEvent):void 
 		{
 			var scrollRect:Rectangle = this.displayObject.scrollRect;

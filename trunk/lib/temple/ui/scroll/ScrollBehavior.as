@@ -57,6 +57,9 @@ package temple.ui.scroll
 
 	/**
 	 * The ScrollBehavior makes a DisplayObject scrollable.
+	 * <p>Scrolling is needed when the content of a DisplayObject is larger then the available visible area.
+	 * The ScrollBehavior adds a scrollRect to the DisplayObject and is able to move the object under this
+	 * this scrollRect to make all content available.</p>
 	 * 
 	 * @author Thijs Broerse
 	 */
@@ -96,8 +99,8 @@ package temple.ui.scroll
 		private var _scrollProxy:IPropertyProxy;
 		private var _snapToPixel:Boolean;
 		private var _mouseWheelScrollSpeed:Number;
-		private var _stepSizeH:Number = _DEFAULT_STEP_SIZE;
-		private var _stepSizeV:Number = _DEFAULT_STEP_SIZE;
+		private var _stepSizeH:Number = ScrollBehavior._DEFAULT_STEP_SIZE;
+		private var _stepSizeV:Number = ScrollBehavior._DEFAULT_STEP_SIZE;
 		private var _marginTop:Number = 0;
 		private var _marginBottom:Number = 0;
 		private var _marginLeft:Number = 0;
@@ -108,6 +111,13 @@ package temple.ui.scroll
 		private var _targetScrollV:Number;
 		private var _limit:Boolean = true;
 		
+		/**
+		 * Creates a ScrollBehavior for a DisplayObject.
+		 * @param target the DisplayObject that needs to be scrolled.
+		 * @param scrollRect the size of the visible area.
+		 * @param scrollPane if the target is part of a scrollPane, add it here, so the ScrollBehavior can handle through the scrollPane. Otherwise, set this property to null.
+		 * @param snapToPixel a Boolean which indicates if all properties should be rounded.
+		 */
 		public function ScrollBehavior(target:DisplayObject, scrollRect:Rectangle, scrollPane:IScrollPane = null, snapToPixel:Boolean = true)
 		{
 			super(target);

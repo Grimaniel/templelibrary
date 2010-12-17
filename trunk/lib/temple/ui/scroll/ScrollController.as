@@ -51,7 +51,7 @@ package temple.ui.scroll
 	import flash.utils.Dictionary;
 
 	/**
-	 * The ScrollController attaches multiple IScrollable together. Useful if you want to scroll multiple ScrollPanes with a single ScrollBar.
+	 * The ScrollController attaches multiple IScrollables together. Useful if you want to scroll multiple ScrollPanes with a single ScrollBar.
 	 * 
 	 * @author Thijs Broerse
 	 */
@@ -59,9 +59,6 @@ package temple.ui.scroll
 	{
 		private static const _dictionary:Dictionary = new Dictionary(true);
 		
-		private var _blockRequest:Boolean;
-		private var _targetScrollH:Number;
-		private var _targetScrollV:Number;
 
 		/**
 		 * Returns a list of all ScrollController of a IScrollable if the IScrollable has ScrollControllers. Otherwise null is returned.
@@ -71,6 +68,9 @@ package temple.ui.scroll
 			return ScrollController._dictionary[target] as Array;
 		}
 		
+		private var _blockRequest:Boolean;
+		private var _targetScrollH:Number;
+		private var _targetScrollV:Number;
 		private var _scrollables:Dictionary;
 		
 		public function ScrollController(useWeakReference:Boolean = true, ...args)
