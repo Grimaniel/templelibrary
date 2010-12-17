@@ -42,6 +42,8 @@
 
 package temple.ui.form.result 
 {
+	import temple.data.result.IDataResult;
+	import temple.data.result.IResult;
 	import temple.data.result.DataResult;
 	import temple.data.xml.XMLParser;
 
@@ -50,7 +52,15 @@ package temple.ui.form.result
 	 */
 	public class FormResult extends DataResult implements IFormResult
 	{
-		protected var _errors:Array;
+		/**
+		 * Converts an IResult to a FormFormResult
+		 */
+		public static function createFromResult(result:IResult):IFormResult
+		{
+			return result is IFormResult ? IFormResult(result) : new FormResult(result.success, result.message, result.code, result is IDataResult ? IDataResult(result).data : null);
+		}
+		
+		private var _errors:Array;
 
 		public function FormResult(success:Boolean = false, message:String = null, code:String = null, data:* = null, errors:Array = null) 
 		{
@@ -97,6 +107,16 @@ package temple.ui.form.result
 		public function get errors():Array
 		{
 			return this._errors;
+		}
+		
+		/**
+		 * @inheritDoc 
+		 */
+		override public function destruct():void
+		{
+			this._errors = null;
+			
+			super.destruct();
 		}
 	}
 }

@@ -125,6 +125,7 @@ package temple.ui.form
 		private var _submitButtons:Dictionary;
 		private var _resetButtons:Dictionary;
 		private var _elementIndex:uint;
+		private var _disableOnSubmit:Boolean = true;
 
 		/**
 		 * Form
@@ -592,6 +593,24 @@ package temple.ui.form
 		}
 		
 		/**
+		 * A Boolean which indicates if the Form should be disabled when the data is submitted. This prevent multiple submits.
+		 * The Form will be enabled again if a result from the service is received.
+		 * @default true
+		 */
+		public function get disableOnSubmit():Boolean
+		{
+			return this._disableOnSubmit;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set disableOnSubmit(value:Boolean):void
+		{
+			this._disableOnSubmit = value;
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function get debug():Boolean
@@ -619,7 +638,7 @@ package temple.ui.form
 			
 			if (this._service != null)
 			{
-				this.enabled = false;
+				if (this._disableOnSubmit) this.enabled = false;
 				
 				// add listeners (remove first to prevend double listening)
 				this._service.removeEventListener(FormServiceEvent.SUCCESS, this.handleFormServiceEvent);

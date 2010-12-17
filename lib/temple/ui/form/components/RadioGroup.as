@@ -141,11 +141,13 @@ package temple.ui.form.components
 		private var _prefillValue:*;
 		private var _debug:Boolean;
 		private var _keyboardTabbingEnabled:Boolean = true;
+		private var _submitOnChange:Boolean;
 
 		
 		public function RadioGroup(name:String = null)
 		{
-			if (name){
+			if (name)
+			{
 				this._name = name;
 				
 				if (RadioGroup._instances[this._name]){
@@ -156,6 +158,7 @@ package temple.ui.form.components
 					RadioGroup._instances[this._name] = this;
 				}
 			}
+			this.addEventListener(Event.CHANGE, this.handleChange);
 		}
 		
 		/**
@@ -319,7 +322,8 @@ package temple.ui.form.components
 		public function setValue(value:*, dispatchChangeEvent:Boolean = true):void
 		{
 			this._dispatchChangeEvent = dispatchChangeEvent;
-			
+
+			this._selected = null;
 			for each (var selection:Selection in this._buttons)
 			{
 				if (value == null)
@@ -329,6 +333,7 @@ package temple.ui.form.components
 				else if (selection.value == value)
 				{
 					selection.button.selected = true;
+					this._selected = selection.button;
 					this._dispatchChangeEvent = true;
 					return;
 				}
@@ -476,6 +481,22 @@ package temple.ui.form.components
 		}
 
 		/**
+		 * If set to true the RadioGroup will dispatch an FormElementEvent.SUBMIT on change and the form (if enabled) can be submitted
+		 */
+		public function get submitOnChange():Boolean
+		{
+			return this._submitOnChange;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set submitOnChange(value:Boolean):void
+		{
+			this._submitOnChange = value;
+		}
+
+		/**
 		 * @private
 		 */
 		protected function handleButtonChange(event:Event):void
@@ -592,6 +613,11 @@ package temple.ui.form.components
 		private function handleKeyFocusChange(event:FocusEvent):void 
 		{
 			event.preventDefault();
+		}
+
+		private function handleChange(event:Event):void
+		{
+			if (this._submitOnChange) if (this._submitOnChange) this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 		}
 
 		private function sortButtons(a:Selection, b:Selection):int

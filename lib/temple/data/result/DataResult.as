@@ -88,5 +88,16 @@ package temple.data.result
 		{
 			return super.toString() + ", data=" + this._data;
 		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void
+		{
+			this._data = null;
+			
+			super.destruct();
+		}
+
 	}
 }

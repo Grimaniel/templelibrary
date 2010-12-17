@@ -136,6 +136,37 @@ package temple.utils.types
 		}
 		
 		/**
+		 * Try to convert a value to a date
+		 */
+		public static function convertToDate(value:*):Date
+		{
+			if (value is Number)
+			{
+				// The backend value is based in seconds
+				return new Date((value as Number) * 1000);
+			}
+			else if (value is String)
+			{
+				// The date string is empty so return null
+				if (value == "" || value == '0000-00-00 00:00:00')
+				{
+					return null;
+				}
+				else
+				{
+					return DateUtils.parseFromSqlDateTime(value);
+				}
+			}
+			else if (value is Date)
+			{
+				// If it is a Date, just return it (for internal use).
+				return value as Date;
+			}
+			
+			return null;
+		}
+		
+		/**
 		 * Convert a Date to a SQL-DATETIME (YYYY-MM-DD HH:MM:SS)
 		 */
 		public static function toSqlDateTime(date:Date):String

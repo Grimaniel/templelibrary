@@ -67,11 +67,11 @@ package temple.utils.types
 		private static var _CLIP_DICTIONARY:Dictionary;
 
 		/**
-		 * Delays a MovieClip from playing for an amount of frames/miliseconds
+		 * Delays a MovieClip from playing for an amount of frames/milliseconds
 		 * 
 		 * @param clip MovieClip
-		 * @param delay Delay in frames (or miliseconds when useFrames is set to false)
-		 * @param useFrames	Use frames or miliseconds
+		 * @param delay Delay in frames (or milliseconds when useFrames is set to false)
+		 * @param useFrames	Use frames or milliseconds
 		 */
 		public static function wait(movieclip:MovieClip, delay:uint, frameBased:Boolean = true):void
 		{

@@ -98,31 +98,31 @@ package temple.utils.types
 		}
 
 		/**
-		 * Format miliseconds as mm:ss.mmm 
+		 * Format milliseconds as mm:ss.mmm 
 		 */
-		public static function formatTime(miliseconds:Number, delimiter:String = ':'):String
+		public static function formatTime(milliseconds:Number, delimiter:String = ':'):String
 		{
-			return StringUtils.padLeft(Math.floor(miliseconds / 60000).toString(), 2, "0") + delimiter + StringUtils.padLeft((Math.floor(miliseconds * .001) % 60).toString(), 2, "0") + '.' + StringUtils.padLeft((Math.round(Math.floor(miliseconds % 1000))).toString(), 3, "0");
+			return StringUtils.padLeft(Math.floor(milliseconds / 60000).toString(), 2, "0") + delimiter + StringUtils.padLeft((Math.floor(milliseconds * .001) % 60).toString(), 2, "0") + '.' + StringUtils.padLeft((Math.round(Math.floor(milliseconds % 1000))).toString(), 3, "0");
 		}
 
 		/**
-		 * Format miliseconds as mm:ss
+		 * Format milliseconds as mm:ss
 		 * 
 		 * @includeExample TimeUtilsExample.as
 		 */
-		public static function formatMinutesSeconds(miliseconds:Number, delimiter:String = ':'):String
+		public static function formatMinutesSeconds(milliseconds:Number, delimiter:String = ':'):String
 		{
-			return StringUtils.padLeft(Math.floor(miliseconds / (60000)).toString(), 2, "0") + delimiter + StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0");
+			return StringUtils.padLeft(Math.floor(milliseconds / (60000)).toString(), 2, "0") + delimiter + StringUtils.padLeft((Math.floor(milliseconds / 1000) % 60).toString(), 2, "0");
 		}
 
 		/**
-		 * Format miliseconds as m:ss
+		 * Format milliseconds as m:ss
 		 * 
 		 * @includeExample TimeUtilsExample.as
 		 */
-		public static function formatMinutesSecondsAlt(miliseconds:Number, delimiter:String = ':'):String
+		public static function formatMinutesSecondsAlt(milliseconds:Number, delimiter:String = ':'):String
 		{
-			return (Math.floor(miliseconds / 60000)).toString() + delimiter + StringUtils.padLeft((Math.floor(miliseconds / 1000) % 60).toString(), 2, "0");
+			return (Math.floor(milliseconds / 60000)).toString() + delimiter + StringUtils.padLeft((Math.floor(milliseconds / 1000) % 60).toString(), 2, "0");
 		}
 		
 		public static function toString():String

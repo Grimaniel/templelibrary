@@ -77,13 +77,13 @@ package temple.debug
 	{
 		private var _fpsField:TextField;		
 		private var _memoryField:TextField;		
-		private var _frameMiliTotal:Number = 0;
+		private var _frameMilliTotal:Number = 0;
 		private var _memoryKiloByteTotal:Number = 0;
-		private var _frameMiliMin:Number = 0;
+		private var _frameMilliMin:Number = 0;
 		private var _memoryKiloByteMin:Number = 0;
-		private var _frameMiliMax:Number = 0;
+		private var _frameMilliMax:Number = 0;
 		private var _memoryKiloByteMax:Number = 0;
-		private var _frameMiliHistory:Array;
+		private var _frameMilliHistory:Array;
 		private var _memoryKiloByteHistory:Array;
 		//utils
 		private var _updateFrequency:Number = 1000 / 4;
@@ -116,7 +116,7 @@ package temple.debug
 			this.setFieldFormat(this._memoryField, this._graphRect.width, this._fieldHeight, 0x0000BB);
 			
 			//init/set some datas
-			this._frameMiliHistory = new Array();
+			this._frameMilliHistory = new Array();
 			this._memoryKiloByteHistory = new Array();
 			
 			this._previousTime = getTimer();
@@ -150,7 +150,7 @@ package temple.debug
 			this._previousTime += delta;
 			this._ticks++;
 			
-			this._frameMiliTotal += delta;
+			this._frameMilliTotal += delta;
 			this._memoryKiloByteTotal += (System.totalMemory / 1024);
 			
 			//check if it's update time again
@@ -178,39 +178,39 @@ package temple.debug
 				}
 				
 				//update fps
-				avgTmp = this._frameMiliTotal / this._ticks;
+				avgTmp = this._frameMilliTotal / this._ticks;
 								
 				this._fpsField.text = 'Fps: ' + String(Math.round(1000 / avgTmp * 100) / 100);
-				this._frameMiliHistory.push(avgTmp);	
+				this._frameMilliHistory.push(avgTmp);	
 							
-				if (this._frameMiliHistory.length > this._maxHistoryItems)
+				if (this._frameMilliHistory.length > this._maxHistoryItems)
 				{
-					this._frameMiliHistory.splice(0, this._frameMiliHistory.length - this._maxHistoryItems);
+					this._frameMilliHistory.splice(0, this._frameMilliHistory.length - this._maxHistoryItems);
 				}
 				
 				//calc min/max							
-				this._frameMiliMin = this._frameMiliHistory[0];
-				this._frameMiliMax = this._frameMiliHistory[0];			
-				iLim = this._frameMiliHistory.length;
+				this._frameMilliMin = this._frameMilliHistory[0];
+				this._frameMilliMax = this._frameMilliHistory[0];			
+				iLim = this._frameMilliHistory.length;
 				for(i = 1;i < iLim;i++)
 				{
-					this._frameMiliMin = Math.min(this._frameMiliHistory[i], this._frameMiliMin); 
-					this._frameMiliMax = Math.max(this._frameMiliHistory[i], this._frameMiliMax);
+					this._frameMilliMin = Math.min(this._frameMilliHistory[i], this._frameMilliMin); 
+					this._frameMilliMax = Math.max(this._frameMilliHistory[i], this._frameMilliMax);
 				}
 				
 				if (this._redraw)
 				{
 					//add text
-					this._fpsField.appendText(' [ ' + String(Math.round(1000 / this._frameMiliMax * 100) / 100) + ' / ' + String(Math.round(1000 / this._frameMiliMin * 100) / 100) + ' ]');
+					this._fpsField.appendText(' [ ' + String(Math.round(1000 / this._frameMilliMax * 100) / 100) + ' / ' + String(Math.round(1000 / this._frameMilliMin * 100) / 100) + ' ]');
 					
 					
 					//calc some more & draw				
 					this.graphics.lineStyle(0, 0xBB0000, 1, false, LineScaleMode.NORMAL);
 					dx = this._graphRect.width / iLim;
-					dy = this._graphRect.height / (this._frameMiliMax - this._frameMiliMin);
+					dy = this._graphRect.height / (this._frameMilliMax - this._frameMilliMin);
 					for(i = 0;i < iLim;i++)
 					{
-						tmpY = this._graphRect.bottom - dy * (this._frameMiliHistory[i] - this._frameMiliMin);
+						tmpY = this._graphRect.bottom - dy * (this._frameMilliHistory[i] - this._frameMilliMin);
 						this.graphics.moveTo(this._graphRect.left + dx * i, tmpY);
 						this.graphics.lineTo(this._graphRect.left + dx * (i + 1), tmpY);
 					}
@@ -255,7 +255,7 @@ package temple.debug
 				}			
 					
 				//reset these
-				this._frameMiliTotal = 0;		
+				this._frameMilliTotal = 0;		
 				this._memoryKiloByteTotal = 0;
 				this._ticks = 0;
 			}
@@ -268,20 +268,20 @@ package temple.debug
 		{
 			if (chop == 0)
 			{
-				this._frameMiliHistory = new Array();
+				this._frameMilliHistory = new Array();
 				this._memoryKiloByteHistory = new Array();
 			}
 			else
 			{
 				//both are same length (so one check is fine)
-				if (this._frameMiliHistory.length > chop)
+				if (this._frameMilliHistory.length > chop)
 				{
-					this._frameMiliHistory.splice(0, this._frameMiliHistory.length - chop);	
+					this._frameMilliHistory.splice(0, this._frameMilliHistory.length - chop);	
 					this._memoryKiloByteHistory.splice(0, this._memoryKiloByteHistory.length - chop);	
 				}
 				else
 				{
-					this._frameMiliHistory = new Array();	
+					this._frameMilliHistory = new Array();	
 					this._memoryKiloByteHistory = new Array();
 				}
 			}
@@ -325,15 +325,15 @@ package temple.debug
 			this._fpsField = null;
 			this._memoryKiloByteMin = NaN;
 			this._graphRect = null;
-			this._frameMiliMax = NaN;
+			this._frameMilliMax = NaN;
 			this._updateFrequency = NaN;
 			this._memoryKiloByteMax = NaN;
 			this._maxHistoryItems = NaN;
-			this._frameMiliTotal = NaN;
+			this._frameMilliTotal = NaN;
 			this._redraw = false;
-			this._frameMiliMin = NaN;
+			this._frameMilliMin = NaN;
 			this._memoryKiloByteHistory = null;
-			this._frameMiliHistory = null;
+			this._frameMilliHistory = null;
 			this._nextUpdateTime = NaN;
 			this._previousTime = NaN;
 			this._memoryField = null;

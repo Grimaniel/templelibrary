@@ -39,16 +39,14 @@
  *	repository with their own license!
  *	
  */
-
-package temple.utils.color 
+package temple.utils.color
 {
-
 	/**
 	 * The list below is a complete list of the color HTML names supported by all major browsers.
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public final class Colors 
+	public final class Colors
 	{
 		public static const ALICE_BLUE:uint = 0xF0F8FF;
 		public static const ANTIQUE_WHITE:uint = 0xFAEBD7;
@@ -105,8 +103,8 @@ package temple.utils.color
 		public static const GREEN_YELLOW:uint = 0xADFF2F;
 		public static const HONEY_DEW:uint = 0xF0FFF0;
 		public static const HOTPINK:uint = 0xFF69B4;
-		public static const INDIAN_RED :uint = 0xCD5C5C;
-		public static const INDIGO :uint = 0x4B0082;
+		public static const INDIAN_RED:uint = 0xCD5C5C;
+		public static const INDIGO:uint = 0x4B0082;
 		public static const IVORY:uint = 0xFFFFF0;
 		public static const KHAKI:uint = 0xF0E68C;
 		public static const LAVENDER:uint = 0xE6E6FA;

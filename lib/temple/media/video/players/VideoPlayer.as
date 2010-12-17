@@ -822,7 +822,7 @@ package temple.media.video.players
 		[Inspectable(name="Smoothing", type="Boolean", defaultValue="false")]
 		public function set smoothing(value:Boolean):void
 		{
-			this._video.smoothing;
+			this._video.smoothing = value;
 		}
 
 		/**
@@ -1014,7 +1014,7 @@ package temple.media.video.players
 		/**
 		 * @private
 		 * 
-		 *	Flash Player dispatches NetStatusEvent objects when  NetStream reports its status
+		 * Flash Player dispatches NetStatusEvent objects when NetStream reports its status.
 		 */
 		protected function handleNetStatusEvent(event:NetStatusEvent):void 
 		{
