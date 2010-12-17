@@ -108,7 +108,7 @@ package temple.data.loader.cache
 		}
 		
 		/**
-		 * The last time (in miliseconds) this data is used
+		 * The last time (in milliseconds) this data is used
 		 */
 		public function get time():uint
 		{

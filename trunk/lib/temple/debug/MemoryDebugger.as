@@ -75,7 +75,7 @@ package temple.debug
 
 		/**
 		 * Creates a new MemoryDebugger instance.
-		 * @param interval the time (in miliseconds) between every Memory check.
+		 * @param interval the time (in milliseconds) between every Memory check.
 		 * @param includeCreationStack indicates if a stackTrace of the object construction should be included in the log messages.
 		 */
 		public function MemoryDebugger(interval:uint = 2000, includeCreationStack:Boolean = false)

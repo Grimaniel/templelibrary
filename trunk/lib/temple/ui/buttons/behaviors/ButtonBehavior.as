@@ -223,7 +223,7 @@ package temple.ui.buttons.behaviors
 		}
 		
 		/**
-		 * Get or set the delay before mouse over is performed, in miliseconds.
+		 * Get or set the delay before mouse over is performed, in milliseconds.
 		 */
 		public function get inDelay():Number
 		{
@@ -242,7 +242,7 @@ package temple.ui.buttons.behaviors
 		}
 
 		/**
-		 * (Hysteresis) delay before mouse out action is performed, in miliseconds.
+		 * (Hysteresis) delay before mouse out action is performed, in milliseconds.
 		 */
 		public function get outDelay():Number
 		{

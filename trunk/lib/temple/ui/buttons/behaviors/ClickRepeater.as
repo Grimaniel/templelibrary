@@ -89,10 +89,10 @@ package temple.ui.buttons.behaviors
 		/**
 		 * Create a new ClickRepeater
 		 * @param target the InteractiveObject that should repeat the click event
-		 * @param initDelay the delay of the first repeat in miliseconds
-		 * @param repeatDelay the delay of the following repeats in miliseconds
-		 * @param highSpeedWait the number of miliseconds to wait before go in to 'highspeed' mode, if NaN highspeed mode is disabled
-		 * @param highSpeedDelay the delay of the repeats in miliseconds in highspeed mode
+		 * @param initDelay the delay of the first repeat in milliseconds
+		 * @param repeatDelay the delay of the following repeats in milliseconds
+		 * @param highSpeedWait the number of milliseconds to wait before go in to 'highspeed' mode, if NaN highspeed mode is disabled
+		 * @param highSpeedDelay the delay of the repeats in milliseconds in highspeed mode
 		 */
 		public function ClickRepeater(target:InteractiveObject, initDelay:uint = 500, repeatDelay:uint = 70, highSpeedWait:Number = NaN, highSpeedDelay:uint = 20):void 
 		{
@@ -119,7 +119,7 @@ package temple.ui.buttons.behaviors
 		}
 		
 		/**
-		 * Set the delay of the first repeat in miliseconds
+		 * Set the delay of the first repeat in milliseconds
 		 */
 		public function get initDelay():uint
 		{
@@ -135,7 +135,7 @@ package temple.ui.buttons.behaviors
 		}
 
 		/**
-		 * Set the 2nd and following repeats in miliseconds
+		 * Set the 2nd and following repeats in milliseconds
 		 */
 		public function get repeatDelay():uint
 		{
@@ -151,7 +151,7 @@ package temple.ui.buttons.behaviors
 		}
 		
 		/**
-		 * the delay of the repeats in miliseconds in highspeed mode
+		 * the delay of the repeats in milliseconds in highspeed mode
 		 */
 		public function get highSpeedDelay():uint
 		{
@@ -167,7 +167,7 @@ package temple.ui.buttons.behaviors
 		}
 		
 		/**
-		 * the number of miliseconds to wait before go in to 'highspeed' mode, if NaN highspeed mode is disabled
+		 * the number of milliseconds to wait before go in to 'highspeed' mode, if NaN highspeed mode is disabled
 		 */
 		public function get highSpeedWait():uint
 		{

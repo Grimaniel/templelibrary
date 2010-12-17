@@ -42,6 +42,8 @@
 
 package temple.utils 
 {
+	import temple.debug.errors.TempleError;
+	import temple.debug.errors.throwError;
 	import temple.core.CoreObject;
 	import temple.core.CoreTimer;
 	import temple.ui.IPauseable;
@@ -62,7 +64,7 @@ package temple.utils
 	 * <p>Create a new TimeOut instance with the callback function and delay.</p>
 	 * 
 	 * <listing version="3.0">
-	 * // call delayedFunction after 1 second (1000 miliseconds) 
+	 * // call delayedFunction after 1 second (1000 milliseconds) 
 	 * new TimeOut(delayedFunction, 1000);
 	 * 
 	 * function delayedFunction()
@@ -74,7 +76,7 @@ package temple.utils
 	 * It is also possible to pass arguments with the callback:
 	 * 
 	 * <listing version="3.0">
-	 * // call delayedFunction after 1 second (1000 miliseconds) 
+	 * // call delayedFunction after 1 second (1000 milliseconds) 
 	 * new TimeOut(delayedFunction, 1000, ["Some string", 2]);
 	 * 
 	 * function delayedFunction(arg1:String, arg2:Number)
@@ -87,30 +89,38 @@ package temple.utils
 	 */
 	public class TimeOut extends CoreObject implements IPauseable
 	{
+		/**
+		 * Lazy creates a TimeOut
+		 */
+		public static function create(callback:Function, milliseconds:Number, params:Array = null):TimeOut
+		{
+			return new TimeOut(callback, milliseconds, params);
+		}
+		
 		private var _timer:CoreTimer;
 		private var _callback:Function;
 		private var _params:Array;
 
 		//for pausing/restarting
-		private var _intervalMiliseconds:Number;
-		private var _startMiliseconds:Number;
-		private var _remainingMiliseconds:Number;
+		private var _intervalMilliseconds:Number;
+		private var _startMilliseconds:Number;
+		private var _remainingMilliseconds:Number;
 
 		/**
 		 * Creates a new TimeOut
 		 * @param callback the callback function to be called when done waiting
-		 * @param miliseconds the number of miliseconds to wait
+		 * @param milliseconds the number of milliseconds to wait
 		 * @param params list of parameters to pass to the callback function
 		 */
-		public function TimeOut(callback:Function, miliseconds:Number, params:Array = null)
+		public function TimeOut(callback:Function, milliseconds:Number, params:Array = null)
 		{
 			this._callback = callback;
 			this._params = params;
 			
-			this._intervalMiliseconds = miliseconds;			
-			this._startMiliseconds = getTimer();
+			this._intervalMilliseconds = milliseconds;			
+			this._startMilliseconds = getTimer();
 			
-			this._timer = new CoreTimer(this._intervalMiliseconds, 1);
+			this._timer = new CoreTimer(this._intervalMilliseconds, 1);
 			this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
 			this._timer.start();
 		}
@@ -125,11 +135,11 @@ package temple.utils
 				this._timer.stop();
 			}
 			
-			this._startMiliseconds = getTimer();
+			this._startMilliseconds = getTimer();
 			
 			if(this._timer == null)
 			{
-				this._timer = new CoreTimer(this._intervalMiliseconds, 1);
+				this._timer = new CoreTimer(this._intervalMilliseconds, 1);
 				this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
 			}
 			this._timer.start();
@@ -142,7 +152,7 @@ package temple.utils
 		{
 			if(this._timer != null && this._timer.running == true)
 			{
-				this._remainingMiliseconds = this._timer.delay - (getTimer() - this._startMiliseconds);
+				this._remainingMilliseconds = this._timer.delay - (getTimer() - this._startMilliseconds);
 				this._timer.stop();
 			}
 		}
@@ -152,20 +162,20 @@ package temple.utils
 		 */
 		public function resume():void
 		{
-			if(this._remainingMiliseconds > 0)
+			if(this._remainingMilliseconds > 0)
 			{
 				if(this._timer != null)
 				{
-					this._timer.delay = this._remainingMiliseconds;
+					this._timer.delay = this._remainingMilliseconds;
 					this._timer.start();
 				}
 				else
 				{
-					this._timer = new CoreTimer(this._remainingMiliseconds, 1);
+					this._timer = new CoreTimer(this._remainingMilliseconds, 1);
 					this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);	
 				}
 				
-				this._startMiliseconds = getTimer();
+				this._startMilliseconds = getTimer();
 			}
 		}
 		
@@ -186,39 +196,53 @@ package temple.utils
 			{
 				this._timer.stop();
 			}
-			this._remainingMiliseconds = 0;
+			this._remainingMilliseconds = 0;
 		}
 
 		/**
-		 * Lazy creates a TimeOut
+		 * Returns the passed time (in milliseconds)
 		 */
-		public static function create(callback:Function, miliseconds:Number, params:Array = null):TimeOut
+		public function get timeElapsed():Number
 		{
-			return new TimeOut(callback, miliseconds, params);
+			return this._intervalMilliseconds - this.timeLeft;
+		}
+
+		/**
+		 * Returns the time (in milliseconds) it will take at this moment till the TimeOut is complete.
+		 */
+		public function get timeLeft():Number
+		{
+			return this._timer ? (this._timer.running ? this._timer.delay - (getTimer() - this._startMilliseconds) : this._remainingMilliseconds) : 0;
+		}
+		
+		/**
+		 * Call this method to force a complete before the time has passed.
+		 */
+		public function complete():void
+		{
+			if (!this.isDestructed)
+			{
+				if(this._params != null)
+				{
+					if(this._callback != null) this._callback.apply(null, this._params);
+				}
+				else
+				{
+					if(this._callback != null) this._callback();
+				}
+				this.destruct();
+			}
+			else
+			{
+				throwError(new TempleError(this, "TimeOut already completed"));
+			}
 		}
 		
 		private function handleTimerComplete(event:TimerEvent):void
 		{
-			if(this._params != null)
-			{
-				if(this._callback != null) this._callback.apply(null, this._params);
-			}
-			else
-			{
-				if(this._callback != null) this._callback();
-			}
-			this.destruct();
+			this.complete();
 		}
 		
-		public function get timeElapsed():Number
-		{
-			return this._intervalMiliseconds - this.timeLeft;
-		}
-
-		public function get timeLeft():Number
-		{
-			return this._timer ? (this._timer.running ? this._timer.delay - (getTimer() - this._startMiliseconds) : this._remainingMiliseconds) : 0;
-		}
 		
 		/**
 		 * @inheritDoc
@@ -233,7 +257,7 @@ package temple.utils
 			this._callback = null;
 			this._params = null;	
 			
-			this._remainingMiliseconds = 0;
+			this._remainingMilliseconds = 0;
 			
 			super.destruct();	
 		}

@@ -84,6 +84,8 @@ package temple.ui.form.services
 		 */
 		public function submit(data:Object):IFormResult
 		{
+			if (this.debug) this.logDebug("submit: " + ObjectUtils.traceObject(data, 2, false));
+
 			var success:Boolean;
 			
 			if (this._object == null)
@@ -113,6 +115,7 @@ package temple.ui.form.services
 					}
 				}
 			}
+			if (this.debug) this.logDebug("object: " + ObjectUtils.traceObject(this._object, 1, false));
 			
 			var result:IFormResult = new FormResult(success);
 			this.dispatchEvent(new FormServiceEvent(FormServiceEvent.RESULT, result));

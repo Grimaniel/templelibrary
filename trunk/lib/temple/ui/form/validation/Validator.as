@@ -78,7 +78,6 @@ package temple.ui.form.validation
 	public class Validator extends CoreObject implements IDebuggable
 	{
 		/** Objects of type RuleData */
-		[ArrayElementType("RuleData")]
 		private var _rules:Array = new Array();
 		private var _errorMessage:String;
 		private var _errorMessages:Array;
@@ -91,8 +90,8 @@ package temple.ui.form.validation
 
 		/**
 		 * Add a validation rule
-		 * @param rule: The rule
-		 * @param message (optional): error message
+		 * @param rule The rule
+		 * @param message (optional) error message
 		 */
 		public function addValidationRule(rule:IValidationRule, message:String = null):IValidationRule 
 		{
@@ -107,7 +106,7 @@ package temple.ui.form.validation
 		{
 			for (var i:int = this._rules.length - 1 ;i >= 0; i--) 
 			{
-				if(RuleData(this._rules[i]).rule.target == element)
+				if (RuleData(this._rules[i]).rule.target == element)
 				{
 					this._rules.splice(i, 1);
 				}
