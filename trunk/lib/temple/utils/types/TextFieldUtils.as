@@ -157,7 +157,7 @@ package temple.utils.types
 		 */
 		public static function formatTextFields(container:DisplayObjectContainer, recursive:Boolean = true, debug:Boolean = false):void
 		{
-			if(container == null) return;
+			if (container == null) return;
 			
 			var child:DisplayObject;
 			
@@ -166,11 +166,11 @@ package temple.utils.types
 			{
 				child = container.getChildAt(i);
 				
-				if(child is TextField)
+				if (child is TextField)
 				{
 					TextField(child).defaultTextFormat = TextField(child).getTextFormat();
 					
-					if(debug) Log.debug("formatTextFields: found TextField '" + TextField(child).name + "', text: '" + TextField(child).text + "'", "temple.utils.types.DisplayObjectContainerUtils");
+					if (debug) Log.debug("formatTextFields: found TextField '" + TextField(child).name + "', text: '" + TextField(child).text + "'", "temple.utils.types.DisplayObjectContainerUtils");
 				}
 				else if (recursive && child is DisplayObjectContainer)
 				{
@@ -188,7 +188,7 @@ package temple.utils.types
 		 */
 		public static function emptyTextFields(container:DisplayObjectContainer, recursive:Boolean = true, debug:Boolean = false):void
 		{
-			if(container == null) return;
+			if (container == null) return;
 			
 			var child:DisplayObject;
 			
@@ -197,9 +197,9 @@ package temple.utils.types
 			{
 				child = container.getChildAt(i);
 				
-				if(child is TextField)
+				if (child is TextField)
 				{
-					if(debug) Log.debug("emptyTextFields: found TextField '" + TextField(child).name + "', text: '" + TextField(child).text + "'", "temple.utils.types.DisplayObjectContainerUtils");
+					if (debug) Log.debug("emptyTextFields: found TextField '" + TextField(child).name + "', text: '" + TextField(child).text + "'", "temple.utils.types.DisplayObjectContainerUtils");
 
 					TextField(child).text = '';
 				}
@@ -218,10 +218,10 @@ package temple.utils.types
 		public static function embedFontsInTextFields(container:DisplayObjectContainer):void
 		{
 			var child:DisplayObject;
-			for(var i:int = 0;i < container.numChildren;i++)
+			for (var i:int = 0;i < container.numChildren;i++)
 			{
 				child = container.getChildAt(i); 
-				if(child is DisplayObjectContainer)
+				if (child is DisplayObjectContainer)
 				{
 					TextFieldUtils.embedFontsInTextFields(child as DisplayObjectContainer);
 				} 
@@ -287,11 +287,11 @@ package temple.utils.types
 		{
 			var usesStyleSheet:Boolean = TextFieldUtils.usesStyleSheet(textField);
 			var usesOneTextFormat:Boolean = TextFieldUtils.usesTextFormat(textField);
-			if(!usesOneTextFormat && !usesStyleSheet)
+			if (!usesOneTextFormat && !usesStyleSheet)
 			{
 				throwError(new TempleError(TextField, "setting fontSize only works when you use one TextFormat or a StyleSheet"));				
 			}
-			if(!usesStyleSheet)
+			if (!usesStyleSheet)
 			{
 				var textFormat:TextFormat = textField.getTextFormat();
 				textFormat.size = fontSize;
@@ -305,7 +305,7 @@ package temple.utils.types
 				
 				var styles:Array = textField.styleSheet.styleNames;
 				var i:int = styles.length;
-				while(i--)
+				while (i--)
 				{
 					var styleName:String = styles[i];
 					var styleObject:Object = textField.styleSheet.getStyle(styleName);
@@ -341,7 +341,7 @@ package temple.utils.types
                 TextFieldUtils.setFontSize(field, size--);
             }
             
-            if(affectTextFieldHeight)
+            if (affectTextFieldHeight)
             {
                 var lineMetrics:TextLineMetrics = field.getLineMetrics(0);
                 field.height = lineMetrics.height + 4 + lineMetrics.leading * (lines - 1);

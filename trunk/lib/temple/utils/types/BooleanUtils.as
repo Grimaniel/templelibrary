@@ -57,11 +57,11 @@ package temple.utils.types
 		 */
 		public static function getBoolean(value:*):Boolean 
 		{
-			if(typeof(value) == ObjectType.OBJECT || typeof(value) == ObjectType.XML)
+			if (typeof(value) == ObjectType.OBJECT || typeof(value) == ObjectType.XML)
 			{
 				value = String(value);
 			}
-			switch(value) 
+			switch (value) 
 			{
 				case true :
 				case "on" :

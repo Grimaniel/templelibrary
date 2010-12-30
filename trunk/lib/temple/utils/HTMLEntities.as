@@ -63,7 +63,7 @@ package temple.utils
 		{
 			HTMLEntities._entities ||= HTMLEntities.getEntities();
         	
-			for(var entity:String in HTMLEntities._entities)
+			for (var entity:String in HTMLEntities._entities)
 			{
 				string = string.replace(new RegExp(entity, 'g'), HTMLEntities._entities[entity]);
 			}

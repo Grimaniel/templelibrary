@@ -158,7 +158,7 @@ package temple.data.xml
 		{
 			for each (var data:XMLObjectData in this._xmlObjectDataList) 
 			{
-				if(data.objectClass == objectClass && data.node == node)
+				if (data.objectClass == objectClass && data.node == node)
 				{
 					return data;
 				}
@@ -186,11 +186,11 @@ package temple.data.xml
 		 */
 		override public function destruct():void
 		{
-			if(this._isLoading) this.cancel();
+			if (this._isLoading) this.cancel();
 			this._sendData = null;
 			this._xml = null;
 			this._decoder = null;
-			if(this._xmlObjectDataList)
+			if (this._xmlObjectDataList)
 			{
 				for each (var xmlObject : XMLObjectData in this._xmlObjectDataList) 
 				{

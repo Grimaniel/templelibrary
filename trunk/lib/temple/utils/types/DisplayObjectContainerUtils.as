@@ -83,14 +83,14 @@ package temple.utils.types
 			{
 				child = container.getChildAt(i);
 				
-				if(child is type)
+				if (child is type)
 				{
 					return child;
 				}
 				else if (recursive && child is DisplayObjectContainer)
 				{
 					child = DisplayObjectContainerUtils.findChildOfType(child as DisplayObjectContainer, type, recursive);
-					if(child != null) return child;
+					if (child != null) return child;
 				}
 			}
 			return null;
@@ -106,8 +106,8 @@ package temple.utils.types
 		 */
 		public static function getDisplayObject(container:DisplayObjectContainer, name:String, ...names):DisplayObject
 		{
-			if(container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
-			if(!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
+			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
 			names.unshift(name);
 			
 			return DisplayObjectContainerUtils.getDescendantByNames(container, names);
@@ -124,12 +124,12 @@ package temple.utils.types
 		 */
 		public static function getTextField(container:DisplayObjectContainer, name:String, ...names):TextField
 		{
-			if(container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
-			if(!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
+			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
 			names.unshift(name);
 			
 			var child:DisplayObject = DisplayObjectContainerUtils.getDescendantByNames(container, names);
-			if(!(child is TextField))
+			if (!(child is TextField))
 			{
 				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the child named \'' + child.name + '\' is not a TextField'));
 			}
@@ -147,12 +147,12 @@ package temple.utils.types
 		 */
 		public static function getMovieClip(container:DisplayObjectContainer, name:String, ...names):MovieClip
 		{
-			if(container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
-			if(!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
+			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
 			names.unshift(name);
 			
 			var child:DisplayObject = DisplayObjectContainerUtils.getDescendantByNames(container, names);
-			if(!(child is MovieClip))
+			if (!(child is MovieClip))
 			{
 				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the child named \'' + name + '\' is not a MovieClip'));
 			}
@@ -170,14 +170,14 @@ package temple.utils.types
 			
 			var name:String = names.shift();
 			var child:DisplayObject = container.getChildByName(name);
-			if(child == null)
+			if (child == null)
 			{
 				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'cannot find a child named \'' + name + '\' in container \'' + container.name + '\' (' + container + ')'));	
 			}
 			
-			if(names.length > 0)
+			if (names.length > 0)
 			{
-				if(!(child is DisplayObjectContainer))
+				if (!(child is DisplayObjectContainer))
 				{
 					throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'the child named \'' + name + '\' in container \'' + container.name + '\' (' + container + ') is not a DisplayObjectContainerUtils'));
 				}
@@ -194,7 +194,7 @@ package temple.utils.types
 		 */
 		public static function mouseChildren(container:DisplayObjectContainer, recursive:Boolean = true, enabled:Boolean = false, debug:Boolean = false):void
 		{
-			if(container == null) return;
+			if (container == null) return;
 			
 			container.mouseChildren = true;
 			
@@ -207,11 +207,11 @@ package temple.utils.types
 				
 				if (debug) Log.debug("mouseDisableChildren: " + child, DisplayObjectContainer);
 				
-				if(child is InteractiveObject)
+				if (child is InteractiveObject)
 				{
 					InteractiveObject(child).mouseEnabled = enabled;
 					
-					if(recursive && child is DisplayObjectContainer)
+					if (recursive && child is DisplayObjectContainer)
 					{
 						DisplayObjectContainer(child).mouseChildren = true;
 						DisplayObjectContainerUtils.mouseChildren(DisplayObjectContainer(child), recursive, enabled, debug);
@@ -239,10 +239,10 @@ package temple.utils.types
 		 */
 		public static function moveToContainer(target:DisplayObject, container:DisplayObjectContainer):void
 		{
-			if(target.parent != container)
+			if (target.parent != container)
 			{
 				var p:Point = new Point(target.x, target.y);
-				if(target.parent)
+				if (target.parent)
 				{
 					p = target.parent.localToGlobal(p); 
 				}

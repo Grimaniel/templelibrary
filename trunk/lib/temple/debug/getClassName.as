@@ -57,7 +57,7 @@ package temple.debug
 	{
 		var qualifiedClassName:String = getQualifiedClassName(object);
 		
-		if(Temple.displayFullPackageInToString || qualifiedClassName.indexOf('::') == -1)
+		if (Temple.displayFullPackageInToString || qualifiedClassName.indexOf('::') == -1)
 		{
 			return qualifiedClassName;
 		}

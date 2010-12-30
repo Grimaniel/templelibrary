@@ -97,7 +97,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Left", type="String")]
 		public function set inspectableLeft(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.left = Number(value);
 			}
@@ -125,7 +125,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Right", type="String")]
 		public function set inspectableRight(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.right = Number(value);
 			}
@@ -153,7 +153,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Horizontal center", type="String")]
 		public function set inspectableHorizontalCenter(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.horizontalCenter = Number(value);
 			}
@@ -181,7 +181,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Relative X", type="String")]
 		public function set inspectableRelativeX(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.relativeX = Number(value);
 			}
@@ -209,7 +209,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Minimal width", type="String")]
 		public function set inspectableMinimalWidth(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.minimalWidth = Number(value);
 			}
@@ -237,14 +237,14 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Relative Width", type="String")]
 		public function set inspectableRelativeWidth(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.liquidBehavior.relativeWidth = Number(value);
 			}
 			else if (value.indexOf('%'))
 			{
 				value = value.replace('%', '');
-				if(value != '' && !isNaN(Number(value)))
+				if (value != '' && !isNaN(Number(value)))
 				{
 					this.liquidBehavior.relativeWidth = Number(value) * 0.01;
 				}
@@ -289,7 +289,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Top", type="String")]
 		public function set inspectableTop(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.top = Number(value);
 			}
@@ -318,7 +318,7 @@ package temple.ui.layout.liquid
 		public function set inspectableBottom(value:String):void
 		{
 			
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.bottom = Number(value);
 			}
@@ -346,7 +346,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Vertical center", type="String")]
 		public function set inspectableVerticalCenter(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.verticalCenter = Number(value);
 			}
@@ -374,7 +374,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Relative Y", type="String")]
 		public function set inspectableRelativeY(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.relativeY = Number(value);
 			}
@@ -434,14 +434,14 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Relative Height", type="String")]
 		public function set inspectableRelativeHeight(value:String):void
 		{
-			if(value != '' && !isNaN(Number(value)))
+			if (value != '' && !isNaN(Number(value)))
 			{
 				this.liquidBehavior.relativeHeight = Number(value);
 			}
 			else if (value.indexOf('%'))
 			{
 				value = value.replace('%', '');
-				if(value != '' && !isNaN(Number(value)))
+				if (value != '' && !isNaN(Number(value)))
 				{
 					this.liquidBehavior.relativeHeight = Number(value) * 0.01;
 				}
@@ -469,7 +469,7 @@ package temple.ui.layout.liquid
 		 */
 		public function update():void
 		{
-			if(this._liquidBehavior) this._liquidBehavior.update();
+			if (this._liquidBehavior) this._liquidBehavior.update();
 		}
 		
 		/**
@@ -493,7 +493,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set resetRelatedScale(value:Boolean):void
 		{
-			if(this._liquidBehavior) this._liquidBehavior.resetRelatedScale = value;
+			if (this._liquidBehavior) this._liquidBehavior.resetRelatedScale = value;
 		}
 		
 		/**
@@ -518,7 +518,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Snap to pixels", type="Boolean", defaultValue="true")]
 		public function set snapToPixels(value:Boolean):void
 		{
-			if(this._liquidBehavior) this._liquidBehavior.snapToPixels = value;
+			if (this._liquidBehavior) this._liquidBehavior.snapToPixels = value;
 		}
 		
 		/**
@@ -610,7 +610,7 @@ package temple.ui.layout.liquid
 		 */
 		protected function initLiquid():void
 		{
-			if(this.isLiquid())
+			if (this.isLiquid())
 			{
 				this._liquidBehavior.init();
 			}

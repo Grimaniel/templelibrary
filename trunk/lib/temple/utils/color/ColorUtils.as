@@ -246,13 +246,13 @@ package temple.utils.color
 			hsb.s = (_max != 0) ? (_max - _min) / _max * 100 : 0;
 			hsb.b = _max / 255 * 100;
 
-			if(hsb.s == 0)
+			if (hsb.s == 0)
 			{
 				hsb.h = 0;
 			}
 			else
 			{
-				switch(_max)
+				switch (_max)
 				{
 					case r:
 						hsb.h = (g - b) / (_max - _min) * 60 + 0;
@@ -283,12 +283,12 @@ package temple.utils.color
 			var max:Number = (b * 0.01) * 255;
 			var min:Number = max * (1 - (s * 0.01));
 			
-			if(h == 360)
+			if (h == 360)
 			{
 				h = 0;
 			}
 			
-			if(s == 0)
+			if (s == 0)
 			{
 				rgb.r = rgb.g = rgb.b = b * (255 * 0.01) ;
 			}
@@ -296,7 +296,7 @@ package temple.utils.color
 			{
 				var _h:Number = Math.floor(h / 60);
 				
-				switch(_h)
+				switch (_h)
 				{
 					case 0:
 						rgb.r = max	;																																																					

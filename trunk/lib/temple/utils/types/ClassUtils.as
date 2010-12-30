@@ -65,14 +65,14 @@ package temple.utils.types
 			var factoryList:XMLList = describeType(checkType)['factory'];
 			var checkList:XMLList;
 			var elem:XML;
-			if(checkType == superType)
+			if (checkType == superType)
 			{
 				return true;
 			}
 			
 			checkList = factoryList['extendsClass'];			for each (elem in checkList)
 			{
-				if(elem.@['type'] == superName)
+				if (elem.@['type'] == superName)
 				{
 					return true;	
 				}
@@ -81,7 +81,7 @@ package temple.utils.types
 			checkList = factoryList['implementsInterface'];
 			for each (elem in checkList)
 			{
-				if(elem.@['type'] == superName)
+				if (elem.@['type'] == superName)
 				{
 					return true;	
 				}
@@ -97,7 +97,7 @@ package temple.utils.types
 		public static function hasSimpleConstructor(checkType:Class):Boolean
 		{
 			var factoryList:XMLList = describeType(checkType)['factory'];
-			if(factoryList.elements('constructor').length() > 0)
+			if (factoryList.elements('constructor').length() > 0)
 			{
 				return false;	
 			}

@@ -73,7 +73,7 @@ package temple.utils.types
 		 */
 		public static function randomElement(array:Array):*
 		{
-			if(array.length > 0)
+			if (array.length > 0)
 			{
 				return array[Math.floor(Math.random() * array.length)];
 			}
@@ -117,7 +117,7 @@ package temple.utils.types
 		{
 			var target:Array = new Array();
 			var i:int;
-			while(array.length > 0)
+			while (array.length > 0)
 			{
 				i = Math.round(Math.random() * (array.length - 1));
 				target.push(array[i]);
@@ -135,9 +135,9 @@ package temple.utils.types
 			var ret:Array = array.concat();
 			var iLim:uint = ret.length;
 			var i:uint;
-			for(i = 0;i < iLim;i++)
+			for (i = 0;i < iLim;i++)
 			{
-				if(ret[i] is Array)
+				if (ret[i] is Array)
 				{
 					ret[i] = ArrayUtils.deepArrayClone(ret[i]);
 				}
@@ -151,7 +151,7 @@ package temple.utils.types
 		 */
 		public static function average(array:Array):Number
 		{
-			if(array == null || array.length == 0) return NaN;
+			if (array == null || array.length == 0) return NaN;
 			var total:Number = 0;
 			for each (var n : Number in array) total += n;
 			return total / array.length;
@@ -165,9 +165,9 @@ package temple.utils.types
 		 */		
 		public static function removeValueFromArray(array:Array, value:Object):void
 		{
-			for(var i:Number = array.length - 1;i > -1; i--)
+			for (var i:Number = array.length - 1;i > -1; i--)
 			{
-				if(array[i] === value)
+				if (array[i] === value)
 				{
 					array.splice(i, 1);
 				}
@@ -198,7 +198,7 @@ package temple.utils.types
 			{
 				item = array[i];
 				
-				if(ArrayUtils.inArray(newArray, item))
+				if (ArrayUtils.inArray(newArray, item))
 				{
 					continue;
 				}
@@ -238,16 +238,16 @@ package temple.utils.types
 		 */		
 		public static function arraysAreEqual(array1:Array, array2:Array):Boolean
 		{
-			if(array1.length != array2.length)
+			if (array1.length != array2.length)
 			{
 				return false;
 			}
 			
 			var len:Number = array1.length;
 			
-			for(var i:Number = 0;i < len; i++)
+			for (var i:Number = 0;i < len; i++)
 			{
-				if(array1[i] !== array2[i])
+				if (array1[i] !== array2[i])
 				{
 					return false;
 				}

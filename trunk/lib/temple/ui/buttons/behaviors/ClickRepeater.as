@@ -184,7 +184,7 @@ package temple.ui.buttons.behaviors
 		
 		private function handleMouseDown(event:MouseEvent):void 
 		{
-			if(this._stage == null) this._stage = this.displayObject.stage;
+			if (this._stage == null) this._stage = this.displayObject.stage;
 			
 			this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
 			this._stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp, false, 0, true);
@@ -200,7 +200,7 @@ package temple.ui.buttons.behaviors
 			
 			this._mouseOverTarget = true;
 			
-			if(!isNaN(this._highSpeedWait))
+			if (!isNaN(this._highSpeedWait))
 			{
 				this._highSpeedWaitTimeOut = new TimeOut(this.setHighSpeed, this._highSpeedWait);
 			}
@@ -213,7 +213,7 @@ package temple.ui.buttons.behaviors
 			this.displayObject.removeEventListener(MouseEvent.ROLL_OUT, this.handleTargetRollOut);
 			this.displayObject.removeEventListener(MouseEvent.ROLL_OVER, this.handleTargetRollOver);
 			this._timer.stop();
-			if(this._highSpeedWaitTimeOut) this._highSpeedWaitTimeOut.destruct();
+			if (this._highSpeedWaitTimeOut) this._highSpeedWaitTimeOut.destruct();
 		}
 
 		private function handleClick(event:MouseEvent):void
@@ -226,7 +226,7 @@ package temple.ui.buttons.behaviors
 		{
 			this._timer.stop();
 			this._mouseOverTarget = false;
-			if(this._highSpeedWaitTimeOut) this._highSpeedWaitTimeOut.destruct();
+			if (this._highSpeedWaitTimeOut) this._highSpeedWaitTimeOut.destruct();
 		}
 
 		private function handleTargetRollOver(event:MouseEvent):void
@@ -257,22 +257,22 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if(this.displayObject)
+			if (this.displayObject)
 			{
 				this.displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
 				this.displayObject.removeEventListener(DestructEvent.DESTRUCT, this.handleTargetDestructed);
 			}
-			if(this._stage)
+			if (this._stage)
 			{
 				this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
 				this._stage = null;
 			}
-			if(this._timer)
+			if (this._timer)
 			{
 				this._timer.destruct();
 				this._timer = null;
 			}
-			if(this._highSpeedWaitTimeOut)
+			if (this._highSpeedWaitTimeOut)
 			{
 				this._highSpeedWaitTimeOut.destruct();
 				this._highSpeedWaitTimeOut = null;

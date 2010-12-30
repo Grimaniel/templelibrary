@@ -91,12 +91,12 @@ package temple.ui.label
 		 */
 		public function set label(value:String):void
 		{
-			if(value == null) value = "";
+			if (value == null) value = "";
 			
-			if(this._html)
+			if (this._html)
 			{
 				// Add an empty StyleSheet to the TextField if there is no StyleSheet. This prevents the HTML text to get parsed by Flash
-				if(this.textField.styleSheet == null) this.textField.styleSheet = new StyleSheet();
+				if (this.textField.styleSheet == null) this.textField.styleSheet = new StyleSheet();
 				this.textField.htmlText = value;
 			}
 			else
@@ -119,7 +119,7 @@ package temple.ui.label
 		 */
 		public function set autoSize(value:String):void
 		{
-			switch(value)
+			switch (value)
 			{
 				case TextFieldAutoSize.LEFT:
 				case TextFieldAutoSize.RIGHT:
@@ -152,10 +152,10 @@ package temple.ui.label
 		 */
 		public function set html(value:Boolean):void
 		{
-			if(this._html != value)
+			if (this._html != value)
 			{
 				this._html = value;
-				if(this._html)
+				if (this._html)
 				{
 					this.textField.htmlText = this.textField.text;
 				}
@@ -179,7 +179,7 @@ package temple.ui.label
 		{
 			this.dispatchEvent(event.clone());
 			
-			if(this.textField.autoSize != TextFieldAutoSize.NONE)
+			if (this.textField.autoSize != TextFieldAutoSize.NONE)
 			{
 				this.textField.dispatchEvent(new Event(Event.RESIZE));
 			}

@@ -54,7 +54,7 @@ package temple.data.collections
 
 		public function Collection(items:Array = null) 
 		{
-			if(items)
+			if (items)
 			{
 				this._items = items;
 			}
@@ -106,7 +106,7 @@ package temple.data.collections
 		 */
 		override public function destruct():void
 		{
-			if(this._items)
+			if (this._items)
 			{
 				for each (var item : Object in this._items)
 				{

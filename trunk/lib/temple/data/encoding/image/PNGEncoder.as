@@ -112,7 +112,7 @@ package temple.data.encoding.image
 			writeChunk(png, 0x49484452, IHDR);
 			// Build IDAT chunk
 			var IDAT:ByteArray = new ByteArray();
-			for(var i:int = 0;i < img.height;i++) 
+			for (var i:int = 0;i < img.height;i++) 
 			{
 				// no filter
 				IDAT.writeByte(0);
@@ -120,7 +120,7 @@ package temple.data.encoding.image
 				var j:int;
 				if ( !img.transparent ) 
 				{
-					for(j = 0;j < img.width;j++) 
+					for (j = 0;j < img.width;j++) 
 					{
 						p = img.getPixel(j, i);
 						IDAT.writeUnsignedInt(uint(((p & 0xFFFFFF) << 8) | 0xFF));
@@ -128,7 +128,7 @@ package temple.data.encoding.image
 				} 
 				else 
 				{
-					for(j = 0;j < img.width;j++) 
+					for (j = 0;j < img.width;j++) 
 					{
 						p = img.getPixel32(j, i);
 						IDAT.writeUnsignedInt(uint(((p & 0xFFFFFF) << 8) | (p >>> 24)));

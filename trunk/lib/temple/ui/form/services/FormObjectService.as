@@ -92,7 +92,7 @@ package temple.ui.form.services
 			{
 				this.logError("submit: object is not set yet");
 			}
-			else if(this._object is IObjectParsable)
+			else if (this._object is IObjectParsable)
 			{
 				success = IObjectParsable(this._object).parseObject(data);
 			}
@@ -102,9 +102,9 @@ package temple.ui.form.services
 				
 				var isDynamic:Boolean = ObjectUtils.isDynamic(this._object);
 
-				for(var key:String in data)
+				for (var key:String in data)
 				{
-					if(this._object.hasOwnProperty(key) || isDynamic)
+					if (this._object.hasOwnProperty(key) || isDynamic)
 					{
 						this._object[key] = data[key];
 					}

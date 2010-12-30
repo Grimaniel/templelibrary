@@ -59,7 +59,7 @@ package temple.ui.states.error
 		public function ErrorTimelineState()
 		{
 			this._errorTextField = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
-			if(this._errorTextField) this._errorTextField.text = "";
+			if (this._errorTextField) this._errorTextField.text = "";
 		}
 		
 		/**
@@ -67,7 +67,7 @@ package temple.ui.states.error
 		 */
 		public function set message(value:String):void
 		{
-			if(this._errorTextField) this._errorTextField.text = value ? value : '';
+			if (this._errorTextField) this._errorTextField.text = value ? value : '';
 		}
 	}
 }

@@ -760,7 +760,7 @@ package temple.media.video.players
 		{
 			if (this._debug) this.logDebug("scaleMode: " + value);
 			
-			switch(value)
+			switch (value)
 			{
 				case ScaleMode.EXACT_FIT:
 				case ScaleMode.NO_BORDER:
@@ -1295,7 +1295,7 @@ package temple.media.video.players
 		
 		private function setVideoSize():void
 		{
-			switch(this._scaleMode)
+			switch (this._scaleMode)
 			{
 				case ScaleMode.EXACT_FIT:
 				{

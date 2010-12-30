@@ -68,7 +68,7 @@ package temple.utils.types
 		public static function repeat(string:String, amount:int):String
 		{
 			var ret:String = '';
-			for(var i:int = 0;i < amount;i++)
+			for (var i:int = 0;i < amount;i++)
 			{
 				ret += string;
 			}
@@ -92,10 +92,10 @@ package temple.utils.types
 		{
 			if (fillChar == null || fillChar.length == 0) throwError(new TempleArgumentError(StringUtils, "invalid value for fillChar: '" + fillChar + "'"));
 			
-			if(string.length < length)
+			if (string.length < length)
 			{
 				var iLim:Number = length - string.length;
-				for(var i:Number = 0;i < iLim;i++)
+				for (var i:Number = 0;i < iLim;i++)
 				{
 					string = fillChar + string;
 				}
@@ -118,10 +118,10 @@ package temple.utils.types
 		 */
 		public static function padRight(string:String, length:int, fillChar:String = ' '):String
 		{
-			if(string.length < length)
+			if (string.length < length)
 			{
 				var iLim:Number = length - string.length;
-				for(var i:Number = 0;i < iLim;i++)
+				for (var i:Number = 0;i < iLim;i++)
 				{
 					string += fillChar;
 				}
@@ -163,7 +163,7 @@ package temple.utils.types
 		 */			
 		public static function stringsAreEqual(string1:String, string2:String, caseSensitive:Boolean = true):Boolean
 		{
-			if(caseSensitive)
+			if (caseSensitive)
 			{
 				return (string1 == string2);
 			}
@@ -191,9 +191,9 @@ package temple.utils.types
 		public static function ltrim(string:String):String
 		{
 			var size:Number = string.length;
-			for(var i:Number = 0;i < size;i++)
+			for (var i:Number = 0;i < size;i++)
 			{
-				if(string.charCodeAt(i) > 32)
+				if (string.charCodeAt(i) > 32)
 				{
 					return string.substring(i);
 				}
@@ -209,9 +209,9 @@ package temple.utils.types
 		public static function rtrim(string:String):String
 		{
 			var size:Number = string.length;
-			for(var i:Number = size;i > 0;i--)
+			for (var i:Number = size;i > 0;i--)
 			{
-				if(string.charCodeAt(i - 1) > 32)
+				if (string.charCodeAt(i - 1) > 32)
 				{
 					return string.substring(0, i);
 				}
@@ -291,7 +291,7 @@ package temple.utils.types
 				
 				// ensure that there are 4 digits by adjusting
 				// the # of zeros accordingly.
-				while( hexCode.length < 4 ) hexCode = "0"+hexCode;
+				while ( hexCode.length < 4 ) hexCode = "0"+hexCode;
 				
 				// create the unicode escape sequence with 4 hex digits
 				return "\\u" + hexCode;
@@ -319,19 +319,19 @@ package temple.utils.types
 
 			for (var i:Number = 0;i < sLen;i++)
 			{
-				if(string.charAt(i) == replace.charAt(0))
+				if (string.charAt(i) == replace.charAt(0))
 				{   
 					found = true;
-					for(var j:Number = 0;j < rLen;j++)
+					for (var j:Number = 0;j < rLen;j++)
 					{
-						if(!(string.charAt(i + j) == replace.charAt(j)))
+						if (!(string.charAt(i + j) == replace.charAt(j)))
 						{
 							found = false;
 							break;
 						}
 					}
 
-					if(found)
+					if (found)
 					{
 						sb += replaceWith;
 						i = i + (rLen - 1);
@@ -354,14 +354,14 @@ package temple.utils.types
 		 */
 		public static function replaceVars(string:String, object:Object, debug:Boolean = false):String
 		{
-			if(string == null) throwError(new TempleArgumentError(StringUtils, "String can not be null"));
-			if(object == null) throwError(new TempleArgumentError(StringUtils, "Object can not be null"));
+			if (string == null) throwError(new TempleArgumentError(StringUtils, "String can not be null"));
+			if (object == null) throwError(new TempleArgumentError(StringUtils, "Object can not be null"));
 			
 			return string.replace(/\{[@#$%&\w]*\}/gi, function ():String
 			{
 				var prop:String = (arguments[0] as String).substr(1, (arguments[0] as String).length - 2);
-				if(object != null && object.hasOwnProperty(prop) && object[prop] != null) return object[prop];
-				if(debug) return '*VALUE NOT FOUND*';
+				if (object != null && object.hasOwnProperty(prop) && object[prop] != null) return object[prop];
+				if (debug) return '*VALUE NOT FOUND*';
 				return '';
 			});
 		}
@@ -641,7 +641,7 @@ package temple.utils.types
 		private static function replaceTag(tag:String, ...args):String
 		{
 			// check tag
-			switch(String(tag.match(/(?<=\<|\<\/)\w+/g)[0]).toLowerCase())
+			switch (String(tag.match(/(?<=\<|\<\/)\w+/g)[0]).toLowerCase())
 			{
 				// allowed tags
 				case "a":

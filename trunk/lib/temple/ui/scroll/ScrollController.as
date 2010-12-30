@@ -204,7 +204,7 @@ package temple.ui.scroll
 		{
 			if (scrollable == null) throwError(new TempleArgumentError(this, "scrollable can not be null"));
 			
-			if(ScrollController._dictionary[scrollable] == null) ScrollController._dictionary[scrollable] = new Array();
+			if (ScrollController._dictionary[scrollable] == null) ScrollController._dictionary[scrollable] = new Array();
 			(ScrollController._dictionary[scrollable] as Array).push(this);
 			
 			this._scrollables[scrollable] = this;
@@ -228,7 +228,7 @@ package temple.ui.scroll
 			
 			delete this._scrollables[scrollable];
 			
-			if(ScrollController._dictionary && ScrollController._dictionary[scrollable])
+			if (ScrollController._dictionary && ScrollController._dictionary[scrollable])
 			{
 				ArrayUtils.removeValueFromArray(ScrollController._dictionary[scrollable], this);
 			}

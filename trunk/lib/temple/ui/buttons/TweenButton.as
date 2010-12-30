@@ -112,7 +112,7 @@ package temple.ui.buttons
 				for (var i:int = 0; i < leni ; i++)
 				{
 					pvd = (value as ICollection).getItemAt(i) as PropertyValueData;
-					if(pvd)
+					if (pvd)
 					{
 						vars[pvd.property] = pvd.value;
 					}
@@ -160,7 +160,7 @@ package temple.ui.buttons
 				for (var i:int = 0; i < leni ; i++)
 				{
 					pvd = (value as ICollection).getItemAt(i) as PropertyValueData;
-					if(pvd)
+					if (pvd)
 					{
 						vars[pvd.property] = pvd.value;
 					}
@@ -208,7 +208,7 @@ package temple.ui.buttons
 				for (var i:int = 0; i < leni ; i++)
 				{
 					pvd = (value as ICollection).getItemAt(i) as PropertyValueData;
-					if(pvd)
+					if (pvd)
 					{
 						vars[pvd.property] = pvd.value;
 					}
@@ -256,7 +256,7 @@ package temple.ui.buttons
 				for (var i:int = 0; i < leni ; i++)
 				{
 					pvd = (value as ICollection).getItemAt(i) as PropertyValueData;
-					if(pvd)
+					if (pvd)
 					{
 						vars[pvd.property] = pvd.value;
 					}
@@ -304,7 +304,7 @@ package temple.ui.buttons
 				for (var i:int = 0; i < leni ; i++)
 				{
 					pvd = (value as ICollection).getItemAt(i) as PropertyValueData;
-					if(pvd)
+					if (pvd)
 					{
 						vars[pvd.property] = pvd.value;
 					}
@@ -328,7 +328,7 @@ package temple.ui.buttons
 		{
 			super.debug = value;
 			
-			if(this._tweenBehavior) this._tweenBehavior.debug = value;
+			if (this._tweenBehavior) this._tweenBehavior.debug = value;
 		}
 		
 		/**

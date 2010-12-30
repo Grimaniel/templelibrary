@@ -162,7 +162,7 @@ package temple.data.loader.preload
 				if ((PreloadableBehavior._loadingList[this._preloader] as Array).length == 1) this._preloader.onLoadComplete();
 				
 				var len:uint = (PreloadableBehavior._loadingList[this._preloader] as Array).length;
-				for(var i:Number = len;i > -1; i--)
+				for (var i:Number = len;i > -1; i--)
 				{
 					if (PreloadableBehavior._loadingList[this._preloader][i] === target)
 					{

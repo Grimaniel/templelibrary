@@ -77,7 +77,7 @@ package temple.ui.states
 			this._labels = new HashMap("TimelineState Labels");
 			this.currentScene.labels.map(this.addLabelHashEntry);
 			this.addFrameScript(this.totalFrames - 1, this.onLastFrame);
-			if(this._labels[BaseTimelineState._LABEL_HIDE])
+			if (this._labels[BaseTimelineState._LABEL_HIDE])
 			{
 				this.addFrameScript((FrameLabel(this._labels[BaseTimelineState._LABEL_HIDE]).frame - 1), this.stop);
 			}
@@ -171,7 +171,7 @@ package temple.ui.states
 		private function onLastFrame():void
 		{
 			MovieClipUtils.stop(this);
-			if(this._shown)
+			if (this._shown)
 			{
 				this.show();
 			}

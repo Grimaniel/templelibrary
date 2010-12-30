@@ -130,7 +130,7 @@ package temple.core
 		 */
 		override public function set width(value:Number):void
 		{
-			if(super.width || !this.scaleX) super.width = value;
+			if (super.width || !this.scaleX) super.width = value;
 		}
 		
 		/**
@@ -151,7 +151,7 @@ package temple.core
 		 */
 		override public function set height(value:Number):void
 		{
-			if(super.height || !this.scaleY) super.height = value;
+			if (super.height || !this.scaleY) super.height = value;
 		}
 		
 		/**
@@ -229,7 +229,7 @@ package temple.core
 		 */
 		public function get scale():Number
 		{
-			if(this.scaleX == this.scaleY) return this.scaleX;
+			if (this.scaleX == this.scaleY) return this.scaleX;
 			return NaN;
 		}
 		
@@ -469,7 +469,7 @@ package temple.core
 			
 			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			if(this.bitmapData && this._disposeBitmapDataOnDestruct)
+			if (this.bitmapData && this._disposeBitmapDataOnDestruct)
 			{
 				this.bitmapData.dispose();
 			}

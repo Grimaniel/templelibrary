@@ -59,9 +59,9 @@ package temple.utils.types
 
 		public static function getFrameForLabel(clip:MovieClip, label:String):int
 		{
-			for each(var frameLabel:FrameLabel in clip.currentLabels)
+			for each (var frameLabel:FrameLabel in clip.currentLabels)
 			{
-				if(frameLabel.name == label)
+				if (frameLabel.name == label)
 				{
 					return frameLabel.frame;	
 				}	
@@ -71,9 +71,9 @@ package temple.utils.types
 
 		public static function hasLabel(clip:MovieClip, label:String):Boolean
 		{
-			for each(var frameLabel:FrameLabel in clip.currentLabels)
+			for each (var frameLabel:FrameLabel in clip.currentLabels)
 			{
-				if(frameLabel.name == label)
+				if (frameLabel.name == label)
 				{
 					return true;	
 				}	
@@ -85,13 +85,13 @@ package temple.utils.types
 		{
 			if ((labels as Array).length == 0) throwError(new ArgumentError('zero labels'));
 			
-			for each(var frameLabel:FrameLabel in clip.currentLabels)
+			for each (var frameLabel:FrameLabel in clip.currentLabels)
 			{
 				var ind:int = (labels as Array).indexOf(frameLabel.name);
-				if(ind > -1)
+				if (ind > -1)
 				{
 					(labels as Array).splice(ind, 1);
-					if((labels as Array).length == 0)
+					if ((labels as Array).length == 0)
 					{
 						return true;
 					}
@@ -102,9 +102,9 @@ package temple.utils.types
 
 		public static function getLabel(clip:MovieClip, label:String):FrameLabel
 		{
-			for each(var frameLabel:FrameLabel in clip.currentLabels)
+			for each (var frameLabel:FrameLabel in clip.currentLabels)
 			{
-				if(frameLabel.name == label)
+				if (frameLabel.name == label)
 				{
 					return frameLabel;	
 				}	
@@ -119,15 +119,15 @@ package temple.utils.types
 		{
 			var start:FrameLabel = FrameLabelUtils.getLabel(clip, label);
 			var closest:int = clip.totalFrames;
-			if(closest == start.frame)
+			if (closest == start.frame)
 			{
 				//label is on last frame
 				return closest;
 			}
 			
-			for each(var frameLabel:FrameLabel in clip.currentLabels)
+			for each (var frameLabel:FrameLabel in clip.currentLabels)
 			{
-				if(frameLabel.frame > start.frame && frameLabel.frame < closest)
+				if (frameLabel.frame > start.frame && frameLabel.frame < closest)
 				{
 					closest = frameLabel.frame;	
 				}	
@@ -138,7 +138,7 @@ package temple.utils.types
 		public static function dumpLabels(clip:MovieClip):String
 		{
 			var str:String = '';
-			for each(var frameLabel:FrameLabel in clip.currentLabels)
+			for each (var frameLabel:FrameLabel in clip.currentLabels)
 			{
 				str += frameLabel.frame + ':' + frameLabel.name + '\n';
 			}	

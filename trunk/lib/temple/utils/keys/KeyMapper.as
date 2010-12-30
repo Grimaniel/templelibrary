@@ -110,14 +110,14 @@ package temple.utils.keys
 		/**
 		 * Creates a new KeyMapper instance
 		 * @param stage a reference to the stage. Needed for handling KeyBoardEvents
-		 * @param keyboardEvent pass KeyboardEvent.KEY_UP (default) if you want to listen for KEY_UP events,
-		 * otherwise pass KeyboardEvent.KEY_DOWN if you want to listen for KEY_DOWN events.
+		 * @param keyboardEvent pass KeyboardEvent.KEY_DOWN (default) if you want to listen for KEY_DOWN events,
+		 * otherwise pass KeyboardEvent.KEY_UP if you want to listen for KEY_UP events.
 		 */
-		public function KeyMapper(stage:Stage, keyboardEvent:String = KeyboardEvent.KEY_UP) 
+		public function KeyMapper(stage:Stage, keyboardEvent:String = KeyboardEvent.KEY_DOWN) 
 		{
-			if(!stage) throwError(new TempleArgumentError(this, "stage can not be null"));
+			if (!stage) throwError(new TempleArgumentError(this, "stage can not be null"));
 			
-			if(keyboardEvent != KeyboardEvent.KEY_UP && keyboardEvent != KeyboardEvent.KEY_DOWN)
+			if (keyboardEvent != KeyboardEvent.KEY_UP && keyboardEvent != KeyboardEvent.KEY_DOWN)
 			{
 				throwError(new TempleArgumentError(this, "invalid value for keyboardEvent '" + keyboardEvent + "'"));
 			}
@@ -135,7 +135,7 @@ package temple.utils.keys
 		 */
 		public function map(key:uint, method:Function, arguments:Array = null):void 
 		{
-			if(this._map[key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
+			if (this._map[key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
 			
 			if (arguments && arguments.length)
 			{
@@ -254,16 +254,16 @@ package temple.utils.keys
 
 		private function handleKeyEvent(event:KeyboardEvent):void 
 		{
-			if(!this._enabled)
+			if (!this._enabled)
 			{
 				if (this.debug) this.logDebug("KeyMapper disabled " + event);
 				return;
 			}
 			
 			var keyCode:uint = event.keyCode;
-			if(event.shiftKey) keyCode |= KeyMapper.SHIFT;
-			if(event.altKey) keyCode |= KeyMapper.ALT;
-			if(event.ctrlKey) keyCode |= KeyMapper.CONTROL;
+			if (event.shiftKey) keyCode |= KeyMapper.SHIFT;
+			if (event.altKey) keyCode |= KeyMapper.ALT;
+			if (event.ctrlKey) keyCode |= KeyMapper.CONTROL;
 			
 			if (this._map && this._map[keyCode])
 			{
@@ -289,16 +289,16 @@ package temple.utils.keys
 		 */
 		override public function destruct():void 
 		{
-			if(this._stage)
+			if (this._stage)
 			{
 				this._stage.removeEventListener(this._keyboardEvent, this.handleKeyEvent);
 				this._stage = null;
 				this._keyboardEvent = null;
 			}
 			
-			if(this._map)
+			if (this._map)
 			{
-				for each(var call:* in this._map)
+				for each (var call:* in this._map)
 				{
 					if (call is IDestructible)
 					{

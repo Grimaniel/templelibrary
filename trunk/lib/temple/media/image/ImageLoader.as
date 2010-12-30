@@ -121,7 +121,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 * @param preloaderMode Indicates how the ImageLoader uses the preloader. When set to PreloaderMode.OWN_PRELOADER it addChilds and centers the preloader.
 		 * @param context
 		 */
-		public function ImageLoader(url:* = null, width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = true, smoothing:Boolean = false, preloader:IPreloader = null, preloaderMode:String = PreloaderMode.OWN_PRELOADER, context:LoaderContext = null, cache:Boolean = false)
+		public function ImageLoader(url:* = null, width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = true, smoothing:Boolean = false, preloader:IPreloader = null, preloaderMode:String = 'ownPreloader', context:LoaderContext = null, cache:Boolean = false)
 		{
 			this._width = !isNaN(width) ? width : (super.width ? super.width : NaN);
 			this._height = !isNaN(height) ? height : (super.height ? super.height : NaN);
@@ -162,11 +162,11 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			}
 			if (url)
 			{
-				if(url is ByteArray)
+				if (url is ByteArray)
 				{
 					this.loadBytes(url);
 				}
-				else if(url is String)
+				else if (url is String)
 				{
 					this.load(url, context);
 				}
@@ -604,7 +604,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			var scale:Number;
 			
 			// scale
-			switch(this._scaleMode)
+			switch (this._scaleMode)
 			{
 				case ScaleMode.EXACT_FIT:
 				{
@@ -638,7 +638,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			if (this._scaleMode != ScaleMode.EXACT_FIT)
 			{
 				// align horizontal
-				switch(this._align)
+				switch (this._align)
 				{
 					case Align.TOP_LEFT:
 					case Align.LEFT:
@@ -669,7 +669,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 				}
 				
 				// align vertical
-				switch(this._align)
+				switch (this._align)
 				{
 					case Align.TOP_LEFT:
 					case Align.TOP:
@@ -747,7 +747,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 */
 		override public function destruct():void
 		{
-			if(this._loader)
+			if (this._loader)
 			{
 				this._loader.destruct();
 				this._loader = null;

@@ -75,7 +75,7 @@ package temple.ui.buttons
 		 */
 		public function set selected(value:Boolean):void 
 		{
-			if(value != this.selected)
+			if (value != this.selected)
 			{
 				this.buttonBehavior.selected = value;
 				this.dispatchEvent(new Event(Event.CHANGE));

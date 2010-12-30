@@ -96,13 +96,13 @@ package temple.ui.form.components
 		public function set group(value:IRadioGroup):void
 		{
 			// remove from group if we already have a group
-			if(this._group) this._group.remove(this);
+			if (this._group) this._group.remove(this);
 			
 			this._group = value;
-			if(this._group)
+			if (this._group)
 			{
 				this._group.add(this, this.selectedValue);
-				if(this.selected) this._group.selected = this;
+				if (this.selected) this._group.selected = this;
 			}
 		}
 
@@ -185,7 +185,7 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			if(this._group)
+			if (this._group)
 			{
 				this._group.remove(this);
 				this._group = null;

@@ -100,7 +100,7 @@ package temple.data.xml
 		 */
 		public function load(urlData:URLData, sendData:Object = null, method:String = URLRequestMethod.GET):void 
 		{
-			if(urlData == null)
+			if (urlData == null)
 			{
 				this.logError("load: urlData cannot be null");
 				return;
@@ -162,7 +162,7 @@ package temple.data.xml
 		{
 			this._debug = value;
 			
-			if(this._debug) this.logDebug("debug: " + debug);
+			if (this._debug) this.logDebug("debug: " + debug);
 		}
 		
 		/**
@@ -263,7 +263,7 @@ package temple.data.xml
 		 */
 		override public function destruct():void
 		{
-			if(this._loader)
+			if (this._loader)
 			{
 				this._loader.destruct();
 				this._loader = null;

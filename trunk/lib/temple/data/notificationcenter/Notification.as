@@ -75,7 +75,7 @@ package temple.data.notificationcenter
 			this._notificationCenter = notificationCenter;
 			this._data = data;
 
-			if(type == null) throwError(new TempleArgumentError(this, "type can't be null"));
+			if (type == null) throwError(new TempleArgumentError(this, "type can't be null"));
 		}
 		
 		/**

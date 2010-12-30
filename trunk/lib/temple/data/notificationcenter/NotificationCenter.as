@@ -118,11 +118,11 @@ package temple.data.notificationcenter
 		 */
 		public static function getInstance(name:String = 'default', createIfNull:Boolean = true):NotificationCenter
 		{
-			if(NotificationCenter._instances == null || NotificationCenter._instances[name] == null)
+			if (NotificationCenter._instances == null || NotificationCenter._instances[name] == null)
 			{
-				if(createIfNull)
+				if (createIfNull)
 				{
-					if(NotificationCenter._instances == null)
+					if (NotificationCenter._instances == null)
 					{
 						NotificationCenter._instances = new HashMap("NotificationCenter instances");
 					}
@@ -180,7 +180,7 @@ package temple.data.notificationcenter
 		 */
 		public function addObserver(type:String, listener:Function, useWeakReference:Boolean = true):void
 		{
-			if(this._debug) this.logDebug("addObserver: '" + type + "' ");
+			if (this._debug) this.logDebug("addObserver: '" + type + "' ");
 			
 			this._eventDispatcher.addEventListener(type, listener, false, 0, useWeakReference);
 		}
@@ -218,7 +218,7 @@ package temple.data.notificationcenter
 		 */
 		public function post(type:String, data:* = null):void
 		{
-			if(this._debug)
+			if (this._debug)
 			{
 				this.logDebug("post: '" + type + "', data: " + data);
 				
@@ -251,19 +251,19 @@ package temple.data.notificationcenter
 		 */
 		override public function destruct():void
 		{
-			if(this._eventDispatcher)
+			if (this._eventDispatcher)
 			{
 				this._eventDispatcher.destruct();
 				this._eventDispatcher = null;
 			}
 			
-			if(NotificationCenter._instances)
+			if (NotificationCenter._instances)
 			{
 				delete NotificationCenter._instances[this._name];
 				
 				// check if there are some NotificationCenters left
-				for(var key:String in NotificationCenter._instances);
-				if(key == null) NotificationCenter._instances = null;
+				for (var key:String in NotificationCenter._instances);
+				if (key == null) NotificationCenter._instances = null;
 			}
 			super.destruct();
 		}

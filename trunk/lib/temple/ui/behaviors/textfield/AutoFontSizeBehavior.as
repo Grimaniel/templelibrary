@@ -100,13 +100,13 @@ package temple.ui.behaviors.textfield
 		{
 			super(textField);
 			
-			if(AutoFontSizeBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has AutoFontSizeBehavior"));
+			if (AutoFontSizeBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has AutoFontSizeBehavior"));
 			
 			AutoFontSizeBehavior._dictionary[target] = this;
 			
 			this._minimalFontSize = minimalFontSize;
 			
-			if(isNaN(maximalFontSize)) maximalFontSize = Number(textField.getTextFormat().size);
+			if (isNaN(maximalFontSize)) maximalFontSize = Number(textField.getTextFormat().size);
 			
 			this._currentFontSize = this._maximalFontSize = maximalFontSize;
 			this._previousText = "";
@@ -114,7 +114,7 @@ package temple.ui.behaviors.textfield
 			
 			this.update();
 			
-			if(willUpdateOnInput)
+			if (willUpdateOnInput)
 			{
 				textField.addEventListener(Event.CHANGE, this.handleTextFieldChange);
 				textField.addEventListener(KeyboardEvent.KEY_UP, this.handleTextFieldChange);
@@ -130,7 +130,7 @@ package temple.ui.behaviors.textfield
 		{
 			this.textField.scrollV = 0;
  
-			if(this._previousText.length > this.textField.length)
+			if (this._previousText.length > this.textField.length)
 			{
                 this.setFontSize(this._maximalFontSize);
 			}
@@ -141,7 +141,7 @@ package temple.ui.behaviors.textfield
 				this.setFontSize(this._currentFontSize - 0.5);
 			}
  
-			if(this._currentFontSize <= this._minimalFontSize) 
+			if (this._currentFontSize <= this._minimalFontSize) 
 			{
 				this.textField.text = this._previousText;
 			} 
@@ -212,9 +212,9 @@ package temple.ui.behaviors.textfield
 		 */
 		override public function destruct():void
 		{
-			if(this.target) delete AutoFontSizeBehavior._dictionary[this.target];
+			if (this.target) delete AutoFontSizeBehavior._dictionary[this.target];
 			
-			if(this.textField)
+			if (this.textField)
 			{
 				this.textField.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
 				this.textField.removeEventListener(KeyboardEvent.KEY_UP, this.handleTextFieldChange);

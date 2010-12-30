@@ -64,11 +64,11 @@ package temple.utils.types
 		 */
 		public static function getStageLeft(stage:Stage):Number
 		{
-			if(stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
+			if (stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
 			
 			var originalWidth:Number;
 			
-			if(stage.numChildren)
+			if (stage.numChildren)
 			{
 				originalWidth = DisplayObject(stage.getChildAt(0)).loaderInfo.width;
 			}
@@ -79,7 +79,7 @@ package temple.utils.types
 				originalWidth = s.loaderInfo.width;
 				stage.removeChild(s);
 			}
-			switch(stage.align)
+			switch (stage.align)
 			{
 				case '':
 				case StageAlign.TOP:
@@ -111,11 +111,11 @@ package temple.utils.types
 		 */
 		public static function getStageRight(stage:Stage):Number
 		{
-			if(stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
+			if (stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
 			
 			var originalWidth:Number;
 			
-			if(stage.numChildren)
+			if (stage.numChildren)
 			{
 				originalWidth = DisplayObject(stage.getChildAt(0)).loaderInfo.width;
 			}
@@ -126,7 +126,7 @@ package temple.utils.types
 				originalWidth = s.loaderInfo.width;
 				stage.removeChild(s);
 			}
-			switch(stage.align)
+			switch (stage.align)
 			{
 				case '':
 				case StageAlign.TOP:
@@ -159,11 +159,11 @@ package temple.utils.types
 		 */
 		public static function getStageTop(stage:Stage):Number
 		{
-			if(stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
+			if (stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
 			
 			var originalHeight:Number;
 			
-			if(stage.numChildren)
+			if (stage.numChildren)
 			{
 				originalHeight = DisplayObject(stage.getChildAt(0)).loaderInfo.height;
 			}
@@ -174,7 +174,7 @@ package temple.utils.types
 				originalHeight = s.loaderInfo.width;
 				stage.removeChild(s);
 			}
-			switch(stage.align)
+			switch (stage.align)
 			{
 				case '':
 				case StageAlign.LEFT:
@@ -206,11 +206,11 @@ package temple.utils.types
 		 */
 		public static function getStageBottom(stage:Stage):Number
 		{
-			if(stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
+			if (stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
 			
 			var originalHeight:Number;
 			
-			if(stage.numChildren)
+			if (stage.numChildren)
 			{
 				originalHeight = DisplayObject(stage.getChildAt(0)).loaderInfo.height;
 			}
@@ -221,7 +221,7 @@ package temple.utils.types
 				originalHeight = s.loaderInfo.width;
 				stage.removeChild(s);
 			}
-			switch(stage.align)
+			switch (stage.align)
 			{
 				case '':
 				case StageAlign.LEFT:

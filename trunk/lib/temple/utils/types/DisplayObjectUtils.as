@@ -55,6 +55,7 @@ package temple.utils.types
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
@@ -90,7 +91,7 @@ package temple.utils.types
 		public static function align(target:DisplayObject, bounds:Rectangle, horizontalAlign:String = null, verticalAlign:String = null):void
 		{	
 			var horizontalDifference:Number = bounds.width - target.width;
-			switch(horizontalAlign)
+			switch (horizontalAlign)
 			{
 				case Align.LEFT:
 				{
@@ -110,7 +111,7 @@ package temple.utils.types
 			}
 					
 			var verticalDifference:Number = bounds.height - target.height;
-			switch(verticalAlign)
+			switch (verticalAlign)
 			{
 				case Align.TOP:
 				{
@@ -144,7 +145,7 @@ package temple.utils.types
 			var currentAspectRatio:Number = !isNaN(aspectRatio) ? aspectRatio : target.width / target.height;
 			var boundsAspectRatio:Number = width / height;
 			
-			if(currentAspectRatio < boundsAspectRatio)
+			if (currentAspectRatio < boundsAspectRatio)
 			{
 				target.width = Math.floor(height * currentAspectRatio);
 				target.height = height;
@@ -254,6 +255,44 @@ package temple.utils.types
 		public static function isApplicationRoot(displayObject:DisplayObject):Boolean 
 		{
 			return displayObject.stage && displayObject.stage == displayObject.parent;
+		}
+		
+		/**
+		 * Applies the Transform Matrix of the source on the target manipulated by their parents Transform Matrices.
+		 * So the position, scale and rotation of the target will look exactly the same as the source.
+		 * @param source the source DisplayObject to get the Transform Matrix from.
+		 * @param target the target DisplayObject to apply the Matrix to.
+		 */
+		public static function mimicTransformMatrix(source:DisplayObject, target:DisplayObject):void
+		{
+			if (!source || !source.transform) return;
+			
+			var matrix:Matrix = source.transform.matrix;
+			
+			var container:DisplayObjectContainer = source.parent;
+			
+			while (!container.contains(target))
+			{
+				matrix.concat(container.transform.matrix);
+				if (!(container = container.parent)) return;
+			}
+			
+			container = target.parent;
+			var inverts:Array = [];
+			while (!container.contains(source))
+			{
+				inverts.push(container.transform.matrix);
+				if (!(container = container.parent)) return;
+			}
+			
+			var invert:Matrix;
+			while (inverts.length)
+			{
+				invert = inverts.pop();
+				invert.invert();
+				matrix.concat(invert);
+			}
+			target.transform.matrix = matrix;
 		}
 
 		public static function toString():String

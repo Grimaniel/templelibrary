@@ -408,12 +408,12 @@ package temple.ui.form
 		{
 			if (this._debug) this.logDebug("clear: ");
 			
+			this._validator.stopRealtimeValidating();
 			for each (var fed:FormElementData in this._elements)
 			{
 				if (fed.element is IHasError) IHasError(fed.element).hideError();
 				if (fed.element is IResettable) IResettable(fed.element).reset();
 			}
-			this._validator.stopRealtimeValidating();
 			
 			this.dispatchEvent(new FormEvent(FormEvent.RESET));
 		}
@@ -687,7 +687,7 @@ package temple.ui.form
 		 */
 		protected function handleFormServiceEvent(event:FormServiceEvent):void 
 		{
-			switch(event.type)
+			switch (event.type)
 			{
 				case FormServiceEvent.SUCCESS:
 				{

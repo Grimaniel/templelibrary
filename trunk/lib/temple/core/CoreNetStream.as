@@ -343,7 +343,7 @@ package temple.core
 				this._framePulseSprite = null;
 			}
 			
-			if(this._eventListenerManager)
+			if (this._eventListenerManager)
 			{
 				this._eventListenerManager.destruct();
 				this._eventListenerManager = null;

@@ -109,7 +109,7 @@ package temple.debug
 				{
 					Memory.registerObject(object);
 				}
-				if(Registry._object_id == uint.MAX_VALUE)
+				if (Registry._object_id == uint.MAX_VALUE)
 				{
 					Log.warn("Max value reached in Registry", Registry);
 				}

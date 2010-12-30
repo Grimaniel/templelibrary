@@ -74,7 +74,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function isValid():Boolean
 		{
-			if(this._params)
+			if (this._params)
 			{
 				return this._rule.apply(null, this._params);
 			}

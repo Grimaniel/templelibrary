@@ -98,9 +98,9 @@ package temple.utils
 		 */
 		public function call():void
 		{
-			if(this._method != null)
+			if (this._method != null)
 			{
-				if(this._arguments != null)
+				if (this._arguments != null)
 				{
 					this._method.apply(null, this._arguments);
 				}
@@ -108,7 +108,7 @@ package temple.utils
 				{
 					this._method();
 				}
-				if(this._destructAfterCall == true)
+				if (this._destructAfterCall == true)
 				{
 					this.destruct();
 				}

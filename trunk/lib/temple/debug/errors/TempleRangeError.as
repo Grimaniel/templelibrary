@@ -68,7 +68,7 @@ package temple.debug.errors
 			super(message + ' (index=' + index + ', size=' + size + ')', id);
 			
 			var stack:String = this.getStackTrace();
-			if(stack)
+			if (stack)
 			{
 				Log.error(stack + " id:" + id, String(sender));
 			}

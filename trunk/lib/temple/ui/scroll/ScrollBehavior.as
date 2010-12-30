@@ -61,6 +61,9 @@ package temple.ui.scroll
 	 * The ScrollBehavior adds a scrollRect to the DisplayObject and is able to move the object under this
 	 * this scrollRect to make all content available.</p>
 	 * 
+	 * @includeExample ScrollComponentExample.as
+	 * @includeExample LiquidScrollComponentExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ScrollBehavior extends AbstractDisplayObjectBehavior implements IScrollPane
@@ -122,7 +125,7 @@ package temple.ui.scroll
 		{
 			super(target);
 			
-			if(ScrollBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has ScrollablePaneBehavior"));
+			if (ScrollBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has ScrollablePaneBehavior"));
 			
 			ScrollBehavior._dictionary[target] = this;
 			

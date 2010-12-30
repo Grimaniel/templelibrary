@@ -74,7 +74,7 @@ package temple.debug
 	 * // debugging for this added objects are set to the value in the URL
 	 * 
 	 * // change the debugging value for an object:
-	 * DebugManager.setDebugFor(12, false);
+	 * DebugManager.setDebugfor (12, false);
 	 * 
 	 * // set debugging globally ON
 	 * DebugManager.debugMode = DebugManager.ALL;
@@ -113,7 +113,7 @@ package temple.debug
 		
 		public static function getInstance():DebugManager
 		{
-			if(DebugManager._instance == null)
+			if (DebugManager._instance == null)
 			{
 				DebugManager._instance = new DebugManager();
 				DebugManager.add(DebugManager._instance);
@@ -382,7 +382,7 @@ package temple.debug
 		 * @param id The id of the Debuggable object
 		 * @param value The debug value
 		 */
-		public static function setDebugFor(objectId:uint, value:Boolean):void
+		public static function setDebugfor (objectId:uint, value:Boolean):void
 		{
 			var object:* = Registry.getObject(objectId);
 			if (object && object is IDebuggable) IDebuggable(object).debug = value;

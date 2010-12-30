@@ -70,7 +70,7 @@ package temple.ui.behaviors
 		{
 			super(target);
 			
-			if(bounds) this.bounds = bounds;
+			if (bounds) this.bounds = bounds;
 			
 			// dispath BoundsBehaviorEvent on target
 			this.addEventListener(BoundsBehaviorEvent.BOUNCED, target.dispatchEvent);
@@ -100,7 +100,7 @@ package temple.ui.behaviors
 		public function keepInBounds():void
 		{
 			// Keep in bounds, checking for parent is allowed, since this is in a mouse event
-			if(this._bounds)
+			if (this._bounds)
 			{
 				var target:DisplayObject = this.displayObject;
 				
@@ -111,13 +111,13 @@ package temple.ui.behaviors
 				if (this._bounds.width >= target.width)
 				{
 					
-					if(objectbounds.left < this._bounds.left)
+					if (objectbounds.left < this._bounds.left)
 					{
 						target.x += this._bounds.left - objectbounds.left;
 						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.LEFT));
 					}
 				
-					else if(objectbounds.right > this._bounds.right)
+					else if (objectbounds.right > this._bounds.right)
 					{
 						target.x -= objectbounds.right - this._bounds.right;
 						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.RIGHT));
@@ -126,12 +126,12 @@ package temple.ui.behaviors
 				// check larger
 				else
 				{
-					if(objectbounds.left > this._bounds.left)
+					if (objectbounds.left > this._bounds.left)
 					{
 						target.x += this._bounds.left - objectbounds.left;
 						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.LEFT));
 					}
-					else if(objectbounds.right < this._bounds.right)
+					else if (objectbounds.right < this._bounds.right)
 					{
 						target.x -= objectbounds.right - this._bounds.right;
 						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.RIGHT));
@@ -142,12 +142,12 @@ package temple.ui.behaviors
 				// check smaller
 				if (this._bounds.height >= target.height)
 				{
-					if(objectbounds.top < this._bounds.top)
+					if (objectbounds.top < this._bounds.top)
 					{
 						target.y += this._bounds.top - objectbounds.top;
 						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.TOP));
 					}
-					else if(objectbounds.bottom > this._bounds.bottom)
+					else if (objectbounds.bottom > this._bounds.bottom)
 					{
 						target.y -= objectbounds.bottom - this._bounds.bottom;
 						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.BOTTOM));
@@ -156,12 +156,12 @@ package temple.ui.behaviors
 				// check larger
 				else
 				{
-					if(objectbounds.top > this._bounds.top)
+					if (objectbounds.top > this._bounds.top)
 					{
 						target.y += this._bounds.top - objectbounds.top;
 						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.TOP));
 					}
-					else if(objectbounds.bottom < this._bounds.bottom)
+					else if (objectbounds.bottom < this._bounds.bottom)
 					{
 						target.y -= objectbounds.bottom - this._bounds.bottom;
 						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.BOTTOM));

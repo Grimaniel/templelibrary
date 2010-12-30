@@ -59,9 +59,9 @@ package temple.utils.types
 
 		public function parseXML(xml:XML):Boolean
 		{
-			if(xml.@access == "writeonly") return false;
+			if (xml.@access == "writeonly") return false;
 		
-			if(xml.@uri.length()) return false;
+			if (xml.@uri.length()) return false;
 		
 			name = xml.@name;
 			type = xml.@type;

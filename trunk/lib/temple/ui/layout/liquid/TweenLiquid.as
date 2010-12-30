@@ -67,9 +67,9 @@ package temple.ui.layout.liquid
 			for (var i:int = 0; i < leni; i++)
 			{
 				property = LiquidProperties.ALL[i];
-				if(vars.hasOwnProperty(property))
+				if (vars.hasOwnProperty(property))
 				{
-					if(isNaN(vars[property]))
+					if (isNaN(vars[property]))
 					{
 						target[property] = NaN;
 						delete vars[property];
@@ -81,7 +81,7 @@ package temple.ui.layout.liquid
 				}
 			}
 			
-			if(vars.onUpdate is Function)
+			if (vars.onUpdate is Function)
 			{
 				var update:Function = vars.onUpdate as Function;
 				vars.onComplete = function():void

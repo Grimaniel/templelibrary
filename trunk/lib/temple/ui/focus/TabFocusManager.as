@@ -147,7 +147,7 @@ package temple.ui.focus
 				{
 					tempItem = ItemData(this._items[i]);
 					
-					if(tempItem.position >= tabIndex || tempItem.position == -1)
+					if (tempItem.position >= tabIndex || tempItem.position == -1)
 					{
 						this._items.splice(i, 0, new ItemData(item, tabIndex));
 						break;
@@ -325,13 +325,13 @@ package temple.ui.focus
 			
 			var item:IFocusable;
 			
-			while(item == null)
+			while (item == null)
 			{
 				// increment & check limit
 				index++;
 				if (index > this._items.length - 1) index = 0;
 				
-				if(item == prev)
+				if (item == prev)
 				{
 					// we checked all items, no next item found
 					return;
@@ -340,7 +340,7 @@ package temple.ui.focus
 				item = ItemData(this._items[index]).item;
 				
 				// check if new item is enabled, if not, set to null so we check next
-				if(item is IEnableable && IEnableable(item).enabled == false)
+				if (item is IEnableable && IEnableable(item).enabled == false)
 				{
 					item = null;
 				}
@@ -364,13 +364,13 @@ package temple.ui.focus
 			
 			var item:IFocusable;
 			
-			while(item == null)
+			while (item == null)
 			{
 				// decrement & check limit
 				index--;
 				if (index < 0) index = this._items.length - 1;
 				
-				if(item == prev)
+				if (item == prev)
 				{
 					// we checked all items, no next item found
 					return;
@@ -379,7 +379,7 @@ package temple.ui.focus
 				item = ItemData(this._items[index]).item;
 				
 				// check if new item is enabled, if not, set to null so we check next
-				if(item is IEnableable && IEnableable(item).enabled == false)
+				if (item is IEnableable && IEnableable(item).enabled == false)
 				{
 					item = null;
 				}
@@ -418,7 +418,7 @@ package temple.ui.focus
 			var leni:int = this._items.length;
 			for (var i:int = 0;i < leni; i++)
 			{
-				if(ItemData(this._items[i]).item == item) return i;
+				if (ItemData(this._items[i]).item == item) return i;
 			}
 			return -1;
 		}

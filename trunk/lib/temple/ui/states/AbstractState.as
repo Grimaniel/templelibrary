@@ -91,7 +91,7 @@ package temple.ui.states
 		 */
 		public function set shown(value:Boolean):void
 		{
-			if(value)
+			if (value)
 			{
 				this.show();
 			}

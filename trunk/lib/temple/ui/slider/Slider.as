@@ -135,15 +135,15 @@ package temple.ui.slider
 		 */
 		public function set value(value:Number):void
 		{
-			if(isNaN(value)) return;
+			if (isNaN(value)) return;
 			
-			if(this._dragBehaviour == null || !this._dragBehaviour.target || !(this._dragBehaviour.target as DisplayObject).parent) return;
+			if (this._dragBehaviour == null || !this._dragBehaviour.target || !(this._dragBehaviour.target as DisplayObject).parent) return;
 			
-			if(value < 0)
+			if (value < 0)
 			{
 				value = 0;
 			}
-			else if(value > 1)
+			else if (value > 1)
 			{
 				value = 1;
 			}
@@ -152,12 +152,12 @@ package temple.ui.slider
 			var target:DisplayObject = this._dragBehaviour.target as DisplayObject;
 			var targetBounds:Rectangle = target.getBounds(target.parent);
 			
-			if(this._direction == Direction.DESCENDING)
+			if (this._direction == Direction.DESCENDING)
 			{
 				value = 1 - value;
 			}
 			
-			if(this._orientation == Orientation.HORIZONTAL)
+			if (this._orientation == Orientation.HORIZONTAL)
 			{
 				target.x = bounds.x + (target.x - targetBounds.x) + (bounds.width - targetBounds.width) * value;  
 			}
@@ -184,7 +184,7 @@ package temple.ui.slider
 		 */
 		public function set orientation(value:String):void
 		{
-			switch(value)
+			switch (value)
 			{
 				case Orientation.HORIZONTAL:
 				{
@@ -223,7 +223,7 @@ package temple.ui.slider
 		 */
 		public function set direction(value:String):void
 		{
-			switch(value)
+			switch (value)
 			{
 				case Direction.ASCENDING:
 				case Direction.DESCENDING:
@@ -303,7 +303,7 @@ package temple.ui.slider
 		 */
 		override public function destruct():void
 		{
-			if(this._dragBehaviour)
+			if (this._dragBehaviour)
 			{
 				this._dragBehaviour.destruct();
 				this._dragBehaviour = null;

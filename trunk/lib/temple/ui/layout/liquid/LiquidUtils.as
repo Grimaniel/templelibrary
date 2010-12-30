@@ -56,7 +56,7 @@ package temple.ui.layout.liquid
 	{
 		public static function calculateProperty(liquidObject:ILiquidObject, property:String):Number
 		{
-			switch(property)
+			switch (property)
 			{
 				case LiquidProperties.LEFT:
 				{
@@ -109,7 +109,7 @@ package temple.ui.layout.liquid
 		 */
 		public static function getLeft(liquidObject:ILiquidObject):Number
 		{
-			if(!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
+			if (!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
 			return DisplayObjectUtils.localToLocal(new Point(liquidObject.displayObject.x, 0), liquidObject.displayObject.parent, (liquidObject as ILiquidRelatedObject).relatedObject.displayObject).x;
 		}
 
@@ -118,7 +118,7 @@ package temple.ui.layout.liquid
 		 */
 		public static function getRight(liquidObject:ILiquidObject):Number
 		{
-			if(!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
+			if (!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
 			return (liquidObject as ILiquidRelatedObject).relatedObject.width - liquidObject.displayObject.width - LiquidUtils.getLeft(liquidObject);
 		}
 
@@ -127,7 +127,7 @@ package temple.ui.layout.liquid
 		 */
 		public static function getHorizontalCenter(liquidObject:ILiquidObject):Number
 		{
-			if(!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
+			if (!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
 			return (LiquidUtils.getLeft(liquidObject) + LiquidUtils.getRight(liquidObject)) * .5;
 		}
 
@@ -136,12 +136,12 @@ package temple.ui.layout.liquid
 		 */
 		public static function getRelativeX(liquidObject:ILiquidObject):Number
 		{
-			if(!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
+			if (!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
 			var left:Number = LiquidUtils.getLeft(liquidObject);
-			if(left == 0) return 0;
+			if (left == 0) return 0;
 			var rel:Number = left / ((liquidObject as ILiquidRelatedObject).relatedObject.width - liquidObject.displayObject.width);
-			if(isNaN(rel) || rel < 0) return 0;
-			if(rel > 1) return 1;
+			if (isNaN(rel) || rel < 0) return 0;
+			if (rel > 1) return 1;
 			return rel;
 		}
 
@@ -150,7 +150,7 @@ package temple.ui.layout.liquid
 		 */
 		public static function getTop(liquidObject:ILiquidObject):Number
 		{
-			if(!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
+			if (!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
 			return DisplayObjectUtils.localToLocal(new Point(0, liquidObject.displayObject.y), liquidObject.displayObject.parent, (liquidObject as ILiquidRelatedObject).relatedObject.displayObject).y;
 		}
 
@@ -159,7 +159,7 @@ package temple.ui.layout.liquid
 		 */
 		public static function getBottom(liquidObject:ILiquidObject):Number
 		{
-			if(!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
+			if (!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
 			return (liquidObject as ILiquidRelatedObject).relatedObject.height - liquidObject.displayObject.height - LiquidUtils.getTop(liquidObject);
 		}
 
@@ -168,7 +168,7 @@ package temple.ui.layout.liquid
 		 */
 		public static function getVerticalCenter(liquidObject:ILiquidObject):Number
 		{
-			if(!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
+			if (!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
 			return (LiquidUtils.getTop(liquidObject) + LiquidUtils.getBottom(liquidObject)) * .5;
 		}
 
@@ -177,12 +177,12 @@ package temple.ui.layout.liquid
 		 */
 		public static function getRelativeY(liquidObject:ILiquidObject):Number
 		{
-			if(!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
+			if (!liquidObject.displayObject.parent || !(liquidObject as ILiquidRelatedObject).relatedObject) return NaN;
 			var top:Number = LiquidUtils.getTop(liquidObject);
-			if(top == 0) return 0;
+			if (top == 0) return 0;
 			var rel:Number = top / ((liquidObject as ILiquidRelatedObject).relatedObject.height - liquidObject.displayObject.height);
-			if(isNaN(rel) || rel < 0) return 0;
-			if(rel > 1) return 1;
+			if (isNaN(rel) || rel < 0) return 0;
+			if (rel > 1) return 1;
 			return rel;
 		}
 

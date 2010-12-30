@@ -61,10 +61,10 @@ package temple.ui.label
 			var label:ILabel = DisplayObjectContainerUtils.findChildOfType(container, ILabel, false) as ILabel;
 			
 			// No ILabelled found, check for TextField
-			if(label == null)
+			if (label == null)
 			{
 				var textField:TextField = DisplayObjectContainerUtils.findChildOfType(container, TextField, false) as TextField;
-				if(textField) label = new TextFieldLabel(textField);
+				if (textField) label = new TextFieldLabel(textField);
 			}
 			return label;
 		}
