@@ -75,7 +75,7 @@ package temple.ui.buttons.behaviors
 			
 			target.addEventListener(MouseEvent.MOUSE_DOWN, this.handleTargetMouseDown);
 
-			if(target.stage)
+			if (target.stage)
 			{
 				this._stage = target.stage;
 			}
@@ -106,7 +106,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set eventType(value:String):void
 		{
-			switch(value)
+			switch (value)
 			{
 				case MouseEvent.CLICK:
 				case MouseEvent.MOUSE_DOWN:
@@ -127,9 +127,9 @@ package temple.ui.buttons.behaviors
 		{
 			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
 			
-			if(!this._stage && this.displayObject.stage) this._stage = this.displayObject.stage;
+			if (!this._stage && this.displayObject.stage) this._stage = this.displayObject.stage;
 			
-			if(this._stage)
+			if (this._stage)
 			{
 				this._stage.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
 				this._stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
@@ -138,7 +138,7 @@ package temple.ui.buttons.behaviors
 		
 		private function handleMouseMove(event:MouseEvent):void
 		{
-			if(event.buttonDown) this.displayObject.dispatchEvent(new MouseEvent(this._eventType, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
+			if (event.buttonDown) this.displayObject.dispatchEvent(new MouseEvent(this._eventType, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
 		}
 		
 		private function handleMouseUp(event:MouseEvent):void
@@ -163,7 +163,7 @@ package temple.ui.buttons.behaviors
 				this.displayObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
 			}
 			
-			if(this._stage)
+			if (this._stage)
 			{
 				this._stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
 				this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);

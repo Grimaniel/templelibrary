@@ -126,7 +126,7 @@ package temple.core
 		 */
 		override public function set width(value:Number):void
 		{
-			if(super.width || !this.scaleX) super.width = value;
+			if (super.width || !this.scaleX) super.width = value;
 		}
 		
 		/**
@@ -147,7 +147,7 @@ package temple.core
 		 */
 		override public function set height(value:Number):void
 		{
-			if(super.height || !this.scaleY) super.height = value;
+			if (super.height || !this.scaleY) super.height = value;
 		}
 
 		/**
@@ -225,7 +225,7 @@ package temple.core
 		 */
 		public function get scale():Number
 		{
-			if(this.scaleX == this.scaleY) return this.scaleX;
+			if (this.scaleX == this.scaleY) return this.scaleX;
 			return NaN;
 		}
 		
@@ -402,7 +402,7 @@ package temple.core
 		{
 			this._onStage = true;
 			
-			if(!StageProvider.stage)
+			if (!StageProvider.stage)
 			{
 				StageProvider.stage = super.stage;
 			}
@@ -478,7 +478,7 @@ package temple.core
 				{
 					if (this._onParent)
 					{
-						if(this.name && this.parent.hasOwnProperty(this.name)) this.parent[this.name] = null;
+						if (this.name && this.parent.hasOwnProperty(this.name)) this.parent[this.name] = null;
 						this.parent.removeChild(this);
 					}
 					else
@@ -486,7 +486,7 @@ package temple.core
 						// something weird happened, since we have a parent but didn't receive an ADDED event. So do the try-catch thing
 						try
 						{
-							if(this.name && this.parent.hasOwnProperty(this.name)) this.parent[this.name] = null;
+							if (this.name && this.parent.hasOwnProperty(this.name)) this.parent[this.name] = null;
 							this.parent.removeChild(this);
 						}
 						catch (e:Error){}

@@ -111,7 +111,7 @@ package temple.ui.form.validation
 					this._rules.splice(i, 1);
 				}
 			}
-			if(element is IEventDispatcher)
+			if (element is IEventDispatcher)
 			{
 				// first remove, to prevent double listening
 				IEventDispatcher(element).removeEventListener(Event.CHANGE, this.handleErrorInputFieldChange);
@@ -132,7 +132,7 @@ package temple.ui.form.validation
 				var rule:IValidationRule = RuleData(this._rules[i]).rule;
 				
 				// check if target is enabled
-				if(rule.target is IEnableable && IEnableable(rule.target).enabled == false) continue;
+				if (rule.target is IEnableable && IEnableable(rule.target).enabled == false) continue;
 				
 				if (!rule.isValid())
 				{
@@ -171,7 +171,7 @@ package temple.ui.form.validation
 				var ruleData:RuleData = RuleData(this._rules[i]);
 				
 				// check if target is enabled
-				if(ruleData.rule.target is IEnableable && IEnableable(ruleData.rule.target).enabled == false)
+				if (ruleData.rule.target is IEnableable && IEnableable(ruleData.rule.target).enabled == false)
 				{
 					if (this.debug) this.logDebug("Target is not enabled, skip: " + ruleData);
 					
@@ -180,8 +180,8 @@ package temple.ui.form.validation
 				
 				if (!ruleData.rule.isValid())
 				{
-					if(this._errorMessage == null) this._errorMessage = ruleData.message;
-					if(ruleData.message != null) this._errorMessages.push(ruleData.message);
+					if (this._errorMessage == null) this._errorMessage = ruleData.message;
+					if (ruleData.message != null) this._errorMessages.push(ruleData.message);
 					valid = false;
 					
 					if (this.debug) this.logDebug("Not valid: " + ruleData);
@@ -189,21 +189,21 @@ package temple.ui.form.validation
 				else if (this.debug) this.logDebug("Valid: " + ruleData);
 				
 				var target:IHasValue = ruleData.rule.target;
-				if(target is IHasError)
+				if (target is IHasError)
 				{
-					if(ruleData.rule.isValid())
+					if (ruleData.rule.isValid())
 					{
-						if(dictionary[target] == null)
+						if (dictionary[target] == null)
 						{
 							IHasError(target).hideError();
 						}
 					}
 					else
 					{
-						if(showErrors)
+						if (showErrors)
 						{
 							IHasError(target).showError(ruleData.message);
-							if(target is IFocusable && !focussed)
+							if (target is IFocusable && !focussed)
 							{
 								IFocusable(target).focus = true;
 								focussed = true;
@@ -211,7 +211,7 @@ package temple.ui.form.validation
 						}
 						dictionary[target] = false;
 					}
-					if(target is IEventDispatcher && keepValidating)
+					if (target is IEventDispatcher && keepValidating)
 					{
 						// first remove, to prevent double listening
 						IEventDispatcher(target).removeEventListener(Event.CHANGE, this.handleErrorInputFieldChange);
@@ -272,7 +272,7 @@ package temple.ui.form.validation
 		 */
 		public function stopRealtimeValidating():void
 		{
-			if(this._rules)
+			if (this._rules)
 			{
 				var leni:uint = this._rules.length;
 				for (var i:uint = 0;i < leni; i++) 
@@ -318,7 +318,7 @@ package temple.ui.form.validation
 
 		private function handleErrorInputFieldChange(event:Event):void 
 		{
-			if(event.currentTarget is IHasValue)
+			if (event.currentTarget is IHasValue)
 			{
 				var leni:uint = _rules.length;
 				var isValid:Boolean = true;
@@ -328,18 +328,18 @@ package temple.ui.form.validation
 				{
 					ruleData = RuleData(_rules[i]);
 					
-					if(ruleData.rule.target != event.currentTarget) continue;
+					if (ruleData.rule.target != event.currentTarget) continue;
 
-					if(ruleData.rule.target is IHasError)
+					if (ruleData.rule.target is IHasError)
 					{
-						if(!ruleData.rule.isValid())
+						if (!ruleData.rule.isValid())
 						{
 							isValid = false;
 							message = ruleData.message;
 						}
 					}
 				}
-				if(isValid)
+				if (isValid)
 				{
 					IHasError(event.currentTarget).hideError();
 				}
@@ -398,7 +398,7 @@ final class RuleData extends CoreObject
 	 */
 	override public function destruct():void
 	{
-		if(this.rule)
+		if (this.rule)
 		{
 			this.rule.destruct();
 			this.rule = null;

@@ -113,7 +113,7 @@ package temple.destruction
 		 */
 		override public function destruct():void
 		{
-			if(this._list)
+			if (this._list)
 			{
 				this.destructAll();
 				this._list = null;

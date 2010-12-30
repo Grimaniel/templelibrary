@@ -391,7 +391,7 @@ package temple.data.xml
 			var xmlUrlData:XMLLoadItem = XMLLoadItem(this._xmlLoadDataList[name]);
 			xmlUrlData._xml = data;
 			
-			for(var i:int = xmlUrlData.xmlObjectDataList.length - 1;i > -1; --i)
+			for (var i:int = xmlUrlData.xmlObjectDataList.length - 1;i > -1; --i)
 			{
 				var xmlObjectData:XMLObjectData = xmlUrlData.xmlObjectDataList[i]; 
 				var object:Object = this.getXMLNode(data, xmlObjectData.node, xmlObjectData.type == XMLObjectData.OBJECT ? XML : XMLList);
@@ -408,7 +408,7 @@ package temple.data.xml
 					
 					var callback:Function;
 					
-					switch(xmlObjectData.type)
+					switch (xmlObjectData.type)
 					{
 						case XMLObjectData.LIST:
 						{
@@ -500,7 +500,7 @@ package temple.data.xml
 				}
 				else if (this.debug) this.logDebug("_load: get parsed object from cache");
 				
-				switch(type)
+				switch (type)
 				{
 					case XMLObjectData.OBJECT:
 					{
@@ -666,7 +666,7 @@ package temple.data.xml
 		
 		private function getCacheSetting(cacheXML:int, defaultSetting:Boolean):Boolean
 		{
-			switch(cacheXML){
+			switch (cacheXML){
 				case XMLManager.DEFAULT_CACHE_SETTING:
 				{
 					return defaultSetting;

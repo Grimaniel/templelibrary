@@ -71,22 +71,22 @@ package temple.utils
 		 */
 		public static function getEnvironment():String
 		{
-			if(Environment.isPlugin())
+			if (Environment.isPlugin())
 			{
 				return Environment.PLUGIN;
 			}
 			
-			if(Environment.isIDE())
+			if (Environment.isIDE())
 			{
 				return Environment.IDE;
 			}
 		
-			if(Environment.isStandAlone())
+			if (Environment.isStandAlone())
 			{
 				return Environment.STANDALONE;
 			}
 		
-			if(Environment.isAirApplication())
+			if (Environment.isAirApplication())
 			{
 				return Environment.AIR;
 			}

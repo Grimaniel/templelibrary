@@ -72,9 +72,9 @@ package temple.utils
 			var arr:Array = new Array();
 			var xml:XML = describeType(type);
 			var list:XMLList = xml.child('constant');		
-			for each(var node:XML in list)
+			for each (var node:XML in list)
 			{
-				if(type == null || node.@['type'] == constType)
+				if (type == null || node.@['type'] == constType)
 				{
 					arr.push(type[node.@['name']]);
 				}
@@ -87,9 +87,9 @@ package temple.utils
 			var arr:Object = new Object();
 			var xml:XML = describeType(type);
 			var list:XMLList = xml.child('constant');		
-			for each(var node:XML in list)
+			for each (var node:XML in list)
 			{
-				if(type == null || node.@['type'] == constType)
+				if (type == null || node.@['type'] == constType)
 				{
 					arr[node.@['name']] = type[node.@['name']];
 				}
@@ -101,9 +101,9 @@ package temple.utils
 		{
 			var xml:XML = describeType(type);
 			var list:XMLList = xml.child('constant');		
-			for each(var node:XML in list)
+			for each (var node:XML in list)
 			{
-				if(type == null || type[node.@['name']] == value)
+				if (type == null || type[node.@['name']] == value)
 				{
 					return value;
 				}

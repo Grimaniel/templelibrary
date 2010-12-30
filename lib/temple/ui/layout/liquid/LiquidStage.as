@@ -99,7 +99,7 @@ package temple.ui.layout.liquid
 		 */
 		public static function set originalWidth(value:Number):void
 		{
-			if(isNaN(value)) throwError(new TempleArgumentError(LiquidStage, "originalWidth can not be set to NaN"));
+			if (isNaN(value)) throwError(new TempleArgumentError(LiquidStage, "originalWidth can not be set to NaN"));
 			
 			LiquidStage._originalWidth = value;
 		}
@@ -117,7 +117,7 @@ package temple.ui.layout.liquid
 		 */
 		public static function set originalHeight(value:Number):void
 		{
-			if(isNaN(value)) throwError(new TempleArgumentError(LiquidStage, "originalHeight can not be set to NaN"));
+			if (isNaN(value)) throwError(new TempleArgumentError(LiquidStage, "originalHeight can not be set to NaN"));
 			
 			LiquidStage._originalHeight = value;
 		}
@@ -129,22 +129,22 @@ package temple.ui.layout.liquid
 		 */
 		public function LiquidStage(stage:Stage) 
 		{
-			if(_instance)
+			if (_instance)
 			{
 				throwError(new TempleError(this, "instance already set, use LiquidStage.getInstance()"));
 			}
-			if(stage == null) throwError(new TempleArgumentError(this, "Stage can not be null"));
+			if (stage == null) throwError(new TempleArgumentError(this, "Stage can not be null"));
 			
 			_instance = this;
 			this._stage = stage;
 			this._stage.addEventListener(Event.RESIZE, this.handleStageResize, false, -1);
 			
-			if(this._stage.scaleMode != StageScaleMode.NO_SCALE)
+			if (this._stage.scaleMode != StageScaleMode.NO_SCALE)
 			{
 				this._stage.scaleMode = StageScaleMode.NO_SCALE;
 				//this.logWarn("LiquidStage changed the StageScaleMode");
 			}
-			if(this._stage.align != StageAlign.TOP_LEFT)
+			if (this._stage.align != StageAlign.TOP_LEFT)
 			{
 				this._stage.align = StageAlign.TOP_LEFT;
 				//this.logWarn("LiquidStage changed the StageAlign");
@@ -259,7 +259,7 @@ package temple.ui.layout.liquid
 		private function handleStageResize(event:Event):void
 		{
 			this.dispatchEvent(event.clone());
-			if(this._resizeDelay) this._resizeDelay.destruct();
+			if (this._resizeDelay) this._resizeDelay.destruct();
 			this._resizeDelay = new FrameDelay(this.delayedResize, 2);
 		}
 

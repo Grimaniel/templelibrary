@@ -216,7 +216,7 @@ package temple.ui.behaviors
 			
 			this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOMING, this));
 			
-			if(Math.abs(this.displayObject.scaleX - this._newScale) < .01)
+			if (Math.abs(this.displayObject.scaleX - this._newScale) < .01)
 			{
 				this.displayObject.scaleX = this.displayObject.scaleY = this._newScale;
 				this.displayObject.x = this._newX;
@@ -268,8 +268,8 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			if(this.target) this.displayObject.removeEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
-			if(this._running) this.stopZoom();
+			if (this.target) this.displayObject.removeEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
+			if (this._running) this.stopZoom();
 			super.destruct();
 		}
 	}

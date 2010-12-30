@@ -218,7 +218,7 @@ package temple.core
 			this.client = this;
 			this.close();
 			
-			if(this._eventListenerManager)
+			if (this._eventListenerManager)
 			{
 				this._eventListenerManager.destruct();
 				this._eventListenerManager = null;

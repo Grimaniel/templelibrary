@@ -108,7 +108,7 @@ package temple.ui.buttons.behaviors
 		public function set upVars(value:Object):void
 		{
 			this._upVars = value;
-			if(this.debug) this.logDebug("upVars: " + ObjectUtils.traceObject(this._upVars, 3, false));
+			if (this.debug) this.logDebug("upVars: " + ObjectUtils.traceObject(this._upVars, 3, false));
 			this.update(this);
 		}
 		
@@ -145,7 +145,7 @@ package temple.ui.buttons.behaviors
 		public function set overVars(value:Object):void
 		{
 			this._overVars = value;
-			if(this.debug) this.logDebug("overVars: " + ObjectUtils.traceObject(this._overVars, 3, false));
+			if (this.debug) this.logDebug("overVars: " + ObjectUtils.traceObject(this._overVars, 3, false));
 			this.update(this);
 		}
 		
@@ -182,7 +182,7 @@ package temple.ui.buttons.behaviors
 		public function set downVars(value:Object):void
 		{
 			this._downVars = value;
-			if(this.debug) this.logDebug("downVars: " + ObjectUtils.traceObject(this._downVars, 3, false));
+			if (this.debug) this.logDebug("downVars: " + ObjectUtils.traceObject(this._downVars, 3, false));
 			this.update(this);
 		}
 		
@@ -219,7 +219,7 @@ package temple.ui.buttons.behaviors
 		public function set selectedVars(value:Object):void
 		{
 			this._selectedVars = value;
-			if(this.debug) this.logDebug("selectedVars: " + ObjectUtils.traceObject(this._selectedVars, 3, false));
+			if (this.debug) this.logDebug("selectedVars: " + ObjectUtils.traceObject(this._selectedVars, 3, false));
 			this.update(this);
 		}
 		
@@ -256,7 +256,7 @@ package temple.ui.buttons.behaviors
 		public function set disabledVars(value:Object):void
 		{
 			this._disabledVars = value;
-			if(this.debug) this.logDebug("disabledVars: " + ObjectUtils.traceObject(this._disabledVars, 3, false));
+			if (this.debug) this.logDebug("disabledVars: " + ObjectUtils.traceObject(this._disabledVars, 3, false));
 			this.update(this);
 		}
 		
@@ -289,11 +289,11 @@ package temple.ui.buttons.behaviors
 		{
 			super.update(status);
 			
-			if(!this.enabled) return;
+			if (!this.enabled) return;
 			
-			if(this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down + ", state=" + this._state);
+			if (this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down + ", state=" + this._state);
 			
-			switch(true)
+			switch (true)
 			{
 				case (this.selected && !!this._selectedVars):
 				{
@@ -370,13 +370,13 @@ package temple.ui.buttons.behaviors
 
 		private function toState(state:String, duration:Number, vars:Object):void
 		{
-			if(this.debug) this.logDebug("toState: " + state + ", duration: " + duration + ", vars: " + ObjectUtils.traceObject(vars, 3, false));
+			if (this.debug) this.logDebug("toState: " + state + ", duration: " + duration + ", vars: " + ObjectUtils.traceObject(vars, 3, false));
 			
 			this._state = state;
-			if(isNaN(duration)) duration = 0;
-			if(vars)
+			if (isNaN(duration)) duration = 0;
+			if (vars)
 			{
-				if(vars['ease'] is String) vars['ease'] = EaseLookup.find(vars['ease']);
+				if (vars['ease'] is String) vars['ease'] = EaseLookup.find(vars['ease']);
 				TweenMax.to(this.target, duration, vars);
 			}
 		}

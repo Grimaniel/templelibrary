@@ -124,7 +124,7 @@ package temple.ui.behaviors
 		{
 			super(target, bounds);
 			
-			if(dragButton)
+			if (dragButton)
 			{
 				this._dragButton = dragButton;
 			}
@@ -251,7 +251,7 @@ package temple.ui.behaviors
 		 */
 		public function update():void
 		{
-			if(this._dragHorizontal)
+			if (this._dragHorizontal)
 			{
 				var newX:Number = this.displayObject.parent.mouseX - (this._startDragMousePoint.x * this.displayObject.scaleX);
 				if (this._positionProxy)
@@ -264,7 +264,7 @@ package temple.ui.behaviors
 				}
 				
 			}
-			if(this.dragVertical)
+			if (this.dragVertical)
 			{
 				var newY:Number = this.displayObject.parent.mouseY - (this._startDragMousePoint.y * this.displayObject.scaleY);
 				if (this._positionProxy)
@@ -335,8 +335,8 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			if(this.isDragging) this.stopDrag();
-			if(this._dragButton)
+			if (this.isDragging) this.stopDrag();
+			if (this._dragButton)
 			{
 				this._dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
 				this._dragButton = null;

@@ -162,7 +162,7 @@ package temple.ui.buttons.behaviors
 			
 			if (!this.enabled) return;
 			
-			if(this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down + ", focus=" + this.focus + ", currentLabel='" + this._currentLabel + "', currentFrame='" + this.movieClip.currentFrame + "'");
+			if (this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down + ", focus=" + this.focus + ", currentLabel='" + this._currentLabel + "', currentFrame='" + this.movieClip.currentFrame + "'");
 			
 			switch (true)
 			{
@@ -178,7 +178,7 @@ package temple.ui.buttons.behaviors
 				}
 				case this.down:
 				{
-					switch(this._currentLabel)
+					switch (this._currentLabel)
 					{
 						case ButtonTimelineLabels.UP:
 						case ButtonTimelineLabels.IN:
@@ -197,7 +197,7 @@ package temple.ui.buttons.behaviors
 				}
 				case this.over:
 				{
-					switch(this._currentLabel)
+					switch (this._currentLabel)
 					{
 						case ButtonTimelineLabels.IN:
 						case ButtonTimelineLabels.OVER:
@@ -215,7 +215,7 @@ package temple.ui.buttons.behaviors
 						case ButtonTimelineLabels.DOWN:
 						case ButtonTimelineLabels.RELEASE:
 						{
-							if(this.debug) this.logDebug("update from a down state");
+							if (this.debug) this.logDebug("update from a down state");
 							this.animateTo(ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, ButtonTimelineLabels.OVER, ButtonTimelineLabels.PRESS, this._playBackwardsBeforeDown);
 							break;
 						}
@@ -231,7 +231,7 @@ package temple.ui.buttons.behaviors
 				{
 					if (this._labels[ButtonTimelineLabels.FOCUSED] || this._labels[ButtonTimelineLabels.FOCUS])
 					{
-						switch(this._currentLabel)
+						switch (this._currentLabel)
 						{
 							case ButtonTimelineLabels.SELECT:
 							case ButtonTimelineLabels.SELECTED:
@@ -244,7 +244,7 @@ package temple.ui.buttons.behaviors
 							case ButtonTimelineLabels.DOWN:
 							case ButtonTimelineLabels.RELEASE:
 							{
-								if(this.debug) this.logDebug("update from a down state");
+								if (this.debug) this.logDebug("update from a down state");
 								this.animateTo(ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.PRESS, this._playBackwardsBeforeDown);
 								break;
 							}
@@ -436,7 +436,7 @@ package temple.ui.buttons.behaviors
 		{
 			if (this.debug) this.logDebug("animateTo: start='" + start + "', enter='" + enter + "', goal='" + goal + "', exit='" + exit + "', backwardsBeforeGoal=" + backwardsBeforeGoal + ", currentFrame=" + this.movieClip.currentFrame + ", currentLabel='" + this._currentLabel + "'");
 			
-			if(!this._labels[goal])
+			if (!this._labels[goal])
 			{
 				if (this.debug) this.logWarn("MovieClip has no label '" + goal + "'");
 				return;
@@ -449,7 +449,7 @@ package temple.ui.buttons.behaviors
 				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
 			}
 			// check if we are currently in the exit state 
-			else if(this._labels[exit] && FrameLabelData(this._labels[exit]).isActiveAt(this.movieClip.currentFrame))
+			else if (this._labels[exit] && FrameLabelData(this._labels[exit]).isActiveAt(this.movieClip.currentFrame))
 			{
 				// backwards?
 				if (backwardsBeforeGoal)
@@ -504,7 +504,7 @@ package temple.ui.buttons.behaviors
 				}
 			}
 			// check if we have an enter state
-			else if(this._labels[enter])
+			else if (this._labels[enter])
 			{
 				this._currentLabel = enter;
 				
@@ -513,7 +513,7 @@ package temple.ui.buttons.behaviors
 				// check if enter is currently active
 				if (!FrameLabelData(this._labels[enter]).isActiveAt(this.movieClip.currentFrame))
 				{
-					if(this.debug) this.logDebug("animateTo: goto '" + enter + "'");
+					if (this.debug) this.logDebug("animateTo: goto '" + enter + "'");
 					this.movieClip.gotoAndStop(enter);
 				}
 				this.gotoFrame(FrameLabelData(this._labels[enter]).endframe);
@@ -521,12 +521,12 @@ package temple.ui.buttons.behaviors
 			else
 			{
 				// just go to our goal
-				if(this.debug) this.logDebug("animateTo: just go to our goal '" + goal + "'");
+				if (this.debug) this.logDebug("animateTo: just go to our goal '" + goal + "'");
 				this._currentLabel = goal;
 				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
 				this.movieClip.gotoAndStop(FrameLabelData(this._labels[goal]).startframe);
 				
-				if(goal == ButtonTimelineLabels.OVER && !this.over) this.update(this);
+				if (goal == ButtonTimelineLabels.OVER && !this.over) this.update(this);
 			}
 			RenderUtils.update();
 		}
@@ -536,7 +536,7 @@ package temple.ui.buttons.behaviors
 		 */
 		private function upState():void
 		{
-			if(this.debug) this.logDebug("upState");
+			if (this.debug) this.logDebug("upState");
 			
 			this._currentLabel = ButtonTimelineLabels.UP;
 			this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
@@ -546,13 +546,13 @@ package temple.ui.buttons.behaviors
 
 		private function overState():void
 		{
-			if(this.debug) this.logDebug("overState");
+			if (this.debug) this.logDebug("overState");
 			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.IN, ButtonTimelineLabels.OVER, ButtonTimelineLabels.OUT, this._playBackwardsBeforeOver);
 		}
 
 		private function downState():void
 		{
-			if(this.debug) this.logDebug("downState");
+			if (this.debug) this.logDebug("downState");
 			this.animateTo(ButtonTimelineLabels.OVER, ButtonTimelineLabels.PRESS, ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, this._playBackwardsBeforeDown);
 		}
 
@@ -570,7 +570,7 @@ package temple.ui.buttons.behaviors
 		
 		private function focusState():void
 		{
-			if(this.debug) this.logDebug("focusState");
+			if (this.debug) this.logDebug("focusState");
 			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.FOCUS, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.BLUR, this._playBackwardsBeforeOver);
 		}
 
@@ -610,7 +610,7 @@ package temple.ui.buttons.behaviors
 				{
 					frameLabelData = new FrameLabelData(FrameLabel(this.movieClip.currentScene.labels[i]).name, FrameLabel(this.movieClip.currentScene.labels[i]).frame);
 					
-					switch(frameLabelData.name)
+					switch (frameLabelData.name)
 					{
 						// Animated states
 						case ButtonTimelineLabels.IN:
@@ -629,7 +629,7 @@ package temple.ui.buttons.behaviors
 							j = 0;
 							do
 							{
-								if(++j < length)
+								if (++j < length)
 								{
 									next = FrameLabel(this.movieClip.currentScene.labels[i + j]);
 								}
@@ -669,7 +669,7 @@ package temple.ui.buttons.behaviors
 				if (!this._labels[ButtonTimelineLabels.UP])
 				{
 					this._labels[1] = this._labels[ButtonTimelineLabels.UP] = new FrameLabelData(ButtonTimelineLabels.UP, 1);
-					if(this.debug) this.logDebug("initLabels: 'up' not found so first frame is used as 'up' state");
+					if (this.debug) this.logDebug("initLabels: 'up' not found so first frame is used as 'up' state");
 				}
 				// since 'over' is mandatory, check for it and use 'up' if 'over' is not found
 				if (!this._labels[ButtonTimelineLabels.OVER])
@@ -728,9 +728,9 @@ package temple.ui.buttons.behaviors
 
 		private function onAnimationDone():void
 		{
-			if(this.debug) this.logDebug("animation done: currentLabel='" + this._currentLabel + "'");
+			if (this.debug) this.logDebug("animation done: currentLabel='" + this._currentLabel + "'");
 			
-			switch(this._currentLabel)
+			switch (this._currentLabel)
 			{
 				case ButtonTimelineLabels.IN:
 				{
@@ -800,7 +800,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if(this.target) delete ButtonTimelineBehavior._dictionary[this.target];
+			if (this.target) delete ButtonTimelineBehavior._dictionary[this.target];
 			
 			if (this.movieClip)
 			{

@@ -291,7 +291,7 @@ package temple.utils.types
 		{
 			if (object is Array) return (object as Array).length > 0;
 			
-			for(var key:* in object)
+			for (var key:* in object)
 			{
 				return true;
 			}
@@ -308,7 +308,7 @@ package temple.utils.types
 		public static function length(object:Object):int
 		{
 			var count:int = 0;
-			for(var key:* in object)
+			for (var key:* in object)
 			{
 				count++;
 			}

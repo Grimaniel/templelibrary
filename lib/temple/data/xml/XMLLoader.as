@@ -170,7 +170,7 @@ package temple.data.xml
 			{
 				xld = this._waitingStack[i];
 				
-				if(xld.name == name)
+				if (xld.name == name)
 				{
 					this.logInfo("cancelLoad: succesfull removed form waiting stack");
 					
@@ -186,7 +186,7 @@ package temple.data.xml
 			{
 				xld = this._loadingStack[i];
 				
-				if(xld.name == name)
+				if (xld.name == name)
 				{
 					this.logInfo("cancelLoad: succesfull removed form loading stack");
 					// found, remove form list and return
@@ -350,12 +350,12 @@ package temple.data.xml
 		 */
 		override public function destruct():void
 		{
-			if(this._waitingStack)
+			if (this._waitingStack)
 			{
 				this._waitingStack.destruct();
 				this._waitingStack = null;
 			}
-			if(this._loadingStack)
+			if (this._loadingStack)
 			{
 				this._loadingStack.destruct();
 				this._loadingStack = null;
@@ -396,7 +396,7 @@ final class XMLLoaderData implements IDestructible
 	public function destruct():void
 	{
 		this.variables = null;
-		if(this.loader)
+		if (this.loader)
 		{
 			this.loader.destruct();
 			this.loader = null;

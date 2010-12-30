@@ -168,7 +168,7 @@ package temple.ui.form.components
 		 */
 		public function set text(value:String):void 
 		{
-			if(value == null) value = "";
+			if (value == null) value = "";
 			
 			this._text = value;
 			
@@ -207,7 +207,7 @@ package temple.ui.form.components
 		[Inspectable(name="Hint text", type="String")]
 		public function set hintText(value:String):void 
 		{
-			if(this._textField.text == this._hintText)
+			if (this._textField.text == this._hintText)
 			{
 				this._textField.text = value;
 			}
@@ -321,7 +321,7 @@ package temple.ui.form.components
 		 */
 		public function set value(value:*):void
 		{
-			if(value == null) return;
+			if (value == null) return;
 			this.text = value;
 		}
 
@@ -374,7 +374,7 @@ package temple.ui.form.components
 		[Inspectable(name="Restriction", type="String", defaultValue="none", enumeration="none,numeric,numbers,alphanumeric,email,postalcode (Dutch),uppercase,lowercase")]
 		public function set restrict(value:String):void 
 		{
-			switch(value)
+			switch (value)
 			{
 				case "none":
 				{
@@ -439,7 +439,7 @@ package temple.ui.form.components
 		public function set displayAsPassword(value:Boolean):void
 		{
 			this._displayAsPassword = value;
-			if(this._hintText && this._hintText == this._textField.text)
+			if (this._hintText && this._hintText == this._textField.text)
 			{
 				this._textField.displayAsPassword = true;
 			}
@@ -481,7 +481,7 @@ package temple.ui.form.components
 		[Inspectable(name="Max characters (0 = unlimited, -1 = limited to design)", type="Number", defaultValue="0")]
 		public function set maxChars(value:int):void
 		{
-			if(value == -1)
+			if (value == -1)
 			{
 				this.limitInputToDesign = true;
 				this._textField.maxChars = 0;
@@ -498,7 +498,7 @@ package temple.ui.form.components
 		[Inspectable(name="Validation rule", type="String", defaultValue="none", enumeration="none,mandatory,email,postalcode (Dutch),mobile (Dutch),phone (Dutch)")]
 		public function set validationRuleName(value:String):void
 		{
-			switch(value)
+			switch (value)
 			{
 				case "none":
 				{
@@ -554,7 +554,7 @@ package temple.ui.form.components
 		public function set debugValue(value:*):void
 		{
 			this._debugValue = value;
-			if(this._debug)
+			if (this._debug)
 			{
 				this.value = this._debugValue;
 			}
@@ -574,7 +574,7 @@ package temple.ui.form.components
 		public function set debug(value:Boolean):void
 		{
 			this._debug = value;
-			if(this._debug && this._debugValue)
+			if (this._debug && this._debugValue)
 			{
 				this.value = this._debugValue;
 			}
@@ -587,7 +587,7 @@ package temple.ui.form.components
 		[Inspectable(name="Reset scaling", type="Boolean")]
 		public function set resetScale(value:Boolean):void
 		{
-			if(value)
+			if (value)
 			{
 				var len:int = this.numChildren;
 				for (var i:int = 0; i < len ; i++)
@@ -614,7 +614,7 @@ package temple.ui.form.components
 		public function set multiline(value:Boolean):void
 		{
 			this._textField.multiline = value;
-			if(this._textField.multiline == true)
+			if (this._textField.multiline == true)
 			{
 				this._submitOnEnter = false;
 			}
@@ -656,7 +656,7 @@ package temple.ui.form.components
 		[Inspectable(name="Submit on Enter", type="Boolean", defaultValue="true")]
 		public function set submitOnEnter(value:Boolean):void
 		{
-			if(this._textField.multiline == true && value == true)
+			if (this._textField.multiline == true && value == true)
 			{
 				this._submitOnEnter = false;
 			}
@@ -787,13 +787,13 @@ package temple.ui.form.components
 		 */
 		protected function handleTextFieldChange(event:Event):void
 		{
-			if(!isNaN(this._minimalFontSize))
+			if (!isNaN(this._minimalFontSize))
 			{
 				this.fontSize = this._normalFontSize;
-				while(this._textField.textWidth > this._textField.width || this._textField.textHeight > this._textField.height)
+				while (this._textField.textWidth > this._textField.width || this._textField.textHeight > this._textField.height)
 				{
 					this.fontSize -= 1;
-					if(this.fontSize <= this._minimalFontSize)
+					if (this.fontSize <= this._minimalFontSize)
 					{
 						this.fontSize = this._minimalFontSize;
 						break;
@@ -801,15 +801,15 @@ package temple.ui.form.components
 				}
 			}
 			
-			if(this._limitInputToDesign)
+			if (this._limitInputToDesign)
 			{
-				if(this._textField.textWidth > this._textField.width)
+				if (this._textField.textWidth > this._textField.width)
 				{
 					this._textField.text = this._previousText;
 				}
 				this._textField.scrollH = 0;
 
-				if(this._textField.textHeight > this._textField.height)
+				if (this._textField.textHeight > this._textField.height)
 				{
 					this._textField.text = this._previousText;
 				}
@@ -818,7 +818,7 @@ package temple.ui.form.components
 			event.stopPropagation();
 			this.dispatchEvent(new Event(Event.CHANGE));
 			
-			if(this._submitOnChange)
+			if (this._submitOnChange)
 			{
 				this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 			}
@@ -839,7 +839,7 @@ package temple.ui.form.components
 			else if (!this._focus && !this._showsHint && (this._textField.text == "")) 
 			{
 				this._showsHint = true;
-				if(this._hintText)
+				if (this._hintText)
 				{
 					this._textField.text = this._hintText;
 					this._textField.textColor = this._hintTextColor;
@@ -859,7 +859,7 @@ package temple.ui.form.components
 		 */
 		protected function handleKeyDown(event:KeyboardEvent):void
 		{
-			if(this._submitOnEnter && event.keyCode == KeyCode.ENTER)
+			if (this._submitOnEnter && event.keyCode == KeyCode.ENTER)
 			{
 				event.stopPropagation();
 				this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
@@ -871,7 +871,7 @@ package temple.ui.form.components
 		 */
 		protected function handleTextFieldScroll(event:Event):void
 		{
-			if(this._limitInputToDesign) this._textField.scrollH = this._textField.scrollV = 0;
+			if (this._limitInputToDesign) this._textField.scrollH = this._textField.scrollV = 0;
 		}
 
 		/**
@@ -892,7 +892,7 @@ package temple.ui.form.components
 			this._prefillText = null;
 			this._debugValue = null;
 			
-			if(this._textField)
+			if (this._textField)
 			{
 				this._textField.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
 				this._textField.removeEventListener(TextEvent.TEXT_INPUT, this.handleTextInput);

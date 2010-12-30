@@ -65,12 +65,12 @@ package temple.utils
 		 */
 		public static function apply(object:Object, properties:Object, debug:Boolean = false):Object
 		{
-			if(object == null)
+			if (object == null)
 			{
 				Log.error("Object can not be null", PropertyApplier);
 				return object;
 			}
-			if(properties == null)
+			if (properties == null)
 			{
 				Log.error("Properties can not be null", PropertyApplier);
 				return object;
@@ -82,7 +82,7 @@ package temple.utils
 				{
 					try
 					{
-						switch(typeof(object[key]))
+						switch (typeof(object[key]))
 						{
 							case ObjectType.BOOLEAN:
 							{
@@ -98,12 +98,12 @@ package temple.utils
 					}
 					catch (error:Error)
 					{
-						if(debug) Log.warn("property '" + key + "' can not be applied to " + object, PropertyApplier);
+						if (debug) Log.warn("property '" + key + "' can not be applied to " + object, PropertyApplier);
 					}
 				}
 				else
 				{
-					if(debug) Log.warn("Object '" + object + "' has no property '" + key + "'", PropertyApplier);
+					if (debug) Log.warn("Object '" + object + "' has no property '" + key + "'", PropertyApplier);
 				}
 			}
 			

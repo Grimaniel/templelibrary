@@ -119,7 +119,7 @@ package temple.utils.types
 		 */
 		public static function parseFromSqlDateTime(dateTime:String):Date
 		{
-			if(dateTime == null)
+			if (dateTime == null)
 			{
 				return null;
 			}
@@ -188,7 +188,7 @@ package temple.utils.types
 		{
 			var dStr:String = String(d.getFullYear());
 			
-			if(dStr.length < 3)
+			if (dStr.length < 3)
 			{
 				return dStr;
 			}
@@ -213,11 +213,11 @@ package temple.utils.types
 			var d1ms:Number = d1.getTime();
 			var d2ms:Number = d2.getTime();
 			
-			if(d1ms > d2ms)
+			if (d1ms > d2ms)
 			{
 				return -1;
 			}
-			else if(d1ms < d2ms)
+			else if (d1ms < d2ms)
 			{
 				return 1;
 			}
@@ -243,11 +243,11 @@ package temple.utils.types
 		{
 			var h:int = date.hours;
 			
-			if(h == 0 || h == 12)
+			if (h == 0 || h == 12)
 			{
 				return 12;
 			}
-			else if(h > 12)
+			else if (h > 12)
 			{
 				return h - 12;
 			}
@@ -434,7 +434,7 @@ package temple.utils.types
 		 */
 		public static function isLeapYear(year:int):Boolean
 		{
-			if(year % 100 == 0) return year % 400 == 0;
+			if (year % 100 == 0) return year % 400 == 0;
 			return year % 4 == 0;
 		}
 
@@ -470,7 +470,7 @@ package temple.utils.types
 		public static function roundUp(dateToRound:Date, timeUnit:String = "day"):Date
 		{
 			dateToRound = new Date(dateToRound.valueOf());
-			switch(timeUnit)
+			switch (timeUnit)
 			{
 				case TimeUnit.YEAR:
 				{
@@ -545,7 +545,7 @@ package temple.utils.types
 		public static function roundDown(dateToRound:Date, timeUnit:String = "day"):Date
 		{
 			dateToRound = new Date(dateToRound.valueOf());
-			switch(timeUnit)
+			switch (timeUnit)
 			{
 				case TimeUnit.YEAR:
 				{
@@ -699,9 +699,9 @@ package temple.utils.types
 		
 		public static function isSameDay(compare:Date, to:Date):Boolean
 		{
-			if(compare.getFullYear() != to.getFullYear()) return false;
-			if(compare.getMonth() != to.getMonth()) return false;
-			if(compare.getDate() != to.getDate()) return false;
+			if (compare.getFullYear() != to.getFullYear()) return false;
+			if (compare.getMonth() != to.getMonth()) return false;
+			if (compare.getDate() != to.getDate()) return false;
 			return true;
 		}
 
@@ -714,12 +714,12 @@ package temple.utils.types
 		public static function getHoursIn12HourFormat(value:Date):Number
 		{
 			var hours:Number = value.getHours();
-			if(hours == 0)
+			if (hours == 0)
 			{
 				return 12;
 			}
 			
-			if(hours > 0 && hours <= 12)
+			if (hours > 0 && hours <= 12)
 			{
 				return hours;
 			}
@@ -735,9 +735,9 @@ package temple.utils.types
 			var now:Date = new Date();
 			var age:int = now.fullYear - date.fullYear;
 			
-			if(date.month < now.month) return age;
-			if(date.month > now.month) return age-1;
-			if(date.date <= now.date) return age;
+			if (date.month < now.month) return age;
+			if (date.month > now.month) return age-1;
+			if (date.date <= now.date) return age;
 			return age- 1;
 		}
 		
@@ -766,7 +766,7 @@ package temple.utils.types
 			{
 				d = date as Date;
 			}
-			else if(date is int)
+			else if (date is int)
 			{
 				var unixTimestamp:int = date as int;
 				d = new Date(unixTimestamp * 1000);
@@ -794,7 +794,7 @@ package temple.utils.types
 			var chars:Array = format.split("");
 			
 			//iterating over all chars
-			chars.forEach(function( item:String, index:int, array:Array ):void
+			chars.forEach(function (item:String, index:int, array:Array ):void
 			{
 				/*
 				 * check if the current char was escaped if true don't
@@ -825,145 +825,144 @@ package temple.utils.types
 			 * checking if some regexp match to the given char, if false
 			 * give back the original item
 			 */ 
-			if(item.match(/a/))
+			if (item.match(/a/))
 			{
 				return DateUtils.getAmPm(date);
 			}
-			else if(item.match(/A/))
+			else if (item.match(/A/))
 			{
 				return DateUtils.getAmPm(date, true);
 			}
-			else if(item.match(/B/))
+			else if (item.match(/B/))
 			{
 				return DateUtils.getSwatchInternetTime(date);
 			}
-			else if(item.match(/c/))
+			else if (item.match(/c/))
 			{
 				return DateUtils.getIso8601(date);
 			}
-			else if(item.match(/d/))
+			else if (item.match(/d/))
 			{
 				return DateUtils.getDayOfMonth(date);
 			}
-			else if(item.match(/D/))
+			else if (item.match(/D/))
 			{
 				return DateUtils.getWeekDayAsText(date, true);
 			}
-			else if(item.match(/F/))
+			else if (item.match(/F/))
 			{
 				return DateUtils.getMonthAsText(date);
 			}
-			else if(item.match(/g/))
+			else if (item.match(/g/))
 			{
 				return DateUtils.getHours(date, false, true);
 			}
-			else if(item.match(/G/))
+			else if (item.match(/G/))
 			{
 				return DateUtils.getHours(date, false);
 			}
-			else if(item.match(/h/))
+			else if (item.match(/h/))
 			{
 				return DateUtils.getHours(date, true, true);
 			}
-			else if(item.match(/H/))
+			else if (item.match(/H/))
 			{
 				return DateUtils.getHours(date);
 			}
-			else if(item.match(/i/))
+			else if (item.match(/i/))
 			{
 				return DateUtils.getMinutes(date);
 			}
-			else if(item.match(/I/))
+			else if (item.match(/I/))
 			{
 				return DateUtils.getSummertime(date);
 			}
-			else if(item.match(/j/))
+			else if (item.match(/j/))
 			{
 				return DateUtils.getDayOfMonth(date, false);
 			}
-			else if(item.match(/l/))
+			else if (item.match(/l/))
 			{
 				return DateUtils.getWeekDayAsText(date);
 			}
-			else if(item.match(/L/))
+			else if (item.match(/L/))
 			{
 				return DateUtils.getLeapYear(date);
 			}
-			else if(item.match(/m/))
+			else if (item.match(/m/))
 			{
 				return DateUtils.getMonth(date);
 			}
-			else if(item.match(/M/))
+			else if (item.match(/M/))
 			{
 				return DateUtils.getMonthAsText(date, true);
 			}
-			else if(item.match(/n/))
+			else if (item.match(/n/))
 			{
 				return DateUtils.getMonth(date, false);
 			}
 
-			else if(item.match(/N/))
+			else if (item.match(/N/))
 			{
 				return DateUtils.getIso8601Day(date);
 			}
-			else if(item.match(/O/))
+			else if (item.match(/O/))
 			{
 				return DateUtils.getDifferenceBetweenGmt(date);
 			}
-			else if(item.match(/P/))
+			else if (item.match(/P/))
 			{
 				return DateUtils.getDifferenceBetweenGmt(date, ":");
 			}
-			else if(item.match(/r/))
+			else if (item.match(/r/))
 			{
 				return DateUtils.getRfc2822(date);
 			}
-			else if(item.match(/s/))
+			else if (item.match(/s/))
 			{
 				return DateUtils.getSeconds(date);
 			}
-			else if(item.match(/S/))
+			else if (item.match(/S/))
 			{
-
-				return DateUtils.getMonthDayOrdinalSuffix(date);
+				return NumberUtils.ordinalSuffix(date.getDate());
 			}
-			else if(item.match(/t/))
+			else if (item.match(/t/))
 			{
 				return String(DateUtils.getDaysOfMonth(date));
 			}
-			else if(item.match(/T/)) 
+			else if (item.match(/T/)) 
 			{
 				return DateUtils.getTimezone(date);
 			}
-			else if(item.match(/u/))
+			else if (item.match(/u/))
 			{
 				return DateUtils.getMilliseconds(date);
 			}
-			else if(item.match(/U/))
+			else if (item.match(/U/))
 			{
 				return DateUtils.getUnixTimestamp(date);
 			}
-			else if(item.match(/w/))
+			else if (item.match(/w/))
 			{
 				return DateUtils.getWeekDay(date);
 			}
-			else if(item.match(/W/))
+			else if (item.match(/W/))
 			{
 				return DateUtils.getWeekOfYear(date);
 			}
-			else if(item.match(/y/))
+			else if (item.match(/y/))
 			{
 				return DateUtils.getYear(date, true);
 			}
-			else if(item.match(/Y/))
+			else if (item.match(/Y/))
 			{
 				return DateUtils.getYear(date);
 			}
-			else if(item.match(/z/))
+			else if (item.match(/z/))
 			{
 				return String(DateUtils.getDayOfYear(date));
 			}
-			else if(item.match(/Z/))
+			else if (item.match(/Z/))
 			{
 				return DateUtils.getTimezoneOffset(date);
 			}
@@ -981,7 +980,7 @@ package temple.utils.types
 		 */
 		private static function getSummertime(date:Date):String
 		{
-			if(isSummertime(date)) return "1";
+			if (isSummertime(date)) return "1";
 			return "0";
 		}
 
@@ -1015,7 +1014,7 @@ package temple.utils.types
 		 * 
 		 * @return String
 		 */
-		private static function getUnixTimestamp(date:Date):String
+		public static function getUnixTimestamp(date:Date):String
 		{
 			return String(Math.floor(date.getTime() / 1000));
 		}
@@ -1025,7 +1024,7 @@ package temple.utils.types
 		 * 
 		 * @return String
 		 */
-		private static function getIso8601(date:Date):String
+		public static function getIso8601(date:Date):String
 		{
 			return DateUtils.getYear(date) + "-" + DateUtils.getMonth(date) + "-" + DateUtils.getDayOfMonth(date) + "T" + DateUtils.getHours(date) + ":" + DateUtils.getMinutes(date) + ":" + DateUtils.getSeconds(date) + DateUtils.getDifferenceBetweenGmt(date, ":");
 		}
@@ -1041,7 +1040,7 @@ package temple.utils.types
 		 * 
 		 * @return String
 		 */
-		private static function getRfc2822(date:Date):String
+		public static function getRfc2822(date:Date):String
 		{
 			return DateUtils.getWeekDayAsText(date, true) + ", " + DateUtils.getDayOfMonth(date) + " " + DateUtils.getMonthAsText(date, true) + " " + DateUtils.getYear(date) + " " + DateUtils.getHours(date) + ":" + DateUtils.getMinutes(date) + ":" + DateUtils.getSeconds(date) + " " + DateUtils.getDifferenceBetweenGmt(date);
 		}
@@ -1083,9 +1082,9 @@ package temple.utils.types
 		{
 			var offset:Number = Math.round(11 + -( date.getTimezoneOffset() / 60));
 			
-			if(isSummertime(date)) offset--;
+			if (DateUtils.isSummertime(date)) offset--;
 				
-			return _TIMEZONES[ offset ];
+			return DateUtils._TIMEZONES[offset];
 		}
 
 		/**
@@ -1095,13 +1094,13 @@ package temple.utils.types
 		 * @param String seperator 
 		 * @return String
 		 */
-		private static function getDifferenceBetweenGmt(date:Date,seperator:String = ''):String
+		private static function getDifferenceBetweenGmt(date:Date, seperator:String = ''):String
 		{
 			var timezoneOffset:Number = -date.getTimezoneOffset();
 			
 			//sets the prefix
 			var pre:String;
-			if( timezoneOffset > 0 )
+			if (timezoneOffset > 0 )
 			{
 				pre = "+";
 			}
@@ -1114,14 +1113,14 @@ package temple.utils.types
 
 			// building the return string			
 			var result:String = pre;
-			if( hours < 9 )
+			if (hours < 9 )
 			{
 				result += "0";
 			}
 			//adding leading zero to hours
 			result += hours.toString();
 			result += seperator;
-			if( min < 9 )
+			if (min < 9 )
 			{
 				result += "0";
 			}
@@ -1165,42 +1164,14 @@ package temple.utils.types
 		}
 
 		/**
-		 * return the two chars ordinal suffix of the month day (such as th, st, nd, rd )
-		 * 
-		 * @retun String; 
-		 */
-		private static function getMonthDayOrdinalSuffix(date:Date):String
-		{
-			var day:String = date.getDate().toString();
-			switch( day.charAt(day.length - 1) )
-			{
-				case "1":
-					return "st";
-					break;
-				
-				case "2":
-					return "nd";
-					break;
-
-				case "3":
-					return "rd";
-					break;
-				
-				default:
-					return "th";
-					break;				
-			} 
-		}
-
-		/**
 		 * returns the month as text (such as Janury - December or Jan - Dec)
 		 * 
 		 * @param Boolean flag to get the short version of month, optional
 		 * @return String 
 		 */
-		private static function getMonthAsText(date:Date, short:Boolean = false):String
+		public static function getMonthAsText(date:Date, short:Boolean = false):String
 		{
-			if( short == true )	return DateUtils.getShortMonthName(date.month);	
+			if (short == true )	return DateUtils.getShortMonthName(date.month);	
 
 			return DateUtils.getMonthName(date.month);	
 		}
@@ -1221,7 +1192,7 @@ package temple.utils.types
 		 * @param Flag to add leading zero, optional default = true
 		 * @return String
 		 */	
-		private static function getSeconds(date:Date, leadingZero:Boolean = true ):String
+		private static function getSeconds(date:Date, leadingZero:Boolean = true):String
 		{
 			if (leadingZero == true && date.getSeconds() <= 9)
 			{
@@ -1260,7 +1231,7 @@ package temple.utils.types
 				hours = hours % 12;
 			}
 			
-			if( leadingZero == true && hours <= 9 )
+			if (leadingZero == true && hours <= 9 )
 			{
 				return "0" + hours.toString();
 			}
@@ -1273,15 +1244,15 @@ package temple.utils.types
 		 * @param Boolean flag to get an upper-case string
 		 * @return String am or pm
 		 */
-		private static function getAmPm(date:Date, upperCase:Boolean = false ):String
+		public static function getAmPm(date:Date, upperCase:Boolean = false ):String
 		{
 			var result:String = "am";
-			if(date.hours > 12 )
+			if (date.hours > 12 )
 			{
 				result = "pm";
 			}
 			
-			if( upperCase == true )
+			if (upperCase == true )
 			{
 				return result.toUpperCase();
 			}
@@ -1293,7 +1264,7 @@ package temple.utils.types
 		 * 
 		 * @return String
 		 */
-		private static function getWeekDay(date:Date):String
+		public static function getWeekDay(date:Date):String
 		{
 			return String(date.getDay());
 		}
@@ -1304,9 +1275,9 @@ package temple.utils.types
 		 * @param Boolean flag to switch between short and long weekdays
 		 * @return String
 		 */
-		private static function getWeekDayAsText(date:Date, short:Boolean = false ):String
+		public static function getWeekDayAsText(date:Date, short:Boolean = false ):String
 		{
-			if( short == true )
+			if (short == true )
 			{
 				return String(DateUtils.WEEKDAYS_SHORT[date.getDay() ]);
 			}
@@ -1320,13 +1291,12 @@ package temple.utils.types
 		 */
 		private static function getLeapYear(date:Date):String
 		{
-			if(DateUtils.isLeapYear(date.getFullYear())) return "1";
+			if (DateUtils.isLeapYear(date.getFullYear())) return "1";
 			return "0";
 		}
 		
 		/**
-		 * returns the number of the current week for the year, a week starts
-		 * with monday
+		 * returns the number of the current week for the year, a week starts with monday
 		 * 
 		 * @return String
 		 */
@@ -1341,13 +1311,13 @@ package temple.utils.types
 			 * remove Days of the first and the current week to get the realy
 			 * passed weeks
 			 */
-			var fullWeeks:Number = ( dayOfYear - (_MONDAY_STARTING_WEEK[date.getDay() ] + ( 7 - _MONDAY_STARTING_WEEK[ firstDay.getDay()])) ) / 7;  
+			var fullWeeks:Number = (dayOfYear - (DateUtils._MONDAY_STARTING_WEEK[date.getDay()] + ( 7 - DateUtils._MONDAY_STARTING_WEEK[ firstDay.getDay()])) ) / 7;  
 			
 			/**
 			 * the first week of this year only matters if it has more than 3
 			 * in the current year
 			 */
-			if(_MONDAY_STARTING_WEEK[ firstDay.getDay() ] <= 4)
+			if (DateUtils._MONDAY_STARTING_WEEK[ firstDay.getDay() ] <= 4)
 			{
 				fullWeeks++;
 			}
@@ -1378,7 +1348,7 @@ package temple.utils.types
 		 */
 		private static function getYear(date:Date, twoDigits:Boolean = false):String
 		{
-			if( twoDigits == true )
+			if (twoDigits == true )
 			{
 				//cut the year for the last two digits and return it
 				return String(date.getFullYear()).substr(2, 2);
@@ -1395,7 +1365,7 @@ package temple.utils.types
 		private static function getMonth(date:Date, leadingZero:Boolean = true ):String
 		{
 			var month:Number = date.getMonth() + 1;
-			if( leadingZero == true && month <= 9 )
+			if (leadingZero == true && month <= 9 )
 			{
 				return "0" + String(month);
 			}
@@ -1410,7 +1380,7 @@ package temple.utils.types
 		 */
 		private static function getDayOfMonth(date:Date, leadingZero:Boolean = true ):String
 		{
-			if( leadingZero == true && date.getDate() <= 9 )
+			if (leadingZero == true && date.getDate() <= 9 )
 			{
 				return "0" + String(date.getDate());
 			}
@@ -1419,12 +1389,12 @@ package temple.utils.types
 		
 		/**
 		 * Gets the next date in the week for the given time and day. Useful for weekly countdowns
-		 * @param day The day for the countdown. 0 starts at sunday, so every monday at 20:00 is: getNextInWeekDateFor(1, 20);
+		 * @param day The day for the countdown. 0 starts at sunday, so every monday at 20:00 is: getNextInWeekDatefor (1, 20);
 		 * @param hours The hours of the time
 		 * @param minutes The minutes of the time
 		 * @param seconds The seconds of the time
 		 */
-		public static function getNextInWeekDateFor(day:int, hours:int, minutes:int = 0, seconds:int = 0):Date
+		public static function getNextInWeekDatefor (day:int, hours:int, minutes:int = 0, seconds:int = 0):Date
 		{
 			var d:Date = new Date();
 			var targetDate:Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hours, minutes, seconds);
@@ -1432,7 +1402,7 @@ package temple.utils.types
 			{
 				targetDate.setDate(targetDate.getDate() + (((day + 7) - targetDate.getDay()) % 7));
 			}
-			else if(d.time > targetDate.time)
+			else if (d.time > targetDate.time)
 			{
 				targetDate.setDate(targetDate.getDate() + 7);
 			}

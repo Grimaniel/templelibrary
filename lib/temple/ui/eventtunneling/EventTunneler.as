@@ -113,7 +113,7 @@ package temple.ui.eventtunneling
 			{
 				if ((event as TunnelingEvent).tunnels && (event as TunnelingEvent).tunnelTarget == this.target)
 				{
-					if(this._debug) this.logDebug("Tunnel Event '" + event.type + "'");
+					if (this._debug) this.logDebug("Tunnel Event '" + event.type + "'");
 					this.dispatchOnChildren(this.sprite, TunnelingEvent(event));
 				}
 			}
@@ -131,12 +131,12 @@ package temple.ui.eventtunneling
 			for (var i:int = 0; i < leni; i++)
 			{
 				child = parent.getChildAt(i);
-				if(child)
+				if (child)
 				{
 					e = event.clone() as TunnelingEvent;
 					e._tunnelTarget = event.tunnelTarget;
 					child.dispatchEvent(e);
-					if(e.tunnels && child is Sprite)
+					if (e.tunnels && child is Sprite)
 					{
 						this.dispatchOnChildren(child as Sprite, event);
 					}

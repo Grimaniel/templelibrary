@@ -118,7 +118,7 @@ package temple.ui.states
 		[Inspectable(name="Show duration", type="Number", defaultValue="0.5")]
 		public function set showDuration(value:Number):void
 		{
-			if(isNaN(value)) throwError(new TempleArgumentError(this, "showDuration can not be NaN"));
+			if (isNaN(value)) throwError(new TempleArgumentError(this, "showDuration can not be NaN"));
 			
 			this._showDuration = value;
 		}
@@ -137,7 +137,7 @@ package temple.ui.states
 		[Inspectable(name="Hide duration", type="Number", defaultValue="0.5")]
 		public function set hideDuration(value:Number):void
 		{
-			if(isNaN(value)) throwError(new TempleArgumentError(this, "hideDuration can not be NaN"));
+			if (isNaN(value)) throwError(new TempleArgumentError(this, "hideDuration can not be NaN"));
 			
 			this._hideDuration = value;
 		}

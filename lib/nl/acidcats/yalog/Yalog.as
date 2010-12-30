@@ -198,7 +198,7 @@ package nl.acidcats.yalog
 		{
 			var md:MessageData = new MessageData(text, level, getTimer(), sender, objectId, stackTrace);
 			
-			if(Yalog._showTrace) trace(md.toString());
+			if (Yalog._showTrace) trace(md.toString());
 
 			Yalog.getInstance().handleData(md);
 		}

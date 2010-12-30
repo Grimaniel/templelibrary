@@ -78,7 +78,7 @@ package temple.utils
 			StageSettings._width = width;
 			StageSettings._height = height;
 			
-			if(this._displayObject.stage)
+			if (this._displayObject.stage)
 			{
 				this.apply();
 			}
@@ -127,7 +127,7 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			if(this._displayObject)
+			if (this._displayObject)
 			{
 				this._displayObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
 				this._displayObject = null;

@@ -130,14 +130,14 @@ package temple.utils
 		 */
 		public function restart():void
 		{
-			if(this._timer != null && this._timer.running == true)
+			if (this._timer != null && this._timer.running == true)
 			{
 				this._timer.stop();
 			}
 			
 			this._startMilliseconds = getTimer();
 			
-			if(this._timer == null)
+			if (this._timer == null)
 			{
 				this._timer = new CoreTimer(this._intervalMilliseconds, 1);
 				this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
@@ -150,7 +150,7 @@ package temple.utils
 		 */
 		public function pause():void
 		{
-			if(this._timer != null && this._timer.running == true)
+			if (this._timer != null && this._timer.running == true)
 			{
 				this._remainingMilliseconds = this._timer.delay - (getTimer() - this._startMilliseconds);
 				this._timer.stop();
@@ -162,9 +162,9 @@ package temple.utils
 		 */
 		public function resume():void
 		{
-			if(this._remainingMilliseconds > 0)
+			if (this._remainingMilliseconds > 0)
 			{
-				if(this._timer != null)
+				if (this._timer != null)
 				{
 					this._timer.delay = this._remainingMilliseconds;
 					this._timer.start();
@@ -192,7 +192,7 @@ package temple.utils
 		 */
 		public function stop():void
 		{
-			if(this._timer != null && this._timer.running == true)
+			if (this._timer != null && this._timer.running == true)
 			{
 				this._timer.stop();
 			}
@@ -222,13 +222,13 @@ package temple.utils
 		{
 			if (!this.isDestructed)
 			{
-				if(this._params != null)
+				if (this._params != null)
 				{
-					if(this._callback != null) this._callback.apply(null, this._params);
+					if (this._callback != null) this._callback.apply(null, this._params);
 				}
 				else
 				{
-					if(this._callback != null) this._callback();
+					if (this._callback != null) this._callback();
 				}
 				this.destruct();
 			}
@@ -249,7 +249,7 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			if(this._timer != null)
+			if (this._timer != null)
 			{
 				this._timer.destruct();
 				this._timer = null;

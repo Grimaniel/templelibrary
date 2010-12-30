@@ -55,7 +55,8 @@ package temple.ui.scroll
 	 * 
 	 * @see temple.ui.scroll.ScrollBar
 	 * 
-	 * @exampleText ScrollComponentExample
+	 * @includeExample ScrollComponentExample.as
+	 * @includeExample LiquidScrollComponentExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */
@@ -64,17 +65,17 @@ package temple.ui.scroll
 		/**
 		 * Instance name of a child which acts as content for the ScrollComponent.
 		 */
-		public static var CONTENT_INSTANCENAME:String = "mcContent";
+		public static var contentInstanceName:String = "mcContent";
 
 		/**
 		 * Instance name of a child which acts as mask for the ScrollComponent.
 		 */
-		public static var MASK_INSTANCENAME:String = "mcMask";
+		public static var maskInstanceName:String = "mcMask";
 
 		/**
 		 * Instance name of a child which acts as ScrollBar for the ScrollComponent.
 		 */
-		public static var SCROLLBAR_INSTANCENAME:String = "mcScrollBar";
+		public static var scrollBarInstanceName:String = "mcScrollBar";
 		
 		private var _content:DisplayObjectContainer;
 		private var _scrollbar:ScrollBar;
@@ -88,9 +89,9 @@ package temple.ui.scroll
 		 */
 		override protected function init():void 
 		{
-			if (!this._content) this.content = this.getChildByName(CONTENT_INSTANCENAME) as DisplayObjectContainer;
-			this.mask ||= this.getChildByName(MASK_INSTANCENAME);
-			this.scrollbar ||= this.getChildByName(SCROLLBAR_INSTANCENAME) as ScrollBar;
+			if (!this._content) this.content = this.getChildByName(contentInstanceName) as DisplayObjectContainer;
+			this.mask ||= this.getChildByName(maskInstanceName);
+			this.scrollbar ||= this.getChildByName(scrollBarInstanceName) as ScrollBar;
 			
 			if (!this._scrollBehavior)
 			{

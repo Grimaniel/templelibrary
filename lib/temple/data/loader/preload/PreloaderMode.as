@@ -59,11 +59,11 @@ package temple.data.loader.preload
 		 * It can position the preloader, and will destruct the IPreloader when the class itself is destructed.
 		 * 
 		 */
-		public static const OWN_PRELOADER:String = 'own_preloader';
+		public static const OWN_PRELOADER:String = 'ownPreloader';
 		
 		/**
 		 * The IPreloable class uses the provided preloader only to update the information
 		 */
-		public static const EXTERNAL_PRELOADER:String = 'external_preloader';
+		public static const EXTERNAL_PRELOADER:String = 'externalPreloader';
 	}
 }

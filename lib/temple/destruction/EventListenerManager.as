@@ -74,8 +74,8 @@ package temple.destruction
 			
 			super();
 			
-			if(eventDispatcher == null) throwError(new TempleArgumentError(this, "dispatcher can not be null"));
-			if(eventDispatcher.eventListenerManager) throwError(new TempleError(this, "dispatcher already has an EventListenerManager"));
+			if (eventDispatcher == null) throwError(new TempleArgumentError(this, "dispatcher can not be null"));
+			if (eventDispatcher.eventListenerManager) throwError(new TempleError(this, "dispatcher already has an EventListenerManager"));
 		}
 		
 		/**
@@ -98,7 +98,7 @@ package temple.destruction
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
 			// Don't store weak reference info, since storing the listener will make it strong
-			if(useWeakReference) return;
+			if (useWeakReference) return;
 			
 			var l:int = this._events.length;
 			var eventData:EventData;

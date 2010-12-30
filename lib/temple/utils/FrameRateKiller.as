@@ -104,7 +104,7 @@ package temple.utils
 		private function handleEnterFrame(event:Event):void
 		{
 			if (!this._time) this._time = getTimer();
-			while(getTimer() - this._time < this._frameDuration)
+			while (getTimer() - this._time < this._frameDuration)
 			{
 				// do nothing
 			}

@@ -78,7 +78,7 @@ package temple.ui.behaviors.textfield
 			this._bottom = target.y + target.height;
 			this._middle = target.y + target.height * .5;
 			
-			switch(autoSize)
+			switch (autoSize)
 			{
 				case TextFieldAutoSize.CENTER:
 				case TextFieldAutoSize.LEFT:
@@ -108,7 +108,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function set align(value:String):void
 		{
-			switch(value)
+			switch (value)
 			{
 				case Align.TOP:
 				case Align.MIDDLE:
@@ -177,7 +177,7 @@ package temple.ui.behaviors.textfield
 
 		private function doAlign():void
 		{
-			switch(this._align)
+			switch (this._align)
 			{
 				case Align.TOP:
 					this.displayObject.y = this._top;
@@ -197,7 +197,7 @@ package temple.ui.behaviors.textfield
 		 */
 		override public function destruct():void
 		{
-			if(this.displayObject) this.displayObject.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
+			if (this.displayObject) this.displayObject.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
 			
 			super.destruct();
 		}

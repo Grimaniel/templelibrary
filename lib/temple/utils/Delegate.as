@@ -62,7 +62,7 @@ package temple.utils
 		 */
 		public static function create(method:Function, scope:Object = null, arguments:Array = null):Function
 		{
-			return function(...innerArgs):void
+			return function (...innerArgs):void
 			{
 				method.apply(scope, (innerArgs as Array).concat(arguments));
 			};

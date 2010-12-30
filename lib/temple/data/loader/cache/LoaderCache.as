@@ -124,9 +124,9 @@ package temple.data.loader.cache
 		public static function purge(maxSeconds:Number):void
 		{
 			var limit:Number = getTimer() - (maxSeconds * 1000);
-			for each(var data:LoaderCacheData in LoaderCache._cache)
+			for each (var data:LoaderCacheData in LoaderCache._cache)
 			{
-				if(data.purgeable && data.time < limit)
+				if (data.purgeable && data.time < limit)
 				{
 					Log.debug('LoaderCache.purge(maxAgeSeconds:' + [maxSeconds] + ') on data.time:' + data.time + ', limit:' + limit, LoaderCache);
 					LoaderCache.clear(data.url);
@@ -141,7 +141,7 @@ package temple.data.loader.cache
 		{
 			LoaderCache._maxSeconds = maxSeconds;
 			
-			if(LoaderCache._autoPurgeTimer)
+			if (LoaderCache._autoPurgeTimer)
 			{
 				LoaderCache._autoPurgeTimer.destruct();
 			}
@@ -155,7 +155,7 @@ package temple.data.loader.cache
 		 */
 		public static function stopAutoPurge():void
 		{
-			if(LoaderCache._autoPurgeTimer)
+			if (LoaderCache._autoPurgeTimer)
 			{
 				LoaderCache._autoPurgeTimer.destruct();
 				LoaderCache._autoPurgeTimer = null;

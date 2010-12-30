@@ -80,7 +80,7 @@ package temple.ui.buttons.behaviors
 		{
 			super(target);
 			
-			if(ButtonStateBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has ButtonStateBehavior"));
+			if (ButtonStateBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has ButtonStateBehavior"));
 			
 			ButtonStateBehavior._dictionary[target] = this;
 			
@@ -97,7 +97,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set over(value:Boolean):void
 		{
-			if(this.over == value || !this.enabled) return;
+			if (this.over == value || !this.enabled) return;
 			
 			super.over = value;
 			
@@ -118,7 +118,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set down(value:Boolean):void
 		{
-			if(this.down == value || !this.enabled) return;
+			if (this.down == value || !this.enabled) return;
 			
 			super.down = value;
 			
@@ -137,7 +137,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set selected(value:Boolean):void
 		{
-			if(this.selected == value || !this.enabled) return;
+			if (this.selected == value || !this.enabled) return;
 			
 			super.selected = value;
 			
@@ -156,7 +156,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set disabled(value:Boolean):void
 		{
-			if(this.disabled == value || !this.enabled) return;
+			if (this.disabled == value || !this.enabled) return;
 			
 			super.disabled = value;
 			
@@ -175,7 +175,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set focus(value:Boolean):void
 		{
-			if(this.focus == value || !this.enabled) return;
+			if (this.focus == value || !this.enabled) return;
 			
 			super.focus = value;
 			
@@ -194,7 +194,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if(this.target) delete ButtonStateBehavior._dictionary[this.target];
+			if (this.target) delete ButtonStateBehavior._dictionary[this.target];
 			
 			super.destruct();
 		}

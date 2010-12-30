@@ -98,8 +98,8 @@ package temple.ui.buttons.behaviors
 		 */
 		public function ButtonBinder(button1:DisplayObject, button2:DisplayObject, useWeakReference:Boolean = true, ignoreMouseEnabled:Boolean = false)
 		{
-			if(button1 == null) throwError(new TempleArgumentError(this, "button1 can not be null"));
-			if(button2 == null) throwError(new TempleArgumentError(this, "button2 can not be null"));
+			if (button1 == null) throwError(new TempleArgumentError(this, "button1 can not be null"));
+			if (button2 == null) throwError(new TempleArgumentError(this, "button2 can not be null"));
 			
 			this._buttons = new Dictionary(useWeakReference);
 			
@@ -118,7 +118,7 @@ package temple.ui.buttons.behaviors
 		{
 			if (button == null) throwError(new TempleArgumentError(this, "Button can not be null"));
 			
-			if(ButtonBinder._dictionary[button] == null) ButtonBinder._dictionary[button] = new Array();
+			if (ButtonBinder._dictionary[button] == null) ButtonBinder._dictionary[button] = new Array();
 			(ButtonBinder._dictionary[button] as Array).push(this);
 			
 			this._buttons[button] = this;

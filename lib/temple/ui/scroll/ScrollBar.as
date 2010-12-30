@@ -65,6 +65,9 @@ package temple.ui.scroll
 	 * <p>A ScrollBar need at least a button and a track which can be set in the Flash IDE or by code. If set in the IDE
 	 * name the object which must act as track 'track' or 'mcTrack'. The button must be called 'button' or 'mcButton'.</p>
 	 * 
+	 * @includeExample ScrollComponentExample.as
+	 * @includeExample LiquidScrollComponentExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ScrollBar extends LiquidContainer implements IScrollable, IShowable 
@@ -72,32 +75,32 @@ package temple.ui.scroll
 		/**
 		 * Instance name of a child which acts as button for the ScrollBar.
 		 */
-		public static var BUTTON_INSTANCENAME:String = "mcButton";
+		public static var buttonInstanceName:String = "mcButton";
 
 		/**
 		 * Instance name of a child which acts as track for the ScrollBar.
 		 */
-		public static var TRACK_INSTANCENAME:String = "mcTrack";
+		public static var trackInstanceName:String = "mcTrack";
 
 		/**
 		 * Instance name of a child which acts as upButton for the ScrollBar.
 		 */
-		public static var UPBUTTON_INSTANCENAME:String = "mcUpButton";
+		public static var upButtonInstanceName:String = "mcUpButton";
 		
 		/**
 		 * Instance name of a child which acts as downButton for the ScrollBar.
 		 */
-		public static var DOWNBUTTON_INSTANCENAME:String = "mcDownButton";
+		public static var downButtonInstanceName:String = "mcDownButton";
 		
 		/**
 		 * Instance name of a child which acts as leftButton for the ScrollBar.
 		 */
-		public static var LEFTBUTTON_INSTANCENAME:String = "mcLeftButton";
+		public static var leftButtonInstanceName:String = "mcLeftButton";
 		
 		/**
 		 * Instance name of a child which acts as rightButton for the ScrollBar.
 		 */
-		public static var RIGHTBUTTON_INSTANCENAME:String = "mcRightButton";
+		public static var rightButtonInstanceName:String = "mcRightButton";
 		
 		private static const _DEFAULT_STEP_SIZE:Number = 1/10;
 
@@ -173,12 +176,12 @@ package temple.ui.scroll
 			this.addEventListener(Event.ACTIVATE, this.handleActivate);
 			this.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
 
-			this.track ||= this.getChildByName(TRACK_INSTANCENAME) as InteractiveObject;
-			this.button ||= this.getChildByName(BUTTON_INSTANCENAME) as InteractiveObject;
-			this.upButton ||= this.getChildByName(UPBUTTON_INSTANCENAME) as InteractiveObject;
-			this.downButton ||= this.getChildByName(DOWNBUTTON_INSTANCENAME) as InteractiveObject;
-			this.leftButton ||= this.getChildByName(LEFTBUTTON_INSTANCENAME) as InteractiveObject;
-			this.rightButton ||= this.getChildByName(RIGHTBUTTON_INSTANCENAME) as InteractiveObject;
+			this.track ||= this.getChildByName(trackInstanceName) as InteractiveObject;
+			this.button ||= this.getChildByName(buttonInstanceName) as InteractiveObject;
+			this.upButton ||= this.getChildByName(upButtonInstanceName) as InteractiveObject;
+			this.downButton ||= this.getChildByName(downButtonInstanceName) as InteractiveObject;
+			this.leftButton ||= this.getChildByName(leftButtonInstanceName) as InteractiveObject;
+			this.rightButton ||= this.getChildByName(rightButtonInstanceName) as InteractiveObject;
 		}
 		
 		/**
@@ -808,7 +811,7 @@ package temple.ui.scroll
 		[Inspectable(name="Orientation", type="String", defaultValue="auto", enumeration="auto,vertical,horizontal")]
 		public function set orientation(value:String):void
 		{
-			switch(value)
+			switch (value)
 			{
 				case null:
 				case "":

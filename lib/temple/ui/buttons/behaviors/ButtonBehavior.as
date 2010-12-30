@@ -108,26 +108,26 @@ package temple.ui.buttons.behaviors
 		{
 			super(target);
 			
-			if(ButtonBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has ButtonBehavior"));
+			if (ButtonBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has ButtonBehavior"));
 			
 			ButtonBehavior._dictionary[target] = this;
 			
 			if (target is InteractiveObject)
 			{
-				if(target is DisplayObjectContainer)
+				if (target is DisplayObjectContainer)
 				{
 					(target as DisplayObjectContainer).mouseChildren = false;
 
 					// act as button
-					if(target is Sprite)
+					if (target is Sprite)
 					{
 						this._eventTunneler = new EventTunneler(target as Sprite, ButtonEvent.UPDATE);
 						
 						(target as Sprite).buttonMode = true;
-						if(target.hasOwnProperty(BaseButton.HITAREA_INSTANCENAME) && target[BaseButton.HITAREA_INSTANCENAME] is Sprite)
+						if (target.hasOwnProperty(BaseButton.hitAreaInstanceName) && target[BaseButton.hitAreaInstanceName] is Sprite)
 						{
-							(target as Sprite).hitArea = target[BaseButton.HITAREA_INSTANCENAME] as Sprite;
-							(target[BaseButton.HITAREA_INSTANCENAME] as Sprite).visible = false;
+							(target as Sprite).hitArea = target[BaseButton.hitAreaInstanceName] as Sprite;
+							(target[BaseButton.hitAreaInstanceName] as Sprite).visible = false;
 						}
 					}
 				}
@@ -149,7 +149,7 @@ package temple.ui.buttons.behaviors
 			this._outDelayTimer = new CoreTimer(0);
 			this._outDelayTimer.addEventListener(TimerEvent.TIMER, this.handleOutDelay);
 			
-			if(target.stage)
+			if (target.stage)
 			{
 				this._stage = target.stage;
 				this._stage.addEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave);
@@ -167,7 +167,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set over(value:Boolean):void
 		{
-			if(this.over != value)
+			if (this.over != value)
 			{
 				super.over = value;
 				this.update();
@@ -179,7 +179,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set down(value:Boolean):void
 		{
-			if(this.down != value)
+			if (this.down != value)
 			{
 				super.down = value;
 				this.update();
@@ -191,7 +191,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set selected(value:Boolean):void
 		{
-			if(this.selected != value)
+			if (this.selected != value)
 			{
 				super.selected = value;
 				this.update();
@@ -203,7 +203,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set disabled(value:Boolean):void
 		{
-			if(this.disabled != value)
+			if (this.disabled != value)
 			{
 				super.disabled = value;
 				this.update();
@@ -215,7 +215,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set focus(value:Boolean):void
 		{
-			if(this.focus != value)
+			if (this.focus != value)
 			{
 				super.focus = value;
 				this.update();
@@ -235,7 +235,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set inDelay(value:Number):void
 		{
-			if(this._inDelayTimer.delay != value && !isNaN(value))
+			if (this._inDelayTimer.delay != value && !isNaN(value))
 			{
 				this._inDelayTimer.delay = value;
 			}
@@ -254,7 +254,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set outDelay(value:Number):void
 		{
-			if(this._outDelayTimer.delay != value && !isNaN(value))
+			if (this._outDelayTimer.delay != value && !isNaN(value))
 			{
 				this._outDelayTimer.delay = value;
 			}
@@ -314,12 +314,12 @@ package temple.ui.buttons.behaviors
 		 */
 		public function update():void
 		{
-			if(this.enabled)
+			if (this.enabled)
 			{
 				this.displayObject.dispatchEvent(new ButtonEvent(ButtonEvent.UPDATE, this));
 				this.dispatchEvent(new ButtonEvent(ButtonEvent.UPDATE, this, false));
 			}
-			else if(this.debug) this.logWarn("ButtonBehavior is disabled");
+			else if (this.debug) this.logWarn("ButtonBehavior is disabled");
 		}
 
 		private function handleRollOver(event:MouseEvent):void
@@ -389,9 +389,9 @@ package temple.ui.buttons.behaviors
 			
 			super.over = false;
 			
-			if(this.down)
+			if (this.down)
 			{
-				if(this._outOnDragOut)
+				if (this._outOnDragOut)
 				{
 					this.down = false;
 				}
@@ -417,8 +417,8 @@ package temple.ui.buttons.behaviors
 
 		private function resetTimers():void 
 		{
-			if(this._inDelayTimer) this._inDelayTimer.reset();
-			if(this._outDelayTimer) this._outDelayTimer.reset();
+			if (this._inDelayTimer) this._inDelayTimer.reset();
+			if (this._outDelayTimer) this._outDelayTimer.reset();
 		}
 
 		
@@ -435,9 +435,9 @@ package temple.ui.buttons.behaviors
 		
 		private function handleMouseLeave(event:Event):void
 		{
-			if(this.over)
+			if (this.over)
 			{
-				if(this.debug) this.logDebug("handleMouseLeave");
+				if (this.debug) this.logDebug("handleMouseLeave");
 				super.down = false;
 				this.over = false;
 			}
@@ -477,7 +477,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if(this.target) delete ButtonBehavior._dictionary[this.target];
+			if (this.target) delete ButtonBehavior._dictionary[this.target];
 			
 			if (this.displayObject)
 			{
@@ -502,14 +502,14 @@ package temple.ui.buttons.behaviors
 				this._outDelayTimer.destruct();
 				this._outDelayTimer = null;
 			}
-			if(this._stage)
+			if (this._stage)
 			{
 				this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleStageMouseUp);
 				this._stage.removeEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave);
 				this._stage.removeEventListener(Event.DEACTIVATE, this.handleMouseLeave);
 				this._stage = null;
 			}
-			if(this._eventTunneler)
+			if (this._eventTunneler)
 			{
 				this._eventTunneler.destruct();
 				this._eventTunneler = null;

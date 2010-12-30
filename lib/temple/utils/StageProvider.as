@@ -76,11 +76,11 @@ package temple.utils
 		 */
 		public static function set stage(value:Stage):void
 		{
-			if(value == null)
+			if (value == null)
 			{
 				throwError(new TempleArgumentError(StageProvider, "Stage cannot be set to null"));
 			}
-			else if(StageProvider._STAGE == null)
+			else if (StageProvider._STAGE == null)
 			{
 				StageProvider._STAGE = value;
 				StageProvider._STAGE.addEventListener(FullScreenEvent.FULL_SCREEN, StageProvider.handleFullScreen, false, int.MAX_VALUE, true);
@@ -89,7 +89,7 @@ package temple.utils
 		
 		private static function handleFullScreen(event:FullScreenEvent):void
 		{
-			if(event.fullScreen)
+			if (event.fullScreen)
 			{
 				StageProvider._STAGE.addEventListener(KeyboardEvent.KEY_DOWN, StageProvider.handleKeyDown, false, int.MAX_VALUE, true);
 				StageProvider._STAGE.addEventListener(Event.ENTER_FRAME, StageProvider.handleFrameDelay);
@@ -102,7 +102,7 @@ package temple.utils
 		 */
 		private static function handleKeyDown(event:KeyboardEvent):void
 		{
-			if(event.keyCode == Keyboard.SPACE)	event.stopImmediatePropagation();
+			if (event.keyCode == Keyboard.SPACE)	event.stopImmediatePropagation();
 		}
 		
 		private static function handleFrameDelay(event:Event):void

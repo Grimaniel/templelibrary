@@ -96,7 +96,7 @@ package temple.ui.scroll
 				scrollRect.x = this._startDragMousePoint.x - (this.displayObject.parent.mouseX - this._startDragMousePoint.x);
 			}
 			
-			if(this.dragVertical)
+			if (this.dragVertical)
 			{
 				scrollRect.y = this._startDragMousePoint.y - (this.displayObject.parent.mouseY - this._startDragMousePoint.y);
 			}

@@ -62,7 +62,7 @@ package temple.ui.buttons
 			
 			this.stop();
 			
-			if(this.totalFrames > 1) this._timelineBehavior = new ButtonTimelineBehavior(this);
+			if (this.totalFrames > 1) this._timelineBehavior = new ButtonTimelineBehavior(this);
 			this._stateBehavior = new ButtonStateBehavior(this);
 		}
 		
@@ -97,7 +97,7 @@ package temple.ui.buttons
 		[Inspectable(name="Play Backwards Before Over", type="Boolean", defaultValue="true")]
 		public function set playBackwardsBeforeOver(value:Boolean):void
 		{
-			if(this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeOver = value;
+			if (this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeOver = value;
 		}
 		
 		/**
@@ -115,7 +115,7 @@ package temple.ui.buttons
 		[Inspectable(name="Play Backwards Before Down", type="Boolean", defaultValue="true")]
 		public function set playBackwardsBeforeDown(value:Boolean):void
 		{
-			if(this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeDown = value;
+			if (this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeDown = value;
 		}
 
 		/**
@@ -133,7 +133,7 @@ package temple.ui.buttons
 		[Inspectable(name="Play Backwards Before Selected", type="Boolean", defaultValue="true")]
 		public function set playBackwardsBeforeSelected(value:Boolean):void
 		{
-			if(this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeSelected = value;
+			if (this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeSelected = value;
 		}
 
 		/**
@@ -151,7 +151,7 @@ package temple.ui.buttons
 		[Inspectable(name="Play Backwards Before Disabled", type="Boolean", defaultValue="true")]
 		public function set playBackwardsBeforeDisabled(value:Boolean):void
 		{
-			if(this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeSelected = value;
+			if (this._timelineBehavior) this._timelineBehavior.playBackwardsBeforeSelected = value;
 		}
 		
 		/**
@@ -169,8 +169,8 @@ package temple.ui.buttons
 		public function set debug(value:Boolean):void
 		{
 			this._debug = value;
-			if(this._timelineBehavior) this._timelineBehavior.debug = value;
-			if(this._stateBehavior) this._stateBehavior.debug = value;
+			if (this._timelineBehavior) this._timelineBehavior.debug = value;
+			if (this._stateBehavior) this._stateBehavior.debug = value;
 		}
 		
 		/**

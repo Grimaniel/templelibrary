@@ -192,7 +192,7 @@ package temple.debug
 				this._frameMilliMin = this._frameMilliHistory[0];
 				this._frameMilliMax = this._frameMilliHistory[0];			
 				iLim = this._frameMilliHistory.length;
-				for(i = 1;i < iLim;i++)
+				for (i = 1;i < iLim;i++)
 				{
 					this._frameMilliMin = Math.min(this._frameMilliHistory[i], this._frameMilliMin); 
 					this._frameMilliMax = Math.max(this._frameMilliHistory[i], this._frameMilliMax);
@@ -208,7 +208,7 @@ package temple.debug
 					this.graphics.lineStyle(0, 0xBB0000, 1, false, LineScaleMode.NORMAL);
 					dx = this._graphRect.width / iLim;
 					dy = this._graphRect.height / (this._frameMilliMax - this._frameMilliMin);
-					for(i = 0;i < iLim;i++)
+					for (i = 0;i < iLim;i++)
 					{
 						tmpY = this._graphRect.bottom - dy * (this._frameMilliHistory[i] - this._frameMilliMin);
 						this.graphics.moveTo(this._graphRect.left + dx * i, tmpY);
@@ -231,7 +231,7 @@ package temple.debug
 				this._memoryKiloByteMin = this._memoryKiloByteHistory[0];
 				this._memoryKiloByteMax = this._memoryKiloByteHistory[0];				
 				iLim = this._memoryKiloByteHistory.length;
-				for(i = 1;i < iLim;i++)
+				for (i = 1;i < iLim;i++)
 				{
 					this._memoryKiloByteMin = Math.min(this._memoryKiloByteHistory[i], this._memoryKiloByteMin); 
 					this._memoryKiloByteMax = Math.max(this._memoryKiloByteHistory[i], this._memoryKiloByteMax); 
@@ -246,7 +246,7 @@ package temple.debug
 					this.graphics.lineStyle(0, 0x0000BB, 1, false, LineScaleMode.NORMAL);
 					dx = this._graphRect.width / iLim;
 					dy = this._graphRect.height / (this._memoryKiloByteMax - this._memoryKiloByteMin);
-					for(i = 0;i < iLim;i++)
+					for (i = 0;i < iLim;i++)
 					{
 						tmpY = this._graphRect.bottom - dy * (this._memoryKiloByteHistory[i] - this._memoryKiloByteMin);
 						this.graphics.moveTo(this._graphRect.left + dx * i, tmpY);

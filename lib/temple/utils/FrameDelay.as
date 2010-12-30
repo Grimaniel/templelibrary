@@ -165,7 +165,7 @@ package temple.utils
 			if (this._isDone) 
 			{
 				FramePulse.removeEnterFrameListener(this.handleEnterFrame);
-				if(this._callback != null)
+				if (this._callback != null)
 				{
 					if (this._params == null) 
 					{

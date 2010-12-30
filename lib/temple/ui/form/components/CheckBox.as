@@ -134,7 +134,7 @@ package temple.ui.form.components
 		public function get value():* 
 		{
 			// selectedValue and unselectedValue are both empty strings (happens when no value is filled in in components), return value as Boolean
-			if(this._selectedValue == '' && this._selectedValue === this._unselectedValue) return this.selected;
+			if (this._selectedValue == '' && this._selectedValue === this._unselectedValue) return this.selected;
 			
 			return this.selected ? this._selectedValue : this._unselectedValue;
 		}
@@ -144,7 +144,7 @@ package temple.ui.form.components
 		 */
 		public function set value(value:*):void 
 		{
-			if(value == this._selectedValue)
+			if (value == this._selectedValue)
 			{
 				this.selected = true;
 			}
@@ -213,7 +213,7 @@ package temple.ui.form.components
 		[Inspectable(name="Unselected value", type="String")]
 		public function set unselectedValue(value:*):void
 		{
-			if(this._validator == EmptyStringValidationRule)
+			if (this._validator == EmptyStringValidationRule)
 			{
 				this.logError("unselectedValue: can not be set when CheckBox has a validator");
 			}
@@ -254,7 +254,7 @@ package temple.ui.form.components
 		[Inspectable(name="Validation rule", type="String", defaultValue="none", enumeration="none,not null,boolean")]
 		public function set validationRuleName(value:String):void
 		{
-			switch(value){
+			switch (value){
 				case "none":
 				{
 					this._validator = null;
@@ -265,7 +265,7 @@ package temple.ui.form.components
 					this._validator = EmptyStringValidationRule;
 					
 					// check if unselected value is set
-					if(this.unselectedValue != "")
+					if (this.unselectedValue != "")
 					{
 						this.logWarn("validationRuleName: validation rule will always be valid, unselected value is changed");
 						this._unselectedValue = '';
@@ -275,7 +275,7 @@ package temple.ui.form.components
 				case "boolean":
 				{
 					this._validator = BooleanValidationRule;
-					if(this._selectedValue !== true && !(this._selectedValue == '' && this._selectedValue == this._unselectedValue))
+					if (this._selectedValue !== true && !(this._selectedValue == '' && this._selectedValue == this._unselectedValue))
 					{
 						this.logWarn("validationRuleName: invalid ValidationRule, CheckBox does not return a Boolean");
 					}
@@ -338,7 +338,7 @@ package temple.ui.form.components
 		[Inspectable(name="Label", type="String")]
 		public function set label(value:String):void
 		{
-			if(this._label)
+			if (this._label)
 			{
 				this._label.label = value;
 			}
@@ -386,7 +386,7 @@ package temple.ui.form.components
 		[Inspectable(name="AutoSize", type="String", defaultValue="none", enumeration="none,left, right, center")]
 		public function set autoSize(value:String):void
 		{
-			if(this._label is IAutoSizableLabel)
+			if (this._label is IAutoSizableLabel)
 			{
 				(this._label as IAutoSizableLabel).autoSize = value;
 			}

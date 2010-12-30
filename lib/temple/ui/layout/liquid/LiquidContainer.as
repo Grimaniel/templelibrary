@@ -430,7 +430,7 @@ package temple.ui.layout.liquid
 
 		private function layout():void 
 		{
-			switch(this._scaleMode)
+			switch (this._scaleMode)
 			{
 				case ScaleMode.NO_SCALE:
 				{

@@ -148,7 +148,7 @@ package temple.utils.types
 		 */
 		public static function format(number:Number, decimalDelimiter:String = ',', thousandDelimiter:String = '.', precision:Number = NaN, fillLength:Number = NaN, fillChar:String = '0'):String
 		{
-			if(!isNaN(precision))
+			if (!isNaN(precision))
 			{
 				number = NumberUtils.roundToPrecision(number, precision);
 			}
@@ -162,7 +162,7 @@ package temple.utils.types
 			var floored:String = Math.floor(number).toString();
 			var formatted:String = '';
 			
-			if(thousandDelimiter)
+			if (thousandDelimiter)
 			{
 				var len:uint = Math.ceil(floored.length / 3) - 1;
 				for (var i:int = 0;i < len; ++i)
@@ -176,9 +176,9 @@ package temple.utils.types
 				formatted = floored;
 			}
 			
-			if(fillLength && fillChar && fillChar != '')
+			if (fillLength && fillChar && fillChar != '')
 			{
-				while(formatted.length < fillLength) formatted = fillChar + formatted;
+				while (formatted.length < fillLength) formatted = fillChar + formatted;
 			}
 			
 			if (isNaN(precision) || precision > 0) formatted = formatted + (decimals ? decimalDelimiter + decimals : '');
@@ -198,7 +198,7 @@ package temple.utils.types
 		 */
 		public static function roundToNearest(number:Number, nearest:Number = 1):Number
 		{
-			if(nearest == 0)
+			if (nearest == 0)
 			{
 				return number;
 			}
@@ -218,7 +218,7 @@ package temple.utils.types
 		 */
 		public static function roundUpToNearest(number:Number, nearest:Number = 1):Number
 		{
-			if(nearest == 0)
+			if (nearest == 0)
 			{
 				return number;
 			}
@@ -237,7 +237,7 @@ package temple.utils.types
 		 */
 		public static function roundDownToNearest(number:Number, nearest:Number = 1):Number
 		{
-			if(nearest == 0)
+			if (nearest == 0)
 			{
 				return number;
 			}

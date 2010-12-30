@@ -85,7 +85,7 @@ package temple.utils
 		
 		public static function init():void
 		{
-			if(DefinitionProvider._isInitialized == false)
+			if (DefinitionProvider._isInitialized == false)
 			{
 				DefinitionProvider._isInitialized = true;
 				DefinitionProvider._domainRegister = new Dictionary(false); //maybe weak keys?
@@ -99,12 +99,12 @@ package temple.utils
 		 */
 		public static function hasDefinition(name:String):Boolean
 		{
-			if(name == null || name == '') throwError(new ArgumentError('null or empty name'));
+			if (name == null || name == '') throwError(new ArgumentError('null or empty name'));
 			
-			if(DefinitionProvider._isInitialized == true)
+			if (DefinitionProvider._isInitialized == true)
 			{
 				//check our cache
-				if(DefinitionProvider._definitionCache[name] !== undefined)
+				if (DefinitionProvider._definitionCache[name] !== undefined)
 				{
 					return true;
 				}
@@ -114,7 +114,7 @@ package temple.utils
 					var def:Class;
 					for each (var appDomain:ApplicationDomain in DefinitionProvider._domainRegister)
 					{
-						if(appDomain.hasDefinition(name))
+						if (appDomain.hasDefinition(name))
 						{
 							DefinitionProvider._definitionCache[name] = appDomain.getDefinition(name);
 							return true;
@@ -135,10 +135,10 @@ package temple.utils
 		 */
 		public static function getDefinition(name:String):Class
 		{
-			if(DefinitionProvider._isInitialized == true)
+			if (DefinitionProvider._isInitialized == true)
 			{
 				//check our cache
-				if(DefinitionProvider._definitionCache[name] !== undefined)
+				if (DefinitionProvider._definitionCache[name] !== undefined)
 				{
 					return Class(DefinitionProvider._definitionCache[name]);
 				}
@@ -148,7 +148,7 @@ package temple.utils
 					var def:Class;
 					for each (var appDomain:ApplicationDomain in DefinitionProvider._domainRegister)
 					{
-						if(appDomain.hasDefinition(name))
+						if (appDomain.hasDefinition(name))
 						{
 							def = Class(appDomain.getDefinition(name));
 							DefinitionProvider._definitionCache[name] = def;
@@ -174,11 +174,11 @@ package temple.utils
 		{
 			var count:uint = 0;
 			
-			if(DefinitionProvider._isInitialized == true)
+			if (DefinitionProvider._isInitialized == true)
 			{
 				for each (var appDomain:ApplicationDomain in DefinitionProvider._domainRegister)
 				{
-					if(appDomain.hasDefinition(name))
+					if (appDomain.hasDefinition(name))
 					{
 						count++;
 					}
@@ -198,7 +198,7 @@ package temple.utils
 		{
 			var arr:Array = new Array();
 			var iLim:uint = classNameArray.length;
-			for(var i:uint = 0;i < iLim;i++)
+			for (var i:uint = 0;i < iLim;i++)
 			{
 				arr.push(DefinitionProvider.getDefinition(classNameArray[i]));
 			}
@@ -226,9 +226,9 @@ package temple.utils
 		 */
 		public static function unregisterApplicationDomain(appDomain:ApplicationDomain):void
 		{
-			if(DefinitionProvider._isInitialized)
+			if (DefinitionProvider._isInitialized)
 			{
-				if(DefinitionProvider._domainRegister[appDomain] != undefined)
+				if (DefinitionProvider._domainRegister[appDomain] != undefined)
 				{
 					delete DefinitionProvider._domainRegister[appDomain];
 				}
@@ -310,7 +310,7 @@ package temple.utils
 			var def:Class = DefinitionProvider.getDefinition(name);
 			var clone:DisplayObject = DisplayObject(new def());
 			
-			if(graphicOnly == false)
+			if (graphicOnly == false)
 			{
 				clone.transform.matrix = object.transform.matrix.clone();
 			}

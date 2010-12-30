@@ -168,7 +168,7 @@ package temple.ui.form.components
 		{
 			if (!item) throwError(new TempleArgumentError(this, "Parameter 'button' not defined."));
 			
-			if(ArrayUtils.inArrayField(this._buttons, 'button', item)) return;
+			if (ArrayUtils.inArrayField(this._buttons, 'button', item)) return;
 			
 			if (this._debug) this.logDebug("addButton: " + item + ", value='" + value + "', selected=" + selected + "");
 			
@@ -178,7 +178,7 @@ package temple.ui.form.components
 			
 			this._buttons.push(selection);
 			
-			if(item is IRadioButton && IRadioButton(item).group != this) IRadioButton(item).group = this;
+			if (item is IRadioButton && IRadioButton(item).group != this) IRadioButton(item).group = this;
 			
 			item.addEventListener(Event.CHANGE, this.handleButtonChange);
 			item.addEventListener(FocusEvent.FOCUS_IN, this.handleButtonFocusIn, false, 0, true);
@@ -212,7 +212,7 @@ package temple.ui.form.components
 			for (var i:int = 0; i < leni ; i++)
 			{
 				selection = Selection(this._buttons[i]);
-				if(selection.button == button)
+				if (selection.button == button)
 				{
 					this._buttons.splice(i, 1);
 					button.removeEventListener(Event.CHANGE, this.handleButtonChange);
@@ -222,7 +222,7 @@ package temple.ui.form.components
 					button.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
 					selection.destruct();
 					
-					if(button is IRadioButton) IRadioButton(button).group = null;
+					if (button is IRadioButton) IRadioButton(button).group = null;
 					
 					return;
 				}
@@ -275,7 +275,7 @@ package temple.ui.form.components
 		 */
 		public function get items():Array 
 		{
-			if(this._buttons == null) return null;
+			if (this._buttons == null) return null;
 			
 			var a:Array = new Array();
 			var leni:uint = this._buttons.length;
@@ -292,7 +292,7 @@ package temple.ui.form.components
 		 */
 		public function get value():* 
 		{
-			if(this._selected)
+			if (this._selected)
 			{
 				var leni:uint = this._buttons.length;
 				for (var i:uint = 0;i < leni; i++) 
@@ -503,9 +503,9 @@ package temple.ui.form.components
 		{
 			if (!(event.target is ISelectable)) return;
 			
-			if(ISelectable(event.target).selected)
+			if (ISelectable(event.target).selected)
 			{
-				if(this._selected != event.target)
+				if (this._selected != event.target)
 				{
 					var oldSelectedButton:ISelectable = this._selected;
 
@@ -515,13 +515,13 @@ package temple.ui.form.components
 					{
 						oldSelectedButton.selected = false;
 					}
-					if(this._dispatchChangeEvent) this.dispatchEvent(new Event(Event.CHANGE));
+					if (this._dispatchChangeEvent) this.dispatchEvent(new Event(Event.CHANGE));
 				}
 			}
 			else if (this._selected == event.target)
 			{
 				this._selected = null;
-				if(this._dispatchChangeEvent) this.dispatchEvent(new Event(Event.CHANGE));
+				if (this._dispatchChangeEvent) this.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 
@@ -530,12 +530,12 @@ package temple.ui.form.components
 		 */
 		protected function handleKeyDown(event:KeyboardEvent):void
 		{
-			if(this._keyboardTabbingEnabled)
+			if (this._keyboardTabbingEnabled)
 			{
 				var i : int;
 				var leni : int;
 				var item:ISelectable;
-				switch(event.keyCode)
+				switch (event.keyCode)
 				{
 					case Keyboard.DOWN:
 					case Keyboard.RIGHT:
@@ -544,7 +544,7 @@ package temple.ui.form.components
 						leni = this._buttons.length;
 						for (i = 0; i < leni ;i++)
 						{
-							if(Selection(this._buttons[i]).button == event.target)
+							if (Selection(this._buttons[i]).button == event.target)
 							{
 								item = Selection(this._buttons[++i < leni ? i : 0]).button;
 								if (item is IFocusable)
@@ -568,7 +568,7 @@ package temple.ui.form.components
 						leni = this._buttons.length;
 						for (i = 0; i < leni ; i++) 
 						{
-							if(Selection(this._buttons[i]).button == event.target)
+							if (Selection(this._buttons[i]).button == event.target)
 							{
 								item = Selection(this._buttons[--i >= 0 ? i : leni-1]).button;
 								if (item is IFocusable)
@@ -634,7 +634,7 @@ package temple.ui.form.components
 			this._selected = null;
 			this._buttons = null;
 			
-			if(this._name) delete RadioGroup._instances[this._name];
+			if (this._name) delete RadioGroup._instances[this._name];
 			
 			super.destruct();
 		}
@@ -675,7 +675,7 @@ final class Selection extends CoreObject
 
 	public function set value(value:*):void
 	{
-		if(this.button is ISetValue)
+		if (this.button is ISetValue)
 		{
 			ISetValue(this.button).value = value;
 		}

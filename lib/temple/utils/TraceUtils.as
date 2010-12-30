@@ -66,7 +66,7 @@ package temple.utils
 		{
 			var stacktrace:String = new Error("Get stack").getStackTrace();
 			
-			if(stacktrace == null)
+			if (stacktrace == null)
 			{
 				return null;
 			}
@@ -81,7 +81,7 @@ package temple.utils
 				output += TraceUtils.STACK_TRACE_NEWLINE_INDENT + String(a[i]).substr(4);
 			}
 			
-			if(doTrace) trace(output);
+			if (doTrace) trace(output);
 			
 			return output;
 		}
@@ -94,7 +94,7 @@ package temple.utils
 			var output:String = "Root Trace:\n";
 			output += TraceUtils._rootTrace(object, 0);
 			
-			if(doTrace) trace(output);
+			if (doTrace) trace(output);
 			
 			return output;
 		}
@@ -102,17 +102,17 @@ package temple.utils
 		private static function _rootTrace(object:DisplayObject, index:int):String
 		{
 			var extra:String = ''; 
-			if(object is InteractiveObject)
+			if (object is InteractiveObject)
 			{
 				extra += ', mouseEnabled=' + InteractiveObject(object).mouseEnabled;
-				if(object is DisplayObjectContainer)
+				if (object is DisplayObjectContainer)
 				{
 					extra += ', mouseChildren=' + DisplayObjectContainer(object).mouseChildren;
 				}
 			}
 			
 			var output:String = "   " + index + ": " + object + ":" + object.name + ' (visible=' + object.visible + ', alpha=' + object.alpha + extra + ")\n" ;
-			if(object.parent) output += TraceUtils._rootTrace(object.parent, ++index);
+			if (object.parent) output += TraceUtils._rootTrace(object.parent, ++index);
 			
 			return output;
 		}

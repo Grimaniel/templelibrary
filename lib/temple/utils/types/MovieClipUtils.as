@@ -136,7 +136,7 @@ package temple.utils.types
 		 */
 		public static function stop(movieclip:MovieClip, callStop:Boolean = true):void
 		{
-			if(callStop) movieclip.stop();
+			if (callStop) movieclip.stop();
 			if (MovieClipUtils._CLIP_DICTIONARY != null && MovieClipUtils._CLIP_DICTIONARY[movieclip] != null) movieclip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 		
@@ -147,24 +147,24 @@ package temple.utils.types
 		 */
 		public static function deepStop(clip:DisplayObjectContainer):void
 		{
-			if(clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'null clip'));
+			if (clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'null clip'));
 			
 			var num:int = clip.numChildren;
-			for(var i:int=0;i<num;i++)
+			for (var i:int=0;i<num;i++)
 			{
-				var disp:DisplayObject;
+				var child:DisplayObject;
 				try
 				{
-					disp = clip.getChildAt(i);
+					child = clip.getChildAt(i);
 				}
 				catch (error:Error) {}
 				
-				if(disp && disp is DisplayObjectContainer)
+				if (child && child is DisplayObjectContainer)
 				{
-					MovieClipUtils.deepStop(DisplayObjectContainer(disp));
-					if(disp is MovieClip)
+					MovieClipUtils.deepStop(DisplayObjectContainer(child));
+					if (child is MovieClip)
 					{
-						MovieClip(disp).stop();
+						MovieClip(child).stop();
 					}
 				}
 			}
@@ -177,25 +177,25 @@ package temple.utils.types
 		 */
 		public static function deepPlay(clip:DisplayObjectContainer):void
 		{
-			if(clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'null clip'));
+			if (clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'null clip'));
 			
 			var num:int = clip.numChildren;
-			for(var i:int=0;i<num;i++)
+			for (var i:int=0;i<num;i++)
 			{
-				var disp:DisplayObject;
+				var child:DisplayObject;
 				try
 				{
-					disp = clip.getChildAt(i);
+					child = clip.getChildAt(i);
 				}
 				catch (error:Error) {}
 				
-				if(disp && disp is DisplayObjectContainer)
+				if (child && child is DisplayObjectContainer)
 				{
-					if(disp is MovieClip)
+					if (child is MovieClip)
 					{
-						MovieClip(disp).play();
+						MovieClip(child).play();
 					}
-					MovieClipUtils.deepPlay(DisplayObjectContainer(disp));
+					MovieClipUtils.deepPlay(DisplayObjectContainer(child));
 				}
 			}
 		}
@@ -211,26 +211,26 @@ package temple.utils.types
 		 */
 		public static function deepNextFrame(clip:DisplayObjectContainer, loop:Boolean=false):void
 		{
-			if(clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'Clip cannot be null'));
+			if (clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'Clip cannot be null'));
 			
 			var num:int = clip.numChildren;
-			for(var i:int=0;i<num;i++)
+			for (var i:int=0;i<num;i++)
 			{
-				var disp:DisplayObject;
+				var child:DisplayObject;
 				try
 				{
-					disp = clip.getChildAt(i);
+					child = clip.getChildAt(i);
 				}
 				catch (error:Error) {}
 				
-				if(disp && disp is DisplayObjectContainer)
+				if (child && child is DisplayObjectContainer)
 				{
-					if(disp is MovieClip)
+					if (child is MovieClip)
 					{
-						var mc:MovieClip = MovieClip(disp);
-						if(mc.currentFrame == mc.totalFrames)
+						var mc:MovieClip = MovieClip(child);
+						if (mc.currentFrame == mc.totalFrames)
 						{
-							if(loop)
+							if (loop)
 							{
 								mc.gotoAndStop(1);
 							}
@@ -240,31 +240,31 @@ package temple.utils.types
 							mc.nextFrame();
 						}
 					}
-					MovieClipUtils.deepNextFrame(DisplayObjectContainer(disp), loop);
+					MovieClipUtils.deepNextFrame(DisplayObjectContainer(child), loop);
 				}
 			}
 		}
 
 		public static function deepGotoAndStop(clip:DisplayObjectContainer, frame:*):void 
 		{
-			if(clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'null clip'));
+			if (clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'null clip'));
 			
 			var num:int = clip.numChildren;
-			for(var i:int=0;i<num;i++)
+			for (var i:int=0;i<num;i++)
 			{
-				var disp:DisplayObject;
+				var child:DisplayObject;
 				try
 				{
-					disp = clip.getChildAt(i);
+					child = clip.getChildAt(i);
 				}
 				catch (error:Error) {}
 				
-				if(disp && disp is DisplayObjectContainer)
+				if (child && child is DisplayObjectContainer)
 				{
-					MovieClipUtils.deepGotoAndStop(DisplayObjectContainer(disp), frame);
-					if(disp is MovieClip)
+					MovieClipUtils.deepGotoAndStop(DisplayObjectContainer(child), frame);
+					if (child is MovieClip)
 					{
-						MovieClip(disp).gotoAndStop(frame);
+						MovieClip(child).gotoAndStop(frame);
 					}
 				}
 			}
@@ -272,24 +272,24 @@ package temple.utils.types
 
 		public static function deepGotoAndPlay(clip:DisplayObjectContainer, frame:*):void 
 		{
-			if(clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'null clip'));
+			if (clip == null) throwError(new TempleArgumentError(MovieClipUtils, 'null clip'));
 			
 			var num:int = clip.numChildren;
-			for(var i:int=0;i<num;i++)
+			for (var i:int=0;i<num;i++)
 			{
-				var disp:DisplayObject;
+				var child:DisplayObject;
 				try
 				{
-					disp = clip.getChildAt(i);
+					child = clip.getChildAt(i);
 				}
 				catch (error:Error) {}
 				
-				if(disp && disp is DisplayObjectContainer)
+				if (child && child is DisplayObjectContainer)
 				{
-					MovieClipUtils.deepGotoAndPlay(DisplayObjectContainer(disp), frame);
-					if(disp is MovieClip)
+					MovieClipUtils.deepGotoAndPlay(DisplayObjectContainer(child), frame);
+					if (child is MovieClip)
 					{
-						MovieClip(disp).gotoAndPlay(frame);
+						MovieClip(child).gotoAndPlay(frame);
 					}
 				}
 			}
