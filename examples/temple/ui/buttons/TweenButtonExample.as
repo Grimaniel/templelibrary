@@ -7,7 +7,7 @@
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.swf" target="_blank">Download source</a></p>
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/buttons/TweenButtonExample.as" target="_blank">Download source</a></p>
  */
 package  
 {
