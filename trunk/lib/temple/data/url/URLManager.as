@@ -113,12 +113,11 @@
 		 * Default name for urls.xml
 		 */
 		private static const _URLS:String = "urls";
-		private var _rawData:XML;
 
 		/**
 		 * Get named URL data
-		 * @param name name of data block
-		 * @return the data block, or null if none was found
+		 * @param name name of the URL
+		 * @return the URLData, or null if none was found
 		 */
 		public static function getURLDataByName(name:String):URLData 
 		{
@@ -127,12 +126,22 @@
 
 		/**
 		 * Get named URL 
-		 * @param name name of data block
-		 * @return URL as string or null if none was found
+		 * @param name name of the URL
+		 * @return URL as string or null if none was found.
 		 */
 		public static function getURLByName(name:String):String 
 		{
 			return URLManager.getInstance().getURLByName(name);
+		}
+
+		/**
+		 * Checks if a URL with a specific name is defined.
+		 * @param name name of the URL
+		 * @return a Boolean which indicates if the URL which the specific name is defined.
+		 */
+		public static function hasURLByName(name:String):Boolean 
+		{
+			return URLManager.getInstance().hasURLByName(name);
 		}
 
 		/**
@@ -297,6 +306,7 @@
 		private var _group:String;
 		private var _groups:Array;
 		private var _variables:HashMap;
+		private var _rawData:XML;
 
 		/**
 		 * @private
@@ -368,10 +378,11 @@
 				return null;
 			}
 			
-			var len:Number = _urls.length;
+			var ud:URLData;
+			var len:Number = this._urls.length;
 			for (var i:Number = 0;i < len; i++) 
 			{
-				var ud:URLData = URLData(_urls[i]);
+				ud = URLData(this._urls[i]);
 				if (ud.name == name) return ud;
 			}
 			this.logError("getURLDataByName: url with name '" + name + "' not found. Check urls.xml!");
@@ -390,14 +401,27 @@
 				return null;
 			}
 			
-			var len:Number = _urls.length;
+			var ud:URLData;
+			var len:Number = this._urls.length;
 			for (var i:Number = 0;i < len; i++) 
 			{
-				var ud:URLData = URLData(_urls[i]);
+				ud = URLData(this._urls[i]);
 				if (ud.name == name) return ud.url;
 			}
 			this.logError("getURLByName: url with name '" + name + "' not found. Check urls.xml!");
 			return null;
+		}
+		
+		private function hasURLByName(name:String):Boolean
+		{
+			var ud:URLData;
+			var len:Number = this._urls.length;
+			for (var i:Number = 0;i < len; i++) 
+			{
+				ud = URLData(this._urls[i]);
+				if (ud.name == name) return true;
+			}
+			return false;
 		}
 
 		private function openURLByName(name:String, variables:Object = null):void 
@@ -559,7 +583,6 @@
 			
 			this._urls = XMLParser.parseList(urls, URLData, false, this.debug);
 			
-			
 			var ud:URLData;
 			
 			if (this.debug)
@@ -569,7 +592,6 @@
 				{
 					s += "\n\t" + ud.name + ": " + ud.url;
 				}
-				
 				this.logDebug("Current urls in XML: " + s);
 			}
 			

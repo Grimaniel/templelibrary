@@ -42,16 +42,15 @@
 
 package temple.debug 
 {
-	import temple.debug.log.Log;
 	import temple.Temple;
 	import temple.core.CoreObject;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
+	import temple.debug.log.Log;
 	import temple.utils.BuildMode;
 	import temple.utils.Environment;
 	import temple.utils.StageProvider;
-	import temple.utils.types.DateUtils;
 
 	import flash.external.ExternalInterface;
 	import flash.system.Capabilities;
@@ -382,7 +381,7 @@ package temple.debug
 		 * @param id The id of the Debuggable object
 		 * @param value The debug value
 		 */
-		public static function setDebugfor (objectId:uint, value:Boolean):void
+		public static function setDebugFor(objectId:uint, value:Boolean):void
 		{
 			var object:* = Registry.getObject(objectId);
 			if (object && object is IDebuggable) IDebuggable(object).debug = value;
@@ -503,7 +502,8 @@ package temple.debug
 			
 			info += "\n\tTemple version: " + Temple.VERSION;
 			info += "\n\tTemple date: " + Temple.DATE;
-			info += "\n\tCurrent date: " + DateUtils.format("Y-m-d");
+			var date:Date = new Date();
+			info += "\n\tCurrent date: " + date.fullYear + "-" + (date.month+1) + "-" + date.date;
 			info += "\n\tPlayer version: " + Capabilities.version;
 			info += "\n\tEnvironment: " + Environment.getEnvironment();
 			info += "\n\tOperation System: " + Capabilities.os;
@@ -514,6 +514,12 @@ package temple.debug
 			if (StageProvider.stage)
 			{
 				info += "\n\tURL: " + StageProvider.stage.loaderInfo.url;
+				info += "\n\tFlashVars:";
+				var vars:Object = StageProvider.stage.loaderInfo.parameters;
+				for (var key : String in vars)
+				{
+					info += "\n\t\t" + key + ": " + vars[key];
+				}
 			}
 			Log.debug(info, DebugManager);
 			

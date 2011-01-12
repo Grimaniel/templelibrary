@@ -34,6 +34,24 @@ package nl.acidcats.yalog.util
 			if (YaLogConnector._instance == null) YaLogConnector._instance = new YaLogConnector();
 			return YaLogConnector._instance;
 		}
+		
+		/**
+		 * Connect to the Log.
+		 * @param name optional name that is used to identify the connection. The name is displayed in Yalala.
+		 */
+		public static function connect(name:String = null):void 
+		{
+			YaLogConnector.getInstance();
+			Yalog.connectionName = name;
+		}
+		
+		/**
+		 * Indicates if Yalog is already connected.
+		 */
+		public static function get isConnected():Boolean
+		{
+			return !!YaLogConnector._instance;
+		}
 
 		public function YaLogConnector() 
 		{
@@ -41,9 +59,6 @@ package nl.acidcats.yalog.util
 			Yalog.showTrace = false;
 		}
 
-		/**
-		 *	
-		 */
 		private function handleLogEvent(event:LogEvent):void 
 		{
 			switch (event.level) 
@@ -67,16 +82,6 @@ package nl.acidcats.yalog.util
 					Yalog.warn(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
 			}
-		}
-
-		/**
-		 * Connect to the Log.
-		 * @param name optional name that is used to identify the connection. The name is displayed in Yalala.
-		 */
-		public static function connect(name:String = null):void 
-		{
-			YaLogConnector.getInstance();
-			Yalog.connectionName = name;
 		}
 	}
 }

@@ -40,58 +40,28 @@
  *	
  */
 
-package temple.media.player 
+package temple.media.player
 {
-	import temple.destruction.IDestructibleEventDispatcher;
-	import temple.status.IHasStatus;
-	import temple.ui.IPauseable;
-
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IPlayer extends IDestructibleEventDispatcher, IPauseable, IHasStatus
+	public interface IURLPlayer extends IPlayer
 	{
 		/**
-		 * 	start from beginning
+		 * Starts buffering the url, so it can be played when you press play
+		 * @param url The url for the player
 		 */
-		function play():void;
-
-		/**
-		 * Stops the player.
-		 */
-		function stop():void;
-
-		/**
-		 * Seeks to the offset specified (seconds). Pass '0' to rewind the player.
-		 * @param seconds the offset to seek to (in seconds)
-		 */
-		function seek(seconds:Number = 0):void;
-
-		/**
-		 *	the current progress time in seconds.
-		 */
-		function get currentPlayTime():Number;
+		function loadUrl(url:String):void;
 		
 		/**
-		 * The total duration in seconds
+		 * Starts loading and playing the url, without having to press play
+		 * @param url The url for the player
 		 */
-		function get duration():Number;
-
-		/**
-		 *	returns the current progress (value between 0 and 1)
-		 *	if the duration has been set, otherwise returns 0.
-		 */
-		function get currentPlayFactor():Number;
+		function playUrl(url:String):void;
 		
 		/**
-		 * Get or set the autoRewind of the VideoPlayer
-		 * When autoRewind is set to true, the video rewinds when the video is done playing
+		 * The players source (URL), supplied by loadUrl or playUrl
 		 */
-		function get autoRewind():Boolean;
-
-		/**
-		 * @private
-		 */
-		function set autoRewind(value:Boolean):void;
+		function get url():String;
 	}
 }

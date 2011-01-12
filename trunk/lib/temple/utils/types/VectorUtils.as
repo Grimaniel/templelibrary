@@ -40,58 +40,64 @@
  *	
  */
 
-package temple.media.player 
+package temple.utils.types 
 {
-	import temple.destruction.IDestructibleEventDispatcher;
-	import temple.status.IHasStatus;
-	import temple.ui.IPauseable;
+	import temple.debug.errors.TempleArgumentError;
+	import temple.debug.errors.throwError;
+	import temple.debug.getClassName;
+
+	import flash.utils.getQualifiedClassName;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IPlayer extends IDestructibleEventDispatcher, IPauseable, IHasStatus
+	public final class VectorUtils 
 	{
 		/**
-		 * 	start from beginning
+		 * Checks if the object is a Vector
 		 */
-		function play():void;
-
-		/**
-		 * Stops the player.
-		 */
-		function stop():void;
-
-		/**
-		 * Seeks to the offset specified (seconds). Pass '0' to rewind the player.
-		 * @param seconds the offset to seek to (in seconds)
-		 */
-		function seek(seconds:Number = 0):void;
-
-		/**
-		 *	the current progress time in seconds.
-		 */
-		function get currentPlayTime():Number;
+		public static function isVector(object:Object):Boolean
+		{
+			 return getQualifiedClassName(object).indexOf("__AS3__.vec::Vector.") === 0;
+		}
 		
 		/**
-		 * The total duration in seconds
-		 */
-		function get duration():Number;
+		 *	Remove all instances of the specified value from the vector,
+		 * 	@param vector The vector from which the value will be removed
+		 *	@param value The object that will be removed from the vector.
+		 */		
+		public static function removeValueFromVector(vector:*, value:Object):void
+		{
+			if (!VectorUtils.isVector(vector)) throwError(new TempleArgumentError(VectorUtils, vector + " is not a Vector " + getQualifiedClassName(vector)));
+			
+			for (var i:Number = vector.length - 1;i > -1; i--)
+			{
+				if (vector[i] === value)
+				{
+					vector.splice(i, 1);
+				}
+			}
+		}
 
 		/**
-		 *	returns the current progress (value between 0 and 1)
-		 *	if the duration has been set, otherwise returns 0.
+		 * Converts a Vector to an Array
 		 */
-		function get currentPlayFactor():Number;
-		
-		/**
-		 * Get or set the autoRewind of the VideoPlayer
-		 * When autoRewind is set to true, the video rewinds when the video is done playing
-		 */
-		function get autoRewind():Boolean;
+		public static function toArray(vector:*):Array 
+		{
+			if (!VectorUtils.isVector(vector)) throwError(new TempleArgumentError(VectorUtils, vector + " is not a Vector " + getQualifiedClassName(vector)));
+			
+			var array:Array = new Array(vector.length);
+			var i:int=vector.length;
+			while (i--)
+			{
+			    array[i] = vector[i];
+			}
+			return array;
+		}
 
-		/**
-		 * @private
-		 */
-		function set autoRewind(value:Boolean):void;
+		public static function toString():String
+		{
+			return getClassName(VectorUtils);
+		}
 	}
 }

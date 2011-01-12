@@ -46,16 +46,31 @@ package temple.media.player
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IProgressiveDownloadPlayer extends IPlayer 
+	public interface IProgressiveDownloadPlayer extends IURLPlayer 
 	{
 		/**
-		 *	The loading progress of the movie.
+		 *	The loading progress of the player.
 		 */
-		function get bytesLoaded():Number;
+		function get bytesLoaded():uint;
 
 		/**
 		 *	The total size of the movie in bytes.
 		 */
-		function get bytesTotal():Number;
+		function get bytesTotal():uint;
+		
+		/**
+		 * The number of seconds of data currently in the buffer.
+		 */
+		function get bufferLength():Number;
+		
+		/**
+		 * The size of the buffer in seconds. Specifies how long to buffer messages before starting to display the stream.
+		 */
+		function get bufferTime():Number;
+		
+		/**
+		 * @private
+		 */
+		function set bufferTime(value:Number):void;
 	}
 }

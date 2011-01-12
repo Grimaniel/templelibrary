@@ -1394,7 +1394,7 @@ package temple.utils.types
 		 * @param minutes The minutes of the time
 		 * @param seconds The seconds of the time
 		 */
-		public static function getNextInWeekDatefor (day:int, hours:int, minutes:int = 0, seconds:int = 0):Date
+		public static function getNextInWeekDateFor(day:int, hours:int, minutes:int = 0, seconds:int = 0):Date
 		{
 			var d:Date = new Date();
 			var targetDate:Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hours, minutes, seconds);

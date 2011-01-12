@@ -97,7 +97,7 @@ package temple.ui.form
 	[Event(name = "FormEvent.reset", type = "temple.ui.form.FormEvent")]
 
 	/**
-	 * A Form is used to get information about the user. The form uses form elements, like InputField, CheckBoxes or 
+	 * A Form is used to get information from the user. The form uses form elements, like InputField, CheckBoxes or 
 	 * RadioButtons, to let the user fill in the data. By adding the elements to the Form, the Form can handle the validation, tabbing, clearing, prefilling and submit of the elements and the data.
 	 * 
 	 * @see temple.ui.form.components.InputField

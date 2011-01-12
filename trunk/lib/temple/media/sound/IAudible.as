@@ -49,7 +49,7 @@ package temple.media.sound
 	public interface IAudible 
 	{
 		/**
-		 * The sound volume between 0 and 1, where 0 means no sound
+		 * The sound volume between 0 and 1, where 0 means no sound.
 		 * The (relative) sound level of the object. If the object has an other IAmplifier the actual sound level (gain) will depend on the gain of the IAmplifier
 		 */
 		function get volume():Number;

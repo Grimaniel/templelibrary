@@ -64,7 +64,7 @@ package temple.ui.form.validation.rules
 		/**
 		 * Cannot be used in conjunction with other restrictions
 		 */
-		public static const NO_SPECIAL_CHARS:String = "^#$\^|;\<>{}[]";
+		public static const NO_SPECIAL_CHARS:String = "^#$\\^|;\\\\<>{}[]";
 		
 		public static const EMAIL:String = Restrictions.INTEGERS + Restrictions.ALPHABETIC + Restrictions.SPACE + Restrictions.DASH + "@._";
 		public static const DUTCH_POSTALCODE:String = Restrictions.NUMERIC + Restrictions.UPPERCASE;

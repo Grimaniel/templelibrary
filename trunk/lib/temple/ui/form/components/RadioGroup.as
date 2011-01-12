@@ -42,6 +42,7 @@
 
 package temple.ui.form.components 
 {
+	import temple.data.collections.HashMap;
 	import temple.core.CoreEventDispatcher;
 	import temple.debug.DebugManager;
 	import temple.debug.IDebuggable;
@@ -74,10 +75,12 @@ package temple.ui.form.components
 	 * <listing version="3.0">
 	 * // create new group, add radio buttons, select first button, listen to change event
 	 * var rg:RadioGroup = new RadioGroup();
-	 * rg.addButton(mcRadio1, "1");
-	 * rg.addButton(mcRadio2, "2");
-	 * rg.addButton(mcRadio3, "3");
-	 * rg.selected = mcRadio);
+	 * rg.add(mcRadio1, "1");
+	 * rg.add(mcRadio2, "2");
+	 * rg.add(mcRadio3, "3");
+	 * 
+	 * // select one
+	 * rg.selected = mcRadio1);
 	 * rg.addEventListener(Event.CHANGE, handleRadioGroupChanged);
 	 * </listing>
 	 * 
@@ -89,7 +92,7 @@ package temple.ui.form.components
 	{
 		private static const _NO_INDEX:int = 10000;
 
-		private static var _instances:Object;
+		private static var _instances:HashMap;
 
 		/**
 		 * Static function to get instances by name. Multiton implementation
@@ -106,7 +109,7 @@ package temple.ui.form.components
 			{
 				if (RadioGroup._instances == null)
 				{
-					RadioGroup._instances = new Object();
+					RadioGroup._instances = new HashMap("RadioGroups");
 				}
 				return new RadioGroup(name);
 			}
@@ -143,14 +146,21 @@ package temple.ui.form.components
 		private var _keyboardTabbingEnabled:Boolean = true;
 		private var _submitOnChange:Boolean;
 
-		
+		/**
+		 * Create a new RadioGroup. 
+		 * @param name the name if this RadioGroup so it can be retreived using RadioGroup.getInstance(name) (multiton implementation).
+		 * If you don't want to use this multiton feature don't pass a name.
+		 */
 		public function RadioGroup(name:String = null)
 		{
 			if (name)
 			{
 				this._name = name;
 				
-				if (RadioGroup._instances[this._name]){
+				if (!RadioGroup._instances) RadioGroup._instances = new HashMap("RadioGroups");
+
+				if (RadioGroup._instances[this._name])
+				{
 					this.logError("RadioGroup: group with name '" + this._name + "' already exists");
 				}
 				else

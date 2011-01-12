@@ -101,7 +101,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		private var _align:String;
 		private var _upscaleEnabled:Boolean = true;
 		private var _smoothing:Boolean;
-		private var _context:LoaderContext;
+		private var _loaderContext:LoaderContext;
 		private var _preloader:IPreloader;
 		private var _preloaderMode:String;
 		private var _background:Boolean;
@@ -119,9 +119,9 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 * @param smoothing If an image is loaded, set smoothing property on the Bitmap after loading
 		 * @param preloader Use a DisplayObject that implements the IPreloader interface, the preloader is centered in the width-height-rectangle.
 		 * @param preloaderMode Indicates how the ImageLoader uses the preloader. When set to PreloaderMode.OWN_PRELOADER it addChilds and centers the preloader.
-		 * @param context
+		 * @param loaderContext
 		 */
-		public function ImageLoader(url:* = null, width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = true, smoothing:Boolean = false, preloader:IPreloader = null, preloaderMode:String = 'ownPreloader', context:LoaderContext = null, cache:Boolean = false)
+		public function ImageLoader(url:* = null, width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = true, smoothing:Boolean = false, preloader:IPreloader = null, preloaderMode:String = 'ownPreloader', loaderContext:LoaderContext = null, cache:Boolean = false)
 		{
 			this._width = !isNaN(width) ? width : (super.width ? super.width : NaN);
 			this._height = !isNaN(height) ? height : (super.height ? super.height : NaN);
@@ -130,7 +130,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			this._align = align;
 			this._smoothing = smoothing;
 			
-			this._context = context;
+			this._loaderContext = loaderContext;
 			
 			// loader
 			this._loader = new CacheLoader(true, cache);
@@ -168,7 +168,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 				}
 				else if (url is String)
 				{
-					this.load(url, context);
+					this.load(url, loaderContext);
 				}
 				else
 				{
@@ -184,7 +184,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		public function load(url:String, context:LoaderContext = null):void
 		{
 			if (this._debug) this.logDebug("load: " + url);
-			this._loader.load(new URLRequest(url), !context && this._context ? this._context : context);
+			this._loader.load(new URLRequest(url), !context && this._loaderContext ? this._loaderContext : context);
 		}
 		
 		/**
@@ -193,7 +193,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 */
 		public function loadBytes(image:ByteArray, context:LoaderContext = null):void
 		{
-			this._loader.loadBytes(image, !context && this._context ? this._context : context);
+			this._loader.loadBytes(image, !context && this._loaderContext ? this._loaderContext : context);
 		}
 
 		/**
@@ -544,6 +544,22 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		}
 		
 		/**
+		 * LoaderContext for loading the images
+		 */
+		public function get loaderContext():LoaderContext
+		{
+			return this._loaderContext;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set loaderContext(value:LoaderContext):void
+		{
+			this._loaderContext = value;
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function get debug():Boolean
@@ -755,7 +771,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			this._preloader = null;
 			this._scaleMode = null;
 			this._align = null;
-			this._context = null;
+			this._loaderContext = null;
 			
 			super.destruct();
 		}
