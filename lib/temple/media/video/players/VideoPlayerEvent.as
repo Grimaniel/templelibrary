@@ -64,7 +64,6 @@ package temple.media.video.players
 		 */
 		public static const LOAD_READY:String = "VideoPlayerEvent.loadReady";
 
-
 		public function VideoPlayerEvent(type:String, bubbles:Boolean = false) 
 		{
 			super(type, bubbles);

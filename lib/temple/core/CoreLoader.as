@@ -70,6 +70,51 @@ package temple.core
 	[Event(name = "DestructEvent.destruct", type = "temple.destruction.DestructEvent")]
 	
 	/**
+	 * @eventType flash.events.Event.OPEN
+	 */
+	[Event(name = "open", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType flash.events.ProgressEvent.PROGRESS
+	 */
+	[Event(name = "progress", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType flash.events.Event.INIT
+	 */
+	[Event(name = "init", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType flash.events.Event.COMPLETE
+	 */
+	[Event(name = "complete", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType flash.events.IOErrorEvent.IO_ERROR
+	 */
+	[Event(name = "ioError", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType flash.events.IOErrorEvent.DISK_ERROR
+	 */
+	[Event(name = "diskError", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType flash.events.IOErrorEvent.NETWORK_ERROR
+	 */
+	[Event(name = "networkError", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType flash.events.IOErrorEvent.VERIFY_ERROR
+	 */
+	[Event(name = "verifyError", type = "flash.events.Event")]
+	
+	/**
+	 * @eventType flash.events.SecurityErrorEvent.SECURITY_ERROR
+	 */
+	[Event(name = "securityError", type = "flash.events.Event")]
+	
+	/**
 	 * Base class for all Loaders in the Temple. The CoreLoader handles some core features of the Temple:
 	* <ul>
 	 * 	<li>Registration to the Registry class.</li>
@@ -711,7 +756,15 @@ package temple.core
 			
 			try
 			{
-				this.unload();
+				if (this.hasOwnProperty("unloadAndStop"))
+				{
+					//Flash Player 10 and later only
+					(this as Object).unloadAndStop(true);
+				}
+				else
+				{
+					this.unload();
+				}
 			}
 			catch (e:ArgumentError)
 			{

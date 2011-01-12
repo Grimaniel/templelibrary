@@ -91,6 +91,7 @@ package temple.core
 		private var _onParent:Boolean;
 		private var _registryId:uint;
 		private var _destructOnUnload:Boolean = true;
+		private var _isPlaying:Boolean = true;
 
 		public function CoreMovieClip()
 		{
@@ -250,6 +251,68 @@ package temple.core
 				children[i] = this.getChildAt(i);
 			}
 			return children;
+		}
+		
+		/**
+		 * A Boolean which indicates if this MovieClip is currently playing
+		 */
+		public function get isPlaying():Boolean
+		{
+			return this._isPlaying;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function play():void
+		{
+			super.play();
+			this._isPlaying = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function stop():void
+		{
+			super.stop();
+			this._isPlaying = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function gotoAndPlay(frame:Object, scene:String = null):void
+		{
+			super.gotoAndPlay(frame, scene);
+			this._isPlaying = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function gotoAndStop(frame:Object, scene:String = null):void
+		{
+			super.gotoAndStop(frame, scene);
+			this._isPlaying = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function nextFrame():void
+		{
+			super.nextFrame();
+			this._isPlaying = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function prevScene():void
+		{
+			super.prevScene();
+			this._isPlaying = false;
 		}
 		
 		/**

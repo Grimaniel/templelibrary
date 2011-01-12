@@ -582,7 +582,7 @@ package temple.media.video.players
 		/**
 		 * @inheritDoc
 		 */
-		public function get bytesLoaded():Number 
+		public function get bytesLoaded():uint 
 		{
 			if (this._isClosed == true) return this._bytesLoaded;
 			return this._netStream.bytesLoaded;
@@ -591,7 +591,7 @@ package temple.media.video.players
 		/**
 		 * @inheritDoc
 		 */
-		public function get bytesTotal():Number 
+		public function get bytesTotal():uint 
 		{
 			if (this._isClosed == true) return this._bytesTotal;
 			return this._netStream.bytesTotal;
@@ -685,7 +685,7 @@ package temple.media.video.players
 		/**
 		 * @inheritDoc
 		 */
-		public function get source():String
+		public function get url():String
 		{
 			return this.videoPath;
 		}
@@ -857,11 +857,25 @@ package temple.media.video.players
 			if (this._netStream) this._netStream.preloader = this._preloader;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
+		public function get bufferLength():Number
+		{
+			return this._netStream ? this._netStream.bufferLength : 0;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
 		public function get bufferTime():Number
 		{
 			return this._bufferTime;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set bufferTime(value:Number):void
 		{
 			this._bufferTime = value;
