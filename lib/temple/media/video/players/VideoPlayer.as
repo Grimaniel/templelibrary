@@ -118,6 +118,11 @@ package temple.media.video.players
 	[Event(name = "VideoPlayerEvent.seekNotify", type = "temple.media.video.players.VideoPlayerEvent")]
 
 	/**
+	 * @eventType temple.media.video.players.VideoPlayerEvent.LOAD_READY
+	 */
+	[Event(name = "VideoPlayerEvent.loadReady", type = "temple.media.video.players.VideoPlayerEvent")]
+
+	/**
 	 * @eventType temple.media.sound.SoundEvent.VOLUME_CHANGE
 	 */
 	[Event(name = "SoundEvent.volumeChange", type = "temple.media.sound.SoundEvent")]
@@ -1087,10 +1092,14 @@ package temple.media.video.players
 						this._status = PlayerStatus.STOPPED;
 						this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
 						
-						if (this._autoRewind && this.currentPlayFactor > 0.99)
+						if (this.currentPlayFactor > 0.99)
 						{
-							this.seek(0);
-							this.pause();
+							if (this._autoRewind)
+							{
+								this.seek(0);
+								this.pause();
+							}
+							this.dispatchEvent(new PlayerEvent(PlayerEvent.COMPLETE));
 						}
 					}
 					break;
@@ -1185,9 +1194,8 @@ package temple.media.video.players
 		{
 			if (this._debug) this.logDebug("handleMetaDataEvent: " + event.metadata);
 			
-			if (this._metaData == null) new FrameDelay(this.setVideoSize);
-			
 			this._metaData = event.metadata;
+			new FrameDelay(this.setVideoSize);
 			
 			// max buffertime to duration
 			if (this._netStream.bufferTime > this._metaData.duration) this._netStream.bufferTime = this._metaData.duration;
@@ -1209,7 +1217,7 @@ package temple.media.video.players
 
 		private function handleNetConnectionAsyncError(event:AsyncErrorEvent):void
 		{
-			this.logError("handleNetConnectionAsyncError: " + event.text);
+			this.logError("handleNetConnectionAsyncError: '" + event.text + "'");
 		}
 
 		private function handleIOError(event:IOErrorEvent):void
@@ -1222,15 +1230,23 @@ package temple.media.video.players
 			if (this._status == PlayerStatus.LOADING)
 			{
 				if (this._debug) this.logDebug("onLoadReady: Load Ready!");
-
+				
 				this.setVideoSize();
-				this.pause();
-				this.seek(0);
 				this._video.visible = true;
 				var volume:Number = this._volume;
 				this._volume = 0;
 				this.volume = volume;
-				if (this._playAfterLoaded) this.resume();
+
+				if (this._playAfterLoaded)
+				{
+					this._status = PlayerStatus.PLAYING;
+					this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+				}
+				else
+				{
+					this.pause();
+					this.seek(0);
+				}
 				
 				this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.LOAD_READY));
 			}
@@ -1309,6 +1325,9 @@ package temple.media.video.players
 		
 		private function setVideoSize():void
 		{
+			var vWidth:Number = this._metaData ? this._metaData.width : this._video.videoWidth;
+			var vHeight:Number = this._metaData ? this._metaData.height : this._video.videoHeight;
+			
 			switch (this._scaleMode)
 			{
 				case ScaleMode.EXACT_FIT:
@@ -1322,9 +1341,9 @@ package temple.media.video.players
 				}	
 				case ScaleMode.NO_BORDER:
 				{
-					if (this._width / this._video.videoWidth > this._height / this._video.videoHeight)
+					if (this._width / vWidth > this._height / vHeight)
 					{
-						this._video.height = (this._width / this._video.videoWidth) * this._video.videoHeight;
+						this._video.height = (this._width / vWidth) * vHeight;
 						this._video.width = this._width;
 						
 						this._video.x = 0;
@@ -1332,7 +1351,7 @@ package temple.media.video.players
 					}
 					else
 					{
-						this._video.width = (this._height / this._video.videoHeight) * this._video.videoWidth;
+						this._video.width = (this._height / vHeight) * vWidth;
 						this._video.height = this._height;
 						
 						this._video.x = - 0.5 * (this._video.width - this._width);
@@ -1342,8 +1361,8 @@ package temple.media.video.players
 				}
 				case ScaleMode.NO_SCALE:
 				{
-					this._video.width = this._video.videoWidth;
-					this._video.height = this._video.videoHeight;
+					this._video.width = vWidth;
+					this._video.height = vHeight;
 					
 					this._video.x = - 0.5 * (this._video.width - this._width);
 					this._video.y = - 0.5 * (this._video.height - this._height);
@@ -1352,9 +1371,9 @@ package temple.media.video.players
 				}	
 				case ScaleMode.SHOW_ALL:
 				{
-					if (this._width / this._video.videoWidth < this._height / this._video.videoHeight)
+					if (this._width / vWidth < this._height / vHeight)
 					{
-						this._video.height = (this._width / this._video.videoWidth) * this._video.videoHeight;
+						this._video.height = (this._width / vWidth) * vHeight;
 						this._video.width = this._width;
 						
 						this._video.x = 0;
@@ -1362,7 +1381,7 @@ package temple.media.video.players
 					}
 					else
 					{
-						this._video.width = (this._height / this._video.videoHeight) * this._video.videoWidth;
+						this._video.width = (this._height / vHeight) * vWidth;
 						this._video.height = this._height;
 
 						this._video.x = 0.5 * (this._width - this._video.width);

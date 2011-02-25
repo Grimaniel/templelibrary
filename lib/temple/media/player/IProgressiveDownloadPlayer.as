@@ -42,7 +42,8 @@
 
 package temple.media.player 
 {
-
+	import temple.media.player.IURLPlayer;
+	
 	/**
 	 * @author Thijs Broerse
 	 */

@@ -53,11 +53,11 @@ package temple.data.loader
 		/**
 		 * Returns true if Loader is currently loading
 		 */
-		function isLoading():Boolean
+		function get isLoading():Boolean
 		
 		/**
 		 * Returns true if Loader has succesfully completed the loading
 		 */
-		function isLoaded():Boolean
+		function get isLoaded():Boolean
 	}
 }

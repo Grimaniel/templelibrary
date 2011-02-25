@@ -42,6 +42,7 @@
 
 package temple.data.loader.cache 
 {
+	import flash.utils.ByteArray;
 	import temple.data.loader.preload.IPreloader;
 
 	import flash.events.HTTPStatusEvent;
@@ -163,6 +164,14 @@ package temple.data.loader.cache
 		{
 			this._cacheURLLoader.preloader = value;
 			super.preloader = value;
+		}
+
+		/**
+		 * Loaded data as ByteArray
+		 */
+		public function get bytes():ByteArray
+		{
+			return this._cacheURLLoader.data || this.contentLoaderInfo.bytes;
 		}
 
 		private function handleURLLoaderComplete(event:Event):void

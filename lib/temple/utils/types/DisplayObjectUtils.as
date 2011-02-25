@@ -258,31 +258,34 @@ package temple.utils.types
 		}
 		
 		/**
-		 * Applies the Transform Matrix of the source on the target manipulated by their parents Transform Matrices.
-		 * So the position, scale and rotation of the target will look exactly the same as the source.
+		 * Convert the Transform Matrix of the source to the target manipulated by their parents Transform Matrices.
+		 * So the position, scale and rotation of the returned Matrix will be exactly the same as the source, when used in the target.
 		 * @param source the source DisplayObject to get the Transform Matrix from.
 		 * @param target the target DisplayObject to apply the Matrix to.
 		 */
-		public static function mimicTransformMatrix(source:DisplayObject, target:DisplayObject):void
+		public static function convertTransformMatrix(source:DisplayObject, target:DisplayObjectContainer):Matrix
 		{
-			if (!source || !source.transform) return;
+			if (!source || !source.transform || !source.parent || !target) return null;
 			
 			var matrix:Matrix = source.transform.matrix;
 			
 			var container:DisplayObjectContainer = source.parent;
 			
-			while (!container.contains(target))
+			while (container && !container.contains(target))
 			{
+				if (!container.transform.matrix) return null;
+				
 				matrix.concat(container.transform.matrix);
-				if (!(container = container.parent)) return;
+				container = container.parent;
 			}
 			
-			container = target.parent;
+			container = target;
+			
 			var inverts:Array = [];
-			while (!container.contains(source))
+			while (container && !container.contains(source))
 			{
 				inverts.push(container.transform.matrix);
-				if (!(container = container.parent)) return;
+				container = container.parent;
 			}
 			
 			var invert:Matrix;
@@ -292,7 +295,38 @@ package temple.utils.types
 				invert.invert();
 				matrix.concat(invert);
 			}
-			target.transform.matrix = matrix;
+			return matrix;
+		}
+		
+		/**
+		 * Applies the Transform Matrix of the source on the target manipulated by their parents Transform Matrices.
+		 * So the position, scale and rotation of the target will look exactly the same as the source.
+		 * @param source the source DisplayObject to get the Transform Matrix from.
+		 * @param target the target DisplayObject to apply the Matrix to.
+		 */
+		public static function mimicTransformMatrix(source:DisplayObject, target:DisplayObject):void
+		{
+			target.transform.matrix = DisplayObjectUtils.convertTransformMatrix(source, target.parent);
+		}
+
+		/**
+		 * Moves an Object to a new parent, but keeps the same (visible) scaling, rotation and position
+		 */
+		public static function reparent(displayObject:DisplayObject, newParent:DisplayObjectContainer):void
+		{
+			if (!displayObject || !displayObject.transform) return;
+			displayObject.transform.matrix = DisplayObjectUtils.convertTransformMatrix(displayObject, newParent);
+			newParent.addChild(displayObject);
+		}
+
+		/**
+		 * Moves an Object to a new parent, but keeps the same (visible) scaling, rotation and position
+		 */
+		public static function reparentAt(displayObject:DisplayObject, newParent:DisplayObjectContainer, index:int):void
+		{
+			if (!displayObject || !displayObject.transform) return;
+			displayObject.transform.matrix = DisplayObjectUtils.convertTransformMatrix(displayObject, newParent);
+			newParent.addChildAt(displayObject, index);
 		}
 
 		public static function toString():String

@@ -83,7 +83,7 @@ package temple.ui.states
 		 * @param message an error message to put in the state.
 		 * @param instant a Boolean which indicates if the states must use an animation to show itself or do it instantly
 		 */
-		public static function showError(object:DisplayObjectContainer, message:String, instant:Boolean = false):void
+		public static function showError(object:DisplayObjectContainer, message:String = null, instant:Boolean = false):void
 		{
 			var len:int = object.numChildren;
 			for (var i:int = 0; i < len; i++)
@@ -92,7 +92,7 @@ package temple.ui.states
 				{
 					var errorState:IErrorState = IErrorState(object.getChildAt(i));
 					errorState.show(instant);
-					errorState.message = message;
+					if (message != null) errorState.message = message;
 				}
 			}
 		}

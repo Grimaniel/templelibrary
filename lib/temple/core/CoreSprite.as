@@ -97,16 +97,16 @@ package temple.core
 			this._eventListenerManager = new EventListenerManager(this);
 			super();
 			
-			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, temple::handleUnload, false, 0, true);
+			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, templelibrary::handleUnload, false, 0, true);
 			
 			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
-			this.addEventListener(Event.ADDED, temple::handleAdded);
-			this.addEventListener(Event.ADDED_TO_STAGE, temple::handleAddedToStage);
-			this.addEventListener(Event.REMOVED, temple::handleRemoved);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, temple::handleRemovedFromStage);
+			this.addEventListener(Event.ADDED, templelibrary::handleAdded);
+			this.addEventListener(Event.ADDED_TO_STAGE, templelibrary::handleAddedToStage);
+			this.addEventListener(Event.REMOVED, templelibrary::handleRemoved);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, templelibrary::handleRemovedFromStage);
 		}
 		
 		/**
@@ -355,7 +355,7 @@ package temple.core
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.DEBUG, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.DEBUG, this._registryId);
 		}
 		
 		/**
@@ -364,7 +364,7 @@ package temple.core
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.ERROR, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.ERROR, this._registryId);
 		}
 		
 		/**
@@ -373,7 +373,7 @@ package temple.core
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.FATAL, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.FATAL, this._registryId);
 		}
 		
 		/**
@@ -382,7 +382,7 @@ package temple.core
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.INFO, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.INFO, this._registryId);
 		}
 		
 		/**
@@ -391,7 +391,7 @@ package temple.core
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.STATUS, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.STATUS, this._registryId);
 		}
 		
 		/**
@@ -400,20 +400,20 @@ package temple.core
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.WARN, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.WARN, this._registryId);
 		}
 		
-		temple final function handleUnload(event:Event):void
+		templelibrary final function handleUnload(event:Event):void
 		{
 			if (this._destructOnUnload) this.destruct();
 		}
 		
-		temple final function handleAdded(event:Event):void
+		templelibrary final function handleAdded(event:Event):void
 		{
 			if (event.currentTarget == this) this._onParent = true;
 		}
 
-		temple final function handleAddedToStage(event:Event):void
+		templelibrary final function handleAddedToStage(event:Event):void
 		{
 			this._onStage = true;
 			
@@ -423,31 +423,31 @@ package temple.core
 			}
 		}
 
-		temple final function handleRemoved(event:Event):void
+		templelibrary final function handleRemoved(event:Event):void
 		{
 			if (event.target == this)
 			{
 				this._onParent = false;
-				if (!this._isDestructed) this.addEventListener(Event.ENTER_FRAME, temple::handleDestructedFrameDelay);
+				if (!this._isDestructed) this.addEventListener(Event.ENTER_FRAME, templelibrary::handleDestructedFrameDelay);
 			}
 		}
 		
-		temple final function handleDestructedFrameDelay(event:Event):void
+		templelibrary final function handleDestructedFrameDelay(event:Event):void
 		{
-			this.removeEventListener(Event.ENTER_FRAME, temple::handleDestructedFrameDelay);
-			temple::checkParent();
+			this.removeEventListener(Event.ENTER_FRAME, templelibrary::handleDestructedFrameDelay);
+			templelibrary::checkParent();
 		}
 		
 		/**
 		 * Check objects parent, after being removed. If the object still has a parent, the object has been removed by a timeline animation.
 		 * If an object is removed by a timeline animation, the object is not used anymore and can be destructed
 		 */
-		temple final function checkParent():void
+		templelibrary final function checkParent():void
 		{
 			if (this.parent && !this._onParent) this.destruct();
 		}
 
-		temple final function handleRemovedFromStage(event:Event):void
+		templelibrary final function handleRemovedFromStage(event:Event):void
 		{
 			this._onStage = false;
 		}
@@ -474,9 +474,9 @@ package temple.core
 			
 			if (this.stage && this.stage.focus == this) this.stage.focus = null;
 			
-			if (this.loaderInfo) this.loaderInfo.removeEventListener(Event.UNLOAD, temple::handleUnload);
+			if (this.loaderInfo) this.loaderInfo.removeEventListener(Event.UNLOAD, templelibrary::handleUnload);
 			
-			this.removeEventListener(Event.ENTER_FRAME, temple::handleDestructedFrameDelay);
+			this.removeEventListener(Event.ENTER_FRAME, templelibrary::handleDestructedFrameDelay);
 			
 			if (this._eventListenerManager)
 			{

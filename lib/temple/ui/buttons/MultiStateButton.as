@@ -42,6 +42,7 @@
 
 package temple.ui.buttons 
 {
+	import temple.ui.ISelectable;
 	import temple.debug.IDebuggable;
 	import temple.ui.IEnableable;
 	import temple.ui.buttons.behaviors.ButtonBehavior;
@@ -70,7 +71,7 @@ package temple.ui.buttons
 	 * @includeExample MultiStateButtonFrameLabelsExample.as
 	 * @includeExample behaviors/NestedMultiStateButtonsExample.as
 	 */
-	public class MultiStateButton extends BaseButton implements IDebuggable, IEnableable, IFocusable, INestableButton
+	public class MultiStateButton extends BaseButton implements IDebuggable, IEnableable, IFocusable, INestableButton, ISelectable
 	{
 		private var _buttonBehavior:ButtonBehavior;
 		private var _timelineBehavior:ButtonTimelineBehavior;
@@ -303,6 +304,22 @@ package temple.ui.buttons
 		{
 			if (this._stateBehavior) this._stateBehavior.updateByParent = value; 
 			if (this._timelineBehavior) this._timelineBehavior.updateByParent = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get selected():Boolean
+		{
+			return this._buttonBehavior.selected;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set selected(value:Boolean):void
+		{
+			this._buttonBehavior.selected = value;
 		}
 
 		/**

@@ -54,6 +54,11 @@ package temple.media.player
 		 */
 		public static const PLAY_STARTED:String = "PlayerEvent.playStarted"; 
 		
+		/**
+		 * Event sent when the player has completed the playing
+		 */
+		public static const COMPLETE:String = "PlayerEvent.complete"; 
+		
 		public function PlayerEvent(type:String, bubbles:Boolean = false)
 		{
 			super(type, bubbles);

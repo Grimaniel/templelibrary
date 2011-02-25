@@ -42,8 +42,8 @@
 
 package temple.data.loader.cache 
 {
-	import temple.destruction.DestructEvent;
 	import temple.core.CoreURLLoader;
+	import temple.destruction.DestructEvent;
 	import temple.utils.FrameDelay;
 	import temple.utils.types.ObjectUtils;
 
@@ -83,10 +83,18 @@ package temple.data.loader.cache
 		override public function load(request:URLRequest):void
 		{
 			// check if our current load is competed
-			if (this._owner && this._cacheData && this._cacheData.isLoading())
+			if (this._owner && this._cacheData && this._cacheData.isLoading)
 			{
 				// we didn't finished the current load, delete it
 				LoaderCache.clear(this._url);
+				try
+				{
+					super.close();
+				}
+				catch (error:Error)
+				{
+					// ignore
+				}
 			}
 			
 			this._url = request.url;
@@ -96,7 +104,7 @@ package temple.data.loader.cache
 			this.clearCacheData();
 			if (this._cache && (this._cacheData = LoaderCache.get(this._url)))
 			{
-				if (this._cacheData.isLoaded())
+				if (this._cacheData.isLoaded)
 				{
 					if (this.debug) this.logDebug("load: get data from cache, url:" + this._url);
 					this.data = LoaderCache.get(this._url).bytes;
@@ -106,7 +114,7 @@ package temple.data.loader.cache
 				}
 				else
 				{
-					if (this.debug) this.logDebug("load: data is currently loading, wait...");
+					if (this.debug) this.logDebug("load: data is currently loading, wait... " + this._cacheData.url);
 					this._cacheData.addEventListener(Event.COMPLETE, this.handleCacheDataComplete);
 					this._cacheData.addEventListener(Event.OPEN, this.dispatchEvent);
 					this._cacheData.addEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
@@ -140,6 +148,20 @@ package temple.data.loader.cache
 				super.load(request);
 			}
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function close():void
+		{
+			// check if our current load is competed
+			if (this._owner && this._cacheData && this._cacheData.isLoading)
+			{
+				// we didn't finished the current load, delete it
+				LoaderCache.clear(this._url);
+			}
+			super.close();
+		}
 
 		/**
 		 * @inheritDoc
@@ -160,7 +182,7 @@ package temple.data.loader.cache
 
 		private function handleComplete(event:Event):void
 		{
-			if (this._cache)
+			if (this._cache && this._owner)
 			{
 				if (this.debug) this.logDebug("handleURLLoaderComplete: store data in cache, url:" + this.url);
 				LoaderCache.set(this.url, this.data);
@@ -209,6 +231,7 @@ package temple.data.loader.cache
 		private function handleCacheDataDestuct(event:DestructEvent):void 
 		{
 			// reload
+			if (this.debug) this.logDebug("handleCacheDataDestuct: LoaderCacheData has been destructed, reload.");
 			if (this._isLoading) this.load(new URLRequest(this._url)); 
 		}
 

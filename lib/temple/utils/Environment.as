@@ -97,14 +97,14 @@ package temple.utils
 		}
 
 		/**
-		Determines if the SWF is being served on the internet.
-			
-		@param location: DisplayObject to get location of.
-		@return Returns {@code true} if SWF is being served on the internet; otherwise {@code false}.
-		@usage
-		<code>
-		trace(LocationUtil.isWeb(_root));
-		</code>
+		 * Determines if the SWF is being served on the internet.
+		 * 	
+		 * @param location: DisplayObject to get location of.
+		 * @return Returns {@code true} if SWF is being served on the internet; otherwise {@code false}.
+		 * @usage
+		 * <code>
+		 * trace(LocationUtil.isWeb(_root));
+		 * </code>
 		 */
 		public static function isWeb(object:DisplayObject):Boolean 
 		{

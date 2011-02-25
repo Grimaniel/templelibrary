@@ -43,7 +43,7 @@
 package 
 {
 	import temple.debug.log.LogLevels;
-	import temple.core.temple;
+	import temple.core.templelibrary;
 	import temple.debug.log.Log;
 	import temple.utils.types.ObjectUtils;
 	
@@ -80,12 +80,12 @@ package
 			case LogLevels.STATUS:
 			case LogLevels.WARN:
 			{
-				Log.temple::send(message, "log", level);
+				Log.templelibrary::send(message, "log", level);
 				break;
 			}
 			default:
 			{
-				Log.temple::send(message, "log", LogLevels.INFO);
+				Log.templelibrary::send(message, "log", LogLevels.INFO);
 				Log.error("Invalid value for level: '" + level + "'", "log");
 			}
 		}

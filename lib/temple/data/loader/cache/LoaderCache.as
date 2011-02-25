@@ -106,8 +106,9 @@ package temple.data.loader.cache
 		{
 			if (url && LoaderCache._cache[url])
 			{
-				LoaderCacheData(LoaderCache._cache[url]).destruct();
+				var data:LoaderCacheData = LoaderCacheData(LoaderCache._cache[url]);
 				delete LoaderCache._cache[url];
+				data.destruct();
 			}
 			else if (url == null)
 			{

@@ -70,7 +70,6 @@ package temple.utils.types
 			var d:Number = end - start;
 			return start + (d - Math.random() * d);
 		}
-
 		
 		/**
 		 * Finds the x value of a point on a sine curve of which only the y value is known. The closest x value is returned, ranging between -1 pi and 1 pi.
@@ -159,7 +158,7 @@ package temple.utils.types
 			var decimals:String = p != -1 ? str.substr(p + 1) : '';
 			while (decimals.length < precision) decimals = decimals + '0';
 			
-			var floored:String = Math.floor(number).toString();
+			var floored:String = number > 0 ? Math.floor(number).toString() : Math.ceil(number).toString();
 			var formatted:String = '';
 			
 			if (thousandDelimiter)

@@ -124,7 +124,7 @@ package temple.data.xml
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoading():Boolean
+		public function get isLoading():Boolean
 		{
 			return this._isLoading;
 		}
@@ -132,7 +132,7 @@ package temple.data.xml
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoaded():Boolean
+		public function get isLoaded():Boolean
 		{
 			return this._isLoaded;
 		}
