@@ -42,12 +42,12 @@
 
 package temple.data.loader.cache 
 {
-	import flash.utils.getTimer;
 	import temple.core.CoreEventDispatcher;
 	import temple.data.loader.ILoader;
 
 	import flash.events.Event;
 	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
 
 	/**
 	 * @author Bart van der Schoor, Thijs Broerse
@@ -94,7 +94,7 @@ package temple.data.loader.cache
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoading():Boolean
+		public function get isLoading():Boolean
 		{
 			return this._bytes == null;
 		}
@@ -102,7 +102,7 @@ package temple.data.loader.cache
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoaded():Boolean
+		public function get isLoaded():Boolean
 		{
 			return this._bytes != null;
 		}

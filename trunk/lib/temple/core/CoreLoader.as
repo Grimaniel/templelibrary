@@ -187,27 +187,27 @@ package temple.core
 			
 			this._logErrors = logErrors;
 			
-			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, temple::handleUnload, false, 0, true);
+			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, templelibrary::handleUnload, false, 0, true);
 			
 			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
-			this.addEventListener(Event.ADDED, temple::handleAdded);
-			this.addEventListener(Event.ADDED_TO_STAGE,temple::handleAddedToStage);
-			this.addEventListener(Event.REMOVED, temple::handleRemoved);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, temple::handleRemovedFromStage);
+			this.addEventListener(Event.ADDED, templelibrary::handleAdded);
+			this.addEventListener(Event.ADDED_TO_STAGE,templelibrary::handleAddedToStage);
+			this.addEventListener(Event.REMOVED, templelibrary::handleRemoved);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, templelibrary::handleRemovedFromStage);
 			
 			// Add default listeners to Error events
-			this.contentLoaderInfo.addEventListener(Event.OPEN, temple::handleLoadStart, false, 0, true);
-			this.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, temple::handleLoadProgress, false, 0, true);
-			this.contentLoaderInfo.addEventListener(Event.INIT, temple::handleLoadInit, false, 0, true);
-			this.contentLoaderInfo.addEventListener(Event.COMPLETE, temple::handleLoadComplete, false, 0, true);
-			this.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, temple::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
-			this.contentLoaderInfo.addEventListener(IOErrorEvent.DISK_ERROR, temple::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
-			this.contentLoaderInfo.addEventListener(IOErrorEvent.NETWORK_ERROR, temple::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
-			this.contentLoaderInfo.addEventListener(IOErrorEvent.VERIFY_ERROR, temple::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
-			this.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, temple::handleSecurityError, false, CoreLoader._DEFAULT_HANDLER, true);
+			this.contentLoaderInfo.addEventListener(Event.OPEN, templelibrary::handleLoadStart, false, 0, true);
+			this.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, templelibrary::handleLoadProgress, false, 0, true);
+			this.contentLoaderInfo.addEventListener(Event.INIT, templelibrary::handleLoadInit, false, 0, true);
+			this.contentLoaderInfo.addEventListener(Event.COMPLETE, templelibrary::handleLoadComplete, false, 0, true);
+			this.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, templelibrary::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
+			this.contentLoaderInfo.addEventListener(IOErrorEvent.DISK_ERROR, templelibrary::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
+			this.contentLoaderInfo.addEventListener(IOErrorEvent.NETWORK_ERROR, templelibrary::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
+			this.contentLoaderInfo.addEventListener(IOErrorEvent.VERIFY_ERROR, templelibrary::handleIOError, false, CoreLoader._DEFAULT_HANDLER, true);
+			this.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, templelibrary::handleSecurityError, false, CoreLoader._DEFAULT_HANDLER, true);
 		}
 		
 		/**
@@ -298,7 +298,7 @@ package temple.core
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoading():Boolean
+		public function get isLoading():Boolean
 		{
 			return this._isLoading;
 		}
@@ -306,7 +306,7 @@ package temple.core
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoaded():Boolean
+		public function get isLoaded():Boolean
 		{
 			return this._isLoaded;
 		}
@@ -541,7 +541,7 @@ package temple.core
 		public function set preloader(value:IPreloader):void
 		{
 			if (value && !this._preloadableBehavior) this._preloadableBehavior = new PreloadableBehavior(this);
-			this._preloadableBehavior.preloader = value;
+			if (this._preloadableBehavior) this._preloadableBehavior.preloader = value;
 		}
 		
 		/**
@@ -583,7 +583,7 @@ package temple.core
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.DEBUG, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.DEBUG, this._registryId);
 		}
 		
 		/**
@@ -592,7 +592,7 @@ package temple.core
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.ERROR, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.ERROR, this._registryId);
 		}
 		
 		/**
@@ -601,7 +601,7 @@ package temple.core
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.FATAL, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.FATAL, this._registryId);
 		}
 		
 		/**
@@ -610,7 +610,7 @@ package temple.core
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.INFO, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.INFO, this._registryId);
 		}
 		
 		/**
@@ -619,7 +619,7 @@ package temple.core
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.STATUS, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.STATUS, this._registryId);
 		}
 		
 		/**
@@ -628,35 +628,35 @@ package temple.core
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.temple::send(data, this.toString(), LogLevels.WARN, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevels.WARN, this._registryId);
 		}
 		
-		temple final function handleUnload(event:Event):void
+		templelibrary final function handleUnload(event:Event):void
 		{
 			if (this._destructOnUnload) this.destruct();
 		}
 		
-		temple final function handleAdded(event:Event):void
+		templelibrary final function handleAdded(event:Event):void
 		{
 			if (event.currentTarget == this) this._onParent = true;
 		}
 
-		temple final function handleAddedToStage(event:Event):void
+		templelibrary final function handleAddedToStage(event:Event):void
 		{
 			this._onStage = true;
 		}
 
-		temple final function handleRemoved(event:Event):void
+		templelibrary final function handleRemoved(event:Event):void
 		{
 			if (event.currentTarget == this) this._onParent = false;
 		}
 		
-		temple final function handleRemovedFromStage(event:Event):void
+		templelibrary final function handleRemovedFromStage(event:Event):void
 		{
 			this._onStage = false;
 		}
 
-		temple final function handleLoadStart(event:Event):void
+		templelibrary final function handleLoadStart(event:Event):void
 		{
 			if (this.debug) this.logDebug("handleLoadStart");
 			
@@ -664,20 +664,19 @@ package temple.core
 			this.dispatchEvent(event.clone());
 		}
 
-		temple final function handleLoadProgress(event:ProgressEvent):void
+		templelibrary final function handleLoadProgress(event:ProgressEvent):void
 		{
 			if (this.debug) this.logDebug("handleLoadProgress: " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
-			
 			if (this._preloadableBehavior) this._preloadableBehavior.onLoadProgress();
 			this.dispatchEvent(event.clone());
 		}
 		
-		temple final function handleLoadInit(event:Event):void
+		templelibrary final function handleLoadInit(event:Event):void
 		{
 			this.dispatchEvent(event.clone());
 		}
 		
-		temple final function handleLoadComplete(event:Event):void
+		templelibrary final function handleLoadComplete(event:Event):void
 		{
 			if (this.debug) this.logDebug("handleLoadComplete");
 			
@@ -691,7 +690,7 @@ package temple.core
 		/**
 		 * Default IOError handler
 		 */
-		temple final function handleIOError(event:IOErrorEvent):void
+		templelibrary final function handleIOError(event:IOErrorEvent):void
 		{
 			this._isLoading = false;
 			if (this._preloadableBehavior) this._preloadableBehavior.onLoadComplete(this);
@@ -705,7 +704,7 @@ package temple.core
 		 * Default SecurityError handler
 		 * <p>If logErrors is set to true, an error message is logged</p>
 		 */
-		temple final function handleSecurityError(event:SecurityErrorEvent):void
+		templelibrary final function handleSecurityError(event:SecurityErrorEvent):void
 		{
 			this._isLoading = false;
 			if (this._preloadableBehavior) this._preloadableBehavior.onLoadComplete(this);
@@ -759,7 +758,7 @@ package temple.core
 				if (this.hasOwnProperty("unloadAndStop"))
 				{
 					//Flash Player 10 and later only
-					(this as Object).unloadAndStop(true);
+					(this as Object)['unloadAndStop'](true);
 				}
 				else
 				{
@@ -773,15 +772,15 @@ package temple.core
 			
 			if (this.contentLoaderInfo)
 			{
-				this.contentLoaderInfo.removeEventListener(Event.OPEN, temple::handleLoadStart);
-				this.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, temple::handleLoadProgress);
-				this.contentLoaderInfo.removeEventListener(Event.INIT, temple::handleLoadInit);
-				this.contentLoaderInfo.removeEventListener(Event.COMPLETE, temple::handleLoadComplete);
-				this.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, temple::handleIOError);
-				this.contentLoaderInfo.removeEventListener(IOErrorEvent.DISK_ERROR, temple::handleIOError);
-				this.contentLoaderInfo.removeEventListener(IOErrorEvent.NETWORK_ERROR, temple::handleIOError);
-				this.contentLoaderInfo.removeEventListener(IOErrorEvent.VERIFY_ERROR, temple::handleIOError);
-				this.contentLoaderInfo.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, temple::handleSecurityError);
+				this.contentLoaderInfo.removeEventListener(Event.OPEN, templelibrary::handleLoadStart);
+				this.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, templelibrary::handleLoadProgress);
+				this.contentLoaderInfo.removeEventListener(Event.INIT, templelibrary::handleLoadInit);
+				this.contentLoaderInfo.removeEventListener(Event.COMPLETE, templelibrary::handleLoadComplete);
+				this.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, templelibrary::handleIOError);
+				this.contentLoaderInfo.removeEventListener(IOErrorEvent.DISK_ERROR, templelibrary::handleIOError);
+				this.contentLoaderInfo.removeEventListener(IOErrorEvent.NETWORK_ERROR, templelibrary::handleIOError);
+				this.contentLoaderInfo.removeEventListener(IOErrorEvent.VERIFY_ERROR, templelibrary::handleIOError);
+				this.contentLoaderInfo.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, templelibrary::handleSecurityError);
 			}
 			
 			if (this.parent)

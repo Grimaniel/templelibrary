@@ -98,7 +98,7 @@ package temple.ui.states
 		 */
 		override public function show(instant:Boolean = false):void
 		{
-			if (this.enabled == false || this._shown) return;
+			if (this.enabled == false || this._shown && !instant) return;
 			this._shown = true;
 			MovieClipUtils.stop(this);
 			
@@ -128,7 +128,7 @@ package temple.ui.states
 		 */
 		override public function hide(instant:Boolean = false):void
 		{
-			if (this.enabled == false || !this._shown) return;
+			if (this.enabled == false || !this._shown && !instant) return;
 			this._shown = false;
 			MovieClipUtils.stop(this);
 			

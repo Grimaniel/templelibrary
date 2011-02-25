@@ -42,7 +42,6 @@
 
 package temple.media.image 
 {
-	import temple.ui.IHasBackground;
 	import temple.core.CoreSprite;
 	import temple.data.loader.ILoader;
 	import temple.data.loader.cache.CacheLoader;
@@ -51,6 +50,7 @@ package temple.media.image
 	import temple.data.loader.preload.IPreloader;
 	import temple.data.loader.preload.PreloaderMode;
 	import temple.debug.IDebuggable;
+	import temple.ui.IHasBackground;
 	import temple.ui.layout.Align;
 	import temple.ui.layout.ScaleMode;
 
@@ -101,13 +101,13 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		private var _align:String;
 		private var _upscaleEnabled:Boolean = true;
 		private var _smoothing:Boolean;
-		private var _loaderContext:LoaderContext;
 		private var _preloader:IPreloader;
 		private var _preloaderMode:String;
 		private var _background:Boolean;
 		private var _backgroundColor:uint;
 		private var _backgroundAlpha:Number = 1;
 		private var _debug:Boolean;
+		private var _loaderContext:LoaderContext;
 
 		/**
 		 * @param url If supplied, start loading this url, can be an url (String) or the data (ByteArray)
@@ -183,7 +183,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 */
 		public function load(url:String, context:LoaderContext = null):void
 		{
-			if (this._debug) this.logDebug("load: " + url);
+			if (this._debug) this.logDebug("load: " + url + ' context: ' + context);
 			this._loader.load(new URLRequest(url), !context && this._loaderContext ? this._loaderContext : context);
 		}
 		
@@ -400,7 +400,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 */
 		public function get bitmap():Bitmap 
 		{
-			return this.content ? Bitmap(this.content) : null;
+			return this.content as Bitmap;
 		}
 		
 		/**
@@ -412,32 +412,15 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 */
 		public function get bitmapData():BitmapData 
 		{
-			return this.content ? Bitmap(this.content).bitmapData : null;
+			return this.content && this.content is Bitmap ? Bitmap(this.content).bitmapData : null;
 		}
 		
-		/**
-		 *	Returns the clipped image as JPG encoded ByteArray.
-		 *	
-		 *	You can use this to get the JPG or PNG byteArray of th eloaded data:
-		 *	new JPGEncoder(quality).encode(imageLoader.clippedBitmapData);
-		 *	PNGEncoder.encode(imageLoader.clippedBitmapData);
-		 */
-		public function get clippedBitmapData():BitmapData 
-		{
-			if (!this.isLoaded()) return null;
-			
-			var bmd:BitmapData = new BitmapData(this.width, this.height, true, 0x00FFFFFF);
-			bmd.draw(this);
-			
-			return bmd;
-		}
-
 		/**
 		 * Returns the content of the Loader
 		 */
 		public function get content():DisplayObject
 		{
-			if (!this.isLoaded()) return null;
+			if (!this.isLoaded) return null;
 			
 			var content:DisplayObject;
 			
@@ -455,17 +438,17 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoading():Boolean
+		public function get isLoading():Boolean
 		{
-			return this._loader.isLoading();
+			return this._loader.isLoading;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoaded():Boolean
+		public function get isLoaded():Boolean
 		{
-			return this._loader.isLoaded();
+			return this._loader.isLoaded;
 		}
 		
 		/**
@@ -581,7 +564,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 			this.dispatchEvent(event);
 		}
 
-		private function handleLoadComplete(event:Event):void
+		protected function handleLoadComplete(event:Event):void
 		{
 			if (this._debug) this.logDebug("handleLoadComplete");
 			
@@ -598,7 +581,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 
 		private function layoutImage():void
 		{
-			if (!this._loader.isLoaded()) return;
+			if (!this._loader.isLoaded) return;
 			
 			if (this.debug) this.logDebug("layoutImage: clipping=" + this._clipping + ", scaleMode='" + this._scaleMode + "', align='" + this._align + "', upscaleEnabled:" + this._upscaleEnabled);
 			
@@ -715,7 +698,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 					}
 				}
 			}
-			if (this._loader.isLoading()) this.layoutPreloader();
+			if (this._loader.isLoading) this.layoutPreloader();
 			
 			this.setBackground();
 			

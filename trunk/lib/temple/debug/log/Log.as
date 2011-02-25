@@ -1,4 +1,4 @@
-/*
+﻿/*
  *	 
  *	Temple Library for ActionScript 3.0
  *	Copyright © 2010 MediaMonks B.V.
@@ -59,7 +59,7 @@ limitations under the License.
 
 package temple.debug.log 
 {
-	import temple.core.temple;
+	import temple.core.templelibrary;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
 	import temple.utils.types.TimeUtils;
@@ -141,7 +141,7 @@ package temple.debug.log
 		 */
 		public static function debug(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.temple::send(data, sender, LogLevels.DEBUG, objectId);
+			Log.templelibrary::send(data, sender, LogLevels.DEBUG, objectId);
 		}
 
 		/**
@@ -158,7 +158,7 @@ package temple.debug.log
 		 */
 		public static function info(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.temple::send(data, sender, LogLevels.INFO, objectId);
+			Log.templelibrary::send(data, sender, LogLevels.INFO, objectId);
 		}
 
 		/**
@@ -175,7 +175,7 @@ package temple.debug.log
 		 */
 		public static function error(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.temple::send(data, sender, LogLevels.ERROR, objectId);
+			Log.templelibrary::send(data, sender, LogLevels.ERROR, objectId);
 		}
 
 		/**
@@ -192,7 +192,7 @@ package temple.debug.log
 		 */
 		public static function warn(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.temple::send(data, sender, LogLevels.WARN, objectId);
+			Log.templelibrary::send(data, sender, LogLevels.WARN, objectId);
 		}
 
 		/**
@@ -209,7 +209,7 @@ package temple.debug.log
 		 */
 		public static function fatal(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.temple::send(data, sender, LogLevels.FATAL, objectId);
+			Log.templelibrary::send(data, sender, LogLevels.FATAL, objectId);
 		}
 
 		/**
@@ -226,7 +226,7 @@ package temple.debug.log
 		 */
 		public static function status(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.temple::send(data, sender, LogLevels.STATUS, objectId);
+			Log.templelibrary::send(data, sender, LogLevels.STATUS, objectId);
 		}
 
 		/**
@@ -237,7 +237,7 @@ package temple.debug.log
 		 *	@param objectId the Registry objectId that is stored in Core Objects;
 		 *	@param stackLine the line of the stackTrace that must be used as stack. Only works if stackTrace is enabled.
 		 */
-		temple static function send(data:*, sender:String, level:String, objectId:uint = 0, stackLine:uint = 3):void 
+		templelibrary static function send(data:*, sender:String, level:String, objectId:uint = 0, stackLine:uint = 3):void 
 		{
 			var stack:String;
 			

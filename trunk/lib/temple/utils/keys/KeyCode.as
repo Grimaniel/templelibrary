@@ -102,6 +102,21 @@ package temple.utils.keys
 		public static const NUMPAD_SUBTRACT:uint = Keyboard.NUMPAD_SUBTRACT;
 		public static const NUMPAD_MULTIPLY:uint = Keyboard.NUMPAD_MULTIPLY;
 
+		public static const SEMICOLON:uint = 186;
+		public static const EQUAL:uint = 187;
+		public static const COMMA:uint = 188;
+		public static const MINUS:uint = 189;
+		public static const PERIOD:uint = 190;
+		public static const SLASH:uint = 191;
+		public static const BACKQUOTE:uint = 192;
+		public static const LEFTBRACKET:uint = 219;
+		public static const BACKSLASH:uint = 220;
+		public static const RIGHTBRACKET:uint = 221;
+		public static const QUOTE:uint = 222;
+		public static const ALTERNATE:uint = 18;
+		public static const COMMAND:uint = 15;
+		public static const NUMPAD:uint = 21;
+
 		// Custom added
 		public static const A:uint = 65;
 		public static const B:uint = 66;
@@ -130,17 +145,18 @@ package temple.utils.keys
 		public static const Y:uint = 89;
 		public static const Z:uint = 90;
 
-		public static const NUM_0:uint = 96;		
-		public static const NUM_1:uint = 97;
-		public static const NUM_2:uint = 98;
-		public static const NUM_3:uint = 99;
-		public static const NUM_4:uint = 100;
-		public static const NUM_5:uint = 101;
-		public static const NUM_6:uint = 102;
-		public static const NUM_7:uint = 103;
-		public static const NUM_8:uint = 104;
-		public static const NUM_9:uint = 105;
-		public static const ADD:uint = 107;
-		public static const SUBSTRACT:uint = 109;
+		public static const NUM_0:uint = 48;		
+		public static const NUM_1:uint = 49;
+		public static const NUM_2:uint = 50;
+		public static const NUM_3:uint = 51;
+		public static const NUM_4:uint = 52;
+		public static const NUM_5:uint = 53;
+		public static const NUM_6:uint = 54;
+		public static const NUM_7:uint = 55;
+		public static const NUM_8:uint = 56;
+		public static const NUM_9:uint = 57;
+		
+		public static const SUBSTRACT:uint = 189;
+		public static const ADD:uint = 187;
 	}
 }

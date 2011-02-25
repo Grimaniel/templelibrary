@@ -291,6 +291,7 @@ package com.greensock
 		 */
 		public function TweenLite(target:Object, duration:Number, vars:Object) {
 			super(duration, vars);
+			if (target == null) throw new Error("target can not be null");
 			this.target = target;
 			if (this.target is TweenCore && this.vars.timeScale) { //if timeScale is in the vars object and the target is a TweenCore, this tween's timeScale must be adjusted (in TweenCore's constructor, it was set to whatever the vars.timeScale was)
 				this.cachedTimeScale = 1;

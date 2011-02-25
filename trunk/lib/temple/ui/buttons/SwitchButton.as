@@ -65,19 +65,11 @@ package temple.ui.buttons
 		/**
 		 * @inheritDoc
 		 */
-		public function get selected():Boolean 
-		{
-			return this.buttonBehavior.selected;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function set selected(value:Boolean):void 
+		override public function set selected(value:Boolean):void 
 		{
 			if (value != this.selected)
 			{
-				this.buttonBehavior.selected = value;
+				super.selected = value;
 				this.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}

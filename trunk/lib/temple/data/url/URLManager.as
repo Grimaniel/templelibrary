@@ -42,8 +42,6 @@
  
  package temple.data.url 
 {
-	import temple.utils.types.StringUtils;
-	import temple.utils.types.ArrayUtils;
 	import temple.data.collections.HashMap;
 	import temple.data.loader.ILoader;
 	import temple.data.loader.preload.IPreloadable;
@@ -56,9 +54,10 @@
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
 	import temple.utils.TraceUtils;
+	import temple.utils.types.ArrayUtils;
 	import temple.utils.types.ObjectUtils;
+	import temple.utils.types.StringUtils;
 
-	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
@@ -183,7 +182,7 @@
 		/**
 		 * Indicates if the urls.xml is loaded yet
 		 */
-		public static function isLoaded():Boolean
+		public static function get isLoaded():Boolean
 		{
 			return URLManager.getInstance()._loaded;
 		}
@@ -191,7 +190,7 @@
 		/**
 		 * Indicates if the urls.xml is being loaded, but not loaded yet
 		 */
-		public static function isLoading():Boolean
+		public static function get isLoading():Boolean
 		{
 			return URLManager.getInstance()._loading;
 		}
@@ -255,7 +254,7 @@
 		{
 			URLManager.getInstance()._variables[name] = value;
 			
-			if (URLManager.getInstance().isLoaded()) URLManager.getInstance().processXml();
+			if (URLManager.getInstance().isLoaded) URLManager.getInstance().processXml();
 		}
 		
 		/**
@@ -325,7 +324,7 @@
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoaded():Boolean
+		public function get isLoaded():Boolean
 		{
 			return this._loaded;
 		}
@@ -333,7 +332,7 @@
 		/**
 		 * @inheritDoc
 		 */
-		public function isLoading():Boolean
+		public function get isLoading():Boolean
 		{
 			return this._loading;
 		}
@@ -439,34 +438,14 @@
 		private function openURL(url:String, target:String, name:String = null):void 
 		{
 			if (url == null) throwError(new TempleArgumentError(this, "url can not be null"));
-			
 			this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
-			
 			try 
 			{
-				var request:URLRequest = new URLRequest(url);
-				
-				if (!ExternalInterface.available) 
-				{
-					navigateToURL(request, target);
-				} 
-				else 
-				{
-					var userAgent:String = String(ExternalInterface.call("function() {return navigator.userAgent;}")).toLowerCase();
-					
-					if (userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7)) 
-					{
-						ExternalInterface.call("window.open", request.url, target);
-					} 
-					else 
-					{
-						navigateToURL(request, target);
-					}
-				}
+				navigateToURL(new URLRequest(url), target);
 			}
-			catch (e:Error) 
+			catch (error:Error) 
 			{
-				this.logError("openURLByName: Error navigating to URL '" + url + "', system says:" + e.message);
+				this.logError("openURLByName: Error navigating to URL '" + url + "': '" + error.message + "'");
 			}
 		}
 

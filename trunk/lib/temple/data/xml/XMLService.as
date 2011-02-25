@@ -117,7 +117,7 @@ package temple.data.xml
 				}
 			}
 			
-			if (this._debug) this.logInfo("load: '" + urlData.name + "' from " + urlData.url);
+			if (this._debug) this.logInfo("load: '" + urlData.name + "' from '" + urlData.url + "'");
 			
 			this._loader.loadXML(urlData.url, urlData.name, vars, method);
 		}

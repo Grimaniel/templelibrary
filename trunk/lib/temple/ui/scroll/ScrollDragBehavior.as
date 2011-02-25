@@ -47,6 +47,7 @@ package temple.ui.scroll
 
 	import flash.display.InteractiveObject;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
 	/**
@@ -81,7 +82,7 @@ package temple.ui.scroll
 		{
 			super.handleMouseDown(event);
 			
-			this._startDragMousePoint = this.displayObject.scrollRect.topLeft;
+			this._startDragOffset = new Point(this.displayObject.scrollRect.topLeft.x - this.displayObject.parent.mouseX, this.displayObject.scrollRect.topLeft.y - this.displayObject.parent.mouseY);
 		}
 
 		/**
@@ -93,12 +94,12 @@ package temple.ui.scroll
 			
 			if (this.dragHorizontal)
 			{
-				scrollRect.x = this._startDragMousePoint.x - (this.displayObject.parent.mouseX - this._startDragMousePoint.x);
+				scrollRect.x = this._startDragOffset.x + this.displayObject.parent.mouseX;
 			}
 			
 			if (this.dragVertical)
 			{
-				scrollRect.y = this._startDragMousePoint.y - (this.displayObject.parent.mouseY - this._startDragMousePoint.y);
+				scrollRect.y = this._startDragOffset.y + this.displayObject.parent.mouseY;
 			}
 			
 			this.displayObject.scrollRect = scrollRect;

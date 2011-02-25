@@ -93,7 +93,6 @@ package temple.utils.types
 			return StringUtils.afterLast(url, ".");
 		}
 
-        
 		public static function toString():String
 		{
 			return getClassName(URLUtils);

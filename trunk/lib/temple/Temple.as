@@ -66,7 +66,7 @@ package temple
 		/**
 		 * The current version of the Temple Library
 		 */
-		public static const VERSION:String = "2.8.2";
+		public static const VERSION:String = "2.8.3";
 		
 		/**
 		 * The Authors of the Temple
@@ -76,7 +76,7 @@ package temple
 		/**
 		 * Last modified date of the Temple
 		 */
-		public static const DATE:String = "2011-01-12";
+		public static const DATE:String = "2011-02-25";
 
 		/**
 		 * The official website of the Temple.
@@ -132,7 +132,7 @@ package temple
 		/**
 		 * Indicates if the package will be displayed when calling a toString() method on an object or class
 		 * Example:
-		 * If set to true trace(Temple) will output 'temple::Temple'
+		 * If set to true trace(Temple) will output 'templelibrary::Temple'
 		 * If set to false trace(Temple) will output 'Temple'
 		 * 
 		 * @see temple.debug.getClassName#getClassName()

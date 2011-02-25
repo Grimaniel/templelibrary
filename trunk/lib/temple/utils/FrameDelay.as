@@ -60,6 +60,7 @@ limitations under the License.
 
 package temple.utils 
 {
+	import temple.debug.IDebuggable;
 	import temple.utils.types.FunctionUtils;
 	import temple.ui.IPauseable;
 	import temple.core.CoreObject;
@@ -94,8 +95,9 @@ package temple.utils
 	 * 
 	 * @author ASAPLibrary, Thijs Broerse
 	 */
-	public final class FrameDelay extends CoreObject implements IPauseable
+	public final class FrameDelay extends CoreObject implements IPauseable, IDebuggable
 	{
+		private var _debug:Boolean;
 		/**
 		 * Make frame-delayed callback: (eg: a closure to .resume() of a paused FrameDelay)
 		 */
@@ -117,14 +119,17 @@ package temple.utils
 		 * @param callback the callback function to be called when done waiting
 		 * @param frameCount the number of frames to wait; when left out, or set to 1 or 0, one frame is waited
 		 * @param params list of parameters to pass to the callback function
+		 * @param debug if set to true, debug information will be logged.
 		 */
-		public function FrameDelay(callback:Function, frameCount:int = 1, params:Array = null) 
+		public function FrameDelay(callback:Function, frameCount:int = 1, params:Array = null, debug:Boolean = false) 
 		{
 			this._currentFrame = frameCount;
 			this._callback = callback;
 			this._params = params;
 			this._isDone = (isNaN(frameCount) || (frameCount <= 1));
 			FramePulse.addEnterFrameListener(this.handleEnterFrame);
+			
+			this.debug = debug;
 		}
 		
 		/**
@@ -132,6 +137,8 @@ package temple.utils
 		 */
 		public function pause():void
 		{
+			if (this.debug) this.logDebug("pause: ");
+			
 			FramePulse.removeEnterFrameListener(this.handleEnterFrame);
 			this._paused = true;
 		}
@@ -141,6 +148,8 @@ package temple.utils
 		 */
 		public function resume():void
 		{
+			if (this.debug) this.logDebug("resume: ");
+			
 			if (!this.isDestructed && this._paused)
 			{
 				FramePulse.addEnterFrameListener(handleEnterFrame);
@@ -153,6 +162,22 @@ package temple.utils
 		public function get paused():Boolean
 		{
 			return this._paused;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
 		}
 
 		/**
@@ -167,6 +192,8 @@ package temple.utils
 				FramePulse.removeEnterFrameListener(this.handleEnterFrame);
 				if (this._callback != null)
 				{
+					if (this.debug) this.logDebug("Done, execute callback: ");
+					
 					if (this._params == null) 
 					{
 						this._callback();
@@ -182,6 +209,8 @@ package temple.utils
 			{
 				this._currentFrame--;
 				this._isDone = (this._currentFrame <= 1);
+				
+				if (this.debug) this.logDebug("handleEnterFrame: wait for " + this._currentFrame + " frames...");
 			}
 		}
 		
@@ -191,6 +220,8 @@ package temple.utils
 		 */
 		override public function destruct():void 
 		{
+			if (this.debug) this.logDebug("destruct: ");
+			
 			FramePulse.removeEnterFrameListener(this.handleEnterFrame);
 			
 			this._callback = null;
@@ -199,9 +230,12 @@ package temple.utils
 			super.destruct();
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function toString():String
 		{
-			return super.toString() + ": " + (this._callback != null ? FunctionUtils.functionToString(this._callback) + "(" + (this._params ? this._params : "") + ")" : "");
+			return super.toString() + ": " + (this._callback != null ? FunctionUtils.functionToString(this._callback).substring(0, -2) + "(" + (this._params ? this._params : "") + ")" : "");
 		}
 	}
 }

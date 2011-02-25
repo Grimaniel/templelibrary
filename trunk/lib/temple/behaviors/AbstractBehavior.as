@@ -41,7 +41,7 @@
 
 package temple.behaviors 
 {
-	import temple.core.temple;
+	import temple.core.templelibrary;
 	import temple.core.CoreEventDispatcher;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
@@ -78,7 +78,7 @@ package temple.behaviors
 			this._target = target;
 			if (this._target is IEventDispatcher)
 			{
-				(this._target as IEventDispatcher).addEventListener(DestructEvent.DESTRUCT, temple::handleTargetDestructed);
+				(this._target as IEventDispatcher).addEventListener(DestructEvent.DESTRUCT, templelibrary::handleTargetDestructed);
 			}
 			else
 			{
@@ -94,7 +94,7 @@ package temple.behaviors
 			return this._target;
 		}
 		
-		temple final function handleTargetDestructed(event:DestructEvent):void
+		templelibrary final function handleTargetDestructed(event:DestructEvent):void
 		{
 			this.destruct();
 		}
@@ -114,7 +114,7 @@ package temple.behaviors
 		{
 			if (this._target)
 			{
-				if (this._target is IEventDispatcher) (this._target as IEventDispatcher).removeEventListener(DestructEvent.DESTRUCT, temple::handleTargetDestructed);
+				if (this._target is IEventDispatcher) (this._target as IEventDispatcher).removeEventListener(DestructEvent.DESTRUCT, templelibrary::handleTargetDestructed);
 				this._target = null;
 			}
 			super.destruct();

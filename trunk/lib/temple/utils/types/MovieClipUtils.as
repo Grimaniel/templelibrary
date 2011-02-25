@@ -64,7 +64,7 @@ package temple.utils.types
 		/**
 		 * Stores all playing movieclip as [movieclip] = speed
 		 */
-		private static var _CLIP_DICTIONARY:Dictionary;
+		private static var _playInfoDictionary:Dictionary;
 
 		/**
 		 * Delays a MovieClip from playing for an amount of frames/milliseconds
@@ -90,20 +90,20 @@ package temple.utils.types
 		/**
 		 * Play a MovieClip at a given speed (forwards or backwards)
 		 * 
-		 * @param clip		MovieClip
-		 * @param speed		int				speed indication (negative for backwards playing)
+		 * @param movieclip the MovieClip that must be played.
+		 * @param speed indication (negative for backwards playing)
+		 * @param loop the movieclip if reached the end or beginning
 		 */
-		public static function play(movieclip:MovieClip, speed:int = 1):void
+		public static function play(movieclip:MovieClip, speed:Number = 1, loop:Boolean = false):void
 		{
 			MovieClipUtils.stop(movieclip);
 			
 			if (speed != 0)
 			{
-				if (MovieClipUtils._CLIP_DICTIONARY == null) MovieClipUtils._CLIP_DICTIONARY = new Dictionary(true);
+				if (MovieClipUtils._playInfoDictionary == null) MovieClipUtils._playInfoDictionary = new Dictionary(true);
 				
 				movieclip.addEventListener(Event.ENTER_FRAME, handleEnterFrame, false, 0, true);
-				
-				MovieClipUtils._CLIP_DICTIONARY[movieclip] = speed;
+				MovieClipUtils._playInfoDictionary[movieclip] = new PlayInfo(speed, loop, movieclip.currentFrame);
 			}
 		}
 		
@@ -118,14 +118,29 @@ package temple.utils.types
 		private static function handleEnterFrame(event:Event):void
 		{
 			var movieclip:MovieClip = MovieClip(event.target);
-			var speed:int = MovieClipUtils._CLIP_DICTIONARY[movieclip];
+			var playInfo:PlayInfo = MovieClipUtils._playInfoDictionary[movieclip];
 			
-			movieclip.gotoAndStop(movieclip.currentFrame + speed);
-			
-			if (movieclip.currentFrame == 1 || movieclip.currentFrame == movieclip.totalFrames)
+			if (playInfo.frame < 1 || playInfo.frame > movieclip.totalFrames)
 			{
-				MovieClipUtils.stop(movieclip);
+				if (playInfo.loop)
+				{
+					if (playInfo.frame < 1)
+					{
+						playInfo.frame += movieclip.totalFrames;
+					}
+					else
+					{
+						playInfo.frame -= movieclip.totalFrames;
+					}
+				}
+				else
+				{
+					playInfo.frame = playInfo.frame < 1 ? 1 : movieclip.totalFrames;
+					MovieClipUtils.stop(movieclip);
+				}
 			}
+			
+			movieclip.gotoAndStop(Math.round(playInfo.frame));
 		}
 
 		/**
@@ -137,7 +152,7 @@ package temple.utils.types
 		public static function stop(movieclip:MovieClip, callStop:Boolean = true):void
 		{
 			if (callStop) movieclip.stop();
-			if (MovieClipUtils._CLIP_DICTIONARY != null && MovieClipUtils._CLIP_DICTIONARY[movieclip] != null) movieclip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+			if (MovieClipUtils._playInfoDictionary != null && MovieClipUtils._playInfoDictionary[movieclip] != null) movieclip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 		
 		/**
@@ -300,4 +315,20 @@ package temple.utils.types
 			return getClassName(MovieClipUtils);
 		}
 	}
+}
+
+class PlayInfo
+{
+	internal var speed:Number;
+	internal var loop:Boolean;
+	internal var frame:int;
+
+	public function PlayInfo(speed:Number, loop:Boolean, frame:int)
+	{
+		this.speed = speed;
+		this.loop = loop;
+		this.frame = frame;
+	}
+
+	
 }

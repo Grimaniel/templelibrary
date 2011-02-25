@@ -598,7 +598,7 @@ package temple.data.xml
 				{
 					super.load(new URLData(url, url), sendData, method);
 				}
-				else if (URLManager.isLoaded())
+				else if (URLManager.isLoaded)
 				{
 					super.load(URLManager.getURLDataByName(name), sendData, method);
 				}
@@ -606,7 +606,7 @@ package temple.data.xml
 				{
 					URLManager.addEventListener(XMLServiceEvent.COMPLETE, handleURLManagerComplete);
 					
-					if (URLManager.isLoading() == false) URLManager.loadURLs();
+					if (!URLManager.isLoading) URLManager.loadURLs();
 				}
 			}
 			return loadData;
