@@ -165,13 +165,19 @@ package temple.core
 
 		/**
 		 * @inheritDoc
+		 * 
+		 * Checks if the object is actually loading before call super.unload();
 		 */ 
 		override public function close():void
 		{
-			super.close();
-			this._isLoading = false;
-			this._url = null;
-			if (this.debug) this.logDebug("close: ");
+			if (this._isLoading)
+			{
+				super.close();
+				
+				this._isLoading = false;
+				this._url = null;
+			}
+			else if (this._debug) this.logInfo('Nothing is loading, so closing is useless');
 		}
 		
 		/**

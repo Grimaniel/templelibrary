@@ -297,6 +297,40 @@ package temple.core
 		
 		/**
 		 * @inheritDoc
+		 * 
+		 * Checks if the object has loaded something before call super.unload();
+		 */
+		override public function unload():void
+		{
+			if (this._isLoaded)
+			{
+				super.unload();
+				
+				this._isLoaded = false;
+				this._url = null;
+			}
+			else if (this._debug) this.logInfo('Nothing is loaded, so unloading is useless');
+		}
+		
+		/**
+		 * @inheritDoc
+		 * 
+		 * Checks if the object is actually loading before call super.unload();
+		 */ 
+		override public function close():void
+		{
+			if (this._isLoading)
+			{
+				super.close();
+				
+				this._isLoading = false;
+				this._url = null;
+			}
+			else if (this._debug) this.logInfo('Nothing is loading, so closing is useless');
+		}
+		
+		/**
+		 * @inheritDoc
 		 */
 		public function get isLoading():Boolean
 		{
@@ -558,23 +592,6 @@ package temple.core
 		public function get bytesTotal():uint
 		{
 			return this.contentLoaderInfo ? this.contentLoaderInfo.bytesTotal : 0;
-		}
-		
-		/**
-		 * @inheritDoc
-		 * 
-		 * Checks if the object is actually loading or has loaded something before call super.unload();
-		 */
-		override public function unload():void
-		{
-			if (this._isLoaded || this._isLoading)
-			{
-				super.unload();
-			}
-			else
-			{
-				if (this._debug) this.logInfo('Nothing is loaded, so unloading is useless');
-			}
 		}
 		
 		/**

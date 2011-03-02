@@ -89,8 +89,6 @@ package temple.ui.form.services
 		 */
 		public function FormXMLService(url:String = null, resultClass:Class = null, debug:Boolean = false) 
 		{
-			super();
-			
 			this._url = url;
 			
 			this.resultClass = resultClass ? resultClass : FormResult;
