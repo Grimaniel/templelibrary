@@ -195,9 +195,17 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		{
 			this._loader.loadBytes(image, !context && this._loaderContext ? this._loaderContext : context);
 		}
+		
+		/**
+		 * Cancels a load() method operation that is currently in progress for the Loader instance.
+		 */
+		public function close():void 
+		{
+			this._loader.close();
+		}
 
 		/**
-		 * Unloads the current loaded image
+		 * Unloads the current loaded image.
 		 */
 		public function unload():void 
 		{

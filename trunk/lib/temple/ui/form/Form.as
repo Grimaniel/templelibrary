@@ -184,13 +184,13 @@ package temple.ui.form
 		 * For adding an input, checkbox, radiogroup etc. to the Form.
 		 * @param element the element to add (input/checkbox/radiogroup etc)
 		 * @param name the name in the submit object to the IFormService of this element. If null an auto incremented value will be used as name.
-		 * @param validator (optional) a class that validates the result, NOTE: validator must implement IValidationRule.
+		 * @param validationRule (optional) a class that validates the result, NOTE: validationRule must implement IValidationRule.
 		 * @param errorMessage (optional) an error message which is returned by the validator.
 		 * @param tabIndex (optional). The order for tabbing for this element.
 		 * @param submit (optional) indicates if this value should be submitted to the service (true) or should be ignored (false), default: true
 		 * @return the element
 		 */
-		public function addElement(element:IHasValue, name:String = null, validator:Class = null, errorMessage:String = null, tabIndex:int = -1, submit:Boolean = true):IHasValue 
+		public function addElement(element:IHasValue, name:String = null, validationRule:Class = null, errorMessage:String = null, tabIndex:int = -1, submit:Boolean = true):IHasValue 
 		{
 			if (this._debug)
 			{
@@ -223,9 +223,9 @@ package temple.ui.form
 			this._elements[name] = new FormElementData(name, element, tabIndex == -1 ? ObjectUtils.length(this._elements) : tabIndex, submit);
 			if (element is IDebuggable) DebugManager.addAsChild(element as IDebuggable, this);
 			
-			if (validator)
+			if (validationRule)
 			{
-				this._validator.addValidationRule(new validator(element), errorMessage);
+				this._validator.addValidationRule(new validationRule(element), errorMessage);
 			}
 			
 			if (element is IFocusable) this._tabFocusManager.add(element as IFocusable);

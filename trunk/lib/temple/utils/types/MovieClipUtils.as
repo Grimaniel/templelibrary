@@ -102,7 +102,7 @@ package temple.utils.types
 			{
 				if (MovieClipUtils._playInfoDictionary == null) MovieClipUtils._playInfoDictionary = new Dictionary(true);
 				
-				movieclip.addEventListener(Event.ENTER_FRAME, handleEnterFrame, false, 0, true);
+				movieclip.addEventListener(Event.ENTER_FRAME, MovieClipUtils.handleEnterFrame, false, 0, true);
 				MovieClipUtils._playInfoDictionary[movieclip] = new PlayInfo(speed, loop, movieclip.currentFrame);
 			}
 		}
@@ -120,27 +120,31 @@ package temple.utils.types
 			var movieclip:MovieClip = MovieClip(event.target);
 			var playInfo:PlayInfo = MovieClipUtils._playInfoDictionary[movieclip];
 			
-			if (playInfo.frame < 1 || playInfo.frame > movieclip.totalFrames)
+			if (playInfo)
 			{
-				if (playInfo.loop)
+				playInfo.frame += playInfo.speed;
+				
+				if (playInfo.frame < 1 || playInfo.frame > movieclip.totalFrames)
 				{
-					if (playInfo.frame < 1)
+					if (playInfo.loop)
 					{
-						playInfo.frame += movieclip.totalFrames;
+						if (playInfo.frame < 1)
+						{
+							playInfo.frame += movieclip.totalFrames;
+						}
+						else
+						{
+							playInfo.frame -= movieclip.totalFrames;
+						}
 					}
 					else
 					{
-						playInfo.frame -= movieclip.totalFrames;
+						playInfo.frame = playInfo.frame < 1 ? 1 : movieclip.totalFrames;
+						MovieClipUtils.stop(movieclip);
 					}
 				}
-				else
-				{
-					playInfo.frame = playInfo.frame < 1 ? 1 : movieclip.totalFrames;
-					MovieClipUtils.stop(movieclip);
-				}
+				movieclip.gotoAndStop(Math.round(playInfo.frame));
 			}
-			
-			movieclip.gotoAndStop(Math.round(playInfo.frame));
 		}
 
 		/**
@@ -319,9 +323,9 @@ package temple.utils.types
 
 class PlayInfo
 {
-	internal var speed:Number;
-	internal var loop:Boolean;
-	internal var frame:int;
+	public var speed:Number;
+	public var loop:Boolean;
+	public var frame:int;
 
 	public function PlayInfo(speed:Number, loop:Boolean, frame:int)
 	{
@@ -329,6 +333,4 @@ class PlayInfo
 		this.loop = loop;
 		this.frame = frame;
 	}
-
-	
 }

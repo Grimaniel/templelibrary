@@ -131,7 +131,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Returns a reference to the TextField
+		 * Returns a reference to the TextField.
 		 */
 		public function get textField():TextField
 		{
@@ -156,7 +156,7 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * The text in the contained input field
+		 * The text in the contained input field.
 		 */
 		public function get text():String 
 		{
@@ -178,7 +178,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Color of the text, if not set the original color of the TextField is used
+		 * Color of the text, if not set the original color of the TextField is used.
 		 */
 		public function get textColor():uint
 		{
@@ -194,7 +194,8 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Set the hint text to be displayed when nothing has been input in the field yet
+		 * Set the hint text to be displayed when nothing has been input in the field yet.
+		 * The hintText will automatically disappear when the InputField get focus and can be used the clarify the usage of the InputField.
 		 */
 		public function get hintText():String 
 		{
@@ -217,7 +218,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Set the prefill text to be displayed when nothing has been input in the field yet
+		 * Set the prefill text to be displayed when nothing has been input in the field yet.
 		 */
 		public function get prefillText():String 
 		{
@@ -254,7 +255,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Set the colour of the error text
+		 * Set the colour of the text when the InputField has an error.
 		 */
 		public function get errorTextColor():uint
 		{
@@ -361,7 +362,8 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Get or set a restriction on the input 
+		 * Get or set a restriction on the InputField.
+		 * @see temple.ui.form.validation.rules.Restrictions
 		 */
 		public function get restrict():String 
 		{
@@ -425,7 +427,7 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Will display '*******' instead of real characters 
+		 * Will display asterisks (&#42;&#42;&#42;&#42;) instead of real characters. 
 		 */
 		public function get displayAsPassword():Boolean
 		{
@@ -450,7 +452,7 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Indicates if the method getValue() trim the value
+		 * Indicates if the method getValue() trim the value.
 		 */
 		public function get trimValue():Boolean
 		{
@@ -458,8 +460,8 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Sets if the value should be trimmed
-		 * Trims only the value get by the getValue() method
+		 * Sets if the value should be trimmed.
+		 * Trims only the value get by the getValue() method.
 		 */
 		[Inspectable(name="Trim value (remove spaces)", type="Boolean", defaultValue=true)]
 		public function set trimValue(value:Boolean):void
@@ -468,8 +470,8 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Get or set the maximum charachters
-		 */
+		 * The maximum amount of characters that can be typed in the InputField.
+		 */	
 		public function get maxChars():int
 		{
 			return this._textField.maxChars;
@@ -493,7 +495,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		[Inspectable(name="Validation rule", type="String", defaultValue="none", enumeration="none,mandatory,email,postalcode (Dutch),mobile (Dutch),phone (Dutch)")]
 		public function set validationRuleName(value:String):void
@@ -540,7 +542,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * De bug value will be prefilled when form runs in debug mode
+		 * De bug value will be prefilled when form runs in debug mode.
 		 */
 		public function get debugValue():*
 		{
@@ -582,7 +584,7 @@ package temple.ui.form.components
 		
 		/**
 		 * When set to true, scaleX and scaleY will be reset to 0 and all children will be resized.
-		 * By using this the textfield and all 9-slice children will look normal
+		 * By using this the textfield and all 9-slice children will look normal.
 		 */
 		[Inspectable(name="Reset scaling", type="Boolean")]
 		public function set resetScale(value:Boolean):void
@@ -704,7 +706,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Limits the text to the design. It will prevend horizontal or vertical scrolling in the textfield 
+		 * Limits the text to the design. It will prevend horizontal or vertical scrolling in the textfield.
 		 */
 		public function get limitInputToDesign():Boolean
 		{
@@ -741,7 +743,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Indicates if the text should be selected if the InputField gets focus
+		 * Indicates if the text should be selected if the InputField gets focus.
 		 * @default true;
 		 */
 		public function get selectTextOnFocus():Boolean
