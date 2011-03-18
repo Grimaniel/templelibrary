@@ -70,7 +70,6 @@ package temple.core
 
 		public function CoreObject()
 		{
-			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 		}
 

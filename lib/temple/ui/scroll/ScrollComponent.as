@@ -131,7 +131,7 @@ package temple.ui.scroll
 		 */
 		override public function get contentWidth():Number 
 		{
-			return this.content.transform.pixelBounds.width + (!isNaN(this.marginLeft) ? this.marginLeft : 0) + (!isNaN(this.marginRight) ? this.marginRight : 0);
+			return this.content.transform.pixelBounds.width / this.content.transform.concatenatedMatrix.a + (!isNaN(this.marginLeft) ? this.marginLeft : 0) + (!isNaN(this.marginRight) ? this.marginRight : 0);
 		}
 
 		/**
@@ -165,7 +165,7 @@ package temple.ui.scroll
 
 		override public function get contentHeight():Number 
 		{
-			return this.content.transform.pixelBounds.height + (!isNaN(this.marginTop) ? this.marginTop : 0) + (!isNaN(this.marginBottom) ? this.marginBottom : 0);
+			return this.content.transform.pixelBounds.height / this.content.transform.concatenatedMatrix.d + (!isNaN(this.marginTop) ? this.marginTop : 0) + (!isNaN(this.marginBottom) ? this.marginBottom : 0);
 		}
 
 		/**

@@ -177,11 +177,35 @@ package temple.ui.buttons.behaviors
 		/**
 		 * @inheritDoc
 		 */
+		override public function set lockOver(value:Boolean):void
+		{
+			if (this.lockOver != value)
+			{
+				super.lockOver = value;
+				this.update();
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		override public function set down(value:Boolean):void
 		{
 			if (this.down != value)
 			{
 				super.down = value;
+				this.update();
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function set lockDown(value:Boolean):void
+		{
+			if (this.lockDown != value)
+			{
+				super.lockDown = value;
 				this.update();
 			}
 		}

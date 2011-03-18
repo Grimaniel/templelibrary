@@ -1,16 +1,14 @@
 /**
- * VERSION: 0.21 (beta)
- * DATE: 2010-04-21
- * ACTIONSCRIPT VERSION: 3.0 
- * UPDATES AND DOCUMENTATION AT: http://www.GreenSock.com
+ * VERSION: 0.5
+ * DATE: 2011-01-12
+ * AS3
+ * UPDATES AND DOCS AT: http://www.greensock.com
  **/
-package com.greensock.motionPaths 
-{
+package com.greensock.motionPaths {
 	import flash.display.Shape;
 	import flash.events.Event;
-
-	/**
-	 * A MotionPath defines a path along which a PathFollower can travel, making it relatively simple to do 
+/**
+ * A MotionPath defines a path along which a PathFollower can travel, making it relatively simple to do 
  * things like tween an object in a circular path. A PathFollower's position along the path is described using
  * its <code>progress</code> property, a value between 0 and 1 where 0 is at the beginning of the path, 0.5 is in
  * the middle, and 1 is at the very end of the path. So to tween a PathFollower along the path, you can simply
@@ -64,7 +62,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
  * 			property which will provide better performance than tweening each follower independently.</li>
  * </ul>
  * 
- * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -98,17 +96,19 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		protected var _rootFollower:PathFollower;
 		/** @private **/
 		protected var _progress:Number;
+		/** @private not re-interpolated between 0 and 1. **/
+		protected var _rawProgress:Number;
 		
 		/** @private **/
 		public function MotionPath() {
-			_progress = 0;
+			_progress = _rawProgress = 0;
 			lineStyle(1, 0x666666, 1, false, "none", null, null, 3, true);
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
 		}
 		
 		/** @private **/
 		protected function onAddedToStage(event:Event):void {
-			renderAll();
+			update();
 		}
 		
 		/**
@@ -136,8 +136,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 				f.cachedNext = _rootFollower;
 				_rootFollower = f;
 				f.path = this;
-				f.cachedProgress = progress;
-				renderObjectAt(f.target, progress, autoRotate, rotationOffset);
+				f.progress = progress;
 			}
 			return f;
 		}
@@ -209,7 +208,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 				if (f == null) {
 					f = this.addFollower(targets[i], 0, autoRotate, rotationOffset);
 				}
-				f.cachedProgress = min + (space * i);
+				f.cachedProgress = f.cachedRawProgress = min + (space * i);
 				this.renderObjectAt(f.target, f.cachedProgress, autoRotate, rotationOffset);
 			}
 		}
@@ -244,8 +243,11 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 			return null;
 		}
 		
-		/** @private **/
-		protected function renderAll():void {
+		/** 
+		 * Forces the MotionPath to re-render itself and all of its followers.
+		 * 
+		 * @param event An optional Event that is accepted just to make it easier for use as an event handler (to have it update automatically on every frame, for example, you could add an ENTER_FRAME listener and point it to this method).  **/
+		public function update(event:Event=null):void {
 			
 		}
 		
@@ -304,7 +306,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 			_miterLimit = miterLimit;
 			_redrawLine = true;
 			if (!skipRedraw) {
-				renderAll();
+				update();
 			}
 		}
 		
@@ -314,7 +316,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		}
 		override public function set rotation(value:Number):void {
 			super.rotation = value;
-			renderAll();
+			update();
 		}
 		
 		/** @inheritDoc **/
@@ -323,7 +325,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		}
 		override public function set scaleX(value:Number):void {
 			super.scaleX = value;
-			renderAll();
+			update();
 		}
 		
 		/** @inheritDoc **/
@@ -332,7 +334,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		}
 		override public function set scaleY(value:Number):void {
 			super.scaleY = value;
-			renderAll();
+			update();
 		}
 		
 		/** @inheritDoc **/
@@ -341,7 +343,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		}
 		override public function set x(value:Number):void {
 			super.x = value;
-			renderAll();
+			update();
 		}
 		
 		/** @inheritDoc **/
@@ -350,7 +352,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		}
 		override public function set y(value:Number):void {
 			super.y = value;
-			renderAll();
+			update();
 		}
 		
 		/** @inheritDoc **/
@@ -359,7 +361,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		}
 		override public function set width(value:Number):void {
 			super.width = value;
-			renderAll();
+			update();
 		}
 		
 		/** @inheritDoc **/
@@ -368,7 +370,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		}
 		override public function set height(value:Number):void {
 			super.height = value;
-			renderAll();
+			update();
 		}
 		
 		/** @inheritDoc **/
@@ -378,38 +380,92 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		override public function set visible(value:Boolean):void {
 			super.visible = value;
 			_redrawLine = true;
-			renderAll();
+			update();
 		}
 		
 		/** 
-		 * A value (typically between 0 and 1) that can be used to move all followers along the path. Unlike a PathFollower's
-		 * <code>progress</code>, this value is not absolute - it simply facilitates movement of followers together along the 
-		 * path in a way that performs better than tweening each follower independently (plus it's easier). You can tween to
-		 * values that are greater than 1 or less than 0 but the values are simply wrapped. So, for example, setting 
-		 * <code>progress</code> to 1.2 is the same as setting it to 0.2 and -0.2 is the same as 0.8. If your goal is to
-		 * tween all followers around a CirclePath2D twice completely, you could just add 2 to the progress value or use a
-		 * relative value in the tween, like: <br /><br /><code>
+		 * Identical to <code>progress</code> except that the value is not re-interpolated between 0 and 1. 
+		 * For example, if you set the motion path's <code>rawProgress</code> to 2.1, <code>progress</code> 
+		 * would be 0.1 (the corresponding value between 0 and 1), essentially wrapping it. If <code>rawProgress</code> 
+		 * is set to -3.4, <code>progress</code> would be 0.6. Setting <code>progress</code> affects <code>rawProgress</code>
+		 * and vice versa. For example:<br /><br /><code>
+		 * 
+		 * myPath.progress = 2.1;<br />
+		 * trace(myPath.progress); //traces "0.1"<br />
+		 * trace(myPath.rawProgress); //traces "2.1"<br /><br /></code>
+		 * 
+		 * Either property can be used to move all followers along the path. Unlike a PathFollower's 
+		 * <code>progress</code> or <code>rawProgress</code>, this value is not absolute for motion paths - it simply 
+		 * facilitates relative movement of followers together along the path in a way that performs better than 
+		 * tweening each follower independently (plus it's easier). If your goal is to tween all followers around 
+		 * a CirclePath2D twice completely, for example, you could just add 2 to the <code>progress</code> or 
+		 * <code>rawProgress</code> value or use a relative value in the tween, like: <br /><br /><code>
+		 * 
+		 * TweenLite.to(myCircle, 5, {rawProgress:"2"}); //or myCircle.rawProgress + 2
+		 * 
+		 * </code>
+		 * @see #progress
+		 **/
+		public function get rawProgress():Number {
+			return _rawProgress;
+		}
+		public function set rawProgress(value:Number):void {
+			this.progress = value;
+		}
+		
+		/** 
+		 * A value between 0 and 1 that can be used to move all followers along the path. <code>progress</code>
+		 * is identical to <code>rawProgress</code> except that the <code>rawProgress</code> is not re-interpolated 
+		 * between 0 and 1. For example, if you set the motion path's <code>rawProgress</code> to 2.1, <code>progress</code> 
+		 * would be 0.1 (the corresponding value between 0 and 1), essentially wrapping it. If <code>rawProgress</code> 
+		 * is set to -3.4, <code>progress</code> would be 0.6. You may set <code>progress</code> to any value but it will
+		 * be re-interpolated to its corresponding value between 0 and 1 very much like a DisplayObject's "rotation" 
+		 * property in Flash where setting it to 270 works fine but when you trace() the rotation value it will report 
+		 * as -90 instead. Setting <code>progress</code> affects <code>rawProgress</code> too. For example:<br /><br /><code>
+		 * 
+		 * myPath.progress = 2.1;<br />
+		 * trace(myPath.progress); //traces "0.1"<br />
+		 * trace(myPath.rawProgress); //traces "2.1"<br /><br /></code>
+		 * 
+		 * Either property can be used to move all followers along the path. Unlike a PathFollower's 
+		 * <code>progress</code> or <code>rawProgress</code>, this value is not absolute for motion paths - it simply 
+		 * facilitates relative movement of followers together along the path in a way that performs better than 
+		 * tweening each follower independently (plus it's easier). If your goal is to tween all followers around 
+		 * a CirclePath2D twice completely, you could just add 2 to the <code>progress</code> or 
+		 * <code>rawProgress</code> value or use a relative value in the tween, like: <br /><br /><code>
 		 * 
 		 * TweenLite.to(myCircle, 5, {progress:"2"}); //or myCircle.progress + 2
 		 * 
 		 * </code>
+		 * @see #rawProgress
 		 **/
 		public function get progress():Number {
 			return _progress;
 		}
 		public function set progress(value:Number):void {
 			if (value > 1) {
+				_rawProgress = value;
 				value -= int(value);
+				if (value == 0) {
+					value = 1;
+				}
 			} else if (value < 0) {
+				_rawProgress = value;
 				value -= int(value) - 1;
+			} else {
+				_rawProgress = int(_rawProgress) + value;
 			}
 			var dif:Number = value - _progress;
 			var f:PathFollower = _rootFollower;
 			while (f) {
 				f.cachedProgress += dif;
+				f.cachedRawProgress += dif;
 				
 				if (f.cachedProgress > 1) {
 					f.cachedProgress -= int(f.cachedProgress);
+					if (f.cachedProgress == 0) {
+						f.cachedProgress = 1;
+					}
 				} else if (f.cachedProgress < 0) {
 					f.cachedProgress -= int(f.cachedProgress) - 1;
 				}
@@ -417,7 +473,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 				f = f.cachedNext;
 			}
 			_progress = value;
-			renderAll();
+			update();
 		}
 		
 		/** Returns an array of all PathFollower instances associated with this path **/

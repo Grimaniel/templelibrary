@@ -4,14 +4,12 @@
  * ACTIONSCRIPT VERSION: 3.0 
  * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
-package com.greensock.plugins 
-{
+package com.greensock.plugins {
 	import com.greensock.*;
-
-	/**
-	 * @private
-	 * 
-	 * Although hex colors are technically numbers, if you try to tween them conventionally, 
+/**
+ * @private
+ * 
+ * Although hex colors are technically numbers, if you try to tween them conventionally, 
  * you'll notice that they don't tween smoothly. To tween them properly, the red, green, and 
  * blue components must be extracted and tweened independently. The HexColorsPlugin makes it easy. 
  * To tween a property of your object that's a hex color to another hex color, just pass a hexColors 
@@ -44,7 +42,7 @@ package com.greensock.plugins
  * }<br /><br />
  * </code>
  * 
- * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */
@@ -101,8 +99,8 @@ package com.greensock.plugins
 		
 		/** @private **/
 		override public function set changeFactor(n:Number):void {
-			var i:int, a:Array;
-			for (i = _colors.length - 1; i > -1; i--) {
+			var i:int = _colors.length, a:Array;
+			while (--i > -1) {
 				a = _colors[i];
 				a[0][a[1]] = ((a[2] + (n * a[3])) << 16 | (a[4] + (n * a[5])) << 8 | (a[6] + (n * a[7])));
 			}

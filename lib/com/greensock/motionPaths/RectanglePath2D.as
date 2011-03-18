@@ -1,16 +1,15 @@
 /**
- * VERSION: 0.2 (beta)
- * DATE: 2010-04-21
- * ACTIONSCRIPT VERSION: 3.0 
- * UPDATES AND DOCUMENTATION AT: http://www.GreenSock.com
+ * VERSION: 0.4 (beta)
+ * DATE: 2010-12-22
+ * AS3
+ * UPDATES AND DOCS AT: http://www.greensock.com
  **/
-package com.greensock.motionPaths 
-{
+package com.greensock.motionPaths {
 	import flash.display.Graphics;
 	import flash.geom.Matrix;
-
-	/**
-	 * A RectanglePath2D defines a rectangular path on which a PathFollower can be placed, making it simple to tween objects
+	import flash.events.Event;
+/**
+ * A RectanglePath2D defines a rectangular path on which a PathFollower can be placed, making it simple to tween objects
  * along a rectangle's perimeter. A PathFollower's position along the path is described using its <code>progress</code> property, 
  * a value between 0 and 1 where 0 is at the beginning of the path (top left corner), and as the value increases, it
  * moves clockwise along the path so that 0.5 would be at the lower right corner, and 1 is all the way back at the 
@@ -51,7 +50,7 @@ TweenLite.to(follower, 2, {progress:-1});
  * 			property which will provide better performance than tweening each follower independently.</li>
  * </ul>
  * 
- * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -81,8 +80,8 @@ TweenLite.to(follower, 2, {progress:-1});
 			super.y = y;
 		}
 		
-		/** @private **/
-		override protected function renderAll():void {
+		/** @inheritDoc **/
+		override public function update(event:Event=null):void {
 			var xOffset:Number = _centerOrigin ? _rawWidth / -2 : 0;
 			var yOffset:Number = _centerOrigin ? _rawHeight / -2 : 0;
 			
@@ -128,7 +127,7 @@ TweenLite.to(follower, 2, {progress:-1});
 				
 				f = f.cachedNext;
 			}
-			if (_redrawLine && this.visible && this.parent) {
+			if (_redrawLine) {
 				var g:Graphics = this.graphics;
 				g.clear();
 				g.lineStyle(_thickness, _color, _lineAlpha, _pixelHinting, _scaleMode, _caps, _joints, _miterLimit);
@@ -192,7 +191,7 @@ TweenLite.to(follower, 2, {progress:-1});
 		public function set rawWidth(value:Number):void {
 			_rawWidth = value;
 			_redrawLine = true;
-			renderAll();
+			update();
 		}
 		
 		/** height of the rectangle in its unrotated, unscaled state (does not factor in any transformations like scaleX/scaleY/rotation) **/
@@ -202,7 +201,7 @@ TweenLite.to(follower, 2, {progress:-1});
 		public function set rawHeight(value:Number):void {
 			_rawHeight = value;
 			_redrawLine = true;
-			renderAll();
+			update();
 		}
 		
 		/** height of the rectangle in its unrotated, unscaled state (does not factor in any transformations like scaleX/scaleY/rotation) **/
@@ -212,7 +211,7 @@ TweenLite.to(follower, 2, {progress:-1});
 		public function set centerOrigin(value:Boolean):void {
 			_centerOrigin;
 			_redrawLine = true;
-			renderAll();
+			update();
 		}
 		
 	}

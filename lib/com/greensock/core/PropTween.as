@@ -1,4 +1,4 @@
-/**
+﻿/**
  * VERSION: 2.1
  * DATE: 2009-09-12
  * ACTIONSCRIPT VERSION: 3.0 (AS2 version is also available)
@@ -10,11 +10,11 @@ package com.greensock.core {
  * 
  * Stores information about an individual property tween. There is no reason to use this class directly - TweenLite, TweenMax, and some plugins use it internally.<br /><br />
  * 
- * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
-	public class PropTween {
+	final public class PropTween {
 		/** Target object **/
 		public var target:Object;
 		/** Name of the property that is being tweened **/

@@ -93,6 +93,7 @@ package temple.ui.form.components
 		private static const _NO_INDEX:int = 10000;
 
 		private static var _instances:HashMap;
+		private var _hasError:Boolean;
 
 		/**
 		 * Static function to get instances by name. Multiton implementation
@@ -360,10 +361,34 @@ package temple.ui.form.components
 		}
 		
 		/**
+		 * @inheritDoc 
+		 */
+		public function get hasError():Boolean
+		{
+			return this._hasError;
+		}
+
+		/**
+		 * @inheritDoc 
+		 */
+		public function set hasError(value:Boolean):void
+		{
+			if (value)
+			{
+				this.showError();
+			}
+			else
+			{
+				this.hideError();
+			}
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function showError(message:String = null):void 
 		{
+			this._hasError = true;
 			var leni:uint = this._buttons.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
@@ -377,6 +402,7 @@ package temple.ui.form.components
 		 */
 		public function hideError():void 
 		{
+			this._hasError = false;
 			var leni:uint = this._buttons.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{

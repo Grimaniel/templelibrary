@@ -65,6 +65,8 @@ package temple.ui.buttons.behaviors
 		private var _debug:Boolean;
 		private var _enabled:Boolean;
 		private var _focus:Boolean;
+		private var _lockOver:Boolean;
+		private var _lockDown:Boolean;
 
 		public function AbstractButtonBehavior(target:DisplayObject)
 		{
@@ -77,7 +79,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get over():Boolean
 		{
-			return this._over;
+			return this._over || this._lockOver;
 		}
 		
 		/**
@@ -89,11 +91,27 @@ package temple.ui.buttons.behaviors
 		}
 
 		/**
+		 * Lock the over state of the button. If set to true the button will display the over state even when the mouse isn't over the button. 
+		 */
+		public function get lockOver():Boolean
+		{
+			return this._lockOver;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set lockOver(value:Boolean):void
+		{
+			this._lockOver = value;
+		}
+
+		/**
 		 * @inheritDoc
 		 */
 		public function get down():Boolean
 		{
-			return this._down;
+			return this._down || this._lockDown;
 		}
 		
 		/**
@@ -102,6 +120,22 @@ package temple.ui.buttons.behaviors
 		public function set down(value:Boolean):void
 		{
 			this._down = value;
+		}
+
+		/**
+		 * Lock the down state of the button. If set to true the button will display the down state even when the mouse isn't over or pressing the button. 
+		 */
+		public function get lockDown():Boolean
+		{
+			return this._lockDown;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set lockDown(value:Boolean):void
+		{
+			this._lockDown = value;
 		}
 
 		/**

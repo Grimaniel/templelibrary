@@ -317,7 +317,7 @@ package temple.ui.scroll
 			{
 				return this._scrollPane.contentWidth + this._marginLeft + this._marginRight;
 			}
-			return this.displayObject.transform.pixelBounds.width + this._marginLeft + this._marginRight;
+			return this.displayObject.transform.pixelBounds.width / this.displayObject.transform.concatenatedMatrix.a + this._marginLeft + this._marginRight;
 		}
 
 		/**
@@ -349,7 +349,7 @@ package temple.ui.scroll
 			{
 				return this._scrollPane.contentHeight + this._marginTop + this._marginBottom;
 			}
-			return this.displayObject.transform.pixelBounds.height + this._marginTop + this._marginBottom;
+			return this.displayObject.transform.pixelBounds.height / this.displayObject.transform.concatenatedMatrix.d + this._marginTop + this._marginBottom;
 		}
 
 		/**

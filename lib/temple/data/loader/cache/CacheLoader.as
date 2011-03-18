@@ -69,8 +69,9 @@ package temple.data.loader.cache
 	public class CacheLoader extends CoreLoader implements ICacheable
 	{
 		private var _cacheURLLoader:CacheURLLoader;
+		private var _reloadAfterError:Boolean = true;
 
-		public function CacheLoader(logErrors:Boolean = true, cache:Boolean = true)
+		public function CacheLoader(logErrors:Boolean = true, cache:Boolean = true, reloadAfterError:Boolean = true)
 		{
 			super(logErrors);
 			
@@ -92,6 +93,7 @@ package temple.data.loader.cache
 			DebugManager.addAsChild(this._cacheURLLoader, this);
 			
 			this.cache = cache;
+			this._reloadAfterError = reloadAfterError;
 		}
 
 		/**
@@ -117,6 +119,22 @@ package temple.data.loader.cache
 		{
 			this._cacheURLLoader.cache = value;
 			if (this.debug) this.logDebug("cache: " + value);
+		}
+		
+		/**
+		 * When set to true and cache is enabled, the cacheloader will reload the image with cache set to false if there is a SecurityError
+		 */
+		public function get reloadAfterError():Boolean
+		{
+			return this._reloadAfterError;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set reloadAfterError(value:Boolean):void
+		{
+			this._reloadAfterError = value;
 		}
 
 		/**
@@ -181,7 +199,7 @@ package temple.data.loader.cache
 		
 		private function handleSecurityError(event:SecurityErrorEvent):void 
 		{
-			if (this.cache)
+			if (this.cache && this._reloadAfterError)
 			{
 				this.logWarn("SecurityError: Cache is switched off. Reload...");
 				this.cache = false;
