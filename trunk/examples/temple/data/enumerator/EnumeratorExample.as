@@ -9,7 +9,7 @@
  * 
  * <p>View this example online at: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/enumerator/EnumeratorExample.swf" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/enumerator/EnumeratorExample.swf</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/EnumeratorExample.as" target="_blank">Download source</a>.
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/enumerator/EnumeratorExample.as" target="_blank">Download source</a>.
  * This example also uses the class <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/enumerator/Gender.as" target="_blank">Gender</a> and <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/data/enumerator/Person.as" target="_blank">Person</a>.</p>
  */
 package
