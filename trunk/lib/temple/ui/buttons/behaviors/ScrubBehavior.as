@@ -42,6 +42,7 @@
 
 package temple.ui.buttons.behaviors 
 {
+	import temple.ui.IEnableable;
 	import temple.behaviors.AbstractBehavior;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
@@ -57,10 +58,11 @@ package temple.ui.buttons.behaviors
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ScrubBehavior extends AbstractBehavior 
+	public class ScrubBehavior extends AbstractBehavior implements IEnableable
 	{
-		protected var _eventType:String;
-		protected var _stage:Stage;
+		private var _eventType:String;
+		private var _stage:Stage;
+		private var _enabled:Boolean = true;
 		
 		/**
 		 * Creates a new ScrubBehavior
@@ -71,7 +73,7 @@ package temple.ui.buttons.behaviors
 		{
 			super(target);
 			
-			this._eventType = eventType;
+			this.eventType = eventType;
 			
 			target.addEventListener(MouseEvent.MOUSE_DOWN, this.handleTargetMouseDown);
 
@@ -102,6 +104,38 @@ package temple.ui.buttons.behaviors
 		}
 		
 		/**
+		 * @inheritDoc
+		 */
+		public function get enabled():Boolean
+		{
+			return this._enabled;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set enabled(value:Boolean):void
+		{
+			this._enabled = value;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			this.enabled = true;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			this.enabled = false;
+		}
+		
+		/**
 		 * @private
 		 */
 		public function set eventType(value:String):void
@@ -125,7 +159,7 @@ package temple.ui.buttons.behaviors
 		
 		private function handleTargetMouseDown(event:MouseEvent):void
 		{
-			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
+			if (this._enabled) this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
 			
 			if (!this._stage && this.displayObject.stage) this._stage = this.displayObject.stage;
 			
@@ -138,7 +172,7 @@ package temple.ui.buttons.behaviors
 		
 		private function handleMouseMove(event:MouseEvent):void
 		{
-			if (event.buttonDown) this.displayObject.dispatchEvent(new MouseEvent(this._eventType, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
+			if (event.buttonDown && this._enabled) this.displayObject.dispatchEvent(new MouseEvent(this._eventType, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
 		}
 		
 		private function handleMouseUp(event:MouseEvent):void
@@ -169,6 +203,8 @@ package temple.ui.buttons.behaviors
 				this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
 				this._stage = null;
 			}
+			this._eventType = null;
+			
 			super.destruct();
 		}
 	}

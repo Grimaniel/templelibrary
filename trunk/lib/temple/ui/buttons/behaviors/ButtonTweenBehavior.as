@@ -61,12 +61,6 @@ package temple.ui.buttons.behaviors
 	 */
 	public class ButtonTweenBehavior extends AbstractButtonDesignBehavior
 	{
-		private static const _UP:String = "up";
-		private static const _OVER:String = "over";
-		private static const _DOWN:String = "down";
-		private static const _SELECTED:String = "selected";
-		private static const _DISABLED:String = "disabled";
-		
 		private var _upVars:Object;
 		private var _upDuration:Number;
 		
@@ -81,8 +75,7 @@ package temple.ui.buttons.behaviors
 		
 		private var _disabledVars:Object;
 		private var _disabledDuration:Number;
-		
-		private var _state:String;
+		private var _tween:TweenMax;
 		
 		public function ButtonTweenBehavior(target:DisplayObject, upDuration:Number = NaN, upVars:Object = null, overDuration:Number = NaN, overVars:Object = null, downDuration:Number = NaN, downVars:Object = null)
 		{
@@ -291,7 +284,7 @@ package temple.ui.buttons.behaviors
 			
 			if (!this.enabled) return;
 			
-			if (this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down + ", state=" + this._state);
+			if (this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down);
 			
 			switch (true)
 			{
@@ -329,7 +322,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function upState(immediately:Boolean = false):void
 		{
-			this.toState(ButtonTweenBehavior._UP, immediately ? 0 : this._upDuration, this._upVars);
+			this.toState(immediately ? 0 : this._upDuration, this._upVars);
 		}
 		
 		/**
@@ -338,7 +331,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function overState(immediately:Boolean = false):void
 		{
-			this.toState(ButtonTweenBehavior._OVER, immediately ? 0 : this._overDuration, this._overVars);
+			this.toState(immediately ? 0 : this._overDuration, this._overVars);
 		}
 		
 		/**
@@ -347,7 +340,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function downState(immediately:Boolean = false):void
 		{
-			this.toState(ButtonTweenBehavior._DOWN, immediately ? 0 : this._downDuration, this._downVars);
+			this.toState(immediately ? 0 : this._downDuration, this._downVars);
 		}
 		
 		/**
@@ -356,7 +349,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function selectedState(immediately:Boolean = false):void
 		{
-			this.toState(ButtonTweenBehavior._SELECTED, immediately ? 0 : this._selectedDuration, this._selectedVars);
+			this.toState(immediately ? 0 : this._selectedDuration, this._selectedVars);
 		}
 
 		/**
@@ -365,19 +358,19 @@ package temple.ui.buttons.behaviors
 		 */
 		public function disabledState(immediately:Boolean = false):void
 		{
-			this.toState(ButtonTweenBehavior._DISABLED, immediately ? 0 : this._disabledDuration, this._disabledVars);
+			this.toState(immediately ? 0 : this._disabledDuration, this._disabledVars);
 		}
 
-		private function toState(state:String, duration:Number, vars:Object):void
+		private function toState(duration:Number, vars:Object):void
 		{
-			if (this.debug) this.logDebug("toState: " + state + ", duration: " + duration + ", vars: " + ObjectUtils.traceObject(vars, 3, false));
+			if (this.debug) this.logDebug("toState: duration: " + duration + ", vars: " + ObjectUtils.traceObject(vars, 3, false));
 			
-			this._state = state;
 			if (isNaN(duration)) duration = 0;
+			if (this._tween) this._tween.destruct();
 			if (vars)
 			{
 				if (vars['ease'] is String) vars['ease'] = EaseLookup.find(vars['ease']);
-				TweenMax.to(this.target, duration, vars);
+				this._tween = TweenMax.to(this.target, duration, vars);
 			}
 		}
 
@@ -386,12 +379,16 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
+			if (this._tween)
+			{
+				this._tween.destruct();
+				this._tween = null;
+			}
 			this._upVars = null;
 			this._overVars = null;
 			this._downVars = null;
 			this._selectedVars = null;
 			this._disabledVars = null;
-			this._state = null;
 			
 			super.destruct();
 		}

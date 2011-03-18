@@ -223,7 +223,7 @@ package temple.ui.form.validation
 		}
 		
 		/**
-		 * Checks if a single element is valid and shows error if the element has an error and showError is set to true (default: false). Return true if form is valid.
+		 * Checks if a single element is valid and shows error if the element has an error and showError is set to true (default: false). Return true if element is valid.
 		 * @param showError if set to true the element will show an ErrorState if the element is not valid.
 		 */
 		public function isElementValid(element:IHasValue, showError:Boolean = false):Boolean 
@@ -249,7 +249,6 @@ package temple.ui.form.validation
 			{
 				(element as IHasError).showError(errorMessage);
 			}
-			
 			return valid;
 		}
 
@@ -268,7 +267,7 @@ package temple.ui.form.validation
 		}
 
 		/**
-		 * Stop the realtime validating add by the isValid function
+		 * Stop the realtime validating set by the isValid() function
 		 */
 		public function stopRealtimeValidating():void
 		{

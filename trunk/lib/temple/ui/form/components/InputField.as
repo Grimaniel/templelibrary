@@ -54,7 +54,6 @@ package temple.ui.form.components
 	import temple.ui.form.validation.rules.EmailValidationRule;
 	import temple.ui.form.validation.rules.EmptyStringValidationRule;
 	import temple.ui.form.validation.rules.Restrictions;
-	import temple.ui.states.StateHelper;
 	import temple.utils.keys.KeyCode;
 	import temple.utils.types.DisplayObjectContainerUtils;
 	import temple.utils.types.StringUtils;
@@ -97,7 +96,6 @@ package temple.ui.form.components
 		private var _errorTextColor:uint;
 		private var _trimValue:Boolean = true;
 		private var _displayAsPassword:Boolean;
-		private var _hasError:Boolean;
 		private var _debug:Boolean;
 		private var _debugValue:*;
 		private var _submitOnEnter:Boolean = true;
@@ -143,13 +141,13 @@ package temple.ui.form.components
 		 */
 		override public function set focus(value:Boolean):void
 		{
-			if (value == this._focus) return;
+			if (value == this.focus) return;
 			
 			if (value)
 			{
 				FocusManager.focus = this._textField;
 			}
-			else if (this._focus)
+			else if (this.focus)
 			{
 				FocusManager.focus = null;
 			}
@@ -270,7 +268,7 @@ package temple.ui.form.components
 		{
 			this._errorTextColor = value;
 			
-			if (this._hasError) this._textField.textColor = this._errorTextColor;
+			if (this.hasError) this._textField.textColor = this._errorTextColor;
 		}
 
 		/**
@@ -329,26 +327,24 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc 
 		 */
-		public function showError(message:String = null):void 
+		override public function showError(message:String = null):void 
 		{
-			this._hasError = true;
+			super.showError(message);
 			this._textField.textColor = this._errorTextColor;
-			StateHelper.showError(this, message);
 		}
 
 		/**
 		 * @inheritDoc 
 		 */
-		public function hideError():void 
+		override public function hideError():void 
 		{
-			this._hasError = false;
-			StateHelper.hideError(this);
-			
+			super.hideError();
 			if (this._showsHint)
 			{
 				this._textField.textColor = this._hintTextColor;
 			}
-			else{
+			else
+			{
 				this._textField.textColor = this._textColor;
 			}
 		}
@@ -831,14 +827,14 @@ package temple.ui.form.components
 		 */
 		protected function updateHint():void 
 		{
-			if (this._focus && this._showsHint) 
+			if (this.focus && this._showsHint) 
 			{
 				this._showsHint = false;
 				this._textField.text = "";
 				this._textField.textColor = this._textColor;
 				this._textField.displayAsPassword = this._displayAsPassword;
 			}
-			else if (!this._focus && !this._showsHint && (this._textField.text == "")) 
+			else if (!this.focus && !this._showsHint && (this._textField.text == "")) 
 			{
 				this._showsHint = true;
 				if (this._hintText)
@@ -848,7 +844,7 @@ package temple.ui.form.components
 					this._textField.displayAsPassword = false;
 				}
 			}
-			else if (this._textField.text != this._hintText && !this._hasError)
+			else if (this._textField.text != this._hintText && !this.hasError)
 			{
 				this._showsHint = false;
 				this._textField.textColor = this._textColor;

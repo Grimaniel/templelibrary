@@ -143,7 +143,7 @@ package temple.debug
 				}
 			}
 			
-			// if no debugsetting in url, set to default
+			// if no debugsetting in URL, set to default
 			if (!DebugManager._debugMode)
 			{
 				DebugManager.debugMode = Temple.defaultDebugMode;
@@ -451,7 +451,7 @@ package temple.debug
 		 */
 		public static function get debugMode():String
 		{
-			return DebugManager._debugMode;
+			return DebugManager._debugMode ||= Temple.defaultDebugMode;
 		}
 		
 		
@@ -502,7 +502,21 @@ package temple.debug
 			
 			info += "\n\tTemple version: " + Temple.VERSION;
 			info += "\n\tTemple date: " + Temple.DATE;
-			var date:Date = new Date();
+			var date:Date;
+			if (StageProvider.stage)
+			{
+				info += "\n\tCompilation date: ";
+				date = BuildMode.getCompilationDate(StageProvider.stage);
+				if (date)
+				{
+					info += date.fullYear + "-" + (date.month+1) + "-" + date.date + " " + date.hours + ":" + date.minutes + ":" + date.seconds;
+				}
+				else
+				{
+					info += "not found";
+				}
+			}
+			date = new Date();
 			info += "\n\tCurrent date: " + date.fullYear + "-" + (date.month+1) + "-" + date.date;
 			info += "\n\tPlayer version: " + Capabilities.version;
 			info += "\n\tEnvironment: " + Environment.getEnvironment();

@@ -81,6 +81,7 @@ package temple.ui.layout.liquid
 		private var _background:Boolean;
 		private var _backgroundColor:uint;
 		private var _backgroundAlpha:Number = 1;
+		private var _aspectRatio:Number;
 
 		public function LiquidContainer(width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = false)
 		{
@@ -427,7 +428,27 @@ package temple.ui.layout.liquid
 			}
 			return super.getBounds(targetCoordinateSpace);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function set keepAspectRatio(value:Boolean):void
+		{
+			super.keepAspectRatio = value;
+			
+			this._aspectRatio = value ? this._width / this._height : NaN;
+		}
+		
+		public function get aspectRatio():Number
+		{
+			return this._aspectRatio;
+		}
 
+		public function set aspectRatio(value:Number):void
+		{
+			this._aspectRatio = value;
+		}
+		
 		private function layout():void 
 		{
 			switch (this._scaleMode)
@@ -435,6 +456,17 @@ package temple.ui.layout.liquid
 				case ScaleMode.NO_SCALE:
 				{
 					if (this._clipping) this.scrollRect = new Rectangle(-this._horizontalAlign * (this._width - this._contentWidth), -this._verticalAlign * (this._height - this._contentHeight), this._width, this._height);
+					
+					if (!isNaN(this._aspectRatio))
+					{
+						var ratio:Number = this.width / this.height;
+						
+						if (ratio != this._aspectRatio)
+						{
+							this.width = this.height * this._aspectRatio;
+						}
+					}
+					
 					break;
 				}
 				case ScaleMode.SHOW_ALL:

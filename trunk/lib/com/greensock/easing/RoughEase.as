@@ -2,7 +2,7 @@
  * VERSION: 0.61
  * DATE: 2010-10-13
  * AS3
- * UPDATES AND DOCS AT: http://www.grensock.com/roughease/
+ * UPDATES AND DOCS AT: http://www.greensock.com/roughease/
  **/
 package com.greensock.easing {
 /**

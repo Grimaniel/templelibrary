@@ -51,6 +51,16 @@ package temple.ui.form.validation
 	public interface IHasError 
 	{
 		/**
+		 * Indicates if the object currently shows the error state.
+		 */
+		function get hasError():Boolean;
+
+		/**
+		 * @private
+		 */
+		function set hasError(value:Boolean):void;
+		
+		/**
 		 * Show the error state
 		 */
 		function showError(message:String = null):void;
@@ -59,5 +69,6 @@ package temple.ui.form.validation
 		 * Hide the error state
 		 */
 		function hideError():void;
+
 	}
 }

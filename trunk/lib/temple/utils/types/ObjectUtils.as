@@ -42,6 +42,7 @@
 
 package temple.utils.types 
 {
+	import temple.data.Enumerator;
 	import flash.utils.Dictionary;
 	import temple.core.ICoreObject;
 	import temple.data.xml.XMLParser;
@@ -99,8 +100,7 @@ package temple.utils.types
 		{
 			var output:String = "";
 			
-			// every time this function is called we'll add another
-			// tab to the indention in the output window
+			// every time this function is called we'll add another tab to the indention in the output window
 			tabs += "\t";
 			
 			if (maxDepth < 0 )
@@ -226,6 +226,10 @@ package temple.utils.types
 						{
 							output += "\n" + tabs + vardata.name + ": " + uint(ByteArray(variable).bytesAvailable / 1024) + "KB " + (['AMF0',,,'AMF3'][(ByteArray(variable).objectEncoding)]) + " position:" + ByteArray(variable).position + " (ByteArray)";
 						}
+						else if (variable is Enumerator)
+						{
+							output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable || getDefinitionByName(vardata.type)) + ")" : "") + " (" + getClassName(Enumerator) + ")";
+						}
 						else 
 						{
 							// object, make exception for Date
@@ -248,18 +252,20 @@ package temple.utils.types
 							}
 							else
 							{
-								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + (variable != null ? getClassName(variable) : vardata.type) + ")" : "") + (objects && objects[variable] ? " (duplicate)" : "");
+								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable || getDefinitionByName(vardata.type)) + ")" : "") + (objects && objects[variable] ? " (duplicate)" : "");
 							}
 						}
 						break;
 					}
 					default:				
 					{
+						vardata.type ||= getClassName(variable);
+						
 						//variable is not an object nor string, just trace it out normally
-						output += "\n" + tabs + vardata.name + ": " + variable + " (" + (vardata.type ? vardata.type : getClassName(variable)) + ")" ;
+						output += "\n" + tabs + vardata.name + ": " + variable + " (" + vardata.type + ")" ;
 						
 						// add value as hex for uints
-						if (vardata.type == "uint") output += " 0x" + uint(variable).toString(16).toUpperCase();
+						if (vardata.type == "uint" || vardata.type == "int") output += " 0x" + uint(variable).toString(16).toUpperCase();
 						
 						break;
 					}

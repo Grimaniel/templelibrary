@@ -95,6 +95,7 @@ package temple.ui.form.components
 		private var _label:ILabel;
 		private var _submit:Boolean = true;
 		private var _submitOnChange:Boolean;
+		private var _hasError:Boolean;
 
 		public function CheckBox()
 		{
@@ -111,12 +112,35 @@ package temple.ui.form.components
 			super.selected = value;
 		}
 		
+		/**
+		 * @inheritDoc 
+		 */
+		public function get hasError():Boolean
+		{
+			return this._hasError;
+		}
+
+		/**
+		 * @inheritDoc 
+		 */
+		public function set hasError(value:Boolean):void
+		{
+			if (value)
+			{
+				this.showError();
+			}
+			else
+			{
+				this.hideError();
+			}
+		}
 		
 		/**
 		 * @inheritDoc 
 		 */
 		public function showError(message:String = null):void 
 		{
+			this._hasError = true;
 			StateHelper.showError(this, message);
 		}
 		
@@ -125,6 +149,7 @@ package temple.ui.form.components
 		 */
 		public function hideError():void 
 		{
+			this._hasError = false;
 			StateHelper.hideError(this);
 		}
 

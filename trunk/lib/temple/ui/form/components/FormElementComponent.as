@@ -42,6 +42,7 @@
 
 package temple.ui.form.components 
 {
+	import temple.ui.form.validation.IHasError;
 	import temple.core.CoreSprite;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
@@ -56,14 +57,15 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FormElementComponent extends CoreSprite implements IFormElementComponent 
+	public class FormElementComponent extends CoreSprite implements IFormElementComponent, IHasError 
 	{
-		protected var _focus:Boolean;
-		protected var _dataName:String;
 		protected var _validator:Class;
-		protected var _errorMessage:String;
-		protected var _tabIndex:int;
-		protected var _submit:Boolean = true;
+		private var _focus:Boolean;
+		private var _dataName:String;
+		private var _errorMessage:String;
+		private var _tabIndex:int;
+		private var _submit:Boolean = true;
+		private var _hasError:Boolean;
 		
 		public function FormElementComponent()
 		{
@@ -183,6 +185,47 @@ package temple.ui.form.components
 			{
 				FocusManager.focus = null;
 			}
+		}
+		
+		/**
+		 * @inheritDoc 
+		 */
+		public function get hasError():Boolean
+		{
+			return this._hasError;
+		}
+
+		/**
+		 * @inheritDoc 
+		 */
+		public function set hasError(value:Boolean):void
+		{
+			if (value)
+			{
+				this.showError();
+			}
+			else
+			{
+				this.hideError();
+			}
+		}
+		
+		/**
+		 * @inheritDoc 
+		 */
+		public function showError(message:String = null):void 
+		{
+			this._hasError = true;
+			StateHelper.showError(this, message);
+		}
+		
+		/**
+		 * @inheritDoc 
+		 */
+		public function hideError():void 
+		{
+			this._hasError = false;
+			StateHelper.hideError(this);
 		}
 		
 		/**
