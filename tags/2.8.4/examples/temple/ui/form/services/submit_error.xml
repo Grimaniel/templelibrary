@@ -1,0 +1,7 @@
+<result>
+	<success>false</success>
+	<message>login failed</message>
+	<errors>
+		<error field='email'>Unknown email address</error>
+	</errors>
+</result>
