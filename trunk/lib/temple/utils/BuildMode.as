@@ -75,33 +75,37 @@ package temple.utils
 		
 		/**
 		 * Returns the date when the SWF is compiled.
+		 * Note: this only works for files compiled using mxmlc or FCSH. The Flash IDE does not add the compilation date.
 		 */
 		public static function getCompilationDate(displayObject:DisplayObject):Date
 		{
 			if (!displayObject) throwError(new TempleArgumentError(BuildMode, "No displayObject"));
-
-			var bytes:ByteArray = displayObject.loaderInfo.bytes;
-			bytes.endian = Endian.LITTLE_ENDIAN;
-			// Signature + Version + FileLength + FrameSize + FrameRate + FrameCount
-			bytes.position = 3 + 1 + 4 + (Math.ceil(((bytes[8] >> 3) * 4 - 3) / 8) + 1) + 2 + 2;
-			while (bytes.position != bytes.length)
+			
+			if (displayObject.loaderInfo.hasOwnProperty('bytes'))
 			{
-				var tagHeader:uint = bytes.readUnsignedShort();
-				if (tagHeader >> 6 == 41)
+				var bytes:ByteArray = displayObject.loaderInfo['bytes'] as ByteArray;
+				bytes.endian = Endian.LITTLE_ENDIAN;
+				// Signature + Version + FileLength + FrameSize + FrameRate + FrameCount
+				bytes.position = 3 + 1 + 4 + (Math.ceil(((bytes[8] >> 3) * 4 - 3) / 8) + 1) + 2 + 2;
+				while (bytes.position != bytes.length)
 				{
-					// ProductID + Edition + MajorVersion + MinorVersion + BuildLow + BuildHigh
-					bytes.position += 4 + 4 + 1 + 1 + 4 + 4;
-					var milli:Number = bytes.readUnsignedInt();
-					var date:Date = new Date();
-					date.setTime(milli + bytes.readUnsignedInt() * 4294967296);
-					return date;
+					var tagHeader:uint = bytes.readUnsignedShort();
+					if (tagHeader >> 6 == 41)
+					{
+						// ProductID + Edition + MajorVersion + MinorVersion + BuildLow + BuildHigh
+						bytes.position += 4 + 4 + 1 + 1 + 4 + 4;
+						var milli:Number = bytes.readUnsignedInt();
+						var date:Date = new Date();
+						date.setTime(milli + bytes.readUnsignedInt() * 4294967296);
+						return date;
+					}
+					else
+					{
+						bytes.position += (tagHeader & 63) != 63 ? (tagHeader & 63) : bytes.readUnsignedInt() + 4;
+					}
 				}
-				else
-				{
-					bytes.position += (tagHeader & 63) != 63 ? (tagHeader & 63) : bytes.readUnsignedInt() + 4;
-				}
+				Log.warn("No ProductInfo tag found", BuildMode);
 			}
-			Log.warn("No ProductInfo tag found", BuildMode);
 			
 			return null;
 		}
