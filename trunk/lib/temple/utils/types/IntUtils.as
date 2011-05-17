@@ -42,7 +42,7 @@
 
 package temple.utils.types 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	/**
 	 * This class contains some functions for Integers.
@@ -104,7 +104,7 @@ package temple.utils.types
 
 		public static function toString():String
 		{
-			return getClassName(IntUtils);
+			return objectToString(IntUtils);
 		}
 	}
 }

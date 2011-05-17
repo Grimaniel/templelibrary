@@ -168,6 +168,7 @@ package temple.ui.form.components
 				{
 					RadioGroup._instances[this._name] = this;
 				}
+				this.toStringProps.push('name');
 			}
 			this.addEventListener(Event.CHANGE, this.handleChange);
 		}
@@ -334,7 +335,7 @@ package temple.ui.form.components
 		{
 			this._dispatchChangeEvent = dispatchChangeEvent;
 
-			this._selected = null;
+			
 			for each (var selection:Selection in this._buttons)
 			{
 				if (value == null)
@@ -343,12 +344,14 @@ package temple.ui.form.components
 				}
 				else if (selection.value == value)
 				{
+					if (this._selected) this._selected.selected = false;
 					selection.button.selected = true;
 					this._selected = selection.button;
 					this._dispatchChangeEvent = true;
 					return;
 				}
 			}
+			this._selected = null;
 			this._dispatchChangeEvent = true;
 			
 			if (value != null)
@@ -673,14 +676,6 @@ package temple.ui.form.components
 			if (this._name) delete RadioGroup._instances[this._name];
 			
 			super.destruct();
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String 
-		{
-			return super.toString() + (this._name ? ':' + this._name : '');
 		}
 	}
 }

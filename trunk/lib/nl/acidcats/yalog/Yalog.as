@@ -16,12 +16,12 @@ limitations under the License.
 
 package nl.acidcats.yalog 
 {
-	import temple.debug.errors.throwError;
 	import nl.acidcats.yalog.common.Functions;
 	import nl.acidcats.yalog.common.Levels;
 	import nl.acidcats.yalog.common.MessageData;
 
-	import temple.debug.getClassName;
+	import temple.debug.errors.throwError;
+	import temple.debug.objectToString;
 
 	import flash.events.Event;
 	import flash.events.StatusEvent;
@@ -438,11 +438,10 @@ package nl.acidcats.yalog
 
 		public function toString():String 
 		{
-			return getClassName(this);
+			return objectToString(this);
 		}
 	}
 }
-
 import nl.acidcats.yalog.common.Functions;
 
 import flash.events.Event;

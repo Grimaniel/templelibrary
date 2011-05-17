@@ -44,19 +44,25 @@ package temple.utils.types
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.display.FrameLabel;
 	import flash.display.MovieClip;
 
 	/**
-	 * This class contains some functions for FrameLabels.
+	 * This class contains some functions for working with FrameLabels
 	 * 
 	 * @author Bart van der Schoor
 	 */
 	public final class FrameLabelUtils 
 	{
-
+		/**
+		 * Returns the frame number for a specific label in a MovieClip
+		 * @param clip the MovieClip which contains the label
+		 * @param label the label to check
+		 * 
+		 * @return the frame number of the label
+		 */
 		public static function getFrameForLabel(clip:MovieClip, label:String):int
 		{
 			for each (var frameLabel:FrameLabel in clip.currentLabels)
@@ -69,6 +75,33 @@ package temple.utils.types
 			return 1;
 		}
 
+		/**
+		 * Add a script on a specific label on a MovieClip.
+		 */
+		public static function addLabelScript(clip:MovieClip, label:String, frameScript:Function):Boolean
+		{
+			for each(var frameLabel:FrameLabel in clip.currentLabels)
+			{
+				if(frameLabel.name == label)
+				{
+					clip.addFrameScript(frameLabel.frame - 1, frameScript);
+					return true;	
+				}	
+			}
+			return false;
+		}
+
+		/**
+		 * Add a script at the last frame of specific label of a MovieClip.
+		 */
+		public static function addLabelScriptEnd(clip:MovieClip, label:String, frameScript:Function):void
+		{
+			clip.addFrameScript(FrameLabelUtils.getLastFrameOfSection(clip, label) - 1, frameScript);
+		}
+		
+		/**
+		 * Checks if a MovieClip has a specific label.
+		 */
 		public static function hasLabel(clip:MovieClip, label:String):Boolean
 		{
 			for each (var frameLabel:FrameLabel in clip.currentLabels)
@@ -81,6 +114,9 @@ package temple.utils.types
 			return false;
 		}
 
+		/**
+		 * Checks if a MovieClip has all of the provided labels.
+		 */
 		public static function hasLabels(clip:MovieClip, ...labels):Boolean
 		{
 			if ((labels as Array).length == 0) throwError(new ArgumentError('zero labels'));
@@ -147,7 +183,7 @@ package temple.utils.types
 		
 		public static function toString():String
 		{
-			return getClassName(FrameLabelUtils);
+			return objectToString(FrameLabelUtils);
 		}
 	}
 }

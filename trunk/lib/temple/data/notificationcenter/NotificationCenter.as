@@ -147,12 +147,10 @@ package temple.data.notificationcenter
 		public function NotificationCenter(name:String = null) 
 		{
 			this._name = name;
-			
 			super();
-			
 			this._eventDispatcher = new CoreEventDispatcher();
-			
 			DebugManager.add(this);
+			this.toStringProps.push('name');
 		}
 
 		/**
@@ -266,14 +264,6 @@ package temple.data.notificationcenter
 				if (key == null) NotificationCenter._instances = null;
 			}
 			super.destruct();
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + ": '" + this._name + "'";
 		}
 	}
 }

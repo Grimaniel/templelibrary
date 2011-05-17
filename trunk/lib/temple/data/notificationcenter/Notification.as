@@ -40,11 +40,11 @@
  *	
  */
 
-package temple.data.notificationcenter 
+package temple.data.notificationcenter
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.events.Event;
 
@@ -60,6 +60,8 @@ package temple.data.notificationcenter
 	 */
 	public final class Notification extends Event
 	{
+		private static const _TO_STRING_PROPS:Array = ['type', 'data'];
+		
 		private var _notificationCenter:NotificationCenter;
 		private var _data:*;
 
@@ -132,7 +134,7 @@ package temple.data.notificationcenter
 		 */
 		override public function toString():String 
 		{
-			return getClassName(this) + " type='" + this.type + "', data=" + this._data;
+			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }

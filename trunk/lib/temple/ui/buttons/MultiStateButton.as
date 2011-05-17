@@ -42,15 +42,17 @@
 
 package temple.ui.buttons 
 {
-	import temple.ui.ISelectable;
 	import temple.debug.IDebuggable;
 	import temple.ui.IEnableable;
+	import temple.ui.ISelectable;
 	import temple.ui.buttons.behaviors.ButtonBehavior;
 	import temple.ui.buttons.behaviors.ButtonStateBehavior;
 	import temple.ui.buttons.behaviors.ButtonTimelineBehavior;
 	import temple.ui.buttons.behaviors.INestableButton;
 	import temple.ui.focus.FocusManager;
 	import temple.ui.focus.IFocusable;
+
+	import flash.events.Event;
 
 	/**
 	 * @eventType temple.ui.buttons.behaviors.ButtonEvent.UPDATE
@@ -311,7 +313,7 @@ package temple.ui.buttons
 		 */
 		public function get selected():Boolean
 		{
-			return this._buttonBehavior.selected;
+			return this._buttonBehavior ? this._buttonBehavior.selected : false;
 		}
 
 		/**
@@ -319,7 +321,11 @@ package temple.ui.buttons
 		 */
 		public function set selected(value:Boolean):void
 		{
-			this._buttonBehavior.selected = value;
+			if (this._buttonBehavior.selected != value)
+			{
+				this._buttonBehavior.selected = value;
+				this.dispatchEvent(new Event(Event.CHANGE));
+			}
 		}
 
 		/**

@@ -65,6 +65,7 @@ package temple.media.video.cuepoints
 			this._time = time;
 			this._type = type;
 			this._parameters = parameters;
+			this.toStringProps.push('type', 'name', 'time');
 		}
 
 		/**
@@ -110,11 +111,6 @@ package temple.media.video.cuepoints
 		public function get type():String
 		{
 			return this._type;
-		}
-		
-		override public function toString():String
-		{
-			return super.toString() + " : " + this._type + ": '" + this._name + "' (" + this._time + ")";
 		}
 	}
 }

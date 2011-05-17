@@ -402,7 +402,7 @@ package com.greensock
 		 * @param e ENTER_FRAME Event
 		 */
 		public static function updateAll(e:Event=null):void {
-			_frame++;
+			_frame += 1;
 			_time = getTimer() * 0.001;
 			var ml:Dictionary = _masterList, a:Array, tgt:Object, i:int, t:Number, tween:TweenNano;
 			for (tgt in ml) {

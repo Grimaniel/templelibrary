@@ -42,15 +42,15 @@
 
 package temple.utils.types 
 {
-	import temple.data.Enumerator;
-	import flash.utils.Dictionary;
 	import temple.core.ICoreObject;
+	import temple.data.Enumerator;
 	import temple.data.xml.XMLParser;
 	import temple.debug.getClassName;
 	import temple.utils.ObjectType;
 
 	import flash.display.DisplayObject;
 	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -66,6 +66,16 @@ package temple.utils.types
 		 * Indicates if a Date will be fully traced (including all properties) on traceObject() (true) or only as a simple String (false)
 		 */
 		public static var subTraceDate:Boolean = false;
+
+		/**
+		 * Indicates if a constant will be traced on traceObject() (true) or not (false)
+		 */
+		public static var traceConstants:Boolean = false;
+
+		/**
+		 * Indicates if a methods will be traced on traceObject() (true) or not (false)
+		 */
+		public static var traceMethods:Boolean = false;
 		
 		/**
 		 *
@@ -164,6 +174,12 @@ package temple.utils.types
 				
 				// getters
 				variables = variables.concat(XMLParser.parseList(description.accessor, ObjectVariableData, true));
+
+				// constants
+				if (ObjectUtils.traceConstants) variables = variables.concat(XMLParser.parseList(description.constant, ObjectVariableData, true));
+
+				// method
+				if (ObjectUtils.traceMethods) variables = variables.concat(XMLParser.parseList(description.method, ObjectVariableData, true));
 				
 				// dynamic values
 				for (key in object)
@@ -228,7 +244,7 @@ package temple.utils.types
 						}
 						else if (variable is Enumerator)
 						{
-							output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable || getDefinitionByName(vardata.type)) + ")" : "") + " (" + getClassName(Enumerator) + ")";
+							output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable || vardata.type) + ")" : "") + " (" + getClassName(Enumerator) + ")";
 						}
 						else 
 						{
@@ -252,9 +268,32 @@ package temple.utils.types
 							}
 							else
 							{
-								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable || getDefinitionByName(vardata.type)) + ")" : "") + (objects && objects[variable] ? " (duplicate)" : "");
+								output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + (vardata.type == "*" ? vardata.type : getClassName(variable || vardata.type)) + ")" : "") + (objects && objects[variable] ? " (duplicate)" : "");
 							}
 						}
+						break;
+					}
+					case ObjectType.FUNCTION:
+					{
+						output += "\n" + tabs + vardata.name + "(";
+						
+						if (vardata.xml.parameter && vardata.xml.parameter is XMLList)
+						{
+							var lenj:int = (vardata.xml.parameter as XMLList).length();
+							var optional:Boolean = false;
+							for (var j:int = 0; j < lenj; j++)
+							{
+								if (j) output += ", ";
+								if (!optional && vardata.xml.parameter[j].@optional == "true")
+								{
+									optional = true;
+									output += "(";
+								}
+								output += "arg" + vardata.xml.parameter[j].@index + ":" + getClassName(String(vardata.xml.parameter[j].@type));
+							}
+							if (optional) output += ")";
+						}
+						output += ") (" + getClassName(variable) + ")";
 						break;
 					}
 					default:				
@@ -262,7 +301,7 @@ package temple.utils.types
 						vardata.type ||= getClassName(variable);
 						
 						//variable is not an object nor string, just trace it out normally
-						output += "\n" + tabs + vardata.name + ": " + variable + " (" + vardata.type + ")" ;
+						output += "\n" + tabs + vardata.name + ": " + variable + " (" + vardata.type + ")";
 						
 						// add value as hex for uints
 						if (vardata.type == "uint" || vardata.type == "int") output += " 0x" + uint(variable).toString(16).toUpperCase();
@@ -421,6 +460,20 @@ package temple.utils.types
 			}			
 			return values;
 		}
+		
+		/**
+		 * Check if there are proerties defined
+		 * @return true if we have properties
+		 */
+		public static function hasKeys(object:Object):Boolean
+		{
+			for (var key:* in object)
+			{
+				return true;
+				key;
+			}
+			return false;
+		}
 
 		/**
 		 * Converts an object to a readable String
@@ -450,9 +503,73 @@ package temple.utils.types
 			return String(object);
 		}
 
+		/**
+		 * Lazy get a property from a object, with alt/default-value (if object is null or property is undefined)
+		 * 
+		 * very usefull for bulk JSON/Object-data import 
+		 */
+		public static function getValueAlt(obj:Object, name:String, alt:*):*
+		{
+			if(obj && obj && name in obj)
+			{
+				return obj[name];
+			}
+			return alt;
+		}
+		/**
+		 * Lazy get a boolean-property from an object (using BooleanUtils.getBoolean), with alt/default-value (if object is null or property is undefined)
+		 * 
+		 * very usefull for bulk JSON/Object-data import
+		 */
+		public static function getBooleanAlt(obj:Object, name:String, alt:Boolean):Boolean
+		{
+			if(obj && name in obj)
+			{
+				return BooleanUtils.getBoolean(obj[name]);
+			}
+			return alt;
+		}
+		
+		/**
+		 * Compact format Object-properties to debug-string (Array.join()-like), usually simple non-recursive bulletted lists
+		 * - propaA = 11
+		 * - propaB = 22
+		 * - propaC = 33
+		 */
+		public static function simpleJoin(obj:Object, sort:Boolean = true, post:String = '\n', pre:String = ' - ', glue:String = ' = ',seperator:String = ''):String
+		{
+			if(!obj)
+			{
+				return '(null)' + post;
+			}
+			var arr:Array = [];
+			for(var name:String in obj)
+			{
+				arr.push(pre + name + glue + obj[name] + post);
+			}
+			if(arr.length == 0)
+			{
+				return '(empty)' + post;
+			}
+			if(sort)
+			{
+				arr.sort();
+			}
+			return arr.join(seperator);
+		}
+		
+		/**
+		 * Compact Object-properties to one-line debug string 
+		 * propA:11,propB:22,propC:33
+		 */
+		public static function simpleJoinS(obj:Object):String
+		{
+			return ObjectUtils.simpleJoin(obj, true, '', '', ':', ',');
+		}
+		
 		public static function toString():String
 		{
-			return getClassName(ObjectUtils);
+			return objectToString(ObjectUtils);
 		}
 	}
 }

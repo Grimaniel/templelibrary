@@ -20,7 +20,7 @@ package nl.acidcats.yalog.util
 
 	import temple.debug.log.Log;
 	import temple.debug.log.LogEvent;
-	import temple.debug.log.LogLevels;
+	import temple.debug.log.LogLevel;
 
 	public class YaLogConnector 
 	{
@@ -63,22 +63,22 @@ package nl.acidcats.yalog.util
 		{
 			switch (event.level) 
 			{
-				case LogLevels.DEBUG: 
+				case LogLevel.DEBUG: 
 					Yalog.debug(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
-				case LogLevels.ERROR: 
+				case LogLevel.ERROR: 
 					Yalog.error(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
-				case LogLevels.FATAL: 
+				case LogLevel.FATAL: 
 					Yalog.fatal(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
-				case LogLevels.INFO: 
+				case LogLevel.INFO: 
 					Yalog.info(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
-				case LogLevels.STATUS: 
+				case LogLevel.STATUS: 
 					Yalog.info(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
-				case LogLevels.WARN: 
+				case LogLevel.WARN: 
 					Yalog.warn(event.data, event.sender, event.objectId, event.stackTrace); 
 					break;
 			}

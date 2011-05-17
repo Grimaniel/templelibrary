@@ -454,15 +454,11 @@ class ItemData extends CoreObject
 
 	public function ItemData(item:IFocusable, position:int) 
 	{
+		this.toStringProps.push('position', 'item');
 		this.item = item;
 		this.position = position;
 	}
-
-	override public function toString():String
-	{
-		return super.toString() + " " + this.position + ":" + this.item;
-	}
-
+	
 	override public function destruct():void
 	{
 		this.item = null;

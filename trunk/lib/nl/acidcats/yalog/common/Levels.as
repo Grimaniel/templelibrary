@@ -16,7 +16,7 @@ limitations under the License.
 
 package nl.acidcats.yalog.common 
 {
-	import temple.debug.log.LogLevels;
+	import temple.debug.log.LogLevel;
 
 	public class Levels 
 	{
@@ -27,6 +27,6 @@ package nl.acidcats.yalog.common
 		public static var FATAL:uint = 4;
 		public static var STATUS:uint = 5;
 
-		public static var NAMES:Array = [LogLevels.DEBUG, LogLevels.INFO, LogLevels.ERROR, LogLevels.WARN, LogLevels.FATAL, LogLevels.STATUS];
+		public static var NAMES:Array = [LogLevel.DEBUG, LogLevel.INFO, LogLevel.ERROR, LogLevel.WARN, LogLevel.FATAL, LogLevel.STATUS];
 	}
 }

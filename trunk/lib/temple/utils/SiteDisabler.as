@@ -42,9 +42,10 @@
 
 package temple.utils 
 {
-	import temple.core.CoreObject;
-	import temple.debug.getClassName;
+	import temple.debug.errors.TempleError;
+	import temple.debug.errors.throwError;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
 
 	/**
 	 * The SiteDisabler can prefend all DisplayObject to receive MouseEvents.
@@ -68,8 +69,12 @@ package temple.utils
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public final class SiteDisabler extends CoreObject
+	public final class SiteDisabler extends Object
 	{
+		private static const _TO_STRING_PROPS:Array = ['isSiteEnabled'];
+		
+		private static var _debug:Boolean;
+		
 		/**
 		 * Disables the site (not the SiteDisabler)
 		 */
@@ -78,6 +83,7 @@ package temple.utils
 			if (StageProvider.stage)
 			{
 				StageProvider.stage.mouseChildren = false;
+				if (SiteDisabler.debug) Log.debug("disableSite", SiteDisabler);
 			}
 			else
 			{
@@ -93,17 +99,36 @@ package temple.utils
 			if (StageProvider.stage)
 			{
 				StageProvider.stage.mouseChildren = true;
+				if (SiteDisabler.debug) Log.debug("enableSite", SiteDisabler);
 			}
 		}
 
-		public static function isSiteEnabled():Boolean
+		/**
+		 * Indicates is the site is currently enabled.
+		 */
+		public static function get isSiteEnabled():Boolean
 		{
 			return StageProvider.stage ? StageProvider.stage.mouseChildren : true;
 		}
 		
+		public static function get debug():Boolean
+		{
+			return SiteDisabler._debug;
+		}
+
+		public static function set debug(value:Boolean):void
+		{
+			SiteDisabler._debug = value;
+		}
+		
 		public static function toString():String 
 		{
-			return getClassName(SiteDisabler);
+			return objectToString(SiteDisabler, _TO_STRING_PROPS);
+		}
+
+		public function SiteDisabler()
+		{
+			throwError(new TempleError(this, "This class cannot be instantiated"));
 		}
 	}
 }

@@ -44,8 +44,8 @@ package temple.utils.types
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
 
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -255,7 +255,7 @@ package temple.utils.types
 
 		public static function toString():String
 		{
-			return getClassName(DisplayObjectContainerUtils);
+			return objectToString(DisplayObjectContainerUtils);
 		}
 	}
 }

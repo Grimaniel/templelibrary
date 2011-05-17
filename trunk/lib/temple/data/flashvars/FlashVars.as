@@ -46,7 +46,7 @@ package temple.data.flashvars
 	import temple.data.collections.HashMap;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.debug.log.Log;
 
 	/**
@@ -249,7 +249,7 @@ package temple.data.flashvars
 		
 		public static function toString():String
 		{
-			return getClassName(FlashVars);
+			return objectToString(FlashVars);
 		}
 	}
 }

@@ -44,7 +44,7 @@ package temple.utils
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -113,7 +113,7 @@ package temple.utils
 
 		public static function toString():String
 		{
-			return getClassName(StageProvider);
+			return objectToString(StageProvider);
 		}
 	}
 }

@@ -385,13 +385,9 @@ final class RuleData extends CoreObject
 	{
 		this.rule = rule;
 		this.message = message;
+		this.toStringProps.push('rule', 'message');
 	}
 	
-	override public function toString():String
-	{
-		return super.toString() + " : " + this.rule + " '" + this.message + "'";
-	}
-
 	/**
 	 * @inheritDoc
 	 */

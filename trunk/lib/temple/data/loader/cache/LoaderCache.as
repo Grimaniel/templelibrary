@@ -42,7 +42,7 @@
 
 package temple.data.loader.cache 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import flash.events.TimerEvent;
 
 	import temple.core.CoreTimer;
@@ -170,7 +170,7 @@ package temple.data.loader.cache
 
 		public static function toString():String
 		{
-			return getClassName(LoaderCache);
+			return objectToString(LoaderCache);
 		}
 	}
 }

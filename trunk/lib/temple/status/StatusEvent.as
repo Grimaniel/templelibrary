@@ -42,7 +42,8 @@
 
 package temple.status 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
+
 	import flash.events.Event;
 
 	/**
@@ -51,6 +52,8 @@ package temple.status
 	public class StatusEvent extends Event implements IHasStatus
 	{
 		public static const STATUS_CHANGE:String = "StatusEvent.statusChange";
+		
+		private static const _TO_STRING_PROPS:Array = ['status'];
 		
 		private var _status:String;
 
@@ -73,7 +76,7 @@ package temple.status
 
 		override public function toString():String
 		{
-			return getClassName(this) + ": status=\"" + this.status + "\"";
+			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }

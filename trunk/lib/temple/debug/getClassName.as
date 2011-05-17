@@ -47,15 +47,15 @@ package temple.debug
 	import flash.utils.getQualifiedClassName;
 	
 	/**
-	 * Creates a nice readable string of a object or class. Uses getQualifiedClassName internally but you can disable full package display in the Temple.as file
+	 * Creates a nice readable string of an object or class. Uses getQualifiedClassName internally but you can disable full package display in the Temple.as file
 	 * 
 	 * @see temple.Temple#displayFullPackageInToString()
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function getClassName(object:Object):String
+	public function getClassName(object:*):String
 	{
-		var qualifiedClassName:String = getQualifiedClassName(object);
+		var qualifiedClassName:String = object is String ? object : getQualifiedClassName(object);
 		
 		if (Temple.displayFullPackageInToString || qualifiedClassName.indexOf('::') == -1)
 		{

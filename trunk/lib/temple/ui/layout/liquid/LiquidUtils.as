@@ -44,7 +44,7 @@ package temple.ui.layout.liquid
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.utils.types.DisplayObjectUtils;
 
 	import flash.geom.Point;
@@ -188,7 +188,7 @@ package temple.ui.layout.liquid
 
 		public static function toString():String
 		{
-			return getClassName(LiquidUtils);
+			return objectToString(LiquidUtils);
 		}
 	}
 }

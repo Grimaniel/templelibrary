@@ -42,7 +42,7 @@
 
 package temple.utils.types 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.utils.ObjectType;
 
 	/**
@@ -57,9 +57,17 @@ package temple.utils.types
 		 */
 		public static function getBoolean(value:*):Boolean 
 		{
+			if(!value)
+			{
+				return false;
+			}
 			if (typeof(value) == ObjectType.OBJECT || typeof(value) == ObjectType.XML)
 			{
 				value = String(value);
+			}			
+			if(value is String)
+			{
+				String(value).toLowerCase();
 			}
 			switch (value) 
 			{
@@ -78,7 +86,7 @@ package temple.utils.types
 		
 		public static function toString():String
 		{
-			return getClassName(BooleanUtils);
+			return objectToString(BooleanUtils);
 		}
 	}
 }

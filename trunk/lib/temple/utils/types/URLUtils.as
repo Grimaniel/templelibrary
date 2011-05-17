@@ -42,7 +42,7 @@
 
 package temple.utils.types 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	/**
 	 * This class contains some functions for URLs.
@@ -77,11 +77,34 @@ package temple.utils.types
 		}
 		
 		/**
+		 * Checks if the URL contains a specific parameter
+		 */
+		public static function hasParameter(url:String, param:String):Boolean
+		{
+			return url.indexOf(param + "=") != -1;
+		}
+		
+		/**
 		 * Add a parameter to the url
 		 */
 		public static function addParameter(url:String, param:String, value:String):String
 		{
 			return url + (url.indexOf("?") == -1 ? "?" : "&") + param + "=" + value;
+		}
+		
+		/**
+		 * Set a parameter in the URL
+		 */
+		public static function setParameter(url:String, param:String, value:String):String
+		{
+			if (URLUtils.hasParameter(url, param))
+			{
+				return url.replace(new RegExp('(?<=' + param + '=)\\w*', 'g'), value);
+			}
+			else
+			{
+				return URLUtils.addParameter(url, param, value);
+			}
 		}
 
 		/**
@@ -89,13 +112,14 @@ package temple.utils.types
 		 */
 		public static function getFileExtension(url:String):String
 		{
+			if (url == null) return null;
 			if (url.indexOf('?') != -1) url = StringUtils.beforeFirst(url, '?');
 			return StringUtils.afterLast(url, ".");
 		}
 
 		public static function toString():String
 		{
-			return getClassName(URLUtils);
+			return objectToString(URLUtils);
 		}
 	}
 }

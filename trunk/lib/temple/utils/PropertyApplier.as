@@ -42,8 +42,8 @@
 
 package temple.utils 
 {
-	import temple.debug.getClassName;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
 	import temple.utils.types.BooleanUtils;
 
 	/**
@@ -112,7 +112,7 @@ package temple.utils
 
 		public static function toString():String
 		{
-			return getClassName(PropertyApplier);
+			return objectToString(PropertyApplier);
 		}
 	}
 }

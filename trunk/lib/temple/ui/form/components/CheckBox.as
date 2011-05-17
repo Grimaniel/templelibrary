@@ -42,8 +42,6 @@
 
 package temple.ui.form.components 
 {
-	import flash.text.TextField;
-
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
 	import temple.ui.IResettable;
@@ -61,6 +59,7 @@ package temple.ui.form.components
 	import temple.ui.states.StateHelper;
 
 	import flash.events.Event;
+	import flash.text.TextField;
 
 	/**
 	 * @eventType flash.events.Event.CHANGE
@@ -99,6 +98,7 @@ package temple.ui.form.components
 
 		public function CheckBox()
 		{
+			this.toStringProps.push('name', 'selected', 'selectedValue', 'unselectedValue', 'label');
 			this._label = LabelUtils.findLabel(this);
 			this.addEventListener(Event.CHANGE, this.handleChange);
 		}
@@ -467,14 +467,6 @@ package temple.ui.form.components
 			}
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + ' (value=' + this.selectedValue + (this.label ? ', label="' + this.label + '"' : '') + ')';
-		}
-
 		/**
 		 * @inheritDoc
 		 */

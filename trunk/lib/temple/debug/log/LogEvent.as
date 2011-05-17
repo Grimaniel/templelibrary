@@ -59,7 +59,7 @@ limitations under the License.
 
 package temple.debug.log 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.events.Event;
 
@@ -74,6 +74,8 @@ package temple.debug.log
 		 * Event type
 		 */
 		public static const EVENT:String = "LogEvent.Event";
+		
+		private static const _TO_STRING_PROPS:Array = ['level', 'data', 'sender', 'objectId'];
 
 		private var _level:String;
 		private var _data:*;
@@ -156,7 +158,7 @@ package temple.debug.log
 		 */
 		override public function toString():String 
 		{
-			return getClassName(this) + ": level=" + this._level + "; data=" + this._data + "; sender=" + this._sender + "; objetId=" + this.objectId;
+			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }

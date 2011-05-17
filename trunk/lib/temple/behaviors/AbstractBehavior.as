@@ -74,7 +74,7 @@ package temple.behaviors
 		public function AbstractBehavior(target:Object)
 		{
 			if (target == null) throwError(new TempleArgumentError(this, "target cannot be null"));
-			
+			this.toStringProps.push('target');
 			this._target = target;
 			if (this._target is IEventDispatcher)
 			{
@@ -102,20 +102,13 @@ package temple.behaviors
 		/**
 		 * @inheritDoc
 		 */
-		override public function toString():String 
-		{
-			return super.toString() + ": " + this._target;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
 		override public function destruct():void
 		{
 			if (this._target)
 			{
 				if (this._target is IEventDispatcher) (this._target as IEventDispatcher).removeEventListener(DestructEvent.DESTRUCT, templelibrary::handleTargetDestructed);
-				this._target = null;
+				// Store target as String, so we do not have the real reverence anymore, but we can still see what is was.
+				this._target = String(this._target);
 			}
 			super.destruct();
 		}

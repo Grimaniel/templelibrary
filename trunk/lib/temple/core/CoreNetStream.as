@@ -45,9 +45,9 @@ package temple.core
 	import temple.data.loader.preload.IPreloader;
 	import temple.data.loader.preload.PreloadableBehavior;
 	import temple.debug.Registry;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.debug.log.Log;
-	import temple.debug.log.LogLevels;
+	import temple.debug.log.LogLevel;
 	import temple.destruction.DestructEvent;
 	import temple.destruction.EventListenerManager;
 
@@ -85,6 +85,8 @@ package temple.core
 		private var _isLoading:Boolean;
 		private var _logErrors:Boolean;
 		private var _url:String;
+		private var _toStringProps:Array = [];
+		private var _emptyPropsInToString:Boolean = true;
 
 		public function CoreNetStream(nc:NetConnection) 
 		{
@@ -268,7 +270,7 @@ package temple.core
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.DEBUG, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.DEBUG, this._registryId);
 		}
 		
 		/**
@@ -277,7 +279,7 @@ package temple.core
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.ERROR, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.ERROR, this._registryId);
 		}
 		
 		/**
@@ -286,7 +288,7 @@ package temple.core
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.FATAL, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.FATAL, this._registryId);
 		}
 		
 		/**
@@ -295,7 +297,7 @@ package temple.core
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.INFO, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.INFO, this._registryId);
 		}
 		
 		/**
@@ -304,7 +306,7 @@ package temple.core
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.STATUS, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.STATUS, this._registryId);
 		}
 		
 		/**
@@ -313,7 +315,55 @@ package temple.core
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.WARN, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.WARN, this._registryId);
+		}
+		
+		/**
+		 * A Boolean which indicates if empty properties are outputted in the toString() method.
+		 */
+		protected final function get toStringProps():Array
+		{
+			return this._toStringProps;
+		}
+		
+		/**
+		 * @private
+		 */
+		templelibrary final function get toStringProps():Array
+		{
+			return this._toStringProps;
+		}
+		
+		/**
+		 * List of property names which are outputted in the toString() method.
+		 */
+		protected final function get emptyPropsInToString():Boolean
+		{
+			return this._emptyPropsInToString;
+		}
+
+		/**
+		 * @private
+		 */
+		protected final function set emptyPropsInToString(value:Boolean):void
+		{
+			this._emptyPropsInToString = value;
+		}
+
+		/**
+		 * @private
+		 */
+		templelibrary final function get emptyPropsInToString():Boolean
+		{
+			return this._emptyPropsInToString;
+		}
+		
+		/**
+		 * @private
+		 */
+		templelibrary final function set emptyPropsInToString(value:Boolean):void
+		{
+			this._emptyPropsInToString = value;
 		}
 		
 		/**
@@ -348,16 +398,15 @@ package temple.core
 				this._eventListenerManager.destruct();
 				this._eventListenerManager = null;
 			}
-			
 			this._isDestructed = true;
 		}
 
 		/**
-		 *	@inheritDoc
+		 * @inheritDoc
 		 */
-		override public function toString():String 
+		override public function toString():String
 		{
-			return getClassName(this);
+			return objectToString(this, this.toStringProps, !this.emptyPropsInToString);
 		}
 	}
 }

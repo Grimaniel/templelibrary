@@ -53,7 +53,7 @@ package temple.utils.color
 	{
 		public static function colorTransform(color:uint, alpha:Number = 1):ColorTransform
 		{
-			var argb:Object = ColorUtils.getARGB(color); 
+			var argb:ARGB = ColorUtils.getARGB(color); 
 			
 			return new ColorTransform(1 - alpha, 1 - alpha, 1 - alpha, 1, argb.r * alpha, argb.g * alpha, argb.b * alpha, 0);
 		}
@@ -151,9 +151,9 @@ package temple.utils.color
 		 * trace("Blue = " + myRGB.b);
 		 * </listing>
 		 */
-		public static function getARGB(color:uint):Object 
+		public static function getARGB(color:uint):ARGB 
 		{
-			var c:Object = {};
+			var c:ARGB = new ARGB();
 			c.a = color >> 24 & 0xFF;
 			c.r = color >> 16 & 0xFF;
 			c.g = color >> 8 & 0xFF;
@@ -237,48 +237,14 @@ package temple.utils.color
 		/**
 		 * Converts RGB to HSB
 		 */
-		public static function RGBToHSB(r:int,g:int,b:int):Object
-		{
-			var hsb:Object = new Object;
-			var _max:Number = Math.max(r, g, b);
-			var _min:Number = Math.min(r, g, b);
-			
-			hsb.s = (_max != 0) ? (_max - _min) / _max * 100 : 0;
-			hsb.b = _max / 255 * 100;
-
-			if (hsb.s == 0)
-			{
-				hsb.h = 0;
-			}
-			else
-			{
-				switch (_max)
-				{
-					case r:
-						hsb.h = (g - b) / (_max - _min) * 60 + 0;
-						break;
-					case g:
-						hsb.h = (b - r) / (_max - _min) * 60 + 120;
-						break;
-					case b:
-						hsb.h = (r - g) / (_max - _min) * 60 + 240;
-						break;
-				}
-			}
-			
-			hsb.h = Math.min(360, Math.max(0, Math.round(hsb.h)));
-			hsb.s = Math.min(100, Math.max(0, Math.round(hsb.s)));
-			hsb.b = Math.min(100, Math.max(0, Math.round(hsb.b)));
-			
-			return hsb;
-		}
+		
 		
 		/**
 		 * Convert HSB to RGB
 		 */
-		public static function HSBToRGB(h:int,s:int,b:int):Object
+		public static function HSBToRGB(h:int,s:int,b:int):ARGB
 		{
-			var rgb:Object = new Object();
+			var rgb:Object = {};
 		
 			var max:Number = (b * 0.01) * 255;
 			var min:Number = max * (1 - (s * 0.01));
@@ -339,7 +305,7 @@ package temple.utils.color
 				rgb.g = Math.min(255, Math.max(0, Math.round(rgb.g)));
 				rgb.b = Math.min(255, Math.max(0, Math.round(rgb.b)));
 			}
-			return rgb;
+			return new ARGB(rgb.r, rgb.g, rgb.b);
 		}
 
 		/**
@@ -347,9 +313,7 @@ package temple.utils.color
 		 */
 		public static function getRandomColor(saturation:int = 255, brightness:int = 255):uint
 		{
-			var rgb:Object = ColorUtils.HSBToRGB(Math.random() * 255, saturation, brightness);
-			
-			return ColorUtils.getColor(rgb.r, rgb.g, rgb.b);
+			return ColorUtils.HSBToRGB(Math.random() * 255, saturation, brightness).color;
 		}
 	}
 }

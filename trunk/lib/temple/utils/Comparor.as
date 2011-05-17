@@ -42,9 +42,9 @@
 
 package temple.utils 
 {
-	import temple.debug.getClassName;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
+	import temple.debug.objectToString;
 
 	/**
 	 * The Comparor compares two values, based on an operator.  
@@ -180,7 +180,7 @@ package temple.utils
 		
 		public static function toString() : String
 		{
-			return getClassName(Comparor);
+			return objectToString(Comparor);
 		}
 	}
 }

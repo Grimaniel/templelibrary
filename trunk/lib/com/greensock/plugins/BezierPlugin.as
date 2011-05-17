@@ -131,7 +131,7 @@ package com.greensock.plugins
 		 * 
 		 * @param props Object containing a property corresponding to each one you'd like bezier paths for. Each property's value should be a single Array with the numeric point values (i.e. <code>props.x = [12,50,80]</code> and <code>props.y = [50,97,158]</code>). 
 		 * @param through If you want the paths drawn THROUGH the supplied control points, set this to true.
-		 * @return A new object with an Array of values for each property. The first element in the Array is the start value, the second is the control point, and the 3rd is the end value. (i.e. <code>returnObject.x = [[12, 32, 50}, [50, 65, 80]]</code>)
+		 * @return A new object with an Array of values for each property. The first element in the Array is the start value, the second is the control point, and the 3rd is the end value. (i.e. <code>returnObject.x = [[12, 32, 50], [50, 65, 80]]</code>)
 		 */
 		public static function parseBeziers(props:Object, through:Boolean=false):Object { 
 			var i:int, a:Array, b:Object, p:String;

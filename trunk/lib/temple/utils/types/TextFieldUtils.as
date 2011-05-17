@@ -48,7 +48,7 @@ package temple.utils.types
 	import flash.text.StyleSheet;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.debug.log.Log;
 
 	import flash.display.DisplayObject;
@@ -350,7 +350,7 @@ package temple.utils.types
 		
 		public static function toString():String
 		{
-			return getClassName(TextFieldUtils);
+			return objectToString(TextFieldUtils);
 		}
 	}
 }

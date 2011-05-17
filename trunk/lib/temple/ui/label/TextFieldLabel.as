@@ -73,10 +73,19 @@ package temple.ui.label
 		public function TextFieldLabel(target:TextField)
 		{
 			super(target);
-			
+			this.toStringProps.push('name', 'label');
 			target.addEventListener(Event.CHANGE, this.handleTextFieldChange);
 			target.addEventListener(Event.RESIZE, this.handleTextFieldResize);
 		}
+
+		/**
+		 * Return the name of the TextField
+		 */
+		public function get name():String
+		{
+			return this.textField ? this.textField.name : null;
+		}
+
 		
 		/**
 		 * @inheritDoc
@@ -188,14 +197,6 @@ package temple.ui.label
 		private function handleTextFieldResize(event:Event):void
 		{
 			this.dispatchEvent(event.clone());
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + (this.textField ?  ": \"" + this.textField.name + "\" (text:\"" + this.textField.text + "\")" : "");
 		}
 
 		/**

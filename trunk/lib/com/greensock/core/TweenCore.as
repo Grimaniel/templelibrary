@@ -262,7 +262,7 @@ package com.greensock.core {
 		 **/
 		protected function setTotalTime(time:Number, suppressEvents:Boolean=false):void {
 			if (this.timeline) {
-				var tlTime:Number = (this.cachedPauseTime || this.cachedPauseTime == 0) ? this.cachedPauseTime : this.timeline.cachedTotalTime;
+				var tlTime:Number = (this.cachedPaused) ? this.cachedPauseTime : this.timeline.cachedTotalTime;
 				if (this.cachedReversed) {
 					var dur:Number = (this.cacheIsDirty) ? this.totalDuration : this.cachedTotalDuration;
 					this.cachedStartTime = tlTime - ((dur - time) / this.cachedTimeScale);

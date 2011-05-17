@@ -42,7 +42,7 @@
 
 package temple.data.xml 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.events.Event;
 
@@ -53,7 +53,6 @@ package temple.data.xml
 	 */
 	public class XMLLoaderEvent extends Event 
 	{
-
 		/**
 		 * Event sent when loading of a single XML is complete
 		 */
@@ -73,6 +72,8 @@ package temple.data.xml
 		 * Event sent during loading of XML
 		 */
 		public static const PROGRESS:String = "XMLLoaderEvent.progress";
+
+		private static const _TO_STRING_PROPS:Array = ['name', 'type', 'error', 'bytesLoaded', 'bytesTotal'];
 
 		private var _name:String;
 		private var _data:XML;
@@ -158,7 +159,7 @@ package temple.data.xml
 		 */
 		override public function toString():String 
 		{
-			return getClassName(this) + "; name=" + this.name + "; type=" + this.type + "; error=" + this.error + "; bytesLoaded=" + this.bytesLoaded + "; bytesTotal=" + this.bytesTotal;
+			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }

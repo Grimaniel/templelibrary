@@ -59,5 +59,7 @@ package temple.utils
 		public static const STRING:String = "string";
 
 		public static const XML:String = "xml";
+
+		public static const FUNCTION:String = "function";
 	}
 }

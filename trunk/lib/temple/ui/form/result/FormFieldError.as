@@ -42,21 +42,21 @@
 
 package temple.ui.form.result 
 {
-	import temple.debug.getClassName;
-	import temple.data.xml.IXMLParsable;
 	import temple.data.result.Result;
+	import temple.data.xml.IXMLParsable;
 
 	/**
 	 * @author Thijs Broerse
 	 */
 	public class FormFieldError extends Result implements IFormFieldError, IXMLParsable 
 	{
-		protected var _field:String;
+		private var _field:String;
 
 		public function FormFieldError(field:String = null, message:String = null, code:String = null)
 		{
 			super(false, message, code);
-			
+			this.toStringProps.push('field', 'message', 'code');
+			this.emptyPropsInToString = false;
 			this._field = field;
 		}
 		
@@ -78,14 +78,6 @@ package temple.ui.form.result
 		public function get field():String
 		{
 			return this._field;
-		}
-
-		/**
-		 * @inheritDoc 
-		 */
-		override public function toString():String
-		{
-			return getClassName(this) + ": " + this._field + (this.message != null ? ", message='" + this.message + "'" : "") + (this.code ? ", code=" + this.code : "");
 		}
 	}
 }

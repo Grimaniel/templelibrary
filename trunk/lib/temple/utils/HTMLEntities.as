@@ -42,8 +42,8 @@
 
 package temple.utils 
 {
-	import temple.debug.getClassName;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
 
 	/**
 	 * This class is used to decode HTMLEntities
@@ -181,7 +181,7 @@ package temple.utils
         
         public static function toString():String
        	{
-        	return getClassName(HTMLEntities);
+        	return objectToString(HTMLEntities);
         }
 	}
 }

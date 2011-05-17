@@ -46,9 +46,9 @@ package temple.core
 	import temple.data.loader.preload.PreloadableBehavior;
 	import temple.debug.IDebuggable;
 	import temple.debug.Registry;
-	import temple.debug.getClassName;
 	import temple.debug.log.Log;
-	import temple.debug.log.LogLevels;
+	import temple.debug.log.LogLevel;
+	import temple.debug.objectToString;
 	import temple.destruction.DestructEvent;
 	import temple.destruction.EventListenerManager;
 	import temple.destruction.IDestructibleOnError;
@@ -85,8 +85,6 @@ package temple.core
 	 */
 	public class CoreURLLoader extends URLLoader implements ICoreLoader, IDestructibleOnError, IDebuggable
 	{
-		private static const _DEFAULT_HANDLER : int = 0;
-		
 		/** @private */
 		protected var _isLoading:Boolean;
 		/** @private */
@@ -104,6 +102,8 @@ package temple.core
 		private var _isDestructed:Boolean;
 		private var _registryId:uint;
 		private var _debug:Boolean;
+		private var _toStringProps:Array = ['url'];
+		private var _emptyPropsInToString:Boolean = true;
 
 		/**
 		 * Creates a CoreURLLoader
@@ -127,11 +127,11 @@ package temple.core
 			this.addEventListener(Event.OPEN, templelibrary::handleLoadStart);
 			this.addEventListener(ProgressEvent.PROGRESS, templelibrary::handleLoadProgress);
 			this.addEventListener(Event.COMPLETE, templelibrary::handleLoadComplete);
-			this.addEventListener(IOErrorEvent.IO_ERROR, templelibrary::handleIOError, false, CoreURLLoader._DEFAULT_HANDLER);
-			this.addEventListener(IOErrorEvent.DISK_ERROR, templelibrary::handleIOError, false, CoreURLLoader._DEFAULT_HANDLER);
-			this.addEventListener(IOErrorEvent.NETWORK_ERROR, templelibrary::handleIOError, false, CoreURLLoader._DEFAULT_HANDLER);
-			this.addEventListener(IOErrorEvent.VERIFY_ERROR, templelibrary::handleIOError, false, CoreURLLoader._DEFAULT_HANDLER);
-			this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, templelibrary::handleSecurityError, false, CoreURLLoader._DEFAULT_HANDLER);
+			this.addEventListener(IOErrorEvent.IO_ERROR, templelibrary::handleIOError);
+			this.addEventListener(IOErrorEvent.DISK_ERROR, templelibrary::handleIOError);
+			this.addEventListener(IOErrorEvent.NETWORK_ERROR, templelibrary::handleIOError);
+			this.addEventListener(IOErrorEvent.VERIFY_ERROR, templelibrary::handleIOError);
+			this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, templelibrary::handleSecurityError);
 			
 			// preloader support
 			this._preloadableBehavior = new PreloadableBehavior(this);
@@ -401,7 +401,7 @@ package temple.core
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.DEBUG, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.DEBUG, this._registryId);
 		}
 		
 		/**
@@ -410,7 +410,7 @@ package temple.core
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.ERROR, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.ERROR, this._registryId);
 		}
 		
 		/**
@@ -419,7 +419,7 @@ package temple.core
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.FATAL, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.FATAL, this._registryId);
 		}
 		
 		/**
@@ -428,7 +428,7 @@ package temple.core
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.INFO, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.INFO, this._registryId);
 		}
 		
 		/**
@@ -437,7 +437,7 @@ package temple.core
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.STATUS, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.STATUS, this._registryId);
 		}
 		
 		/**
@@ -446,7 +446,55 @@ package temple.core
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevels.WARN, this._registryId);
+			Log.templelibrary::send(data, this.toString(), LogLevel.WARN, this._registryId);
+		}
+		
+		/**
+		 * A Boolean which indicates if empty properties are outputted in the toString() method.
+		 */
+		protected final function get toStringProps():Array
+		{
+			return this._toStringProps;
+		}
+		
+		/**
+		 * @private
+		 */
+		templelibrary final function get toStringProps():Array
+		{
+			return this._toStringProps;
+		}
+		
+		/**
+		 * List of property names which are outputted in the toString() method.
+		 */
+		protected final function get emptyPropsInToString():Boolean
+		{
+			return this._emptyPropsInToString;
+		}
+
+		/**
+		 * @private
+		 */
+		protected final function set emptyPropsInToString(value:Boolean):void
+		{
+			this._emptyPropsInToString = value;
+		}
+
+		/**
+		 * @private
+		 */
+		templelibrary final function get emptyPropsInToString():Boolean
+		{
+			return this._emptyPropsInToString;
+		}
+		
+		/**
+		 * @private
+		 */
+		templelibrary final function set emptyPropsInToString(value:Boolean):void
+		{
+			this._emptyPropsInToString = value;
 		}
 		
 		/**
@@ -479,14 +527,12 @@ package temple.core
 					if (this.debug) this.logWarn("destruct: " + error.message);
 				}
 			}
-			
 			if (this._eventListenerManager)
 			{
 				this.removeAllEventListeners();
 				this._eventListenerManager.destruct();
 				this._eventListenerManager = null;
 			}
-			
 			this._isDestructed = true;
 		}
 		
@@ -495,7 +541,7 @@ package temple.core
 		 */
 		override public function toString():String
 		{
-			return getClassName(this) + (this._url ? ": url=\"" + this._url + "\"" : "");;
+			return objectToString(this, this.toStringProps, !this.emptyPropsInToString);
 		}
 	}
 }

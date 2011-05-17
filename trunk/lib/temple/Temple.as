@@ -44,8 +44,8 @@ package temple
 {
 	import temple.debug.DebugMode;
 	import temple.debug.Registry;
-	import temple.debug.getClassName;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
 
 	/**
 	 * This class contains information about the Temple Library and some global properties and settings.
@@ -66,7 +66,7 @@ package temple
 		/**
 		 * The current version of the Temple Library
 		 */
-		public static const VERSION:String = "2.8.6";
+		public static const VERSION:String = "2.8.7";
 		
 		/**
 		 * The Authors of the Temple
@@ -76,7 +76,7 @@ package temple
 		/**
 		 * Last modified date of the Temple
 		 */
-		public static const DATE:String = "2011-03-22";
+		public static const DATE:String = "2011-05-17";
 
 		/**
 		 * The official website of the Temple.
@@ -139,6 +139,8 @@ package temple
 		 */
 		public static var displayFullPackageInToString:Boolean = false;
 		
+		private static const _TO_STRING_PROPS:Array = ['registerObjectsInMemory', 'defaultDebugMode', 'ignoreErrors'];
+		
 		/**
 		 * Destructs all objects of the Temple. Useful when unloading an ApplicationDomainRoot object.
 		 */
@@ -153,7 +155,7 @@ package temple
 		 */
 		public static function toString():String
 		{
-			return getClassName(Temple);
+			return objectToString(Temple, _TO_STRING_PROPS);
 		}
 	}
 }

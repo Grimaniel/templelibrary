@@ -44,7 +44,6 @@ package temple.ui.buttons
 {
 	import temple.ui.ISelectable;
 
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 
 	/**
@@ -60,18 +59,6 @@ package temple.ui.buttons
 		public function SwitchButton()
 		{
 			this.addEventListener(MouseEvent.CLICK, this.handleClick);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function set selected(value:Boolean):void 
-		{
-			if (value != this.selected)
-			{
-				super.selected = value;
-				this.dispatchEvent(new Event(Event.CHANGE));
-			}
 		}
 		
 		/**

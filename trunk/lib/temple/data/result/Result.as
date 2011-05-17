@@ -58,6 +58,9 @@ package temple.data.result
 			this._success = success;
 			this._message = message;
 			this._code = code;
+			
+			this.toStringProps.push('success', 'message', 'code');
+			this.emptyPropsInToString = false;
 		}
 		
 		/**
@@ -82,14 +85,6 @@ package temple.data.result
 		public function get code():String
 		{
 			return this._code;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String 
-		{
-			return super.toString() + ": success=" + this.success + (this.message != null ? ", message='" + this.message + "'" : "") + (this.code ? ", code=" + this.code : "");
 		}
 	}
 }

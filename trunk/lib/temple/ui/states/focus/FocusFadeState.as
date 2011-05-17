@@ -51,7 +51,7 @@ package temple.ui.states.focus
 	 */
 	public class FocusFadeState extends BaseFadeState implements IFocusState 
 	{
-		public function FocusFadeState(showDuration:Number = .5, hideDuration:Number = .5)
+		public function FocusFadeState(showDuration:Number = .25, hideDuration:Number = .25)
 		{
 			super(showDuration, hideDuration);
 		}

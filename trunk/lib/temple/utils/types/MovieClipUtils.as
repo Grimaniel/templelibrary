@@ -44,7 +44,7 @@ package temple.utils.types
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.utils.FrameDelay;
 	import temple.utils.TimeOut;
 
@@ -316,7 +316,7 @@ package temple.utils.types
 		
 		public static function toString():String
 		{
-			return getClassName(MovieClipUtils);
+			return objectToString(MovieClipUtils);
 		}
 	}
 }

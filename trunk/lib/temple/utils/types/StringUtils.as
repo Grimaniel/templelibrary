@@ -44,7 +44,7 @@ package temple.utils.types
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	/**
 	 * This class contains some functions for Strings.
@@ -842,9 +842,87 @@ package temple.utils.types
 			return string;
 		}
 
+		/**
+		 * Split a string on multiple seperators
+		 * @param string The string.
+		 * @param seperators Array with the seperators to split on
+		 * @param reappendSeperator (optional) Re-append the seperator after each part
+		 * @return a single-dimension array with the parts
+		 */
+		public static function splitMultiSeperator(string:String, seperators:Array, reappendSeperator:Boolean = false):Array
+		{
+			var ret:Array = [string];
+			for each(var seperator:String in seperators)
+			{
+				ret = StringUtils.splitElements(ret, seperator, reappendSeperator);
+			}
+			return ret;
+		}
+		/**
+		 * Split multiple strings on a seperator
+		 * @param string Array with the strings
+		 * @param seperators The seperator to split on
+		 * @param reappendSeperator (optional) Re-append the seperator after each part
+		 * @return a single-dimension array with the parts
+		 */
+		public static function splitElements(strings:Array, seperator:String, reappendSeperator:Boolean = false):Array
+		{
+			var ret:Array = [];
+			for(var i:int = 0;i < strings.length;i++)
+			{
+				var split:Array = String(strings[i]).split(seperator);
+				for(var j:int = 0;j < split.length;j++)
+				{
+					var p:String = StringUtils.trim(split[j]);
+					if(p != '')
+					{
+						ret.push(reappendSeperator && j < split.length - 1 ? p + seperator : p);
+					}
+				}
+			}
+			return ret;
+		}
+		/**
+		 * Trim all elements in an Array (in place)
+		 * @param string Array with the strings
+		 * @param seperators The seperator to split on
+		 * @param reappendSeperator (optional) Re-append the seperator after each part
+		 * @return the modified input array
+		 */
+		public static function trimAll(array:Array):Array
+		{
+			for(var i:int = 0;i < array.length;i++)
+			{
+				array[i] = StringUtils.ltrim(StringUtils.rtrim(array[i]));
+			}
+			return array;
+		}
+
+		/**
+		 * Trim all elements in an Array, and after trimming remove any empty (== '') elements
+		 * @param string Array with the strings
+		 * @param seperators The seperator to split on
+		 * @param reappendSeperator (optional) Re-append the seperator after each part
+		 * @return a new array with the parts
+		 */
+		public static function trimAllFilter(array:Array):Array
+		{
+			var ret:Array = [];
+
+			for(var i:int = 0;i < array.length;i++)
+			{
+				var tmp:String = StringUtils.ltrim(StringUtils.rtrim(array[i]));
+				if(tmp != '')
+				{
+					ret.push(tmp);
+				}
+			}
+			return ret;
+		}
+		
 		public static function toString():String
 		{
-			return getClassName(StringUtils);
+			return objectToString(StringUtils);
 		}
 	}
 }

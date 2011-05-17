@@ -54,8 +54,8 @@ package temple.data.result
 		public function DataResult(data:*, success:Boolean = true, message:String = null, code:String = null)
 		{
 			super(success, message, code);
-			
 			this._data = data;
+			this.toStringProps.push('data');
 		}
 		
 		/**
@@ -79,14 +79,6 @@ package temple.data.result
 			this._data = object.data;
 			
 			return true;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String 
-		{
-			return super.toString() + ", data=" + this._data;
 		}
 
 		/**

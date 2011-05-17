@@ -76,6 +76,7 @@ package temple.destruction
 			
 			if (eventDispatcher == null) throwError(new TempleArgumentError(this, "dispatcher can not be null"));
 			if (eventDispatcher.eventListenerManager) throwError(new TempleError(this, "dispatcher already has an EventListenerManager"));
+			this.toStringProps.push('target');
 		}
 		
 		/**
@@ -329,20 +330,11 @@ package temple.destruction
 			
 			super.destruct();
 		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + ": " + this._target;
-		}
 	}
 }
+import temple.core.CoreObject;
 
-import temple.debug.getClassName;
-
-final class EventData
+final class EventData extends CoreObject
 {
 	public var type:String;
 	public var listener:Function;
@@ -358,6 +350,7 @@ final class EventData
 		this.once = once;
 		this.priority = priority;
 		super();
+		this.toStringProps.push('type');
 	}
 
 	public function equals(type:String, listener:Function, useCapture:Boolean):Boolean 
@@ -368,14 +361,9 @@ final class EventData
 	/**
 	 * Destructs the object
 	 */
-	public function destruct():void
+	override public function destruct():void
 	{
 		this.type = null;
 		this.listener = null;
-	}
-	
-	public function toString():String
-	{
-		return getClassName(this) + ": " + this.type;
 	}
 }
