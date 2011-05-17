@@ -42,7 +42,7 @@
 
 package temple.data.xml 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.events.Event;
 
@@ -75,6 +75,8 @@ package temple.data.xml
 		 * Event sent when there was an error parsing the data
 		 */
 		public static const PARSE_ERROR:String = "XMLServiceEvent.parseError";
+		
+		private static const _TO_STRING_PROPS:Array = ['name', 'type'];
 
 		/** name of original request*/
 		public var name:String;
@@ -103,7 +105,7 @@ package temple.data.xml
 
 		override public function toString():String 
 		{
-			return getClassName(this) + ": type = " + this.type + ", name = " + name;
+			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }

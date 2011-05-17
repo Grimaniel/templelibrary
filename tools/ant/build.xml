@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="Export" basedir="." name="Temple-GoogleCode">
 
-	<property name="flexdsk.path" value="C:\Program Files (x86)\Adobe\Adobe Flash Builder 4\sdks\4.0.0" />
+	<property name="flexdsk.path" value="C:\Program Files (x86)\Adobe\Adobe Flash Builder 4.5\sdks\4.5.0" />
 	<property name="src.path" value="D:\Projects\Temple\GoogleCode\templelibrary\lib" />
 	<property name="dst.path" value="../../bin" />
 	<property name="root.path" value="../.." />
-	<property name="version" value="2.8.6" />
+	<property name="version" value="2.8.7" />
 
 	
 	<target name="Export">
@@ -105,7 +105,7 @@
 			</not>
 		</fileset>
 		<property name="wrongfiles" refid="wrongfileset" />
-		<fail message="The following files does not contain copyrights: ${wrongfiles}">
+		<fail message="The following files does not contain correct license: ${wrongfiles}">
 			<condition>
 				<not>
 					<resourcecount count="0" refid="wrongfileset" />

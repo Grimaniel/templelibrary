@@ -69,6 +69,7 @@ package temple.data.xml
 
 		public function XMLLoadItem(name:String, url:String, xmlObjectData:XMLObjectData, sendData:Object, method:String, cache:Boolean, decoder:IDecoder) 
 		{
+			this.toStringProps.push('name');
 			this._name = name;
 			this._url = url;
 			this._xmlObjectDataList = new Array;
@@ -200,14 +201,6 @@ package temple.data.xml
 			}
 			
 			super.destruct();
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String 
-		{
-			return super.toString() + " : " + this._name;
 		}
 	}
 }

@@ -269,7 +269,7 @@ package temple.debug
 				var listenerInfo:String = "";
 				var numListeners:uint;
 				
-				if (temp[i].object is IDestructibleEventDispatcher)
+				if (temp[i].object is IDestructibleEventDispatcher && (temp[i].object as IDestructibleEventDispatcher).eventListenerManager)
 				{
 					numListeners = (temp[i].object as IDestructibleEventDispatcher).eventListenerManager.numListeners;
 					listenerInfo = (temp[i].object as IDestructibleEventDispatcher).eventListenerManager.getInfo().join("\n");
@@ -337,7 +337,7 @@ package temple.debug
 		
 		public static function toString():String
 		{
-			return getClassName(Memory);
+			return objectToString(Memory);
 		}
 	}
 }

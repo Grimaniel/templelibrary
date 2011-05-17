@@ -42,8 +42,8 @@
 
 package temple.utils 
 {
-	import temple.debug.getClassName;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
 
 	import flash.display.DisplayObject;
 	import flash.system.Capabilities;
@@ -242,7 +242,7 @@ package temple.utils
 
 		public static function toString():String
 		{
-			return getClassName(Environment);
+			return objectToString(Environment);
 		}
 	}
 }

@@ -50,7 +50,7 @@ package temple.ui.layout.liquid
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.debug.log.Log;
 	import temple.ui.IEnableable;
 	import temple.utils.PropertyApplier;
@@ -1259,7 +1259,7 @@ package temple.ui.layout.liquid
 		
 		public static function toString():String
 		{
-			return getClassName(LiquidBehavior);
+			return objectToString(LiquidBehavior);
 		}
 	}
 }

@@ -39,6 +39,7 @@
  *	repository with their own license!
  *	
  */
+
 package temple.utils.color
 {
 	/**

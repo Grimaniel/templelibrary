@@ -44,8 +44,8 @@ package temple.utils
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -207,6 +207,11 @@ package temple.utils
 		
 		/**
 		 * Register a ApplicationDomain for Class definition lookups.
+		 * 
+		 * @example
+		 * <listing version="3.0">
+		 * DefinitionProvider.registerApplicationDomain(this.loaderInfo.applicationDomain);
+		 * </listing>
 		 */
 		public static function registerApplicationDomain(appDomain:ApplicationDomain):void
 		{
@@ -343,7 +348,7 @@ package temple.utils
 		
 		public static function toString():String
 		{
-			return getClassName(DefinitionProvider);
+			return objectToString(DefinitionProvider);
 		}
 		
 		public function DefinitionProvider()

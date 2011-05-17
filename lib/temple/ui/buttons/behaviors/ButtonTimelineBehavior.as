@@ -812,11 +812,12 @@ package temple.ui.buttons.behaviors
 		}
 	}
 }
-
-import temple.debug.getClassName;
+import temple.debug.objectToString;
 
 class FrameLabelData
 {
+	private static const _TO_STRING_PROPS:Array = ['name', 'startframe', 'endframe'];
+	
 	internal var name:String;
 	internal var startframe:int;
 	internal var endframe:int;
@@ -837,6 +838,6 @@ class FrameLabelData
 	
 	public function toString():String
 	{
-		return getClassName(this) + ", name: '" + this.name + "' frames: " + this.startframe + "-" + this.endframe;
+		return objectToString(this, _TO_STRING_PROPS);
 	}
 }

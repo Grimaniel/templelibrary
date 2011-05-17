@@ -44,7 +44,7 @@ package temple.utils.types
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.debug.log.Log;
 	import temple.utils.Enum;
 
@@ -157,10 +157,9 @@ package temple.utils.types
 			}
 		}
 		
-		
 		public static function toString():String
 		{
-			return getClassName(EventUtils);
+			return objectToString(EventUtils);
 		}
 	}
 }

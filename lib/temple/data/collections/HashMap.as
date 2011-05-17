@@ -51,24 +51,13 @@ package temple.data.collections
 	 */
 	dynamic public class HashMap extends CoreObject 
 	{
-		protected var _name:String;
-		
 		/**
 		 * Creates a new HashMap.
 		 * @param name used in toString for identifying the HashMap
 		 */
 		public function HashMap(name:String)
 		{
-			this._name = name;
-			super();
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + ": \"" + this._name + "\"";
+			this.toStringProps.push(name);
 		}
 	}
 }

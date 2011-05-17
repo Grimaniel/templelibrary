@@ -44,7 +44,7 @@ package temple.utils.types
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.utils.getQualifiedClassName;
 
@@ -59,6 +59,20 @@ package temple.utils.types
 		public static function isVector(object:Object):Boolean
 		{
 			 return getQualifiedClassName(object).indexOf("__AS3__.vec::Vector.") === 0;
+		}
+		
+		/**
+		 * Get a random element form the vector
+		 */
+		public static function randomElement(vector:*):*
+		{
+			if (!VectorUtils.isVector(vector)) throwError(new TempleArgumentError(VectorUtils, vector + " is not a Vector " + getQualifiedClassName(vector)));
+			
+			if (vector.length > 0)
+			{
+				return vector[Math.floor(Math.random() * vector.length)];
+			}
+			return null;
 		}
 		
 		/**
@@ -94,10 +108,54 @@ package temple.utils.types
 			}
 			return array;
 		}
+		
+		/**
+		 *	Creates a copy of the specified Vector.
+		 *
+		 *	<p>Note that the vector returned is a new vector but the items within the
+		 *	vector are not copies of the items in the original vector (but rather 
+		 *	references to the same items)</p>
+		 * 
+		 * 	@param vector The vector that will be cloned
+		 *
+		 *	@return A new vector of the same type which contains the same items as the vector passed in.
+		 */			
+		public static function clone(vector:*):Array
+		{
+			if (!VectorUtils.isVector(vector)) throwError(new TempleArgumentError(VectorUtils, vector + " is not a Vector " + getQualifiedClassName(vector)));
+			
+			return vector.slice();
+		}
+
+		/**
+		 * Checks if vectors are the same or clones of each other.
+		 */
+		public static function areEqual(vector1:*, vector2:*):Boolean
+		{
+			if (!VectorUtils.isVector(vector1)) throwError(new TempleArgumentError(VectorUtils, vector1 + " is not a Vector " + getQualifiedClassName(vector1)));
+			if (!VectorUtils.isVector(vector2)) throwError(new TempleArgumentError(VectorUtils, vector2 + " is not a Vector " + getQualifiedClassName(vector2)));
+			if (vector1 == vector2)
+			{
+				return true;
+			}
+			if (vector1.length != vector2.length)
+			{
+				return false;
+			}
+			for (var i:int = vector1.length -1; i >= 0; --i)
+			{
+				if (vector1[i] != vector2[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
 
 		public static function toString():String
 		{
-			return getClassName(VectorUtils);
+			return objectToString(VectorUtils);
 		}
 	}
 }

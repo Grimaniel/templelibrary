@@ -62,6 +62,7 @@ package temple.data.loader.cache
 		public function LoaderCacheData(url:String)
 		{
 			this._url = url;
+			this.toStringProps.push('url');
 		}
 
 		/**
@@ -140,14 +141,6 @@ package temple.data.loader.cache
 			this._url = null;
 			
 			super.destruct();
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String 
-		{
-			return super.toString() + ": url=\"" + this._url + "\"";
 		}
 	}
 }

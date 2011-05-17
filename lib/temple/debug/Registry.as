@@ -165,7 +165,7 @@ package temple.debug
 		
 		public static function toString() : String
 		{
-			return getClassName(Registry);
+			return objectToString(Registry);
 		}
 	}
 }

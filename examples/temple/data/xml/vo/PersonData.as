@@ -3,14 +3,21 @@
  */
 package vo 
 {
+	import temple.core.CoreObject;
 	import temple.data.xml.IXMLParsable;
 
-	public class PersonData implements IXMLParsable 
+	public class PersonData extends CoreObject implements IXMLParsable 
 	{
 		private var _id:uint;
 		private var _name:String;
 		private var _age:uint;
 		private var _gender:String;
+
+		public function PersonData()
+		{
+			// Add the properties you want to be returned in the 'toString()' method
+			this.toStringProps.push('id', 'name', 'age', 'gender');
+		}
 		
 		public function parseXML(xml:XML):Boolean
 		{
@@ -39,7 +46,7 @@ package vo
 			return this._age;
 		}
 		
-		public function get gender():*
+		public function get gender():String
 		{
 			return this._gender;
 		}

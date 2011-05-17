@@ -61,11 +61,12 @@ package temple.data.flashvars
 		private var _type:Class;
 		private var _external:Boolean;
 
-		public function FlashVar(name:String, value:*, fromHTML:Boolean = false)
+		public function FlashVar(name:String, value:*, external:Boolean = false)
 		{
 			this._name = name;
 			this._value = value;
-			this._external = fromHTML;
+			this._external = external;
+			this.toStringProps.push('name', 'defaultValue', 'value', 'type', 'external');
 		}
 
 		/**
@@ -126,9 +127,17 @@ package temple.data.flashvars
 			}
 			return this._value;
 		}
-
+		
 		/**
 		 * The defaultValue, used when the value is not set by the LoaderInfo.
+		 */
+		public function get defaultValue():*
+		{
+			return this._defaultValue;
+		}
+
+		/**
+		 * @private
 		 */
 		public function set defaultValue(value:*):void
 		{
@@ -162,14 +171,6 @@ package temple.data.flashvars
 		public function get external():Boolean
 		{
 			return this._external;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + " (name='" + this._name + "', default='" + this._defaultValue + "', value='" + this._value + "', type='" + this._type + "', external=" + this._external + ")";
 		}
 	}
 }

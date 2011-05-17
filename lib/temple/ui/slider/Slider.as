@@ -293,14 +293,6 @@ package temple.ui.slider
 		/**
 		 * @inheritDoc
 		 */
-		override public function toString():String
-		{
-			return super.toString() + (this._dragBehaviour ? ":" + (this._dragBehaviour.target as DisplayObject).name : '');
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
 		override public function destruct():void
 		{
 			if (this._dragBehaviour)

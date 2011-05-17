@@ -44,7 +44,7 @@ package temple.utils.types
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	/**
 	 * This class contains some functions for Numbers.
@@ -244,8 +244,7 @@ package temple.utils.types
 		}
 
 		/**
-		 * Rounds a number to a certain level of precision. Useful for limiting the number of
-		 * decimal places on a fractional number.
+		 * Rounds a number to a certain level of precision. Useful for limiting the number of decimal places on a fractional number.
 		 * 
 		 * @param number the input number to round.
 		 * @param precision	the number of decimal digits to keep
@@ -253,11 +252,7 @@ package temple.utils.types
 		 */
 		public static function roundToPrecision(number:Number, precision:int = 0):Number
 		{
-			var n:Number = 1;
-			while (precision--) 
-			{
-				n *= 10;
-			}
+			var n:Number = Math.pow(10, precision);
 			return Math.round(number * n) / n;
 		}
 
@@ -389,7 +384,7 @@ package temple.utils.types
 
 		public static function toString():String
 		{
-			return getClassName(NumberUtils);
+			return objectToString(NumberUtils);
 		}
 	}	
 }

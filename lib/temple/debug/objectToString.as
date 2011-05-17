@@ -40,21 +40,56 @@
  *	
  */
 
-package temple.debug.log 
+package temple.debug 
 {
-
+	import temple.utils.ObjectType;
 	/**
-	 * This class contains all possible levels of log messages
+	 * Creates a nice readable string of an object.
+	 * @param object the object that must be converted to a String
+	 * @param props a list of properties of the object that must be added to the String.
+	 * @param notEmpty a Boolean which indicates if null or NaN values must be ignored. 
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class LogLevels 
+	public function objectToString(object:Object, props:Array = null, notEmpty:Boolean = false):String
 	{
-		public static var DEBUG:String = "debug";
-		public static var INFO:String = "info";
-		public static var WARN:String = "warn";
-		public static var ERROR:String = "error";
-		public static var FATAL:String = "fatal";
-		public static var STATUS:String = "status";
+		var string:String = getClassName(object);
+		
+		if (object is Class) string = "class " + string;
+		
+		if (props && props.length)
+		{
+			string += " (";
+			var sep:String = "", value:*;
+			
+			for each(var name:String in props)
+			{
+				if (name in object)
+				{
+					value = object[name];
+					if(!notEmpty || typeof(value) == ObjectType.NUMBER && !isNaN(value) || value !== null)
+					{
+						string += sep + name + "=";
+						
+						if (value is String && value !== null)
+						{
+							string += "\"" + value + "\"";
+						}
+						else
+						{
+							string += value;
+						}
+						sep = " ";
+					}
+				}
+				else
+				{
+					string += "\"" + name + "\"";
+					sep = " ";
+				}
+			}
+			string += ")";
+		}
+		return "[" + string + "]";
 	}
 }

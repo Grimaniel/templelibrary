@@ -65,8 +65,8 @@
 			this._name = name;
 			this._url = url;
 			this._target = target;
-			
-			super();
+			this.toStringProps.push('name', 'url', 'target');
+			this.emptyPropsInToString = false;
 		}
 		
 		/**
@@ -119,14 +119,6 @@
 		public function clone():URLData
 		{
 			return new URLData(this._name, this._url, this._target);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + ' (name="' + this._name + '", url="' + this._url + '")';
 		}
 	}
 }

@@ -42,7 +42,7 @@
 
 package temple.data.object 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.debug.log.Log;
 	import temple.data.object.IObjectParsable;
 
@@ -123,7 +123,7 @@ package temple.data.object
 		
 		public static function toString():String
 		{
-			return getClassName(ObjectParser);
+			return objectToString(ObjectParser);
 		}
 	}
 }

@@ -42,7 +42,7 @@
 
 package temple.utils 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.events.TimerEvent;
 
@@ -62,7 +62,7 @@ package temple.utils
 		
 		public static function toString():String
 		{
-			return getClassName(RenderUtils);
+			return objectToString(RenderUtils);
 		}
 	}
 }

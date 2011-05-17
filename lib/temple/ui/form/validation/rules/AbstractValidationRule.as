@@ -58,6 +58,7 @@ package temple.ui.form.validation.rules
 		public function AbstractValidationRule(target:IHasValue):void 
 		{
 			this._target = target;
+			this.toStringProps.push('target');
 		}
 
 		/**
@@ -75,14 +76,6 @@ package temple.ui.form.validation.rules
 		{
 			this._target = null;
 			super.destruct();
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + ": " + this._target;
 		}
 	}
 }

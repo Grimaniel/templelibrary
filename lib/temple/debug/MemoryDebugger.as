@@ -140,7 +140,7 @@ package temple.debug
 
 		public static function toString():String 
 		{
-			return getClassName(MemoryDebugger);
+			return objectToString(MemoryDebugger);
 		}
 	}
 }

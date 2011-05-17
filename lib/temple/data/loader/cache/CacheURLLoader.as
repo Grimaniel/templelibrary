@@ -184,7 +184,7 @@ package temple.data.loader.cache
 		{
 			if (this._cache && this._owner)
 			{
-				if (this.debug) this.logDebug("handleURLLoaderComplete: store data in cache, url:" + this.url);
+				if (this.debug) this.logDebug("handleComplete: store data in cache, url:" + this.url);
 				LoaderCache.set(this.url, this.data);
 			}
 			this.clearCacheData();

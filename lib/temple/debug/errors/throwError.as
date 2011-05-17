@@ -50,11 +50,13 @@ package temple.debug.errors
 	 * 
 	 * <p>Note: When using this, code will continue to run after the call. So maybe you should do a return after this call.</p>
 	 * 
+	 * @return untyped null
+	 * 
 	 * @see temple.Temple
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function throwError(error:Error):void
+	public function throwError(error:Error):*
 	{
 		if (!(error is ITempleError)) Log.error(error.message + "\n" + error.getStackTrace(), Temple.displayFullPackageInToString ? 'temple.debug.errors.throwError' : 'throwError');
 		
@@ -62,5 +64,6 @@ package temple.debug.errors
 		{
 			throw error;
 		}
+		return null;
 	}
 }

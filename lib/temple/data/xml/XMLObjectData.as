@@ -69,6 +69,7 @@ package temple.data.xml
 			this._node = node;
 			this._cache = cache;
 			this._callback = callback;
+			this.toStringProps.push('objectClass');
 		}
 		
 		public function get type():int
@@ -119,11 +120,6 @@ package temple.data.xml
 		public function get cache():Boolean
 		{
 			return this._cache;
-		}
-
-		override public function toString():String 
-		{
-			return super.toString() + " : " + this._objectClass;
 		}
 
 		override public function destruct():void

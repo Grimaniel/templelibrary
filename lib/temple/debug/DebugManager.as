@@ -44,7 +44,6 @@ package temple.debug
 {
 	import temple.Temple;
 	import temple.core.CoreObject;
-	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
 	import temple.debug.log.Log;
@@ -68,7 +67,7 @@ package temple.debug
 	 * 
 	 * // add IDebuggable objects:
 	 * DebugManager.add(this);
-	 * // add IDebugable children:
+	 * // add IDebuggable children:
 	 * if (button is IDebuggable) DebugManager.addAsChild(button as IDebuggable, this);
 	 * // debugging for this added objects are set to the value in the URL
 	 * 
@@ -220,7 +219,7 @@ package temple.debug
 				// for quick lookup
 				DebugManager.getInstance()._debuggableChildren[object] = parentId;
 				
-				object.debug = parent.debug;	
+				object.debug ||= parent.debug;	
 				
 				
 				// check for children in the queue
@@ -236,7 +235,7 @@ package temple.debug
 						// for quick lookup
 						DebugManager.getInstance()._debuggableChildren[i as IDebuggable] = DebugManager.getInstance()._debuggableChildQueue[i];
 						
-						object.debug = parent.debug;	
+						object.debug ||= parent.debug;	
 						
 						DebugManager.getInstance()._debuggableChildQueue[i] = null;
 					}
@@ -429,7 +428,8 @@ package temple.debug
 				}
 				default:
 				{
-					throwError(new TempleArgumentError(DebugManager, "Invalid value for debugMode: " + value));
+					Log.error("Invalid value for debugMode: " + value, DebugManager);
+					return;
 					break;
 				}
 			}
@@ -556,7 +556,7 @@ package temple.debug
 
 		public static function toString():String 
 		{
-			return getClassName(DebugManager);
+			return objectToString(DebugManager);
 		}
 	}
 }

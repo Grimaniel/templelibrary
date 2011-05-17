@@ -1,6 +1,6 @@
 ﻿/**
- * VERSION: 11.66
- * DATE: 2011-01-25
+ * VERSION: 11.68
+ * DATE: 2011-05-09
  * AS3 (AS2 version is also available)
  * UPDATES AND DOCS AT: http://www.greensock.com 
  **/
@@ -298,7 +298,7 @@ package com.greensock {
  */
 	public class TweenMax extends TweenLite implements IEventDispatcher {
 		/** @private **/
-		public static const version:Number = 11.66;
+		public static const version:Number = 11.68;
 		
 		TweenPlugin.activate([
 			
@@ -483,13 +483,20 @@ package com.greensock {
 				this.vars[p] = vars[p];
 			}
 			if (this.initted) {
-				this.initted = false;
-				if (!resetDuration) {
+				if (resetDuration) {
+					this.initted = false;
+				} else {
 					if (_notifyPluginsOfEnabled && this.cachedPT1) {
 						onPluginEvent("onDisable", this); //in case a plugin like MotionBlur must perform some cleanup tasks
 					}
-					init();
-					if (!resetDuration && this.cachedTime > 0 && this.cachedTime < this.cachedDuration) {
+					if (this.cachedTime / this.cachedDuration > 0.998) { //if the tween has finished (or come extremely close to finishing), we just need to rewind it to 0 and then render it again at the end which forces it to re-initialize (parsing the new vars). We allow tweens that are close to finishing (but haven't quite finished) to work this way too because otherwise, the values are so small when determining where to project the starting values that binary math issues creep in and can make the tween appear to render incorrectly when run backwards. 
+						var prevTime:Number = this.cachedTime;
+						this.renderTime(0, true, false);
+						this.initted = false;
+						this.renderTime(prevTime, true, false);
+					} else if (this.cachedTime > 0) {
+						this.initted = false;
+						init();
 						var inv:Number = 1 / (1 - curRatio);
 						var pt:PropTween = this.cachedPT1, endValue:Number;
 						while (pt) {
@@ -499,7 +506,6 @@ package com.greensock {
 							pt = pt.nextNode;
 						}
 					}
-					
 				}
 			}
 		}
@@ -872,6 +878,9 @@ package com.greensock {
 			var i:int, varsDup:Object, p:String;
 			var l:int = targets.length;
 			var a:Array = [];
+			if (vars.isGSVars) { //to accommodate TweenMaxVars instances for strong data typing and code hinting
+				vars = vars.vars;
+			}
 			var curDelay:Number = ("delay" in vars) ? Number(vars.delay) : 0;
 			var onCompleteProxy:Function = vars.onComplete;
 			var onCompleteParamsProxy:Array = vars.onCompleteParams;

@@ -54,6 +54,7 @@ package temple.data.collections
 		
 		public function PropertyValueData(property:String = null, value:* = null)
 		{
+			this.toStringProps.push('property', 'value');
 			this._property = property;
 			this._value = value;
 		}
@@ -90,14 +91,6 @@ package temple.data.collections
 		public function set value(value:*):void
 		{
 			this._value = value;
-		}
-
-		/**
-		 * 
-		 */
-		override public function toString():String
-		{
-			return super.toString() + ' (property="' + this._property + '", value="' + this._value + '")';
 		}
 
 		/**

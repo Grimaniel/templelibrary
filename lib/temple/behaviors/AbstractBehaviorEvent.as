@@ -41,7 +41,7 @@
 
 package temple.behaviors 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.events.Event;
 
@@ -88,7 +88,7 @@ package temple.behaviors
 		 */
 		override public function toString():String
 		{
-			return getClassName(this) + " (type:'" + this.type + "', behaviorTarget:" + this.behaviorTarget + ")";
+			return objectToString(this) + " (type:'" + this.type + "', behaviorTarget:" + this.behaviorTarget + ")";
 		}
 	}
 }

@@ -141,7 +141,7 @@ package temple.debug.log
 		 */
 		public static function debug(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevels.DEBUG, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.DEBUG, objectId);
 		}
 
 		/**
@@ -158,7 +158,7 @@ package temple.debug.log
 		 */
 		public static function info(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevels.INFO, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.INFO, objectId);
 		}
 
 		/**
@@ -175,7 +175,7 @@ package temple.debug.log
 		 */
 		public static function error(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevels.ERROR, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.ERROR, objectId);
 		}
 
 		/**
@@ -192,7 +192,7 @@ package temple.debug.log
 		 */
 		public static function warn(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevels.WARN, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.WARN, objectId);
 		}
 
 		/**
@@ -209,7 +209,7 @@ package temple.debug.log
 		 */
 		public static function fatal(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevels.FATAL, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.FATAL, objectId);
 		}
 
 		/**
@@ -226,7 +226,7 @@ package temple.debug.log
 		 */
 		public static function status(data:*, sender:*, objectId:uint = 0):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevels.STATUS, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.STATUS, objectId);
 		}
 
 		/**

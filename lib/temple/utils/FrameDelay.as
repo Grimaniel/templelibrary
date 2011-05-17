@@ -60,10 +60,9 @@ limitations under the License.
 
 package temple.utils 
 {
-	import temple.debug.IDebuggable;
-	import temple.utils.types.FunctionUtils;
-	import temple.ui.IPauseable;
 	import temple.core.CoreObject;
+	import temple.debug.IDebuggable;
+	import temple.ui.IPauseable;
 
 	import flash.events.Event;
 
@@ -228,14 +227,6 @@ package temple.utils
 			this._params = null;
 			
 			super.destruct();
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + ": " + (this._callback != null ? FunctionUtils.functionToString(this._callback).substring(0, -2) + "(" + (this._params ? this._params : "") + ")" : "");
 		}
 	}
 }

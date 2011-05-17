@@ -51,6 +51,7 @@ package temple.utils.types
 	{
 		public var name:*;
 		public var type:String;
+		public var xml:XML;
 
 		public function ObjectVariableData(name:* = null) 
 		{
@@ -63,10 +64,11 @@ package temple.utils.types
 		
 			if (xml.@uri.length()) return false;
 		
-			name = xml.@name;
-			type = xml.@type;
+			this.name = xml.@name;
+			this.type = xml.@type;
+			this.xml = xml;
 		
-			return name != null && type != null;
+			return this.name != null && this.type != null;
 		}
 	}
 }

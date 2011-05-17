@@ -47,7 +47,7 @@ package temple.utils.keys
 	import temple.debug.IDebuggable;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.debug.log.Log;
 
 	import flash.display.Stage;
@@ -177,7 +177,7 @@ package temple.utils.keys
 
 		public static function toString():String 
 		{
-			return getClassName(KeyManager);
+			return objectToString(KeyManager);
 		}
 	}
 }

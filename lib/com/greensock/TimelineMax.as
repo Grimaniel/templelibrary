@@ -147,7 +147,7 @@ package com.greensock {
  **/
 	public class TimelineMax extends TimelineLite implements IEventDispatcher {
 		/** @private **/
-		public static const version:Number = 1.66;
+		public static const version:Number = 1.67;
 		
 		/** @private **/
 		protected var _repeat:int;
@@ -640,11 +640,13 @@ package com.greensock {
 		 * @return an Array of active tweens/timelines
 		 */
 		public function getActive(nested:Boolean=true, tweens:Boolean=true, timelines:Boolean=false):Array {
-			var a:Array = [], all:Array = getChildren(nested, tweens, timelines), i:int;
+			var a:Array = [], all:Array = getChildren(nested, tweens, timelines), i:int, tween:TweenCore;
 			var l:int = all.length;
 			var cnt:int = 0;
 			for (i = 0; i < l; i += 1) {
-				if (TweenCore(all[i]).active) {
+				tween = all[i];
+				//note: we cannot just check tween.active because timelines that contain paused children will continue to have "active" set to true even after the playhead passes their end point (technically a timeline can only be considered complete after all of its children have completed too, but paused tweens are...well...just waiting and until they're unpaused we don't know where their end point will be).
+				if (!tween.cachedPaused && tween.timeline.cachedTotalTime >= tween.cachedStartTime && tween.timeline.cachedTotalTime < tween.cachedStartTime + tween.cachedTotalDuration / tween.cachedTimeScale && !OverwriteManager.getGlobalPaused(tween.timeline)) {
 					a[cnt++] = all[i];
 				}
 			}

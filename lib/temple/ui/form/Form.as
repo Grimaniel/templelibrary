@@ -662,7 +662,7 @@ package temple.ui.form
 			}
 			else
 			{
-				this.logError("send: service is not set, form can not be submitted!");
+				this.logWarn("send: service is not set, form can not be submitted!");
 			}
 		}
 

@@ -70,6 +70,7 @@ package temple.data.loader.cache
 	{
 		private var _cacheURLLoader:CacheURLLoader;
 		private var _reloadAfterError:Boolean = true;
+		private var _context:LoaderContext;
 
 		public function CacheLoader(logErrors:Boolean = true, cache:Boolean = true, reloadAfterError:Boolean = true)
 		{
@@ -145,6 +146,7 @@ package temple.data.loader.cache
 			this._isLoading = true;
 			this._isLoaded = false;
 			this._url = request.url;
+			this._context = context;
 			
 			if (this.cache)
 			{
@@ -194,7 +196,8 @@ package temple.data.loader.cache
 
 		private function handleURLLoaderComplete(event:Event):void
 		{
-			this.loadBytes(this._cacheURLLoader.data);
+			if (this._context) this._context.checkPolicyFile = false;
+			this.loadBytes(this._cacheURLLoader.data, this._context);
 		}
 		
 		private function handleSecurityError(event:SecurityErrorEvent):void 
@@ -217,6 +220,7 @@ package temple.data.loader.cache
 				this._cacheURLLoader.destruct();
 				this._cacheURLLoader = null;
 			}
+			this._context = null;
 			super.destruct();
 		}
 	}

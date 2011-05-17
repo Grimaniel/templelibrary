@@ -42,7 +42,7 @@
 
 package temple.utils.types 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	/**
 	 * This class contains some functions for Time.
@@ -127,7 +127,7 @@ package temple.utils.types
 		
 		public static function toString():String
 		{
-			return getClassName(TimeUtils);
+			return objectToString(TimeUtils);
 		}
 	}
 }

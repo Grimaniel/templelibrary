@@ -189,6 +189,7 @@ package temple.media.video.players
 		private var _width:Number;
 		private var _height:Number;
 		private var _scaleMode:String = ScaleMode.EXACT_FIT;
+		private var _upscaleEnabled:Boolean = true;
 		private var _playAfterLoaded:Boolean;
 		private var _autoRewind:Boolean;
 		private var _bufferTime:Number;
@@ -210,6 +211,7 @@ package temple.media.video.players
 		 */
 		public function VideoPlayer(width:Number = NaN, height:Number = NaN, smoothing:Boolean = false, scaleMode:String = ScaleMode.EXACT_FIT, debug:Boolean = false) 
 		{
+			this.toStringProps.push('videoPath');
 			if (isNaN(width) && super.width > 0)
 			{
 				this._width = super.width;
@@ -778,6 +780,25 @@ package temple.media.video.players
 					throwError(new TempleError(this, "Invalid value for scaleMode: '" + value + "'"));
 					break;
 			}
+		}
+
+		/**
+		 * When you set the scaleMode to a property other than NO_SCALE, and clipping mode is enabled, every image is scaled.
+		 * When you set upscaleEnabled to false, images that are smaller than the clippingRect are not scaled.
+		 * @default true
+		 */
+		public function get upscaleEnabled():Boolean
+		{
+			return this._upscaleEnabled;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set upscaleEnabled(value:Boolean):void
+		{
+			this._upscaleEnabled = value;
+			this.setVideoSize();
 		}
 		
 		/**
@@ -1390,6 +1411,20 @@ package temple.media.video.players
 					break;
 				}
 			}
+			if (!this._upscaleEnabled)
+			{
+				if (this._video.width > vWidth)
+				{
+					this._video.width = vWidth;
+					this._video.x = 0.5 * (this._width - this._video.width);
+				}
+				if (this._video.height > vHeight)
+				{
+					this._video.height = vHeight;
+					this._video.y = 0.5 * (this._height - this._video.height);
+				}
+			}
+			
 			this.setBackground();
 		}
 
@@ -1402,14 +1437,6 @@ package temple.media.video.players
 				this.graphics.drawRect(0, 0, this._width, this._height);
 				this.graphics.endFill();
 			}
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String 
-		{
-			return super.toString() + ' (source="' + this.videoPath + '")';
 		}
 
 		/**

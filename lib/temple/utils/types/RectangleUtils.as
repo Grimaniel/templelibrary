@@ -42,7 +42,7 @@
 
 package temple.utils.types 
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	import flash.display.MovieClip;
 	import flash.geom.Point;
@@ -157,7 +157,7 @@ package temple.utils.types
 		
 		public static function toString():String
 		{
-			return getClassName(RectangleUtils);
+			return objectToString(RectangleUtils);
 		}
 	}
 }

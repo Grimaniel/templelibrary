@@ -47,7 +47,7 @@ The copyrights embodied in the content of this file are licensed under the BSD (
  */
 package temple.utils.types
 {
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 	import temple.ui.layout.Align;
 
 	import flash.display.BitmapData;
@@ -185,27 +185,6 @@ package temple.utils.types
 		}
 
 		/**
-		 * Returns the distance from the registration point of the specified object to the bottom-most visible pixel, ignoring any region
-		 * that is not visible due to masking. For example, if a display object contains a 100-pixel-high shape and a 50-pixel-high mask,
-		 * getVisibleHeight() will return 50, whereas DisplayObject's "height" variable would yield 100. 
-		 * 
-		 * The maximum measureable dimensions of the supplied object is 2000x2000.
-		 * 
-		 * From: http://www.moock.org/blog/archives/000292.html
-		 */
-		public static function getVisibleHeight(displayObject:DisplayObject):Number 
-		{
-			var bitmapDataSize:int = 2000;
-			var bounds:Rectangle;
-			var bitmapData:BitmapData = new BitmapData(bitmapDataSize, bitmapDataSize, true, 0);
-			bitmapData.draw(displayObject);
-			bitmapData.threshold(bitmapData, new Rectangle(0, 0, bitmapDataSize, bitmapDataSize), new Point(0, 0), ">=", 0x80000000, 0xFF000000, 0xFF000000);
-			bounds = bitmapData.getColorBoundsRect(0xFF000000, 0xFF000000);
-			bitmapData.dispose(); 
-			return bounds.y + bounds.height;
-		}
-
-		/**
 		 * Returns the distance from the registration point of the specified object to the right-most visible pixel, ignoring any region
 		 * that is not visible due to masking. For example, if a display object contains a 100-pixel-wide shape and a 50-pixel-wide mask,
 		 * getVisibleWidth() will return 50, whereas DisplayObject's "width" variable would yield 100. 
@@ -225,6 +204,102 @@ package temple.utils.types
 			bitmapData.dispose(); 
 			return bounds.x + bounds.width;
 		}
+
+		/**
+		 * Returns the distance from the registration point of the specified object to the bottom-most visible pixel, ignoring any region
+		 * that is not visible due to masking. For example, if a display object contains a 100-pixel-high shape and a 50-pixel-high mask,
+		 * getVisibleHeight() will return 50, whereas DisplayObject's "height" variable would yield 100. 
+		 * 
+		 * The maximum measureable dimensions of the supplied object is 2000x2000.
+		 * 
+		 * From: http://www.moock.org/blog/archives/000292.html
+		 */
+		public static function getVisibleHeight(displayObject:DisplayObject):Number 
+		{
+			var bitmapDataSize:int = 2000;
+			var bounds:Rectangle;
+			var bitmapData:BitmapData = new BitmapData(bitmapDataSize, bitmapDataSize, true, 0);
+			bitmapData.draw(displayObject);
+			bitmapData.threshold(bitmapData, new Rectangle(0, 0, bitmapDataSize, bitmapDataSize), new Point(0, 0), ">=", 0x80000000, 0xFF000000, 0xFF000000);
+			bounds = bitmapData.getColorBoundsRect(0xFF000000, 0xFF000000);
+			bitmapData.dispose(); 
+			return bounds.y + bounds.height;
+		}
+		
+		/**
+		 * getBounds with added visible/alpha0/mask check, recursive on DisplayObjectContainer, but DisplayObject for power (add treshhold-for-bitmaps-option?)
+		 */
+		public static function getVisibleBounds(target:DisplayObject, space:DisplayObject = null, recurse:int = 0):Rectangle
+		{
+			space = space ? space : target;
+
+			if(target is DisplayObjectContainer)
+			{
+				var i:int;
+				var rect:Rectangle;
+				var container:DisplayObjectContainer = DisplayObjectContainer(target);
+				var disp:DisplayObject;
+				if(recurse > 0)
+				{
+					for(i = 0;i < container.numChildren;i++)
+					{
+						disp = container.getChildAt(i);
+						if(disp.mask)
+						{
+							disp = disp.mask;
+						}
+						if(disp.visible && disp.alpha > 0)
+						{
+							if(rect)
+							{
+								rect = rect.union(DisplayObjectUtils.getVisibleBounds(disp, space, recurse - 1));
+							}
+							else
+							{
+								rect = DisplayObjectUtils.getVisibleBounds(disp, space, recurse - 1);
+							}
+						}
+						/*else
+						{
+						log('-> skipped ' + disp);
+						}*/
+					}
+				}
+				else
+				{
+					for(i = 0;i < container.numChildren;i++)
+					{
+						disp = container.getChildAt(i);
+						if(disp.mask)
+						{
+							disp = disp.mask;
+						}
+						if(disp.visible && disp.alpha > 0)
+						{
+							if(rect)
+							{
+								rect = rect.union(disp.getBounds(space));
+							}
+							else
+							{
+								rect = disp.getBounds(space);
+							}
+						}
+						/*else
+						{
+						log('-> skipped ' + disp);
+						}*/
+					}
+				}
+				if(rect)
+				{
+					return rect;
+				}
+			}
+			// fallback
+			return target.getBounds(space);
+		}
+		
 
 		/**
 		 * Clears all the content of a displayObject. Removes all children and clears graphic.
@@ -331,7 +406,7 @@ package temple.utils.types
 
 		public static function toString():String
 		{
-			return getClassName(DisplayObjectUtils);
+			return objectToString(DisplayObjectUtils);
 		}
 	}
 }

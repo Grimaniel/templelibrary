@@ -59,11 +59,18 @@ package temple.destruction
 	public final class Destructor 
 	{
 		/**
-		 * Recursively destructs the object and all his descendants
+		 * Recursively destructs the object and all its descendants.
+		 * Note: This method always returns null. Useful if you want to destruct and clear an object in one line of code:
+		 * 
+		 * <listing version="3.0">
+		 * this._someObject = Destructor.destruct(this._someObject);
+		 * </listing>
+		 * 
+		 * @returns untyped null 
 		 */
-		public static function destruct(object:*):void
+		public static function destruct(object:*):*
 		{
-			if (!object) return;
+			if (!object) return null;
 			
 			if (object is IDestructible)
 			{
@@ -108,6 +115,7 @@ package temple.destruction
 					Destructor.destruct((object as Array).shift());
 				}
 			}
+			return null;
 		}
 
 		/**

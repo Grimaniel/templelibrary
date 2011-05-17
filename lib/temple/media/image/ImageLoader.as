@@ -123,6 +123,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 */
 		public function ImageLoader(url:* = null, width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = true, smoothing:Boolean = false, preloader:IPreloader = null, preloaderMode:String = 'ownPreloader', loaderContext:LoaderContext = null, cache:Boolean = false)
 		{
+			this.toStringProps.push('name', 'url');
 			this._width = !isNaN(width) ? width : (super.width ? super.width : NaN);
 			this._height = !isNaN(height) ? height : (super.height ? super.height : NaN);
 			 
@@ -739,14 +740,6 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 				this.graphics.drawRect(0, 0, this.width, this.height);
 				this.graphics.endFill();
 			}
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return super.toString() + (this.url ? ' (url="' + this.url + '")' : '');
 		}
 
 		/**

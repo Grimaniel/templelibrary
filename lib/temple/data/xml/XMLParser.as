@@ -45,7 +45,7 @@ package temple.data.xml
 	import temple.debug.log.Log;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.debug.getClassName;
+	import temple.debug.objectToString;
 
 	/**
 	 * Class for parsing XML data into DataValueObject classes.
@@ -159,7 +159,7 @@ package temple.data.xml
 		
 		public static function toString():String
 		{
-			return getClassName(XMLParser);
+			return objectToString(XMLParser);
 		}
 	}
 }
