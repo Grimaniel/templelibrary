@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="XMLManager"></a>
  * <h1>XMLManager</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/xml/XMLManager.html">XMLManager</a>. The XMLManager is used for easily loading and parsing XML files to typed objects.</p>

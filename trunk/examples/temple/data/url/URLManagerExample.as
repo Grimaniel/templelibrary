@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="URLManager"></a>
  * <h1>URLManager</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/url/URLManager.html">URLManager</a>. The URLManager is used to manage the URL's of a project in an XML file. With this XML file you can easily switch between different groups groups of URL's (for different environments).</p>

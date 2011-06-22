@@ -1,6 +1,7 @@
 ﻿/**
  * @exampleText
  * 
+ * <a name="MultiStateButton"></a>
  * <h1>MultiStateButton</h1>
  * 
  * <p>This is an example about the usage of frame labels in a <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/MultiStateButton.html">MultiStateButton</a>.</p>

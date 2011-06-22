@@ -2,7 +2,7 @@
  * @exampleText
  * 
  * <a name="LiquidScrollComponent"></a>
- * <h1>LiquidScrollComponentExample</h1>
+ * <h1>Liquid ScrollComponent</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/scroll/ScrollComponent.html">ScrollComponent</a>.</p>
  * 

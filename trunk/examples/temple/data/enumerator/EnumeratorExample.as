@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="Enumerator"></a>
  * <h1>Enumerator</h1>
  * 
  * <p>This is an example of the usages of an <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/data/Enumerator.html">Enumerator</a>.</p>

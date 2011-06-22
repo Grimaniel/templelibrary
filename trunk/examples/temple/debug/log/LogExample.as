@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="Log"></a>
  * <h1>Log</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/debug/log/Log.html">Log</a>.</p>
