@@ -124,9 +124,9 @@ package temple.core
 			this._registryId = Registry.add(this);
 			
 			// Add default listeners to Error events and preloader support
-			this.addEventListener(Event.OPEN, templelibrary::handleLoadStart);
-			this.addEventListener(ProgressEvent.PROGRESS, templelibrary::handleLoadProgress);
-			this.addEventListener(Event.COMPLETE, templelibrary::handleLoadComplete);
+			this.addEventListener(Event.OPEN, templelibrary::handleOpen);
+			this.addEventListener(ProgressEvent.PROGRESS, templelibrary::handleProgress);
+			this.addEventListener(Event.COMPLETE, templelibrary::handleComplete);
 			this.addEventListener(IOErrorEvent.IO_ERROR, templelibrary::handleIOError);
 			this.addEventListener(IOErrorEvent.DISK_ERROR, templelibrary::handleIOError);
 			this.addEventListener(IOErrorEvent.NETWORK_ERROR, templelibrary::handleIOError);
@@ -160,6 +160,7 @@ package temple.core
 			this._url = request.url;
 			this._isLoading = true;
 			this._isLoaded = false;
+			this._preloadableBehavior.onLoadStart(this);
 			super.load(request);
 		}
 
@@ -348,22 +349,21 @@ package temple.core
 		{
 			this._preloadableBehavior.preloader = value;
 		}
-				
-		templelibrary final function handleLoadStart(event:Event):void
+		
+		templelibrary final function handleOpen(event:Event):void
 		{
-			if (this._debug) this.logDebug("handleLoadStart");
-			this._preloadableBehavior.onLoadStart(this);
+			if (this._debug) this.logDebug("handleOpen");
 		}
 
-		templelibrary final function handleLoadProgress(event:ProgressEvent):void
+		templelibrary final function handleProgress(event:ProgressEvent):void
 		{
-			if (this.debug) this.logDebug("handleLoadProgress: " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
+			if (this.debug) this.logDebug("handleProgress: " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
 			this._preloadableBehavior.onLoadProgress();
 		}
 		
-		templelibrary final function handleLoadComplete(event:Event):void
+		templelibrary final function handleComplete(event:Event):void
 		{
-			if (this._debug) this.logDebug("handleLoadComplete");
+			if (this._debug) this.logDebug("handleComplete");
 			this._preloadableBehavior.onLoadComplete(this);
 			this._isLoading = false;
 			this._isLoaded = true;

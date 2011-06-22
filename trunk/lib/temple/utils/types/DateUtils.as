@@ -762,7 +762,7 @@ package temple.utils.types
 		{
 			var d:Date;
 			
-			if (date is Date )
+			if (date is Date)
 			{
 				d = date as Date;
 			}
@@ -771,9 +771,13 @@ package temple.utils.types
 				var unixTimestamp:int = date as int;
 				d = new Date(unixTimestamp * 1000);
 			}
-			else
+			else if (date == null)
 			{
 				d = new Date();
+			}
+			else
+			{
+				throwError(new TempleArgumentError(DateUtils, "Invalid value for date: '" + date + "'"));
 			}
 			
 			return DateUtils.parseFormatString(d, format);
@@ -790,25 +794,26 @@ package temple.utils.types
 		{
 			var result:String = "";
 			
-			//get single chars from the full format string
-			var chars:Array = format.split("");
-			
 			//iterating over all chars
-			chars.forEach(function (item:String, index:int, array:Array ):void
+			var leni:int = format.length;
+			for (var i:int = 0; i < leni; i++)
 			{
-				/*
-				 * check if the current char was escaped if true don't
-				 * parse it
+				/**
+				 * check if the current char was escaped if true don't parse it
 				 */
-				if ((index > 0 && array[index - 1] != "\\" ) || index == 0)
+				if (format.charAt(i) == "\\")
 				{
-					result += DateUtils.parseSingleChar(date, item);
+					// escape char, skip this
+				}
+				else if (i == 0 || format.charAt(i - 1) != "\\")
+				{
+					result += DateUtils.parseSingleChar(date, format.charAt(i));
 				}
 				else
 				{
-					result += item;
+					result += format.charAt(i);
 				}
-			});
+			}
 							
 			return result;
 		}
@@ -816,160 +821,52 @@ package temple.utils.types
 		/**
 		 * parses a single char
 		 * 
-		 * @param item single char of a format string
+		 * @param char single char of a format string
 		 * @return String
 		 */
-		private static function parseSingleChar(date:Date, item:String):String
+		private static function parseSingleChar(date:Date, char:String):String
 		{
-			/**
-			 * checking if some regexp match to the given char, if false
-			 * give back the original item
-			 */ 
-			if (item.match(/a/))
+			if (!char || char.length != 1) throwError(new TempleArgumentError(DateUtils, "char must be a single char"));
+			
+			switch (char)
 			{
-				return DateUtils.getAmPm(date);
+				case 'a': return DateUtils.getAmPm(date);
+				case 'A': return DateUtils.getAmPm(date, true);
+				case 'B': return DateUtils.getSwatchInternetTime(date);
+				case 'c': return DateUtils.getIso8601(date);
+				case 'd': return DateUtils.getDayOfMonth(date);
+				case 'D': return DateUtils.getWeekDayAsText(date, true);
+				case 'F': return DateUtils.getMonthAsText(date);
+				case 'g': return DateUtils.getHours(date, false, true);
+				case 'G': return DateUtils.getHours(date, false);
+				case 'h': return DateUtils.getHours(date, true, true);
+				case 'H': return DateUtils.getHours(date);
+				case 'i': return DateUtils.getMinutes(date);
+				case 'I': return DateUtils.getSummertime(date);
+				case 'j': return DateUtils.getDayOfMonth(date, false);
+				case 'l': return DateUtils.getWeekDayAsText(date);
+				case 'L': return DateUtils.getLeapYear(date);
+				case 'm': return DateUtils.getMonth(date);
+				case 'M': return DateUtils.getMonthAsText(date, true);
+				case 'n': return DateUtils.getMonth(date, false);
+				case 'N': return DateUtils.getIso8601Day(date);
+				case 'O': return DateUtils.getDifferenceBetweenGmt(date);
+				case 'P': return DateUtils.getDifferenceBetweenGmt(date, ":");
+				case 'r': return DateUtils.getRfc2822(date);
+				case 's': return DateUtils.getSeconds(date);
+				case 'S': return NumberUtils.ordinalSuffix(date.getDate());
+				case 't': return String(DateUtils.getDaysOfMonth(date));
+				case 'T': return DateUtils.getTimezone(date);
+				case 'u': return DateUtils.getMilliseconds(date);
+				case 'U': return DateUtils.getUnixTimestamp(date);
+				case 'w': return DateUtils.getWeekDay(date);
+				case 'W': return DateUtils.getWeekOfYear(date);
+				case 'y': return DateUtils.getYear(date, true);
+				case 'Y': return DateUtils.getYear(date);
+				case 'z': return String(DateUtils.getDayOfYear(date));
+				case 'Z': return DateUtils.getTimezoneOffset(date);
 			}
-			else if (item.match(/A/))
-			{
-				return DateUtils.getAmPm(date, true);
-			}
-			else if (item.match(/B/))
-			{
-				return DateUtils.getSwatchInternetTime(date);
-			}
-			else if (item.match(/c/))
-			{
-				return DateUtils.getIso8601(date);
-			}
-			else if (item.match(/d/))
-			{
-				return DateUtils.getDayOfMonth(date);
-			}
-			else if (item.match(/D/))
-			{
-				return DateUtils.getWeekDayAsText(date, true);
-			}
-			else if (item.match(/F/))
-			{
-				return DateUtils.getMonthAsText(date);
-			}
-			else if (item.match(/g/))
-			{
-				return DateUtils.getHours(date, false, true);
-			}
-			else if (item.match(/G/))
-			{
-				return DateUtils.getHours(date, false);
-			}
-			else if (item.match(/h/))
-			{
-				return DateUtils.getHours(date, true, true);
-			}
-			else if (item.match(/H/))
-			{
-				return DateUtils.getHours(date);
-			}
-			else if (item.match(/i/))
-			{
-				return DateUtils.getMinutes(date);
-			}
-			else if (item.match(/I/))
-			{
-				return DateUtils.getSummertime(date);
-			}
-			else if (item.match(/j/))
-			{
-				return DateUtils.getDayOfMonth(date, false);
-			}
-			else if (item.match(/l/))
-			{
-				return DateUtils.getWeekDayAsText(date);
-			}
-			else if (item.match(/L/))
-			{
-				return DateUtils.getLeapYear(date);
-			}
-			else if (item.match(/m/))
-			{
-				return DateUtils.getMonth(date);
-			}
-			else if (item.match(/M/))
-			{
-				return DateUtils.getMonthAsText(date, true);
-			}
-			else if (item.match(/n/))
-			{
-				return DateUtils.getMonth(date, false);
-			}
-
-			else if (item.match(/N/))
-			{
-				return DateUtils.getIso8601Day(date);
-			}
-			else if (item.match(/O/))
-			{
-				return DateUtils.getDifferenceBetweenGmt(date);
-			}
-			else if (item.match(/P/))
-			{
-				return DateUtils.getDifferenceBetweenGmt(date, ":");
-			}
-			else if (item.match(/r/))
-			{
-				return DateUtils.getRfc2822(date);
-			}
-			else if (item.match(/s/))
-			{
-				return DateUtils.getSeconds(date);
-			}
-			else if (item.match(/S/))
-			{
-				return NumberUtils.ordinalSuffix(date.getDate());
-			}
-			else if (item.match(/t/))
-			{
-				return String(DateUtils.getDaysOfMonth(date));
-			}
-			else if (item.match(/T/)) 
-			{
-				return DateUtils.getTimezone(date);
-			}
-			else if (item.match(/u/))
-			{
-				return DateUtils.getMilliseconds(date);
-			}
-			else if (item.match(/U/))
-			{
-				return DateUtils.getUnixTimestamp(date);
-			}
-			else if (item.match(/w/))
-			{
-				return DateUtils.getWeekDay(date);
-			}
-			else if (item.match(/W/))
-			{
-				return DateUtils.getWeekOfYear(date);
-			}
-			else if (item.match(/y/))
-			{
-				return DateUtils.getYear(date, true);
-			}
-			else if (item.match(/Y/))
-			{
-				return DateUtils.getYear(date);
-			}
-			else if (item.match(/z/))
-			{
-				return String(DateUtils.getDayOfYear(date));
-			}
-			else if (item.match(/Z/))
-			{
-				return DateUtils.getTimezoneOffset(date);
-			}
-			else
-			{
-				return item;
-			}
+			return char;
 		}
 
 		/**

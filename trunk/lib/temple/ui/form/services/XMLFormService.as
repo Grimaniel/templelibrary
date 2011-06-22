@@ -70,11 +70,11 @@ package temple.ui.form.services
 	/**
 	 * The FormXMLService send the submitted data to a URL, the URL response is an XML file which contains data about the success (or fail) or the submit.
 	 * 
-	 * @includeExample FormXMLServiceExample.as
+	 * @includeExample XMLFormServiceExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FormXMLService extends XMLService implements IFormService
+	public class XMLFormService extends XMLService implements IFormService
 	{
 		private var _resultClass:Class;
 		private var _url:String;
@@ -87,7 +87,7 @@ package temple.ui.form.services
 		 * @param resultClass the Class that parses the result XML, default is FormResult
 		 * @param debug indicates if the service is in debug mode
 		 */
-		public function FormXMLService(url:String = null, resultClass:Class = null, debug:Boolean = false) 
+		public function XMLFormService(url:String = null, resultClass:Class = null, debug:Boolean = false) 
 		{
 			this._url = url;
 			

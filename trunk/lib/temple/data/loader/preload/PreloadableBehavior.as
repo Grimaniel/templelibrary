@@ -230,8 +230,8 @@ package temple.data.loader.preload
 		{
 			if (this._preloader)
 			{
-				if ((PreloadableBehavior._loadingList[this._preloader] as Array).length == 0) PreloadableBehavior._loadingList[this._preloader] = null;
-				if ((PreloadableBehavior._completedList[this._preloader] as Array).length == 0) PreloadableBehavior._completedList[this._preloader] = null;
+				if (PreloadableBehavior._loadingList[this._preloader] && (PreloadableBehavior._loadingList[this._preloader] as Array).length == 0) PreloadableBehavior._loadingList[this._preloader] = null;
+				if (PreloadableBehavior._completedList[this._preloader] && (PreloadableBehavior._completedList[this._preloader] as Array).length == 0) PreloadableBehavior._completedList[this._preloader] = null;
 				
 				this._preloader = null;
 			}

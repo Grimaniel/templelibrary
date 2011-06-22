@@ -447,6 +447,7 @@ package temple.ui.buttons.behaviors
 				this._currentLabel = goal;
 				if (this.debug) this.logDebug("animateTo: goal '" + goal + "' reached");
 				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				if (this._currentLabel == ButtonTimelineLabels.OVER && !this.over) this.update(this);
 			}
 			// check if we are currently in the exit state 
 			else if (this._labels[exit] && FrameLabelData(this._labels[exit]).isActiveAt(this.movieClip.currentFrame))

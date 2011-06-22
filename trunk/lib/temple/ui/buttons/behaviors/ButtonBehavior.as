@@ -67,7 +67,6 @@ package temple.ui.buttons.behaviors
 	 */
 	[Event(name = "ButtonEvent.update", type = "temple.ui.buttons.behaviors.ButtonEvent")]
 	
-
 	/**
 	 * The ButtonBehavior can make every DisplayObject act like a button. The ButtonBehavior keeps track of status of the button.
 	 * The status of the button indicates if the mouse is currently up, over or down the button or if the button is selected of disabled.
@@ -98,8 +97,9 @@ package temple.ui.buttons.behaviors
 		private var _inDelayTimer:CoreTimer;
 		private var _outDelayTimer:CoreTimer;
 		private var _outOnDragOut:Boolean = true;
-		private var _clickOnEnter:Boolean = true;
-		private var _clickOnSpacebar:Boolean = true;
+		private var _downOnDragIn:Boolean = false;
+		private var _clickOnEnter:Boolean = false;
+		private var _clickOnSpacebar:Boolean = false;
 		
 		/**
 		 * 
@@ -285,7 +285,7 @@ package temple.ui.buttons.behaviors
 		}
 
 		/**
-		 * Indicates if behavior should go in out state (true) when dragging (mouse out while mouse down) out the target
+		 * Indicates if the ButtonBehavior should go in out state (true) when dragging (mouse out while mouse down) out the target.
 		 * If set to false, buttons stays in down state when dragging out. Default: true
 		 */
 		public function get outOnDragOut():Boolean
@@ -299,6 +299,22 @@ package temple.ui.buttons.behaviors
 		public function set outOnDragOut(value:Boolean):void
 		{
 			this._outOnDragOut = value;
+		}
+		
+		/**
+		 * Indicates if the ButtonBehavior should go in down state (true) when dragging (mouse in while mouse down) in the target.
+		 */
+		public function get downOnDragIn():Boolean
+		{
+			return this._downOnDragIn;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set downOnDragIn(value:Boolean):void
+		{
+			this._downOnDragIn = value;
 		}
 		
 		/**
@@ -340,6 +356,8 @@ package temple.ui.buttons.behaviors
 		{
 			if (this.enabled)
 			{
+				if (this.debug) this.logDebug("update: over=" + this.over + ", down=" + this.down + ", selected=" + this.selected + ", disabled=" + this.disabled);
+				
 				this.displayObject.dispatchEvent(new ButtonEvent(ButtonEvent.UPDATE, this));
 				this.dispatchEvent(new ButtonEvent(ButtonEvent.UPDATE, this, false));
 			}
@@ -351,6 +369,7 @@ package temple.ui.buttons.behaviors
 			if (this.debug) this.logDebug("handleRollOver");
 			
 			super.over = true;
+			super.down = event.buttonDown && this._downOnDragIn;
 			this.resetTimers();
 			this._inDelayTimer.start();
 		}

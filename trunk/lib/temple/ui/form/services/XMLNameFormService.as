@@ -68,7 +68,7 @@ package temple.ui.form.services
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FormXMLNameService extends FormXMLService 
+	public class XMLNameFormService extends XMLFormService 
 	{
 		private var _urlName:String;
 		
@@ -78,7 +78,7 @@ package temple.ui.form.services
 		 * @param resultClass the class which is used to parse the XML result. This class must implement IFormResult. If set to null FormResult will be used.
 		 * @param debug a Boolean which indicates if debugging is enabled.
 		 */
-		public function FormXMLNameService(urlName:String = null, resultClass:Class = null, debug:Boolean = false)
+		public function XMLNameFormService(urlName:String = null, resultClass:Class = null, debug:Boolean = false)
 		{
 			super(null, resultClass, debug);
 			
