@@ -64,7 +64,7 @@ package temple.ui.form.services
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FormObjectService extends CoreEventDispatcher implements IFormService 
+	public class ObjectFormService extends CoreEventDispatcher implements IFormService 
 	{
 		private var _debug:Boolean;
 		private var _object:Object;
@@ -74,7 +74,7 @@ package temple.ui.form.services
 		 * The FormObjectService stores the form data in an object
 		 * @param object the object to store the data in, if the object implements IObjectParsable, the parseObject method is used to store 
 		 */
-		public function FormObjectService(object:Object = null)
+		public function ObjectFormService(object:Object = null)
 		{
 			this._object = object;
 		}

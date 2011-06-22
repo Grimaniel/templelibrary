@@ -122,8 +122,8 @@ package temple.core
 			this._registryId = Registry.add(this);
 			
 			// Add default listeners to Error events and preloader support
-			this.addEventListener(Event.OPEN, templelibrary::handleLoadStart);
-			this.addEventListener(ProgressEvent.PROGRESS, templelibrary::handleLoadProgress);
+			this.addEventListener(Event.OPEN, templelibrary::handleOpen);
+			this.addEventListener(ProgressEvent.PROGRESS, templelibrary::handleProgress);
 			this.addEventListener(Event.COMPLETE, templelibrary::handleLoadComplete);
 			this.addEventListener(IOErrorEvent.IO_ERROR, templelibrary::handleIOError, false, CoreURLStream._DEFAULT_HANDLER);
 			this.addEventListener(IOErrorEvent.DISK_ERROR, templelibrary::handleIOError, false, CoreURLStream._DEFAULT_HANDLER);
@@ -316,12 +316,12 @@ package temple.core
 			this._preloadableBehavior.preloader = value;
 		}
 		
-		templelibrary final function handleLoadStart(event:Event):void
+		templelibrary final function handleOpen(event:Event):void
 		{
 			this._preloadableBehavior.onLoadStart(this);
 		}
 
-		templelibrary final function handleLoadProgress(event:ProgressEvent):void
+		templelibrary final function handleProgress(event:ProgressEvent):void
 		{
 			this._preloadableBehavior.onLoadProgress();
 		}

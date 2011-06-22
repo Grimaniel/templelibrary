@@ -284,14 +284,14 @@ package temple.utils.types
 		 */
 		public static function escapeToUnicodeChar(inputChar:String):String
 		{
-			if ( inputChar < ' '  || inputChar > '}' )
+			if (inputChar < ' ' || inputChar > '}')
 			{
 				// get the hex digit(s) of the character (either 1 or 2 digits)
-				var hexCode:String = inputChar.charCodeAt( 0 ).toString( 16 );
+				var hexCode:String = inputChar.charCodeAt(0).toString(16);
 				
 				// ensure that there are 4 digits by adjusting
 				// the # of zeros accordingly.
-				while ( hexCode.length < 4 ) hexCode = "0"+hexCode;
+				while (hexCode.length < 4) hexCode = "0" + hexCode;
 				
 				// create the unicode escape sequence with 4 hex digits
 				return "\\u" + hexCode;

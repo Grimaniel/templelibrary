@@ -42,6 +42,7 @@
 
 package temple.utils 
 {
+	import flash.external.ExternalInterface;
 	import temple.debug.log.Log;
 	import temple.debug.objectToString;
 
@@ -58,6 +59,9 @@ package temple.utils
 		public static const STANDALONE:String = 'StandAlone';
 		public static const AIR:String = 'AIR';
 		public static const PLUGIN:String = 'PlugIn';
+		
+		public static const WIN32:String = 'Win32';
+		public static const WIN64:String = 'Win64';
 		
 		private static const _SPLITTED_PLAYER_VERSION:Array = Capabilities.version.split(",");
 		
@@ -238,6 +242,26 @@ package temple.utils
 		public static function hasH264Support():Boolean
 		{
 			return Environment.getMajorPlayerVersion() >= 10 || Environment.getMajorPlayerVersion() == 9 && Environment.getPlayerRevision() >= 115;
+		}
+		
+		/**
+		 * Checks the browser platform (Win32 or Win64)
+		 */
+		public static function getBrowserPlatform():String
+		{
+			if (ExternalInterface.available)
+			{
+				try
+				{
+					return ExternalInterface.call('function(){return navigator.platform;}');
+				}
+				catch(error:Error)
+				{
+					return null;
+				}
+			}
+			
+			return null;
 		}
 
 		public static function toString():String

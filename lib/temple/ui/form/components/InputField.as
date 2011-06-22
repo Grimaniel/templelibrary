@@ -168,11 +168,10 @@ package temple.ui.form.components
 		{
 			if (value == null) value = "";
 			
-			this._text = value;
-			
-			this._textField.text = value;
+			this._textField.text = this._text = value;
 			this._showsHint = false;
 			this.updateHint();
+			this._textField.dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -189,6 +188,7 @@ package temple.ui.form.components
 		public function set textColor(textColor:uint):void
 		{
 			this._textColor = textColor;
+			if (!this._showsHint) this._textField.textColor = this._textColor;
 		}
 		
 		/**
@@ -579,24 +579,34 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * When set to true, scaleX and scaleY will be reset to 0 and all children will be resized.
-		 * By using this the textfield and all 9-slice children will look normal.
+		 * Setter function to make the resetScale option available in the Component Inspector, when the InputField is used as component. 
+		 * 
+		 * @private
 		 */
 		[Inspectable(name="Reset scaling", type="Boolean")]
-		public function set resetScale(value:Boolean):void
+		public function set inspectableResetScale(value:Boolean):void
 		{
 			if (value)
 			{
-				var len:int = this.numChildren;
-				for (var i:int = 0; i < len ; i++)
-				{
-					this.getChildAt(i).width *= this.scaleX;
-					this.getChildAt(i).height *= this.scaleY;
-				}
-				this.scaleX = this.scaleY = 1;
+				this.resetScale();
 			}
 		}
-		
+
+		/**
+		 * When set to true, scaleX and scaleY will be reset to 0 and all children will be resized.
+		 * By using this the textfield and all 9-slice children will look normal.
+		 */
+		public function resetScale():void
+		{
+			var len:int = this.numChildren;
+			for (var i:int = 0; i < len ; i++)
+			{
+				this.getChildAt(i).width *= this.scaleX;
+				this.getChildAt(i).height *= this.scaleY;
+			}
+			this.scaleX = this.scaleY = 1;
+		}
+
 		/**
 		 * Indicates whether the text field is a multiline text field. If the value is true, the text field is multiline; if the value is false, the text field is a single-line text field.
 		 */

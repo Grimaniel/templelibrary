@@ -48,7 +48,6 @@ package temple.ui.form
 	import temple.debug.IDebuggable;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
-	import temple.destruction.IDestructible;
 	import temple.ui.IEnableable;
 	import temple.ui.IResettable;
 	import temple.ui.focus.IFocusable;
@@ -778,15 +777,7 @@ package temple.ui.form
 			
 			this._submitButtons = null;
 			this._resetButtons = null;
-			
-			// Destruct service
-			if (this._service)
-			{
-				// first set this._service to null, to prefend infinite loop
-				var service:IFormService = this._service;
-				this._service = null;
-				service.destruct();
-			}
+			this._service = null;
 			
 			// Destruct validator
 			if (this._validator)
@@ -805,10 +796,6 @@ package temple.ui.form
 			// Destruct elements
 			if (this._elements)
 			{
-				for each (var fed:FormElementData in this._elements)
-				{
-					if (fed is IDestructible) IDestructible(fed).destruct();
-				}
 				this.removeAllElements();
 				this._elements = null;
 			}
@@ -818,7 +805,6 @@ package temple.ui.form
 		}
 	}
 }
-
 import temple.ui.form.validation.IHasValue;
 
 class FormElementData

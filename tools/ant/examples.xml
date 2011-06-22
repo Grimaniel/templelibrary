@@ -28,10 +28,12 @@
 		<antcall target="LiquidExample" />
 		<antcall target="StatesExample" />
 		<antcall target="ButtonBinderExample" />
-		<antcall target="FormXMLServiceExample" />
+		<antcall target="XMLFormServiceExample" />
 		<antcall target="ScrollComponentExample" />
 		<antcall target="LiquidScrollComponentExample" />
 		<antcall target="EnumeratorExample" />
+		<antcall target="ComboBoxExample" />
+		<antcall target="ComboBoxComponentExample" />
 		<echo>All examples exported</echo>
 	</target>
 	
@@ -210,10 +212,10 @@
 		<echo>ButtonBinderExample exported</echo>
 	</target>
 	
-	<target name="FormXMLServiceExample" >
+	<target name="XMLFormServiceExample" >
 		<fdt.launch.application projectname="Temple-GoogleCode" startswf="${startswf}" debug="${debug}" swflauncher="Adobe Flash Player"
-			mainclass="${root.path}/examples/temple/ui/form/services/FormXMLServiceExample.as"
-			target="${root.path}/examples/temple/ui/form/services/BoundsBehaviorExample.swf"
+			mainclass="${root.path}/examples/temple/ui/form/services/XMLFormServiceExample.as"
+			target="${root.path}/examples/temple/ui/form/services/XMLFormServiceExample.swf"
 		/>
 		<echo>FormXMLServiceExample exported</echo>
 	</target>
@@ -230,12 +232,23 @@
 		<echo>LiquidScrollComponentExample exported</echo>
 	</target>
 	
-	
 	<target name="EnumeratorExample" >
-			<fdt.launch.application projectname="Temple-GoogleCode" startswf="${startswf}" debug="${debug}" swflauncher="Adobe Flash Player"
-				mainclass="${root.path}/examples/temple/data/enumerator/EnumeratorExample.as"
-				target="${root.path}/examples/temple/data/enumerator/EnumeratorExample.swf"
-			/>
-			<echo>EnumeratorExample exported</echo>
-		</target>
+		<fdt.launch.application projectname="Temple-GoogleCode" startswf="${startswf}" debug="${debug}" swflauncher="Adobe Flash Player"
+			mainclass="${root.path}/examples/temple/data/enumerator/EnumeratorExample.as"
+			target="${root.path}/examples/temple/data/enumerator/EnumeratorExample.swf"
+		/>
+		<echo>EnumeratorExample exported</echo>
+	</target>
+	
+	<target name="ComboBoxExample" >
+		<fdt.flashCompile file="${root.path}/examples/temple/ui/form/components/ComboBoxExample.fla" />
+		<fdt.extSWFViewer.startSWF file="${root.path}/examples/temple/ui/form/components/ComboBoxExample.swf" width="500" height="320" />
+		<echo>ComboBoxExample exported</echo>
+	</target>
+	
+	<target name="ComboBoxComponentExample" >
+		<fdt.flashCompile file="${root.path}/examples/temple/ui/form/components/ComboBoxComponentExample.fla" />
+		<fdt.extSWFViewer.startSWF file="${root.path}/examples/temple/ui/form/components/ComboBoxComponentExample.swf" width="500" height="320" />
+		<echo>ComboBoxComponentExample exported</echo>
+	</target>
 </project>

@@ -94,8 +94,8 @@ package temple.data.xml
 
 		/**
 		 *	Load from specified location, optionally with specified parameters
-		 *	@param urlData: url of xml data to be loaded
-		 *	@param sendData: optional object containing parameters to be posted
+		 *	@param urlData url of xml data to be loaded
+		 *	@param sendData optional object containing parameters to be posted
 		 *	@param method Method to send the sendData object (GET of POST)
 		 */
 		public function load(urlData:URLData, sendData:Object = null, method:String = URLRequestMethod.GET):void 

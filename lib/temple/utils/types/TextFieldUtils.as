@@ -323,10 +323,17 @@ package temple.utils.types
 		 */
 		public static function setFont(textField:TextField, fontName:String):void
 		{
-			var textFormat:TextFormat = textField.getTextFormat();
-			textFormat.font = fontName;
-			textField.setTextFormat(textFormat);
-			textField.defaultTextFormat = textFormat;
+			if (textField.styleSheet)
+			{
+				// TODO: TextFormat can't be set on a TextField with a StyleSheet, so we need to fix something for this
+			}
+			else
+			{
+				var textFormat:TextFormat = textField.getTextFormat();
+				textFormat.font = fontName;
+				textField.setTextFormat(textFormat);
+				textField.defaultTextFormat = textFormat;
+			}
 		}
 		
 		/**

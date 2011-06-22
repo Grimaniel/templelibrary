@@ -40,7 +40,7 @@
  *	
  */
  
- package temple.ui.buttons 
+package temple.ui.buttons 
 {
 	import temple.core.CoreMovieClip;
 	import temple.ui.IEnableable;

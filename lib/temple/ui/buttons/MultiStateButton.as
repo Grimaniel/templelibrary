@@ -178,6 +178,23 @@ package temple.ui.buttons
 		}
 		
 		/**
+		 * Indicates if the ButtonBehavior should go in down state (true) when dragging (mouse in while mouse down) in the target.
+		 */
+		public function get downOnDragIn():Boolean
+		{
+			return this._buttonBehavior.downOnDragIn;
+		}
+
+		/**
+		 * @private
+		 */
+		[Inspectable(name="Down On DragIn", type="Boolean", defaultValue="false")]
+		public function set downOnDragIn(value:Boolean):void
+		{
+			this._buttonBehavior.downOnDragIn = value;
+		}
+		
+		/**
 		 * Indicates if the animation should play the 'in' animation backwards (true) when the 'over' state is not reached.
 		 * Otherwise (false) animation continues to 'over' state and that does 'out' state. Default: true.
 		 */

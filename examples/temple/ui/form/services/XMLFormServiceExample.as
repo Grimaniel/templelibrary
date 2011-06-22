@@ -21,7 +21,7 @@ package
 	import temple.data.flashvars.FlashVars;
 	import temple.ui.form.Form;
 	import temple.ui.form.FormEvent;
-	import temple.ui.form.services.FormXMLService;
+	import temple.ui.form.services.XMLFormService;
 	import temple.ui.form.validation.rules.EmailValidationRule;
 	import temple.ui.form.validation.rules.EmptyStringValidationRule;
 	import temple.utils.color.Colors;
@@ -30,11 +30,11 @@ package
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 
-	public class FormXMLServiceExample extends DocumentClassExample
+	public class XMLFormServiceExample extends DocumentClassExample
 	{
 		private var _label:TextField;
 		
-		public function FormXMLServiceExample()
+		public function XMLFormServiceExample()
 		{
 			super("Temple - FormXMLServiceExample");
 			
@@ -46,7 +46,7 @@ package
 			// For this case we just submit the data to an XML file, normally you would send it to a backend server.
 			// The XML file acts as the result of the backend server.
 			// If the Flash var "success" is set to true, we use an XML file without errors, otherwise we use an XML with an error.
-			var service:FormXMLService = new FormXMLService(FlashVars.getValue("success") ? "submit_success.xml" : "submit_error.xml"); 
+			var service:XMLFormService = new XMLFormService(FlashVars.getValue("success") ? "submit_success.xml" : "submit_error.xml"); 
 			
 			// we set method to GET, since Google Code doesn't allow us to send POST data to an XML file.
 			service.method = URLRequestMethod.GET;
