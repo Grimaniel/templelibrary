@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="TweenButton"></a>
  * <h1>TweenButton</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/buttons/TweenButton.html">TweenButton</a>.</p>

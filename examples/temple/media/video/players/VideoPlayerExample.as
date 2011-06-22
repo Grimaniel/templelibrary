@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="VideoPlayer"></a>
  * <h1>VideoPlayer</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/media/video/players/VideoPlayer.html">VideoPlayer</a>.</p>

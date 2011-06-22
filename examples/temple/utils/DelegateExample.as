@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ *  <a name="Delegate"></a>
  * <h1>Delegate</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/Delegate.html">Delegate</a> class.</p>

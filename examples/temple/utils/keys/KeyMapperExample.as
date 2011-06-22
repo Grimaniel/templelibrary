@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="KeyMapper"></a>
  * <h1>KeyMapper</h1>
  * 
  * <p>This is an example of how to use the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/keys/KeyMapper.html">KeyMapper</a>.</p>

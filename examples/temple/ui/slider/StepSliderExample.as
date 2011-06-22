@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="StepSlider"></a>
  * <h1>StepSlider</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/ui/slider/StepSlider.html">StepSlider</a>.</p>

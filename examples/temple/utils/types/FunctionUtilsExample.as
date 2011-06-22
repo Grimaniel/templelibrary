@@ -1,6 +1,7 @@
 /**
  * @exampleText
  * 
+ * <a name="FunctionUtils"></a>
  * <h1>FunctionUtils</h1>
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/doc/temple/utils/types/FunctionUtils.html">FunctionUtils</a>.</p>
