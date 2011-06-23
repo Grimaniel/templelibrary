@@ -63,9 +63,44 @@ package temple.ui.form.components
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	import flash.ui.Keyboard;
+	
+	
 	/**
+	 * A ComboBox let the user select from a (predefined) list of options.
+	 * A ComboBox is a combination of an InputField and a List. When the ComboBox is closed (collapsed),
+	 * the List is not visible. If the ComboBox is opened (expanded) the List is visible. The user 
+	 * selects an option from the List by clicking on an item in the List.
+	 * 
+	 * <p>The ComboBox extends the InputField and therefor it needs (at least) a TextField. I also needs
+	 * a List (or an object which implements IList). The TextField and List can be passed through the
+	 * constructor, when you create a ComboBox by code.</p>
+	 * <p>If you want to create a ComboBox in the Flash IDE you just need to add a TextField and a List
+	 * on the display list of the ComboBox. Make sure you set the class
+	 * (temple.ui.form.components.ComboBox) of the ComboBox as base class.</p>
+	 * 
+	 * <p>A ComboBox can be used in a Form and supports ErrorStates, FocusStates and OpenStates.</p>
+	 * 
+	 * <p>The ComboBox also support keyboard navigation. You can use the following keys to control the
+	 * ComboBox:
+	 * <ul>
+	 * 	<li>arrow keys: opens the ComboBox and steps through the options of the list.</li>
+	 * 	<li>space or enter: selects the focussed item of the list.</li>
+	 * 	<li>escape: closes the ComboBox</li>
+	 * 	<li>characters: selects an item of the list which matches the pressed character.</li>
+	 * </ul>
+	 * </p>
+	 * 
+	 * @see temple.ui.form.components.InputField
+	 * @see temple.ui.form.components.List
+	 * @see temple.ui.form.components.IList
+	 * @see temple.ui.form.Form
+	 * @see temple.ui.states.error.IErrorState
+	 * @see temple.ui.states.focus.IFocusState
+	 * @see temple.ui.states.open.IOpenState
+	 * 
 	 * @includeExample ./ComboBoxExample.as
 	 * @includeExample ./ComboBoxComponentExample.as
+	 * @includeExample ../FormExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */
@@ -80,6 +115,13 @@ package temple.ui.form.components
 		private var _closeDelay:FrameDelay;
 		private var _labelProxy:IPropertyProxy;
 
+		/**
+		 * Creates a new ComboBox. If you create a ComboBox by code you must provide a TextField and a List.
+		 * If you create a ComboBox in the Flash IDE you can place a TextField and a List on the display list
+		 * of the ComboBox.
+		 * @param textField the TextField of the ComboBox, must be provided when creating a ComboBox in code.
+		 * @param list the list of the ComboBox, must be provided when creating a ComboBox in code.
+		 */
 		public function ComboBox(textField:TextField = null, list:IList = null)
 		{
 			super(textField);
@@ -539,7 +581,7 @@ package temple.ui.form.components
 		 */
 		override public function reset():void
 		{
-			this._list.selectedIndex = -1;
+			this._list.reset();
 			super.reset();
 			this.close();
 		}

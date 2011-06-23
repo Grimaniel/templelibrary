@@ -42,6 +42,7 @@
 
 package temple.ui.form.components 
 {
+	import temple.ui.IResettable;
 	import temple.core.ICoreDisplayObject;
 	import temple.destruction.IDestructibleEventDispatcher;
 	import temple.ui.IDisplayObjectContainer;
@@ -52,7 +53,7 @@ package temple.ui.form.components
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IList extends IDestructibleEventDispatcher, IDisplayObjectContainer, IHasValue, ISetValue, IFocusable, ICoreDisplayObject
+	public interface IList extends IDestructibleEventDispatcher, IDisplayObjectContainer, IHasValue, ISetValue, IFocusable, ICoreDisplayObject, IResettable
 	{
 		/**
 		 * Add an items to the list.
@@ -70,22 +71,22 @@ package temple.ui.form.components
 		function addItems(items:Array, labels:Array = null):void
 		
 		/**
-		 * Gets the item on a specific position
+		 * Gets the item on a specific position.
 		 */
 		function getItemAt(index:uint):*
 		
 		/**
-		 * Sets the item on a specific position
+		 * Sets the item on a specific position.
 		 */
 		function setItemAt(data:*, index:uint, label:String = null):void
 
 		/**
-		 * Gets the label of the item on a specific position
+		 * Gets the label of the item on a specific position.
 		 */
 		function getLabelAt(index:uint):String
 
 		/**
-		 * Sets the label of the item on a specific position
+		 * Sets the label of the item on a specific position.
 		 */
 		function setLabelAt(index:uint, label:String):void
 		
@@ -102,7 +103,7 @@ package temple.ui.form.components
 		
 		/**
 		 * Removes an item on a specific position.
-		 * Returns a Boolean which indicates if the removal was successful
+		 * Returns a Boolean which indicates if the removal was successful.
 		 */
 		function removeItemAt(index:uint):Boolean
 		
@@ -125,8 +126,8 @@ package temple.ui.form.components
 		function set selectedIndex(value:int):void
 		
 		/**
-		 * Get the current selected item
-		 * Of multiple selections is true, the last selected item is returned
+		 * Get the current selected item.
+		 * Of multiple selections is true, the last selected item is returned.
 		 */
 		function get selectedItem():*
 		
@@ -136,7 +137,7 @@ package temple.ui.form.components
 		function set selectedItem(value:*):void
 
 		/**
-		 * Get the label of the selected item
+		 * Get the label of the selected item.
 		 * Of multiple selections is true, the label of the last selected item is returned
 		 */
 		function get selectedLabel():String
@@ -167,13 +168,13 @@ package temple.ui.form.components
 		function set selectedLabels(value:Array):void
 		
 		/**
-		 * Gets the number of items in the list
+		 * Gets the number of items in the list.
 		 */
 		function get length():uint
 		
 		/**
-		 * indicates if multiple selection (select more then one item) is allowed
-		 * Set if multiple selection (select more then one item) is allowed, default it is not allowed
+		 * indicates if multiple selection (select more then one item) is allowed.
+		 * Set if multiple selection (select more then one item) is allowed, default it is not allowed.
 		 */
 		function get allowMultipleSelection():Boolean
 		
@@ -183,8 +184,8 @@ package temple.ui.form.components
 		function set allowMultipleSelection(value:Boolean):void
 		
 		/**
-		 * Indicates if the previous selection would automaticly be deselected if a new item is selected, unless shift or ctrl key is pressed
-		 * Only works if allowMultipleSelection equals true
+		 * Indicates if the previous selection would automaticly be deselected if a new item is selected, unless shift or ctrl key is pressed.
+		 * Only works if allowMultipleSelection equals true.
 		 */
 		function get autoDeselect():Boolean
 		
@@ -194,7 +195,7 @@ package temple.ui.form.components
 		function set autoDeselect(value:Boolean):void
 		
 		/**
-		 * Get or set the height of a single row
+		 * Get or set the height of a single row.
 		 */
 		function get rowHeight():Number
 		
@@ -214,12 +215,12 @@ package temple.ui.form.components
 		function set rowCount(value:uint):void
 		
 		/**
-		 * Sorts the items in the list
+		 * Sorts the items in the list.
 		 */
 		function sortItems(...sortArgs):void
 		
 		/**
-		 * Indicates if a search automaticly should continue to the begin when reaching the end 
+		 * Indicates if a search automaticly should continue to the begin when reaching the end .
 		 */
 		function get wrapSearch():Boolean
 		
@@ -229,15 +230,15 @@ package temple.ui.form.components
 		function set wrapSearch(value:Boolean):void
 		
 		/**
-		 * Select the first (or next) item starting with 'string'
-		 * @param string: the string to search for
-		 * @param caseSensitive (optional): set the case sensitive, default false
+		 * Select the first (or next) item starting with 'string'.
+		 * @param string: the string to search for.
+		 * @param caseSensitive (optional): set the case sensitive, default false.
 		 */
 		function searchOnString(string:String, caseSensitive:Boolean = false):void
 		
 		/**
-		 * Indicate if auto select on keyboard is true
-		 * If set to true, user can use keyboard to automaticly select next (or first) item starting with the key
+		 * Indicate if auto select on keyboard is true.
+		 * If set to true, user can use keyboard to automaticly select next (or first) item starting with the key.
 		 */
 		function get keySearch():Boolean
 		
@@ -247,7 +248,7 @@ package temple.ui.form.components
 		function set keySearch(value:Boolean):void
 
 		/**
-		 * Returns a reference to the ScrollBehavior of the List
+		 * Returns a reference to the ScrollBehavior of the List.
 		 */
 		function get scrollBehavior():ScrollBehavior;
 	}

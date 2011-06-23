@@ -56,6 +56,8 @@ package temple.ui.buttons
 	import flash.text.TextField;
 
 	/**
+	 * @includeExample ../form/FormExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class LabelButton extends Label implements ISelectable, IFocusable, INestableButton, IEnableable

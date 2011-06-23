@@ -319,7 +319,7 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 * 
-		 * An Event.CHANGE will not be dispatched. If you want a Event.CHANGE event be  dispatched, use setValue()
+		 * An Event.CHANGE will not be dispatched. If you want a Event.CHANGE event be dispatched, use setValue().
 		 */
 		public function set value(value:*):void
 		{

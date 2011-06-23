@@ -97,12 +97,15 @@ package temple.ui.form
 
 	/**
 	 * A Form is used to get information from the user. The form uses form elements, like InputField, CheckBoxes or 
-	 * RadioButtons, to let the user fill in the data. By adding the elements to the Form, the Form can handle the validation, tabbing, clearing, prefilling and submit of the elements and the data.
+	 * RadioButtons, to let the user fill in the data. By adding the elements to the Form, the Form can handle the
+	 * validation, tabbing, clearing, prefilling and submit of the elements and the data.
 	 * 
 	 * @see temple.ui.form.components.InputField
 	 * @see temple.ui.form.components.CheckBox
 	 * @see temple.ui.form.components.RadioButton
 	 * @see temple.ui.form.components.RadioGroup
+	 * @see temple.ui.form.components.List
+	 * @see temple.ui.form.components.ComboBox
 	 * 
 	 * @includeExample FormExample.as
 	 * 
@@ -513,7 +516,7 @@ package temple.ui.form
 		}
 
 		/**
-		 * Returns if the form is enabled
+		 * Indicates if the form is enabled
 		 */
 		public function get enabled():Boolean
 		{

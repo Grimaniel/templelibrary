@@ -74,6 +74,46 @@ package temple.ui.form.components
 	import flash.utils.getQualifiedClassName;
 
 	/**
+	 * A List let the user select from a (predefined) list of item. An item is a data object with or without a label.
+	 * An item is visualized by a ListRow. For performance reasons the List does not create a row for each item, but
+	 * only for the visible items (defined by the rowCount property). The rows are reused for the items when the user
+	 * scrolls the List.
+	 * 
+	 * <p>A List extends the ScrollComponent and there for it supports scrolling, liquid and a ScrollBar.</p>
+	 * 
+	 * <p>A List needs at least a class which the List uses to create the rows. This class can be passed  in the
+	 * constructor if you create a List by code. Or you can place one (ore more) items on the display list of the List
+	 * in the Flash IDE. If the List is created in the Flash IDE, the List will automatically search it's display list
+	 * for ListRows. If the List finds any ListRow it will remove the row and uses the class of this row to create the
+	 * rows it needs.</p>
+	 * 
+	 * <p>You can use the ListRow class for the rows, or you can create you own row class. Make sure this row class
+	 * implements IListRow.</p>
+	 * 
+	 * <p>A List can be used in a Form and supports ErrorStates.</p>
+	 * 
+	 * <p>The List also support keyboard navigation. You can use the following keys to control the
+	 * List:
+	 * <ul>
+	 * 	<li>arrow keys: steps through the options of the List.</li>
+	 * 	<li>space or enter: selects the focussed item of the List.</li>
+	 * 	<li>shift: when an item is selected and the shift key is down, all items between the previous focussed item
+	 * 	and the newly selected item will be selected (or deselected when they were already selected.) Note: this is
+	 * 	only when allowMultipleSelection is set to true.</li>
+	 * 	<li>controll: when an item is selected and the controll key is down, the item will be selected and the other
+	 * 	selected items aren't deselected. (Or the item will be deselected when it was already selected.) Note: this
+	 * 	is only when allowMultipleSelection is set to true.</li>
+	 * 	<li>characters: selects an item of the list which matches the pressed character.</li>
+	 * </ul>
+	 * </p>
+	 * 
+	 * @see temple.ui.form.components.IListRow
+	 * @see temple.ui.form.components.ListRow
+	 * @see temple.ui.scroll.ScrollComponent
+	 * @see temple.ui.scroll.ScrollBar
+	 * @see temple.ui.form.Form
+	 * @see temple.ui.states.error.IErrorState
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class List extends ScrollComponent implements IList, IHasError, IResettable
@@ -455,7 +495,11 @@ package temple.ui.form.components
 		 */
 		public function set selectedIndex(value:int):void
 		{
-			if (this._items[value])
+			if (value == -1)
+			{
+				this.reset();
+			}
+			else if (this._items[value])
 			{
 				this.selectItem(this._items[value]);
 			}
@@ -776,7 +820,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * The colletion that is used to fill the ComboBox
+		 * The colletion that is used to fill the List
 		 */
 		public function get dataSource():ICollection 
 		{
@@ -785,8 +829,6 @@ package temple.ui.form.components
 
 		/**
 		 * @private
-		 * 
-		 * TODO:
 		 */
 		[Collection(name="Data source", collectionClass="temple.data.collections.Collection", collectionItem="temple.ui.form.components.ListItemData",identifier="label")]
 		public function set dataSource(value:ICollection):void 
@@ -972,7 +1014,12 @@ package temple.ui.form.components
 		 */
 		public function reset():void
 		{
-			this.removeAll();
+			while (this._selectedItems && this._selectedItems.length)
+			{
+				var listitem:ListItemData = ListItemData(this._selectedItems.shift());
+				listitem.selected = false;
+				if (this._rowItemDictionary[listitem.row] == listitem && listitem.row is ISelectable) ISelectable(listitem.row).selected = false;
+			}
 		}
 		
 		/**

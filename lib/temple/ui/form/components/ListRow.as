@@ -46,6 +46,8 @@ package temple.ui.form.components
 	import temple.ui.form.validation.IHasValue;
 
 	/**
+	 * A ListRow visualizes an item in a list.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public class ListRow extends LabelButton implements IListRow, IHasValue

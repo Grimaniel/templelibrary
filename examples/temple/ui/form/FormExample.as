@@ -17,14 +17,15 @@
  */
 package  
 {
-	import temple.ui.buttons.MultiStateButton;
+	import temple.ui.buttons.LabelButton;
 	import temple.ui.form.Form;
 	import temple.ui.form.FormEvent;
 	import temple.ui.form.components.CheckBox;
+	import temple.ui.form.components.ComboBox;
 	import temple.ui.form.components.InputField;
 	import temple.ui.form.components.RadioButton;
 	import temple.ui.form.components.RadioGroup;
-	import temple.ui.form.services.FormObjectService;
+	import temple.ui.form.services.ObjectFormService;
 	import temple.ui.form.validation.rules.BooleanValidationRule;
 	import temple.ui.form.validation.rules.EmailValidationRule;
 	import temple.ui.form.validation.rules.EmptyStringValidationRule;
@@ -32,6 +33,7 @@ package
 	import temple.ui.form.validation.rules.Restrictions;
 	import temple.utils.types.ObjectUtils;
 
+	import flash.events.MouseEvent;
 	import flash.text.TextFieldAutoSize;
 
 	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
@@ -41,6 +43,7 @@ package
 		public var mcNameField:InputField;
 		public var mcEmailField:InputField;
 		public var mcCompanyField:InputField;
+		public var mcCountryField:ComboBox;
 		
 		public var mcGenderMaleRadioButton:RadioButton;
 		public var mcGenderFemaleRadioButton:RadioButton;
@@ -48,8 +51,9 @@ package
 		public var mcNewsletterCheckBox:CheckBox;
 		public var mcTermsCheckBox:CheckBox;
 		
-		public var mcSubmitButton:MultiStateButton;
-		public var mcResetButton:MultiStateButton;
+		public var mcSubmitButton:LabelButton;
+		public var mcResetButton:LabelButton;
+		public var mcPrefillButton:LabelButton;
 		
 		private var _data:PersonData;
 		private var _form:Form;
@@ -62,12 +66,51 @@ package
 			this._data = new PersonData();
 			
 			// create a new Form with a FormObjectService as service. Pass the PersonData object as object.
-			this._form = new Form(new FormObjectService(this._data));
+			this._form = new Form(new ObjectFormService(this._data));
 			
 			// add InputFields to the Form. Note: the 'name' property (2nd parameter) must match the corresponding property value of the PersonData object, since we want to store the data in that object.
 			this._form.addElement(this.mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
 			this._form.addElement(this.mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
 			this._form.addElement(this.mcCompanyField, "company");
+			this._form.addElement(this.mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
+			
+			// fill country ComboBox with some countries. We use the ISO code as data. (For this case we don't add all countries of the world, since the example would be too large. But ofcourse you can add all the countries you want.)
+			this.mcCountryField.addItem("BEL","Belgium");
+			this.mcCountryField.addItem("CZE","Czech Republic");
+			this.mcCountryField.addItem("DNK","Denmark");
+			this.mcCountryField.addItem("EST","Estonia");
+			this.mcCountryField.addItem("FRA","France");
+			this.mcCountryField.addItem("DEU","Germany");
+			this.mcCountryField.addItem("GRC","Greece");
+			this.mcCountryField.addItem("GRL","Greenland");
+			this.mcCountryField.addItem("HUN","Hungary");
+			this.mcCountryField.addItem("ISL","Iceland");
+			this.mcCountryField.addItem("IRL","Ireland");
+			this.mcCountryField.addItem("ITA","Italy");
+			this.mcCountryField.addItem("JPN","Japan");
+			this.mcCountryField.addItem("LUX","Luxembourg");
+			this.mcCountryField.addItem("MEX","Mexico");
+			this.mcCountryField.addItem("NLD","Netherlands");
+			this.mcCountryField.addItem("NZL","New Zealand");
+			this.mcCountryField.addItem("NOR","Norway");
+			this.mcCountryField.addItem("PER","Peru");
+			this.mcCountryField.addItem("POL","Poland");
+			this.mcCountryField.addItem("PRT","Portugal");
+			this.mcCountryField.addItem("ROU","Romania");
+			this.mcCountryField.addItem("RWA","Rwanda");
+			this.mcCountryField.addItem("SGP","Singapore");
+			this.mcCountryField.addItem("ZAF","South Africa");
+			this.mcCountryField.addItem("ESP","Spain");
+			this.mcCountryField.addItem("SWE","Sweden");
+			this.mcCountryField.addItem("CHE","Switzerland");
+			this.mcCountryField.addItem("THA","Thailand");
+			this.mcCountryField.addItem("TUR","Turkey");
+			this.mcCountryField.addItem("UGA","Uganda");
+			this.mcCountryField.addItem("UKR","Ukraine");
+			this.mcCountryField.addItem("GBR","United Kingdom");
+			this.mcCountryField.addItem("USA","United States");
+			this.mcCountryField.addItem("ZWE","Zimbabwe");
+						
 			
 			// create a RadioGroup for the RadioButtons.
 			var radiogroup:RadioGroup = new RadioGroup();
@@ -88,16 +131,19 @@ package
 			this.mcNameField.hintText = "your name here...";
 			this.mcEmailField.hintText = "your e-mailaddress here...";
 			this.mcCompanyField.hintText = "your company here...";
+			this.mcCountryField.hintText = "select your country...";
 			
 			// change the color of the hintText
 			this.mcNameField.hintTextColor = 0x888888;
 			this.mcEmailField.hintTextColor = 0x888888;
 			this.mcCompanyField.hintTextColor = 0x888888;
+			this.mcCountryField.hintTextColor = 0x888888;
 
 			// change the textColor for errors
 			this.mcNameField.errorTextColor = 0xFF0000;
 			this.mcEmailField.errorTextColor = 0xFF0000;
 			this.mcCompanyField.errorTextColor = 0xFF0000;
+			this.mcCountryField.errorTextColor = 0xFF0000;
 			
 			// add the submit button
 			this._form.addSubmitButton(this.mcSubmitButton);
@@ -120,7 +166,38 @@ package
 			this.mcTermsCheckBox.autoSize = TextFieldAutoSize.LEFT;
 			this.mcTermsCheckBox.label = "I agree to the terms";
 			
+			// enable submit on enter and spacebar on buttons
+			this.mcResetButton.buttonBehavior.clickOnEnter = true;
+			this.mcResetButton.buttonBehavior.clickOnSpacebar = true;
+			this.mcSubmitButton.buttonBehavior.clickOnEnter = true;
+			this.mcSubmitButton.buttonBehavior.clickOnSpacebar = true;
+			this.mcPrefillButton.buttonBehavior.clickOnEnter = true;
+			this.mcPrefillButton.buttonBehavior.clickOnSpacebar = true;
+			
+			// Set the labels of the buttons
+			this.mcSubmitButton.label = "Submit";
+			this.mcResetButton.label = "Reset";
+			this.mcPrefillButton.label = "Prefill";
+			
+			// We add the mcPrefillButton to the tabFocusManager of the Form, so we can tab to this button
+			this._form.tabFocusManager.add(this.mcPrefillButton);
+			
+			this.mcPrefillButton.addEventListener(MouseEvent.CLICK, this.handleResetClick);
+			
 			this._form.addEventListener(FormEvent.SUBMIT_SUCCESS, this.handleFormSubmitSuccess);
+		}
+
+		private function handleResetClick(event:MouseEvent):void
+		{
+			// Prefill data
+			this._data.name = "Thijs";
+			this._data.email = "thijs@mediamonks.com";
+			this._data.company = "MediaMonks";
+			this._data.country = "NLD";
+			this._data.newsletter = true;
+			this._data.gender = "male";
+			
+			this._form.prefillData(this._data);
 		}
 
 		private function handleFormSubmitSuccess(event:FormEvent):void 
@@ -130,6 +207,7 @@ package
 	}
 }
 
+// Private class for storing the data of the person
 class PersonData
 {
 	public var name:String;
@@ -137,4 +215,5 @@ class PersonData
 	public var company:String;
 	public var gender:String;
 	public var newsletter:Boolean;
+	public var country:String;
 }
