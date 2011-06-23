@@ -11,7 +11,7 @@
 		<property name="asdoc.path" value="${flexdsk.path}/bin/asdoc.exe" />
 		<exec executable="${asdoc.path}">
 			<arg line="-source-path ../../lib" />
-			<arg line="-doc-classes 'temple.ui.form.components.ComboBox' " />
+			<arg line="-doc-classes 'temple.ui.buttons.LabelButton' " />
 			<arg line="-output ../../../temp" />
 			<arg line="-main-title 'Temple API Documentation - version ${version}'" />
 			<arg line="-window-title 'Temple API Documentation'" />

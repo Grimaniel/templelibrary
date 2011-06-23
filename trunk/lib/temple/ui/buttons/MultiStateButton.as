@@ -344,6 +344,40 @@ package temple.ui.buttons
 				this.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
+		
+		/**
+		 * Indicates if the target should dispatch a CLICK event when the target has focus and the spacebar is pressed. Default: true
+		 */
+		public function get clickOnSpacebar():Boolean
+		{
+			return this._buttonBehavior.clickOnSpacebar;
+		}
+		
+		/**
+		 * @private
+		 */
+		[Inspectable(name="Click on Spacebar", type="Boolean", defaultValue="false")]
+		public function set clickOnSpacebar(value:Boolean):void
+		{
+			this._buttonBehavior.clickOnSpacebar = value;
+		}
+		
+		/**
+		 * Indicates if the target should dispatch a CLICK event when the target has focus and the spacebar is pressed. Default: true
+		 */
+		public function get clickOnEnter():Boolean
+		{
+			return this._buttonBehavior.clickOnEnter;
+		}
+		
+		/**
+		 * @private
+		 */
+		[Inspectable(name="Click on Enter", type="Boolean", defaultValue="false")]
+		public function set clickOnEnter(value:Boolean):void
+		{
+			this._buttonBehavior.clickOnEnter = value;
+		}
 
 		/**
 		 * @inheritDoc

@@ -52,7 +52,7 @@ package temple.ui.form.components
 	public interface IFormElementComponent extends IHasValue, IDisplayObject, IFocusable
 	{
 		/**
-		 * The data property this component will fill
+		 * If this element is automatically added by the FormComponent, the FormComponent will use this as property name for this element.
 		 */
 		function get dataName():String;
 		

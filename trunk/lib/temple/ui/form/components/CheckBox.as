@@ -101,6 +101,9 @@ package temple.ui.form.components
 			this.toStringProps.push('name', 'selected', 'selectedValue', 'unselectedValue', 'label');
 			this._label = LabelUtils.findLabel(this);
 			this.addEventListener(Event.CHANGE, this.handleChange);
+			
+			this.clickOnEnter = true;
+			this.clickOnSpacebar = true;
 		}
 
 		/**
