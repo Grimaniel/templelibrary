@@ -46,9 +46,6 @@ package temple.ui.buttons.behaviors
 	import temple.ui.IDisableable;
 	import temple.ui.IEnableable;
 	import temple.ui.ISelectable;
-	import temple.ui.buttons.behaviors.IButtonDesignBehavior;
-	import temple.ui.buttons.behaviors.IButtonStatus;
-	import temple.ui.focus.IFocusable;
 
 	import flash.display.DisplayObject;
 
@@ -87,9 +84,9 @@ package temple.ui.buttons.behaviors
 		 */
 		public function update(status:IButtonStatus):void
 		{
-			if (status is IDisableable) this.disabled = (status as IDisableable).disabled;
-			if (status is ISelectable) this.selected = (status as ISelectable).selected;
-			if (status is IFocusable) this.focus = (status as IFocusable).focus;
+			this.disabled = status.disabled;
+			this.selected = status.selected;
+			this.focus = status.focus;
 			this.over = status.over;
 			this.down = status.down;
 		}
@@ -111,7 +108,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			if (this.displayObject) this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
 			super.destruct();
 		}
 	}

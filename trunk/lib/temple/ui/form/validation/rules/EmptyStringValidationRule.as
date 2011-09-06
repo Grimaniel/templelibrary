@@ -49,7 +49,7 @@ package temple.ui.form.validation.rules
 	/**
 	 * Validation rule to check for empty strings. This validation rule will return false for isValid() if the return value of target.value is an empty String.
 	 * 
-	 * @includeExample ../../services/FormXMLServiceExample.as
+	 * @includeExample ../../services/XMLFormServiceExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */

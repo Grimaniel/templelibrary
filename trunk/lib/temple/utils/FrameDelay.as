@@ -60,6 +60,7 @@ limitations under the License.
 
 package temple.utils 
 {
+	import temple.utils.types.FunctionUtils;
 	import temple.core.CoreObject;
 	import temple.debug.IDebuggable;
 	import temple.ui.IPauseable;
@@ -96,7 +97,6 @@ package temple.utils
 	 */
 	public final class FrameDelay extends CoreObject implements IPauseable, IDebuggable
 	{
-		private var _debug:Boolean;
 		/**
 		 * Make frame-delayed callback: (eg: a closure to .resume() of a paused FrameDelay)
 		 */
@@ -112,6 +112,8 @@ package temple.utils
 		private var _callback:Function;
 		private var _params:Array;
 		private var _paused:Boolean;
+		private var _debug:Boolean;
+		private var _callbackString:String;
 
 		/**
 		 * Creates a new FrameDelay. Starts the delay immediately.
@@ -122,13 +124,23 @@ package temple.utils
 		 */
 		public function FrameDelay(callback:Function, frameCount:int = 1, params:Array = null, debug:Boolean = false) 
 		{
+			this.toStringProps.push('callback');
+			
 			this._currentFrame = frameCount;
 			this._callback = callback;
 			this._params = params;
-			this._isDone = (isNaN(frameCount) || (frameCount <= 1));
+			this._isDone = frameCount <= 1;
 			FramePulse.addEnterFrameListener(this.handleEnterFrame);
 			
 			this.debug = debug;
+		}
+
+		/**
+		 * Returns the callback as a String, useful for debug purposes.
+		 */
+		public function get callback():String
+		{
+			return this._callbackString ||= FunctionUtils.functionToString(this._callback);
 		}
 		
 		/**

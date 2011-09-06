@@ -39,8 +39,7 @@
  *	repository with their own license!
  *	
  */
-
-package temple.utils.types 
+package temple.utils.types
 {
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
@@ -64,7 +63,7 @@ package temple.utils.types
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public final class DisplayObjectContainerUtils 
+	public final class DisplayObjectContainerUtils
 	{
 		/**
 		 * Searches the display list for a child of a specific type. Returns the first found child
@@ -79,10 +78,10 @@ package temple.utils.types
 		{
 			var child:DisplayObject;
 			var leni:int = container.numChildren;
-			for (var i:int = 0;i < leni;i++) 
+			for (var i:int = 0;i < leni;i++)
 			{
 				child = container.getChildAt(i);
-				
+
 				if (child is type)
 				{
 					return child;
@@ -106,10 +105,10 @@ package temple.utils.types
 		 */
 		public static function getDisplayObject(container:DisplayObjectContainer, name:String, ...names):DisplayObject
 		{
-			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
-			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));
+			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));
 			names.unshift(name);
-			
+
 			return DisplayObjectContainerUtils.getDescendantByNames(container, names);
 		}
 
@@ -124,10 +123,10 @@ package temple.utils.types
 		 */
 		public static function getTextField(container:DisplayObjectContainer, name:String, ...names):TextField
 		{
-			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
-			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));
+			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));
 			names.unshift(name);
-			
+
 			var child:DisplayObject = DisplayObjectContainerUtils.getDescendantByNames(container, names);
 			if (!(child is TextField))
 			{
@@ -147,10 +146,10 @@ package temple.utils.types
 		 */
 		public static function getMovieClip(container:DisplayObjectContainer, name:String, ...names):MovieClip
 		{
-			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));	
-			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));	
+			if (container == null) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'container is null while looking for \'' + name + '\''));
+			if (!name) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'name is null or empty'));
 			names.unshift(name);
-			
+
 			var child:DisplayObject = DisplayObjectContainerUtils.getDescendantByNames(container, names);
 			if (!(child is MovieClip))
 			{
@@ -158,7 +157,7 @@ package temple.utils.types
 			}
 			return child as MovieClip;
 		}
-		
+
 		/**
 		 * Find a descendant in a container, recursive: var clip = getDescendantByNames(this, ['mcHolder', 'mcSub', 'mcNested', 'mcTarget']);
 		 * throwErrror() on each step for easy debugging
@@ -166,15 +165,15 @@ package temple.utils.types
 		 */
 		private static function getDescendantByNames(container:DisplayObjectContainer, names:Array):DisplayObject
 		{
-			//no param checks for private
-			
+			// no param checks for private
+
 			var name:String = names.shift();
 			var child:DisplayObject = container.getChildByName(name);
 			if (child == null)
 			{
-				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'cannot find a child named \'' + name + '\' in container \'' + container.name + '\' (' + container + ')'));	
+				throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'cannot find a child named \'' + name + '\' in container \'' + container.name + '\' (' + container + ')'));
 			}
-			
+
 			if (names.length > 0)
 			{
 				if (!(child is DisplayObjectContainer))
@@ -195,22 +194,22 @@ package temple.utils.types
 		public static function mouseChildren(container:DisplayObjectContainer, recursive:Boolean = true, enabled:Boolean = false, debug:Boolean = false):void
 		{
 			if (container == null) return;
-			
+
 			container.mouseChildren = true;
-			
+
 			var child:DisplayObject;
-			
+
 			var leni:int = container.numChildren;
 			for (var i:int = 0;i < leni;i++)
 			{
 				child = container.getChildAt(i);
-				
+
 				if (debug) Log.debug("mouseDisableChildren: " + child, DisplayObjectContainer);
-				
+
 				if (child is InteractiveObject)
 				{
 					InteractiveObject(child).mouseEnabled = enabled;
-					
+
 					if (recursive && child is DisplayObjectContainer)
 					{
 						DisplayObjectContainer(child).mouseChildren = true;
@@ -233,7 +232,7 @@ package temple.utils.types
 			}
 			container.scaleX = container.scaleY = 1;
 		}
-		
+
 		/**
 		 * Moves a displayobject from one container to another and keeps its position
 		 */
@@ -244,13 +243,45 @@ package temple.utils.types
 				var p:Point = new Point(target.x, target.y);
 				if (target.parent)
 				{
-					p = target.parent.localToGlobal(p); 
+					p = target.parent.localToGlobal(p);
 				}
-				p = container.globalToLocal(p); 
+				p = container.globalToLocal(p);
 				container.addChild(target);
 				target.x = p.x;
 				target.y = p.y;
 			}
+		}
+
+		/**
+		 * Return an array with children, optionally recursive OR remove them
+		 */
+		public static function getChildren(container:DisplayObjectContainer, recurse:Boolean = false, remove:Boolean = false, into:Array = null):Array
+		{
+			into ||= [];
+			
+			var i:int;
+			if (remove)
+			{
+				for (i = container.numChildren - 1;i > -1;i--)
+				{
+					into.unshift(container.removeChildAt(i));
+				}
+			}
+			else
+			{
+				var lim:int = container.numChildren;
+				for (i = 0;i < lim;i++)
+				{
+					var disp:DisplayObject = container.getChildAt(i);
+					into.push(disp);
+
+					if (recurse && disp is DisplayObjectContainer)
+					{
+						DisplayObjectContainerUtils.getChildren(DisplayObjectContainer(disp), true, false, into);
+					}
+				}
+			}
+			return into;
 		}
 
 		public static function toString():String

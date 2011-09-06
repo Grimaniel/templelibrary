@@ -1,4 +1,4 @@
-﻿/*
+/*
  *	 
  *	Temple Library for ActionScript 3.0
  *	Copyright © 2010 MediaMonks B.V.

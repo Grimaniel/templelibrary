@@ -1,20 +1,20 @@
 /**
  * @exampleText
  * 
- * <a name="FormXMLService"></a>
- * <h1>FormXMLService</h1>
+ * <a name="XMLFormService"></a>
+ * <h1>XMLFormService</h1>
  * 
- * <p>This is an example of the FormXMLService. In this case we send the submitted data to an XML file, which acts as the result of a possible backend server.
+ * <p>This is an example of the XMLFormService. In this case we send the submitted data to an XML file, which acts as the result of a possible backend server.
  * By setting the Flash var "success" to true, we fake a successful submit, otherwise we fake an error.</p>
  * 
  * <p>View this example online at: 
  * 	<ul>
- * 		<li>Error result: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf?success=false" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf?success=false</a></li>
- * 		<li>Success result: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf?success=true" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.swf?success=true</a></li>
+ * 		<li>Error result: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/XMLFormServiceExample.swf?success=false" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/XMLFormServiceExample.swf?success=false</a></li>
+ * 		<li>Success result: <a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/XMLFormServiceExample.swf?success=true" target="_blank">http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/XMLFormServiceExample.swf?success=true</a></li>
  * 	</ul>	
  * 	</p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/FormXMLServiceExample.as" target="_blank">Download source</a></p>   
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/examples/temple/ui/form/services/XMLFormServiceExample.as" target="_blank">Download source</a></p>   
  */
 package
 {
@@ -36,13 +36,13 @@ package
 		
 		public function XMLFormServiceExample()
 		{
-			super("Temple - FormXMLServiceExample");
+			super("Temple - XMLFormServiceExample");
 			
 			// By setting the flash var "success" to true, we fake a successful submit.
 			FlashVars.initialize(this.loaderInfo.parameters);
 			FlashVars.configureVar("success",  false, Boolean);
 			
-			// Create a FormXMLService which handles our form.
+			// Create a XMLFormService which handles our form.
 			// For this case we just submit the data to an XML file, normally you would send it to a backend server.
 			// The XML file acts as the result of the backend server.
 			// If the Flash var "success" is set to true, we use an XML file without errors, otherwise we use an XML with an error.
@@ -52,7 +52,7 @@ package
 			service.method = URLRequestMethod.GET;
 
 			// XML when the submit was successful
-			//var service:FormXMLService = new FormXMLService('submit_success.xml'); 
+			//var service:XMLFormService = new XMLFormService('submit_success.xml'); 
 			
 			// Create a form
 			var form:Form = new Form(service);

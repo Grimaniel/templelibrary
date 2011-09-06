@@ -227,6 +227,14 @@ package temple.utils
 		}
 		
 		/**
+		 * Checks if an ApplicationDomain is already registered
+		 */
+		public static function hasApplicationDomain(appDomain:ApplicationDomain):Boolean
+		{
+			return appDomain in DefinitionProvider._domainRegister;
+		}
+		
+		/**
 		 * Unregister a ApplicationDomain for Class definition lookups.
 		 */
 		public static function unregisterApplicationDomain(appDomain:ApplicationDomain):void

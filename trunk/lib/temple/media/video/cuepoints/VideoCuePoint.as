@@ -42,8 +42,8 @@
 
 package temple.media.video.cuepoints 
 {
-	import temple.data.object.IObjectParsable;
 	import temple.core.CoreObject;
+	import temple.data.object.IObjectParsable;
 
 	/**
 	 * @author Thijs Broerse

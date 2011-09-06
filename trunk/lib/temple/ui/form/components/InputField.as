@@ -79,7 +79,7 @@ package temple.ui.form.components
 	/**
 	 * @see temple.ui.form.Form
 	 * 
-	 * @includeExample ../services/FormXMLServiceExample.as
+	 * @includeExample ../services/XMLFormServiceExample.as
 	 * @includeExample ../FormExample.as
 	 * 
 	 * @author Thijs Broerse
@@ -188,7 +188,7 @@ package temple.ui.form.components
 		public function set textColor(textColor:uint):void
 		{
 			this._textColor = textColor;
-			if (!this._showsHint) this._textField.textColor = this._textColor;
+			if (!this._showsHint && !this.hasError) this._textField.textColor = this._textColor;
 		}
 		
 		/**

@@ -49,7 +49,7 @@ package temple.ui.form
 	/**
 	 * Event dispatched by the Form. The FormEvent is used to inform about the result of the validation of the form and to inform about the result of the submit of the form.
 	 * 
-	 * @includeExample services/FormXMLServiceExample.as
+	 * @includeExample services/XMLFormServiceExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */

@@ -42,12 +42,12 @@
 
 package temple.data.flashvars
 {
-	import temple.utils.Enum;
 	import temple.data.collections.HashMap;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
-	import temple.debug.objectToString;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
+	import temple.utils.Enum;
 
 	/**
 	 * This class is a Singleton wrapper around the flashvars, so they can be accessed at places where there is no Stage.
@@ -69,7 +69,7 @@ package temple.data.flashvars
 	 * FlashVars.getValue(FlashVarNames.LANGUAGE);
 	 * </listing>
 	 * 
-	 * @includeExample ../../ui/form/services/FormXMLServiceExample.as
+	 * @includeExample ../../ui/form/services/XMLFormServiceExample.as
 	 * 
 	 * @author Arjan van Wijk
 	 */

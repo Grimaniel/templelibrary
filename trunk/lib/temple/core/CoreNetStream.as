@@ -45,9 +45,9 @@ package temple.core
 	import temple.data.loader.preload.IPreloader;
 	import temple.data.loader.preload.PreloadableBehavior;
 	import temple.debug.Registry;
-	import temple.debug.objectToString;
 	import temple.debug.log.Log;
 	import temple.debug.log.LogLevel;
+	import temple.debug.objectToString;
 	import temple.destruction.DestructEvent;
 	import temple.destruction.EventListenerManager;
 
@@ -212,7 +212,7 @@ package temple.core
 		 */
 		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+			this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
 		}
 
 		/**
@@ -237,7 +237,7 @@ package temple.core
 		 */
 		public function removeAllOnceEventListenersForType(type:String):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
+			this._eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**

@@ -42,6 +42,7 @@
 
 package temple.ui.form.components 
 {
+	import flash.events.IEventDispatcher;
 	import temple.data.collections.HashMap;
 	import temple.core.CoreEventDispatcher;
 	import temple.debug.DebugManager;
@@ -192,11 +193,18 @@ package temple.ui.form.components
 			
 			if (item is IRadioButton && IRadioButton(item).group != this) IRadioButton(item).group = this;
 			
-			item.addEventListener(Event.CHANGE, this.handleButtonChange);
-			item.addEventListener(FocusEvent.FOCUS_IN, this.handleButtonFocusIn, false, 0, true);
-			item.addEventListener(FocusEvent.FOCUS_OUT, this.handleButtonFocusOut, false, 0, true);
-			item.addEventListener(FocusEvent.KEY_FOCUS_CHANGE, this.handleKeyFocusChange, false, 0, true);
-			item.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown, false, 0, true);
+			if (item is IEventDispatcher)
+			{
+				IEventDispatcher(item).addEventListener(Event.CHANGE, this.handleButtonChange);
+				IEventDispatcher(item).addEventListener(FocusEvent.FOCUS_IN, this.handleButtonFocusIn, false, 0, true);
+				IEventDispatcher(item).addEventListener(FocusEvent.FOCUS_OUT, this.handleButtonFocusOut, false, 0, true);
+				IEventDispatcher(item).addEventListener(FocusEvent.KEY_FOCUS_CHANGE, this.handleKeyFocusChange, false, 0, true);
+				IEventDispatcher(item).addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown, false, 0, true);
+			}
+			else
+			{
+				this.logWarn("item is not an IEventDispatcher, this might not work properly");
+			}
 			
 			item.selected = selected;
 
@@ -227,11 +235,14 @@ package temple.ui.form.components
 				if (selection.button == button)
 				{
 					this._buttons.splice(i, 1);
-					button.removeEventListener(Event.CHANGE, this.handleButtonChange);
-					button.removeEventListener(FocusEvent.FOCUS_IN, this.handleButtonFocusIn);
-					button.removeEventListener(FocusEvent.FOCUS_OUT, this.handleButtonFocusOut);
-					button.removeEventListener(FocusEvent.KEY_FOCUS_CHANGE, this.handleKeyFocusChange);
-					button.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+					if (button is IEventDispatcher)
+					{
+						IEventDispatcher(button).removeEventListener(Event.CHANGE, this.handleButtonChange);
+						IEventDispatcher(button).removeEventListener(FocusEvent.FOCUS_IN, this.handleButtonFocusIn);
+						IEventDispatcher(button).removeEventListener(FocusEvent.FOCUS_OUT, this.handleButtonFocusOut);
+						IEventDispatcher(button).removeEventListener(FocusEvent.KEY_FOCUS_CHANGE, this.handleKeyFocusChange);
+						IEventDispatcher(button).removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+					}
 					selection.destruct();
 					
 					if (button is IRadioButton) IRadioButton(button).group = null;
@@ -247,6 +258,7 @@ package temple.ui.form.components
 		public function removeAllButtons():void
 		{
 			if (this._buttons) while (this._buttons.length) this.remove((this._buttons[0] as Selection).button);
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -536,6 +548,58 @@ package temple.ui.form.components
 		}
 
 		/**
+		 * Selects the next button in the list
+		 */
+		public function next():void
+		{
+			var item:ISelectable;
+			var leni:int = this._buttons.length;
+			for (var i:int = 0; i < leni ;i++)
+			{
+				if (Selection(this._buttons[i]).button == this._selected)
+				{
+					item = Selection(this._buttons[++i < leni ? i : 0]).button;
+					if (item is IFocusable)
+					{
+						(item as IFocusable).focus = true;
+					}
+					else
+					{
+						FocusManager.focus = item as InteractiveObject;
+					}
+					if (this._selected) this.selected = item;
+					return;
+				}
+			}
+		}
+
+		/**
+		 * Selects the previous button in the list
+		 */
+		public function previous():void
+		{
+			var item:ISelectable;
+			var leni:int = this._buttons.length;
+			for (var i:int = 0; i < leni ; i++) 
+			{
+				if (Selection(this._buttons[i]).button == this._selected)
+				{
+					item = Selection(this._buttons[--i >= 0 ? i : leni-1]).button;
+					if (item is IFocusable)
+					{
+						(item as IFocusable).focus = true;
+					}
+					else
+					{
+						FocusManager.focus = item as InteractiveObject;
+					}
+					if (this._selected) this.selected = item;
+					return;
+				}
+			}
+		}
+
+		/**
 		 * @private
 		 */
 		protected function handleButtonChange(event:Event):void
@@ -571,57 +635,20 @@ package temple.ui.form.components
 		{
 			if (this._keyboardTabbingEnabled)
 			{
-				var i : int;
-				var leni : int;
-				var item:ISelectable;
 				switch (event.keyCode)
 				{
 					case Keyboard.DOWN:
 					case Keyboard.RIGHT:
 					{
 						event.stopPropagation();
-						leni = this._buttons.length;
-						for (i = 0; i < leni ;i++)
-						{
-							if (Selection(this._buttons[i]).button == event.target)
-							{
-								item = Selection(this._buttons[++i < leni ? i : 0]).button;
-								if (item is IFocusable)
-								{
-									(item as IFocusable).focus = true;
-								}
-								else
-								{
-									FocusManager.focus = item as InteractiveObject;
-								}
-								if (this._selected) this.selected = item;
-								return;
-							}
-						}
+						this.next();
 						break;
 					}	
 					case Keyboard.UP:
 					case Keyboard.LEFT:
 					{
 						event.stopPropagation();
-						leni = this._buttons.length;
-						for (i = 0; i < leni ; i++) 
-						{
-							if (Selection(this._buttons[i]).button == event.target)
-							{
-								item = Selection(this._buttons[--i >= 0 ? i : leni-1]).button;
-								if (item is IFocusable)
-								{
-									(item as IFocusable).focus = true;
-								}
-								else
-								{
-									FocusManager.focus = item as InteractiveObject;
-								}
-								if (this._selected) this.selected = item;
-								return;
-							}
-						}
+						this.previous();
 						break;
 					}
 					default:

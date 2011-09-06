@@ -360,7 +360,7 @@ package temple.ui.form.components
 		 */
 		public function set selectedLabel(value:String):void
 		{
-			this._list.selectedItem = value;
+			this._list.selectedLabel = value;
 		}
 		
 		/**

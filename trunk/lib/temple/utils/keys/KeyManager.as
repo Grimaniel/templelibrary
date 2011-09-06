@@ -86,7 +86,7 @@ package temple.utils.keys
 		{
 			if (!KeyManager._INSTANCE._stage)
 			{
-				Log.warn("KeyManager is not initialized yet, pleae call KeyManager.init(stage);", KeyManager);
+				Log.warn("KeyManager is not initialized yet, please call KeyManager.init(stage);", KeyManager);
 				return false;
 			}
 			return Boolean(keyCode in KeyManager._INSTANCE._downKeys);

@@ -64,7 +64,7 @@ package
 		}
 		else if (object is String || object is Number || object is Boolean || object is uint || object is int)
 		{
-			message += ": " + ObjectUtils.objectToString(object);
+			message += ": " + ObjectUtils.convertToString(object);
 		}
 		else
 		{

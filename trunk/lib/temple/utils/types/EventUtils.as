@@ -115,7 +115,7 @@ package temple.utils.types
 		 */
 		public static function addAll(eventClass:Class, dispatcher:IEventDispatcher, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false, debug:Boolean = false):void
 		{
-			var types:Array = Enum.getEnumArray(eventClass);
+			var types:Array = Enum.getArray(eventClass);
 			
 			if (types.length)
 			{
@@ -140,7 +140,7 @@ package temple.utils.types
 		 */
 		public static function removeAll(eventClass:Class, dispatcher:IEventDispatcher, listener:Function, useCapture:Boolean = false, debug:Boolean = false):void
 		{
-			var types:Array = Enum.getEnumArray(eventClass);
+			var types:Array = Enum.getArray(eventClass);
 			
 			if (types.length)
 			{

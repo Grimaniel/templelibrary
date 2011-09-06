@@ -42,10 +42,10 @@
 
 package temple.media.video.metadata 
 {
-	import temple.data.object.IObjectParsable;
-	import temple.media.video.cuepoints.VideoCuePoint;
-	import temple.data.object.ObjectParser;
 	import temple.core.CoreObject;
+	import temple.data.object.IObjectParsable;
+	import temple.data.object.ObjectParser;
+	import temple.media.video.cuepoints.VideoCuePoint;
 
 	/**
 	 * @author Thijs Broerse

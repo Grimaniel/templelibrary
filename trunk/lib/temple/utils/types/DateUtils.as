@@ -784,7 +784,7 @@ package temple.utils.types
 		}
 
 		/**
-		 * split the format string into pieces and parse it
+		 * Split the format string into pieces and parse it.
 		 * 
 		 * @see parseSingleChar
 		 * @param String the full format String
@@ -794,12 +794,12 @@ package temple.utils.types
 		{
 			var result:String = "";
 			
-			//iterating over all chars
+			// Iterating over all chars
 			var leni:int = format.length;
 			for (var i:int = 0; i < leni; i++)
 			{
 				/**
-				 * check if the current char was escaped if true don't parse it
+				 * check if the current char was escaped. If true, don't parse it.
 				 */
 				if (format.charAt(i) == "\\")
 				{
@@ -819,7 +819,7 @@ package temple.utils.types
 		}
 
 		/**
-		 * parses a single char
+		 * Parses a single char.
 		 * 
 		 * @param char single char of a format string
 		 * @return String
@@ -913,7 +913,7 @@ package temple.utils.types
 		 */
 		public static function getUnixTimestamp(date:Date):String
 		{
-			return String(Math.floor(date.getTime() / 1000));
+			return String(Math.floor(date.getTime() * 0.001));
 		}
 
 		/**

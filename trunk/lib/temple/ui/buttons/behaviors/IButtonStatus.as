@@ -42,11 +42,14 @@
 
 package temple.ui.buttons.behaviors 
 {
+	import temple.ui.IDisableable;
+	import temple.ui.ISelectable;
+	import temple.ui.focus.IFocusable;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IButtonStatus 
+	public interface IButtonStatus extends ISelectable, IDisableable, IFocusable
 	{
 		/**
 		 * Indicates if the Mouse is currently over the button

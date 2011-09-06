@@ -41,8 +41,8 @@
 
 package temple.behaviors 
 {
-	import temple.core.templelibrary;
 	import temple.core.CoreEventDispatcher;
+	import temple.core.templelibrary;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
 	import temple.destruction.DestructEvent;

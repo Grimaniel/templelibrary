@@ -148,7 +148,7 @@ package temple.ui.states
 		}
 		
 		/**
-		 * Call hide() on all children of the object which implements IFocusState.
+		 * Call hide() on all children of the object which implements a specified state.
 		 * @param object the DisplayObjectContainer which contains the state clips.
 		 * @param state a state interface (must extend IState) to hide.
 		 * @param instant a Boolean which indicates if the states must use an animation to hide itself or do it instantly
@@ -164,6 +164,21 @@ package temple.ui.states
 				{
 					IState(object.getChildAt(i)).hide(instant);
 				}
+			}
+		}
+
+		/**
+		 * Updates (show or hide) to a specific state
+		 */
+		public static function update(object:DisplayObjectContainer, state:Class, show:Boolean, instant:Boolean = false):void
+		{
+			if (show)
+			{
+				StateHelper.showState(object, state, instant);
+			}
+			else
+			{
+				StateHelper.hideState(object, state, instant);
 			}
 		}
 	}

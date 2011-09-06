@@ -42,9 +42,8 @@
 
 package temple.data.object 
 {
-	import temple.debug.objectToString;
 	import temple.debug.log.Log;
-	import temple.data.object.IObjectParsable;
+	import temple.debug.objectToString;
 
 	/**
 	 * The ObjectParser parses an Object (ig JSON) to an other object (ig a typed DataValueObject).
@@ -70,7 +69,7 @@ package temple.data.object
 		 * @see temple.data.object.IObjectParsable#parseObject(object);
 		 *	
 		 */
-		public static function parseList(list:Array, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = true):Array 
+		public static function parseList(list:Array, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = false):Array 
 		{
 			var a:Array = new Array();
 			
@@ -95,7 +94,7 @@ package temple.data.object
 		}
 
 		/**
-		 * Parses a single Object to an IObjectParsable
+		 * Parses a single Object to an IObjectParsable.
 		 * 
 		 * @param object the object to parse
 		 * @param objectClass classname to be instanced; class must implement IObjectParsable
@@ -107,6 +106,13 @@ package temple.data.object
 		 */
 		public static function parseObject(object:Object, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = false):IObjectParsable 
 		{
+			if (object is objectClass && object is IObjectParsable)
+			{
+				// Object is an instance of objectClass. There is no need to parse it.
+				if (debug) Log.info("Object '" + object + "' is an instance of " + objectClass + ", don't need to parse it.", ObjectParser);
+				return IObjectParsable(object);
+			}
+			
 			var parsable:IObjectParsable = new objectClass();
 			
 			if (parsable.parseObject(object) || ignoreError) 
@@ -115,7 +121,7 @@ package temple.data.object
 			}
 			else 
 			{
-				if (debug) Log.error("Error parsing object: " + object + " to " + parsable, ObjectParser);
+				Log.error("Error parsing object: " + object + " to " + parsable, ObjectParser);
 				
 				return null;
 			}

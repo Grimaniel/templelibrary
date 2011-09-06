@@ -58,6 +58,11 @@ package temple.media.player
 		 * Event sent when the player has completed the playing
 		 */
 		public static const COMPLETE:String = "PlayerEvent.complete"; 
+
+		/**
+		 * Event sent when the player seeks
+		 */
+		public static const SEEK_NOTIFY:String = "PlayerEvent.seekNotify"; 
 		
 		public function PlayerEvent(type:String, bubbles:Boolean = false)
 		{
@@ -69,7 +74,7 @@ package temple.media.player
 		 */
 		override public function clone():Event 
 		{
-			return new PlayerEvent(this.type);
+			return new PlayerEvent(this.type, this.bubbles);
 		}
 	}
 }

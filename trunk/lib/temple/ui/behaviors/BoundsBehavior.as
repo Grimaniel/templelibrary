@@ -110,7 +110,6 @@ package temple.ui.behaviors
 				// check smaller
 				if (this._bounds.width >= target.width)
 				{
-					
 					if (objectbounds.left < this._bounds.left)
 					{
 						target.x += this._bounds.left - objectbounds.left;

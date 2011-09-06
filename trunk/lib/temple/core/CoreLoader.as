@@ -158,17 +158,11 @@ package temple.core
 	{
 		private static const _DEFAULT_HANDLER : int = 0;
 		
-		/** @private */
-		protected var _preloadableBehavior:PreloadableBehavior;
-		/** @private */
-		protected var _isLoading:Boolean;
-		/** @private */
-		protected var _isLoaded:Boolean;
-		/** @private */
-		protected var _logErrors:Boolean;
-		/** @private */
-		protected var _url:String;
-		
+		private var _preloadableBehavior:PreloadableBehavior;
+		private var _isLoading:Boolean;
+		private var _isLoaded:Boolean;
+		private var _logErrors:Boolean;
+		private var _url:String;
 		private var _debug:Boolean;
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -512,7 +506,7 @@ package temple.core
 		 */
 		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+			this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
 		}
 
 		/**
@@ -537,7 +531,7 @@ package temple.core
 		 */
 		public function removeAllOnceEventListenersForType(type:String):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
+			this._eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**

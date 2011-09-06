@@ -50,7 +50,7 @@ package temple.ui.states.error
 	 * <p>The IErrorState is used by FormElements for displaying errors. If there is an error message attached to the error, the IErrorState will 
 	 * get the message through the 'message' setter, so the IErrorState can display the error message.</p>
 	 * 
-	 * @includeExample ../../form/services/FormXMLServiceExample.as
+	 * @includeExample ../../form/services/XMLFormServiceExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */

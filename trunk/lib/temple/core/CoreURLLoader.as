@@ -85,19 +85,12 @@ package temple.core
 	 */
 	public class CoreURLLoader extends URLLoader implements ICoreLoader, IDestructibleOnError, IDebuggable
 	{
-		/** @private */
-		protected var _isLoading:Boolean;
-		/** @private */
-		protected var _isLoaded:Boolean;
-		/** @private */
-		protected var _destructOnError:Boolean;
-		/** @private */
-		protected var _logErrors:Boolean;
-		/** @private */
-		protected var _preloadableBehavior:PreloadableBehavior;
-		/** @private */
-		protected var _url:String;
-		
+		private var _isLoading:Boolean;
+		private var _isLoaded:Boolean;
+		private var _destructOnError:Boolean;
+		private var _logErrors:Boolean;
+		private var _preloadableBehavior:PreloadableBehavior;
+		private var _url:String;
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
 		private var _registryId:uint;
@@ -113,8 +106,6 @@ package temple.core
 		 */
 		public function CoreURLLoader(request:URLRequest = null, destructOnError:Boolean = true, logErrors:Boolean = true)
 		{
-			super(request);
-			
 			this._eventListenerManager = new EventListenerManager(this);
 			
 			this._destructOnError = destructOnError;
@@ -135,6 +126,8 @@ package temple.core
 			
 			// preloader support
 			this._preloadableBehavior = new PreloadableBehavior(this);
+			
+			super(request);
 		}
 		
 		/**
@@ -282,7 +275,7 @@ package temple.core
 		 */
 		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+			this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
 		}
 
 		/**
@@ -307,7 +300,7 @@ package temple.core
 		 */
 		public function removeAllOnceEventListenersForType(type:String):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
+			this._eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**
@@ -323,7 +316,7 @@ package temple.core
 		 */
 		public function removeAllEventListeners():void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllEventListeners();
+			this._eventListenerManager.removeAllEventListeners();
 		}
 		
 		/**

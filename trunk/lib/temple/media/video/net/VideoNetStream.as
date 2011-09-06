@@ -42,11 +42,11 @@
 
 package temple.media.video.net 
 {
-	import temple.media.video.cuepoints.VideoCuePoint;
-	import temple.media.video.cuepoints.CuePointEvent;
-	import temple.media.video.metadata.VideoMetaDataEvent;
-	import temple.media.video.metadata.VideoMetaData;
 	import temple.core.CoreNetStream;
+	import temple.media.video.cuepoints.CuePointEvent;
+	import temple.media.video.cuepoints.VideoCuePoint;
+	import temple.media.video.metadata.VideoMetaData;
+	import temple.media.video.metadata.VideoMetaDataEvent;
 
 	import flash.net.NetConnection;
 

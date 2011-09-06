@@ -304,7 +304,7 @@ package temple.core
 		 */
 		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+			this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
 		}
 
 		/**
@@ -321,7 +321,7 @@ package temple.core
 		 */
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllStrongEventListenersForType(type);
+			this._eventListenerManager.removeAllStrongEventListenersForType(type);
 		}
 		
 		/**
@@ -329,7 +329,7 @@ package temple.core
 		 */
 		public function removeAllOnceEventListenersForType(type:String):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
+			this._eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**
@@ -337,7 +337,7 @@ package temple.core
 		 */
 		public function removeAllStrongEventListenersForListener(listener:Function):void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllStrongEventListenersForListener(listener);
+			this._eventListenerManager.removeAllStrongEventListenersForListener(listener);
 		}
 
 		/**
@@ -345,7 +345,7 @@ package temple.core
 		 */
 		public function removeAllEventListeners():void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllEventListeners();
+			this._eventListenerManager.removeAllEventListeners();
 		}
 		
 		/**
