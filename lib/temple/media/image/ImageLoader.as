@@ -194,6 +194,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 		 */
 		public function loadBytes(image:ByteArray, context:LoaderContext = null):void
 		{
+			if (this._loaderContext) this._loaderContext.checkPolicyFile = false;
 			this._loader.loadBytes(image, !context && this._loaderContext ? this._loaderContext : context);
 		}
 		
@@ -590,7 +591,7 @@ imageLoaderExample.load("http://weblogs2.nrc.nl/discussie/wp-content/uploads/200
 
 		private function layoutImage():void
 		{
-			if (!this._loader.isLoaded) return;
+			if (!this._loader || !this._loader.isLoaded) return;
 			
 			if (this.debug) this.logDebug("layoutImage: clipping=" + this._clipping + ", scaleMode='" + this._scaleMode + "', align='" + this._align + "', upscaleEnabled:" + this._upscaleEnabled);
 			

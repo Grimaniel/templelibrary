@@ -5,7 +5,7 @@
 	<property name="src.path" value="D:\Projects\Temple\GoogleCode\templelibrary\lib" />
 	<property name="dst.path" value="../../bin" />
 	<property name="root.path" value="../.." />
-	<property name="version" value="2.9.1" />
+	<property name="version" value="2.9.2" />
 
 	
 	<target name="Export">

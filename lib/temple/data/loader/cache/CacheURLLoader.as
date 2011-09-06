@@ -76,6 +76,30 @@ package temple.data.loader.cache
 			
 			if (request) new FrameDelay(this.load, 1, [request]);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get url():String
+		{
+			return this._cacheData ? this._cacheData.url : super.url;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get isLoading():Boolean
+		{
+			return this._cache ? this._cacheData && !this._cacheData.isLoaded : super.isLoading;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function get isLoaded():Boolean
+		{
+			return this._cache ? this._cacheData && this._cacheData.isLoaded : super.isLoaded;
+		}
 
 		/**
 		 * @inheritDoc
@@ -86,7 +110,7 @@ package temple.data.loader.cache
 			if (this._owner && this._cacheData && this._cacheData.isLoading)
 			{
 				// we didn't finished the current load, delete it
-				LoaderCache.clear(this._url);
+				LoaderCache.clear(this.url);
 				try
 				{
 					super.close();
@@ -97,19 +121,14 @@ package temple.data.loader.cache
 				}
 			}
 			
-			this._url = request.url;
-			this._isLoading = true;
-			this._isLoaded = false;
 			this._owner = false;
 			this.clearCacheData();
-			if (this._cache && (this._cacheData = LoaderCache.get(this._url)))
+			if (this._cache && (this._cacheData = LoaderCache.get(request.url)))
 			{
 				if (this._cacheData.isLoaded)
 				{
-					if (this.debug) this.logDebug("load: get data from cache, url:" + this._url);
-					this.data = LoaderCache.get(this._url).bytes;
-					this._isLoaded = true;
-					this._isLoading = false;
+					if (this.debug) this.logDebug("load: get data from cache, url:" + this.url);
+					this.data = LoaderCache.get(this.url).bytes;
 					this.dispatchEvent(new Event(Event.COMPLETE));
 				}
 				else
@@ -132,7 +151,7 @@ package temple.data.loader.cache
 			{
 				if (this._cache)
 				{
-					this._cacheData = LoaderCache.create(this._url);
+					this._cacheData = LoaderCache.create(request.url);
 					this._owner = true;
 					this.addEventListener(Event.OPEN, this._cacheData.dispatchEvent);
 					this.addEventListener(ProgressEvent.PROGRESS, this._cacheData.dispatchEvent);
@@ -141,7 +160,7 @@ package temple.data.loader.cache
 					this.addEventListener(IOErrorEvent.NETWORK_ERROR, this._cacheData.dispatchEvent);
 					this.addEventListener(IOErrorEvent.VERIFY_ERROR, this._cacheData.dispatchEvent);
 					this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this._cacheData.dispatchEvent);
-					if (this.debug) this.logDebug("load: new LoaderCacheData created: " + ObjectUtils.traceObject(LoaderCache.get(this._url), 0));
+					if (this.debug) this.logDebug("load: new LoaderCacheData created: " + ObjectUtils.traceObject(LoaderCache.get(request.url), 0));
 				}
 				this.addEventListenerOnce(Event.COMPLETE, this.handleComplete);
 				this.dataFormat = URLLoaderDataFormat.BINARY;
@@ -158,7 +177,7 @@ package temple.data.loader.cache
 			if (this._owner && this._cacheData && this._cacheData.isLoading)
 			{
 				// we didn't finished the current load, delete it
-				LoaderCache.clear(this._url);
+				LoaderCache.clear(this._cacheData.url);
 			}
 			super.close();
 		}
@@ -192,8 +211,6 @@ package temple.data.loader.cache
 
 		private function handleCacheDataComplete(event:Event):void 
 		{
-			this._isLoading = false;
-			this._isLoaded = true;
 			this.data = this._cacheData.bytes;
 			this.clearCacheData();
 			this.dispatchEvent(event);
@@ -202,10 +219,8 @@ package temple.data.loader.cache
 		private function handleCacheDataError(event:ErrorEvent):void 
 		{
 			if (this.debug) this.logWarn(event.type + ": \"" + event.text + "\"");
-			this._isLoading = false;
-			this._isLoaded = false;
 			this.clearCacheData();
-			LoaderCache.clear(this._url);
+			LoaderCache.clear(this.url);
 			this.dispatchEvent(event);
 		}
 		
@@ -232,7 +247,7 @@ package temple.data.loader.cache
 		{
 			// reload
 			if (this.debug) this.logDebug("handleCacheDataDestuct: LoaderCacheData has been destructed, reload.");
-			if (this._isLoading) this.load(new URLRequest(this._url)); 
+			if (this.isLoading) this.load(new URLRequest(this.url)); 
 		}
 
 		/**
@@ -242,7 +257,7 @@ package temple.data.loader.cache
 		{
 			if (this._cacheData)
 			{
-				if (this._owner) LoaderCache.clear(this._url);
+				if (this._owner) LoaderCache.clear(this.url);
 				this.clearCacheData();
 			}
 			super.destruct();

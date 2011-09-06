@@ -42,14 +42,13 @@
 
 package temple.ui 
 {
-	import flash.events.IEventDispatcher;
 
 	/**
 	 * Interface for selectable UI components, such as a CheckBox, RadioButton or SwitchButton
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface ISelectable extends IEventDispatcher
+	public interface ISelectable
 	{
 		/**
 		 * @return true if the object is selected, otherwise false

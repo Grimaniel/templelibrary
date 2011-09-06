@@ -216,6 +216,7 @@ package temple.ui.form.components
 		public function showError(message:String = null):void 
 		{
 			this._hasError = true;
+			this._errorMessage = message;
 			StateHelper.showError(this, message);
 		}
 		

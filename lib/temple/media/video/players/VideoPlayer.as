@@ -1146,6 +1146,7 @@ package temple.media.video.players
 				
 				case NetStatusEventInfoCodes.NETSTREAM_SEEK_NOTIFY:
 				{
+					this.dispatchEvent(new PlayerEvent(PlayerEvent.SEEK_NOTIFY)); 
 					this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.SEEK_NOTIFY)); 
 					break;
 				}

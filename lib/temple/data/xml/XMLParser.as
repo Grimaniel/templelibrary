@@ -39,12 +39,11 @@
  *	repository with their own license!
  *	
  */
-
-package temple.data.xml 
+package temple.data.xml
 {
-	import temple.debug.log.Log;
 	import temple.debug.errors.TempleArgumentError;
 	import temple.debug.errors.throwError;
+	import temple.debug.log.Log;
 	import temple.debug.objectToString;
 
 	/**
@@ -93,9 +92,8 @@ package temple.data.xml
 	 * 
 	 * @author Thijs Broerse (adapted from ASAPLibrary)
 	 */
-	public final class XMLParser 
+	public final class XMLParser
 	{
-
 		/**
 		 * Parse an XMLList into an array of the specified class instance by calling its parseXML function
 		 * @param list XMLList to parse
@@ -107,12 +105,12 @@ package temple.data.xml
 		 *	
 		 * @see temple.data.xml.IXMLParsable#parseXML(xml);
 		 */
-		public static function parseList(list:XMLList, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = true):Array 
+		public static function parseList(list:XMLList, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = true):Array
 		{
 			var a:Array = new Array();
-			
+
 			var len:Number = list.length();
-			for (var i:Number = 0;i < len; i++) 
+			for (var i:Number = 0;i < len; i++)
 			{
 				var ipa:IXMLParsable = XMLParser.parseXML(list[i], objectClass, ignoreError, debug);
 				if ((ipa == null) && !ignoreError)
@@ -124,7 +122,7 @@ package temple.data.xml
 					a.push(ipa);
 				}
 			}
-			
+
 			return a;
 		}
 
@@ -138,25 +136,64 @@ package temple.data.xml
 		 *	
 		 * @see temple.data.xml.IXMLParsable#parseXML(xml);
 		 */
-		public static function parseXML(xml:XML, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = false):IXMLParsable 
+		public static function parseXML(xml:XML, objectClass:Class, ignoreError:Boolean = false, debug:Boolean = false):IXMLParsable
 		{
 			if (!xml) throwError(new TempleArgumentError(XMLParser, "xml can not be null"));
-			
+
 			var parsable:IXMLParsable = new objectClass() as IXMLParsable;
-			
+
 			if (parsable == null)
 			{
 				throwError(new TempleArgumentError(XMLParser, "Class '" + objectClass + "' does not implement IXMLParsable"));
 			}
-			else if (parsable.parseXML(xml) || ignoreError) 
+			else if (parsable.parseXML(xml) || ignoreError)
 			{
 				return parsable;
 			}
 			if (debug) Log.error("Error parsing xml: " + xml + " to " + parsable, XMLParser);
-			
+
 			return null;
 		}
-		
+
+		/**
+		 * Parse XML into the specified class instances by calling its parseXML function and set as properties on a collection object (hash-map or typed object).
+		 * @param xml XML document or node
+		 * @param objectClass classname to be instanced; class must implement IXMLParsable
+		 * @param target object on which to set the properties, defaults to new generic Object
+		 * @param nameAttribute optionally specify which attribute sets the property name (defaults to node-name)
+		 * @param ignoreError if true, the return value of IXMLParsable is ignored, and the newly created object is always returned
+		 * @param debug if true information is logged if the parsing failed
+		 * @return the object on which the properties are set with the newly parsed instances
+		 *	
+		 * @see temple.data.xml.IXMLParsable#parseXML(xml);
+		 */
+		public static function parseListToProps(list:XMLList, objectClass:Class, target:Object = null, nameAttribute:String = null, ignoreError:Boolean = false, debug:Boolean = false):Object
+		{
+			target ||= {};
+
+			var collide:Array = [];
+
+			for each (var node:XML in list)
+			{
+				var name:String = nameAttribute ? String(node.@[nameAttribute]) : String(node.name());
+				if (!ignoreError && collide.indexOf(name) > -1)
+				{
+					throwError(new TempleArgumentError(XMLParser, "name collision on property " + name));
+				}
+				else
+				{
+					var ipa:IXMLParsable = XMLParser.parseXML(node, objectClass, ignoreError, debug);
+					if (ipa != null)
+					{
+						target[name] = ipa;
+						collide.push(name);
+					}
+				}
+			}
+
+			return target;
+		}
+
 		public static function toString():String
 		{
 			return objectToString(XMLParser);

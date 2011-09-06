@@ -44,19 +44,25 @@ package temple.utils
 	import flash.utils.describeType;
 
 	/**
-	 * 
-	 *	Reads the values of all constants (optionally of specified type) to an Array or Object.
-	 *
-	 *		var myConstantValues:Array = Enum.getEnumArray(MyVarsClass, Enum.STRING);
+	 * 	Utils for working with public static constants (list, validate etc)
 	 *	
-	 *	or
-	 *		 *		var myConstantNameValues:Object = Enum.getEnumHash(MyVarsClass, Enum.STRING);
-	 *		
 	 *	@example
 	 *	<listing version="3.0">
-	 *	var allPages:Array = Enum.getEnumArray(PageBranches);
-	 *		
-	 *	var havePageBranch:Boolean = allPages.indexOf(somePageBranch) > -1;
+	 *	
+	 *	//get values
+	 *	var myValues:Array = Enum.getArray(MyVarsClass, Enum.STRING);
+	 *	var myNameValues:Object = Enum.getHash(MyVarsClass, Enum.STRING);
+	 *	
+	 *	//check values
+	 *	if(Enum.hasValue(MyValidateConst, myValue))
+	 *	{
+	 *		...
+	 *	}	
+	 *	if(Enum.hasConstant(MyValidateConst, myConstName))
+	 *	{
+	 *		...
+	 *	}
+	 *	
 	 *	</listing>
 	 *	
 	 * @author Bart van der Schoor
@@ -66,49 +72,104 @@ package temple.utils
 		public static const STRING:String = 'String';
 		public static const INT:String = 'int';
 		public static const NUMBER:String = 'Number';
-
-		public static function getEnumArray(type:Class, constType:String = Enum.STRING):Array
+		
+		/**
+		 * Get an Array with constant-values from given Class
+		 * 
+		 * @param type the Class to check for constants 
+		 * @param constType optionaly specifiy a type of value to check
+		 * @return the 
+		 */
+		public static function getArray(type:Class, constType:String = Enum.STRING):Array
 		{
-			var arr:Array = new Array();
-			var xml:XML = describeType(type);
-			var list:XMLList = xml.child('constant');		
-			for each (var node:XML in list)
+			var arr:Array = [];	
+			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
 			{
-				if (type == null || node.@['type'] == constType)
+				if (constType == null || node.@['type'] == constType)
 				{
 					arr.push(type[node.@['name']]);
 				}
 			}
 			return arr;
 		}
-
-		public static function getEnumHash(type:Class, constType:String = Enum.STRING):Object
+		/**
+		 * Get a generic Object with constant-names as key and constant-values as value from given Class
+		 * 
+		 * @param type the Class to check for constants 
+		 * @param constType optionaly specifiy a type of value to check
+		 * @return the 
+		 */
+		public static function getHash(type:Class, constType:String = Enum.STRING):Object
 		{
-			var arr:Object = new Object();
-			var xml:XML = describeType(type);
-			var list:XMLList = xml.child('constant');		
-			for each (var node:XML in list)
+			var obj:Object = {};	
+			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
 			{
-				if (type == null || node.@['type'] == constType)
+				if (constType == null || node.@['type'] == constType)
 				{
-					arr[node.@['name']] = type[node.@['name']];
+					obj[node.@['name']] = type[node.@['name']];
 				}
 			}
-			return arr;
+			return obj;
 		}
 		
-		public static function getValue(type:Class, value:*):*
-		{
-			var xml:XML = describeType(type);
-			var list:XMLList = xml.child('constant');		
-			for each (var node:XML in list)
+		/**
+		 * Validates a constant value, return it if found, otherwise return alt 
+		 * 
+		 * @param type the Class to check for constants 
+		 * @param value the value we look for
+		 * @param alt optionaly specifiy what to return if not found
+		 * @param constType optionaly specifiy a type of value to check
+		 * @return value if defined, otherwise alt
+		 */
+		public static function getValue(type:Class, value:*, alt:*=null, constType:String = Enum.STRING):*
+		{	
+			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
 			{
-				if (type == null || type[node.@['name']] == value)
+				if ((constType == null || node.@['type'] == constType) && type[node.@['name']] == value)
 				{
 					return value;
 				}
 			}
-			return null;
+			return alt;
+		}
+		
+		/**
+		 * Check if the class has a constant defined with this value
+		 * 
+		 * @param type the Class to check for constants 
+		 * @param value the constants value we look for
+		 * @param constType optionaly specifiy a type of value to check
+		 * @return true if found
+		 */
+		public static function hasValue(type:Class, value:*, constType:String = Enum.STRING):Boolean
+		{	
+			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
+			{
+				if ((constType == null || node.@['type'] == constType) && value == type[node.@['name']])
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		/**
+		 * Check if the class has a constant defined with this name
+		 * 
+		 * @param type the Class to check for constants 
+		 * @param constant the name of the constant we look for
+		 * @param constType optionaly specifiy a type of value to check
+		 * @return true if found
+		 */
+		public static function hasConstant(type:Class, constant:String, constType:String = Enum.STRING):Boolean
+		{	
+			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
+			{
+				if ((constType == null || node.@['type'] == constType) && node.@['name'] == constant)
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

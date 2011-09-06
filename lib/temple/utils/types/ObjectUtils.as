@@ -39,13 +39,16 @@
  *	repository with their own license!
  *	
  */
-
-package temple.utils.types 
+package temple.utils.types
 {
+	import temple.debug.objectToString;
 	import temple.core.ICoreObject;
 	import temple.data.Enumerator;
 	import temple.data.xml.XMLParser;
+	import temple.debug.errors.TempleArgumentError;
+	import temple.debug.errors.throwError;
 	import temple.debug.getClassName;
+	import temple.debug.log.Log;
 	import temple.utils.ObjectType;
 
 	import flash.display.DisplayObject;
@@ -60,23 +63,21 @@ package temple.utils.types
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public final class ObjectUtils 
+	public final class ObjectUtils
 	{
 		/**
 		 * Indicates if a Date will be fully traced (including all properties) on traceObject() (true) or only as a simple String (false)
 		 */
 		public static var subTraceDate:Boolean = false;
-
 		/**
 		 * Indicates if a constant will be traced on traceObject() (true) or not (false)
 		 */
 		public static var traceConstants:Boolean = false;
-
 		/**
 		 * Indicates if a methods will be traced on traceObject() (true) or not (false)
 		 */
 		public static var traceMethods:Boolean = false;
-		
+
 		/**
 		 *
 		 */
@@ -84,11 +85,11 @@ package temple.utils.types
 		{
 			if (value is String || value is Number || value is int || value is uint || value == null)
 			{
-				return true;	
+				return true;
 			}
 			return false;
 		}
-		
+
 		/**
 		 * Recursively traces the properties of an object
 		 * @param object object to trace
@@ -100,65 +101,64 @@ package temple.utils.types
 		public static function traceObject(object:Object, maxDepth:uint = 3, doTrace:Boolean = true, traceDuplicates:Boolean = true):String
 		{
 			var output:String = ObjectUtils._traceObject(object, maxDepth, traceDuplicates ? null : new Dictionary(true));
-			
+
 			if (doTrace) trace(output);
-			
+
 			return output;
 		}
 
 		private static function _traceObject(object:Object, maxDepth:uint = 3, objects:Dictionary = null, inOpenChar:String = null, isInited:Boolean = false, openChar:String = null, tabs:String = ""):String
 		{
 			var output:String = "";
-			
+
 			// every time this function is called we'll add another tab to the indention in the output window
 			tabs += "\t";
-			
+
 			if (maxDepth < 0 )
 			{
 				output += tabs + "\n(...)";
 				output += "\n" + tabs + ((inOpenChar == "[") ? "]" : "}");
 				return output;
 			}
-			
-			if (!isInited) 
+
+			if (!isInited)
 			{
 				isInited = true;
-				output += ObjectUtils.objectToString(object) + " (" + getClassName(object) + ")";
-				
-				if (object is String) 
+				output += ObjectUtils.convertToString(object) + " (" + getClassName(object) + ")";
+
+				if (object is String)
 				{
 					output += " (" + (object as String).length + ")";
-					return output; 
+					return output;
 				}
-				else if (object is uint || object is int) 
+				else if (object is uint || object is int)
 				{
 					output += " (0x" + Number(object).toString(16).toUpperCase() + ")";
-					return output; 
+					return output;
 				}
-				else if (object is Array) 
+				else if (object is Array)
 				{
-					output += " (" + (object as Array).length + ")"; 
+					output += " (" + (object as Array).length + ")";
 					if ((object as Array).length) inOpenChar = openChar = "[";
 				}
-				else if (!ObjectUtils.isPrimitive(object)) 
+				else if (!ObjectUtils.isPrimitive(object))
 				{
 					inOpenChar = openChar = "\u007B";
-					
+
 					if (ObjectUtils.isDynamic(object))
 					{
 						output += " (dynamic)";
 					}
 				}
-				
+
 				if (openChar) output += "\n" + openChar;
 			}
-			
+
 			var variables:Array;
 			var key:*;
 
 			if (object is Array)
 			{
-				
 				variables = new Array();
 				for (key in object)
 				{
@@ -168,10 +168,10 @@ package temple.utils.types
 			else
 			{
 				var description:XML = describeType(object);
-				
+
 				// variables
 				variables = XMLParser.parseList(description.variable, ObjectVariableData, true);
-				
+
 				// getters
 				variables = variables.concat(XMLParser.parseList(description.accessor, ObjectVariableData, true));
 
@@ -180,7 +180,7 @@ package temple.utils.types
 
 				// method
 				if (ObjectUtils.traceMethods) variables = variables.concat(XMLParser.parseList(description.method, ObjectVariableData, true));
-				
+
 				// dynamic values
 				for (key in object)
 				{
@@ -189,21 +189,21 @@ package temple.utils.types
 				// sort variables alphabaticly
 				variables = variables.sortOn('name', Array.CASEINSENSITIVE);
 			}
-			
+
 			var variable:*;
-			
+
 			// an object for temporary storing the key. Needed to prefend duplicates
 			var keys:Object = {};
-			
+
 			var leni:int = variables.length;
-			for (var i:int = 0;i < leni; i++) 
+			for (var i:int = 0;i < leni; i++)
 			{
 				var vardata:ObjectVariableData = variables[i] as ObjectVariableData;
-				
+
 				if (vardata.name == "textSnapshot" || vardata.name == null || keys[vardata.name]) continue;
-				
+
 				keys[vardata.name] = true;
-				
+
 				try
 				{
 					variable = object[vardata.name];
@@ -212,24 +212,22 @@ package temple.utils.types
 				{
 					variable = e.message;
 				}
-				
+
 				// determine what's inside...
 				switch (typeof(variable))
 				{
-					case ObjectType.STRING:
-					{
-						output += "\n" + tabs + vardata.name + ": \"" + variable + "\" (" + (vardata.type ? vardata.type : getClassName(variable)) + ")" ;
+					case ObjectType.STRING: {
+						output += "\n" + tabs + vardata.name + ": \"" + variable + "\" (" + (vardata.type ? vardata.type : "String") + ")" ;
 						break;
 					}
-					case ObjectType.OBJECT:
-					{
+					case ObjectType.OBJECT: {
 						// check to see if the variable is an array.
-						if (variable is Array) 
+						if (variable is Array)
 						{
 							if ((objects == null || !objects[variable]) && ObjectUtils.hasValues(variable) && maxDepth)
 							{
 								if (objects) objects[variable] = true;
-								
+
 								output += "\n" + tabs + vardata.name + ": Array(" + (variable as Array).length + ")\n" + tabs + "[";
 								output += ObjectUtils._traceObject(variable, maxDepth - 1, objects, "[", isInited, openChar, tabs);
 							}
@@ -240,19 +238,19 @@ package temple.utils.types
 						}
 						else if (variable is ByteArray)
 						{
-							output += "\n" + tabs + vardata.name + ": " + uint(ByteArray(variable).bytesAvailable / 1024) + "KB " + (['AMF0',,,'AMF3'][(ByteArray(variable).objectEncoding)]) + " position:" + ByteArray(variable).position + " (ByteArray)";
+							output += "\n" + tabs + vardata.name + ": " + uint(ByteArray(variable).bytesAvailable / 1024) + "KB " + (['AMF0',,, 'AMF3'][(ByteArray(variable).objectEncoding)]) + " position:" + ByteArray(variable).position + " (ByteArray)";
 						}
 						else if (variable is Enumerator)
 						{
 							output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable || vardata.type) + ")" : "") + " (" + getClassName(Enumerator) + ")";
 						}
-						else 
+						else
 						{
 							// object, make exception for Date
 							if ((objects == null || !objects[variable]) && (variable && maxDepth && (ObjectUtils.subTraceDate || !(variable is Date))))
 							{
 								if (objects) objects[variable] = true;
-								
+
 								// recursive call
 								output += "\n" + tabs + vardata.name + ": " + variable;
 								if (ObjectUtils.hasValues(variable))
@@ -261,7 +259,7 @@ package temple.utils.types
 									{
 										output += " (dynamic)";
 									}
-									
+
 									output += "\n" + tabs + "\u007B";
 									output += ObjectUtils._traceObject(variable, maxDepth - 1, objects, "\u007B", isInited, openChar, tabs);
 								}
@@ -273,10 +271,9 @@ package temple.utils.types
 						}
 						break;
 					}
-					case ObjectType.FUNCTION:
-					{
+					case ObjectType.FUNCTION: {
 						output += "\n" + tabs + vardata.name + "(";
-						
+
 						if (vardata.xml.parameter && vardata.xml.parameter is XMLList)
 						{
 							var lenj:int = (vardata.xml.parameter as XMLList).length();
@@ -296,28 +293,27 @@ package temple.utils.types
 						output += ") (" + getClassName(variable) + ")";
 						break;
 					}
-					default:				
-					{
+					default: {
 						vardata.type ||= getClassName(variable);
-						
-						//variable is not an object nor string, just trace it out normally
+
+						// variable is not an object nor string, just trace it out normally
 						output += "\n" + tabs + vardata.name + ": " + variable + " (" + vardata.type + ")";
-						
+
 						// add value as hex for uints
 						if (vardata.type == "uint" || vardata.type == "int") output += " 0x" + uint(variable).toString(16).toUpperCase();
-						
+
 						break;
 					}
 				}
 			}
-			
+
 			// here we need to displaying the closing '}' or ']', so we bring
 			// the indent back a tab, and set the outerchar to be it's matching
 			// closing char, then display it in the output window
 			tabs = tabs.substr(0, tabs.length - 1);
-			 
+
 			if (inOpenChar) output += "\n" + tabs + ((inOpenChar == "[") ? "]" : "}");
-			
+
 			return output;
 		}
 
@@ -335,15 +331,15 @@ package temple.utils.types
 		public static function hasValues(object:Object):Boolean
 		{
 			if (object is Array) return (object as Array).length > 0;
-			
+
 			for (var key:* in object)
 			{
 				return true;
 			}
 			key;
-			
+
 			var description:XML = describeType(object);
-			
+
 			return description.variable.length() || description.accessor.length();
 		}
 
@@ -360,7 +356,7 @@ package temple.utils.types
 			key;
 			return count;
 		}
-		
+
 		/**
 		 * Checks if the object is dynamic
 		 */
@@ -384,7 +380,7 @@ package temple.utils.types
 		}
 		
 		/**
-		 * Creates a copy of an object. Works only for dynamic properties.
+		 * Creates a clone of an object. Works only for dynamic properties.
 		 */
 		public static function clone(object:Object):Object
 		{
@@ -395,7 +391,59 @@ package temple.utils.types
 			}
 			return copy;
 		}
-		
+
+		/**
+		 * Copies properties of an Object to a new of existing object. Works only for dynamic properties.
+		 * @param from source object.
+		 * @param to optional target (defaults to new generic Object)
+		 * @param fieldNames optional array with names specifing which properties to copy
+		 */
+		public static function copy(from:Object, to:Object = null, fieldNames:Array = null):Object
+		{
+			if (from == null) throwError(new TempleArgumentError(ObjectUtils, 'null from'));
+
+			to ||= {};
+
+			var name:String;
+			var ret:String;
+
+			if (fieldNames)
+			{
+				for each (name in fieldNames)
+				{
+					if (!to.hasOwnProperty(name))
+					{
+						ret += '- no ' + name + ' in to ' + to + '\n';
+					}
+					else if (!from.hasOwnProperty(name))
+					{
+						ret += '- no ' + name + ' in from ' + from + '\n';
+					}
+					else
+					{
+						to[name] = from[name];
+					}
+				}
+				if (ret)
+				{
+					Log.warn('Propper.copyFrom: \n' + ret, ObjectUtils);
+				}
+			}
+			else
+			{
+				var isDynamic:Boolean = ObjectUtils.isDynamic(to);
+				
+				for (name in from)
+				{
+					if (isDynamic || to.hasOwnProperty(name))
+					{
+						to[name] = from[name];
+					}
+				}
+			}
+			return to;
+		}
+
 		/**
 		 * Get the keys and properties of an object.
 		 * @return an Array of all the keys
@@ -404,7 +452,7 @@ package temple.utils.types
 		{
 			var keys:Array = new Array();
 			var key:*;
-			
+
 			for (key in object)
 			{
 				keys.push(key);
@@ -412,19 +460,19 @@ package temple.utils.types
 			if (!(object is Array))
 			{
 				var description:XML = describeType(object);
-				
+
 				// variables
 				var leni:int = description.variable.length();
 				for (var i:int = 0; i < leni; i++)
 				{
 					keys.push(String(description.variable[i].@name));
 				}
-				
+
 				// getters
 				var getters:XMLList = description.accessor.(@access != "writeonly");
-				
+
 				leni = getters.length();
-				
+
 				for (i = 0; i < leni; i++)
 				{
 					keys.push(String(getters[i].@name));
@@ -432,7 +480,7 @@ package temple.utils.types
 			}
 			return keys;
 		}
-		
+
 		/**
 		 * Get the keys of an object.
 		 * @return an Array of all the keys
@@ -446,21 +494,21 @@ package temple.utils.types
 			}
 			return keys;
 		}
-					
+
 		/**
 		 * Get the values of an object.
 		 * @return an Array of all values.
 		 */
 		public static function getValues(object:Object):Array
 		{
-			var values:Array = new Array();			
+			var values:Array = new Array();
 			for each (var value:* in object)
 			{
 				values.push(value);
-			}			
+			}
 			return values;
 		}
-		
+
 		/**
 		 * Check if there are proerties defined
 		 * @return true if we have properties
@@ -478,7 +526,7 @@ package temple.utils.types
 		/**
 		 * Converts an object to a readable String
 		 */
-		public static function objectToString(object:*):String
+		public static function convertToString(object:*):String
 		{
 			if (object is ICoreObject)
 			{
@@ -494,7 +542,7 @@ package temple.utils.types
 			}
 			else if (object is DisplayObject)
 			{
-				return getClassName(object) + ": " + ObjectUtils.objectToString((object as DisplayObject).name);
+				return objectToString(object, ['name']);
 			}
 			else if (object is Function)
 			{
@@ -510,12 +558,13 @@ package temple.utils.types
 		 */
 		public static function getValueAlt(obj:Object, name:String, alt:*):*
 		{
-			if(obj && obj && name in obj)
+			if (obj && obj && name in obj)
 			{
 				return obj[name];
 			}
 			return alt;
 		}
+
 		/**
 		 * Lazy get a boolean-property from an object (using BooleanUtils.getBoolean), with alt/default-value (if object is null or property is undefined)
 		 * 
@@ -523,41 +572,41 @@ package temple.utils.types
 		 */
 		public static function getBooleanAlt(obj:Object, name:String, alt:Boolean):Boolean
 		{
-			if(obj && name in obj)
+			if (obj && name in obj)
 			{
 				return BooleanUtils.getBoolean(obj[name]);
 			}
 			return alt;
 		}
-		
+
 		/**
 		 * Compact format Object-properties to debug-string (Array.join()-like), usually simple non-recursive bulletted lists
 		 * - propaA = 11
 		 * - propaB = 22
 		 * - propaC = 33
 		 */
-		public static function simpleJoin(obj:Object, sort:Boolean = true, post:String = '\n', pre:String = ' - ', glue:String = ' = ',seperator:String = ''):String
+		public static function simpleJoin(obj:Object, sort:Boolean = true, post:String = '\n', pre:String = ' - ', glue:String = ' = ', seperator:String = ''):String
 		{
-			if(!obj)
+			if (!obj)
 			{
 				return '(null)' + post;
 			}
 			var arr:Array = [];
-			for(var name:String in obj)
+			for (var name:String in obj)
 			{
 				arr.push(pre + name + glue + obj[name] + post);
 			}
-			if(arr.length == 0)
+			if (arr.length == 0)
 			{
 				return '(empty)' + post;
 			}
-			if(sort)
+			if (sort)
 			{
 				arr.sort();
 			}
 			return arr.join(seperator);
 		}
-		
+
 		/**
 		 * Compact Object-properties to one-line debug string 
 		 * propA:11,propB:22,propC:33
@@ -566,7 +615,7 @@ package temple.utils.types
 		{
 			return ObjectUtils.simpleJoin(obj, true, '', '', ':', ',');
 		}
-		
+
 		public static function toString():String
 		{
 			return objectToString(ObjectUtils);

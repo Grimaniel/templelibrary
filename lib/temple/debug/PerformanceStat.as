@@ -94,9 +94,12 @@ package temple.debug
 		private var _graphRect:Rectangle;
 		private var _fieldHeight:Number = 16;
 		private var _redraw:Boolean = true;
+		private var _graph:Boolean;
 
-		public function PerformanceStat() 
+		public function PerformanceStat(graph:Boolean = true) 
 		{
+			this._graph = graph;
+			
 			this.x = this.y = 2;
 			
 			//create and set fields
@@ -125,7 +128,9 @@ package temple.debug
 			
 			this.calculate();
 			
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame, false, -1000, true);			this.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage, false, -1000, true);			this.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage, false, -1000, true);
+			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame, false, -1000, true);
+			this.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage, false, -1000, true);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage, false, -1000, true);
 		}
 
 		private function handleAddedToStage(event:Event):void
@@ -167,7 +172,7 @@ package temple.debug
 				//calc new update time
 				this._nextUpdateTime = this._previousTime + this._updateFrequency;
 				
-				if (this._redraw)
+				if (this._redraw && this._graph)
 				{			
 					//prepare the graph
 					this.graphics.clear();
@@ -203,16 +208,18 @@ package temple.debug
 					//add text
 					this._fpsField.appendText(' [ ' + String(Math.round(1000 / this._frameMilliMax * 100) / 100) + ' / ' + String(Math.round(1000 / this._frameMilliMin * 100) / 100) + ' ]');
 					
-					
-					//calc some more & draw				
-					this.graphics.lineStyle(0, 0xBB0000, 1, false, LineScaleMode.NORMAL);
-					dx = this._graphRect.width / iLim;
-					dy = this._graphRect.height / (this._frameMilliMax - this._frameMilliMin);
-					for (i = 0;i < iLim;i++)
+					if (this._graph)
 					{
-						tmpY = this._graphRect.bottom - dy * (this._frameMilliHistory[i] - this._frameMilliMin);
-						this.graphics.moveTo(this._graphRect.left + dx * i, tmpY);
-						this.graphics.lineTo(this._graphRect.left + dx * (i + 1), tmpY);
+						//calc some more & draw				
+						this.graphics.lineStyle(0, 0xBB0000, 1, false, LineScaleMode.NORMAL);
+						dx = this._graphRect.width / iLim;
+						dy = this._graphRect.height / (this._frameMilliMax - this._frameMilliMin);
+						for (i = 0;i < iLim;i++)
+						{
+							tmpY = this._graphRect.bottom - dy * (this._frameMilliHistory[i] - this._frameMilliMin);
+							this.graphics.moveTo(this._graphRect.left + dx * i, tmpY);
+							this.graphics.lineTo(this._graphRect.left + dx * (i + 1), tmpY);
+						}
 					}
 				}
 				
@@ -242,16 +249,19 @@ package temple.debug
 					//add text
 					this._memoryField.appendText(' [ ' + String(Math.round(this._memoryKiloByteMin / 1024 * 100) / 100) + ' / ' + String(Math.round(this._memoryKiloByteMax / 1024 * 100) / 100) + ' ]');
 					
-					//calc some more & draw
-					this.graphics.lineStyle(0, 0x0000BB, 1, false, LineScaleMode.NORMAL);
-					dx = this._graphRect.width / iLim;
-					dy = this._graphRect.height / (this._memoryKiloByteMax - this._memoryKiloByteMin);
-					for (i = 0;i < iLim;i++)
+					if (this._graph)
 					{
-						tmpY = this._graphRect.bottom - dy * (this._memoryKiloByteHistory[i] - this._memoryKiloByteMin);
-						this.graphics.moveTo(this._graphRect.left + dx * i, tmpY);
-						this.graphics.lineTo(this._graphRect.left + dx * (i + 1), tmpY);
-					}	
+						//calc some more & draw
+						this.graphics.lineStyle(0, 0x0000BB, 1, false, LineScaleMode.NORMAL);
+						dx = this._graphRect.width / iLim;
+						dy = this._graphRect.height / (this._memoryKiloByteMax - this._memoryKiloByteMin);
+						for (i = 0;i < iLim;i++)
+						{
+							tmpY = this._graphRect.bottom - dy * (this._memoryKiloByteHistory[i] - this._memoryKiloByteMin);
+							this.graphics.moveTo(this._graphRect.left + dx * i, tmpY);
+							this.graphics.lineTo(this._graphRect.left + dx * (i + 1), tmpY);
+						}
+					}
 				}			
 					
 				//reset these
@@ -291,9 +301,9 @@ package temple.debug
 		private function setFieldFormat(field:TextField, width:Number = 50, height:Number = 20, color:Number = 0x000000):void
 		{
 			field.textColor = 0x000000;
-			field.background = true;
+			field.background = this._graph;
 			field.backgroundColor = 0xDDDDDD;
-			field.border = true;
+			field.border = this._graph;
 			
 			field.selectable = false;
 			field.width = width;

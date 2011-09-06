@@ -68,7 +68,7 @@ package temple.ui.form.services
 	[Event(name = "FormServiceEvent.error", type = "temple.ui.form.services.FormServiceEvent")]
 	
 	/**
-	 * The FormXMLService send the submitted data to a URL, the URL response is an XML file which contains data about the success (or fail) or the submit.
+	 * The XMLFormService send the submitted data to a URL, the URL response is an XML file which contains data about the success (or fail) or the submit.
 	 * 
 	 * @includeExample XMLFormServiceExample.as
 	 * 
@@ -81,8 +81,8 @@ package temple.ui.form.services
 		private var _method:String = URLRequestMethod.POST;
 
 		/**
-		 * Creates a new FormXMLService object.
-		 * The FormXMLService post the form data to a URL that returns a XML file. The XML file contains the result of the submission
+		 * Creates a new XMLFormService object.
+		 * The XMLFormService post the form data to a URL that returns a XML file. The XML file contains the result of the submission
 		 * @param url the URL to post to. There is no default, so it must be set before calling submit.
 		 * @param resultClass the Class that parses the result XML, default is FormResult
 		 * @param debug indicates if the service is in debug mode

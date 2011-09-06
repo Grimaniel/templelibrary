@@ -109,7 +109,7 @@ package temple.ui.form
 	 * 
 	 * @includeExample FormExample.as
 	 * 
-	 * @includeExample services/FormXMLServiceExample.as
+	 * @includeExample services/XMLFormServiceExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */

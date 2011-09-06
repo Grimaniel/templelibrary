@@ -42,15 +42,14 @@
 
 package temple.data.loader.cache 
 {
-	import temple.debug.objectToString;
-	import flash.events.TimerEvent;
-
 	import temple.core.CoreTimer;
 	import temple.data.collections.HashMap;
 	import temple.debug.errors.TempleError;
 	import temple.debug.errors.throwError;
 	import temple.debug.log.Log;
+	import temple.debug.objectToString;
 
+	import flash.events.TimerEvent;
 	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
 
@@ -75,7 +74,7 @@ package temple.data.loader.cache
 		}
 
 		/**
-		 * Creates a new LoaderCacheData for a specific url. Data can be filled later
+		 * Creates a new LoaderCacheData for a specific url. Data can be filled later.
 		 */
 		public static function create(url:String):LoaderCacheData 
 		{
@@ -104,18 +103,18 @@ package temple.data.loader.cache
 		 */
 		public static function clear(url:String = null):void
 		{
-			if (url && LoaderCache._cache[url])
+			if (url == null)
+			{
+				for (url in LoaderCache._cache)
+				{
+					LoaderCache.clear(url);
+				}
+			}
+			else if (LoaderCache._cache[url])
 			{
 				var data:LoaderCacheData = LoaderCacheData(LoaderCache._cache[url]);
 				delete LoaderCache._cache[url];
 				data.destruct();
-			}
-			else if (url == null)
-			{
-				for (url in LoaderCache._cache)
-				{
-					delete LoaderCache._cache[url];
-				}
 			}
 		}
 
@@ -129,7 +128,7 @@ package temple.data.loader.cache
 			{
 				if (data.purgeable && data.time < limit)
 				{
-					Log.debug('LoaderCache.purge(maxAgeSeconds:' + [maxSeconds] + ') on data.time:' + data.time + ', limit:' + limit, LoaderCache);
+					Log.debug('LoaderCache.purge(maxAgeSeconds:' + maxSeconds + ') on data.time:' + data.time + ', limit:' + limit, LoaderCache);
 					LoaderCache.clear(data.url);
 				}
 			}

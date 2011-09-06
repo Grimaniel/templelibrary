@@ -42,11 +42,12 @@
 
 package temple.utils 
 {
+	import temple.debug.objectToString;
 	import temple.utils.types.ObjectUtils;
 
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
-	import flash.display.InteractiveObject;
+	import flash.display.Stage;
+	import flash.events.MouseEvent;
 
 	/**
 	 * This utils are only for debugging purposes.
@@ -56,6 +57,12 @@ package temple.utils
 	public final class TraceUtils 
 	{
 		public static const STACK_TRACE_NEWLINE_INDENT:String = "\n   ";
+		
+		/**
+		 * Default properties of every object which are traced in the 'rootTrace' method.
+		 * You can change this array if you want to trace more (or less) properties
+		 */
+		public static const ROOT_TRACE_PROPS:Array = ['name', 'visible', 'alpha', 'mouseEnabled', 'mouseChildren'];
 		
 		/**
 		 * Log the stack trace only for the debugger version of Flash Player and the AIR Debug Launcher (ADL)
@@ -87,32 +94,39 @@ package temple.utils
 		}
 
 		/**
-		 * Recursive trace object and his parents 
+		 * Will do a TraceUtils.rootTrace() on every mouse click.
 		 */
-		public static function rootTrace(object:DisplayObject, doTrace:Boolean = true):String
+		public static function rootTraceOnClick(stage:Stage):void
+		{
+			stage.addEventListener(MouseEvent.CLICK, TraceUtils.handleStageClick);
+		}
+
+		private static function handleStageClick(event:MouseEvent):void
+		{
+			TraceUtils.rootTrace(event.target as DisplayObject);
+		}
+
+		/**
+		 * Recursive trace object and his parents
+		 * @param object the object to trace
+		 * @param doTrace a Boolean which indicates if the result would be trace of only returned
+		 * @param props a list of properties which should be traces for every object
+		 */
+		public static function rootTrace(object:DisplayObject, doTrace:Boolean = true, props:Array = null):String
 		{
 			var output:String = "Root Trace:\n";
-			output += TraceUtils._rootTrace(object, 0);
+			output += TraceUtils._rootTrace(object, 0, props);
 			
 			if (doTrace) trace(output);
 			
 			return output;
 		}
 		
-		private static function _rootTrace(object:DisplayObject, index:int):String
+		private static function _rootTrace(object:DisplayObject, index:int, props:Array):String
 		{
-			var extra:String = ''; 
-			if (object is InteractiveObject)
-			{
-				extra += ', mouseEnabled=' + InteractiveObject(object).mouseEnabled;
-				if (object is DisplayObjectContainer)
-				{
-					extra += ', mouseChildren=' + DisplayObjectContainer(object).mouseChildren;
-				}
-			}
+			var output:String = "   " + index + ": " + objectToString(object, props || TraceUtils.ROOT_TRACE_PROPS, true);
 			
-			var output:String = "   " + index + ": " + object + ":" + object.name + ' (visible=' + object.visible + ', alpha=' + object.alpha + extra + ")\n" ;
-			if (object.parent) output += TraceUtils._rootTrace(object.parent, ++index);
+			if (object.parent) output += "\n" + TraceUtils._rootTrace(object.parent, ++index, props);
 			
 			return output;
 		}

@@ -88,6 +88,7 @@ package temple.ui.behaviors.textfield
 		private var _currentFontSize:Number;
 		private var _previousText:String;
 		private var _maximalHeight:Number;
+		private var _maximalWidth:Number;
 		
 		/**
 		 * Adds AutoFontSizeBehavior to a TextField
@@ -111,6 +112,7 @@ package temple.ui.behaviors.textfield
 			this._currentFontSize = this._maximalFontSize = maximalFontSize;
 			this._previousText = "";
 			this._maximalHeight = textField.height;
+			this._maximalWidth = textField.width;
 			
 			this.update();
 			
@@ -135,10 +137,21 @@ package temple.ui.behaviors.textfield
                 this.setFontSize(this._maximalFontSize);
 			}
  
-			while (this._maximalHeight < this.textField.textHeight + (4 * this.textField.numLines)) 
-			{ 
-				if (this._currentFontSize <= this._minimalFontSize) break;
-				this.setFontSize(this._currentFontSize - 0.5);
+			if (this.textField.multiline)
+			{
+				while (this._maximalHeight < this.textField.textHeight + (4 * this.textField.numLines)) 
+				{ 
+					if (this._currentFontSize <= this._minimalFontSize) break;
+					this.setFontSize(this._currentFontSize - 0.5);
+				}
+			}
+			else
+			{
+				while (this._maximalWidth < this.textField.textWidth) 
+				{ 
+					if (this._currentFontSize <= this._minimalFontSize) break;
+					this.setFontSize(this._currentFontSize - 0.5);
+				}
 			}
  
 			if (this._currentFontSize <= this._minimalFontSize) 

@@ -42,19 +42,18 @@
 
 package temple.data.loader.cache 
 {
-	import flash.utils.ByteArray;
-	import temple.data.loader.preload.IPreloader;
-
-	import flash.events.HTTPStatusEvent;
 	import temple.core.CoreLoader;
+	import temple.data.loader.preload.IPreloader;
 	import temple.debug.DebugManager;
 
 	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
 
 	/**
 	 * The CacheLoader stores the data (bytes) of the loaded images or SWF into the LoaderCache by URL.
@@ -95,6 +94,30 @@ package temple.data.loader.cache
 			
 			this.cache = cache;
 			this._reloadAfterError = reloadAfterError;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get isLoading():Boolean
+		{
+			return super.isLoading || this._cacheURLLoader.isLoading;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get isLoaded():Boolean
+		{
+			return super.isLoaded && !this.isLoading;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get url():String
+		{
+			return super.url || (this._cacheURLLoader ? this._cacheURLLoader.url : null);
 		}
 
 		/**
@@ -143,15 +166,13 @@ package temple.data.loader.cache
 		 */
 		override public function load(request:URLRequest, context:LoaderContext = null):void
 		{
-			this._isLoading = true;
-			this._isLoaded = false;
-			this._url = request.url;
+			if (this.cache) this.unload();
+			
 			this._context = context;
 			
 			if (this.cache)
 			{
 				if (this.debug) this.logDebug("load: cache enabled ");
-				this.unload();
 				this._cacheURLLoader.load(request);
 			}
 			else

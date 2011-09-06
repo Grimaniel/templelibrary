@@ -222,7 +222,7 @@ package temple.utils.keys
 					for (var i:int = 0; i < leni; i++)
 					{
 						if (i) info += ", ";
-						info += ObjectUtils.objectToString(arguments[i]);
+						info += ObjectUtils.convertToString(arguments[i]);
 					}
 					info += ")";
 				}

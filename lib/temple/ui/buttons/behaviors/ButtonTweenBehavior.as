@@ -75,13 +75,20 @@ package temple.ui.buttons.behaviors
 		
 		private var _disabledVars:Object;
 		private var _disabledDuration:Number;
+		
+		private var _focusVars:Object;
+		private var _focusDuration:Number;
+		
 		private var _tween:TweenMax;
+		private var _previous:ButtonStatus;
 		
 		public function ButtonTweenBehavior(target:DisplayObject, upDuration:Number = NaN, upVars:Object = null, overDuration:Number = NaN, overVars:Object = null, downDuration:Number = NaN, downVars:Object = null)
 		{
 			super(target);
 			
 			OverwriteManager.init();
+			
+			this._previous = new ButtonStatus();
 			
 			this.upDuration = upDuration;
 			this.upVars = upVars;
@@ -275,6 +282,43 @@ package temple.ui.buttons.behaviors
 			this.disabledVars = vars;
 		}
 		
+		public function get focusVars():Object
+		{
+			return this._focusVars;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set focusVars(value:Object):void
+		{
+			this._focusVars = value;
+			if (this.debug) this.logDebug("focusVars: " + ObjectUtils.traceObject(this._disabledVars, 3, false));
+			this.update(this);
+		}
+		
+		/**
+		 * Total duration of the 'disabled' animation in seconds
+		 */
+		public function get focusDuration():Number
+		{
+			return this._focusDuration;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set focusDuration(value:Number):void
+		{
+			this._focusDuration = value;
+		}
+		
+		public function setFocusTween(duration:Number, vars:Object):void
+		{
+			this.focusDuration = duration;
+			this.focusVars = vars;
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -286,34 +330,31 @@ package temple.ui.buttons.behaviors
 			
 			if (this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down);
 			
-			switch (true)
+			if (this._selectedVars && this.selected && !this._previous.selected)
 			{
-				case (this.selected && !!this._selectedVars):
-				{
-					this.selectedState();
-					break;
-				}
-				case (this.disabled && !!this._disabledVars):
-				{
-					this.disabledState();
-					break;
-				}
-				case (this.down && !!this._downVars):
-				{
-					this.downState();
-					break;
-				}
-				case (this.over && !!this._overVars):
-				{
-					this.overState();
-					break;
-				}
-				default:
-				{
-					this.upState();
-					break;
-				}
+				this.selectedState();
 			}
+			else if (this._disabledVars && this.disabled && !this._previous.disabled)
+			{
+				this.disabledState();
+			}
+			else if (this._focusVars && this.focus && !this._previous.focus)
+			{
+				this.focusState();
+			}
+			else if (this._downVars && this.down && !this._previous.down)
+			{
+				this.downState();
+			}
+			else if (this._overVars && this.over && !this._previous.over)
+			{
+				this.overState();
+			}
+			else if (this._upVars && !this.over && !this.down && (this._previous.over || this._previous.down))
+			{
+				this.upState();
+			}
+			this._previous.update(status);
 		}
 		
 		/**
@@ -360,6 +401,15 @@ package temple.ui.buttons.behaviors
 		{
 			this.toState(immediately ? 0 : this._disabledDuration, this._disabledVars);
 		}
+		
+		/**
+		 * Go to the 'focus' state.
+		 * @param immediately if set to true, the focusDuration will be ignored and the state will immediatly be set
+		 */
+		public function focusState(immediately:Boolean = false):void
+		{
+			this.toState(immediately ? 0 : this._focusDuration, this._focusVars);
+		}
 
 		private function toState(duration:Number, vars:Object):void
 		{
@@ -370,6 +420,7 @@ package temple.ui.buttons.behaviors
 			if (vars)
 			{
 				if (vars['ease'] is String) vars['ease'] = EaseLookup.find(vars['ease']);
+				vars.immediateRender = duration == 0;
 				this._tween = TweenMax.to(this.target, duration, vars);
 			}
 		}
@@ -389,6 +440,13 @@ package temple.ui.buttons.behaviors
 			this._downVars = null;
 			this._selectedVars = null;
 			this._disabledVars = null;
+			this._focusVars = null;
+			
+			if (this._previous)
+			{
+				this._previous.destruct();
+				this._previous = null;
+			}
 			
 			super.destruct();
 		}

@@ -42,8 +42,9 @@
 
 package temple.ui.behaviors 
 {
-	import flash.events.Event;
 	import temple.behaviors.AbstractBehaviorEvent;
+
+	import flash.events.Event;
 
 	/**
 	 * Event dispached by the DragBehavior. These events are also dispatched by the object that is dragged (behaviors target)

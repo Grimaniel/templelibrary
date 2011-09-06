@@ -42,13 +42,9 @@
 
 package temple.data.collections 
 {
-	import Array;
-	import Boolean;
 	import temple.core.ICoreObject;
 	import temple.debug.Registry;
 	import temple.destruction.Destructor;
-
-	import uint;
 
 	/**
 	 * The DestructibleArray is the same as a normal Array, but also destructs all elements on destruction.

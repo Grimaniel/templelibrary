@@ -61,8 +61,8 @@ package temple.ui.form.services
 	[Event(name = "FormServiceEvent.error", type = "temple.ui.form.services.FormServiceEvent")]
 	
 	/**
-	 * The FormXMLNameService extends the FormXMLService but instead of supplying the URL, you just pass the name of the URL.
-	 * The FormXMLService uses the URLManager to retrieve the actual URL.
+	 * The XMLNameFormService extends the XMLFormService but instead of supplying the URL, you just pass the name of the URL.
+	 * The XMLFormService uses the URLManager to retrieve the actual URL.
 	 * 
 	 * @see temple.data.url.URLManager
 	 * 
@@ -73,7 +73,7 @@ package temple.ui.form.services
 		private var _urlName:String;
 		
 		/**
-		 * Create a new FormXMLNameService
+		 * Create a new XMLNameFormService
 		 * @param urlName the name of the URL as defined in the urls.xml and the URLManager
 		 * @param resultClass the class which is used to parse the XML result. This class must implement IFormResult. If set to null FormResult will be used.
 		 * @param debug a Boolean which indicates if debugging is enabled.

@@ -171,7 +171,7 @@ package temple.ui.scroll
 			rect.x = this._snapToPixel ? Math.round(value) : value;;
 			this.displayObject.scrollRect = rect;
 			
-			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, NaN, this.maxScrollH, this.maxScrollV));
+			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, value, NaN, this.maxScrollH, this.maxScrollV));
 		}
 		
 		/**
@@ -242,7 +242,7 @@ package temple.ui.scroll
 			rect.y = this._snapToPixel ? Math.round(value) : value;
 			this.displayObject.scrollRect = rect;
 			
-			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, NaN, this.maxScrollH, this.maxScrollV));
+			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, value, this.maxScrollH, this.maxScrollV));
 		}
 		
 		/**

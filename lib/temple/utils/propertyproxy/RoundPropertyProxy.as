@@ -52,9 +52,9 @@ package temple.utils.propertyproxy
 	 */
 	public class RoundPropertyProxy extends SimplePropertyProxy implements IPropertyProxy 
 	{
-		private var _nearest:int;
+		private var _nearest:Number;
 		
-		public function RoundPropertyProxy(nearest:int = 1)
+		public function RoundPropertyProxy(nearest:Number = 1)
 		{
 			this._nearest = nearest;
 		}
@@ -62,7 +62,7 @@ package temple.utils.propertyproxy
 		/**
 		 * @see temple.utils.types.NumberUtils#roundToNearest()
 		 */
-		public function get nearest():int
+		public function get nearest():Number
 		{
 			return this._nearest;
 		}
@@ -70,7 +70,7 @@ package temple.utils.propertyproxy
 		/**
 		 * @private
 		 */
-		public function set nearest(value:int):void
+		public function set nearest(value:Number):void
 		{
 			this._nearest = value;
 		}

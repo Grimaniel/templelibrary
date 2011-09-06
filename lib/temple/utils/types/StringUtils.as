@@ -920,6 +920,35 @@ package temple.utils.types
 			return ret;
 		}
 		
+		public static function cleanSpecialChars(string:String):String
+		{
+			var validString:String = "";
+			var len:int = string.length;
+			//
+			for (var i:int = 0; i < len; i++)
+			{
+				var charCode:int = string.charCodeAt(i);
+				if ((charCode < 47) || (charCode > 57 && charCode < 65) || charCode == 95) validString += "-";
+				else if ((charCode > 90 && charCode < 97) || (charCode > 122 && charCode < 128)) validString += "-";
+				else if (charCode > 127)
+				{
+					if ((charCode > 130 && charCode < 135) || charCode == 142 || charCode == 143 || charCode == 145 || charCode == 146 || charCode == 160 || charCode == 193 || charCode == 225) validString += "a";
+					else if (charCode == 128 || charCode == 135) validString += "c";
+					else if (charCode == 130 || (charCode > 135 && charCode < 139) || charCode == 144 || charCode == 201 || charCode == 233) validString += "e";
+					else if ((charCode > 138 && charCode < 142) || charCode == 161 || charCode == 205 || charCode == 237) validString += "i";
+					else if (charCode == 164 || charCode == 165) validString += "n";
+					else if ((charCode > 146 && charCode < 150) || charCode == 153 || charCode == 162 || charCode == 211 || charCode == 214 || charCode == 243 || charCode == 246 || charCode == 336 || charCode == 337) validString += "o";
+					else if (charCode == 129 || charCode == 150 || charCode == 151 || charCode == 154 || charCode == 163 || charCode == 218 || charCode == 220 || charCode == 250 || charCode == 252 || charCode == 368 || charCode == 369) validString += "u";
+				}
+				else
+				{
+					validString += string.charAt(i);
+				}
+			}
+			validString = validString.replace(/\-+/g, "-").replace(/\-*$/, "");
+			return validString.toLowerCase();
+		}
+		
 		public static function toString():String
 		{
 			return objectToString(StringUtils);

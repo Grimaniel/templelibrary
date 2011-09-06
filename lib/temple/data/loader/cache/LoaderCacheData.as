@@ -62,7 +62,7 @@ package temple.data.loader.cache
 		public function LoaderCacheData(url:String)
 		{
 			this._url = url;
-			this.toStringProps.push('url');
+			this.toStringProps.push('url', 'isLoaded');
 		}
 
 		/**
@@ -137,10 +137,16 @@ package temple.data.loader.cache
 		 */
 		override public function destruct():void 
 		{
+			if (this.isDestructed) return;
+			
 			this._bytes = null;
-			this._url = null;
 			
 			super.destruct();
+			
+			if (this._url) LoaderCache.clear(this._url);
+			
+			// clearing URL must be done after DestructEvent is dispatched, so we can check the URL in the handler.
+			//this._url = null;
 		}
 	}
 }

@@ -50,7 +50,7 @@ package temple.ui.states.error
 	/**
 	 * Uses a TweenLite autoAlpha fade to show or hide the error state of his parent.
 	 * 
-	 * @includeExample ../../form/services/FormXMLServiceExample.as
+	 * @includeExample ../../form/services/XMLFormServiceExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */

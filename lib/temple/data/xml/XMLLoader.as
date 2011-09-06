@@ -42,6 +42,21 @@
 
 package temple.data.xml 
 {
+	import temple.core.CoreEventDispatcher;
+	import temple.core.CoreURLLoader;
+	import temple.data.collections.DestructibleArray;
+	import temple.data.loader.preload.IPreloader;
+	import temple.debug.errors.TempleArgumentError;
+	import temple.debug.errors.throwError;
+
+	import flash.events.ErrorEvent;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	/**
 	 * @eventType temple.data.xml.XMLLoaderEvent.COMPLETE
 	 */
@@ -62,21 +77,6 @@ package temple.data.xml
 	 */
 	[Event(name="XMLLoaderEvent.progress", type="temple.data.xml.XMLLoaderEvent")]
 	
-	import temple.core.CoreEventDispatcher;
-	import temple.core.CoreURLLoader;
-	import temple.data.collections.DestructibleArray;
-	import temple.data.loader.preload.IPreloader;
-	import temple.debug.errors.TempleArgumentError;
-	import temple.debug.errors.throwError;
-
-	import flash.events.ErrorEvent;
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.net.URLRequest;
-	import flash.net.URLRequestMethod;
-	import flash.net.URLVariables;
 
 	/**
 	 * XMLLoader loads XML files 
@@ -364,7 +364,6 @@ package temple.data.xml
 		}
 	}	
 }
-
 import temple.core.CoreURLLoader;
 import temple.destruction.IDestructible;
 

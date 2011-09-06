@@ -43,11 +43,8 @@
 package temple.ui.buttons.behaviors 
 {
 	import temple.debug.IDebuggable;
-	import temple.ui.IDisableable;
 	import temple.ui.IEnableable;
-	import temple.ui.ISelectable;
 	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
-	import temple.ui.focus.IFocusable;
 
 	import flash.display.DisplayObject;
 
@@ -56,7 +53,7 @@ package temple.ui.buttons.behaviors
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractButtonBehavior extends AbstractDisplayObjectBehavior implements IDebuggable, IButtonStatus, ISelectable, IDisableable, IEnableable, IFocusable
+	public class AbstractButtonBehavior extends AbstractDisplayObjectBehavior implements IDebuggable, IButtonStatus, IEnableable
 	{
 		private var _over:Boolean;
 		private var _down:Boolean;
@@ -72,6 +69,8 @@ package temple.ui.buttons.behaviors
 		{
 			super(target);
 			this._enabled = true;
+			
+			this.toStringProps.push('over', 'down', 'selected', 'disabled', 'focus');
 		}
 		
 		/**
