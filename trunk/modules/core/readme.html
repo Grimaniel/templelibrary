@@ -1,0 +1,228 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="./doc/style.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="./doc/print.css" type="text/css" media="print">
+		<link rel="stylesheet" href="./doc/override.css" type="text/css">
+		<title>Temple Core Module</title>
+	</head>
+	<body>
+		<table class="titleTable" id="titleTable" style="" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr>
+					<td class="titleTableTitle" align="left">Temple Library for ActionScript 3.0 by MediaMonks</td>
+					<td class="titleTableTopNav" align="right">
+						<a href="http://code.google.com/p/templelibrary/">Project Home</a>&nbsp;|&nbsp;
+						<a href="./doc/index.html">API Documentation</a>&nbsp;|&nbsp;
+						<a href="http://code.google.com/p/templelibrary/source/checkout">Source</a>&nbsp;|&nbsp;
+						<a href="http://code.google.com/p/templelibrary/downloads/list">Downloads</a>
+					</td>
+					<td class="titleTableLogo" align="right" rowspan="3">
+						<img class="logoImage" title=" Temple Logo " alt=" Temple Library " src="./doc/images/logo.jpg" />
+					</td>
+				</tr>
+				<tr class="titleTableRow2">
+					<td class="titleTableSubTitle" id="subTitle" align="left" colspan="2"><!-- NAME -->Temple Core Module<!-- /NAME --></td>
+				</tr>
+				<tr class="titleTableRow3">
+					<td colspan="2">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="MainContent">
+
+<h1>About</h1>
+
+<p>This is version <!-- VERSION -->3.0.0<!-- /VERSION --> of the <!-- NAME -->Temple Core Module<!-- /NAME -->, built on
+<!-- DATE -->2012-02-17<!-- /DATE -->. Get the latest version from:
+<a href="http://code.google.com/p/templelibrary/">http://code.google.com/p/templelibrary/</a>. You can get the files from
+<a href="http://code.google.com/p/templelibrary/source/checkout">SVN</a> or you could download it as a zip from the
+<a href="http://code.google.com/p/templelibrary/downloads/list">downloads page</a>.</p>
+
+<p>This modules contains the core of the Temple. All other Temple modules are based on this core. The core adds some
+basic functionality to the native Flash classes which are used in the Temple. The core module handles to following
+functionality:</p>
+
+<ul>
+	<li><a class="signatureLink" href="#destruction">Destruction</a></li>
+	<li><a class="signatureLink" href="#event-model">Advanced Event model</a></li>
+	<li><a class="signatureLink" href="#logging">Logging</a></li>
+	<li><a class="signatureLink" href="#memory">Memory Management</a></li>
+	<li><a class="signatureLink" href="#debug">Debugging</a></li>
+	<li>Some <a class="signatureLink" href="#extra">extra properties</a> for DisplayObjects</li>
+</ul>
+
+<h3 id="destruction">Destruction</h3>
+
+<p>All Temple objects implement the <code><a href="./doc/temple/core/destruction/IDestructible.html">IDestructible</a></code>
+interface which adds the <code><a href="./doc/temple/core/destruction/IDestructible.html#destruct()">destruct()</a></code>
+method to every object. Calling this <code>destruct</code> method will destroy the object, removes all its event listeners
+and makes it available for garbage collection.</p>
+
+<h3 id="event-model">Advanced Event model</h3>
+
+<p>All Temple's EventDispatchers implement the <code><a href="./doc/temple/core/events/ICoreEventDispatcher.html">ICoreEventDispatcher</a></code>
+interface. This interface adds to following functionality to the object:
+</p>
+
+<ul>
+	<li><a class="signatureLink" href="./doc/temple/core/events/ICoreEventDispatcher.html#addEventListenerOnce()">addEventListenerOnce()</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/events/ICoreEventDispatcher.html#removeAllEventListeners()">removeAllEventListeners()</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/events/ICoreEventDispatcher.html#removeAllOnceEventListenersForType()">removeAllOnceEventListenersForType()</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/events/ICoreEventDispatcher.html#removeAllStrongEventListenersForType()">removeAllStrongEventListenersForType()</a></li>
+</ul>
+
+<h3 id="logging">Logging</h3>
+
+<p>Every Temple object has some quick methods for sending log messages to your favorite log application. There is a method
+for every level of logging:</p>
+
+<ul>
+	<li><a class="signatureLink" href="./doc/temple/core/CoreObject.html#logDebug()">logDebug()</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/CoreObject.html#logInfo()">logInfo()</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/CoreObject.html#logWarn()">logWarn()</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/CoreObject.html#logError()">logError()</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/CoreObject.html#logFatal()">logFatal()</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/CoreObject.html#logStatus()">logStatus()</a></li>
+</ul>
+
+<p>Note that these logging calls are protected and can only be called from inside to (extended) object. But you can
+always use the related methods of the <code><a href="./doc/temple/core/debug/log/Log.html">Log</a></code> class.</p>
+
+<p>For viewing these log messages you could simply use the trace panel in the Flash IDE. Or you could listen for
+<code>LogEvents</code> on the <code>Log</code> class, with the
+<code><a href="./doc/temple/core/debug/log/Log.html#addLogListener()">addLogListener()</a></code> method.
+You could also use <a href="http://yalala.tyz.nl">Yalala</a> to view you log message. You need the
+<a href="../yalog/readme.html">Yalog module</a> to implement Yalala in your project.</p>
+
+<h3 id="memory">Memory Management</h3>
+
+<p>The destruct model and the advanced event model of the Temple can help you to get rid of your old objects. However it 
+is still possible that these objects aren't garbage collected. Holding a reference to a destructed object can block the 
+Garbage Collector for disposing the object. By using the <code><a href="./doc/temple/core/debug/Memory.html">Memory</a></code>
+class you can track down these objects. If you set
+<code><a href="./doc/temple/core/Temple.html#registerObjectsInMemory">Temple.registerObjectsInMemory</a></code> to
+<code>true</code> all Temple objects are registered in the <code>Memory</code>, using a weak reference. If a destructed
+object can still be found in the <code>Memory</code>, you might have a memory leak.</p>
+
+<h3 id="debug">Debugging</h3>
+
+<p>Many Temple classes implement the <code><a href="./doc/temple/core/debug/IDebuggable.html">IDebuggable</a></code>
+interface. This interface adds a <code>debug</code> property to the object. Setting this property to <code>true</code>
+enables debug mode for this object. Depending on the implementation of the object, extra debug information will be
+available. Most objects will send extra debug messages which can help you to debug your application.</p>
+
+<p>This debug property can be set manually on every object you want to debug, or you could use the
+<code><a href="./doc/temple/core/debug/DebugManager.html">DebugManager</a></code> to set the <code>debug</code> property
+for every object at once. If you set
+<code><a href="./doc/temple/core/debug/DebugManager.html#debugMode">DebugManager.debugMode</a></code> to 
+<code><a href="./doc/temple/core/debug/DebugMode.html#ALL">DebugMode.ALL</a></code> you enable debugging for every
+<code>IDebuggable</code> which is added in the DebugManager.
+</p>
+<p>
+The objects in the Temple are added to the <code>DebugManager</code> with the
+<code><a href="./doc/temple/core/debug/package.html#addToDebugManager()">addToDebugManager()</a></code> function. This
+function only adds the Object if the <code>DebugManager</code> is available and doesn't force the compiler to add the
+<code>DebugManager</code> in the SWF. Therefore you MUST use the <code>DebugManager</code> in your own code to force the
+compiler to add the <code>DebugManager</code> into the SWF.
+</p>
+<p>
+The <code>DebugManager</code> checks for the property <code>debug</code> in the URL. If this property is found it will 
+set the <code>DebugManager</code> to this debugMode. In this way it's possible to set the debugMode on a live website by
+just adding <code>"?debug=all"</code> to the URL:
+</p>
+
+<div class="listing">
+<pre>
+http://www.some-domain.com/?debug=all
+</pre>
+</div>
+
+
+<h3 id="extra">Extra properties for DisplayObjects</h3>
+
+<p>All <code>DisplayObjects</code> of the Temple have some extra properties, which can be quite handy:</p>
+<ul>
+	<li><a class="signatureLink" href="./doc/temple/core/display/ICoreDisplayObject.html#autoAlpha">autoAlpha</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/display/CoreLoader.html#position">position</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/display/CoreShape.html#scale">scale</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/display/CoreMovieClip.html#scale">stage</a></li>
+	<li><a class="signatureLink" href="./doc/temple/core/display/CoreSprite.html#children">children</a> (only for
+	<code>DisplayObjectContainers</code>)</li>
+</ul>
+
+<h1>Content</h1>
+<p>This module contains the following folders:</p>
+
+<dl>
+	<dt><a href="./bin">/bin</a></dt>
+	<dd>Contains the SWC of this module.</dd>
+	<dt><a href="./doc">/doc</a></dt>
+	<dd>Contains the <a href="./doc/index.html">documentation of the core module</a>.</dd>
+	<dt><a href="./examples">/examples</a></dt>
+	<dd>Contains some <a href="./examples/index.html">examples of the core module</a>.</dd>
+	<dt><a href="./export">/export</a></dt>
+	<dd>Contains the generated source files from the <a href="./source">/source</a> folder.<br/>
+	<em>(This folder is not available in the zip file.)</em></dd>
+	<dt><a href="./source">/source</a></dt>
+	<dd>Contains the source (.as) files of this module, but with <code>include</code> statements. <em><br/>
+	Note: the source folder of the zip file contains the generated (exported) source files without <code>include</code>
+	statements.</em></dd>
+	<dt><a href="./tools">/tools</a></dt>
+	<dd>Contains ANT scripts which are used to generate docs, examples, swc etc...<br/>
+	<em>(This folder is not available in the zip file.)</em></dd>
+</dl>
+
+<h1>Dependencies</h1>
+
+<p>The core module has no dependencies with other modules and can be used straight away.</p>
+
+<h1>Getting started</h1>
+<p></p>
+<h3>Adding the core module to your project</h3>
+
+<p>To add the core module to your project you could use the SWC file or the AS files. The SWC file can be found in the
+<code><a href="./bin/">/bin</a></code> folder. If you want to use the SWC file you need to add the SWC file to the class
+path of your project.</p>
+<p>If you want to use the AS files you just need to copy the content of the <code><a href="./export/">/export</a></code>
+folder to the source folder of your project. Or you could add the <code><a href="./export/">/export</a></code> folder to
+the class path of your project. It's also possible to use the AS files in the 
+<code><a href="./source/">/source</a></code> folder, but since these files use the <code>include</code> statement, your
+code editor might not understand this. <br/><strong>NOTE:</strong> don't copy folders from an SVN check out, since this can
+cause SVN problems. It would be better to do an SVN export to your own folder.
+</p>
+
+<h3>Use the Temple features in your own classes</h3>
+
+<p>To use the Temple features in your own classes you only need to extend the classes of the Temple. Temple has a
+<code>core</code> class for almost every native Flash class. Instead of extending <code>MovieClip</code> you extend
+<code>CoreMovieClip</code>, or <code>CoreSprite</code> instead of <code>Sprite</code>, <code>CoreTimer</code> instead of
+<code>Timer</code> or <code>CoreEventDispatcher</code> instead of <code>EventDispatcher</code>, etcetera, etcetera.</p>
+
+<h1>Examples</h1>
+
+<p>Check out the <a href="./examples">/examples</a> folder for all examples. This folder also contains a
+<a href="./examples/index.html">list of all available examples</a>.</p>
+<p>Note: every example has an XML file which is an <a href="http://ant.apache.org/" target="_blank">ANT</a> build file
+which can be used to build the example.</p>
+
+<h1>Notes</h1>
+<p></p>
+<h3>Source and export folder</h3>
+<p>As you may notice there is a <code><a href="./source/">source</a></code> folder and an
+<code><a href="./export">export</a></code> folder in the <code>core</code> module. The <code>source</code> folder
+contains the actual source files. But these files use the
+<code><a href="http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/statements.html#include">include</a></code>
+statement. Not every code editor knows how to handle this <code>include</code> statement. Therefore we have added the 
+<code>export</code> folder which contains the same code, but we replaced the <code>include</code> with the content of the
+actual include file. This replacement is done using <a href="http://ant.apache.org/">ANT</a>. These ANT scripts can be
+found in the <code><a href="./tools/ant/">tools/ant/</a>folder</code></p>
+		
+		
+		<center class="copyright">
+			<footer>by MediaMonks | http://www.mediamonks.com</footer>
+			<br/>
+		</center>
+		</div>
+	</body>
+</html><!--by MediaMonks | http://www.mediamonks.com<br/> -->

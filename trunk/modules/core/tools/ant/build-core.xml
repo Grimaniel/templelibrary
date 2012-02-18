@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Export Core" name="Temple-Core">
+
+	<property name="module" value="core" />
+	<property name="name" value="Temple Core Module" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+	
+	<property name="export.dir" value="${base.dir}/export" />
+	
+	<target name="Export Core">
+		<antcall target="Check version" />
+		<antcall target="Update Temple properties" />
+		<antcall target="Generate Export" />
+		<antcall target="Export" />
+	</target>
+	
+	<target name="Update Temple properties">
+		<!-- Version -->
+		<replaceregexp file="${source.dir}/temple/core/Temple.as" match='VERSION:String = "[0-9].[0-9].[0-9]"' replace='VERSION:String = "${version}"' flags="" byline="true" />
+		<replaceregexp file="${source.dir}/temple/core/includes/Version.as.inc" match='VERSION:String = "[0-9].[0-9].[0-9]"' replace='VERSION:String = "${version}"' flags="" byline="true" />
+
+		<!-- Date -->
+		<replaceregexp file="${source.dir}/temple/core/Temple.as" match='DATE:String = "[0-9]{4}-[0-9]{2}-[0-9]{2}"' replace='DATE:String = "${date}"' flags="" byline="true" />
+		<echo>Temple properties updated: version ${version}, date ${date}</echo>
+	</target>
+	
+	<target name="Check copyrights" >
+		<fileset dir="${source.dir}/temple" id="wrongfileset" includes="**/*.as">
+			<not>
+				<containsregexp expression="License\.as\.inc" />
+			</not>
+		</fileset>
+		<property name="wrongfiles" refid="wrongfileset" />
+		<fail message="The following files does not contain copyrights: ${wrongfiles}">
+			<condition>
+				<not>
+					<resourcecount count="0" refid="wrongfileset" />
+				</not>
+			</condition>
+		</fail>
+		<echo>Copyrights checked</echo>
+	</target>
+
+	<target name="Check version">
+		<fileset dir="${source.dir}/temple" id="wrongfileset" includes="**/*.as">
+			<containsregexp expression="(public|internal)\s+(final\s+)?class" />
+			<not>
+				<containsregexp expression="Version\.as\.inc" />
+			</not>
+		</fileset>
+		<property name="wrongfiles" refid="wrongfileset" />
+		<fail message="The following files does not contain a version: ${wrongfiles}">
+			<condition>
+				<not>
+					<resourcecount count="0" refid="wrongfileset" />
+				</not>
+			</condition>
+		</fail>
+		<echo>Version checked ${wrongfiles}</echo>
+	</target>
+	
+	<target name="Create Zip">
+		<zip destfile="${root.dir}/../zips/temple_${module}_${version}.zip">
+			<zipfileset dir="${bin.dir}" prefix="bin" />
+			<zipfileset dir="${doc.dir}" prefix="doc" />
+			<zipfileset dir="${export.dir}" prefix="source" />
+			<zipfileset dir="${examples.dir}" prefix="examples" />
+			<zipfileset file="${base.dir}/readme.html" />
+		</zip>
+		<echo>Zip file created</echo>
+	</target>
+	
+	<target name="Generate Export" >
+		<antcall target="Clear export dir" />
+		<antcall target="Copy files" />
+		<antcall target="Parse files" />
+	</target>
+	
+	<target name="Clear export dir" >
+		<delete dir="${export.dir}"/>
+	</target>
+	
+	<target name="Copy files" >
+		<copy todir="${export.dir}">
+			<fileset dir="${base.dir}/source" includes="**/*.as">
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="Parse files">
+		<script language="javascript" src="${base.dir}/tools/ant/parse_export.js"></script>
+	</target>
+	
+	<target name="Create SWC">
+		<compc output="${bin.dir}/${swc}" include-classes="" target-player="10" failonerror="true">
+			<include-sources dir="${source.dir}" includes="*" append="true"/>
+			<compiler.external-library-path dir="${root.dir}/lib">
+			    <include name="*" />
+			</compiler.external-library-path >
+		</compc>
+		<echo>SWC created</echo>
+	</target>
+	
+</project>
