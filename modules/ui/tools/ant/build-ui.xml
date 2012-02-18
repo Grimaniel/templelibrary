@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Export" basedir="../../../../tools/ant" name="Temple-UI">
+
+	<property name="module" value="ui" />
+	<property name="name" value="Temple UI Module" />
+	<property name="dependencies" value="core,common,utils,data" />
+	<property name="extended-dependencies" value="tweenlite,utils-extended" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+</project>
