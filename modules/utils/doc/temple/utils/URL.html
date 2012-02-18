@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../override.css" type="text/css"><meta name="keywords" content="URL,temple.utils.URL,ALL,AND,DAY,EQUAL,FILE,FTP,GREATER_THAN,GREATER_THAN_OR_EQUAL_TO,HAS_OWN_PROPERTY,HOURS,HTTP,HTTPS,IN,IS,LESS_THAN,LESS_THAN_OR_EQUAL_TO,MAILTO,MILLISECONDS,MINUTES,MODULO,MONTH,NAND,NOR,NOT_EQUAL,NOT_IN,NOT_IS,NOT_MODULO,OR,READ,READONLY,READWRITE,READ_OR_WRITE_ONLY,ROOT_TRACE_PROPS,SECONDS,SFTP,STACK_TRACE_NEWLINE_INDENT,STRICKTLY_EQUAL,STRICKTLY_NOT_EQUAL,WRITE,WRITEONLY,YEAR,_IMAGES_FILTER,allowNegative,arguments,authentication,callback,data,days,debug,debug,debug,destructAfterCall,domain,duration,email,endDate,file,fps,hash,hashList,height,hours,href,isAbsolute,isInitialized,isRelative,isSecure,isSiteEnabled,maxImageSize,method,milliseconds,minutes,months,password,path,paused,paused,paused,port,progress,propertyProxy,protocol,query,ratio,rawData,redraw,scheme,seconds,startDate,time,timeElapsed,timeLeft,timeRunning,totalDays,totalHours,totalMilliseconds,totalMinutes,totalMonths,totalSeconds,totalWeeks,username,variables,weeks,width,years,addEnterFrameListener,addParameter,apply,browse,clearDefinitionCache,closure,compare,complete,convertCSSValue,countDefinition,create,create,create,decode,degreesToRadians,deleteVariable,destruct,destruct,destruct,destruct,destruct,destruct,destruct,destruct,disableSite,doTrace,enableSite,execute,formatMinutesSeconds,formatMinutesSecondsAlt,formatTime,format,getArray,getAsBitmap,getAsBitmapData,getAsDisplayObject,getAsMovieClip,getAsObject,getAsSound,getAsSprite,getDefinition,getDefinitionList,getFileExtension,getHash,getHashPart,getParameter,getValue,getVariable,hasApplicationDomain,hasConstant,hasDefinition,hasParameter,hasValue,hasVariable,init,load,normalize,pause,pause,pause,radiansToDegrees,registerApplicationDomain,removeEnterFrameListener,reset,resetGraph,restart,resume,resume,resume,rootTrace,rootTraceOnClick,secondsToString,setDomain,setHash,setHashPart,setParameter,setPort,setProtocol,setVariable,simpleDisplayTypeClone,stackTrace,start,start,stop,stop,stop,stringToSeconds,styleToObject,toString,toString,traceObject,unregisterApplicationDomain,update"><title>temple.utils.URL</title><script src="../../AC_OETags.js" type="text/javascript"></script></head><body><script language="javascript" type="text/javascript" src="../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../help.js"></script><script language="javascript" type="text/javascript" src="../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'URL - Temple Utils Module API Documentation';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Utils Module API Documentation - 3.0.0</td><td class="titleTableTopNav" align="right"><a href="../../package-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../class-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../all-index-A.html" onclick="loadClassListFrame('../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../index.html?temple/utils/URL.html&amp;temple/utils/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">URL</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("URL"); titleBar_setSubNav(true,true,false,false,false,false,false,false,true,true,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">temple.utils</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  URL</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">URL  <img src="../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr></table><p></p><p></p>
+	 Class for easy creating and manipulating URLs.
+	 
+	 Syntax:
+	 
+	 <code>protocol:(//)domain(|port)/path?query#hash</code>
+	 
+	 or
+	 
+	 <code>protocol:username:password(at)domain(|port)/path?query#hash</code>
+	 
+	           <p></p><p><a href="#includeExamplesSummary">View the examples</a></p><p><span class="classHeaderTableLabel">See also</span></p><div class="seeAlso"><a href="http://en.wikipedia.org/wiki/Uniform_resource_locator" target="mm_external">http://en.wikipedia.org/wiki/Uniform_resource_locator</a></div><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#authentication" class="signatureLink">authentication</a> : String<div class="summaryTableDescription">
+		 Authentication for FTP as {username}:{password}
+		 
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#domain" class="signatureLink">domain</a> : String<div class="summaryTableDescription">
+		 Domain of the URL
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#email" class="signatureLink">email</a> : String<div class="summaryTableDescription">
+		 The email address of a mailto link.</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#hash" class="signatureLink">hash</a> : String<div class="summaryTableDescription">
+		 The value after the hash (#)
+		 
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#hashList" class="signatureLink">hashList</a> : Vector.&lt;String&gt;<div class="summaryTableDescription">[read-only] 
+		 List of the elements of the hash (splitted by '/')
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#href" class="signatureLink">href</a> : String<div class="summaryTableDescription">
+		 The full string of the URL
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#isAbsolute" class="signatureLink">isAbsolute</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 A Boolean which indicates if this is an absolute URL
+		 
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#isRelative" class="signatureLink">isRelative</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 A Boolean which indicates if this is a relative URL
+		 
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#isSecure" class="signatureLink">isSecure</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 A Boolean which indicates if this is a secure URL.</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#password" class="signatureLink">password</a> : String<div class="summaryTableDescription"></div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#path" class="signatureLink">path</a> : String<div class="summaryTableDescription">
+		 The path of the URL
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#port" class="signatureLink">port</a> : uint<div class="summaryTableDescription">
+		 The port of the URL.</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#protocol" class="signatureLink">protocol</a> : String<div class="summaryTableDescription">
+		 The protocol of the URL
+		 
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#query" class="signatureLink">query</a> : String<div class="summaryTableDescription">
+		 Name/value paired string, which comes after the question sign ('?').</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#scheme" class="signatureLink">scheme</a> : String<div class="summaryTableDescription">
+		 The postfix for a URL, including protocol, : and (if needed) slashes.</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#username" class="signatureLink">username</a> : String<div class="summaryTableDescription"></div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#variables" class="signatureLink">variables</a> : URLVariables<div class="summaryTableDescription">
+		 The variables of the URL.</div></td><td class="summaryTableOwnerCol">URL</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#URL()" class="signatureLink">URL</a>(href:String = null)</div><div class="summaryTableDescription"></div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#deleteVariable()" class="signatureLink">deleteVariable</a>(name:String):void</div><div class="summaryTableDescription">
+		 Removes a variable from the URL
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getHashPart()" class="signatureLink">getHashPart</a>(index:uint):String</div><div class="summaryTableDescription">
+		 Returns a part of the hash
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getVariable()" class="signatureLink">getVariable</a>(name:String):*</div><div class="summaryTableDescription">
+		 Get a variable of the URL.</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#hasVariable()" class="signatureLink">hasVariable</a>(name:String):Boolean</div><div class="summaryTableDescription">
+		 Checks if the URL has a variable
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setDomain()" class="signatureLink">setDomain</a>(value:String):<a href="../../temple/utils/URL.html">URL</a></div><div class="summaryTableDescription">
+		 Set the domain of the URL
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setHash()" class="signatureLink">setHash</a>(value:String):<a href="../../temple/utils/URL.html">URL</a></div><div class="summaryTableDescription">
+		 Set the hash of the URL
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setHashPart()" class="signatureLink">setHashPart</a>(index:uint, value:String):<a href="../../temple/utils/URL.html">URL</a></div><div class="summaryTableDescription">
+		 Set one part of the hash
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setPort()" class="signatureLink">setPort</a>(value:uint):<a href="../../temple/utils/URL.html">URL</a></div><div class="summaryTableDescription">
+		 Set the port of the URL.</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setProtocol()" class="signatureLink">setProtocol</a>(value:String):<a href="../../temple/utils/URL.html">URL</a></div><div class="summaryTableDescription">
+		 Set the protocol of the URL
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setVariable()" class="signatureLink">setVariable</a>(name:String, value:*):<a href="../../temple/utils/URL.html">URL</a></div><div class="summaryTableDescription">
+		 Set a variable on the URL.</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#toString()" class="signatureLink">toString</a>():String</div><div class="summaryTableDescription"></div></td><td class="summaryTableOwnerCol">URL</td></tr></table></div><a name="constantSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Constants</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableConstant"><tr><th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#FILE" class="signatureLink">FILE</a> : String = file<div class="summaryTableDescription">[static] 
+		 Local file
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#FTP" class="signatureLink">FTP</a> : String = ftp<div class="summaryTableDescription">[static] 
+		 File Transfer Protocol
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#HTTP" class="signatureLink">HTTP</a> : String = http<div class="summaryTableDescription">[static] 
+		 Hypertext Transfer Protocol
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#HTTPS" class="signatureLink">HTTPS</a> : String = https<div class="summaryTableDescription">[static] 
+		 HTTP Secure
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#MAILTO" class="signatureLink">MAILTO</a> : String = mailto<div class="summaryTableDescription">[static] 
+		 URLs of this form are intended to be used to open the new message window of the user's email client when the
+		 URL is activated, with the address as defined by the URL in the "To:" field.</div></td><td class="summaryTableOwnerCol">URL</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#SFTP" class="signatureLink">SFTP</a> : String = sftp<div class="summaryTableDescription">[static] 
+		 Secure File Transfer Protocol 
+		 </div></td><td class="summaryTableOwnerCol">URL</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="authentication"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">authentication</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>authentication:String</code><p></p><p>
+		 Authentication for FTP as {username}:{password}
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get authentication():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set authentication(value:String):void</code><br/><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         thijs:AbCdE
+         </pre></div>
+		 </div></div><a name="propertyDetail"></a><a name="domain"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">domain</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>domain:String</code><p></p><p>
+		 Domain of the URL
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get domain():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set domain(value:String):void</code><br/></div><a name="propertyDetail"></a><a name="email"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">email</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>email:String</code><p></p><p>
+		 The email address of a mailto link.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get email():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set email(value:String):void</code><br/><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         mailto:thijs[at]mediamonks.com
+         </pre></div>
+		 </div></div><a name="propertyDetail"></a><a name="hash"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">hash</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>hash:String</code><p></p><p>
+		 The value after the hash (#)
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get hash():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set hash(value:String):void</code><br/><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         #hash
+         </pre></div>
+		 </div></div><a name="propertyDetail"></a><a name="hashList"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">hashList</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>hashList:Vector.&lt;String&gt;</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 List of the elements of the hash (splitted by '/')
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get hashList():Vector.&lt;String&gt;</code><br/></div><a name="propertyDetail"></a><a name="href"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">href</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>href:String</code><p></p><p>
+		 The full string of the URL
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get href():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set href(value:String):void</code><br/></div><a name="propertyDetail"></a><a name="isAbsolute"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isAbsolute</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>isAbsolute:Boolean</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 A Boolean which indicates if this is an absolute URL
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isAbsolute():Boolean</code><br/><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         http://www.domain.com/index.html
+         </pre></div>
+		 </div></div><a name="propertyDetail"></a><a name="isRelative"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isRelative</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>isRelative:Boolean</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 A Boolean which indicates if this is a relative URL
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isRelative():Boolean</code><br/><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         /index.html#value/1
+         </pre></div>
+		 </div></div><a name="propertyDetail"></a><a name="isSecure"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isSecure</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>isSecure:Boolean</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 A Boolean which indicates if this is a secure URL.
+		 
+		 Only https and sftp are secure.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isSecure():Boolean</code><br/></div><a name="propertyDetail"></a><a name="password"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">password</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>password:String</code><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get password():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set password(value:String):void</code><br/></div><a name="propertyDetail"></a><a name="path"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">path</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>path:String</code><p></p><p>
+		 The path of the URL
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get path():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set path(value:String):void</code><br/></div><a name="propertyDetail"></a><a name="port"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">port</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>port:uint</code><p></p><p>
+		 The port of the URL.
+		 
+		 0 means no port.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get port():uint</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set port(value:uint):void</code><br/></div><a name="propertyDetail"></a><a name="protocol"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">protocol</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protocol:String</code><p></p><p>
+		 The protocol of the URL
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get protocol():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set protocol(value:String):void</code><br/><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         http
+         ftp
+         https
+         mailto
+         </pre></div>
+		 </div></div><a name="propertyDetail"></a><a name="query"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">query</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>query:String</code><p></p><p>
+		 Name/value paired string, which comes after the question sign ('?').
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get query():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set query(value:String):void</code><br/><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         http://www.domain.com/index.html?lorem=ipsum&dolor=sit&amet=consectetur
+         </pre></div>
+		 </div></div><a name="propertyDetail"></a><a name="scheme"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">scheme</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>scheme:String</code><p></p><p>
+		 The postfix for a URL, including protocol, : and (if needed) slashes.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scheme():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scheme(value:String):void</code><br/><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         http://
+         ftp://
+         mailto:
+         </pre></div>
+		 </div></div><a name="propertyDetail"></a><a name="username"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">username</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>username:String</code><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get username():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set username(value:String):void</code><br/></div><a name="propertyDetail"></a><a name="variables"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">variables</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>variables:URLVariables</code><p></p><p>
+		 The variables of the URL.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get variables():URLVariables</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set variables(value:URLVariables):void</code><br/></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="URL()"></a><a name="URL(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">URL</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function URL(href:String = null)</code><br/><br/><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">href</span>:String</code> (default = <code>null</code>)<code></code></td></tr></table></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="deleteVariable()"></a><a name="deleteVariable(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">deleteVariable</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function deleteVariable(name:String):void</code><p></p><p>
+		 Removes a variable from the URL
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code></td></tr></table></p></div><a name="getHashPart()"></a><a name="getHashPart(uint)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getHashPart</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getHashPart(index:uint):String</code><p></p><p>
+		 Returns a part of the hash
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">index</span>:uint</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><a name="getVariable()"></a><a name="getVariable(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getVariable</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getVariable(name:String):*</code><p></p><p>
+		 Get a variable of the URL.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>*</code></td></tr></table></div><a name="hasVariable()"></a><a name="hasVariable(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">hasVariable</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function hasVariable(name:String):Boolean</code><p></p><p>
+		 Checks if the URL has a variable
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="setDomain()"></a><a name="setDomain(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setDomain</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setDomain(value:String):<a href="../../temple/utils/URL.html">URL</a></code><p></p><p>
+		 Set the domain of the URL
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">value</span>:String</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../temple/utils/URL.html">URL</a></code></td></tr></table></div><a name="setHash()"></a><a name="setHash(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setHash</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setHash(value:String):<a href="../../temple/utils/URL.html">URL</a></code><p></p><p>
+		 Set the hash of the URL
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">value</span>:String</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../temple/utils/URL.html">URL</a></code></td></tr></table></div><a name="setHashPart()"></a><a name="setHashPart(uint,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setHashPart</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setHashPart(index:uint, value:String):<a href="../../temple/utils/URL.html">URL</a></code><p></p><p>
+		 Set one part of the hash
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">index</span>:uint</code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">value</span>:String</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../temple/utils/URL.html">URL</a></code></td></tr></table></div><a name="setPort()"></a><a name="setPort(uint)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setPort</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setPort(value:uint):<a href="../../temple/utils/URL.html">URL</a></code><p></p><p>
+		 Set the port of the URL.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">value</span>:uint</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../temple/utils/URL.html">URL</a></code></td></tr></table></div><a name="setProtocol()"></a><a name="setProtocol(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setProtocol</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setProtocol(value:String):<a href="../../temple/utils/URL.html">URL</a></code><p></p><p>
+		 Set the protocol of the URL
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">value</span>:String</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../temple/utils/URL.html">URL</a></code></td></tr></table></div><a name="setVariable()"></a><a name="setVariable(String,any)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setVariable</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setVariable(name:String, value:*):<a href="../../temple/utils/URL.html">URL</a></code><p></p><p>
+		 Set a variable on the URL.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">value</span>:*</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../temple/utils/URL.html">URL</a></code></td></tr></table></div><a name="toString()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function toString():String</code><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><div class="detailSectionHeader">Constant Detail</div><a name="constantDetail"></a><a name="FILE"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FILE</td><td class="detailHeaderType">Constant</td></tr></table><div class="detailBody"><code>public static const FILE:String = file</code><p></p><p>
+		 Local file
+		 </p></div><a name="constantDetail"></a><a name="FTP"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FTP</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const FTP:String = ftp</code><p></p><p>
+		 File Transfer Protocol
+		 </p></div><a name="constantDetail"></a><a name="HTTP"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">HTTP</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const HTTP:String = http</code><p></p><p>
+		 Hypertext Transfer Protocol
+		 </p></div><a name="constantDetail"></a><a name="HTTPS"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">HTTPS</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const HTTPS:String = https</code><p></p><p>
+		 HTTP Secure
+		 </p></div><a name="constantDetail"></a><a name="MAILTO"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">MAILTO</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const MAILTO:String = mailto</code><p></p><p>
+		 URLs of this form are intended to be used to open the new message window of the user's email client when the
+		 URL is activated, with the address as defined by the URL in the "To:" field.
+		 </p></div><a name="constantDetail"></a><a name="SFTP"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">SFTP</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const SFTP:String = sftp</code><p></p><p>
+		 Secure File Transfer Protocol 
+		 </p></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="exampleHeader">URLExample.as</div><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/utils/doc/temple/utils/URL.html" target="">URL</a> class.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/utils/examples/temple/utils/URLExample.swf" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/utils/examples/temple/utils/URLExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.utils.URL;
+    import temple.utils.types.ObjectUtils;
+
+    import flash.text.TextField;
+
+    public class URLExample extends DocumentClassExample
+    {
+        private var _output:TextField;
+        
+        public function URLExample()
+        {
+            super("Temple - URLExample");
+            
+            this._output = new TextField();
+            this._output.width = this.stage.stageWidth;
+            this._output.height = this.stage.stageHeight;
+            this.addChild(this._output);
+            
+            var url:URL;
+            
+            this._output.appendText(new URL("http://www.domain.com?var1=test").setVariable("var1", "live").toString() + "\n");
+            
+            url = new URL();
+            url.protocol = URL.MAILTO;
+            url.domain = "mediamonks.com";
+            url.username = "thijs";
+            this._output.appendText(url + "\n");
+            
+            this._output.appendText(new URL("http://www.test.com").setVariable("var1", 1).setVariable("var2", 2) + "\n");
+
+            this._output.appendText(new URL("http://www.test.com").setProtocol(URL.HTTPS) + "\n");
+
+            this._output.appendText(new URL("index.html#foo").setHash("bar") + "\n");
+            
+            this.test("https://sub.domain.ext/dir/subdir/index.html?var1=yes&var2=no#hash");
+            
+            this.test("ftp://domain:8080/path?name=value#hash");
+
+            this.test("ftp://asmith@ftp.example.org");
+            
+            this.test("ftp://username:password@ftp.example.org:1234/dir");
+            
+            this.test("http://www.mediamonks.com?test=true&var1=yes");
+            
+            this.test("mailto:thijs@mediamonks.com");
+
+            this.test("index.html#test");
+            
+            this.test("#products/samples/123/some-description");
+            
+            this._output.appendText(new URL("#products/samples/123/some-description").getHashPart(1) + "\n");
+            
+            this._output.appendText(new URL().setHashPart(1, "part1").setHashPart(2, "part2") + "\n");
+        }
+
+        private function test(href:String):void
+        {
+            this._output.appendText(href + "\n");
+            
+            this._output.appendText(ObjectUtils.traceObject(new URL(href), 3, false) + "\n\n");
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "URLExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>by MediaMonks | http://www.mediamonks.com</footer><br/> </center></div></body></html><!--by MediaMonks | http://www.mediamonks.com<br/> -->
