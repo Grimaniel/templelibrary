@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Export" basedir="../../../../tools/ant" name="Temple-Common">
+
+	<property name="module" value="common" />
+	<property name="name" value="Temple Common Module" />
+	<property name="dependencies" value="core" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+	
+</project>
