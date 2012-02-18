@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../override.css" type="text/css"><meta name="keywords" content="Memory,temple.core.debug.Memory,ALL,CUSTOM,NONE,VERSION,VERSION,VERSION,debug,debug,registry,add,addToDebugManager,destructAll,getClassName,getId,getObject,getObjects,objectToString,registerObject,toString"><title>temple.core.debug.Memory</title></head><body><script language="javascript" type="text/javascript" src="../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'Memory - Temple Control Module API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Control Module API Documentation - 3.0.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/core/debug/Memory.html&amp;temple/core/debug/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Memory</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Memory"); titleBar_setSubNav(true,true,false,false,false,false,false,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">temple.core.debug</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public final   class  Memory</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">Memory  <img src="../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr></table><p></p><p></p>
+	 This class is used for Memory management. If <code>Temple.registerObjectsInMemory</code> is enabled, all Temple 
+	 objects are tracked in this class.
+	 
+	 <p>The main reason for sites and games slowing down are memory leaks: objects that aren't properly removed from
+	 memory when they are no longer needed. The Temple was build to prevent this, and offers tools to solve this
+	 problem.</p>
+	 
+	              <p>The Memory uses a weak reference for storing objects. Therefor this class is useful for tracking down
+	 possible memory leaks. If you have destructed an objects, but the object is still in Memory, you might have a 
+	 memory leak.</p>
+	 
+	              <p>You can use the <code>MemoryDebugger</code> for debugging your application for memory leaks.</p>
+	 
+	           <p></p><p><span class="classHeaderTableLabel">See also</span></p><div class="seeAlso"><a href="../../../temple/core/Temple.html#registerObjectsInMemory" target="">temple.core.Temple.registerObjectsInMemory</a><br/>temple.core.debug.MemoryDebugger</div><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#debug" class="signatureLink">debug</a> : Boolean<div class="summaryTableDescription">[static] 
+		 If set to true, the Memory logs a message everytime an object is registered.</div></td><td class="summaryTableOwnerCol">Memory</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#registerObject()" class="signatureLink">registerObject</a>(object:Object, forceRegister:Boolean = false):void</div><div class="summaryTableDescription">[static] 
+		 Registers an object with a weak reference to track the object
+		 This only works when 'Temple.registerObjectsInMemory' is set to true or
+		 the forceRegister is set to true
+		 </div></td><td class="summaryTableOwnerCol">Memory</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="debug"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">debug</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>debug:Boolean</code><p></p><p>
+		 If set to true, the Memory logs a message everytime an object is registered.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get debug():Boolean</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set debug(value:Boolean):void</code><br/></div><a name="propertyDetail"></a><a name="registry"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">registry</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>registry:Dictionary</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 Reference to the registry. Only use this for debug purposes.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;templelibrary static function get registry():Dictionary</code><br/></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="registerObject()"></a><a name="registerObject(Object,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">registerObject</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public static function registerObject(object:Object, forceRegister:Boolean = false):void</code><p></p><p>
+		 Registers an object with a weak reference to track the object
+		 This only works when 'Temple.registerObjectsInMemory' is set to true or
+		 the forceRegister is set to true
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">object</span>:Object</code> &mdash; The object to register in the memory
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceRegister</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Force the registration of an object if 'Temple.registerObjectsInMemory' is set to false
+		 </td></tr></table></p><br/><span class="label"> Example </span><br/><div class="detailBody">
+		 <div class="listing" version="3.0"><pre>
+         // in the constructor of a class
+         public function TestClass()
+         {
+                 Memory.registerObject(this);
+         }
+         </pre></div> 
+		 </div></div><div class="detailSectionHeader">Constant Detail</div><a name="constantDetail"></a><a name="VERSION"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">VERSION</td><td class="detailHeaderType">Constant</td></tr></table><div class="detailBody"><code>templelibrary static const VERSION:String = 3.0.0</code><p></p><p>
+		 The current version of the Temple Library
+		 </p></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>by MediaMonks | http://www.mediamonks.com</footer><br/> </center></div></body></html><!--by MediaMonks | http://www.mediamonks.com<br/> -->
