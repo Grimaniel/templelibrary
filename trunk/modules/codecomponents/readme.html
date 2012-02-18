@@ -1,0 +1,168 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="./doc/style.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="./doc/print.css" type="text/css" media="print">
+		<link rel="stylesheet" href="./doc/override.css" type="text/css">
+		<title>Temple CodeComponents Module</title>
+		<style type="text/css">
+			.example {
+				padding-top: 14px;
+			}
+			#flashcontent {
+				width: 780px;
+				height: 480px;
+			}
+		
+		</style>
+		<script type="text/javascript" src="./doc/swfobject.js"></script>
+		<script type="text/javascript">
+			swfobject.embedSWF("./examples/temple/codecomponents/CodeComponentsExample.swf", "flashcontent", 780, 480,"10.0.43", null, null, {quality: "high", wmode: "window", bgcolor: "#BBBBBB"},{id:"flashcontent", name:"flashcontent"});
+		</script>
+	</head>
+	<body>
+		<table class="titleTable" id="titleTable" style="" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr>
+					<td class="titleTableTitle" align="left">Temple Library for ActionScript 3.0 by MediaMonks</td>
+					<td class="titleTableTopNav" align="right">
+						<a href="http://code.google.com/p/templelibrary/">Project Home</a>&nbsp;|&nbsp;
+						<a href="./doc/index.html">API Documentation</a>&nbsp;|&nbsp;
+						<a href="http://code.google.com/p/templelibrary/source/checkout">Source</a>&nbsp;|&nbsp;
+						<a href="http://code.google.com/p/templelibrary/downloads/list">Downloads</a>
+					</td>
+					<td class="titleTableLogo" align="right" rowspan="3">
+						<img class="logoImage" title=" Temple Logo " alt=" Temple Library " src="./doc/images/logo.jpg" />
+					</td>
+				</tr>
+				<tr class="titleTableRow2">
+					<td class="titleTableSubTitle" id="subTitle" align="left" colspan="2"><!-- NAME -->Temple CodeComponents Module<!-- /NAME --></td>
+				</tr>
+				<tr class="titleTableRow3">
+					<td colspan="2">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="MainContent">
+
+<h1>About</h1>
+
+<p>This is version <!-- VERSION -->3.0.0<!-- /VERSION --> of the <!-- NAME -->Temple CodeComponents Module<!-- /NAME -->, built on
+<!-- DATE -->2012-02-17<!-- /DATE -->. Get the latest version from:
+<a href="http://code.google.com/p/templelibrary/">http://code.google.com/p/templelibrary/</a>. You can get the files from
+<a href="http://code.google.com/p/templelibrary/source/checkout">SVN</a> or you could download it as a zip from the
+<a href="http://code.google.com/p/templelibrary/downloads/list">downloads page</a>.</p>
+
+<p>CodeComponents are 'code-only' UI Components which are full-featured, lightweight and easy to use. The CodeComponents
+are special design for quick prototype development. The CodeComponents extends the regular Temple components and have
+the same features as their super classes. Since they extend these Temple classes they can be used in combination with
+other Temple objects and can (later in the project) easily be replaced for other objects. This makes them very useful
+for quickly development.</p>
+
+<p>The CodeComponents can be used with Flash and Flex and are not dependent on any special library or compile setting,
+except for some other Temple module (see <a href="#dependencies">Dependencies</a>). All CodeComponents have a 
+'<code>Code</code>' prefix in their name.</p>
+
+<h1>Example</h1>
+<p>Check out this example of several CodeComponents:</p>
+
+<div id="flashcontent"></div>
+<p><a href="./examples/temple/codecomponents/CodeComponentsExample.as">View the source of this example</a>.</p>
+
+<h1>Creation</h1>
+
+<p>Create a CodeComponent is as easy as:</p>
+<div class="listing" >
+<pre>
+// Create a code-only button
+this.addChild(new CodeButton(14, 14, 10, 10));
+</pre>
+</div>
+<div class="listing" >
+<pre>
+// Create a code-only button with a label
+this.add(new CodeLabelButton("TEST"), 10, 10);
+</pre>
+</div>
+<div class="listing" >
+<pre>
+// Create a code-only ComboBox
+var comboBox:CodeComboBox = new CodeComboBox();
+this.addChild(comboBox);
+comboBox.x = 20;
+comboBox.y = 20;
+// add some items to the ComboBox
+comboBox.addItems(["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada"]);
+</pre>
+</div>
+<div class="listing" >
+<pre>
+// Create a code-only RadioGroup with buttons
+var group:RadioGroup = new RadioGroup();
+group.add(CodeRadioButton(this.add(new CodeRadioButton("This is option 1", 1), 10, 10)));
+group.add(CodeRadioButton(this.add(new CodeRadioButton("This is option 2", 2), 10, 30)));
+group.add(CodeRadioButton(this.add(new CodeRadioButton("This is option 3", 3), 10, 50)));
+group.add(CodeRadioButton(this.add(new CodeRadioButton("This is option 4", 4), 10, 70)));
+</pre>
+</div>
+
+<p>Check out the <a href="examples/index.html">examples</a> for more code.</p>
+
+<h1>Skinning</h1>
+<p>The CodeComponents can be skinned by changing the properties of the
+<a href="./doc/temple/codecomponents/style/CodeStyle.html">CodeStyle</a> class. This must be done <em>before</em> you 
+create the components.</p>
+
+<h1>Content</h1>
+<p>This module contains the following folders:</p>
+
+<dl>
+	<dt><a href="./bin">/bin</a></dt>
+	<dd>Contains the SWC of this module.</dd>
+	<dt><a href="./doc">/doc</a></dt>
+	<dd>Contains the <a href="./doc/index.html">documentation of the CodeComponents module</a>.</dd>
+	<dt><a href="./examples">/examples</a></dt>
+	<dd>Contains some <a href="examples/index.html">examples of the CodeComponents module</a>.</dd>
+	<dt><a href="./lib">/lib</a></dt>
+	<dd>Contains the SWC files of other Temple modules which are needed for this module.</dd>
+	<dt><a href="./source">/source</a></dt>
+	<dd>Contains the source (.as) files of this module.</dd>
+	<dt><a href="./tools">/tools</a></dt>
+	<dd>Contains ANT scripts which are used to generate docs, examples, swc etc... <em><br/>
+	(This folder is not available in the zip file.)</em></dd>
+</dl>
+
+<h1>Dependencies</h1>
+
+<p>This module is dependent on the <a href="../core/readme.html">core</a>, <a href="../common/readme.html">common</a>,
+<a href="../utils/readme.html">utils</a>, <a href="../data/readme.html">data</a>, <a href="../ui/readme.html">UI</a>,
+<a href="../ui/readme.html">UI Extended</a> and <a href="../tweenlite/readme.html">TweenLite</a> modules. The SWCs of the these
+modules can be found in the <code><a href="./lib">/lib</a></code> folder.</p>
+
+<h1>Getting started</h1>
+<p></p>
+<h3>Adding the CodeComponents module to your project</h3>
+
+<p>To add the CodeComponents module to you project you could use the SWC file or the AS files. The SWC file can be found
+in the <code><a href="./bin/">/bin</a></code> folder. If you want to use the SWC file you need to add the SWC file to 
+the class path of your project. You also need to add the dependent SWC's to the class path of your project. These SWCs
+<p>If you want to use the AS files you just need to copy the content of the <code><a href="./source/">/source</a></code>
+folder to the source folder of your project. Or you could add the <code><a href="./source/">/source</a></code> folder to
+the class patch of your project.<br/><strong>NOTE:</strong> Don't copy folders from an SVN check out, since this can
+cause SVN problems. It would be better to do an SVN export to your own folder.
+</p>
+
+<h1>More Examples</h1>
+
+<p>Check out the <a href="./examples">/examples</a> folder for all examples. This folder also contains a
+<a href="./examples/index.html">list of all available examples</a>.</p>
+
+		
+		
+		<center class="copyright">
+			<footer>by MediaMonks | http://www.mediamonks.com</footer>
+			<br/>
+		</center>
+		</div>
+	</body>
+</html><!--by MediaMonks | http://www.mediamonks.com<br/> -->

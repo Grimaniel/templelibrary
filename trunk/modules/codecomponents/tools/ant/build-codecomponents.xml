@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Export" basedir="../../../../tools/ant" name="Temple-CodeComponents">
+
+	<property name="module" value="codecomponents" />
+	<property name="name" value="Temple CodeComponents Module" />
+	<property name="dependencies" value="core,common,utils,data,ui,ui-extended,tweenlite" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+	
+</project>
