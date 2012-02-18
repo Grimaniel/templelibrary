@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Export" basedir="../../../../tools/ant" name="Temple-Camera">
+
+	<property name="module" value="camera" />
+	<property name="name" value="Temple Camera Module" />
+	<property name="dependencies" value="core,common,utils" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+	
+</project>
