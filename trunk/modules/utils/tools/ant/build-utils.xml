@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Export" basedir="../../../../tools/ant" name="Temple-Utils">
+
+	<property name="module" value="utils" />
+	<property name="name" value="Temple Utils Module" />
+	<property name="dependencies" value="core,common" />
+	<property name="extended-dependencies" value="data,tweenlite" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+	
+</project>

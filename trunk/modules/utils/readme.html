@@ -1,0 +1,114 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="./doc/style.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="./doc/print.css" type="text/css" media="print">
+		<link rel="stylesheet" href="./doc/override.css" type="text/css">
+		<title>Temple Utils Module</title>
+		<style type="text/css">
+			.example {
+				padding-top: 14px;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<table class="titleTable" id="titleTable" style="" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr>
+					<td class="titleTableTitle" align="left">Temple Library for ActionScript 3.0 by MediaMonks</td>
+					<td class="titleTableTopNav" align="right">
+						<a href="http://code.google.com/p/templelibrary/">Project Home</a>&nbsp;|&nbsp;
+						<a href="./doc/index.html">API Documentation</a>&nbsp;|&nbsp;
+						<a href="http://code.google.com/p/templelibrary/source/checkout">Source</a>&nbsp;|&nbsp;
+						<a href="http://code.google.com/p/templelibrary/downloads/list">Downloads</a>
+					</td>
+					<td class="titleTableLogo" align="right" rowspan="3">
+						<img class="logoImage" title=" Temple Logo " alt=" Temple Library " src="./doc/images/logo.jpg" />
+					</td>
+				</tr>
+				<tr class="titleTableRow2">
+					<td class="titleTableSubTitle" id="subTitle" align="left" colspan="2">Utils Module</td>
+				</tr>
+				<tr class="titleTableRow3">
+					<td colspan="2">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="MainContent">
+
+<h1>About</h1>
+
+<p>This is version <!-- VERSION -->3.0.0<!-- /VERSION --> of the <!-- NAME -->Temple Utils Module<!-- /NAME -->, built on
+<!-- DATE -->2012-02-17<!-- /DATE -->. Get the latest version from:
+<a href="http://code.google.com/p/templelibrary/">http://code.google.com/p/templelibrary/</a>. You can get the files from
+<a href="http://code.google.com/p/templelibrary/source/checkout">SVN</a> or you could download it as a zip from the
+<a href="http://code.google.com/p/templelibrary/downloads/list">downloads page</a>.</p>
+
+<p>This module contains some handy utility classes which can be used out of the box and are used in other Temple modules.
+Static utility methods are grouped together in a single file based on the type of object they apply to. All these files
+with static utility method for a single object are grouped together in the sub package
+<a href="./doc/temple/utils/types/package-detail.html">'temple.utils.types'</a>. So all utility methods for <code>Arrays</code>
+can be found in the <a href="./doc/temple/utils/types/ArrayUtils.html">ArrayUtils</a> class, utility methods for
+<code>DisplayObjects</code> can be found in the <a href="./doc/temple/utils/types/DisplayObjectUtils.html">DisplayObjectUtils</a>
+class, etc.</p>
+
+<h1>Content</h1>
+<p>This module contains the following folders:</p>
+
+<dl>
+	<dt><a href="./bin">/bin</a></dt>
+	<dd>Contains the SWC of this module.</dd>
+	<dt><a href="./doc">/doc</a></dt>
+	<dd>Contains the <a href="./doc/index.html">documentation of the utils module</a>.</dd>
+	<dt><a href="./examples">/examples</a></dt>
+	<dd>Contains some <a href="examples/index.html">examples of the utils module</a>.</dd>
+	<dt><a href="./lib">/lib</a></dt>
+	<dd>Contains the SWC files of other Temple modules which are needed for this module.</dd>
+	<dt><a href="./source">/source</a></dt>
+	<dd>Contains the source (.as) files of this module.</dd>
+	<dt><a href="./extended">/extended</a></dt>
+	<dd>Contains the source (.as) files of some additional classes of this module. These additional class have more
+	dependencies to other modules which are not supplied with this module.</dd>
+	<dt><a href="./tools">/tools</a></dt>
+	<dd>Contains ANT scripts which are used to generate docs, examples, swc etc... <br/>
+	<em>(This folder is not available in the zip file.)</em></dd>
+</dl>
+
+<h1>Dependencies</h1>
+
+<p>This module is dependent on the <a href="../core/readme.html">core module</a> and the
+<a href="../common/readme.html">common module</a>. The SWCs of the <code>core</code> and <code>common</code> modules can
+be found in the <code><a href="./lib">/lib</a></code> folder.</p>
+
+<p>Classes inside the <a href="./extended">/extended</a> folder do have more dependencies to other Temple modules. The
+SWC files of these modules are not supplied with this module. If you want to use these additional classes you will need
+these other modules. The modules you need varies per class. Check the <code>imports</code> of the class to define the
+modules you need.</p>
+
+<h1>Getting started</h1>
+<p></p>
+<h3>Adding the common module to your project</h3>
+
+<p>To add the common module to you project you could use the SWC file or the AS files. The SWC file can be found in the
+<code><a href="./bin/">/bin</a></code> folder. If you want to use the SWC file you need to add the SWC file to the class
+path of your project. You also need to add the SWC of the <code>core</code> and <code>common</code> to the class path of
+your project. These SWCs can be found in the <code><a href="./lib">/lib</a></code> folder.</p>
+<p>If you want to use the AS files you just need to copy the content of the <code><a href="./source/">/source</a></code>
+folder to the source folder of your project. Or you could add the <code><a href="./source/">/source</a></code> folder to
+the class patch of your project.<br/><strong>NOTE:</strong> Don't copy folders from an SVN check out, since this can
+cause SVN problems. It would be better to do an SVN export to your own folder.
+</p>
+
+<h1>Examples</h1>
+
+<p>Check out the <a href="./examples">/examples</a> folder for all examples. This folder also contains a
+<a href="./examples/index.html">list of all available examples</a>.</p>
+
+		<center class="copyright">
+			<footer>by MediaMonks | http://www.mediamonks.com</footer>
+			<br/>
+		</center>
+		</div>
+	</body>
+</html><!--by MediaMonks | http://www.mediamonks.com<br/> -->
