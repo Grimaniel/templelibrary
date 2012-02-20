@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<!-- Path to project -->
+	<property name="root.dir" value="D:/Projects/Temple/GoogleCode/templelibrary" />
+
+	<!-- Eclipse project name -->
+	<property name="project" value="Temple-GoogleCode" />
+
+	<!-- Current Temple version -->
+	<property name="version" value="3.0.0" />
+	
+</project>

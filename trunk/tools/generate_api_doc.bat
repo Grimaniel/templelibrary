@@ -1,2 +1,0 @@
-asdoc -source-path ../lib -doc-sources ../lib/temple -output ../doc -main-title "Temple API Documentation" -window-title "Temple API Documentation" -templates-path ./templates -package temple "Temple Flash Library" -package temple.core "Temple's extensions for most native Flash classes" -package temple.ui "Temple's User Interface classes" -package temple.debug "Classes for debugging" -package temple.debug.errors "Error classes of the Temple"
-PAUSE

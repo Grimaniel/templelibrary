@@ -1,90 +1,244 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="Export" basedir="." name="Temple-GoogleCode">
-
-	<property name="flexdsk.path" value="C:\Program Files (x86)\Adobe\Adobe Flash Builder 4.5\sdks\4.5.0" />
-	<property name="src.path" value="D:\Projects\Temple\GoogleCode\templelibrary\lib" />
-	<property name="dst.path" value="../../bin" />
-	<property name="root.path" value="../.." />
-	<property name="version" value="2.9.2" />
-
+<project default="Export" name="Temple-Build">
 	
+	<import file="build-properties.xml" />
+	<import file="temple-properties.xml"/>
+	
+	<!-- 
+	<property name="skip-asdoc" value="true" />
+	-->
+	
+	<condition property="base.dir" value="${root.dir}/modules/${module}" else="${root.dir}">
+		<isset property="module"/>
+	</condition>
+	
+	<property name="name" value="Temple" />
+	
+	<property name="source.dir" value="${base.dir}/source" />
+	<property name="bin.dir" value="${base.dir}/bin" />
+	<property name="doc.dir" value="${base.dir}/doc" />
+	<property name="lib.dir" value="${base.dir}/lib" />
+	<property name="zip.dir" value="${root.dir}/../zips" />
+	<property name="examples.dir" value="${base.dir}/examples" />
+	<property name="jsfl-output" value="${root.dir}/tools/jsfl/output.txt" />
+
+	<condition property="zip" value="${zip.dir}/temple-${module}_${version}.zip" else="${zip.dir}/temple_${version}.zip">
+		 <isset property="module"/>
+	</condition>
+
+	<condition property="swc" value="temple-${module}_${version}.swc" else="temple_${version}.swc">
+		 <isset property="module"/>
+	</condition>
+
+	<condition property="swc-extended" value="temple-${module}-extended_${version}.swc" else="temple-extended_${version}.swc">
+		 <isset property="module"/>
+	</condition>
+	
+	<condition property="extended.dir" value="${base.dir}/extended">
+		<available file="${base.dir}/extended" type="dir"/>
+	</condition>
+
+	<tstamp><format property="date" pattern="yyyy-MM-dd" locale="nl" /></tstamp>
+	
+	<import file="build-example.xml" />
+	
+	<taskdef resource="flexTasks.tasks" classpath="${root.dir}/tools/jar/flexTasks.jar" />
+
 	<target name="Export">
 		<antcall target="Check copyrights" />
-		<antcall target="Check license" />
+		<antcall target="Check copyrights extended" />
 		<antcall target="Check author" />
-		<antcall target="Update Temple properties" />
+		<antcall target="Check author extended" />
+		<antcall target="Check see tag" />
+		<antcall target="Update Readme" />
+		<antcall target="Copy dependencies" />
 		<antcall target="Delete old SWC" />
-		<antcall target="Create SWC" />
 		<antcall target="Generate ASDoc" />
+		<antcall target="Create SWC" />
+		<antcall target="Update SWC with ASDoc" />
+		<antcall target="Delete ASDoc tempdata" />
+		<antcall target="Create Extended SWC" />
+		<antcall target="Check Examples" />
+		<antcall target="Update Example URLS" />
+		<antcall target="Build Examples" />
+		<antcall target="Generate Example Index" />
 		<antcall target="Create Zip" />
 		<echo>Export successful</echo>
 	</target>
 	
 	<target name="Delete old SWC" >
 		<delete>
-			<fileset dir="${dst.path}" includes="**/*.swc" />
+			<fileset dir="${bin.dir}" includes="**/*.swc" />
 		</delete>
 		<echo>Old SWC deleted</echo>
 	</target>
 
 	<target name="Create SWC">
-		<fdt.launch.library debug="false" projectname="Temple-GoogleCode" autoaddclasspath="false" target="${dst.path}/Temple_${version}.swc" compilerarguments="-include-sources ${src.path}" />
+		<compc output="${bin.dir}/${swc}" include-classes="" target-player="10" failonerror="true">
+			<include-sources dir="${source.dir}" includes="*" append="true"/>
+			<compiler.external-library-path dir="${root.dir}/lib">
+			    <include name="*" />
+			</compiler.external-library-path >
+			<compiler.external-library-path dir="${lib.dir}">
+			    <include name="*" />
+			</compiler.external-library-path >
+		</compc>
+		<echo>SWC created</echo>
+	</target>
+	
+	<target name="Create Extended SWC" if="extended.dir" unless="skip-extended-swc">
+		<antcall target="Copy Extended dependencies" />
+		<compc output="${bin.dir}/${swc-extended}" include-classes="" target-player="10" failonerror="true">
+			<include-sources dir="${extended.dir}" includes="*" append="true"/>
+			<compiler.external-library-path dir="${bin.dir}">
+			    <include name="${swc}" />
+			</compiler.external-library-path >
+			<compiler.external-library-path dir="${root.dir}/lib">
+			    <include name="*" />
+			</compiler.external-library-path >
+			<compiler.external-library-path dir="${lib.dir}">
+			    <include name="*" />
+			</compiler.external-library-path >
+		</compc>
+		<antcall target="Delete Extended dependencies" />
 		<echo>SWC created</echo>
 	</target>
 
-	<!--target name="Create Greensock SWC">
-		<fdt.launch.library debug="false" projectname="Temple-GoogleCode" autoaddclasspath="false" target="${src.path}/Greensock.swc" compilerarguments="-include-sources ${src.path}\..\external" />
-	</target-->
+	<target name="Generate ASDoc" unless="skip-asdoc">
+		<delete>
+			<fileset dir="${doc.dir}" includes="**/*.*"/>
+		</delete>
+		 
+		<script language="javascript">
+			<![CDATA[
+			
+			var sourcepath = [];
+			
+			if (project.getProperty("dependencies"))
+			{
+				var modules = project.getProperty("dependencies").split(",");
+				
+				if (project.getProperty("extended.dir"))
+				{
+					sourcepath.push("-source-path " + project.getProperty("extended.dir"));
+					if (project.getProperty("extended-dependencies"))
+					{
+						modules = modules.concat(project.getProperty("extended-dependencies").split(","));
+					}
+				}
+				for each (var module in modules)
+				{
+					if (module.length())
+					{
+						if (module.indexOf("extended") != -1)
+						{
+							sourcepath.push("-source-path ../../modules/" + module.replace("-", "/"));
+						}
+						else
+						{
+							sourcepath.push("-source-path ../../modules/" + module + "/source");
+						}
+					}
+				}
+			}
+			
+			var prop = project.createTask("property");
+			prop.setName("sourcepath");
+			prop.setValue(sourcepath.length ? sourcepath.join(" ") : "");
+			prop.perform();
 
-	<target name="Generate ASDoc">
-		<property name="asdoc.path" value="${flexdsk.path}/bin/asdoc.exe" />
-		<exec executable="${asdoc.path}">
-			<arg line="-source-path ../../lib" />
-			<arg line="-doc-sources ../../lib/temple" />
-			<arg line="-output ../../doc" />
-			<arg line="-main-title 'Temple API Documentation - version ${version}'" />
-			<arg line="-window-title 'Temple API Documentation'" />
-			<arg line="-templates-path ../templates" />
-			<arg line="-examples-path ../../examples" />
+	    	]]>
+		</script>
+		
+		<condition property="docsources" value="-doc-sources ${source.dir} -doc-sources ${extended.dir}" else="-doc-sources ${source.dir}">
+			 <isset property="extended.dir"/>
+		</condition>
+		
+		<exec executable="${asdoc}" failonerror="true">
+			<arg line="-source-path ${source.dir}" />
+			<arg line="${sourcepath}" />
+			<arg line="${docsources}" />
+			<arg line="-output ${doc.dir}" />
+			<arg line="-main-title '${name} API Documentation - ${version}'" />
+			<arg line="-window-title '${name} API Documentation'" />
+			<arg line="-templates-path ${root.dir}/tools/templates" />
+			<arg line="-examples-path ${examples.dir}" />
 			<arg line="-footer 'by MediaMonks | http://www.mediamonks.com'" />
-			<!--
-			<arg line="-package temple 'Temple Flash Library'"/>
-			<arg line="-package temple.core 'Temple extensions for most native Flash classes'"/>
-			<arg line="-package temple.ui 'Temple User Interface classes'"/>
-			<arg line="-package temple.debug 'Classes for debugging'"/>
-			<arg line="-package temple.debug.errors 'Error classes of the Temple'"/>
-			-->
+			<arg line="-keep-xml" />
+			
 		</exec>
 		<echo>ASDoc generated</echo>
-
+	</target>
+	
+	<target name="Update SWC with ASDoc" unless="skip-asdoc">
+		<zip destfile="${bin.dir}/${swc}" update="true">
+		    <zipfileset dir="${doc.dir}/tempdita" prefix="docs">
+			    <include name="**/*.xml"/>
+			    <include name="**/*.dita"/>
+				<exclude name="ASDoc_Config.xml"/>
+				<exclude name="overviews.xml"/>
+		    </zipfileset>
+		</zip>
+		<echo>SWC updated with ASDoc</echo>
+	</target>
+	
+	<target name="Delete ASDoc tempdata" unless="skip-asdoc">
+		<delete includeemptydirs="true">
+			<fileset dir="${doc.dir}/tempdita" />
+			<fileset file="${doc.dir}/toplevel.xml" />
+		</delete>
+		<echo>Temporary ASDoc data deleted</echo>
 	</target>
 
 	<target name="Create Zip">
-		<zip destfile="${root.path}/templelibrary_${version}.zip">
-			<zipfileset dir="${root.path}/bin" prefix="bin" />
-			<zipfileset dir="${root.path}/doc" prefix="doc" />
-			<zipfileset dir="${root.path}/examples" prefix="examples" />
-			<zipfileset dir="${root.path}/lib" prefix="lib" />
+		<antcall target="Create Extended Zip" />
+		<antcall target="Create Small Zip" />
+	</target>
+	<target name="Create Extended Zip" if="extended">
+		<zip destfile="${zip}">
+			<zipfileset dir="${bin.dir}" prefix="bin" />
+			<zipfileset dir="${doc.dir}" prefix="doc" />
+			<zipfileset dir="${source.dir}" prefix="source" />
+			<zipfileset dir="${extended.dir}" prefix="extended" />
+			<zipfileset dir="${examples.dir}" prefix="examples" />
+			<zipfileset dir="${lib.dir}" prefix="lib" />
+			<zipfileset file="${base.dir}/readme.html" />
+		</zip>
+		<echo>Zip file created</echo>
+	</target>
+	<target name="Create Small Zip" unless="extended">
+		<zip destfile="${zip}">
+			<zipfileset dir="${bin.dir}" prefix="bin" />
+			<zipfileset dir="${doc.dir}" prefix="doc" />
+			<zipfileset dir="${source.dir}" prefix="source" />
+			<zipfileset dir="${examples.dir}" prefix="examples" />
+			<zipfileset dir="${lib.dir}" prefix="lib" />
+			<zipfileset file="${base.dir}/readme.html" />
 		</zip>
 		<echo>Zip file created</echo>
 	</target>
 
-	<target name="Update Temple properties">
-		<!-- Version -->
-		<replaceregexp file="${src.path}/temple/Temple.as" match='VERSION:String = "[0-9].[0-9].[0-9]"' replace='VERSION:String = "${version}"' flags="" byline="true" />
-
-		<!-- Date -->
-		<tstamp>
-			<format property="date" pattern="yyyy-MM-dd" locale="nl" />
-		</tstamp>
-		<replaceregexp file="${src.path}/temple/Temple.as" match='DATE:String = "[0-9]{4}-[0-9]{2}-[0-9]{2}"' replace='DATE:String = "${date}"' flags="" byline="true" />
-		<echo>Temple properties updated: version ${version}, date ${date}</echo>
-	</target>
-
-	<target name="Check copyrights">
-		<fileset dir="${src.path}/temple" id="wrongfileset">
+	<target name="Check copyrights" unless="skip-copyrights">
+		<fileset dir="${source.dir}/temple" id="wrongfileset">
 			<not>
-				<containsregexp expression="2010 MediaMonks B.V." />
+				<containsregexp expression="2012 MediaMonks B.V." />
+			</not>
+		</fileset>
+		<property name="wrongfiles" refid="wrongfileset" />
+		<fail message="The following files does not contain copyrights: ${wrongfiles}">
+			<condition>
+				<not>
+					<resourcecount count="0" refid="wrongfileset" />
+				</not>
+			</condition>
+		</fail>
+		<echo>Copyrights checked</echo>
+	</target>
+	
+	<target name="Check copyrights extended" unless="skip-copyrights" if="extended.dir">
+		<fileset dir="${extended.dir}/temple" id="wrongfileset">
+			<not>
+				<containsregexp expression="2012 MediaMonks B.V." />
 			</not>
 		</fileset>
 		<property name="wrongfiles" refid="wrongfileset" />
@@ -98,25 +252,8 @@
 		<echo>Copyrights checked</echo>
 	</target>
 
-	<target name="Check license">
-		<fileset dir="${src.path}/temple" id="wrongfileset">
-			<not>
-				<containsregexp expression="This license does not apply to 3rd party classes inside the Temple" />
-			</not>
-		</fileset>
-		<property name="wrongfiles" refid="wrongfileset" />
-		<fail message="The following files does not contain correct license: ${wrongfiles}">
-			<condition>
-				<not>
-					<resourcecount count="0" refid="wrongfileset" />
-				</not>
-			</condition>
-		</fail>
-		<echo>License checked</echo>
-	</target>
-
-	<target name="Check author">
-		<fileset dir="${src.path}/temple" id="wrongfileset">
+	<target name="Check author" unless="skip-author">
+		<fileset dir="${source.dir}/temple" id="wrongfileset" includes="**/*.as">
 			<not>
 				<containsregexp expression="@author" />
 			</not>
@@ -130,6 +267,528 @@
 			</condition>
 		</fail>
 		<echo>Author checked</echo>
+	</target>
+
+	<target name="Check author extended" unless="skip-author" if="extended.dir">
+		<fileset dir="${extended.dir}/temple" id="wrongfileset" includes="**/*.as">
+			<not>
+				<containsregexp expression="@author" />
+			</not>
+		</fileset>
+		<property name="wrongfiles" refid="wrongfileset" />
+		<fail message="The following files does not contain an author: ${wrongfiles}">
+			<condition>
+				<not>
+					<resourcecount count="0" refid="wrongfileset" />
+				</not>
+			</condition>
+		</fail>
+		<echo>Author checked</echo>
+	</target>
+	
+	<target name="Check see tag">
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.net);
+			importPackage(java.io);
+			importPackage(java.lang);
+			importPackage(java.util);
+			
+			var source = project.getProperty("source.dir")
+			var extended = project.getProperty("extended.dir")
+			var root  = project.getProperty("root.dir")
+			
+			var sourceFileset = project.createDataType("fileset");
+			sourceFileset.setDir(new File(source));
+			sourceFileset.setIncludes("**/*.*");
+			
+			// Get the files
+			var sourceFiles = sourceFileset.getDirectoryScanner(project).getIncludedFiles();
+
+			var regExp = /(@see )[\w.]+/;
+			var fail;
+
+			// iterate over that array
+			for (i=0; i< sourceFiles.length; i++)
+			{
+				var fileName = sourceFiles[i];
+			
+				var input = new BufferedReader(new FileReader(source + "/" + fileName));
+				
+				var lineNum = 0;
+				while ((line = input.readLine()) !== null)
+				{
+					lineNum++
+					// convert to a "real" string :-S
+					line = "" + line;
+					
+					if (regExp.test(line))
+					{
+						var see = line.match(regExp)[0].substring(5);
+			
+						if (see.substring(0, 6) == "temple")
+						{
+							var file = see.substr(see.lastIndexOf(".") + 1);
+			
+							// If the file is UPPERCASE, it's a static. So chop it off
+							if (file == file.toUpperCase())
+							{
+								see = see.substr(0, see.lastIndexOf("."));
+							}
+							var seeFile = "/" + see.replace(/\./g, "/");
+				
+							if (line.indexOf(";") != -1)
+							{
+								var echo = project.createTask("echo");
+								echo.setMessage("ERROR in file '" + fileName + "', line: " + lineNum + "\n@see tag '" + see + "' is not correct, don't use \";\"\n\n");
+								echo.perform();
+				
+								fail = true; 
+							}
+							else if (!(new File(source + seeFile + ".as").exists()) && !(new File(extended + seeFile + ".as").exists()) && !(new File(source + seeFile).exists()))
+							{
+								var found = false;
+			
+								// file not found in module, check dependencies
+								if (project.getProperty("dependencies"))
+								{
+									for each (var module in project.getProperty("dependencies").split(","))
+									{
+										if (new File(root + "/modules/" + module + "/source" + seeFile + ".as").exists())
+										{
+											found = true;
+											break;
+										}
+									}
+								}
+								if (!found)
+								{
+									var echo = project.createTask("echo");
+									echo.setMessage("ERROR in file '" + fileName + "', line: " + lineNum + "\n@see tag '" + see + "' is not correct, file does not exists\n\n");
+									echo.perform();
+					
+									fail = true;
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			if (fail)
+			{
+				var f = project.createTask("fail");
+				f.setMessage("Source contains invalid @see tags");
+				f.perform();
+			}
+			
+			]]>
+		</script>
+		<echo>@see checked</echo>
+	</target>
+
+	<target name="Copy dependencies">
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.io);
+			
+			var root = project.getProperty("root.dir");
+			var version = project.getProperty("version");
+			var lib = project.getProperty("lib.dir");
+			
+			if (project.getProperty("dependencies"))
+			{
+				for each (var module in project.getProperty("dependencies").split(","))
+				{
+					if (module.indexOf("-extended") != -1)
+					{
+						module = module.substr(0, module.indexOf("-"));
+						var task = project.createTask("copy");
+						task.setFile(new File(root + "/modules/" + module + "/bin/temple-" + module + "-extended_" + version + ".swc"));
+						task.setTodir(new File(lib));
+						task.perform();
+					}
+					else if (module.length())
+					{
+						var task = project.createTask("copy");
+						task.setFile(new File(root + "/modules/" + module + "/bin/temple-" + module + "_" + version + ".swc"));
+						task.setTodir(new File(lib));
+						task.perform();
+					}
+				}
+			}
+	    	]]>
+		</script>
+	</target>
+
+	<target name="Copy Extended dependencies" if="extended-dependencies" unless="skip-extended-swc">
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.io);
+			
+			var root = project.getProperty("root.dir");
+			var version = project.getProperty("version");
+			var lib = project.getProperty("lib.dir");
+			
+			if (project.getProperty("extended-dependencies"))
+			{
+				for each (var module in project.getProperty("extended-dependencies").split(","))
+				{
+					if (module.indexOf("-extended") != -1)
+					{
+						module = module.substr(0, module.indexOf("-"));
+						var task = project.createTask("copy");
+						task.setFile(new File(root + "/modules/" + module + "/bin/temple-" + module + "-extended_" + version + ".swc"));
+						task.setTodir(new File(lib));
+						task.perform();
+					}
+					else if (module.length())
+					{
+						var task = project.createTask("copy");
+						task.setFile(new File(root + "/modules/" + module + "/bin/temple-" + module + "_" + version + ".swc"));
+						task.setTodir(new File(lib));
+						task.perform();
+					}
+				}
+			}
+	    	]]>
+		</script>
+	</target>
+
+	<target name="Delete Extended dependencies" if="extended-dependencies" unless="skip-extended-swc">
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.io);
+			
+			var root = project.getProperty("root.dir");
+			var version = project.getProperty("version");
+			var lib = project.getProperty("lib.dir");
+			
+			if (project.getProperty("extended-dependencies"))
+			{
+				for each (var module in project.getProperty("extended-dependencies").split(","))
+				{
+					if (module.indexOf("-extended") != -1)
+					{
+						var task = project.createTask("delete");
+						task.setFile(new File(lib + "/temple-" + module.substr(0, module.indexOf("-")) + "-extended_" + version + ".swc"));
+						task.perform();
+					}
+					else if (module.length())
+					{
+						var task = project.createTask("delete");
+						task.setFile(new File(lib + "/temple-" + module + "_" + version + ".swc"));
+						task.perform();
+					}
+				}
+			}
+	    	]]>
+		</script>
+	</target>
+	
+	<target name="Update Readme">
+		<replaceregexp file="${base.dir}/readme.html" match="(?&lt;=\u003C!-- VERSION --\u003E).+(?=\u003C!-- /VERSION --\u003E)" replace="${version}" flags="" byline="true" />
+		<replaceregexp file="${base.dir}/readme.html" match="(?&lt;=\u003C!-- DATE --\u003E).+(?=\u003C!-- /DATE --\u003E)" replace="${date}" flags="" byline="true" />
+		<replaceregexp file="${base.dir}/readme.html" match="(?&lt;=\u003C!-- NAME --\u003E).+(?=\u003C!-- /NAME --\u003E)" replace="${name}" flags="" byline="true" />
+		<replaceregexp file="${base.dir}/readme.html" match="(?&lt;=\u003Ctitle\u003E).+(?=\u003C/title\u003E)" replace="${name}" flags="" byline="true" />
+
+		<echo>Readme.html updated</echo>
+	</target>
+
+	<target name="Generate Example Index" unless="skip-examples">
+		<property name="temp.dir" value="${root.dir}/tools/ant/temp" />
+		<antcall target="Clear temp dir" />
+		<antcall target="Copy Example files" />
+		<antcall target="Parse temp files" />
+		<antcall target="Concat temp files" />
+		<antcall target="Clear temp dir" />
+	</target>
+	
+	<target name="Clear temp dir" >
+		<delete dir="${temp.dir}"/>
+	</target>
+	
+	<target name="Copy Example files" >
+		<copy todir="${temp.dir}">
+			<fileset dir="${examples.dir}/temple" includes="**/*.as">
+				<and>
+					<containsregexp expression="@exampleText" />
+					<containsregexp expression="http\://templelibrary\.googlecode\.com" />
+				</and>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="Parse temp files">
+		<fileset dir="${temp.dir}" includes="**/*.as" id="files" />
+	
+		<!-- remove everything after 'package' -->
+		<replaceregexp match="package(.*)" replace="" flags="gms" >
+			<fileset refid="files" />
+		</replaceregexp>
+
+		<!-- remove everything before and includiing '@exampleText' -->
+		<replaceregexp match="(.*?)@exampleText" replace="&lt;div class='example' &gt;" flags="gms" >
+			<fileset refid="files" />
+		</replaceregexp>
+
+		<!-- remove comment stars -->
+		<replaceregexp match=" \* " replace="" flags="gms" >
+			<fileset refid="files" />
+		</replaceregexp>
+
+		<!-- remove comment close tag -->
+		<replaceregexp match=" \*/" replace="&lt;hr/&gt;&lt;/div&gt;" flags="gms" >
+			<fileset refid="files" />
+		</replaceregexp>
+		
+	</target>
+	
+	<target name="Concat temp files">
+		<concat destfile="${examples.dir}/index.html" >
+			<header file="${root.dir}/tools/ant/templates/header.html" />
+			<fileset dir="${temp.dir}" includes="**/*.as" />
+			<footer file="${root.dir}/tools/ant/templates/footer.html" />
+		</concat>
+		<replaceregexp file="${examples.dir}/index.html" match="(?&lt;=\u003C!-- NAME --\u003E).+(?=\u003C!-- /NAME --\u003E)" replace="${name}" flags="" byline="true" />
+	</target>
+	
+	<target name="Build Examples" unless="skip-examples" if="module">
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.net);
+			importPackage(java.io);
+			importPackage(java.lang);
+			importPackage(java.util);
+			
+			var exampleDir = project.getProperty("examples.dir");
+			
+			var examplesFileset = project.createDataType("fileset");
+			examplesFileset.setDir(new File(exampleDir));
+			examplesFileset.setIncludes("**/*Example.xml");
+			//examplesFileset.setIncludes("**/*ComboBoxExample.xml,**/*ComboBoxComponentExample.xml");
+			//examplesFileset.setIncludes("**/*ComboBoxComponentExample.xml");
+			
+			var exampleFiles = examplesFileset.getDirectoryScanner(project).getIncludedFiles();
+			
+			for (i=0; i< exampleFiles.length; i++)
+			{
+				var fileName = exampleFiles[i];
+
+				var echo = project.createTask("echo");
+				echo.setMessage("Build example: " + fileName + "\n");
+				echo.perform();
+			
+				var ant = project.createTask("ant");
+				ant.setAntfile(exampleDir + "/" + fileName);
+				ant.setUseNativeBasedir(true);
+				ant.setInheritAll(false);
+				ant.perform();
+			}
+			
+	    	]]>
+		</script>
+	</target>
+	
+	<target name="Check Examples" unless="skip-examples" if="module">
+		<fileset dir="${examples.dir}/temple" id="wrongfileset-exampleText" includes="**/*Example.as">
+			<not>
+				<containsregexp expression="@exampleText" />
+			</not>
+		</fileset>
+		<property name="wrongfiles-exampleText" refid="wrongfileset-exampleText" />
+		<fail message="The following files does not contain exampleText: ${wrongfiles-exampleText}">
+			<condition>
+				<not>
+					<resourcecount count="0" refid="wrongfileset-exampleText" />
+				</not>
+			</condition>
+		</fail>
+	 
+		<fileset dir="${examples.dir}/temple" id="wrongfileset-doc" includes="**/*Example.as">
+			<not>
+				<containsregexp expression="\u003Ca.*href=\u0022http\u003A\u002F\u002F.*modules.*doc.*\.html(#.+)?\u0022" />
+			</not>
+		</fileset>
+		<property name="wrongfiles-doc" refid="wrongfileset-doc" />
+		<fail message="The following files does not contain a link to the documentation: ${wrongfiles-doc}">
+			<condition>
+				<not>
+					<resourcecount count="0" refid="wrongfileset-doc" />
+				</not>
+			</condition>
+		</fail>
+	
+		<fileset dir="${examples.dir}/temple" id="wrongfileset-view" includes="**/*Example.as">
+			<not>
+				<containsregexp expression="\u003Ca.*href=\u0022http\u003A\u002F\u002F.*\.swf(\?.*)?\u0022" />
+			</not>
+		</fileset>
+		<property name="wrongfiles-view" refid="wrongfileset-view" />
+		<fail message="The following files does not contain a link to view the example: ${wrongfiles-view}">
+			<condition>
+				<not>
+					<resourcecount count="0" refid="wrongfileset-view" />
+				</not>
+			</condition>
+		</fail>
+	
+		<fileset dir="${examples.dir}/temple" id="wrongfileset-source" includes="**/*Example.as">
+			<not>
+				<containsregexp expression="\u003Ca.*href=\u0022http\u003A\u002F\u002F.*\.as\u0022" />
+			</not>
+		</fileset>
+		<property name="wrongfiles-source" refid="wrongfileset-source" />
+		<fail message="The following files does not contain a link to download the source of the example: ${wrongfiles-source}">
+			<condition>
+				<not>
+					<resourcecount count="0" refid="wrongfileset-source" />
+				</not>
+			</condition>
+		</fail>
+	
+		<echo>Examples checked</echo>
+	</target>
+	
+	<target name="Update Example URLS" unless="skip-examples" if="module">
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.net);
+			importPackage(java.io);
+			importPackage(java.lang);
+			importPackage(java.util);
+			
+			var module = project.getProperty("module");
+			var exampleDir = project.getProperty("examples.dir");
+			var sourceDir = project.getProperty("source.dir");
+			var extendedDir = project.getProperty("extended.dir");
+			var baseDir = project.getProperty("base.dir");
+			
+			var examplesFileset = project.createDataType("fileset");
+			examplesFileset.setDir(new File(exampleDir));
+			examplesFileset.setIncludes("**/*Example.as");
+			examplesFileset.setExcludes("*/*DocumentClassExample.as");
+			
+			var exampleFiles = examplesFileset.getDirectoryScanner(project).getIncludedFiles();
+			
+			var prefix = "http://templelibrary.googlecode.com/svn/trunk/modules/" + module + "/examples/";
+			//var viewRegExp = /(<a)(.*)(name="view")/;
+			//var sourceRegExp = /(<a)(.*)(name="source")/;
+			var viewRegExp = /href=".*\.swf"/;
+			var sourceRegExp = /href=".*\.as"/;
+			var flaRegExp = /href=".*examples(.*\.fla)"/;
+			var docRegExp = /href=".*doc(.*)\.html"/;
+			var hrefRegExp = /href="(.*?)"/;
+			
+			for (i=0; i< exampleFiles.length; i++)
+			{
+				var fileName = exampleFiles[i];
+			
+				//var echo = project.createTask("echo");
+				//echo.setMessage(fileName);
+				//echo.perform();
+			
+				var input = new BufferedReader(new FileReader(exampleDir + "/" + fileName));
+			
+				var update = false;
+				var line = null;
+				var output = "";
+			
+				fileName = fileName.replace('\\', "/");
+			
+				while ((line = input.readLine()) !== null)
+				{
+					// convert to a "real" string :-S
+					line = "" + line;
+					
+					if (viewRegExp.test(line))
+					{
+						var swf = fileName.substring(0, fileName.length() - 3) + ".swf";
+			
+						output += " * <p><a href=\"" + prefix + swf + "\" target=\"_blank\">View this example</a></p>\n";
+						
+						//var echo = project.createTask("echo");
+						//echo.setMessage(line);
+						//echo.perform();
+			
+						update = true;
+					}
+					else if (sourceRegExp.test(line))
+					{
+						if (line.indexOf(fileName) != -1)
+						{
+							output += " * <p><a href=\"" + prefix + fileName + "\" target=\"_blank\">View source</a></p>\n";
+							update = true;
+						}
+						else
+						{
+							var href = line.match(hrefRegExp)[1];
+			
+							if (href.indexOf(module) == -1)
+							{
+								var fail = project.createTask("fail");
+								fail.setMessage("Error in file: "+ fileName + "\nURL is not correct: " + href);
+								fail.perform();
+							}
+							else if (!new File(baseDir + href.substr(href.indexOf(module) + module.length()) ).exists())
+							{
+								var fail = project.createTask("fail");
+								fail.setMessage("Error in file: "+ fileName + "\nFile not found: " + href + "\n" + baseDir + href.substr(href.indexOf(module) + module.length()));
+								fail.perform();
+				
+							}
+							output += line + "\n";
+						}
+					}
+					else if (docRegExp.test(line))
+					{
+						var source = line.match(docRegExp)[1] + ".as";
+			
+						if (!new File(sourceDir + source).exists() && !new File(extendedDir + source).exists())
+						{
+							var fail = project.createTask("fail");
+							fail.setMessage("Error in file: "+ fileName + "\nDoc file not found: " + source);
+							fail.perform();
+			
+						}
+						output += line + "\n";
+					}
+					else if (flaRegExp.test(line))
+					{
+						var source = exampleDir + line.match(flaRegExp)[1];
+			
+						if (line.indexOf("modules") == -1)
+						{
+							var fail = project.createTask("fail");
+							fail.setMessage("Error in file: "+ fileName + "\nLink to fla is not correct:\n" + line);
+							fail.perform();
+						}
+						else if (!new File(source).exists())
+						{
+							var fail = project.createTask("fail");
+							fail.setMessage("Error in file: "+ fileName + "\nFla file not found: " + source);
+							fail.perform();
+			
+						}
+						output += " * <p><a href=\"" + prefix + source + "\" target=\"_blank\">Download .fla file</a></p>\n";
+					}
+					else
+					{
+						output += line + "\n";
+					}
+					
+				}
+				if (update)
+				{
+					var write = new DataOutputStream(new FileOutputStream(exampleDir + "/" + fileName));
+					write.writeBytes(output);
+					write.flush();
+					write.close();
+				}
+			}
+			
+	    	]]>
+		</script>
 	</target>
 
 </project>
