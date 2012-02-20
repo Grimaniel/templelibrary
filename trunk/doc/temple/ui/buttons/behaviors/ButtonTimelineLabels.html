@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../../override.css" type="text/css"><meta name="keywords" content="ButtonTimelineLabels,temple.ui.buttons.behaviors.ButtonTimelineLabels,BLUR,CONTINUE,DESELECT,DISABLE,DISABLED,DOWN,ENABLE,FOCUS,FOCUSED,IMMEDIATELY,IN,INTRO,OUT,OUTRO,OVER,PRESS,RELEASE,REVERSED,SELECT,SELECTED,UP,UPDATE,blurPlayMode,clickOnEnter,clickOnSpacebar,currentLabel,deselectPlayMode,disabled,disabled,disabledDuration,disabledVars,displayObject,displayObject,displayObjectContainer,down,down,down,downDuration,downOnDragIn,downVars,enablePlayMode,enabled,enabled,eventType,focus,focus,focusDuration,focusVars,highSpeedDelay,highSpeedWait,ignoreMouseEnabled,inDelay,initDelay,labels,lockDown,lockOver,movieClip,outDelay,outOnDragOut,outPlayMode,over,over,over,overDuration,overVars,playMode,pressPlayMode,releasePlayMode,repeatDelay,selected,selected,selectedDuration,selectedVars,status,upDuration,upVars,updateByParent"><title>temple.ui.buttons.behaviors.ButtonTimelineLabels</title><script src="../../../../AC_OETags.js" type="text/javascript"></script></head><body><script language="javascript" type="text/javascript" src="../../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'ButtonTimelineLabels - Temple API Documentation';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.0.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/buttons/behaviors/ButtonTimelineLabels.html&amp;temple/ui/buttons/behaviors/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ButtonTimelineLabels</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#constantSummary">Constants</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("ButtonTimelineLabels"); titleBar_setSubNav(true,false,false,false,false,false,false,false,false,true,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">temple.ui.buttons.behaviors</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public final   class  ButtonTimelineLabels</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">ButtonTimelineLabels  <img src="../../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr></table><p></p><p></p>
+	 This class contains all possible values for timeline labels used by the <code>ButtonTimelineBehavior</code>.
+	 
+	 <p>There is a frame label for every status of a button. There is also a frame label to define the timeline
+	 animation to enter this status. There is also a frame to define the timeline animation to leave this status.
+	 After the enter animation is played, the timeline stops on the frame of the current status.</p>
+	 
+	              <p>Check out the following schema for the available frame labels for every status.</p>
+	 
+	              <table class="innertable" ><tr><th>button state</th><th>enter animation label</th><th>stops at label</th><th>exit animation label</th></tr><tr><td>over</td><td>in</td><td>over</td><td>out</td></tr><tr><td>down</td><td>press</td><td>down</td><td>release</td></tr><tr><td>selected</td><td>select</td><td>selected</td><td>deselect</td></tr><tr><td>disabled</td><td>disable</td><td>disabled</td><td>enable</td></tr><tr><td>focus</td><td>focus</td><td>focused</td><td>blur</td></tr></table>
+	 
+	              <p>The default label (when none of these above labels applies) is 'up'. If there is no enter and exit label on
+	 the timeline, and there are no other labels between the 'up' label and the current state label, the
+	 <code>ButtonTimelineBehavior</code> will play the timeline forwards and backwards between the up label and the
+	 state label when the button has this state.</p>
+	 
+	           <p></p><p><a href="#includeExamplesSummary">View the examples</a></p><p><span class="classHeaderTableLabel">See also</span></p><div class="seeAlso"><a href="ButtonTimelineBehavior.html" target="">temple.ui.buttons.behaviors.ButtonTimelineBehavior</a><br/><a href="ButtonBehavior.html" target="">temple.ui.buttons.behaviors.ButtonBehavior</a></div><br/><hr></div><a name="constantSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Constants</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableConstant"><tr><th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#BLUR" class="signatureLink">BLUR</a> : String = blur<div class="summaryTableDescription">[static] 
+		 Animation state when the button loses focus.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#DESELECT" class="signatureLink">DESELECT</a> : String = deselect<div class="summaryTableDescription">[static] 
+		 Animation state after the selected state.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#DISABLE" class="signatureLink">DISABLE</a> : String = disable<div class="summaryTableDescription">[static] 
+		 Animation state before the disable state.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#DISABLED" class="signatureLink">DISABLED</a> : String = disabled<div class="summaryTableDescription">[static] 
+		 Displayed when the button is disabled.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#DOWN" class="signatureLink">DOWN</a> : String = down<div class="summaryTableDescription">[static] 
+		 Displayed when the left mouse button is down.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#ENABLE" class="signatureLink">ENABLE</a> : String = enable<div class="summaryTableDescription">[static] 
+		 Animation state after the disable state.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#FOCUS" class="signatureLink">FOCUS</a> : String = focus<div class="summaryTableDescription">[static] 
+		 Animation state when the buttons gets focus.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#FOCUSED" class="signatureLink">FOCUSED</a> : String = focused<div class="summaryTableDescription">[static] 
+		 Displayed when the button has focus.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#IN" class="signatureLink">IN</a> : String = in<div class="summaryTableDescription">[static] 
+		 Displayed when the mouse enters the buttons.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#INTRO" class="signatureLink">INTRO</a> : String = intro<div class="summaryTableDescription">[static] 
+		 Intro animation for the button.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#OUT" class="signatureLink">OUT</a> : String = out<div class="summaryTableDescription">[static] 
+		 Displayed when the mouse leaves the button.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#OUTRO" class="signatureLink">OUTRO</a> : String = outro<div class="summaryTableDescription">[static] 
+		 Outro animation for the button.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#OVER" class="signatureLink">OVER</a> : String = over<div class="summaryTableDescription">[static] 
+		 Displayed when the mouse hovers the button.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#PRESS" class="signatureLink">PRESS</a> : String = press<div class="summaryTableDescription">[static] 
+		 Displayed when the left mouse button is pressed over the button.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#RELEASE" class="signatureLink">RELEASE</a> : String = release<div class="summaryTableDescription">[static] 
+		 Displayed when the left mouse button is released.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#SELECT" class="signatureLink">SELECT</a> : String = select<div class="summaryTableDescription">[static] 
+		 Animation state before the selected state.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#SELECTED" class="signatureLink">SELECTED</a> : String = selected<div class="summaryTableDescription">[static] 
+		 Displayed when the button is selected.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#UP" class="signatureLink">UP</a> : String = up<div class="summaryTableDescription">[static] 
+		 Default status of a button.</div></td><td class="summaryTableOwnerCol">ButtonTimelineLabels</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Constant Detail</div><a name="constantDetail"></a><a name="BLUR"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">BLUR</td><td class="detailHeaderType">Constant</td></tr></table><div class="detailBody"><code>public static const BLUR:String = blur</code><p></p><p>
+		 Animation state when the button loses focus.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="DESELECT"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">DESELECT</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const DESELECT:String = deselect</code><p></p><p>
+		 Animation state after the selected state.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="DISABLE"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">DISABLE</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const DISABLE:String = disable</code><p></p><p>
+		 Animation state before the disable state. The 'disable' status is automatically followed by the 'disabled' status.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="DISABLED"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">DISABLED</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const DISABLED:String = disabled</code><p></p><p>
+		 Displayed when the button is disabled.
+		 <p>This is a non-animated state and uses only one frame.</p>
+		 </p></div><a name="constantDetail"></a><a name="DOWN"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">DOWN</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const DOWN:String = down</code><p></p><p>
+		 Displayed when the left mouse button is down.
+		 <p>This is a non-animated state and uses only one frame.</p>
+		 <p>If there are no 'press' and 'release' defined, the ButtonTimelineBehavior will animatie between 'over' and 'down' label</p>
+		 </p></div><a name="constantDetail"></a><a name="ENABLE"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">ENABLE</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const ENABLE:String = enable</code><p></p><p>
+		 Animation state after the disable state.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="FOCUS"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FOCUS</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const FOCUS:String = focus</code><p></p><p>
+		 Animation state when the buttons gets focus. The 'focus' state is automatically followed by the 'focused' state.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="FOCUSED"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FOCUSED</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const FOCUSED:String = focused</code><p></p><p>
+		 Displayed when the button has focus.
+		 </p></div><a name="constantDetail"></a><a name="IN"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">IN</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const IN:String = in</code><p></p><p>
+		 Displayed when the mouse enters the buttons. The 'in' status is automatically followed by the 'over' status.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="INTRO"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">INTRO</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const INTRO:String = intro</code><p></p><p>
+		 Intro animation for the button.
+		 </p></div><a name="constantDetail"></a><a name="OUT"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">OUT</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const OUT:String = out</code><p></p><p>
+		 Displayed when the mouse leaves the button. The 'out' status is automatically followed by the 'up' status.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="OUTRO"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">OUTRO</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const OUTRO:String = outro</code><p></p><p>
+		 Outro animation for the button.
+		 </p></div><a name="constantDetail"></a><a name="OVER"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">OVER</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const OVER:String = over</code><p></p><p>
+		 Displayed when the mouse hovers the button.
+		 <p>This is a non-animated state and uses only one frame.</p>
+		 <p>If there is no labels defined, the last frame is used for 'over'. If there is no 'over' label, but there are other labels, 'up' is used as 'over'.
+		 If there are no 'in' and 'out' defined, the ButtonTimelineBehavior will animatie between 'up' and 'over' label</p>
+		 </p></div><a name="constantDetail"></a><a name="PRESS"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">PRESS</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const PRESS:String = press</code><p></p><p>
+		 Displayed when the left mouse button is pressed over the button. The 'press' status is automatically followed by the 'down' status.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="RELEASE"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">RELEASE</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const RELEASE:String = release</code><p></p><p>
+		 Displayed when the left mouse button is released. The 'release' status is automatically followed by the 'over' status.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="SELECT"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">SELECT</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const SELECT:String = select</code><p></p><p>
+		 Animation state before the selected state. The 'select' status is automatically followed by the 'selected' status.
+		 <p>This is an animated state and can use multiple frames. The last frame of this state is the frame before the next label (which isn't at the same frame).</p>
+		 </p></div><a name="constantDetail"></a><a name="SELECTED"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">SELECTED</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const SELECTED:String = selected</code><p></p><p>
+		 Displayed when the button is selected.
+		 <p>This is a non-animated state and uses only one frame.</p>
+		 <p>If there are no 'select' and 'deselect' defined, the ButtonTimelineBehavior will animatie between 'up' and 'select' label</p>
+		 </p></div><a name="constantDetail"></a><a name="UP"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">UP</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const UP:String = up</code><p></p><p>
+		 Default status of a button. Displayed when the mouse is not over the button.
+		 <p>This is a non-animated state and uses only one frame.</p>
+		 <p>If there is no 'up' defined, the first frame is used for 'up'.</p>
+		 </p></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="exampleHeader">MultiStateButtonFrameLabelsExample.as</div><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example about the usage of frame labels in a <a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/doc/temple/ui/buttons/MultiStateButton.html" target="">MultiStateButton</a>.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/D:/Projects/Temple/GoogleCode/templelibrary/modules/ui/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla" target="external">Download .fla file</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.ui.buttons.behaviors.ButtonTimelinePlayMode;
+    import temple.ui.buttons.MultiStateButton;
+
+    // This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
+    public class MultiStateButtonFrameLabelsExample extends DocumentClassExample 
+    {
+        
+        // A MultiStateButton with 'up', 'in', 'over', 'out', 'press', 'down' and 'release' framelabels.
+        // 
+        // When the mouse is not on the button, the timeline is at the 'up' label.
+        // When the mouse enters the button, the timeline is played from 'in' till 'over' is played.
+        // When the mouse leaves the button, the timeline is played from 'out' till 'up' is played.
+        // When the mouse presses the button, the timeline is played from 'press' till 'down' is played.
+        // When the mouse releases the button, the timeline is played from 'release' till 'over' is played.
+        public var mcButton1:MultiStateButton;
+        
+        // A MultiStateButton with 'up', 'in', 'over', 'press' and 'down' framelabels.
+        // 
+        // When the mouse is not on the button, the timeline is at the 'up' label.
+        // When the mouse enters the button, the timeline is played from 'in' till 'over' is played.
+        // When the mouse leaves the button, the timeline jumps directly to the 'up' frame.
+        // When the mouse presses the button, the timeline is played from 'press' till 'down' is played.
+        // When the mouse releases the button, the timeline jumps directly to the 'over' frame.
+        public var mcButton2:MultiStateButton;
+        
+        
+        // A MultiStateButton with 'up', 'over', 'out', 'down' and 'release' framelabels.
+        // 
+        // When the mouse is not on the button, the timeline is at the 'up' label.
+        // When the mouse enters the button, the timeline jumps directly to the 'over' frame.
+        // When the mouse leaves the button, the timeline is played from 'out' till 'up' is played.
+        // When the mouse presses the button, the timeline jumps directly to the 'down' frame.
+        // When the mouse releases the button, the timeline is played from 'release' till 'over' is played.
+        public var mcButton3:MultiStateButton;
+
+        // A MultiStateButton with 'up', 'over' and 'down' framelabels.
+        // 
+        // When the mouse is not on the button, the timeline is at the 'up' label.
+        // When the mouse enters the button, the timeline is played from 'up' till 'over' is played.
+        // When the mouse leaves the button, the timeline is played from 'up' till 'over' is played backwards.
+        // When the mouse presses the button, the timeline is played from 'over' till 'down' is played.
+        // When the mouse releases the button, the timeline is played from 'over' till 'down' is played backwards.
+        public var mcButton4:MultiStateButton;
+        
+        // A MultiStateButton without any framelabels.
+        // 
+        // When the mouse is not on the button, the timeline is at the first frame.
+        // When the mouse enters the button, the timeline is played till the last frame.
+        // When the mouse leaves the button the timeline is played backwards till the first frame.
+        public var mcButton5:MultiStateButton;
+
+        // Same MultiStateButton as mcButton1, but with playing backwards switched off.
+        public var mcButton6:MultiStateButton;
+        
+        public function MultiStateButtonFrameLabelsExample()
+        {
+            super("Temple - MultiStateButtonFrameLabelsExample");
+            
+            // Switch off playing backwards.
+            this.mcButton6.buttonTimelineBehavior.playMode = ButtonTimelinePlayMode.CONTINUE;
+            this.mcButton6.buttonTimelineBehavior.pressPlayMode = ButtonTimelinePlayMode.IMMEDIATELY;
+            
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "../MultiStateButtonFrameLabelsExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>by MediaMonks | http://www.mediamonks.com</footer><br/> </center></div></body></html><!--by MediaMonks | http://www.mediamonks.com<br/> -->
