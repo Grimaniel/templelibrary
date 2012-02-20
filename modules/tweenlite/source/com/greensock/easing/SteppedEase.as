@@ -6,6 +6,8 @@
  **/
 package com.greensock.easing {
 /**
+ * @private
+ * 
  * Most easing equations give a smooth, gradual transition between the start and end values, but SteppedEase provides
  * an easy way to define a specific number of steps that the transition should take. For example, if mc.x is 0 and you 
  * want to tween it to 100 with 5 steps (20, 40, 60, 80, and 100) over the course of 2 seconds, you'd do:<br /><br /><code>

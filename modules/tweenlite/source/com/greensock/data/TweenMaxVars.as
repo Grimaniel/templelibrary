@@ -12,6 +12,8 @@ package com.greensock.data {
 	import flash.display.Stage;
 	import flash.geom.Point;
 /**
+ * @private
+ * 
  * 	There are 3 primary benefits of using a TweenMaxVars instance to define your TweenMax's "vars" parameter:
  *  <ol>
  *		<li> In most code editors, code hinting will be activated which helps remind you which special properties are available.</li>
