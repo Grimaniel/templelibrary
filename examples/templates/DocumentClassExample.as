@@ -41,15 +41,19 @@ package
 		// Constructor of the Example, we pass the name of the application as an optional parameter, so we can override this value in a subclass.
 		public function DocumentClassExample(name:String = "Temple - Example")
 		{
-			// Call super after connection to Yalog, so connection has been made before any message is logged.
-			super();
-			
 			this.stage.align = StageAlign.TOP_LEFT;
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			// Create an Analytics object, so we can track some usage statistics. Note: 'analytics.swc' must be added to the classpath.
-			this._tracker = new GATracker(this, "UA-353608-71"); // This is the Analytics account of the Temple, change this to your own account if you want to use Analytics tracking in your project. 
-			this._tracker.trackPageview(name);
+			try
+			{
+				this._tracker = new GATracker(this, "UA-353608-71"); // This is the Analytics account of the Temple, change this to your own account if you want to use Analytics tracking in your project. 
+				this._tracker.trackPageview(name);
+			}
+			catch (error:Error)
+			{
+				this.logError(error.message);
+			}
 			
 			// For debug purpose we log some info about this SWF and the player, using the DebugMananger
 			DebugManager.logInfo();
