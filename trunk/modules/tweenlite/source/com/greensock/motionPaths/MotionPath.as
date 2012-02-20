@@ -8,6 +8,8 @@ package com.greensock.motionPaths {
 	import flash.display.Shape;
 	import flash.events.Event;
 /**
+ * @private
+ * 
  * A MotionPath defines a path along which a PathFollower can travel, making it relatively simple to do 
  * things like tween an object in a circular path. A PathFollower's position along the path is described using
  * its <code>progress</code> property, a value between 0 and 1 where 0 is at the beginning of the path, 0.5 is in
