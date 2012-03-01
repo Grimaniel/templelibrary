@@ -5,7 +5,7 @@
 	<property name="name" value="Temple Yalog Module" />
 	<property name="dependencies" value="core,common" />
 	
-	<property name="skip-license" value="true" />
+	<property name="skip-copyrights" value="true" />
 	<property name="skip-author" value="true" />
 	
 	<import file="../../../../tools/ant/build.xml" />

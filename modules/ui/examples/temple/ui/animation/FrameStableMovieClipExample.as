@@ -13,7 +13,7 @@
  * The frame rate is throttled using the FrameRateKiller. You can change the fps in the TextField to test it.
  * </p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/animation/FrameStableMovieClipExample.fla" target="_blank">Download .fla file</a></p>
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/D:/Projects/Temple/GoogleCode/templelibrary/modules/ui/examples/temple/ui/animation/FrameStableMovieClipExample.fla" target="_blank">Download .fla file</a></p>
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/animation/FrameStableMovieClipExample.as" target="_blank">View source</a></p>
  */
