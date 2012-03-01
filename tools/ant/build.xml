@@ -45,8 +45,8 @@
 	<taskdef resource="flexTasks.tasks" classpath="${root.dir}/tools/jar/flexTasks.jar" />
 
 	<target name="Export">
-		<antcall target="Check copyrights" />
-		<antcall target="Check copyrights extended" />
+		<antcall target="Check license" />
+		<antcall target="Check license extended" />
 		<antcall target="Check author" />
 		<antcall target="Check author extended" />
 		<antcall target="Check see tag" />
@@ -218,38 +218,38 @@
 		<echo>Zip file created</echo>
 	</target>
 
-	<target name="Check copyrights" unless="skip-copyrights">
+	<target name="Check license" unless="skip-license">
 		<fileset dir="${source.dir}/temple" id="wrongfileset">
 			<not>
-				<containsregexp expression="2012 MediaMonks B.V." />
+				<containsregexp expression="THIS SOFTWARE IS PROVIDED BY MEDIAMONKS B.V." />
 			</not>
 		</fileset>
 		<property name="wrongfiles" refid="wrongfileset" />
-		<fail message="The following files does not contain copyrights: ${wrongfiles}">
+		<fail message="The following files does not contain license: ${wrongfiles}">
 			<condition>
 				<not>
 					<resourcecount count="0" refid="wrongfileset" />
 				</not>
 			</condition>
 		</fail>
-		<echo>Copyrights checked</echo>
+		<echo>License checked</echo>
 	</target>
 	
-	<target name="Check copyrights extended" unless="skip-copyrights" if="extended.dir">
+	<target name="Check license extended" unless="skip-license" if="extended.dir">
 		<fileset dir="${extended.dir}/temple" id="wrongfileset">
 			<not>
-				<containsregexp expression="2012 MediaMonks B.V." />
+				<containsregexp expression="THIS SOFTWARE IS PROVIDED BY MEDIAMONKS B.V." />
 			</not>
 		</fileset>
 		<property name="wrongfiles" refid="wrongfileset" />
-		<fail message="The following files does not contain copyrights: ${wrongfiles}">
+		<fail message="The following files does not contain license: ${wrongfiles}">
 			<condition>
 				<not>
 					<resourcecount count="0" refid="wrongfileset" />
 				</not>
 			</condition>
 		</fail>
-		<echo>Copyrights checked</echo>
+		<echo>License checked</echo>
 	</target>
 
 	<target name="Check author" unless="skip-author">
@@ -676,7 +676,7 @@
 			//var sourceRegExp = /(<a)(.*)(name="source")/;
 			var viewRegExp = /href=".*\.swf"/;
 			var sourceRegExp = /href=".*\.as"/;
-			var flaRegExp = /href=".*examples(.*\.fla)"/;
+			var flaRegExp = /href=".*examples\/+(.*\.fla)"/;
 			var docRegExp = /href=".*doc(.*)\.html"/;
 			var hrefRegExp = /href="(.*?)"/;
 			
@@ -755,7 +755,7 @@
 					}
 					else if (flaRegExp.test(line))
 					{
-						var source = exampleDir + line.match(flaRegExp)[1];
+						var source = line.match(flaRegExp)[1];
 			
 						if (line.indexOf("modules") == -1)
 						{
@@ -763,10 +763,10 @@
 							fail.setMessage("Error in file: "+ fileName + "\nLink to fla is not correct:\n" + line);
 							fail.perform();
 						}
-						else if (!new File(source).exists())
+						else if (!new File(exampleDir + "/" + source).exists())
 						{
 							var fail = project.createTask("fail");
-							fail.setMessage("Error in file: "+ fileName + "\nFla file not found: " + source);
+							fail.setMessage("Error in file: "+ fileName + "\nFla file not found: " + exampleDir + "/" + source);
 							fail.perform();
 			
 						}
@@ -790,5 +790,41 @@
 	    	]]>
 		</script>
 	</target>
+	
+	<target name="Update License">
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.net);
+			importPackage(java.io);
+			importPackage(java.lang);
+			importPackage(java.util);
+			
+			var file = new BufferedReader(new FileReader(project.getProperty("root.dir") + "/modules/core/source/temple/core/includes/License.as.inc"));
+			
+			var line = null;
+			var license = "/*\n";
+		
+			while ((line = file.readLine()) !== null)
+			{
+				license += line + "\n";
+			}
+			license += " */\n\n";
+			
+			var prop = project.createTask("property");
+			prop.setName("license");
+			prop.setValue(license);
+			prop.perform();
+			
+			]]>
+		</script>
+		<replaceregexp replace="${license}" match=".+(?=package)" flags="gs">
+			<!-- 
+			<fileset dir="${source.dir}" includes="**/*.as" />
+			-->
+			<fileset dir="${extended.dir}" includes="**/*.as" />
+		</replaceregexp>
+		<echo>${license}</echo>
+	</target>
+	
 
 </project>
