@@ -8,7 +8,7 @@
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.swf" target="_blank">View this example</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/D:/Projects/Temple/GoogleCode/templelibrary/modules/ui/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla" target="_blank">Download .fla file</a></p>
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.fla" target="_blank">Download .fla file</a></p>
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/buttons/MultiStateButtonFrameLabelsExample.as" target="_blank">View source</a></p>
  */

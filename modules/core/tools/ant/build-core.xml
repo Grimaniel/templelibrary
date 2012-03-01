@@ -25,21 +25,21 @@
 		<echo>Temple properties updated: version ${version}, date ${date}</echo>
 	</target>
 	
-	<target name="Check copyrights" >
+	<target name="Check license" >
 		<fileset dir="${source.dir}/temple" id="wrongfileset" includes="**/*.as">
 			<not>
 				<containsregexp expression="License\.as\.inc" />
 			</not>
 		</fileset>
 		<property name="wrongfiles" refid="wrongfileset" />
-		<fail message="The following files does not contain copyrights: ${wrongfiles}">
+		<fail message="The following files does not contain license: ${wrongfiles}">
 			<condition>
 				<not>
 					<resourcecount count="0" refid="wrongfileset" />
 				</not>
 			</condition>
 		</fail>
-		<echo>Copyrights checked</echo>
+		<echo>License checked</echo>
 	</target>
 
 	<target name="Check version">
