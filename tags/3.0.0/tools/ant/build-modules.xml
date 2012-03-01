@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build Modules" name="Temple-Modules">
+
+	<import file="temple-properties.xml"/>
+
+	<target name="Build Modules" >
+		<module name="core" />
+		<module name="common" />
+		<module name="utils" />
+		<module name="tweenlite" />
+		<module name="data" />
+		<module name="control" />
+		<module name="ui" />
+		<module name="yalog" />
+		<module name="codecomponents" />
+		<!--module name="facebook" /-->
+		<module name="mediaplayers" />
+		<module name="camera" />
+		<!--module name="fontutils" /-->
+		<!--module name="sound" /-->
+		<!--module name="multilanguage" /-->
+	</target>
+	
+	 <macrodef name="module">
+	 	<attribute name="name"/>
+	 	<sequential>
+	 		<echo>Building module @{name}</echo>
+	 		<ant antfile="${root.dir}/modules/@{name}/tools/ant/build-@{name}.xml" />
+	 	</sequential>
+	 </macrodef>
+</project>

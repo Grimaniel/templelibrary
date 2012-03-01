@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Export" basedir="../../../../tools/ant" name="Temple-Data">
+
+	<property name="module" value="data" />
+	<property name="name" value="Temple Data Module" />
+	<property name="dependencies" value="core,common,utils" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+</project>

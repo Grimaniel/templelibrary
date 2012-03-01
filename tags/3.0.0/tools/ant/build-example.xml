@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build" name="Example">
+	
+	<target name="Build">
+		<property name="startswf" value="true"/>
+		
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.io);
+			
+			var dependencies = project.getProperty("dependencies") ? project.getProperty("dependencies").split(",") : [];
+			if (project.getProperty("extra-dependencies"))
+			{
+				dependencies = dependencies.concat(project.getProperty("extra-dependencies").split(","));
+			}
+			var root = project.getProperty("root.dir");
+			var version = project.getProperty("version");
+			
+			
+			var libraries = [project.getProperty("examples.dir") + "/templates/analytics.swc"];
+			for each (var module in dependencies)
+			{
+				if (module.length() && module.indexOf("extended") == -1)
+				{
+					libraries.push(root + "/modules/" + module + "/bin/temple-" + module + "_" + version + ".swc");
+					var extended = root + "/modules/" + module + "/bin/temple-" + module + "-extended_" + version + ".swc";
+					if (new File(extended).exists())
+					{
+						libraries.push(extended);
+					}
+				}
+			}
+			
+			prop = project.createTask("property");
+			prop.setName("library-path");
+			prop.setValue(libraries.length ? "-compiler.library-path+=" + libraries.join(",") : "");
+			prop.perform();
+			
+			var extended = project.getProperty("extended.dir");
+			prop = project.createTask("property");
+			prop.setName("extended-source-path");
+			prop.setValue(extended ? "," + extended : "");
+			prop.perform();
+
+	    	]]>
+		</script>
+		
+		<fdt.launch.application projectname="${project}"
+			mainclass="${ant.project.name}.as"
+			target="${ant.project.name}.swf"
+			startswf="${startswf}"
+			swflauncher="Adobe Flash Player"
+			debug="true"
+			autoaddclasspath="false"
+			killpreviousviewer="false"
+			compilerarguments="
+				-compiler.source-path+=${source.dir},${examples.dir}/templates${extended-source-path}
+				${library-path}" />
+	</target>
+	
+	<target name="Build Fla">
+		<delete file="${jsfl-output}" quiet="true" />
+		
+		<script language="javascript">
+			<![CDATA[
+			var file = project.getProperty("ant.file");
+			
+			prop = project.createTask("property");
+			prop.setName("fla");
+			prop.setValue(file.substring(0, file.length() - 3) + "fla");
+			prop.perform();
+	
+	    	]]>
+		</script>
+		<exec executable="${flash}">
+			<arg line="'${root.dir}/tools/jsfl/build.jsfl'"/>
+			<arg line="'${fla}'"/>
+		</exec>
+		
+		<antcall target="Check JSFL Output" />
+	</target>
+	
+	<target name="Check JSFL Output">
+		<waitfor maxwait="30" maxwaitunit="second" checkevery="1">
+			<available file="${jsfl-output}"/>
+		</waitfor>
+		
+		<script language="javascript">
+			<![CDATA[
+			importPackage(java.net);
+			importPackage(java.io);
+			importPackage(java.lang);
+			importPackage(java.util);
+			
+			var output = "" + new BufferedReader(new FileReader(project.getProperty("jsfl-output"))).readLine().substr(3);
+			
+			if (output != "0 Error(s), 0 Warning(s)")
+			{
+				if (output.substr(0, 11) == "**Warning**" && output.indexOf("deprecated") != -1)
+				{
+					// ignore this warning
+					var echo = project.createTask("echo");
+					echo.setMessage(output);
+					echo.perform();
+				}
+				else
+				{
+					var fail = project.createTask("fail");
+					fail.setMessage("Error building fla\n" + output);
+					fail.perform();
+				}
+			}
+			else
+			{
+				var echo = project.createTask("echo");
+				echo.setMessage(output);
+				echo.perform();
+			}
+			
+			]]>
+		</script>
+		<sleep seconds="2"/>
+		<delete file="${jsfl-output}" quiet="true" />
+	</target>
+
+	<target name="Test Fla">
+		<script language="javascript">
+			<![CDATA[
+			var file = project.getProperty("ant.file");
+			
+			prop = project.createTask("property");
+			prop.setName("fla");
+			prop.setValue(file.substring(0, file.length() - 3) + "fla");
+			prop.perform();
+	
+	    	]]>
+		</script>
+		<exec executable="${flash}">
+			<arg line="'${root}/tools/jsfl/test.jsfl'"/>
+			<arg line="'${fla}'"/>
+		</exec>
+	</target>
+
+</project>

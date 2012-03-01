@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build" name="VideoPlayerExample">
+	<import file="../../../../../tools/ant/build-mediaplayers.xml" />
+</project>

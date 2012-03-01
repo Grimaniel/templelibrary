@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Export" basedir="../../../../tools/ant" name="Temple-Yalog">
+
+	<property name="module" value="yalog" />
+	<property name="name" value="Temple Yalog Module" />
+	<property name="dependencies" value="core,common" />
+	
+	<property name="skip-copyrights" value="true" />
+	<property name="skip-author" value="true" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+	
+</project>
