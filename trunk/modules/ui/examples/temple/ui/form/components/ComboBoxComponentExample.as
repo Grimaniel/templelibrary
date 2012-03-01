@@ -10,7 +10,7 @@
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/form/components/ComboBoxComponentExample.swf" target="_blank">View this example</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/D:/Projects/Temple/GoogleCode/templelibrary/modules/ui/examples/temple/ui/form/components/ComboBoxComponentExample.fla" target="_blank">Download .fla file</a></p>
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/form/components/ComboBoxComponentExample.fla" target="_blank">Download .fla file</a></p>
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/form/components/ComboBoxComponentExample.as" target="_blank">View source</a></p>
  */

@@ -1,43 +1,36 @@
 /*
- *	 
  *	Temple Library for ActionScript 3.0
- *	Copyright © 2012 MediaMonks B.V.
+ *	Copyright © MediaMonks B.V.
  *	All rights reserved.
- *	
- *	http://code.google.com/p/templelibrary/
  *	
  *	Redistribution and use in source and binary forms, with or without
  *	modification, are permitted provided that the following conditions are met:
+ *	1. Redistributions of source code must retain the above copyright
+ *	   notice, this list of conditions and the following disclaimer.
+ *	2. Redistributions in binary form must reproduce the above copyright
+ *	   notice, this list of conditions and the following disclaimer in the
+ *	   documentation and/or other materials provided with the distribution.
+ *	3. All advertising materials mentioning features or use of this software
+ *	   must display the following acknowledgement:
+ *	   This product includes software developed by MediaMonks B.V.
+ *	4. Neither the name of MediaMonks B.V. nor the
+ *	   names of its contributors may be used to endorse or promote products
+ *	   derived from this software without specific prior written permission.
  *	
- *	- Redistributions of source code must retain the above copyright notice,
- *	this list of conditions and the following disclaimer.
- *	
- *	- Redistributions in binary form must reproduce the above copyright notice,
- *	this list of conditions and the following disclaimer in the documentation
- *	and/or other materials provided with the distribution.
- *	
- *	- Neither the name of the Temple Library nor the names of its contributors
- *	may be used to endorse or promote products derived from this software
- *	without specific prior written permission.
- *	
- *	
- *	Temple Library is free software: you can redistribute it and/or modify
- *	it under the terms of the GNU Lesser General Public License as published by
- *	the Free Software Foundation, either version 3 of the License, or
- *	(at your option) any later version.
- *	
- *	Temple Library is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU Lesser General Public License for more details.
- *	
- *	You should have received a copy of the GNU Lesser General Public License
- *	along with Temple Library.  If not, see <http://www.gnu.org/licenses/>.
+ *	THIS SOFTWARE IS PROVIDED BY MEDIAMONKS B.V. ''AS IS'' AND ANY
+ *	EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ *	DISCLAIMED. IN NO EVENT SHALL MEDIAMONKS B.V. BE LIABLE FOR ANY
+ *	DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *	(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ *	LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ *	ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ *	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *	
  *	
  *	Note: This license does not apply to 3rd party classes inside the Temple
  *	repository with their own license!
- *	
  */
 
 package temple.utils
@@ -84,14 +77,14 @@ package temple.utils
 			entities['ã'] = 'a';
 			entities['ä'] = 'a';
 			entities['å'] = 'a';
-			entities['ā'] = 'a';
+			entities['�?'] = 'a';
 			entities['ą'] = 'a';
 			entities['ç'] = 'c';
 			entities['ć'] = 'c';
 			entities['ĉ'] = 'c';
 			entities['ċ'] = 'c';
-			entities['č'] = 'c';
-			entities['ď'] = 'd';
+			entities['�?'] = 'c';
+			entities['�?'] = 'd';
 			entities['đ'] = 'd';
 			entities['è'] = 'e';
 			entities['é'] = 'e';
@@ -101,7 +94,7 @@ package temple.utils
 			entities['ĕ'] = 'e';
 			entities['ė'] = 'e';
 			entities['ę'] = 'e';
-			entities['ĝ'] = 'g';
+			entities['�?'] = 'g';
 			entities['ğ'] = 'g';
 			entities['ġ'] = 'g';
 			entities['ģ'] = 'g';
@@ -134,14 +127,14 @@ package temple.utils
 			entities['ö'] = 'o';
 			entities['õ'] = 'o';
 			entities['ø'] = 'o';
-			entities['ō'] = 'o';
-			entities['ŏ'] = 'o';
+			entities['�?'] = 'o';
+			entities['�?'] = 'o';
 			entities['ő'] = 'o';
 			entities['ŕ'] = 'r';
 			entities['ŗ'] = 'r';
 			entities['ř'] = 'r';
 			entities['ś'] = 's';
-			entities['ŝ'] = 's';
+			entities['�?'] = 's';
 			entities['ş'] = 's';
 			entities['š'] = 's';
 			entities['ţ'] = 't';
@@ -166,7 +159,7 @@ package temple.utils
 			entities['ž'] = 'z';
 			
 			entities['À'] = 'A';
-			entities['Á'] = 'A';
+			entities['�?'] = 'A';
 			entities['Â'] = 'A';
 			entities['Ã'] = 'A';
 			entities['Ä'] = 'A';
@@ -180,7 +173,7 @@ package temple.utils
 			entities['Ċ'] = 'C';
 			entities['Č'] = 'C';
 			entities['Ď'] = 'D';
-			entities['Đ'] = 'D';
+			entities['�?'] = 'D';
 			entities['È'] = 'E';
 			entities['É'] = 'E';
 			entities['Ê'] = 'E';
@@ -197,9 +190,9 @@ package temple.utils
 			entities['Ĥ'] = 'H';
 			entities['Ħ'] = 'H';
 			entities['Ì'] = 'I';
-			entities['Í'] = 'I';
+			entities['�?'] = 'I';
 			entities['Î'] = 'I';
-			entities['Ï'] = 'I';
+			entities['�?'] = 'I';
 			entities['Ĩ'] = 'I';
 			entities['Ī'] = 'I';
 			entities['Ĭ'] = 'I';
@@ -212,7 +205,7 @@ package temple.utils
 			entities['Ļ'] = 'L';
 			entities['Ľ'] = 'L';
 			entities['Ŀ'] = 'L';
-			entities['Ł'] = 'L';
+			entities['�?'] = 'L';
 			entities['Ñ'] = 'N';
 			entities['Ń'] = 'N';
 			entities['Ņ'] = 'N';
@@ -226,7 +219,7 @@ package temple.utils
 			entities['Ø'] = 'O';
 			entities['Ō'] = 'O';
 			entities['Ŏ'] = 'O';
-			entities['Ő'] = 'O';
+			entities['�?'] = 'O';
 			entities['Ŕ'] = 'R';
 			entities['Ŗ'] = 'R';
 			entities['Ř'] = 'R';
@@ -248,7 +241,7 @@ package temple.utils
 			entities['Ű'] = 'U';
 			entities['Ų'] = 'U';
 			entities['Ŵ'] = 'W';
-			entities['Ý'] = 'Y';
+			entities['�?'] = 'Y';
 			entities['Ÿ'] = 'Y';
 			entities['Ŷ'] = 'Y';
 			entities['Ź'] = 'Z';
