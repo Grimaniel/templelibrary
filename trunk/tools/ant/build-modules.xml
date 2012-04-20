@@ -2,30 +2,80 @@
 <project default="Build Modules" name="Temple-Modules">
 
 	<import file="temple-properties.xml"/>
-
-	<target name="Build Modules" >
-		<module name="core" />
-		<module name="common" />
-		<module name="utils" />
-		<module name="tweenlite" />
-		<module name="data" />
-		<module name="control" />
-		<module name="ui" />
-		<module name="yalog" />
-		<module name="codecomponents" />
-		<!--module name="facebook" /-->
-		<module name="mediaplayers" />
-		<module name="camera" />
-		<!--module name="fontutils" /-->
-		<!--module name="sound" /-->
-		<!--module name="multilanguage" /-->
-	</target>
 	
-	 <macrodef name="module">
-	 	<attribute name="name"/>
-	 	<sequential>
-	 		<echo>Building module @{name}</echo>
-	 		<ant antfile="${root.dir}/modules/@{name}/tools/ant/build-@{name}.xml" />
-	 	</sequential>
-	 </macrodef>
+	<property name="core-modules" value="core,common,utils,tweenlite,data,control,ui,yalog" />
+	<property name="extended-modules" value="codecomponents,mediaplayers,camera" />
+	
+	<property name="targets" value="Prepare,Compile,Extend,Package" />
+	
+	<target name="Build Modules" >
+		<antcall target="Build Core Modules" />
+		<antcall target="Build Extended Modules" />
+	</target>
+
+	<target name="Build Core Modules" >
+		<script language="javascript">
+			<![CDATA[
+			
+			for each (var target in project.getProperty("targets").split(","))
+			{
+				if (target.length())
+				{
+					var echo = project.createTask("echo");
+					echo.setMessage("\nTarget: " + target);
+					echo.perform();
+			
+					for each (var module in project.getProperty("core-modules").split(","))
+					{
+						if (module.length())
+						{
+							var prebuild = project.createTask("module");
+							prebuild.setDynamicAttribute("name", module);
+							prebuild.setDynamicAttribute("target", target);
+							prebuild.perform();
+						}
+					}
+				}
+			}
+
+	    	]]>
+		</script>
+	</target>
+	<target name="Build Extended Modules" >
+		<script language="javascript">
+			<![CDATA[
+			for each (var target in project.getProperty("targets").split(","))
+			{
+				if (target.length())
+				{
+					var echo = project.createTask("echo");
+					echo.setMessage("\nTarget: " + target);
+					echo.perform();
+			
+					for each (var module in project.getProperty("extended-modules").split(","))
+					{
+						if (module.length())
+						{
+							var prebuild = project.createTask("module");
+							prebuild.setDynamicAttribute("name", module);
+							prebuild.setDynamicAttribute("target", target);
+							prebuild.perform();
+						}
+					}
+				}
+			}
+
+	    	]]>
+		</script>
+	</target>
+
+
+	<macrodef name="module">
+		<attribute name="name"/>
+		<attribute name="target"/>
+		<sequential>
+			<echo>Building module @{name}</echo>
+			<ant antfile="${root.dir}/modules/@{name}/tools/ant/build-@{name}.xml" target="@{target}" />
+		</sequential>
+	</macrodef>
 </project>
