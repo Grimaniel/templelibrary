@@ -54,7 +54,7 @@ package temple.core.destruction
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.1";
+		templelibrary static const VERSION:String = "3.0.2";
 		
 		protected static var _instance:DestructController;
 

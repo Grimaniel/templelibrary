@@ -38,6 +38,8 @@ package temple.core.net
 	{
 		include "../includes/Version.as.inc";
 		
+		include "../includes/ConstructNamespace.as.inc";
+		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -49,12 +51,21 @@ package temple.core.net
 		private var _url:String;
 		private var _emptyPropsInToString:Boolean = true;
 
-		public function CoreNetStream(netConnection:NetConnection) 
+		public function CoreNetStream(netConnection:NetConnection)
 		{
 			super(netConnection);
 			
-			// Register object for destruction testing
+			construct::coreNetStream(netConnection);
+		}
+		
+		/**
+		 * @private
+		 */
+		construct function coreNetStream(netConnection:NetConnection):void
+		{
 			this._registryId = Registry.add(this);
+			
+			netConnection;
 		}
 		
 		/**

@@ -45,6 +45,8 @@ package temple.core.net
 	{
 		include "../includes/Version.as.inc";
 		
+		include "../includes/ConstructNamespace.as.inc";
+		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _isLoading:Boolean;
 		private var _isLoaded:Boolean;
@@ -63,12 +65,17 @@ package temple.core.net
 		 */
 		public function CoreURLStream(destructOnError:Boolean = true, logErrors:Boolean = true)
 		{
-			super();
-			
+			construct::coreURLStream(destructOnError, logErrors);
+		}
+		
+		/**
+		 * @private
+		 */
+		construct function coreURLStream(destructOnError:Boolean, logErrors:Boolean):void
+		{
 			this._destructOnError = destructOnError;
 			this._logErrors = logErrors;
 			
-			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Add default listeners to Error events and preloader support

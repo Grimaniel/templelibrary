@@ -84,7 +84,14 @@ package temple.core.display
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.1";
+		templelibrary static const VERSION:String = "3.0.2";
+		
+		/**
+		 * @private
+		 * 
+		 * Protected namespace for construct method. This makes overriding of constructor possible.
+		 */
+		protected namespace construct;
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);
 		private var _eventListenerManager:EventListenerManager;
@@ -97,11 +104,16 @@ package temple.core.display
 
 		public function CoreMovieClip()
 		{
-			super();
-
+			construct::coreMovieClip();
+		}
+		
+		/**
+		 * @private
+		 */
+		construct function coreMovieClip():void
+		{
 			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
 			
-			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property

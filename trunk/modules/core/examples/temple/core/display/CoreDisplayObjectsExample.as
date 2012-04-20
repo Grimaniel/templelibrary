@@ -29,6 +29,7 @@
  */
 package
 {
+	import flash.system.System;
 	import temple.core.debug.MemoryDebugger;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.log.LogEvent;
@@ -188,6 +189,8 @@ package
 			
 			// the TextField is also destructed, so put it back on stage
 			this.addChild(this._output);
+			
+			System.gc();
 		}
 	}
 }

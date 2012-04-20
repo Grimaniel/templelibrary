@@ -52,6 +52,8 @@ package temple.core.display
 	{
 		include "../includes/Version.as.inc";
 		
+		include "../includes/ConstructNamespace.as.inc";
+		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -66,11 +68,18 @@ package temple.core.display
 		{
 			super(bitmapData, pixelSnapping, smoothing);
 
+			construct::coreBitmap(bitmapData, pixelSnapping, smoothing, disposeBitmapDataOnDestruct);
+		}
+		
+		/**
+		 * @private
+		 */
+		construct function coreBitmap(bitmapData:BitmapData, pixelSnapping:String, smoothing:Boolean, disposeBitmapDataOnDestruct:Boolean):void
+		{
 			this._disposeBitmapDataOnDestruct = disposeBitmapDataOnDestruct;
 
 			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
 			
-			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
@@ -78,6 +87,10 @@ package temple.core.display
 			super.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
 			super.addEventListener(Event.REMOVED, this.handleRemoved);
 			super.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			
+			bitmapData;
+			pixelSnapping;
+			smoothing;
 		}
 		
 		/**

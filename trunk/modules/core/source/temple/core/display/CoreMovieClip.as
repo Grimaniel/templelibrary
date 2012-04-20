@@ -52,6 +52,8 @@ package temple.core.display
 	{
 		include "../includes/Version.as.inc";
 		
+		include "../includes/ConstructNamespace.as.inc";
+		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -63,11 +65,16 @@ package temple.core.display
 
 		public function CoreMovieClip()
 		{
-			super();
-
+			construct::coreMovieClip();
+		}
+		
+		/**
+		 * @private
+		 */
+		construct function coreMovieClip():void
+		{
 			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
 			
-			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property

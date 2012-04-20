@@ -104,7 +104,7 @@ package temple.core.debug.log
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.1";
+		templelibrary static const VERSION:String = "3.0.2";
 		
 		private static var _instance:Log;
 		private static var _showTrace:Boolean = true;
@@ -115,8 +115,6 @@ package temple.core.debug.log
 		 * @param text the message
 		 * @param sender a reference denoting the source of the message;  <code>toString()</code> is called on this
 		 *  object internally.
-		 * @param objectId the Registry objectId that is stored in Core Objects;
-		 *  this param is only used for objects that are stored in the Registry
 		 *			
 		 * @example
 		 * <listing version="3.0">
@@ -125,9 +123,9 @@ package temple.core.debug.log
 		 *	
 		 * @see temple.core.debug.log.LogLevel#DEBUG
 		 */
-		public static function debug(data:*, sender:*, objectId:uint = 0):void 
+		public static function debug(data:*, sender:*):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevel.DEBUG, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.DEBUG);
 		}
 
 		/**
@@ -135,8 +133,6 @@ package temple.core.debug.log
 		 * @param text the message
 		 * @param sender a reference denoting the source of the message; <code>toString()</code> is called on this
 		 *  object internally.
-		 * @param objectId the Registry objectId that is stored in Core Objects;
-		 *  this param is only used for objects that are stored in the Registry
 		 * 
 		 * @example
 		 * <listing version="3.0">
@@ -145,9 +141,9 @@ package temple.core.debug.log
 		 * 
 		 * @see temple.core.debug.log.LogLevel#INFO
 		 */
-		public static function info(data:*, sender:*, objectId:uint = 0):void 
+		public static function info(data:*, sender:*):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevel.INFO, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.INFO);
 		}
 
 		/**
@@ -155,8 +151,7 @@ package temple.core.debug.log
 		 * @param text the message
 		 * @param sender a reference denoting the source of the message; <code>toString()</code> is called on this
 		 *  object internally.
-		 * @param objectId the Registry objectId that is stored in Core Objects;
-		 *  this param is only used for objects that are stored in the Registry
+		 *  
 		 * @example
 		 * <listing version="3.0">
 		 *	Log.error("This is an error message", this);
@@ -164,9 +159,9 @@ package temple.core.debug.log
 		 *	
 		 *	@see temple.core.debug.log.LogLevel#ERROR
 		 */
-		public static function error(data:*, sender:*, objectId:uint = 0):void 
+		public static function error(data:*, sender:*):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevel.ERROR, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.ERROR);
 		}
 
 		/**
@@ -174,8 +169,6 @@ package temple.core.debug.log
 		 * @param text the message
 		 * @param sender a reference denoting the source of the message; <code>toString()</code> is called on this
 		 *  object internally.
-		 * @param objectId the Registry objectId that is stored in Core Objects;
-		 *  this param is only used for objects that are stored in the Registry
 		 *
 		 * @example
 		 * <listing version="3.0">
@@ -184,9 +177,9 @@ package temple.core.debug.log
 		 *	
 		 *	@see temple.core.debug.log.LogLevel#WARN
 		 */
-		public static function warn(data:*, sender:*, objectId:uint = 0):void 
+		public static function warn(data:*, sender:*):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevel.WARN, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.WARN);
 		}
 
 		/**
@@ -194,8 +187,6 @@ package temple.core.debug.log
 		 * @param text the message
 		 * @param sender a reference denoting the source of the message; <code>toString()</code> is called on this
 		 *  object internally.
-		 * @param objectId the Registry objectId that is stored in Core Objects;
-		 *  this param is only used for objects that are stored in the Registry
 		 * 
 		 * @example
 		 * <listing version="3.0">
@@ -204,9 +195,9 @@ package temple.core.debug.log
 		 *	
 		 *	@see temple.core.debug.log.LogLevel#FATAL
 		 */
-		public static function fatal(data:*, sender:*, objectId:uint = 0):void 
+		public static function fatal(data:*, sender:*):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevel.FATAL, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.FATAL);
 		}
 
 		/**
@@ -214,8 +205,6 @@ package temple.core.debug.log
 		 * @param text the message
 		 * @param sender a reference denoting the source of the message; <code>toString()</code> is called on this
 		 *  object internally.
-		 * @param objectId the Registry objectId that is stored in Core Objects;
-		 *  this param is only used for objects that are stored in the Registry
 		 *
 		 * @example
 		 * <listing version="3.0">
@@ -224,9 +213,9 @@ package temple.core.debug.log
 		 *	
 		 *	@see temple.core.debug.log.LogLevel#STATUS
 		 */
-		public static function status(data:*, sender:*, objectId:uint = 0):void 
+		public static function status(data:*, sender:*):void 
 		{
-			Log.templelibrary::send(data, sender, LogLevel.STATUS, objectId);
+			Log.templelibrary::send(data, sender, LogLevel.STATUS);
 		}
 
 		/**

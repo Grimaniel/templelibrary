@@ -23,7 +23,8 @@ package temple.core.utils
 		include "../includes/Version.as.inc";
 		
 		/**
-		 * Returns true if the SWF is built in debug mode
+		 * Returns true if the SWF is built in debug mode.
+		 * Note: only works in a debug player.
 		 */
 		public static function isDebugBuild():Boolean
 		{
@@ -32,7 +33,8 @@ package temple.core.utils
 		}
 
 		/**
-		 * Returns true if the SWF is built in release mode
+		 * Returns true if the SWF is built in release mode.
+		 * Note: only works in a debug player.
 		 */
 		public static function isReleaseBuild():Boolean
 		{
