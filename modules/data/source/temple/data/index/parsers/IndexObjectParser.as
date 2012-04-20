@@ -111,7 +111,7 @@ package temple.data.index.parsers
 				return null;
 			}
 			
-			var id:String = key in object ? object[key] : String(object);
+			var id:String = (key in object) ? object[key] : String(object);
 			
 			if (!id)
 			{
