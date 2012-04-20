@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="Export" name="Temple-Build">
+<project default="Full Build" name="Temple-Build">
 	
 	<import file="build-properties.xml" />
 	<import file="temple-properties.xml"/>
@@ -44,26 +44,46 @@
 	
 	<taskdef resource="flexTasks.tasks" classpath="${root.dir}/tools/jar/flexTasks.jar" />
 
-	<target name="Export">
+	<target name="Full Build">
+		<antcall target="Prepare" />
+		<antcall target="Compile" />
+		<antcall target="Extended" />
+		<antcall target="Package" />
+		<echo>Full Build successful</echo>
+	</target>
+
+	<target name="Prepare">
 		<antcall target="Check license" />
 		<antcall target="Check license extended" />
 		<antcall target="Check author" />
 		<antcall target="Check author extended" />
 		<antcall target="Check see tag" />
 		<antcall target="Update Readme" />
+		<echo>Prepared successful</echo>
+	</target>
+
+	<target name="Compile">
 		<antcall target="Copy dependencies" />
 		<antcall target="Delete old SWC" />
-		<antcall target="Generate ASDoc" />
 		<antcall target="Create SWC" />
+		<echo>Build successful</echo>
+	</target>
+
+	<target name="Extend">
+		<antcall target="Generate ASDoc" />
 		<antcall target="Update SWC with ASDoc" />
 		<antcall target="Delete ASDoc tempdata" />
 		<antcall target="Create Extended SWC" />
+		<echo>Extend successful</echo>
+	</target>
+
+	<target name="Package">
 		<antcall target="Check Examples" />
 		<antcall target="Update Example URLS" />
 		<antcall target="Build Examples" />
 		<antcall target="Generate Example Index" />
 		<antcall target="Create Zip" />
-		<echo>Export successful</echo>
+		<echo>Package successful</echo>
 	</target>
 	
 	<target name="Delete old SWC" >
@@ -387,7 +407,10 @@
 		<echo>@see checked</echo>
 	</target>
 
-	<target name="Copy dependencies">
+	<target name="Copy dependencies" if="dependencies">
+		<delete>
+			<fileset dir="${lib.dir}" includes="**/*.swc" />
+		</delete>
 		<script language="javascript">
 			<![CDATA[
 			importPackage(java.io);
