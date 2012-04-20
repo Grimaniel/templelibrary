@@ -47,18 +47,18 @@ package temple.data
 	 */
 	public class FileData extends CoreObject
 	{
-		public static function createFromFileReference(fileRef:FileReference):FileData
+		public static function createFromFileReference(fileReference:FileReference):FileData
 		{
 			var fd:FileData = new FileData();
 			
-			fd.name = fileRef.name;
-			fd.type = fileRef.type;
-			fd.size = fileRef.size;
-			fd.creator = fileRef.creator;
-			fd.creationDate = fileRef.creationDate;
-			fd.modificationDate = fileRef.modificationDate;
+			fd.name = fileReference.name;
+			fd.type = fileReference.type;
+			fd.size = fileReference.size;
+			fd.creator = fileReference.creator;
+			fd.creationDate = fileReference.creationDate;
+			fd.modificationDate = fileReference.modificationDate;
 			// Fix for Flash Player 9
-			fd.data = fileRef.hasOwnProperty('data') ? fileRef['data'] : null;
+			fd.data = fileReference.hasOwnProperty('data') ? fileReference['data'] : null;
 			
 			return fd;
 		}
@@ -138,6 +138,24 @@ package temple.data
 			fd.url = this.url;
 			
 			return fd;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void
+		{
+			this.name = null;
+			this.type = null;
+			this.size = 0;
+			this.creator = null;
+			this.creationDate = null;
+			this.modificationDate = null;
+			this.data = null;
+			this.pointer = null;
+			this.url = null;
+			
+			super.destruct();
 		}
 	}
 }

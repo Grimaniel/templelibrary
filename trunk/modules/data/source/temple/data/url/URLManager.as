@@ -35,6 +35,7 @@
 
 package temple.data.url 
 {
+	import flash.utils.escapeMultiByte;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.addToDebugManager;
 	import temple.core.errors.TempleArgumentError;
@@ -502,18 +503,26 @@ package temple.data.url
 			// add ungrouped variables
 			vars += this._rawData.child('var');
 			
-			var key:String;
+			var key:String, node:XML;
 			
 			for (i = 0;i < vars.length(); i++)
 			{
-				if (!XML(vars[i]).hasOwnProperty('@name'))
+				node = XML(vars[i]);
+				
+				if (!node.hasOwnProperty('@name'))
 				{
-					this.logError("variable has no name attribute: " + vars[i].toXMLString());
+					this.logError("variable has no name attribute: " + node.toXMLString());
 				}
 				else
 				{
-					if (!XML(vars[i]).hasOwnProperty('@value')) this.logWarn("variable '" + vars[i].@name + "' has no value attribute: " + vars[i].toXMLString());
-					if (!this._variables.hasOwnProperty(vars[i].@name)) this._variables[vars[i].@name] = vars[i].@value;
+					if (!node.hasOwnProperty('@value')) this.logWarn("variable '" + node.@name + "' has no value attribute: " + node.toXMLString());
+					if (!this._variables.hasOwnProperty(node.@name))
+					{
+						var value:String = node.@value;
+						if (node.hasOwnProperty('@escape') && node.@escape == "true") value = escape(value);
+						if (node.hasOwnProperty('@escapemultibyte') && node.@escapemultibyte == "true") value = escapeMultiByte(value);
+						this._variables[node.@name] = value;
+					}
 				}
 			}
 			
