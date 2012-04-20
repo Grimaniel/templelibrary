@@ -77,8 +77,5 @@ package temple.utils
 		 * Accessors with access "readwrite", "readonly" or "writeonly"
 		 */
 		public static const ALL:String = "all";
-
-
-
 	}
 }

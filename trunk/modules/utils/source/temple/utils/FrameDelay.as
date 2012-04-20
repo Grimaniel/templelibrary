@@ -71,7 +71,7 @@ package temple.utils
 	 * 
 	 * @author ASAPLibrary, Thijs Broerse
 	 */
-	public final class FrameDelay extends CoreObject implements IPauseable, IDebuggable
+	public class FrameDelay extends CoreObject implements IPauseable, IDebuggable
 	{
 		/**
 		 * Make frame-delayed callback: (eg: a closure to .resume() of a paused FrameDelay)

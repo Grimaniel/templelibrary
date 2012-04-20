@@ -57,6 +57,7 @@ package temple.utils
 		private var _startDate:Date;
 		private var _allowNegative:Boolean;
 		private var _pauseEndTime:Date;
+		private var _timeDiff:Number;
 
 		public function CountDown(endDate:Date = null, allowNegative:Boolean = false) 
 		{
@@ -79,6 +80,14 @@ package temple.utils
 		public function set endDate(value:Date):void
 		{
 			this._endDate = value;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set timeDiff(value:Number):void
+		{
+			this._timeDiff = value;
 		}
 		
 		/**
@@ -231,7 +240,14 @@ package temple.utils
 		 */
 		public function get weeks():Number
 		{
-			return Math.floor(this.days / 7);
+			if (this._endDate)
+			{
+				return Math.floor(this.days / 7);
+			}
+			else
+			{
+				return int(this.totalWeeks);
+			}
 		}
 		
 		/**
@@ -247,7 +263,14 @@ package temple.utils
 		 */
 		public function get days():Number
 		{
-			return this.time.getDate() - 1;
+			if (this._endDate)
+			{
+				return this.time.getDate() - 1;
+			}
+			else
+			{
+				return int(this.totalDays);
+			}
 		}
 		
 		public function get totalHours():Number
@@ -257,7 +280,14 @@ package temple.utils
 
 		public function get hours():Number
 		{
-			return this.time.getHours();
+			if (this._endDate)
+			{
+				return this.time.getHours();
+			}
+			else
+			{
+				return int(this.totalHours % 24);
+			}
 		}
 		
 		public function get totalMinutes():Number
@@ -267,7 +297,14 @@ package temple.utils
 
 		public function get minutes():Number
 		{
-			return this.time.getMinutes();
+			if (this._endDate)
+			{
+				return this.time.getMinutes();
+			}
+			else
+			{
+				return int(this.totalMinutes % 60);
+			}
 		}
 		
 		public function get totalSeconds():Number
@@ -277,7 +314,14 @@ package temple.utils
 
 		public function get seconds():Number
 		{
-			return this.time.getSeconds();
+			if (this._endDate)
+			{
+				return this.time.getSeconds();
+			}
+			else
+			{
+				return int(this.totalSeconds % 60);
+			}
 		}		
 		
 		public function get totalMilliseconds():Number
@@ -287,12 +331,19 @@ package temple.utils
 
 		public function get milliseconds():Number
 		{
-			return this.time.getMilliseconds();
+			if (this._endDate)
+			{
+				return this.time.getMilliseconds();
+			}
+			else
+			{
+				return int(this.milliseconds);
+			}
 		}
 		
 		private function get totalTime():Number
 		{
-			return this.time ? this.time.time - (this.time.getTimezoneOffset() * 60 * 1000) : NaN;
+			return this.time ? this.time.time - (this.time.getTimezoneOffset() * 60 * 1000) : (this._allowNegative ? this._timeDiff : Math.max(this._timeDiff, 0));
 		}
 
 		/**

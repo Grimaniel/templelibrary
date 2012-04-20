@@ -42,6 +42,8 @@ package temple.utils.types
 	import flash.utils.getQualifiedClassName;
 
 	/**
+	 * This class contains some functions for Vectors.
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public final class VectorUtils 
@@ -118,7 +120,7 @@ package temple.utils.types
 		 *
 		 *	@return A new vector of the same type which contains the same items as the vector passed in.
 		 */			
-		public static function clone(vector:*):Array
+		public static function clone(vector:*):*
 		{
 			if (!VectorUtils.isVector(vector)) throwError(new TempleArgumentError(VectorUtils, vector + " is not a Vector " + getQualifiedClassName(vector)));
 			
@@ -148,6 +150,45 @@ package temple.utils.types
 				}
 			}
 			return true;
+		}
+
+		/**
+		 * Sorts the elements in a vector according to one or more fields in the vector.
+		 * This method works the same as the Array.sortOn method.
+		 */
+		public static function sortOn(vector:*, names:*, options:* = 0, ...args:*):void
+		{
+			var a:Array = VectorUtils.toArray(vector);
+			a.sortOn.apply(null, [names, options].concat(args));
+			
+			var fixed:Boolean = vector.fixed;
+			vector.fixed = false;
+			vector.length = 0;
+			vector.push.apply(null, a);
+			vector.fixed = fixed;
+		}
+		
+		/**
+		 * Shuffles a Vector (sort random) 
+		 */
+		public static function shuffle(vector:*):void 
+		{
+			if (!VectorUtils.isVector(vector)) throwError(new TempleArgumentError(VectorUtils, vector + " is not a Vector " + getQualifiedClassName(vector)));
+			
+			var i:uint = vector.length;
+		    if (i == 0)
+			{
+				return;
+			}
+			var j:int;
+			var temp:*;
+		    while (--i)
+			{
+		        j = Math.floor(Math.random() * (i + 1));
+		        temp = vector[i];
+		        vector[i] = vector[j];
+		        vector[j] = temp;
+		    }
 		}
 
 		/**

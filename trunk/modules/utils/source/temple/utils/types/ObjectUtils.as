@@ -305,7 +305,7 @@ package temple.utils.types
 							}
 							if (optional) output += ")";
 						}
-						output += ") (" + getClassName(variable) + ")";
+						output += ")" + (vardata.xml ? ":" + getClassName(String(vardata.xml.@returnType)) : "") + " (" + getClassName(variable) + ")";
 						break;
 					}
 					default:
@@ -393,7 +393,7 @@ package temple.utils.types
 		public static function toDynamic(object:Object):Object
 		{
 			var result:Object = new Object();
-			for each (var node : XML in describeType(object).accessor.(@access == 'readwrite' || @access == 'readonly'))
+			for each (var node : XML in describeType(object).accessor.(@access == AccessorAccess.READWRITE || @access == AccessorAccess.READONLY))
 			{
 				result[node.@name] = object[node.@name];
 			}
@@ -569,7 +569,7 @@ package temple.utils.types
 		}
 
 		/**
-		 * Check if there are proerties defined
+		 * Check if there are properties defined
 		 * @return true if we have properties
 		 */
 		public static function hasKeys(object:Object):Boolean

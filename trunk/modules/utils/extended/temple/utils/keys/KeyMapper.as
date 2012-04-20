@@ -35,6 +35,8 @@
 
 package temple.utils.keys 
 {
+	import flash.display.DisplayObject;
+	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 	import temple.common.interfaces.IEnableable;
 	import temple.core.CoreObject;
 	import temple.core.debug.IDebuggable;
@@ -77,7 +79,7 @@ package temple.utils.keys
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class KeyMapper extends CoreObject implements IEnableable, IDebuggable
+	public class KeyMapper extends AbstractDisplayObjectBehavior implements IEnableable, IDebuggable
 	{
 		/**
 		 * Added when the shift-key is down while pressing a key
@@ -95,29 +97,30 @@ package temple.utils.keys
 		public static const ALT:uint = 2<<12;
 		
 		private var _map:Object;
-		private var _stage:Stage;
 		private var _keyboardEvent:String;
 		private var _enabled:Boolean = true;
 		private var _debug:Boolean;
 
 		/**
 		 * Creates a new KeyMapper instance
-		 * @param stage a reference to the stage. Needed for handling KeyBoardEvents
+		 * @param target the object which dispatches the KeyboardEvents. This DisplayObject must have focus in order to
+		 * dispatch KeyboardEvent. Pass the stage if you want to listen for global KeyboardEvents.
 		 * @param keyboardEvent pass KeyboardEvent.KEY_DOWN (default) if you want to listen for KEY_DOWN events,
 		 * otherwise pass KeyboardEvent.KEY_UP if you want to listen for KEY_UP events.
 		 */
-		public function KeyMapper(stage:Stage, keyboardEvent:String = KeyboardEvent.KEY_DOWN) 
+		public function KeyMapper(target:DisplayObject, keyboardEvent:String = KeyboardEvent.KEY_DOWN) 
 		{
-			if (!stage) throwError(new TempleArgumentError(this, "stage can not be null"));
+			super(target);
+			
+			if (!target) throwError(new TempleArgumentError(this, "target can not be null"));
 			
 			if (keyboardEvent != KeyboardEvent.KEY_UP && keyboardEvent != KeyboardEvent.KEY_DOWN)
 			{
 				throwError(new TempleArgumentError(this, "invalid value for keyboardEvent '" + keyboardEvent + "'"));
 			}
 			this._map = {};
-			this._stage = stage;
 			this._keyboardEvent = keyboardEvent;
-			this._stage.addEventListener(this._keyboardEvent, this.handleKeyEvent);
+			target.addEventListener(this._keyboardEvent, this.handleKeyEvent);
 		}
 
 		/**
@@ -126,7 +129,7 @@ package temple.utils.keys
 		 * @param method the method to be called when the key is pressed
 		 * @param arguments the argument to be passed to the method when called
 		 */
-		public function map(key:uint, method:Function, arguments:Array = null):void 
+		public function map(key:uint, method:Function, arguments:Array = null):KeyMapper 
 		{
 			if (this._map[key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
 			
@@ -138,6 +141,7 @@ package temple.utils.keys
 			{
 				this._map[key] = method;
 			}
+			return this;
 		}
 		
 		/**
@@ -258,7 +262,7 @@ package temple.utils.keys
 			if (event.altKey) keyCode |= KeyMapper.ALT;
 			if (event.ctrlKey) keyCode |= KeyMapper.CONTROL;
 			
-			if (this._map && this._map[keyCode])
+			if (this._map && keyCode in this._map)
 			{
 				if (this.debug) this.logDebug("handleKeyEvent: " + event);
 				
@@ -282,10 +286,9 @@ package temple.utils.keys
 		 */
 		override public function destruct():void 
 		{
-			if (this._stage)
+			if (this.displayObject)
 			{
-				this._stage.removeEventListener(this._keyboardEvent, this.handleKeyEvent);
-				this._stage = null;
+				this.displayObject.removeEventListener(this._keyboardEvent, this.handleKeyEvent);
 				this._keyboardEvent = null;
 			}
 			

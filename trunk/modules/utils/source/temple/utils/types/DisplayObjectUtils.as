@@ -33,6 +33,11 @@
  *	repository with their own license!
  */
 
+
+/*
+Copyright (c) 2008 Yahoo! Inc.  All rights reserved.  
+The copyrights embodied in the content of this file are licensed under the BSD (revised) open source license
+ */
 package temple.utils.types
 {
 	import temple.common.enum.Align;
@@ -326,39 +331,21 @@ package temple.utils.types
 		 * @param source the source DisplayObject to get the Transform Matrix from.
 		 * @param target the target DisplayObject to apply the Matrix to.
 		 */
-		public static function convertTransformMatrix(source:DisplayObject, target:DisplayObjectContainer):Matrix
+		public static function convertTransformMatrix(source:DisplayObject, target:DisplayObject):Matrix
 		{
 			if (!source || !source.transform || !source.parent || !target) return null;
 			
-			var matrix:Matrix = source.transform.matrix;
+			var sourceConcatenatedMatrix:Matrix = source.transform.concatenatedMatrix;
+			var targetConcatenatedMatrix:Matrix = target.transform.concatenatedMatrix;
+			var targetMatrix:Matrix = target.transform.matrix;
 			
-			var container:DisplayObjectContainer = source.parent;
+			targetConcatenatedMatrix.invert();
 			
-			while (container && !container.contains(target))
-			{
-				if (!container.transform.matrix) return null;
-				
-				matrix.concat(container.transform.matrix);
-				container = container.parent;
-			}
+			sourceConcatenatedMatrix.concat(targetConcatenatedMatrix);
 			
-			container = target;
+			targetMatrix.concat(sourceConcatenatedMatrix);
 			
-			var inverts:Array = [];
-			while (container && !container.contains(source))
-			{
-				inverts.push(container.transform.matrix);
-				container = container.parent;
-			}
-			
-			var invert:Matrix;
-			while (inverts.length)
-			{
-				invert = inverts.pop();
-				invert.invert();
-				matrix.concat(invert);
-			}
-			return matrix;
+			return targetMatrix;
 		}
 		
 		/**
@@ -369,7 +356,7 @@ package temple.utils.types
 		 */
 		public static function mimicTransformMatrix(source:DisplayObject, target:DisplayObject):void
 		{
-			target.transform.matrix = DisplayObjectUtils.convertTransformMatrix(source, target.parent);
+			target.transform.matrix = DisplayObjectUtils.convertTransformMatrix(source, target);
 		}
 
 		/**
