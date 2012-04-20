@@ -35,9 +35,8 @@
 
 package temple.utils 
 {
-	import flash.display.Sprite;
+	import flash.display.Shape;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 
 	/**
 	 * Class to generate onEnterFrame events.
@@ -59,9 +58,9 @@ package temple.utils
 	 * 
 	 * @author ASAPLibrary
 	 */
-	public final class FramePulse extends EventDispatcher 
+	public final class FramePulse 
 	{
-		private static var _sprite:Sprite;
+		private static var _shape:Shape;
 
 		/**
 		 * Add a listener to the FramePulse
@@ -69,11 +68,7 @@ package temple.utils
 		 */
 		public static function addEnterFrameListener(handler:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
-			if (FramePulse._sprite == null) 
-			{
-				FramePulse._sprite = new Sprite();
-			}
-			FramePulse._sprite.addEventListener(Event.ENTER_FRAME, handler, useCapture, priority, useWeakReference);
+			(FramePulse._shape ||= new Shape()).addEventListener(Event.ENTER_FRAME, handler, useCapture, priority, useWeakReference);
 		}
 
 		/**
@@ -82,10 +77,7 @@ package temple.utils
 		 */
 		public static function removeEnterFrameListener(handler:Function, useCapture:Boolean = false):void 
 		{
-			if (FramePulse._sprite != null) 
-			{
-				FramePulse._sprite.removeEventListener(Event.ENTER_FRAME, handler, useCapture);
-			}
+			if (FramePulse._shape) FramePulse._shape.removeEventListener(Event.ENTER_FRAME, handler, useCapture);
 		}
 	}
 }

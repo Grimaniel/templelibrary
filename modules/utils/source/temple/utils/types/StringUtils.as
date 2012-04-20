@@ -124,22 +124,6 @@ package temple.utils.types
 		}
 
 		/**
-		 * Uppercases a string
-		 * @param string the string yo uppercase
-		 * 
-		 * @example
-		 * <listing version="3.0">
-		 * var string:String = "temple";
-		 * var result:String = StringUtils.toUpperCase(string);
-		 * trace(result); // TEMPLE
-		 * </listing>
-		 */
-		public static function toUpperCase(string:String):String
-		{
-			return string.toUpperCase();
-		}
-
-		/**
 		 * replaces all tabs, newlines spaces to just one space
 		 * Works the same as ignore whitespace for XML 
 		 */
@@ -356,20 +340,27 @@ package temple.utils.types
 			if (string == null) throwError(new TempleArgumentError(StringUtils, "String can not be null"));
 			if (object == null) throwError(new TempleArgumentError(StringUtils, "Object can not be null"));
 			
-			return string.replace(/\$?\{([@#$%&\w]*)(\((.+?)\))?\}/gi, function ():String
+			return string.replace(/\$?\{([@#$%&\w]*)(\((.*?)\))?\}/gi, function ():String
 			{
 				var prop:String = arguments[1];
 				if (object != null && prop in object)
 				{
 					if (object[prop] is Function && arguments[2])
 					{
-						try
+						if (debug)
 						{
 							return (object[prop] as Function).apply(null, arguments[3] ? String(arguments[3]).split(",") : undefined);
 						}
-						catch (error:Error)
+						else
 						{
-							Log.error("Unable to replace var " + arguments[0] + ": " + error.message, StringUtils);
+							try
+							{
+								return (object[prop] as Function).apply(null, arguments[3] ? String(arguments[3]).split(",") : undefined);
+							}
+							catch (error:Error)
+							{
+								Log.error("Unable to replace var " + arguments[0] + ": " + error.message, StringUtils);
+							}
 						}
 					}
 					else return object[prop];
@@ -478,21 +469,21 @@ package temple.utils.types
 		 * This method returns you the closest possible match to the delim paramater, while keeping the text length within the len paramter.
 		 * If a match can't be found in your specified length an  '...' is added to that block, and the blocking continues untill all the text is broken apart.
 		 * @param string The string to break up.
-		 * @param len Maximum length of each block of text.
-		 * @param delim delimter to end text blocks on, default = '.'
+		 * @param length Maximum length of each block of text.
+		 * @param delimiter delimiter to end text blocks on, default = '.'
 		 */
-		public static function block(string:String, len:uint, delim:String = "."):Array
+		public static function block(string:String, length:uint, delimiter:String = "."):Array
 		{
 			var array:Array = new Array();
-			if (string == null || !contains(string, delim)) return array;
+			if (string == null || !contains(string, delimiter)) return array;
 			
 			var chrIndex:uint = 0;
 			var strLen:uint = string.length;
-			var replPatt:RegExp = new RegExp("[^" + escapePattern(delim) + "]+$");
+			var replPatt:RegExp = new RegExp("[^" + escapePattern(delimiter) + "]+$");
 			while (chrIndex < strLen)
 			{
-				var subString:String = string.substr(chrIndex, len);
-				if (!contains(subString, delim))
+				var subString:String = string.substr(chrIndex, length);
+				if (!contains(subString, delimiter))
 				{
 					array.push(truncate(subString, subString.length));
 					chrIndex += subString.length;
@@ -523,7 +514,7 @@ package temple.utils.types
 		 */
 		public static function ucFirst(string:String):String
 		{
-			return string.substr(0, 1).toUpperCase() + string.substr(1);
+			return string ? string.substr(0, 1).toUpperCase() + string.substr(1) : null;
 		}
 
 		/**
@@ -531,8 +522,7 @@ package temple.utils.types
 		 */
 		public static function contains(source:String, char:String):Boolean
 		{
-			if (source == null) return false;
-			return source.indexOf(char) != -1;
+			return source ? source.indexOf(char) != -1 : false;
 		}
 
 		/**
@@ -604,15 +594,10 @@ package temple.utils.types
 						cost = 1; 
 					}
 
-					d[i][j] = StringUtils._minimum(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+					d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
 				}
 			}
 			return d[n][m];
-		}
-
-		private static function _minimum(a:uint, b:uint, c:uint):uint 
-		{
-			return Math.min(a, Math.min(b, Math.min(c, a)));
 		}
 
 		/**
@@ -620,8 +605,7 @@ package temple.utils.types
 		 */
 		public static function hasText(string:String):Boolean
 		{
-			var str:String = removeExtraWhitespace(string);
-			return (str.length > 0);
+			return string && StringUtils.removeExtraWhitespace(string).length;
 		}
 
 		/**
@@ -629,8 +613,7 @@ package temple.utils.types
 		 */
 		public static function isEmpty(string:String):Boolean
 		{
-			if (string == null) return true;
-			return !string.length;
+			return !string;
 		}
 
 		/**

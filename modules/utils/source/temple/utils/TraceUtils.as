@@ -35,6 +35,7 @@
 
 package temple.utils 
 {
+	import temple.core.templelibrary;
 	import temple.core.debug.objectToString;
 	import temple.utils.types.ObjectUtils;
 
@@ -49,7 +50,7 @@ package temple.utils
 	 */
 	public final class TraceUtils 
 	{
-		public static const STACK_TRACE_NEWLINE_INDENT:String = "\n   ";
+		templelibrary static const STACK_TRACE_NEWLINE_INDENT:String = "\n   ";
 		
 		/**
 		 * Default properties of every object which are traced in the 'rootTrace' method.
@@ -78,7 +79,7 @@ package temple.utils
 			var leni:int = a.length;
 			for (var i:int = 2;i < leni; i++) 
 			{
-				output += TraceUtils.STACK_TRACE_NEWLINE_INDENT + String(a[i]).substr(4);
+				output += TraceUtils.templelibrary::STACK_TRACE_NEWLINE_INDENT + String(a[i]).substr(4);
 			}
 			
 			if (doTrace) trace(output);

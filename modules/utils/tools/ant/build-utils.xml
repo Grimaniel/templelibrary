@@ -4,7 +4,7 @@
 	<property name="module" value="utils" />
 	<property name="name" value="Temple Utils Module" />
 	<property name="dependencies" value="core,common" />
-	<property name="extended-dependencies" value="data,tweenlite" />
+	<property name="extended-dependencies" value="data,tweenlite,ui" />
 	
 	<import file="../../../../tools/ant/build.xml" />
 	
