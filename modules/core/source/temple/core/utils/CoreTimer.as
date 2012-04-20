@@ -46,6 +46,8 @@ package temple.core.utils
 	{
 		include "../includes/Version.as.inc";
 		
+		include "../includes/ConstructNamespace.as.inc";
+		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['delay', 'repeatCount']);
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -56,8 +58,18 @@ package temple.core.utils
 		{
 			super(delay, repeatCount);
 			
-			// Register object for destruction testing
+			construct::coreNetConnection(delay, repeatCount);
+		}
+		
+		/**
+		 * @private
+		 */
+		construct function coreNetConnection(delay:Number, repeatCount:int):void
+		{
 			this._registryId = Registry.add(this);
+			
+			delay;
+			repeatCount;
 		}
 		
 		include "../includes/CoreObjectMethods.as.inc";

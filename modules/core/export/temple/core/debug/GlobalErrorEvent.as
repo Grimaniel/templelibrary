@@ -50,7 +50,7 @@ package temple.core.debug
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.1";
+		templelibrary static const VERSION:String = "3.0.2";
 		
 		public static const GLOBAL_ERROR:String = "GlobalErrorEvent.globalError";
 		

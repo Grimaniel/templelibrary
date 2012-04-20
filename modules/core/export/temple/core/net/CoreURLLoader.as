@@ -79,7 +79,14 @@ package temple.core.net
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.1";
+		templelibrary static const VERSION:String = "3.0.2";
+		
+		/**
+		 * @private
+		 * 
+		 * Protected namespace for construct method. This makes overriding of constructor possible.
+		 */
+		protected namespace construct;
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['url']);
 		private var _registryId:uint;
@@ -101,23 +108,31 @@ package temple.core.net
 		 */
 		public function CoreURLLoader(request:URLRequest = null, destructOnError:Boolean = true, logErrors:Boolean = true)
 		{
+			construct::coreURLLoader(request, destructOnError, logErrors);
+			
+			super(request);
+		}
+		
+		/**
+		 * @private
+		 */
+		construct function coreURLLoader(request:URLRequest, destructOnError:Boolean, logErrors:Boolean):void
+		{
 			this._destructOnError = destructOnError;
 			this._logErrors = logErrors;
 			
-			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Add default listeners to Error events and preloader support
-			// TODO: super
-			this.addEventListener(ProgressEvent.PROGRESS, this.handleProgress);
-			this.addEventListener(Event.COMPLETE, this.handleComplete);
-			this.addEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
-			this.addEventListener(IOErrorEvent.DISK_ERROR, this.handleIOError);
-			this.addEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError);
-			this.addEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError);
-			this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			super.addEventListener(ProgressEvent.PROGRESS, this.handleProgress);
+			super.addEventListener(Event.COMPLETE, this.handleComplete);
+			super.addEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
+			super.addEventListener(IOErrorEvent.DISK_ERROR, this.handleIOError);
+			super.addEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError);
+			super.addEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError);
+			super.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
 			
-			super(request);
+			request;
 		}
 		
 		/**
@@ -515,6 +530,14 @@ package temple.core.net
 			if (this._isDestructed) return;
 			
 			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			
+			super.removeEventListener(ProgressEvent.PROGRESS, this.handleProgress);
+			super.removeEventListener(Event.COMPLETE, this.handleComplete);
+			super.removeEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
+			super.removeEventListener(IOErrorEvent.DISK_ERROR, this.handleIOError);
+			super.removeEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError);
+			super.removeEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError);
+			super.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
 			
 			if (this._isLoading)
 			{

@@ -37,6 +37,8 @@ package temple.core.net
 	{
 		include "../includes/Version.as.inc";
 		
+		include "../includes/ConstructNamespace.as.inc";
+		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -45,7 +47,14 @@ package temple.core.net
 
 		public function CoreNetConnection() 
 		{
-			// Register object for destruction testing
+			construct::coreNetConnection();
+		}
+		
+		/**
+		 * @private
+		 */
+		construct function coreNetConnection():void
+		{
 			this._registryId = Registry.add(this);
 		}
 		

@@ -168,7 +168,7 @@ package temple.core.utils
 		 */
 		public static function getMajorPlayerVersion():int 
 		{
-			return parseInt(_SPLITTED_PLAYER_VERSION[0].split(" ").pop());
+			return parseInt(Environment._SPLITTED_PLAYER_VERSION[0].split(" ").pop());
 		}
 		
 		/**
@@ -178,7 +178,7 @@ package temple.core.utils
 		 */
 		public static function getMinorPlayerVersion():int 
 		{
-			return parseInt(_SPLITTED_PLAYER_VERSION[1]);
+			return parseInt(Environment._SPLITTED_PLAYER_VERSION[1]);
 		}
 		
 		/**
@@ -188,7 +188,7 @@ package temple.core.utils
 		 */
 		public static function getPlayerRevision():int 
 		{
-			return parseInt(_SPLITTED_PLAYER_VERSION[2]);
+			return parseInt(Environment._SPLITTED_PLAYER_VERSION[2]);
 		}
 		
 		/**

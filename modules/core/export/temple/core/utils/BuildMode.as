@@ -54,10 +54,11 @@ package temple.core.utils
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.1";
+		templelibrary static const VERSION:String = "3.0.2";
 		
 		/**
-		 * Returns true if the SWF is built in debug mode
+		 * Returns true if the SWF is built in debug mode.
+		 * Note: only works in a debug player.
 		 */
 		public static function isDebugBuild():Boolean
 		{
@@ -66,7 +67,8 @@ package temple.core.utils
 		}
 
 		/**
-		 * Returns true if the SWF is built in release mode
+		 * Returns true if the SWF is built in release mode.
+		 * Note: only works in a debug player.
 		 */
 		public static function isReleaseBuild():Boolean
 		{
