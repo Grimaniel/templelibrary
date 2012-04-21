@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="Export" name="Temple">
+<project default="Full Build" name="Temple">
 	<import file="build.xml" />
 </project>
