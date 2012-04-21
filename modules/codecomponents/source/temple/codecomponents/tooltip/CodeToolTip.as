@@ -66,7 +66,7 @@ package temple.codecomponents.tooltip
 		override protected function init(textField:TextField = null):void 
 		{
 			//background
-			var background:LiquidSprite = new LiquidSprite(this, {left:0, right:0, top:0, bottom:0});
+			var background:LiquidSprite = new LiquidSprite({left:0, right:0, top:0, bottom:0}, this);
 			background.graphics.beginFill(CodeStyle.toolTipBackgroundColor, CodeStyle.toolTipBackgroundAlpha);
 			background.graphics.lineStyle(0, CodeStyle.toolTipBorderColor, CodeStyle.toolTipBackgroundAlpha, true, LineScaleMode.NONE);
 			background.graphics.drawRect(0, 0, 10, 10);

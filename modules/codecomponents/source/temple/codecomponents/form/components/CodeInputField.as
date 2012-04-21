@@ -91,6 +91,11 @@ package temple.codecomponents.form.components
 			this._focus.width = value;
 			this._background.width = value;
 			this._error.width = value + 2;
+			
+			this._focus.graphics.clear();
+			this._focus.graphics.beginFill(0xff0000, 1);
+			this._focus.graphics.drawRect(-1, -1, width+2, height+2);
+			this._focus.graphics.endFill();
 		}
 		
 		override public function set height(value:Number):void
@@ -98,6 +103,11 @@ package temple.codecomponents.form.components
 			this.textField.height = value;
 			this._focus.height = value;
 			this._background.height = value;
+			
+			this._focus.graphics.clear();
+			this._focus.graphics.beginFill(0xff0000, 1);
+			this._focus.graphics.drawRect(-1, -1, width+2, height+2);
+			this._focus.graphics.endFill();
 		}
 	}
 }

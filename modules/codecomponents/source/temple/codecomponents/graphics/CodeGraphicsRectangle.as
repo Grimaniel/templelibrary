@@ -42,7 +42,7 @@ package temple.codecomponents.graphics
 	 */
 	public class CodeGraphicsRectangle extends CoreSprite
 	{
-		public function CodeGraphicsRectangle(width:Number, height:Number, color:uint, alpha:Number)
+		public function CodeGraphicsRectangle(width:Number, height:Number, color:uint, alpha:Number = 1)
 		{
 			this.graphics.beginFill(color, alpha);
 			this.graphics.drawRect(0, 0, width, height);
