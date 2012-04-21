@@ -35,6 +35,7 @@
 
 package temple.mediaplayers.video.players 
 {
+	import temple.common.enum.Align;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.AsyncErrorEvent;
@@ -67,6 +68,9 @@ package temple.mediaplayers.video.players
 	import temple.mediaplayers.video.net.VideoNetStream;
 	import temple.utils.FrameDelay;
 	import temple.utils.TimeUtils;
+
+
+
 
 	/**
 	 * Dispatched when the status is changed
@@ -160,7 +164,7 @@ package temple.mediaplayers.video.players
 		/** @private */
 		protected var _netStream:VideoNetStream;
 		/** @private */
-		protected var _metaData:VideoMetaData;
+		private var _metaData:VideoMetaData;
 		
 		// if pausing when status is between connected<>playing, the video is paused but the NetStream.Play.Start is still broadcasted (so the UI is updated)
 		protected var _delayedPause:Boolean;
@@ -182,6 +186,7 @@ package temple.mediaplayers.video.players
 		private var _height:Number;
 		private var _scaleMode:String = ScaleMode.EXACT_FIT;
 		private var _upscaleEnabled:Boolean = true;
+		private var _align:String;
 		private var _playAfterLoaded:Boolean;
 		private var _autoRewind:Boolean;
 		private var _bufferTime:Number;
@@ -202,7 +207,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function VideoPlayer(width:Number = NaN, height:Number = NaN, smoothing:Boolean = false, scaleMode:String = ScaleMode.EXACT_FIT, debug:Boolean = false) 
 		{
-			this.toStringProps.push('videoPath');
+			this.toStringProps.push('videoPath', 'status');
 			if (isNaN(width) && super.width > 0)
 			{
 				this._width = super.width;
@@ -262,7 +267,7 @@ package temple.mediaplayers.video.players
 		 * When using RTMP streaming pass url as:
 		 * rtmp:[//host][:port]/[appname]/[video filename]
 		 */
-		 public function playUrl(url:String):void 
+		public function playUrl(url:String):void 
 		{
 			if (url == null)
 			{
@@ -271,6 +276,8 @@ package temple.mediaplayers.video.players
 			}
 			
 			if (this._debug) this.logDebug("playUrl: " + url);
+			
+			this._video.visible = true;
 			
 			if (this._scaleMode != ScaleMode.EXACT_FIT)
 			{
@@ -376,6 +383,7 @@ package temple.mediaplayers.video.players
 				}
 			}
 			this.playUrl(url);
+			this._video.visible = false;
 		}
 
 		/**
@@ -513,7 +521,7 @@ package temple.mediaplayers.video.players
 			
 			if (this._netStream && (this._metaData || seconds == 0))
 			{
-				if (seconds == 0 || seconds >= 0 && seconds < this._metaData.duration)
+				if (seconds == 0 || seconds >= 0 && seconds < this.duration)
 				{
 					this._netStream.seek(seconds);
 				}
@@ -553,6 +561,14 @@ package temple.mediaplayers.video.players
 		}
 
 		/**
+		 * Returns the width of the current video
+		 */
+		public function get videoWidth():Number
+		{
+			return this._metaData ? this._metaData.width : this._video.videoWidth;
+		}
+
+		/**
 		 * @inheritDoc
 		 */
 		override public function get height():Number
@@ -575,6 +591,14 @@ package temple.mediaplayers.video.players
 				rect.height = this._height;
 				this.scrollRect = rect;
 			}
+		}
+		
+		/**
+		 * Returns the height of the current video
+		 */
+		public function get videoHeight():Number
+		{
+			return this._metaData ? this._metaData.height : this._video.videoHeight;
 		}
 
 		/**
@@ -675,9 +699,9 @@ package temple.mediaplayers.video.players
 		 */
 		public function get currentPlayFactor():Number 
 		{
-			if (!this.metaData || isNaN(this.metaData.duration)) return 0;
+			if (!this.metaData || isNaN(this.duration)) return 0;
 			
-			return this.currentPlayTime / this.metaData.duration;
+			return this.currentPlayTime / this.duration;
 		}
 
 		/**
@@ -712,7 +736,7 @@ package temple.mediaplayers.video.players
 		{
 			if (this._metaData)
 			{
-				return Math.round(this._netStream.bufferLength) == Math.round(this._metaData.duration) || Math.round(this._netStream.bufferLength) == Math.round(this._netStream.bufferTime);
+				return Math.round(this._netStream.bufferLength) == Math.round(this.duration) || Math.round(this._netStream.bufferLength) == Math.round(this._netStream.bufferTime);
 			}
 			else
 			{
@@ -790,6 +814,44 @@ package temple.mediaplayers.video.players
 		{
 			this._upscaleEnabled = value;
 			this.setVideoSize();
+		}
+		
+		/**
+		 * 
+		 */
+		public function get align():String
+		{
+			return this._align;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set align(value:String):void
+		{
+			switch (value)
+			{
+				case Align.LEFT:
+				case Align.CENTER:
+				case Align.RIGHT:
+				case Align.TOP:
+				case Align.MIDDLE:
+				case Align.BOTTOM:
+				case Align.TOP_LEFT:
+				case Align.TOP_RIGHT:
+				case Align.BOTTOM_LEFT:
+				case Align.BOTTOM_RIGHT:
+				case Align.NONE:
+				case null:
+					this._align = value;
+					this.setVideoSize();
+					break;
+				
+				default:
+					throwError(new ArgumentError("Invalid value for align: '" + value + "'"));
+					break;
+			}
+			
 		}
 		
 		/**
@@ -1195,7 +1257,7 @@ package temple.mediaplayers.video.players
 			new FrameDelay(this.setVideoSize);
 			
 			// max buffertime to duration
-			if (this._netStream.bufferTime > this._metaData.duration) this._netStream.bufferTime = this._metaData.duration;
+			if (this._netStream.bufferTime > this.duration) this._netStream.bufferTime = this.duration;
 			
 			this.dispatchEvent(event.clone());
 		}
@@ -1310,15 +1372,18 @@ package temple.mediaplayers.video.players
 				this._txtDebug.text = "";
 				this._txtDebug.appendText("url: " + this.videoPath + "\n");
 				if (this.videoPath && !this.isRTMPStream(this.videoPath)) this._txtDebug.appendText((this.isLoaded ? "loaded" : "loading") + ': ' + int(this.bytesLoaded / 1024) + ' / ' + int(this.bytesTotal / 1024) + " KB - " + uint(100 * this.bytesLoaded / this.bytesTotal) + "%\n");
-				this._txtDebug.appendText(this.status + ": " + TimeUtils.secondsToString(this.currentPlayTime) + " / " + TimeUtils.secondsToString(this.duration) + "\n");
-				this._txtDebug.appendText(this.scaleMode + ": " + this._video.videoWidth + "x" + this._video.videoHeight);
+				this._txtDebug.appendText(this.status + ": " + TimeUtils.secondsToString(this.currentPlayTime) + " / " + TimeUtils.formatTime(this.duration * 1000) + "\n");
+				this._txtDebug.appendText(this.scaleMode + ": " + this.videoWidth + "x" + this.videoHeight);
+				if (!this._video.visible) this._txtDebug.appendText(" (hidden)");
 			}
 		}
 		
 		private function setVideoSize():void
 		{
-			var vWidth:Number = this._metaData ? this._metaData.width : this._video.videoWidth;
-			var vHeight:Number = this._metaData ? this._metaData.height : this._video.videoHeight;
+			var videoWidth:Number = this.videoWidth;
+			var videoHeight:Number = this.videoHeight;
+			
+			if (this.debug) this.logDebug("setVideoSize: " + this._scaleMode + " " + videoWidth + "*" + videoHeight);
 			
 			switch (this._scaleMode)
 			{
@@ -1327,76 +1392,100 @@ package temple.mediaplayers.video.players
 					// do nothing
 					this._video.width = this._width;
 					this._video.height = this._height;
-					this._video.x = 0;
-					this._video.y = 0;
 					break;
 				}	
 				case ScaleMode.NO_BORDER:
 				{
-					if (this._width / vWidth > this._height / vHeight)
+					if (this._width / videoWidth > this._height / videoHeight)
 					{
-						this._video.height = (this._width / vWidth) * vHeight;
+						this._video.height = (this._width / videoWidth) * videoHeight;
 						this._video.width = this._width;
-						
-						this._video.x = 0;
-						this._video.y = - 0.5 * (this._video.height - this._height);
 					}
 					else
 					{
-						this._video.width = (this._height / vHeight) * vWidth;
+						this._video.width = (this._height / videoHeight) * videoWidth;
 						this._video.height = this._height;
-						
-						this._video.x = - 0.5 * (this._video.width - this._width);
-						this._video.y = 0;
 					}
 					break;
 				}
 				case ScaleMode.NO_SCALE:
 				{
-					this._video.width = vWidth;
-					this._video.height = vHeight;
-					
-					this._video.x = - 0.5 * (this._video.width - this._width);
-					this._video.y = - 0.5 * (this._video.height - this._height);
-					
+					this._video.width = videoWidth;
+					this._video.height = videoHeight;
 					break;
 				}	
 				case ScaleMode.SHOW_ALL:
 				{
-					if (this._width / vWidth < this._height / vHeight)
+					if (this._width / videoWidth < this._height / videoHeight)
 					{
-						this._video.height = (this._width / vWidth) * vHeight;
+						this._video.height = (this._width / videoWidth) * videoHeight;
 						this._video.width = this._width;
-						
-						this._video.x = 0;
-						this._video.y = 0.5 * (this._height - this._video.height);
 					}
 					else
 					{
-						this._video.width = (this._height / vHeight) * vWidth;
+						this._video.width = (this._height / videoHeight) * videoWidth;
 						this._video.height = this._height;
-
-						this._video.x = 0.5 * (this._width - this._video.width);
-						this._video.y = 0;
 					}
 					break;
 				}
 			}
 			if (!this._upscaleEnabled)
 			{
-				if (this._video.width > vWidth)
+				if (this._video.width > videoWidth)
 				{
-					this._video.width = vWidth;
-					this._video.x = 0.5 * (this._width - this._video.width);
+					this._video.width = videoWidth;
 				}
-				if (this._video.height > vHeight)
+				if (this._video.height > videoHeight)
 				{
-					this._video.height = vHeight;
-					this._video.y = 0.5 * (this._height - this._video.height);
+					this._video.height = videoHeight;
 				}
 			}
+			this.setAlign();
 			
 			this.setBackground();
+		}
+		
+		private function setAlign():void
+		{
+			// Horizontal
+			switch (this._align)
+			{
+				case Align.LEFT:
+				case Align.TOP_LEFT:
+				case Align.BOTTOM_LEFT:
+					this._video.x = 0;
+					break;
+
+				case Align.RIGHT:
+				case Align.TOP_RIGHT:
+				case Align.BOTTOM_RIGHT:
+					this._video.x = -1 * (this._video.width - this._width);
+					break;
+				
+				default:
+					this._video.x = - 0.5 * (this._video.width - this._width);
+					break;
+			}
+			
+			// Vertical
+			switch (this._align)
+			{
+				case Align.TOP:
+				case Align.TOP_LEFT:
+				case Align.TOP_RIGHT:
+					this._video.y = 0;
+					break;
+
+				case Align.BOTTOM:
+				case Align.BOTTOM_LEFT:
+				case Align.BOTTOM_RIGHT:
+					this._video.y = -1 * (this._video.height - this._height);
+					break;
+				
+				default:
+					this._video.y = - 0.5 * (this._video.height - this._height);
+					break;
+			}
 		}
 
 		private function setBackground():void 
