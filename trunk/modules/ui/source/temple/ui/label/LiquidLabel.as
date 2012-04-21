@@ -112,7 +112,7 @@ package temple.ui.label
 				
 				if (sameSize && child != this.textField && !LiquidBehavior.getInstance(child) && !(child is Shape) && !(child is MorphShape))
 				{
-					new LiquidBehavior(child, this, {top: 0, left: 0, right:0, bottom: 0});
+					new LiquidBehavior(child, {top: 0, left: 0, right:0, bottom: 0}, this);
 				}
 			}
 		}

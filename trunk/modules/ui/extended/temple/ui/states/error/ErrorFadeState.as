@@ -49,14 +49,14 @@ package temple.ui.states.error
 	 */
 	public class ErrorFadeState extends BaseFadeState implements IErrorState 
 	{
-		private var _errorTextField:TextField;
+		private var _textField:TextField;
 		
-		public function ErrorFadeState(showDuration:Number = .5, hideDuration:Number = .5, errorTextField:TextField = null)
+		public function ErrorFadeState(showDuration:Number = .5, hideDuration:Number = .5, textField:TextField = null)
 		{
 			super(showDuration, hideDuration);
 			
-			this._errorTextField = errorTextField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
-			if (this._errorTextField) this._errorTextField.text = "";
+			this._textField = textField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
+			if (this._textField) this._textField.text = "";
 		}
 		
 		/**
@@ -64,7 +64,25 @@ package temple.ui.states.error
 		 */
 		public function set message(value:String):void
 		{
-			if (this._errorTextField) this._errorTextField.text = value ? value : '';
+			if (this._textField) this._textField.text = value ? value : '';
+		}
+		
+		/**
+		 * Returns a reference to the TextField. Note: this value can be null.
+		 */
+		public function get textField():TextField
+		{
+			return this._textField;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void
+		{
+			this._textField = null;
+			
+			super.destruct();
 		}
 	}
 }

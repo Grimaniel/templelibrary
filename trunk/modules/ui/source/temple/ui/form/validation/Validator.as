@@ -250,15 +250,14 @@ package temple.ui.form.validation
 		/**
 		 * @return all elements for validation, objects of type IValidatable
 		 */
-		public function getElements():Vector.<IValidatable>
+		public function getElements():Vector.<IHasValue>
 		{
-			var a:Vector.<IValidatable> = new Vector.<IValidatable>();
-			var leni:uint = this._rules.length;
-			for (var i:uint = 0;i < leni; i++) 
+			var elements:Vector.<IHasValue> = new Vector.<IHasValue>();
+			for (var i:uint = 0, leni:uint = this._rules.length; i < leni; i++) 
 			{
-				a.push(RuleData(this._rules[i]).rule.target);
+				elements.push(RuleData(this._rules[i]).rule.target);
 			}
-			return a;
+			return elements;
 		}
 
 		/**
@@ -387,8 +386,8 @@ import temple.ui.form.validation.rules.IValidationRule;
 
 final class RuleData extends CoreObject
 {
-	internal var rule:IValidationRule;
-	internal var message:String;
+	public var rule:IValidationRule;
+	public var message:String;
 
 	public function RuleData(rule:IValidationRule, message:String) 
 	{

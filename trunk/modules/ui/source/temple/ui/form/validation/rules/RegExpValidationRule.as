@@ -54,12 +54,13 @@ package temple.ui.form.validation.rules
 		 * @param expression regular expression to validate with.
 		 * @param validIfMatch if true, value of IValidatable is considered valid if it matches the regular expression; otherwise it is considered invalid
 		 */
-		public function RegExpValidationRule(target:IHasValue, expression:RegExp = null, validIfMatch:Boolean = true):void 
+		public function RegExpValidationRule(target:IHasValue, expression:RegExp, validIfMatch:Boolean = true, optional:Boolean = false):void 
 		{
 			super(target);
 			
 			this._regExp = expression;
 			this._isValidIfMatch = validIfMatch;
+			this._optional = optional;
 		}
 
 		/**

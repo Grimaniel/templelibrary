@@ -35,6 +35,7 @@
 
 package temple.ui.slider 
 {
+	import temple.core.templelibrary;
 	import temple.common.enum.Direction;
 	import temple.common.enum.Orientation;
 	import temple.ui.behaviors.DragBehaviorEvent;
@@ -80,6 +81,22 @@ package temple.ui.slider
 		override public function set value(value:Number):void
 		{
 			super.value = (NumberUtils.roundToNearest(value, this._stepSize) - this._min) / (this._max - this._min);
+		}
+
+		/**
+		 * @private
+		 */
+		templelibrary function get value():Number
+		{
+			return super.value;
+		}
+
+		/**
+		 * @private
+		 */
+		templelibrary function set value(value:Number):void
+		{
+			super.value = value;
 		}
 		
 		/**

@@ -45,6 +45,7 @@ package temple.ui.form.components
 	import temple.core.errors.TempleError;
 	import temple.core.errors.TempleRangeError;
 	import temple.core.errors.throwError;
+	import temple.core.templelibrary;
 	import temple.data.collections.ICollection;
 	import temple.ui.focus.FocusManager;
 	import temple.ui.form.validation.IHasError;
@@ -54,6 +55,7 @@ package temple.ui.form.components
 	import temple.utils.DefinitionProvider;
 	import temple.utils.TimeOut;
 	import temple.utils.propertyproxy.IPropertyProxy;
+	import temple.utils.types.VectorUtils;
 
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -332,8 +334,35 @@ package temple.ui.form.components
 				}
 			}
 			this._blockResize = false;
-			super.height = this._rowHeight * (this._items.length < this._rowCount ? this._items.length : this._rowCount) + this._heightOffset;
+			super.height = this._rowHeight * Math.min(this._items.length, this._rowCount) + this._heightOffset;
 			this.dispatchEvent(new Event(Event.RESIZE));
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function hasItem(value:*):Boolean
+		{
+			for (var i:int = 0, leni:int = this._items.length; i < leni; i++)
+			{
+				if (this._items[i].data == value) return true;
+			}
+			return false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getItem(value:*, fromIndex:int = 0):*
+		{
+			if (fromIndex < this._items.length)
+			{
+				for (var i:int = 0, leni:int = this._items.length; i < leni; i++)
+				{
+					if (this._items[i].data == value) return value;
+				}
+			}
+			return null;
 		}
 		
 		/**
@@ -341,7 +370,7 @@ package temple.ui.form.components
 		 */
 		public function getItemAt(index:uint):*
 		{
-			return index < this._items.length ? ListItemData(this._items[index]).data : null;
+			return index < this._items.length ? this._items[index].data : null;
 		}
 		
 		/**
@@ -371,11 +400,26 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
+		public function getLabel(value:*, fromIndex:int = 0):String
+		{
+			if (fromIndex < this._items.length)
+			{
+				for (var i:int = 0, leni:int = this._items.length; i < leni; i++)
+				{
+					if (this._items[i].data == value) return this.getListItemLabel(this._items[i]);
+				}
+			}
+			return null;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function getLabelAt(index:uint):String
 		{
 			if (index < this._items.length)
 			{
-				return this.getLabel(this._items[index]);
+				return this.getListItemLabel(this._items[index]);
 			}
 			return null;
 		}
@@ -478,7 +522,7 @@ package temple.ui.form.components
 		{
 			if (this._items)
 			{
-				while (this._items.length) ListItemData(this._items.shift()).destruct();
+				while (this._items.length) this._items.shift().destruct();
 				this._focusItem = null;
 				this._lastSelectedItem = null;
 				this._rowDataOffset = 0;
@@ -512,7 +556,7 @@ package temple.ui.form.components
 			{
 				this.reset();
 			}
-			else if (this._items[value])
+			else if (value in this._items)
 			{
 				this.selectListItemData(this._items[value]);
 			}
@@ -531,7 +575,7 @@ package temple.ui.form.components
 		 */
 		public function set selectedItem(value:*):void
 		{
-			for each (var item : ListItemData in this._items)
+			for each (var item:ListItemData in this._items)
 			{
 				if (item.data == value)
 				{
@@ -547,7 +591,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedLabel():String
 		{
-			return this.getLabel(this._lastSelectedItem);
+			return this.getListItemLabel(this._lastSelectedItem);
 		}
 		
 		/**
@@ -555,7 +599,7 @@ package temple.ui.form.components
 		 */
 		public function set selectedLabel(value:String):void
 		{
-			for each (var item : ListItemData in this._items)
+			for each (var item:ListItemData in this._items)
 			{
 				if (item.label == value)
 				{
@@ -577,7 +621,7 @@ package temple.ui.form.components
 			var item:ListItemData;
 			for (var i:int = 0; i < leni; i++)
 			{
-				item = ListItemData(this._items[i]);
+				item = this._items[i];
 				if (item.selected) items.push(item.data);
 			}
 			return items;
@@ -592,7 +636,7 @@ package temple.ui.form.components
 			var item:ListItemData;
 			for (var i:int = 0; i < leni; i++)
 			{
-				item = ListItemData(this._items[i]);
+				item = this._items[i];
 				if (value.indexOf(item.data) != -1) this.selectListItemData(item);
 			}
 		}
@@ -608,8 +652,8 @@ package temple.ui.form.components
 			var item:ListItemData;
 			for (var i:int = 0; i < leni; i++)
 			{
-				item = ListItemData(this._items[i]);
-				if (item.selected) items.push(this.getLabel(item));
+				item = this._items[i];
+				if (item.selected) items.push(this.getListItemLabel(item));
 			}
 			return items;
 		}
@@ -623,7 +667,7 @@ package temple.ui.form.components
 			var item:ListItemData;
 			for (var i:int = 0; i < leni; i++)
 			{
-				item = ListItemData(this._items[i]);
+				item = this._items[i];
 				if (value.indexOf(item.label) != -1) this.selectListItemData(item);
 			}
 		}
@@ -633,7 +677,7 @@ package temple.ui.form.components
 		 */
 		public function isItemSelected(data:*, label:String = null):Boolean
 		{
-			for each (var item : ListItemData in this._items) 
+			for each (var item:ListItemData in this._items) 
 			{
 				if (item.data === data && item.label === label) return item.selected;
 			}
@@ -646,7 +690,7 @@ package temple.ui.form.components
 		 */
 		public function isIndexSelected(index:uint):Boolean
 		{
-			return index < this._items.length ? ListItemData(this._items[index]).selected : false;
+			return index < this._items.length ? this._items[index].selected : false;
 		}
 		
 		/**
@@ -780,31 +824,24 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function sortItems(compareFunction:Function = null):void
+		public function sort(compareFunction:Function):void
 		{
-			this._items.sort(compareFunction || this.sortItemsAlphabetically);
+			this._items.sort(compareFunction);
 			
-			var leni:int = this._rows.length;
-			for (var i:int = 0; i < leni; i++)
-			{
-				this.setRow(this._rows[i], this._items[i + this._rowDataOffset]);
-			}
+			this.setRows();
 			this.updateRows();
 		}
 
-		private function sortItemsAlphabetically(item1:IListItemData, item2:IListItemData):Number
+		/**
+		 * @inheritDoc
+		 */
+		public function sortOn(names:*, options:* = 0, ...args:*):void
 		{
-			if (item1.label.toLowerCase() == item2.label.toLowerCase())
-			{
-				return 0;
-			}
-			else if (item1.label.toLowerCase() < item2.label.toLowerCase())
-			{
-				return -1;
-			}
-			return 1;
+			VectorUtils.sortOn.apply(null, [this._items, names, options].concat(args));
+			
+			this.setRows();
+			this.updateRows();
 		}
-
 		
 		/**
 		 * @inheritDoc
@@ -885,7 +922,7 @@ package temple.ui.form.components
 			var label:String;
 			for (var i:int = startIndex;i < endIndex; i++)
 			{
-				label = this.getLabel(this._items[i]);
+				label = this.getListItemLabel(this._items[i]);
 				if (label && (label.substr(0, string.length) == string || !caseSensitive && label.substr(0, string.length).toLowerCase() == string.toLowerCase()))
 				{
 					this.selectedIndex = i;
@@ -966,7 +1003,7 @@ package temple.ui.form.components
 			}
 			else if (this._selectedItems.length == 1 && !this._allowMultipleSelection)
 			{
-				return ListItemData(this._selectedItems[0]).data;
+				return this._selectedItems[0].data;
 			}
 			else
 			{
@@ -975,7 +1012,7 @@ package temple.ui.form.components
 				var leni:int = this._selectedItems.length;
 				for (var i:int = 0;i < leni; i++) 
 				{
-					values.push(ListItemData(this._selectedItems[i]).data);
+					values.push(this._selectedItems[i].data);
 				}
 				return values;
 			}
@@ -986,7 +1023,7 @@ package temple.ui.form.components
 		 */
 		public function set value(value:*):void
 		{
-			for each (var item : ListItemData in this._items)
+			for each (var item:ListItemData in this._items)
 			{
 				if (item.data == value)
 				{
@@ -1034,6 +1071,7 @@ package temple.ui.form.components
 		{
 			this._hasError = true;
 			StateHelper.showError(this, message);
+			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
 		}
 		
 		/**
@@ -1043,6 +1081,7 @@ package temple.ui.form.components
 		{
 			this._hasError = false;
 			StateHelper.hideError(this);
+			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
 		}
 
 		/**
@@ -1052,10 +1091,11 @@ package temple.ui.form.components
 		{
 			while (this._selectedItems && this._selectedItems.length)
 			{
-				var listitem:ListItemData = ListItemData(this._selectedItems.shift());
+				var listitem:ListItemData = this._selectedItems.shift();
 				listitem.selected = false;
 				if (this._rowItemDictionary[listitem.row] == listitem && listitem.row is ISelectable) ISelectable(listitem.row).selected = false;
 			}
+			this._lastSelectedItem = null;
 		}
 		
 		/**
@@ -1137,6 +1177,9 @@ package temple.ui.form.components
 				this.createRow();
 			}
 			
+			// remove rows we don't use
+			while (this._rows.length > this._rowCount + 1) this._rows.pop().destruct();
+			
 			// scroll down, move all rows above the top to the buttom of the list
 			var row:IListRow = this._rows[0];
 			while (row.y < (this.content.scrollRect.y - this._rowHeight) && this._rowDataOffset + this._rows.length < this._items.length)
@@ -1154,7 +1197,7 @@ package temple.ui.form.components
 				row = this._rows.pop();
 				this._rows.unshift(row);
 				row.y -= this._rows.length * this._rowHeight;
-				if (this._rowDataOffset) this.setRow(row, this._rowDataOffset ? this._items[--this._rowDataOffset] : null);
+				if (this._rowDataOffset) this.setRow(row, this._items[--this._rowDataOffset]);
 			}
 		}
 		
@@ -1173,7 +1216,7 @@ package temple.ui.form.components
 		 */
 		public function selectItem(data:*):Boolean
 		{
-			for each (var item : ListItemData in this._items)
+			for each (var item:ListItemData in this._items)
 			{
 				if (item.data == data)
 				{
@@ -1189,7 +1232,7 @@ package temple.ui.form.components
 		 */
 		public function deselectItem(data:*):Boolean
 		{
-			for each (var item : ListItemData in this._items)
+			for each (var item:ListItemData in this._items)
 			{
 				if (item.data == data)
 				{
@@ -1210,6 +1253,23 @@ package temple.ui.form.components
 			return this._items;
 		}
 
+		/**
+		 * @private
+		 */
+		templelibrary function get items():Vector.<ListItemData>
+		{
+			return this._items;
+		}
+		
+		private function setRows():void
+		{
+			var leni:int = this._rows.length;
+			for (var i:int = 0; i < leni; i++)
+			{
+				this.setRow(this._rows[i], this._items[i + this._rowDataOffset]);
+			}
+		}
+
 		protected function setRow(row:IListRow, item:ListItemData):void 
 		{
 			this._rowItemDictionary[row] = item;
@@ -1217,7 +1277,7 @@ package temple.ui.form.components
 			{
 				row.visible = true;
 				row.data = item.data;
-				row.label = this.getLabel(item);
+				row.label = this.getListItemLabel(item);
 				if (row is ISelectable) ISelectable(row).selected = item.selected;
 				row.focus = item == this._focusItem;
 				row.index = this._items.indexOf(item);
@@ -1281,7 +1341,7 @@ package temple.ui.form.components
 			{
 				while (this._selectedItems.length)
 				{
-					var listitem:ListItemData = ListItemData(this._selectedItems.shift());
+					var listitem:ListItemData = this._selectedItems.shift();
 					if (listitem != item)
 					{
 						listitem.selected = false;
@@ -1308,7 +1368,7 @@ package temple.ui.form.components
 				// remove old selection
 				while (this._selectedItems.length)
 				{
-					var listitem:ListItemData = ListItemData(this._selectedItems.shift());
+					var listitem:ListItemData = this._selectedItems.shift();
 					if (listitem != item)
 					{
 						listitem.selected = false;
@@ -1378,7 +1438,7 @@ package temple.ui.form.components
 					focusIndex = this._items.indexOf(this._focusItem);
 					if (focusIndex > 0)
 					{
-						item = ListItemData(this._items[focusIndex - 1]);
+						item = this._items[focusIndex - 1];
 						this.scrollToItem(item);
 						FocusManager.focus = InteractiveObject(item.row);
 						this._focusItem = item;
@@ -1393,7 +1453,7 @@ package temple.ui.form.components
 					focusIndex = this._items.indexOf(this._focusItem);
 					if (focusIndex < this._items.length - 1)
 					{
-						item = ListItemData(this._items[focusIndex + 1]);
+						item = this._items[focusIndex + 1];
 						this.scrollToItem(item);
 						FocusManager.focus = InteractiveObject(item.row);
 						this._focusItem = item;
@@ -1431,7 +1491,7 @@ package temple.ui.form.components
 		
 		private function handleFocusIn(event:FocusEvent):void 
 		{
-			if (event.target is IListRow) this.setFocusItem(ListItemData(this._rowItemDictionary[IListRow(event.target)]));
+			if (event.target is IListRow) this.setFocusItem(this._rowItemDictionary[IListRow(event.target)]);
 			this._focus = true;
 		}
 
@@ -1466,7 +1526,7 @@ package temple.ui.form.components
 			}
 		}
 
-		private function getLabel(item:ListItemData): String
+		private function getListItemLabel(item:ListItemData): String
 		{
 			if (item == null)
 			{
@@ -1476,7 +1536,7 @@ package temple.ui.form.components
 			{
 				return item.label;
 			}
-			else if ('label' in item.data)
+			else if (item.data && 'label' in item.data)
 			{
 				return item.data['label'];
 			}

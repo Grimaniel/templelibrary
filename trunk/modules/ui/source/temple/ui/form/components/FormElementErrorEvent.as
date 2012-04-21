@@ -33,20 +33,30 @@
  *	repository with their own license!
  */
 
-package temple.ui.viewstack 
+package temple.ui.form.components
 {
-	import temple.ui.label.ILabel;
+	import flash.events.ErrorEvent;
 
 	/**
-	 * Interface for buttons in a <code>TabBar</code>
+	 * Event dispatched by Form elements when an error is shown or hidden.
 	 * 
-	 * @see temple.ui.viewstack.TabBar
-	 * 
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public interface ITabButton extends ILabel
+	public class FormElementErrorEvent extends ErrorEvent
 	{
-		function set closable(value:Boolean):void
-		function get closable():Boolean
+		/**
+		 * Dispatched by a Form element when an error is shown
+		 */
+		public static const SHOW_ERROR:String = "FormElementErrorEvent.SHOW_ERROR";
+		
+		/**
+		 * Dispatched by a Form element when an error is hidden
+		 */
+		public static const HIDE_ERROR:String = "FormElementErrorEvent.HIDE_ERROR";
+		
+		public function FormElementErrorEvent(type:String, text:String = null, bubbles:Boolean = false)
+		{
+			super(type, bubbles, false, text);
+		}
 	}
 }

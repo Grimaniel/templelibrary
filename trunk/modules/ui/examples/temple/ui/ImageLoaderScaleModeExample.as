@@ -26,10 +26,10 @@ package
 			
 			var cache:Boolean = true;
 			
-			new LiquidBehavior(this.addChild(new ImageLoader(_URL, NaN, NaN, ScaleMode.NO_SCALE, null, true, true, null, cache)), null, {top: 0, left:0, relativeWidth: 0.5, relativeHeight: 0.5});
-			new LiquidBehavior(this.addChild(new ImageLoader(_URL, NaN, NaN, ScaleMode.EXACT_FIT, null, true, true, null, cache)), null, {top: 0, right:0, relativeWidth: 0.5, relativeHeight: 0.5});
-			new LiquidBehavior(this.addChild(new ImageLoader(_URL, NaN, NaN, ScaleMode.NO_BORDER, null, true, true, null, cache)), null, {bottom: 0, left:0, relativeWidth: 0.5, relativeHeight: 0.5});
-			new LiquidBehavior(this.addChild(new ImageLoader(_URL, NaN, NaN, ScaleMode.SHOW_ALL, null, true, true, null, cache)), null, {bottom: 0, right:0, relativeWidth: 0.5, relativeHeight: 0.5});
+			new LiquidBehavior(this.addChild(new ImageLoader(_URL, NaN, NaN, ScaleMode.NO_SCALE, null, true, true, null, cache)), {top: 0, left:0, relativeWidth: 0.5, relativeHeight: 0.5});
+			new LiquidBehavior(this.addChild(new ImageLoader(_URL, NaN, NaN, ScaleMode.EXACT_FIT, null, true, true, null, cache)), {top: 0, right:0, relativeWidth: 0.5, relativeHeight: 0.5});
+			new LiquidBehavior(this.addChild(new ImageLoader(_URL, NaN, NaN, ScaleMode.NO_BORDER, null, true, true, null, cache)), {bottom: 0, left:0, relativeWidth: 0.5, relativeHeight: 0.5});
+			new LiquidBehavior(this.addChild(new ImageLoader(_URL, NaN, NaN, ScaleMode.SHOW_ALL, null, true, true, null, cache)), {bottom: 0, right:0, relativeWidth: 0.5, relativeHeight: 0.5});
 		}
 	}
 }

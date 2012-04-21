@@ -54,7 +54,7 @@ package temple.ui.form
 		private static var _SOUNDS:FileFilter; 
 
 		/**
-		 * Returns a FileFiler for images
+		 * Returns a FileFilter for images
 		 */
 		public static function get IMAGES():FileFilter
 		{
@@ -62,7 +62,7 @@ package temple.ui.form
 		}
 
 		/**
-		 * Returns a FileFiler for text files
+		 * Returns a FileFilter for text files
 		 */
 		public static function get TEXT():FileFilter
 		{
@@ -70,7 +70,7 @@ package temple.ui.form
 		}
 
 		/**
-		 * Returns a FileFiler for SWF files
+		 * Returns a FileFilter for SWF files
 		 */
 		public static function get SWF():FileFilter
 		{
@@ -78,15 +78,23 @@ package temple.ui.form
 		}
 
 		/**
-		 * Returns a FileFiler for SWF files
+		 * Returns a FileFilter for video files
 		 */
 		public static function get VIDEO():FileFilter
 		{
 			return FileFilterTypes._VIDEO ||= new FileFilter("Videos (*.mov, *.mpeg, *.mp4, *.wmv)", "*.mov;*.mpeg;*.mp4;*.wmv");
 		}
+		
+		/**
+		 * Returns a FileFilter for video files
+		 */
+		public static function get VIDEO_EXTENDED():FileFilter
+		{
+			return FileFilterTypes._VIDEO ||= new FileFilter("Videos (*.mov, *.mpeg, *.mp4, *.wmv, *.flv, *.f4v, *.3gp, *.avi)", "*.mov;*.mpeg;*.mp4;*.wmv;*.flv;*.f4v;*.3gp;*.avi");
+		}
 
 		/**
-		 * Returns a FileFiler for SWF files
+		 * Returns a FileFilter for Flash video files
 		 */
 		public static function get FLASH_VIDEO():FileFilter
 		{
@@ -94,7 +102,7 @@ package temple.ui.form
 		}
 
 		/**
-		 * Returns a FileFiler for SWF files
+		 * Returns a FileFilter for compressed files
 		 */
 		public static function get COMPRESSED():FileFilter
 		{
@@ -102,7 +110,7 @@ package temple.ui.form
 		}
 
 		/**
-		 * Returns a FileFiler for SWF files
+		 * Returns a FileFilter for sound files
 		 */
 		public static function get SOUNDS():FileFilter
 		{
