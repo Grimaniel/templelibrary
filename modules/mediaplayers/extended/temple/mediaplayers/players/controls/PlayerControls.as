@@ -91,12 +91,17 @@ package temple.mediaplayers.players.controls
 		private var _muteButton:InteractiveObject;
 		private var _fullScreenButton:InteractiveObject;
 		private var _progressBar:PlayerProgressBar;
-		private var _togglePlayResumeButtonsVisibility:Boolean;
+		private var _toggleResumePauseButtonsVisibility:Boolean;
 		private var _autoHide:Boolean;
 		private var _autoHideTimer:CoreTimer;
 		private var _debug:Boolean;
 		
 		public function PlayerControls()
+		{
+			construct::playerControls();
+		}
+
+		construct function playerControls():void
 		{
 			this.mouseChildren = true;
 			this.mouseEnabled = true;
@@ -291,7 +296,14 @@ package temple.mediaplayers.players.controls
 		{
 			if (this._muteButton) this._muteButton.removeEventListener(MouseEvent.CLICK, this.handleClick);
 			this._muteButton = value;
-			if (this._muteButton) this._muteButton.addEventListener(MouseEvent.CLICK, this.handleClick);
+			if (this._muteButton)
+			{
+				this._muteButton.addEventListener(MouseEvent.CLICK, this.handleClick);
+				if (this._muteButton is ISelectable && this._player is IAudible)
+				{
+					ISelectable(this._muteButton).selected = !IAudible(this._player).volume;
+				}
+			}
 		}
 
 		public function get fullScreenButton():InteractiveObject
@@ -317,14 +329,14 @@ package temple.mediaplayers.players.controls
 			if (this._progressBar) this._progressBar.player = this._player;
 		}
 		
-		public function get togglePlayResumeButtonsVisibility():Boolean
+		public function get toggleResumePauseButtonsVisibility():Boolean
 		{
-			return this._togglePlayResumeButtonsVisibility;
+			return this._toggleResumePauseButtonsVisibility;
 		}
 
-		public function set togglePlayResumeButtonsVisibility(value:Boolean):void
+		public function set toggleResumePauseButtonsVisibility(value:Boolean):void
 		{
-			this._togglePlayResumeButtonsVisibility = value;
+			this._toggleResumePauseButtonsVisibility = value;
 			if (this._player) this.updateToStatus(this._player.status);
 		}
 		
@@ -338,7 +350,7 @@ package temple.mediaplayers.players.controls
 		override public function hide(instant:Boolean = false):void
 		{
 			super.hide(instant);
-			this._autoHideTimer.reset();
+			if (this._autoHideTimer) this._autoHideTimer.reset();
 		}
 		
 		public function get autoHide():Boolean
@@ -444,7 +456,7 @@ package temple.mediaplayers.players.controls
 
 		private function updateToStatus(status:String):void
 		{
-			if (this._togglePlayResumeButtonsVisibility)
+			if (this._toggleResumePauseButtonsVisibility)
 			{
 				if (this._pauseButton) this._pauseButton.visible = status == PlayerStatus.PLAYING;
 				if (this._resumeButton) this._resumeButton.visible = status != PlayerStatus.PLAYING;
