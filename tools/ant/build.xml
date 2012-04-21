@@ -47,7 +47,7 @@
 	<target name="Full Build">
 		<antcall target="Prepare" />
 		<antcall target="Compile" />
-		<antcall target="Extended" />
+		<antcall target="Extend" />
 		<antcall target="Package" />
 		<echo>Full Build successful</echo>
 	</target>
@@ -214,7 +214,7 @@
 		<antcall target="Create Extended Zip" />
 		<antcall target="Create Small Zip" />
 	</target>
-	<target name="Create Extended Zip" if="extended">
+	<target name="Create Extended Zip" if="extended.dir">
 		<zip destfile="${zip}">
 			<zipfileset dir="${bin.dir}" prefix="bin" />
 			<zipfileset dir="${doc.dir}" prefix="doc" />
@@ -226,7 +226,7 @@
 		</zip>
 		<echo>Zip file created</echo>
 	</target>
-	<target name="Create Small Zip" unless="extended">
+	<target name="Create Small Zip" unless="extended.dir">
 		<zip destfile="${zip}">
 			<zipfileset dir="${bin.dir}" prefix="bin" />
 			<zipfileset dir="${doc.dir}" prefix="doc" />
