@@ -113,7 +113,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function ImageLoader(url:* = null, width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = true, smoothing:Boolean = false, loaderContext:LoaderContext = null, cache:Boolean = false)
 		{
-			this.toStringProps.push('name', 'url');
+			this.toStringProps.push('url');
 			this._width = !isNaN(width) ? width : (super.width ? super.width : NaN);
 			this._height = !isNaN(height) ? height : (super.height ? super.height : NaN);
 			 

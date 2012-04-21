@@ -63,11 +63,17 @@ package temple.ui.behaviors
 		{
 			super(target);
 			
+			construct::boundsBehavior(target, bounds);
+		}
+
+		construct function boundsBehavior(target:DisplayObject, bounds:Rectangle):void
+		{
 			if (bounds) this.bounds = bounds;
 			
 			// dispath BoundsBehaviorEvent on target
 			this.addEventListener(BoundsBehaviorEvent.BOUNCED, target.dispatchEvent);
 		}
+
 		
 		/**
 		 * The bounds limits the dragging. The object can only be dragged with this area

@@ -109,14 +109,19 @@ package temple.ui.behaviors
 
 		/**
 		 * Create the possibility to drag an object
-		 * @param target: The InteractiveObject to be dragged
-		 * @param bounds (optional): limits the dragging
-		 * @param dragButton (optional): an InteractiveObject that does the dragging, if there is no dragButton, the target does the dragging
+		 * @param target The InteractiveObject to be dragged
+		 * @param bounds limits the dragging
+		 * @param dragButton an InteractiveObject that does the dragging, if there is no dragButton, the target does the dragging
 		 */
 		public function DragBehavior(target:InteractiveObject, bounds:Rectangle = null, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true) 
 		{
 			super(target, bounds);
 			
+			construct::dragBehavior(target, bounds, dragButton, dragHorizontal, dragVertical);
+		}
+
+		construct function dragBehavior(target:InteractiveObject, bounds:Rectangle, dragButton:InteractiveObject, dragHorizontal:Boolean, dragVertical:Boolean):void
+		{
 			this._dragButton = dragButton || target;
 			this.enabled = true;
 			this._dragHorizontal = dragHorizontal;
@@ -126,7 +131,10 @@ package temple.ui.behaviors
 			this.addEventListener(DragBehaviorEvent.DRAG_START, target.dispatchEvent);
 			this.addEventListener(DragBehaviorEvent.DRAG_STOP, target.dispatchEvent);
 			this.addEventListener(DragBehaviorEvent.DRAGGING, target.dispatchEvent);
+			
+			bounds;
 		}
+
 		
 		/**
 		 * An InteractiveObject that does the dragging, if there is no dragButton, the target does the dragging
@@ -197,6 +205,8 @@ package temple.ui.behaviors
 			}
 			else
 			{
+				if (this.isDragging) this.stopDrag();
+				
 				if (this._dragButton) this._dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
 			}
 		}
@@ -319,7 +329,7 @@ package temple.ui.behaviors
 		/**
 		 * @private
 		 */
-		protected function handleMouseUp(event:MouseEvent):void 
+		private function handleMouseUp(event:MouseEvent):void 
 		{
 			this.stopDrag();
 		}

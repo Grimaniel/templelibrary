@@ -79,14 +79,13 @@ package temple.ui.label
 		{
 			return this.textField ? this.textField.name : null;
 		}
-
 		
 		/**
 		 * @inheritDoc
 		 */
 		public function get label():String
 		{
-			return this._html ? this.textField.htmlText : this.textField.text;
+			return this.textField ? (this._html ? this.textField.htmlText : this.textField.text) : null;
 		}
 		
 		/**

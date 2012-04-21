@@ -37,11 +37,11 @@ package temple.ui.slider
 {
 	import temple.common.enum.Direction;
 	import temple.common.enum.Orientation;
-	import temple.core.behaviors.AbstractBehavior;
 	import temple.core.behaviors.IBehavior;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
+	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 	import temple.ui.behaviors.DragBehavior;
 	import temple.ui.behaviors.DragBehaviorEvent;
 
@@ -77,17 +77,22 @@ package temple.ui.slider
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class Slider extends AbstractBehavior implements IBehavior
+	public class Slider extends AbstractDisplayObjectBehavior implements IBehavior
 	{
-		protected var _orientation:String;
-		protected var _direction:String;
 		protected var _dragBehavior:DragBehavior;
-		protected var _sliding:Boolean;
+		protected var _isSliding:Boolean;
+		private var _orientation:String;
+		private var _direction:String;
 
 		public function Slider(target:InteractiveObject, bounds:Rectangle = null, orientation:String = Orientation.HORIZONTAL, direction:String = Direction.ASCENDING)
 		{
 			super(target);
 			
+			construct::slider(target, bounds, orientation, direction);
+		}
+
+		construct function slider(target:InteractiveObject, bounds:Rectangle, orientation:String, direction:String):void
+		{
 			this._dragBehavior = new DragBehavior(target, bounds);
 			this._dragBehavior.addEventListener(DragBehaviorEvent.DRAGGING, this.handleDragging);
 			this._dragBehavior.addEventListener(DragBehaviorEvent.DRAG_START, this.handleDragStart);
@@ -96,6 +101,7 @@ package temple.ui.slider
 			this.orientation = orientation;
 			this.direction = direction;
 		}
+
 
 		/**
 		 * Get or set the value of the Slider (value between 0 and 1)
@@ -236,9 +242,9 @@ package temple.ui.slider
 		/**
 		 * Indicates if the Slider is sliding 
 		 */
-		public function get sliding():Boolean
+		public function get isSliding():Boolean
 		{
-			return this._sliding;
+			return this._isSliding;
 		}
 		
 		/**
@@ -260,6 +266,14 @@ package temple.ui.slider
 		}
 		
 		/**
+		 * Returns a reference to the <code>DragBehavior</code> of the <code>Slider</code>.
+		 */
+		public function get dragBehavior():DragBehavior
+		{
+			return this._dragBehavior;
+		}
+		
+		/**
 		 * @private
 		 */
 		protected function handleDragging(event:DragBehaviorEvent):void
@@ -272,7 +286,7 @@ package temple.ui.slider
 		 */
 		protected function handleDragStart(event:DragBehaviorEvent):void
 		{
-			this._sliding = true;
+			this._isSliding = true;
 			this.dispatchEvent(new SliderEvent(SliderEvent.SLIDE_START, this.value));
 		}
 
@@ -281,7 +295,7 @@ package temple.ui.slider
 		 */
 		protected function handleDragStop(event:DragBehaviorEvent):void
 		{
-			this._sliding = false;
+			this._isSliding = false;
 			this.dispatchEvent(new SliderEvent(SliderEvent.SLIDE_STOP, this.value));
 		}
 
