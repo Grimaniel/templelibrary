@@ -67,7 +67,7 @@ package temple.codecomponents.buttons
 			textField.defaultTextFormat = CodeStyle.textFormat;
 			textField.width = textField.height = 1;
 			
-			new LiquidBehavior(this.addChildAt(new CodeButton(width, height), 0), this, {left:0, right:0, top:0, bottom:0});
+			new LiquidBehavior(this.addChildAt(new CodeButton(width, height), 0), {left:0, right:0, top:0, bottom:0}, this);
 			var tweenBehavior:ButtonTweenBehavior = new ButtonTweenBehavior(this, .5, {alpha: 1});
 			tweenBehavior.disabledDuration = .5;
 			tweenBehavior.disabledVars = {alpha: .5};

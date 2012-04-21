@@ -48,8 +48,6 @@ package temple.codecomponents.slider
 	import temple.ui.slider.SliderEvent;
 
 
-
-
 	/**
 	 * @author Thijs Broerse
 	 */
@@ -95,6 +93,11 @@ package temple.codecomponents.slider
 		public function set value(value:*):void
 		{
 			this._slider.value = value;
+		}
+		
+		public function get isSliding():Boolean
+		{
+			return this._slider.isSliding;
 		}
 		
 		private function handleSliding(event:SliderEvent):void

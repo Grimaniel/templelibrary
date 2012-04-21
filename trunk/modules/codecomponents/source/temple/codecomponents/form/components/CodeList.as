@@ -54,13 +54,13 @@ package temple.codecomponents.form.components
 			this.width = width;
 			this.height = 60;
 			
-			this.scrollbar = new CodeScrollBar();
-			this.addChild(this.scrollbar);
-			this.scrollbar.top = 0;
-			this.scrollbar.bottom = 0;
-			this.scrollbar.right = 0;
+			this.scrollBar = new CodeScrollBar();
+			this.addChild(this.scrollBar);
+			this.scrollBar.top = 0;
+			this.scrollBar.bottom = 0;
+			this.scrollBar.right = 0;
 
-			new LiquidBehavior(this.addChildAt(new CodeBackground(100, 100), 0), this, {top: 0, left: 0, right: 0, bottom: 0});
+			new LiquidBehavior(this.addChildAt(new CodeBackground(100, 100), 0), {top: 0, left: 0, right: 0, bottom: 0}, this);
 			
 			if (items) this.addItems(items);
 		}

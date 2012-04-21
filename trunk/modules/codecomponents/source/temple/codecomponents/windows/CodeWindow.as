@@ -123,7 +123,7 @@ package temple.codecomponents.windows
 			this._header.graphics.endFill();
 			this._header.addEventListener(MouseEvent.DOUBLE_CLICK, this.handleClick);
 			this._header.doubleClickEnabled = true;
-			new LiquidBehavior(this._header, this, {left:0, top:0, right: 0});
+			new LiquidBehavior(this._header, {left:0, top:0, right: 0}, this);
 			
 			/**
 			 * Sides
@@ -132,25 +132,25 @@ package temple.codecomponents.windows
 			this._topSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
 			this._topSide.graphics.drawRect(0, 0, 1, BORDER_SIZE);
 			this._topSide.graphics.endFill();
-			new LiquidBehavior(this._topSide, this, {left:0, top:0, right: 0});
+			new LiquidBehavior(this._topSide, {left:0, top:0, right: 0}, this);
 			
 			this._leftSide = this._border.addChild(new BaseButton()) as BaseButton;
 			this._leftSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
 			this._leftSide.graphics.drawRect(0, 0, BORDER_SIZE, 1);
 			this._leftSide.graphics.endFill();
-			new LiquidBehavior(this._leftSide, this, {left:0, top:HEADER_SIZE, bottom: 0});
+			new LiquidBehavior(this._leftSide, {left:0, top:HEADER_SIZE, bottom: 0}, this);
 
 			this._rightSide = this._border.addChild(new BaseButton()) as BaseButton;
 			this._rightSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
 			this._rightSide.graphics.drawRect(0, 0, BORDER_SIZE, 1);
 			this._rightSide.graphics.endFill();
-			new LiquidBehavior(this._rightSide, this, {right:0, top:HEADER_SIZE, bottom: 0});
+			new LiquidBehavior(this._rightSide, {right:0, top:HEADER_SIZE, bottom: 0}, this);
 
 			this._bottomSide = this._border.addChild(new BaseButton()) as BaseButton;
 			this._bottomSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
 			this._bottomSide.graphics.drawRect(0, 0, BORDER_SIZE, BORDER_SIZE);
 			this._bottomSide.graphics.endFill();
-			new LiquidBehavior(this._bottomSide, this, {left:0, right:0, bottom: 0});
+			new LiquidBehavior(this._bottomSide, {left:0, right:0, bottom: 0}, this);
 
 			this._resizeButton = this._border.addChild(new BaseButton()) as BaseButton;
 			this._resizeButton.graphics.beginFill(CodeStyle.windowBorderBackgroundColor, 1);
@@ -160,7 +160,7 @@ package temple.codecomponents.windows
 			this._resizeButton.graphics.lineTo(0, size);
 			this._resizeButton.graphics.lineTo(size, 0);
 			this._resizeButton.graphics.endFill();
-			new LiquidBehavior(this._resizeButton, this, {right:0, bottom:0});
+			new LiquidBehavior(this._resizeButton, {right:0, bottom:0}, this);
 			
 			new ScaleBehavior(this, this._topSide, new Point(0, this.height), false, false, true, false);
 			new ScaleBehavior(this, this._leftSide, new Point(this.width, 0), false, true, false, false);
@@ -323,6 +323,16 @@ package temple.codecomponents.windows
 		public function set scalable(value:Boolean):void
 		{
 			this.scaleHorizontal = this.scaleVertical = value;
+		}
+
+		public function get closable():Boolean
+		{
+			return this._closeButton.visible;
+		}
+
+		public function set closable(value:Boolean):void
+		{
+			this._closeButton.visible = value;
 		}
 		
 		public function get focus():Boolean
