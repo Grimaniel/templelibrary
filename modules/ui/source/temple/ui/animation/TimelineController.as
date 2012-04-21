@@ -35,12 +35,13 @@
 
 package temple.ui.animation 
 {
+	import temple.core.behaviors.AbstractBehavior;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.addToDebugManager;
-	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 
 	import flash.display.FrameLabel;
 	import flash.display.MovieClip;
+
 
 	/**
 	 * Class for controlling the timeline of a <code>MovieClip</code>
@@ -51,9 +52,9 @@ package temple.ui.animation
 	 * timelineController.addLableEventListener('fadeIn', handleFadeInClip);
 	 * </listing>
 	 * 
-	 * @author Corstiaan
+	 * @author Corstiaan[at]mediamonks.com
 	 */
-	public class TimelineController extends AbstractDisplayObjectBehavior implements IDebuggable
+	public class TimelineController extends AbstractBehavior implements IDebuggable
 	{
 		protected var _labels:Object;
 		protected var _listeners:Object;

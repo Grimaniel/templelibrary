@@ -61,14 +61,8 @@ package temple.ui.layout.liquid
 
 		public function LiquidMovieClip(relatedObject:ILiquidObject = null)
 		{
-			construct::liquidMovieClip(relatedObject);
-		}
-
-		/**
-		 * @private
-		 */
-		construct function liquidMovieClip(relatedObject:ILiquidObject):void
-		{
+			super();
+			
 			this._liquidBehavior = new LiquidBehavior(this, relatedObject);
 			
 			// Call init after a framedelay, so all inspetables are already set

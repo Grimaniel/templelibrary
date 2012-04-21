@@ -84,14 +84,7 @@ package temple.core.display
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
-		
-		/**
-		 * @private
-		 * 
-		 * Protected namespace for construct method. This makes overriding of constructor possible.
-		 */
-		protected namespace construct;
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);
 		private var _eventListenerManager:EventListenerManager;
@@ -104,14 +97,8 @@ package temple.core.display
 
 		public function CoreSprite()
 		{
-			construct::coreSprite();
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreSprite():void
-		{
+			super();
+			
 			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
 			
 			// Register object for destruction testing

@@ -54,7 +54,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		/**
 		 * The name of the Temple.
@@ -64,7 +64,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library.
 		 */
-		public static const VERSION:String = "3.0.2";
+		public static const VERSION:String = "3.0.1";
 		
 		/**
 		 * The Authors of the Temple.
@@ -76,7 +76,7 @@ package temple.core
 		 * (Format: 'yyyy-mm-dd')
 		 * 
 		 */
-		public static const DATE:String = "2012-04-18";
+		public static const DATE:String = "2012-03-01";
 
 		/**
 		 * The official website of the Temple.
@@ -137,7 +137,7 @@ package temple.core
 		public static var defaultDebugMode:String = DebugMode.CUSTOM;
 
 		/**
-		 * Indicates if Temple errors should be ignored. If set to true, Temple errors are still logged, but not thrown.
+		 * Indicates if Temple errors should be ignored. If set to true, Temple errors are still logged, but not throwed
 		 * 
 		 * @see temple.core.errors#throwError()
 		 */

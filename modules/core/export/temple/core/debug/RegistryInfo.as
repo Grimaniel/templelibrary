@@ -48,9 +48,7 @@ package temple.core.debug
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
-		
-		private static const _TO_STRING_PROPS:Vector.<String> = Vector.<String>(['objectId', 'timestamp']);
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private var _stack:String;
 		private var _timestamp:int;
@@ -76,11 +74,6 @@ package temple.core.debug
 		public function get objectId():uint
 		{
 			return this._objectId;
-		}
-		
-		public function toString():String
-		{
-			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }

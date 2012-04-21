@@ -67,17 +67,7 @@ package temple.mediaplayers.players.controls
 		private var _progressBar:DisplayObject;
 		private var _progressLabel:ILabel;
 		
-		public function PlayerProgressBar(width:Number = NaN, height:Number = NaN)
-		{
-			super(width, height);
-			
-			construct::playerProgressBar(width, height);
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function playerProgressBar(width:Number = NaN, height:Number = NaN):void
+		public function PlayerProgressBar()
 		{
 			this.loadBar ||= this.getChildByName(loadBarInstanceName) as DisplayObject;
 			this.progressBar ||= this.getChildByName(progressBarInstanceName) as DisplayObject;
@@ -92,11 +82,6 @@ package temple.mediaplayers.players.controls
 			this.addEventListener(MouseEvent.CLICK, this.handleClick);
 			
 			new ScrubBehavior(this);
-			
-			this.toStringProps.push("player");
-			
-			width;
-			height;
 		}
 
 		public function get player():IPlayer
@@ -152,7 +137,7 @@ package temple.mediaplayers.players.controls
 				}
 				if (this._loadBar && this._player is IProgressiveDownloadPlayer)
 				{
-					this._loadBar.width = IProgressiveDownloadPlayer(this._player).bytesLoaded / IProgressiveDownloadPlayer(this._player).bytesTotal * this.width || .1;
+					this._loadBar.width = IProgressiveDownloadPlayer(this._player).bytesLoaded / IProgressiveDownloadPlayer(this._player).bytesTotal * this.width || .1; 
 				}
 				if (this._progressLabel)
 				{

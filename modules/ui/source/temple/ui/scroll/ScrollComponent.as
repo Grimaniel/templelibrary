@@ -71,7 +71,7 @@ package temple.ui.scroll
 		public static var scrollBarInstanceName:String = "mcScrollBar";
 		
 		private var _content:DisplayObjectContainer;
-		private var _scrollBar:ScrollBar;
+		private var _scrollbar:ScrollBar;
 		
 		public function ScrollComponent()
 		{
@@ -84,7 +84,7 @@ package temple.ui.scroll
 		{
 			if (!this._content) this.content = this.getChildByName(contentInstanceName) as DisplayObjectContainer;
 			this.mask ||= this.getChildByName(maskInstanceName);
-			this.scrollBar ||= this.getChildByName(scrollBarInstanceName) as ScrollBar;
+			this.scrollbar ||= this.getChildByName(scrollBarInstanceName) as ScrollBar;
 			
 			if (!this._scrollBehavior)
 			{
@@ -214,21 +214,21 @@ package temple.ui.scroll
 		/**
 		 * Add a ScrollBar 
 		 */
-		public function get scrollBar():ScrollBar
+		public function get scrollbar():ScrollBar
 		{
-			return this._scrollBar;
+			return this._scrollbar;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function set scrollBar(value:ScrollBar):void
+		public function set scrollbar(value:ScrollBar):void
 		{
-			this._scrollBar = value;
-			if (this._scrollBar)
+			this._scrollbar = value;
+			if (this._scrollbar)
 			{
-				this._scrollBar.autoHide = true;
-				this._scrollBar.scrollPane = this;
+				this._scrollbar.autoHide = true;
+				this._scrollbar.scrollPane = this;
 			}
 		}
 
@@ -238,7 +238,7 @@ package temple.ui.scroll
 		override public function destruct():void 
 		{
 			this._content = null;
-			this._scrollBar = null;
+			this._scrollbar = null;
 			super.destruct();
 		}
 	}

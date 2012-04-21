@@ -77,14 +77,14 @@ package temple.utils
 			entities['ã'] = 'a';
 			entities['ä'] = 'a';
 			entities['å'] = 'a';
-			entities['ā'] = 'a';
+			entities['�?'] = 'a';
 			entities['ą'] = 'a';
 			entities['ç'] = 'c';
 			entities['ć'] = 'c';
 			entities['ĉ'] = 'c';
 			entities['ċ'] = 'c';
-			entities['č'] = 'c';
-			entities['ď'] = 'd';
+			entities['�?'] = 'c';
+			entities['�?'] = 'd';
 			entities['đ'] = 'd';
 			entities['è'] = 'e';
 			entities['é'] = 'e';
@@ -94,7 +94,7 @@ package temple.utils
 			entities['ĕ'] = 'e';
 			entities['ė'] = 'e';
 			entities['ę'] = 'e';
-			entities['ĝ'] = 'g';
+			entities['�?'] = 'g';
 			entities['ğ'] = 'g';
 			entities['ġ'] = 'g';
 			entities['ģ'] = 'g';
@@ -127,14 +127,14 @@ package temple.utils
 			entities['ö'] = 'o';
 			entities['õ'] = 'o';
 			entities['ø'] = 'o';
-			entities['ō'] = 'o';
-			entities['ŏ'] = 'o';
+			entities['�?'] = 'o';
+			entities['�?'] = 'o';
 			entities['ő'] = 'o';
 			entities['ŕ'] = 'r';
 			entities['ŗ'] = 'r';
 			entities['ř'] = 'r';
 			entities['ś'] = 's';
-			entities['ŝ'] = 's';
+			entities['�?'] = 's';
 			entities['ş'] = 's';
 			entities['š'] = 's';
 			entities['ţ'] = 't';
@@ -159,7 +159,7 @@ package temple.utils
 			entities['ž'] = 'z';
 			
 			entities['À'] = 'A';
-			entities['Á'] = 'A';
+			entities['�?'] = 'A';
 			entities['Â'] = 'A';
 			entities['Ã'] = 'A';
 			entities['Ä'] = 'A';
@@ -173,7 +173,7 @@ package temple.utils
 			entities['Ċ'] = 'C';
 			entities['Č'] = 'C';
 			entities['Ď'] = 'D';
-			entities['Đ'] = 'D';
+			entities['�?'] = 'D';
 			entities['È'] = 'E';
 			entities['É'] = 'E';
 			entities['Ê'] = 'E';
@@ -190,9 +190,9 @@ package temple.utils
 			entities['Ĥ'] = 'H';
 			entities['Ħ'] = 'H';
 			entities['Ì'] = 'I';
-			entities['Í'] = 'I';
+			entities['�?'] = 'I';
 			entities['Î'] = 'I';
-			entities['Ï'] = 'I';
+			entities['�?'] = 'I';
 			entities['Ĩ'] = 'I';
 			entities['Ī'] = 'I';
 			entities['Ĭ'] = 'I';
@@ -205,7 +205,7 @@ package temple.utils
 			entities['Ļ'] = 'L';
 			entities['Ľ'] = 'L';
 			entities['Ŀ'] = 'L';
-			entities['Ł'] = 'L';
+			entities['�?'] = 'L';
 			entities['Ñ'] = 'N';
 			entities['Ń'] = 'N';
 			entities['Ņ'] = 'N';
@@ -219,7 +219,7 @@ package temple.utils
 			entities['Ø'] = 'O';
 			entities['Ō'] = 'O';
 			entities['Ŏ'] = 'O';
-			entities['Ő'] = 'O';
+			entities['�?'] = 'O';
 			entities['Ŕ'] = 'R';
 			entities['Ŗ'] = 'R';
 			entities['Ř'] = 'R';
@@ -241,7 +241,7 @@ package temple.utils
 			entities['Ű'] = 'U';
 			entities['Ų'] = 'U';
 			entities['Ŵ'] = 'W';
-			entities['Ý'] = 'Y';
+			entities['�?'] = 'Y';
 			entities['Ÿ'] = 'Y';
 			entities['Ŷ'] = 'Y';
 			entities['Ź'] = 'Z';

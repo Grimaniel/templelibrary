@@ -62,14 +62,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
-		
-		/**
-		 * @private
-		 * 
-		 * Protected namespace for construct method. This makes overriding of constructor possible.
-		 */
-		protected namespace construct;
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _isDestructed:Boolean;
@@ -77,14 +70,6 @@ package temple.core
 		private var _emptyPropsInToString:Boolean = true;
 
 		public function CoreObject()
-		{
-			construct::coreObject();
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreObject():void
 		{
 			this._registryId = Registry.add(this);
 		}

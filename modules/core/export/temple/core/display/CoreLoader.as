@@ -154,14 +154,7 @@ package temple.core.display
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
-		
-		/**
-		 * @private
-		 * 
-		 * Protected namespace for construct method. This makes overriding of constructor possible.
-		 */
-		protected namespace construct;
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name', 'url']);
 		private var _isLoading:Boolean;
@@ -182,18 +175,13 @@ package temple.core.display
 		 */
 		public function CoreLoader(logErrors:Boolean = true)
 		{
-			construct::coreLoader(logErrors);
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreLoader(logErrors:Boolean):void
-		{
+			super();
+			
 			this._logErrors = logErrors;
 			
 			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
 			
+			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property

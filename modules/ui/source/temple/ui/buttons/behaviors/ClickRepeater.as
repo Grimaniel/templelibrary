@@ -35,11 +35,12 @@
 
 package temple.ui.buttons.behaviors
 {
+	import temple.core.behaviors.AbstractBehavior;
 	import temple.core.destruction.DestructEvent;
 	import temple.core.utils.CoreTimer;
-	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 	import temple.utils.TimeOut;
 
+	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
@@ -67,7 +68,7 @@ package temple.ui.buttons.behaviors
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ClickRepeater extends AbstractDisplayObjectBehavior
+	public class ClickRepeater extends AbstractBehavior
 	{
 		private var _initDelay:uint;
 		private var _repeatDelay:uint;
@@ -91,14 +92,6 @@ package temple.ui.buttons.behaviors
 		{
 			super(target);
 			
-			construct::clickRepeater(target, initDelay, repeatDelay, highSpeedWait, highSpeedDelay);
-		}
-
-		/**
-		 * @private
-		 */
-		construct function clickRepeater(target:InteractiveObject, initDelay:uint, repeatDelay:uint, highSpeedWait:Number, highSpeedDelay:uint):void
-		{
 			this._initDelay = initDelay;
 			this._repeatDelay = repeatDelay;
 			this._highSpeedWait = highSpeedWait;
@@ -110,7 +103,14 @@ package temple.ui.buttons.behaviors
 			this._timer = new CoreTimer(this._initDelay);
 			this._timer.addEventListener(TimerEvent.TIMER, this.handleTimerEvent);
 		}
-
+		
+		/**
+		 * Returns a reference to the DisplayObject
+		 */
+		public function get displayObject():DisplayObject
+		{
+			return this.target as DisplayObject;
+		}
 		
 		/**
 		 * Set the delay of the first repeat in milliseconds
@@ -183,8 +183,8 @@ package temple.ui.buttons.behaviors
 			this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
 			this._stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp, false, 0, true);
 			
-			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
-			this.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
+			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true));
+			this.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true));
 			this.displayObject.addEventListener(MouseEvent.ROLL_OUT, this.handleTargetRollOut);
 			this.displayObject.addEventListener(MouseEvent.ROLL_OVER, this.handleTargetRollOver);
 
@@ -227,7 +227,7 @@ package temple.ui.buttons.behaviors
 		{
 			this._mouseOverTarget = true;
 			this._timer.start();
-			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
+			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true));
 		}
 
 		private function handleTimerEvent(event:TimerEvent):void

@@ -61,21 +61,14 @@ package temple.core.events
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
-		
-		/**
-		 * If set to <code>true</code> the <code>EventListenerManager</code> will log a debug message when a weak event
-		 * listener is set.
-		 */
-		public static var logWeakListeners:Boolean;
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private var _target:IEventDispatcher;
 		private var _events:Vector.<EventData>;
 		private var _blockRequest:Boolean;
 
 		/**
-		 * Creates a new instance of a EventListenerManager. Do not create more then one EventListenerManager for each
-		 * ICoreEventDispatcher!
+		 * Creates a new instance of a EventListenerManager. Do not create more one EventListenerManager for each ICoreEventDispatcher!
 		 * @param eventDispatcher the EventDispatcher of this EventListenerManager
 		 */
 		public function EventListenerManager(eventDispatcher:ICoreEventDispatcher) 
@@ -110,11 +103,7 @@ package temple.core.events
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
 			// Don't store weak reference info, since storing the listener will make it strong
-			if (useWeakReference)
-			{
-				if (EventListenerManager.logWeakListeners) this.logDebug("Weak listener used for '" + type + "'");
-				return;
-			}
+			if (useWeakReference) return;
 			
 			var i:int = this._events.length;
 			while (i--)

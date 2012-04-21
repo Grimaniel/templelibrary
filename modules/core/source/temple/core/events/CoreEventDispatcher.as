@@ -41,8 +41,6 @@ package temple.core.events
 	public class CoreEventDispatcher extends EventDispatcher implements ICoreEventDispatcher, ICoreObject
 	{
 		include "../includes/Version.as.inc";
-
-		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _eventListenerManager:EventListenerManager;
@@ -59,16 +57,8 @@ package temple.core.events
 		{
 			super(target);
 			
-			construct::coreEventDispatcher(target);
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreEventDispatcher(target:IEventDispatcher):void
-		{
+			// Register object for destruction testing
 			this._registryId = Registry.add(this);
-			target;
 		}
 		
 		include "../includes/CoreObjectMethods.as.inc";

@@ -121,9 +121,9 @@ package temple.utils
 			
 			this.calculate();
 			
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame, false, -1000);
-			this.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage, false, -1000);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage, false, -1000);
+			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame, false, -1000, true);
+			this.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage, false, -1000, true);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage, false, -1000, true);
 		}
 
 		private function handleAddedToStage(event:Event):void
@@ -170,7 +170,7 @@ package temple.utils
 					//prepare the graph
 					this.graphics.clear();
 					this.graphics.lineStyle(1, 0x000000, 1);
-					this.graphics.beginFill(0xFFFFFF, 1);
+					this.graphics.beginFill(0xDDDDDD, 1);
 					this.graphics.drawRect(this._graphRect.x, this._graphRect.y, this._graphRect.width, this._graphRect.height);
 					this.graphics.endFill();
 				}
@@ -178,7 +178,7 @@ package temple.utils
 				//update fps
 				avgTmp = this._frameMilliTotal / this._ticks;
 								
-				this._fpsField.text = 'FPS: ' + String(Math.round(1000 / avgTmp * 100) / 100);
+				this._fpsField.text = 'Fps: ' + String(Math.round(1000 / avgTmp * 100) / 100);
 				this._frameMilliHistory.push(avgTmp);	
 							
 				if (this._frameMilliHistory.length > this._maxHistoryItems)
@@ -204,7 +204,7 @@ package temple.utils
 					if (this._graph)
 					{
 						//calc some more & draw				
-						this.graphics.lineStyle(0, 0xCC3300, 1, false, LineScaleMode.NORMAL);
+						this.graphics.lineStyle(0, 0xBB0000, 1, false, LineScaleMode.NORMAL);
 						dx = this._graphRect.width / iLim;
 						dy = this._graphRect.height / (this._frameMilliMax - this._frameMilliMin);
 						for (i = 0;i < iLim;i++)
@@ -245,7 +245,7 @@ package temple.utils
 					if (this._graph)
 					{
 						//calc some more & draw
-						this.graphics.lineStyle(0, 0x0099FF, 1, false, LineScaleMode.NORMAL);
+						this.graphics.lineStyle(0, 0x0000BB, 1, false, LineScaleMode.NORMAL);
 						dx = this._graphRect.width / iLim;
 						dy = this._graphRect.height / (this._memoryKiloByteMax - this._memoryKiloByteMin);
 						for (i = 0;i < iLim;i++)
@@ -295,7 +295,7 @@ package temple.utils
 		{
 			field.textColor = 0x000000;
 			field.background = this._graph;
-			field.backgroundColor = 0xFFFFFF;
+			field.backgroundColor = 0xDDDDDD;
 			field.border = this._graph;
 			
 			field.selectable = false;

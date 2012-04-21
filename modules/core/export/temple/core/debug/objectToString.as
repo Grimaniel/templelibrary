@@ -47,8 +47,6 @@ package temple.core.debug
 	 */
 	public function objectToString(object:*, props:Vector.<String> = null, notEmpty:Boolean = false):String
 	{
-		const _MAX_VALUE_LENGTH:uint = 80;
-		
 		var string:String = getClassName(object);
 		
 		if (object is Class) string = "class " + string;
@@ -68,14 +66,6 @@ package temple.core.debug
 						string += sep + name + "=";
 						
 						if (value is String && value !== null)
-						{
-							// remove new lines
-							var s:String = String(value).split("\r").join(" ").split("\n").join(" ");
-							// limit length
-							if (s.length > _MAX_VALUE_LENGTH) s = s.substr(0, _MAX_VALUE_LENGTH) + "[...]";
-							string += "\"" + s + "\"";
-						}
-						else if (value is Date)
 						{
 							string += "\"" + value + "\"";
 						}

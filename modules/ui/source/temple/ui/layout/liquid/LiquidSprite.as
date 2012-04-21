@@ -58,11 +58,11 @@ package temple.ui.layout.liquid
 		private var _liquidBehavior:LiquidBehavior;
 		private var _debug:Boolean;
 
-		public function LiquidSprite(initObject:Object = null, relatedObject:ILiquidObject = null)
+		public function LiquidSprite(relatedObject:ILiquidObject = null, initObject:Object = null)
 		{
 			super();
 			
-			this._liquidBehavior = new LiquidBehavior(this, initObject, relatedObject);
+			this._liquidBehavior = new LiquidBehavior(this, relatedObject, initObject);
 			
 			// Call init after a framedelay, so all inspetables are already set
 			if (!initObject) new FrameDelay(this.initLiquid);

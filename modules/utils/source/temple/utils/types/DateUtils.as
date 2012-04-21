@@ -727,7 +727,7 @@ package temple.utils.types
 		 */
 		public static function age(birthdate:Date, on:Date = null):int
 		{
-			on ||= new Date();
+			//on ||= new Date();
 			var age:int = on.fullYear - birthdate.fullYear;
 			
 			if (birthdate.month < on.month) return age;

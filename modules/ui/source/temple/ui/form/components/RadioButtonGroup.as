@@ -36,7 +36,6 @@
 package temple.ui.form.components 
 {
 	import temple.common.interfaces.IResettable;
-	import temple.common.interfaces.ISelectable;
 	import temple.ui.form.validation.IHasError;
 	import temple.ui.form.validation.rules.NullValidationRule;
 	import temple.utils.FrameDelay;
@@ -56,7 +55,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class RadioButtonGroup extends FormElementComponent implements IHasError, IResettable, ISetValue, IRadioGroup
+	public class RadioButtonGroup extends FormElementComponent implements IHasError, IResettable, ISetValue
 	{
 		private var _radioGroup:RadioGroup;
 		
@@ -84,22 +83,6 @@ package temple.ui.form.components
 		public function set value(value:*):void
 		{
 			this._radioGroup.value = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get selected():ISelectable 
-		{
-			return this._radioGroup.selected;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set selected(value:ISelectable):void 
-		{
-			this._radioGroup.selected = value;
 		}
 		
 		/**
@@ -164,30 +147,6 @@ package temple.ui.form.components
 		public function get radioGroup():RadioGroup
 		{
 			return this._radioGroup;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function add(item:ISelectable, value:* = null, selected:Boolean = false, tabIndex:int = -1):ISelectable
-		{
-			return this._radioGroup.add(item, value, selected, tabIndex);
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function remove(item:ISelectable):void
-		{
-			this._radioGroup.remove(item);
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function get items():Array
-		{
-			return this._radioGroup.items;
 		}
 		
 		/**

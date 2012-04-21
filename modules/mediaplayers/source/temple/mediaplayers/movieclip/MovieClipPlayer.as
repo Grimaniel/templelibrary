@@ -43,7 +43,6 @@ package temple.mediaplayers.movieclip
 	import temple.core.debug.IDebuggable;
 	import temple.core.events.CoreEventDispatcher;
 	import temple.mediaplayers.players.PlayerStatus;
-	import temple.mediaplayers.players.PlayerEvent;
 
 
 	/**
@@ -286,7 +285,6 @@ package temple.mediaplayers.movieclip
 			if (this._movieClip && this._movieClip.currentFrame == this._movieClip.totalFrames && this.status == PlayerStatus.PLAYING)
 			{
 				this.stop();
-				this.dispatchEvent(new PlayerEvent(PlayerEvent.COMPLETE));
 				if (this._autoRewind) this._movieClip.gotoAndStop(1);
 			}
 		}

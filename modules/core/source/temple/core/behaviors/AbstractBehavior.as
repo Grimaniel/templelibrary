@@ -36,11 +36,6 @@ package temple.core.behaviors
 		 */
 		public function AbstractBehavior(target:Object)
 		{
-			construct::abstractBehavior(target);
-		}
-
-		construct function abstractBehavior(target:Object):void
-		{
 			if (target == null) throwError(new TempleArgumentError(this, "target cannot be null"));
 			this.toStringProps.push('target');
 			this._target = target;

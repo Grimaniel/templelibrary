@@ -70,15 +70,13 @@ package temple.utils.types
 
 		/**
 		 * Trims the text to fit a given textfield.  
-		 * @param textField the TextField to set the new text to.
-		 * @param abbreviatedString the text that indicates that trimming has occurred; commonly this is "..."
-		 * @return a Boolean which indicates if the text in the TextField is trimmed.
+		 * @param textField the TextField to set the new text to
+		 * @param abbreviatedString the text that indicates that trimming has occurred; commonly this is "..."  
 		 */  
-		public static function trimTextFieldText(textField:TextField, abbreviatedString:String = "..."):Boolean 
+		public static function trimTextFieldText(textField:TextField, abbreviatedString:String = "..."):void 
 		{
 			var text:String = textField.text;
 			var trimLength:int = text.length;
-			var trimmed:Boolean;
 			
 			while (textField.multiline && textField.textHeight > textField.height || !textField.multiline && textField.textWidth + TextFieldUtils._MAGICAL_TEXTWIDTH_PADDING > textField.width)
 			{ 
@@ -86,24 +84,20 @@ package temple.utils.types
 				text = text.substr(0, trimLength);
 				text += abbreviatedString;
 				textField.text = text;
-				trimmed = true;
 			}
-			return trimmed;
 		}
 
 		/**
 		 * Trims the htmlText to fit a given textfield.  
-		 * @param textField the TextField to set the new text to.
-		 * @param abbreviatedString the text that indicates that trimming has occurred; commonly this is "..."
-		 * @return a Boolean which indicates if the text in the TextField is trimmed.
+		 * @param textField the TextField to set the new text to
+		 * @param abbreviatedString the text that indicates that trimming has occurred; commonly this is "..."  
 		 */  
-		public static function trimTextFieldHTMLText(textField:TextField, abbreviatedString:String = "..."):Boolean 
+		public static function trimTextFieldHTMLText(textField:TextField, abbreviatedString:String = "..."):void 
 		{
 			var styleSheet:StyleSheet = textField.styleSheet;
 			textField.styleSheet = null;
 			var text:String;
 			var closeTag:uint;
-			var trimmed:Boolean;
 			
 			while (textField.multiline && textField.textHeight > textField.height || !textField.multiline && textField.textWidth + TextFieldUtils._MAGICAL_TEXTWIDTH_PADDING > textField.width)
 			{
@@ -111,10 +105,8 @@ package temple.utils.types
 				closeTag = text.lastIndexOf(')</textformat>');
 				text = text.substr(0, closeTag) + abbreviatedString + text.substr(closeTag);
 				textField.insertXMLText(0, textField.text.length, text);
-				trimmed = true;
 			}
 			new FrameDelay(function():void { textField.styleSheet = styleSheet; }, 5);
-			return trimmed;
 		}
 
 		/**

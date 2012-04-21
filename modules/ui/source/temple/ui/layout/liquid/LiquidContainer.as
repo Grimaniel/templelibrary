@@ -78,14 +78,6 @@ package temple.ui.layout.liquid
 
 		public function LiquidContainer(width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = false)
 		{
-			construct::liquidContainer(width, height, scaleMode, align, clipping);
-		}
-
-		/**
-		 * @private
-		 */
-		construct function liquidContainer(width:Number, height:Number, scaleMode:String, align:String, clipping:Boolean):void
-		{
 			this._width = width;
 			this._height = height;
 			

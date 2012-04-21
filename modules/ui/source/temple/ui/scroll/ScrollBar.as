@@ -401,7 +401,7 @@ package temple.ui.scroll
 				{
 					if (this.orientation == Orientation.VERTICAL)
 					{
-						new LiquidBehavior(this._track,
+						new LiquidBehavior(this._track, null,
 						{
 							top: (this._upButton ? this._upButton.height : 0)
 						, 	bottom: (this._downButton ? this._downButton.height : 0)
@@ -411,7 +411,7 @@ package temple.ui.scroll
 					}
 					else
 					{
-						new LiquidBehavior(this._track,
+						new LiquidBehavior(this._track, null,
 						{
 						 	left: (this._leftButton ? this._leftButton.width : 0)
 						, 	right: (this._rightButton ? this._rightButton.width : 0)
@@ -460,7 +460,7 @@ package temple.ui.scroll
 				this._upRepeater = new ClickRepeater(this._upButton);
 				if (this._initialized && this.rotation == 0)
 				{
-					if (!LiquidBehavior.getInstance(this._upButton)) new LiquidBehavior(this._upButton, {top: 0, adjustRelated: true});
+					if (!LiquidBehavior.getInstance(this._upButton)) new LiquidBehavior(this._upButton, null, {top: 0, adjustRelated: true});
 					if (this._track) LiquidBehavior.getInstance(this._track).top = this._upButton.height;
 				}
 			}
@@ -495,7 +495,7 @@ package temple.ui.scroll
 				
 				if (this._initialized && this.rotation == 0)
 				{
-					if (!LiquidBehavior.getInstance(this._downButton)) new LiquidBehavior(this._downButton, {bottom: 0, adjustRelated: true}, this);
+					if (!LiquidBehavior.getInstance(this._downButton)) new LiquidBehavior(this._downButton, this, {bottom: 0, adjustRelated: true});
 					if (this._track) LiquidBehavior.getInstance(this._track).bottom = this._downButton.height;
 				}
 			}
@@ -529,7 +529,7 @@ package temple.ui.scroll
 				this._leftRepeater = new ClickRepeater(this._leftButton);
 				if (this._initialized && this.rotation == 0)
 				{
-					if (!LiquidBehavior.getInstance(this._leftButton)) new LiquidBehavior(this._leftButton, {left: 0, adjustRelated: true}, this);
+					if (!LiquidBehavior.getInstance(this._leftButton)) new LiquidBehavior(this._leftButton, this, {left: 0, adjustRelated: true});
 					if (this._track) LiquidBehavior.getInstance(this._track).left = this._leftButton.width;
 				}
 			}
@@ -563,7 +563,7 @@ package temple.ui.scroll
 				this._rightRepeater = new ClickRepeater(this._rightButton);
 				if (this._initialized && this.rotation == 0)
 				{
-					if (!LiquidBehavior.getInstance(this._rightButton)) new LiquidBehavior(this._rightButton, {right: 0, adjustRelated: true}, this);
+					if (!LiquidBehavior.getInstance(this._rightButton)) new LiquidBehavior(this._rightButton, this, {right: 0, adjustRelated: true});
 					if (this._track) LiquidBehavior.getInstance(this._track).right = this._rightButton.width;
 				}
 			}
@@ -953,7 +953,7 @@ package temple.ui.scroll
 					if (this._autoSizeButton || this._autoHide)
 					{
 						visibleFactor = Math.min(this._scrollPane.width / this._scrollPane.contentWidth, 1);
-						if (isNaN(visibleFactor) || visibleFactor <= 0) visibleFactor = 1;
+						if (isNaN(visibleFactor) || visibleFactor < 0) visibleFactor = 1;
 						
 						if (this._autoHide) this.shown = visibleFactor < 1;
 						
@@ -971,7 +971,7 @@ package temple.ui.scroll
 					if (this._autoSizeButton || this._autoHide)
 					{
 						visibleFactor = Math.min(this._scrollPane.height / (this._scrollPane.contentHeight-1), 1);
-						if (isNaN(visibleFactor) || visibleFactor <= 0) visibleFactor = 1;
+						if (isNaN(visibleFactor) || visibleFactor < 0) visibleFactor = 1;
 						
 						if (this._autoHide) this.shown = visibleFactor < 1;
 						

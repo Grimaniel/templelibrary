@@ -78,16 +78,6 @@ package temple.utils
 			this._propertyProxy = value;
 		}
 		
-		public function get source():IHasValue
-		{
-			return this._source;
-		}
-		
-		public function get target():Object
-		{
-			return this._target;
-		}
-		
 		public function update():void
 		{
 			if (this._propertyProxy)
@@ -103,16 +93,6 @@ package temple.utils
 		private function handleChange(event:Event):void
 		{
 			this.update();
-		}
-
-		override public function destruct():void
-		{
-			this._source = null;
-			this._target = null;
-			this._propertyProxy = null;
-			this._property = null;
-			
-			super.destruct();
 		}
 	}
 }

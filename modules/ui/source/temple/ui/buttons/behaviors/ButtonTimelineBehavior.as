@@ -612,13 +612,10 @@ package temple.ui.buttons.behaviors
 		{
 			if (this.debug) this.logDebug("upState");
 			
-			if (this.movieClip)
-			{
-				this._currentLabel = ButtonTimelineLabels.UP;
-				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.movieClip.gotoAndStop(FrameLabelData(this._labels[ButtonTimelineLabels.UP]).startframe);
-				new TimerEvent(TimerEvent.TIMER_COMPLETE).updateAfterEvent();
-			}
+			this._currentLabel = ButtonTimelineLabels.UP;
+			this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			this.movieClip.gotoAndStop(FrameLabelData(this._labels[ButtonTimelineLabels.UP]).startframe);
+			new TimerEvent(TimerEvent.TIMER_COMPLETE).updateAfterEvent();
 		}
 
 		private function overState():void

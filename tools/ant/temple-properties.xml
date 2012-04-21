@@ -7,6 +7,6 @@
 	<property name="project" value="Temple-GoogleCode" />
 
 	<!-- Current Temple version -->
-	<property name="version" value="3.0.2" />
+	<property name="version" value="3.0.1" />
 	
 </project>

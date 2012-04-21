@@ -45,15 +45,15 @@ package temple.utils
 	 *	<listing version="3.0">
 	 *	
 	 *	//get values
-	 *	var myValues:Array = Enum.getArray(MyVarsClass, String);
-	 *	var myNameValues:Object = Enum.getHash(MyVarsClass, String);
+	 *	var myValues:Array = Enum.getArray(MyVarsClass, Enum.STRING);
+	 *	var myNameValues:Object = Enum.getHash(MyVarsClass, Enum.STRING);
 	 *	
 	 *	//check values
-	 *	if (Enum.hasValue(MyValidateConst, myValue))
+	 *	if(Enum.hasValue(MyValidateConst, myValue))
 	 *	{
 	 *		...
 	 *	}	
-	 *	if (Enum.hasConstant(MyValidateConst, myConstName))
+	 *	if(Enum.hasConstant(MyValidateConst, myConstName))
 	 *	{
 	 *		...
 	 *	}

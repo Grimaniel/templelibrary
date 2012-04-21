@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="Full Build Core" name="Temple-Core">
+<project default="Export Core" name="Temple-Core">
 
 	<property name="module" value="core" />
 	<property name="name" value="Temple Core Module" />
@@ -8,24 +8,11 @@
 	
 	<property name="export.dir" value="${base.dir}/export" />
 	
-	<target name="Full Build Core">
+	<target name="Export Core">
 		<antcall target="Check version" />
 		<antcall target="Update Temple properties" />
 		<antcall target="Generate Export" />
-		<antcall target="Full Build" />
-	</target>
-	
-	<target name="Prepare">
-		<antcall target="Check version" />
-		<antcall target="Update Temple properties" />
-		<antcall target="Generate Export" />
-		<antcall target="Check license" />
-		<antcall target="Check license extended" />
-		<antcall target="Check author" />
-		<antcall target="Check author extended" />
-		<antcall target="Check see tag" />
-		<antcall target="Update Readme" />
-		<echo>Prepared successful</echo>
+		<antcall target="Export" />
 	</target>
 	
 	<target name="Update Temple properties">

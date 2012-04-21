@@ -36,9 +36,8 @@
 package temple.ui.form.components 
 {
 	import temple.common.interfaces.IHasValue;
-	import temple.ui.focus.FocusManager;
+	import temple.core.destruction.IDestructible;
 	import temple.utils.types.StringUtils;
-	import temple.utils.types.VectorUtils;
 
 	import flash.events.Event;
 	import flash.text.TextField;
@@ -51,7 +50,7 @@ package temple.ui.form.components
 	 */
 	public class AutoCompleteInputField extends ComboBox 
 	{
-		private var _items:Vector.<IListItemData>;
+		private var _items:Array;
 		private var _filter:String;
 		private var _inSearch:Boolean = false;
 		private var _caseSensitive:Boolean = false;
@@ -64,7 +63,7 @@ package temple.ui.form.components
 			super(textField, list);
 			
 			this._filter = "";
-			this._items = new Vector.<IListItemData>();
+			this._items = new Array();
 			this.textField.addEventListener(Event.CHANGE, this.handleInputChange);
 			
 			this.editable = true;
@@ -286,8 +285,6 @@ package temple.ui.form.components
 		 */
 		public function filterItems():Boolean
 		{
-			if (!this._items) return false;
-			
 			this.list.removeAll();
 			var match:Boolean;
 			for (var i:int = 0,leni:int = this._items.length;i < leni; i++)
@@ -295,26 +292,6 @@ package temple.ui.form.components
 				match = this.filterItem(this._items[i]) || match;
 			}
 			return match;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function sort(compareFunction:Function):void
-		{
-			this._items.sort(compareFunction);
-			
-			super.sort(compareFunction);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function sortOn(names:*, options:* = 0, ...args):void
-		{
-			VectorUtils.sortOn.apply(null, [this._items, names, options].concat(args));
-			
-			super.sortOn.apply(null, [names, options].concat(args));
 		}
 
 		/**
@@ -348,20 +325,17 @@ package temple.ui.form.components
 		{
 			this._filter = this.text;
 			
-			if (FocusManager.focus == this.textField)
+			if (this.filterItems())
 			{
-				if (this.filterItems())
-				{
-					this.close();
-				}
-				else if (this.list.length > 0)
-				{
-					this.open();
-				}
-				else
-				{
-					this.close();
-				}
+				this.close();
+			}
+			else if (this.list.length > 0)
+			{
+				this.open();
+			}
+			else
+			{
+				this.close();
 			}
 		}
 		
@@ -375,7 +349,15 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			if (this._items) while(this._items.length) this._items.shift().destruct();
+			if (this._items)
+			{
+				for (var i:int = 0,leni:int = this._items.length;i < leni; i++)
+				{
+					var item:* = this._items[i];
+					if (item is IDestructible) IDestructible(item).destruct();
+					item = null;
+				}
+			}
 			
 			this._items = null;
 			this._filter = null;

@@ -36,9 +36,9 @@
 package temple.ui.buttons.behaviors 
 {
 	import temple.common.interfaces.IEnableable;
+	import temple.core.behaviors.AbstractBehavior;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
-	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
@@ -53,7 +53,7 @@ package temple.ui.buttons.behaviors
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ScrubBehavior extends AbstractDisplayObjectBehavior implements IEnableable
+	public class ScrubBehavior extends AbstractBehavior implements IEnableable
 	{
 		private var _eventType:String;
 		private var _stage:Stage;
@@ -80,6 +80,14 @@ package temple.ui.buttons.behaviors
 			{
 				target.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
 			}
+		}
+		
+		/**
+		 * Returns a reference to the DisplayObject
+		 */
+		public function get displayObject():DisplayObject
+		{
+			return this.target as DisplayObject;
 		}
 		
 		/**
@@ -166,13 +174,6 @@ package temple.ui.buttons.behaviors
 		{
 			this._stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
 			this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-			this.displayObject.addEventListener(MouseEvent.CLICK, this.handleClick, false, int.MAX_VALUE);
-		}
-
-		private function handleClick(event:MouseEvent):void
-		{
-			event.stopImmediatePropagation();
-			this.displayObject.removeEventListener(MouseEvent.CLICK, this.handleClick);
 		}
 		
 		private function handleAddedToStage(event:Event):void

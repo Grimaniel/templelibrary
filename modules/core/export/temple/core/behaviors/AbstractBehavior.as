@@ -60,7 +60,7 @@ package temple.core.behaviors
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private var _target:Object;
 		
@@ -69,11 +69,6 @@ package temple.core.behaviors
 		 * @param target The target of this behavior, preferable an IEventDispatcher so the behavior will be destructed when the target is destructed.
 		 */
 		public function AbstractBehavior(target:Object)
-		{
-			construct::abstractBehavior(target);
-		}
-
-		construct function abstractBehavior(target:Object):void
 		{
 			if (target == null) throwError(new TempleArgumentError(this, "target cannot be null"));
 			this.toStringProps.push('target');

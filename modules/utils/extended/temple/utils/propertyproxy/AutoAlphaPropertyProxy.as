@@ -37,6 +37,7 @@ package temple.utils.propertyproxy
 {
 	import com.greensock.plugins.AutoAlphaPlugin;
 	import com.greensock.plugins.TweenPlugin;
+
 	/**
 	 * Tweens the alpha when an objects visible is set.
 	 * 

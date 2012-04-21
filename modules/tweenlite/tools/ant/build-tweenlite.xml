@@ -1,43 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="Full Build" name="Temple-TweenLite">
+<project default="Export" name="Temple-TweenLite">
 
 	<property name="module" value="tweenlite" />
 	<property name="name" value="Temple TweenLite Module" />
 	<property name="dependencies" value="core" />
 	
-	<property name="skip-license" value="true" />
+	<property name="skip-copyrights" value="true" />
 	<property name="skip-author" value="true" />
 	
 	<import file="../../../../tools/ant/build.xml" />
 	
-	<target name="Full Build">
-		<antcall target="Prepare" />
-		<antcall target="Build" />
-		<antcall target="Extended" />
-		<antcall target="Package" />
-		<echo>Full Build successful</echo>
-	</target>
-
-	<target name="Prepare">
+	<target name="Export">
 		<antcall target="Update Readme" />
-		<echo>Prepared successful</echo>
-	</target>
-
-	<target name="Build">
 		<antcall target="Delete old SWC" />
-		<antcall target="Copy dependencies" />
 		<antcall target="Create SWC" />
-		<echo>Build successful</echo>
-	</target>
-
-	<target name="Extend">
-	</target>
-
-	<target name="Package">
+		<antcall target="Copy dependencies" />
 		<antcall target="Create Zip" />
-		<echo>Package successful</echo>
+		<echo>Export successful</echo>
 	</target>
-	
 	
 	<target name="Create Zip">
 		<zip destfile="${zip}">

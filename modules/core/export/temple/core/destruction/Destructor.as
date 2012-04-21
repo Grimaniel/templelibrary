@@ -57,7 +57,7 @@ package temple.core.destruction
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		/**
 		 * Recursively destructs the object and all its descendants.

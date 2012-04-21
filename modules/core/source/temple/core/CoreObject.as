@@ -30,22 +30,12 @@ package temple.core
 	{
 		include "./includes/Version.as.inc";
 		
-		include "./includes/ConstructNamespace.as.inc";
-		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _isDestructed:Boolean;
 		private var _registryId:uint;
 		private var _emptyPropsInToString:Boolean = true;
 
 		public function CoreObject()
-		{
-			construct::coreObject();
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreObject():void
 		{
 			this._registryId = Registry.add(this);
 		}

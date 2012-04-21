@@ -49,7 +49,7 @@ package temple.core.debug
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		/**
 		 * Debug will be set to false on all debuggable object. So no debug messages will be logged.

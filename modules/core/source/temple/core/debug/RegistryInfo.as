@@ -16,8 +16,6 @@ package temple.core.debug
 	{
 		include "../includes/Version.as.inc";
 		
-		private static const _TO_STRING_PROPS:Vector.<String> = Vector.<String>(['objectId', 'timestamp']);
-		
 		private var _stack:String;
 		private var _timestamp:int;
 		private var _objectId:uint;
@@ -42,11 +40,6 @@ package temple.core.debug
 		public function get objectId():uint
 		{
 			return this._objectId;
-		}
-		
-		public function toString():String
-		{
-			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }

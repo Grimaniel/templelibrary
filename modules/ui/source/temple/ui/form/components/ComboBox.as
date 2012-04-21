@@ -56,6 +56,8 @@ package temple.ui.form.components
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	import flash.ui.Keyboard;
+
+	
 	
 	/**
 	 * A ComboBox let the user select from a (predefined) list of options.
@@ -132,7 +134,6 @@ package temple.ui.form.components
 			this.addEventListener(MouseEvent.CLICK, this.handleClick);
 			this.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
 			this.addEventListener(FocusEvent.MOUSE_FOCUS_CHANGE, this.handleMouseFocusChange);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
 
 			this._list.addEventListener(Event.CHANGE, this.handleListChanged);
 			this._list.addEventListener(MouseEvent.CLICK, this.handleClick);
@@ -230,22 +231,6 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function hasItem(value:*):Boolean
-		{
-			return this._list.hasItem(value);
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function getItem(value:*, fromIndex:int = 0):*
-		{
-			return this._list.getItem(value, fromIndex);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
 		public function getItemAt(index:uint):*
 		{
 			return this._list.getItemAt(index);
@@ -257,14 +242,6 @@ package temple.ui.form.components
 		public function setItemAt(data:*, index:uint, label:String = null):void
 		{
 			this._list.setItemAt(data, index, label);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function getLabel(value:*, fromIndex:int = 0):String
-		{
-			return this._list.getLabel(value, fromIndex);
 		}
 		
 		/**
@@ -497,17 +474,9 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function sort(compareFunction:Function):void
+		public function sortItems(compareFunction:Function = null):void
 		{
-			this._list.sort(compareFunction);
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function sortOn(names:*, options:* = 0, ...args:*):void
-		{
-			this._list.sortOn.apply(null, [names, options].concat(args));
+			this._list.sortItems(compareFunction);
 		}
 
 		/**
@@ -769,11 +738,11 @@ package temple.ui.form.components
 			else
 			{
 				this.dispatchEvent(new Event(Event.CHANGE));
-				
-				if (this.submitOnChange)
-				{
-					this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
-				}
+			}
+			
+			if (this.submitOnChange)
+			{
+				this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 			}
 		}
 		
@@ -892,14 +861,6 @@ package temple.ui.form.components
 			event.preventDefault();
 		}
 		
-		private function handleRemovedFromStage(event:Event):void
-		{
-			if (this._isOpen)
-			{
-				this.close();
-			}
-		}
-		
 		/**
 		 * @inheritDoc
 		 */
@@ -910,6 +871,8 @@ package temple.ui.form.components
 			if (this._list && !this._list.isDestructed)
 			{
 				this._list.removeEventListener(Event.CHANGE, this.handleListChanged);
+				this.close();
+				this.removeAll();
 				this._list.destruct();
 				this._list = null;
 			}

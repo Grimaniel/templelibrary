@@ -80,18 +80,6 @@ package temple.ui.form.components
 		function addItems(items:Array, labels:* = null):void
 		
 		/**
-		 * Returns true if the list has an item with the specified value
-		 */
-		function hasItem(value:*):Boolean
-		
-		/**
-		 * Gets the first item with a specific value.
-		 * @param value the value to search for
-		 * @param fromIndex The location in the list from which to start searching for the item. 
-		 */
-		function getItem(value:*, fromIndex:int = 0):*
-		
-		/**
 		 * Gets the item on a specific position.
 		 */
 		function getItemAt(index:uint):*
@@ -100,13 +88,6 @@ package temple.ui.form.components
 		 * Sets the item on a specific position.
 		 */
 		function setItemAt(data:*, index:uint, label:String = null):void
-		
-		/**
-		 * Gets the label of the first item with a specific value.
-		 * @param value the value to search for
-		 * @param fromIndex The location in the list from which to start searching for the item. 
-		 */
-		function getLabel(value:*, fromIndex:int = 0):String
 
 		/**
 		 * Gets the label of the item on a specific position.
@@ -261,16 +242,12 @@ package temple.ui.form.components
 		 * 	<li>0, if x equals y</li>
 		 * 	<li>a positive number, if x should appear after y in the sorted sequence</li>
 		 * </ul>
+		 * If no sortFunction is specified, the items will be sorted alphabetically on their label.
 		 * 
 		 * @see temple.ui.form.components.IListItemData
 		 */
-		function sort(compareFunction:Function):void
-
-		/**
-		 * Sorts the items in the list according to one or more fields in the item. 
-		 */
-		function sortOn(names:*, options:* = 0, ...args:*):void
-
+		function sortItems(compareFunction:Function = null):void
+		
 		/**
 		 * Indicates if a search automaticly should continue to the begin when reaching the end .
 		 */

@@ -122,8 +122,6 @@ package temple.core.display
 	{
 		include "../includes/Version.as.inc";
 		
-		include "../includes/ConstructNamespace.as.inc";
-		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name', 'url']);
 		private var _isLoading:Boolean;
 		private var _isLoaded:Boolean;
@@ -143,18 +141,13 @@ package temple.core.display
 		 */
 		public function CoreLoader(logErrors:Boolean = true)
 		{
-			construct::coreLoader(logErrors);
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreLoader(logErrors:Boolean):void
-		{
+			super();
+			
 			this._logErrors = logErrors;
 			
 			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
 			
+			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property

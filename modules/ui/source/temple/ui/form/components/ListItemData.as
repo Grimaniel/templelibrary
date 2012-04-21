@@ -42,7 +42,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public final class ListItemData extends CoreObject  implements IListItemData
+	public class ListItemData extends CoreObject  implements IListItemData
 	{
 		internal var selected:Boolean;
 		internal var row:IListRow;

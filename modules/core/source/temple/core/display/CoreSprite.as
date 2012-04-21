@@ -52,8 +52,6 @@ package temple.core.display
 	{
 		include "../includes/Version.as.inc";
 		
-		include "../includes/ConstructNamespace.as.inc";
-		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
@@ -65,14 +63,8 @@ package temple.core.display
 
 		public function CoreSprite()
 		{
-			construct::coreSprite();
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreSprite():void
-		{
+			super();
+			
 			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
 			
 			// Register object for destruction testing

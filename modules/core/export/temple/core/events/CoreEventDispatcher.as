@@ -74,14 +74,7 @@ package temple.core.events
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
-
-		/**
-		 * @private
-		 * 
-		 * Protected namespace for construct method. This makes overriding of constructor possible.
-		 */
-		protected namespace construct;
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _eventListenerManager:EventListenerManager;
@@ -98,16 +91,8 @@ package temple.core.events
 		{
 			super(target);
 			
-			construct::coreEventDispatcher(target);
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreEventDispatcher(target:IEventDispatcher):void
-		{
+			// Register object for destruction testing
 			this._registryId = Registry.add(this);
-			target;
 		}
 		
 		[Temple]

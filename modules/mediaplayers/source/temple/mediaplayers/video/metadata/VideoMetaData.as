@@ -54,8 +54,7 @@ package temple.mediaplayers.video.metadata
 		private var _videocodecid:Number;
 		private var _videodatarate:Number;
 		private var _width:Number;
-		private var _cuePoints:Vector.<VideoCuePoint>;
-		private var _rawData:Object;
+		private var _cuePoints:Array;
 
 		/**
 		 * Constructor.
@@ -64,8 +63,6 @@ package temple.mediaplayers.video.metadata
 		public function VideoMetaData(data:Object = null) 
 		{
 			if (data) this.parseObject(data);
-			
-			this.toStringProps.push("duration", "width", "height", "framerate", "canSeekToEnd", "cuePoints");
 		}
 
 		/**
@@ -87,7 +84,7 @@ package temple.mediaplayers.video.metadata
 			if (object.cuePoints is Array)
 			{
 				var cuePoint:VideoCuePoint;
-				this._cuePoints = new Vector.<VideoCuePoint>();
+				this._cuePoints = [];
 				for (var i:int = 0, leni:int = object.cuePoints.length; i < leni; i++)
 				{
 					cuePoint = new VideoCuePoint();
@@ -95,7 +92,6 @@ package temple.mediaplayers.video.metadata
 					this._cuePoints.push(cuePoint);
 				}
 			}
-			this._rawData = object;
 			
 			return true;
 		}
@@ -181,19 +177,11 @@ package temple.mediaplayers.video.metadata
 		}
 		
 		/**
-		 * An list with cuePoints
+		 * An array with cuePoints
 		 */
-		public function get cuePoints():Vector.<VideoCuePoint>
+		public function get cuePoints():Array
 		{
 			return this._cuePoints;
-		}
-
-		/**
-		 * Returns a reference to the unparsed data
-		 */
-		public function get rawData():Object
-		{
-			return this._rawData;
 		}
 	}
 }

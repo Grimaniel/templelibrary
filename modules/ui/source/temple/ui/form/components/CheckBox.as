@@ -144,7 +144,6 @@ package temple.ui.form.components
 		{
 			this._hasError = true;
 			StateHelper.showError(this, message);
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
 		}
 		
 		/**
@@ -154,7 +153,6 @@ package temple.ui.form.components
 		{
 			this._hasError = false;
 			StateHelper.hideError(this);
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
 		}
 
 		/**

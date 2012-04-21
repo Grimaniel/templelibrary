@@ -57,7 +57,7 @@ package temple.data.flashvars
 		public function FlashVar(name:String, value:*, external:Boolean = false)
 		{
 			this._name = name;
-			this._value = value == "null" ? null : value;
+			this._value = value;
 			this._external = external;
 			this.toStringProps.push('name', 'defaultValue', 'value', 'type', 'external');
 		}

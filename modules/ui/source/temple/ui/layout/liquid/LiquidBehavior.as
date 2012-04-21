@@ -36,6 +36,7 @@
 package temple.ui.layout.liquid 
 {
 	import temple.common.interfaces.IEnableable;
+	import temple.core.behaviors.AbstractBehavior;
 	import temple.core.behaviors.IBehavior;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.log.Log;
@@ -46,7 +47,6 @@ package temple.ui.layout.liquid
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
-	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 	import temple.utils.PropertyApplier;
 	import temple.utils.color.ColorUtils;
 
@@ -88,13 +88,15 @@ package temple.ui.layout.liquid
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class LiquidBehavior extends AbstractDisplayObjectBehavior implements IEnableable, ILiquidObject, IBehavior, IDebuggable
+	public class LiquidBehavior extends AbstractBehavior implements IEnableable, ILiquidObject, IBehavior, IDebuggable
 	{
 		private static const _DEBUG_LINE_THICKNESS:Number = 2;
 		private static const _DEBUG_CROSS_SIZE:Number = 2 * _DEBUG_LINE_THICKNESS;
 		
 		private static const _dictionary:Dictionary = new Dictionary(true);
 		
+		private var _allowNegativePosition:Boolean;
+
 		/**
 		 * Returns the LiquidBehavior of a DisplayObject, if the DisplayObject has LiquidBehavior. Otherwise null is returned.
 		 */
@@ -154,15 +156,14 @@ package temple.ui.layout.liquid
 		private var _debugColor:uint;
 		private var _debugShape:CoreShape;
 		private var _blockRequest:Boolean;
-		private var _allowNegativePosition:Boolean;
 
 		/**
 		 * Create the possibility to align or scale an object related to an other object (or stage)
 		 * @param target The DisplayObject to be aligned
-		 * @param initObject a dynamic object that contains the properties of the behavior
 		 * @param relatedObject the (parent) object to align the target to
+		 * @param initObject a dynamic object that contains the properties of the behavior
 		 */
-		public function LiquidBehavior(target:DisplayObject, initObject:Object = null, relatedObject:ILiquidRelatedObject = null)
+		public function LiquidBehavior(target:DisplayObject, relatedObject:ILiquidRelatedObject = null, initObject:Object = null)
 		{
 			super(target);
 			
@@ -949,6 +950,14 @@ package temple.ui.layout.liquid
 		public function set adjustRelated(value:Boolean):void
 		{
 			this._adjustRelated = value;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get displayObject():DisplayObject
+		{
+			return this.target as DisplayObject;
 		}
 		
 		/**

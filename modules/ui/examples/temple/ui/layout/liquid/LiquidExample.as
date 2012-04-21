@@ -162,7 +162,7 @@ package
 			}
 			
 			// To check how Liquid performs we add a PerformanceStat
-			new LiquidBehavior(this.addChild(new PerformanceStat()), {right: 10, top: 10});
+			new LiquidBehavior(this.addChild(new PerformanceStat()), null, {right: 10, top: 10});
 		}
 	}
 }

@@ -131,7 +131,6 @@ package temple.ui.form.components
 			this._textField = textField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField || this.addChild(new TextField()) as TextField;
 
 			this.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-			this._textField.defaultTextFormat = this._textField.getTextFormat();
 			this._textField.setTextFormat(this._textField.defaultTextFormat);
 			this._textField.addEventListener(Event.CHANGE, this.handleTextFieldChange, false, 0, true);
 			this._textField.addEventListener(TextEvent.TEXT_INPUT, this.handleTextInput, false, 0, true);

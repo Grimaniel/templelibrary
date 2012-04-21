@@ -87,6 +87,7 @@ package temple.utils.propertyproxy
 		public function setTextForValue(value:*, text:String):void
 		{
 			this._texts[value] = text;
+			log('this._texts', (this._texts));
 		}
 
 		/**

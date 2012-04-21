@@ -330,7 +330,7 @@ package temple.ui.focus
 		/**
 		 * Set focus to next item in list.
 		 */
-		public function focusNextItem():void 
+		private function focusNextItem():void 
 		{
 			if (this.debug) this.logDebug("focusNextItem: ");
 			
@@ -369,7 +369,7 @@ package temple.ui.focus
 		/**
 		 * Set focus to previous item in list.
 		 */
-		public function focusPreviousItem():void 
+		private function focusPreviousItem():void 
 		{
 			if (this.debug) this.logDebug("focusPreviousItem: ");
 			
@@ -409,7 +409,7 @@ package temple.ui.focus
 		 * Checks if any of our elements has focus and returns its index
 		 * @return the index of the current item, or -1 if none was found
 		 */
-		public function getCurrentFocusIndex():int 
+		private function getCurrentFocusIndex():int 
 		{
 			if (!this._items) return -1;
 			
@@ -421,7 +421,7 @@ package temple.ui.focus
 			return -1;
 		}
 
-		public function getCurrentFocusItem():IFocusable 
+		private function getCurrentFocusItem():IFocusable 
 		{
 			var len:uint = this._items.length;
 			for (var i:int = 0;i < len; ++i) 

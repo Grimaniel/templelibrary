@@ -289,18 +289,12 @@ package temple.ui.form.components
 			var date:Date = new Date(year, month - 1, day);
 			
 			// Check if date is between range
-			if (this._begin && this._end)
+			if (this._begin && this._end &&	(date.time < Math.min(this._begin.time, this._end.time) || date.time > Math.max(this._begin.time, this._end.time)))
 			{
-				if (date.time < Math.min(this._begin.time, this._end.time) || date.time > Math.max(this._begin.time, this._end.time)) return null;
+				return null;
 			}
-			else if (this._begin)
-			{
-				if (date.time < this._begin.time) return null;
-			}
-			else if (this._end)
-			{
-				if (date.time > this._end.time) return null;
-			}
+			if (this._begin && date.time < this._begin.time) return null;
+			if (this._end && date.time > this._end.time) return null;
 			
 			// Check if days and months still match
 			if (date.getDate() != day || date.getMonth() != month - 1) return null;

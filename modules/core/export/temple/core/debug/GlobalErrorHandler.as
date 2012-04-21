@@ -83,7 +83,7 @@ package temple.core.debug
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private var _preventDefault:Boolean;
 		private var _debug:Boolean;

@@ -27,9 +27,9 @@ package
 			
 			this.mcDateSelector.monthFormat = DateSelector.MONTH_FORMAT_SHORT_EN;
 			
-			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.day).list).scrollBar.button).outOnDragOut = false;
-			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.month).list).scrollBar.button).outOnDragOut = false;
-			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.year).list).scrollBar.button).outOnDragOut = false;
+			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.day).list).scrollbar.button).outOnDragOut = false;
+			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.month).list).scrollbar.button).outOnDragOut = false;
+			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.year).list).scrollbar.button).outOnDragOut = false;
 			
 			this.setOutput();
 		}

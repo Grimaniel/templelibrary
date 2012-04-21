@@ -70,14 +70,7 @@ package temple.core.net
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
-		
-		/**
-		 * @private
-		 * 
-		 * Protected namespace for construct method. This makes overriding of constructor possible.
-		 */
-		protected namespace construct;
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _eventListenerManager:EventListenerManager;
@@ -90,21 +83,12 @@ package temple.core.net
 		private var _url:String;
 		private var _emptyPropsInToString:Boolean = true;
 
-		public function CoreNetStream(netConnection:NetConnection)
+		public function CoreNetStream(netConnection:NetConnection) 
 		{
 			super(netConnection);
 			
-			construct::coreNetStream(netConnection);
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreNetStream(netConnection:NetConnection):void
-		{
+			// Register object for destruction testing
 			this._registryId = Registry.add(this);
-			
-			netConnection;
 		}
 		
 		/**

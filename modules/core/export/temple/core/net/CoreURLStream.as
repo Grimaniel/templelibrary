@@ -77,14 +77,7 @@ package temple.core.net
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
-		
-		/**
-		 * @private
-		 * 
-		 * Protected namespace for construct method. This makes overriding of constructor possible.
-		 */
-		protected namespace construct;
+		templelibrary static const VERSION:String = "3.0.1";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _isLoading:Boolean;
@@ -104,17 +97,12 @@ package temple.core.net
 		 */
 		public function CoreURLStream(destructOnError:Boolean = true, logErrors:Boolean = true)
 		{
-			construct::coreURLStream(destructOnError, logErrors);
-		}
-		
-		/**
-		 * @private
-		 */
-		construct function coreURLStream(destructOnError:Boolean, logErrors:Boolean):void
-		{
+			super();
+			
 			this._destructOnError = destructOnError;
 			this._logErrors = logErrors;
 			
+			// Register object for destruction testing
 			this._registryId = Registry.add(this);
 			
 			// Add default listeners to Error events and preloader support
