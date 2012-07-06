@@ -139,7 +139,9 @@ package temple.ui.form.components
 			this._list.addEventListener(FocusEvent.FOCUS_IN, this.handleListEvent);
 			this._list.addEventListener(FocusEvent.FOCUS_OUT, this.handleListEvent, false, -1);
 			this._list.addEventListener(KeyboardEvent.KEY_DOWN, this.handleListEvent);
-
+			this._list.addEventListener(Event.REMOVED_FROM_STAGE, this.handleListRemovedFromStage, false, int.MAX_VALUE);
+			this._list.addEventListener(Event.REMOVED_FROM_STAGE, this.handleListRemovedFromStage, true, int.MAX_VALUE);
+			
 			this.close();
 			this.submitOnEnter = false;
 			this.selectTextOnFocus = false;
@@ -187,8 +189,11 @@ package temple.ui.form.components
 			{
 				this._list.position = this.globalToLocal(new Point(this._list.x, this._list.y));
 			}
-			// remove list from display list to prevent its height being added to the height of the ComboBox
-			if (this._list.parent) this._list.parent.removeChild(this._list as DisplayObject);
+			// remove list from display list to prevent its height being added to the height of the ComboBox.
+			if (this._list.parent)
+			{
+				this._list.parent.removeChild(this._list as DisplayObject);
+			}
 			
 			StateHelper.hideState(this, IOpenState);
 			
@@ -407,7 +412,7 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function get selectedLabels():Array
+		public function get selectedLabels():Vector.<String>
 		{
 			return this._list.selectedLabels;
 		}
@@ -415,7 +420,7 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function set selectedLabels(value:Array):void
+		public function set selectedLabels(value:Vector.<String>):void
 		{
 			this._list.selectedLabels = value;
 		}
@@ -900,6 +905,12 @@ package temple.ui.form.components
 			}
 		}
 		
+		private function handleListRemovedFromStage(event:Event):void
+		{
+			event.stopImmediatePropagation();
+			event.stopPropagation();
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -910,6 +921,8 @@ package temple.ui.form.components
 			if (this._list && !this._list.isDestructed)
 			{
 				this._list.removeEventListener(Event.CHANGE, this.handleListChanged);
+				this._list.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleListRemovedFromStage);
+				this._list.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleListRemovedFromStage, true);
 				this._list.destruct();
 				this._list = null;
 			}

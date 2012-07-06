@@ -116,6 +116,7 @@ package temple.ui.scroll
 				rect.width = value;
 				this.scrollRect = rect;
 				this.scrollH = scrollFactor * this.maxScrollH;
+				this.dispatchEvent(new Event(Event.RESIZE));
 			}
 			else
 			{
@@ -153,6 +154,7 @@ package temple.ui.scroll
 				rect.height = value;
 				this.scrollRect = rect;
 				this.scrollV = scrollFactor * this.maxScrollV;
+				this.dispatchEvent(new Event(Event.RESIZE));
 			}
 			else
 			{

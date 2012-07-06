@@ -82,6 +82,22 @@ package temple.ui.states
 		}
 		
 		/**
+		 * Object which contains the variables which are applied on the object when the object must be shown
+		 */
+		public function get showVars():Object
+		{
+			return this._showVars;
+		}
+
+		/**
+		 * Object which contains the variables which are applied on the object when the object must be hidden
+		 */
+		public function get hideVars():Object
+		{
+			return this._hideVars;
+		}
+		
+		/**
 		 * Duration in seconds of the fade-in animation
 		 */
 		public final function get showDuration():Number
@@ -148,6 +164,5 @@ package temple.ui.states
 			
 			super.destruct();
 		}
-
 	}
 }

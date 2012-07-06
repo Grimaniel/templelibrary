@@ -35,7 +35,7 @@
 
 package temple.ui.buttons 
 {
-	import temple.data.url.URLManager;
+	import temple.data.url.urlManagerInstance;
 
 	import flash.events.MouseEvent;
 
@@ -123,13 +123,13 @@ package temple.ui.buttons
 		{
 			if (this._urlName)
 			{
-				URLManager.openURLByName(this._urlName);
+				urlManagerInstance.openByName(this._urlName);
 			}
 			else
 			{
 				if (this._url)
 				{
-					URLManager.openURL(this._url, this._urlTarget);
+					urlManagerInstance.open(this._url, this._urlTarget);
 				}
 				else
 				{

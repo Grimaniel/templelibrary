@@ -153,7 +153,7 @@ package temple.ui.scroll
 		 */
 		public function set scrollV(value:Number):void
 		{
-			this.textField.scrollV = value;
+			this.textField.scrollV = Math.round(value);
 		}
 
 		/**
@@ -289,6 +289,5 @@ package temple.ui.scroll
 			
 			super.destruct();
 		}
-
 	}
 }

@@ -511,6 +511,16 @@ package temple.ui.form.components
 			}
 			return false;
 		}
+		
+		public function getValueForButton(button:ISelectable):*
+		{
+			for each (var selection:Selection in this._buttons)
+			{
+				if (selection.button == button) return selection.value;
+			}
+			
+			return null;
+		}
 
 		/**
 		 * If set to true the RadioGroup will dispatch an FormElementEvent.SUBMIT on change and the form (if enabled) can be submitted

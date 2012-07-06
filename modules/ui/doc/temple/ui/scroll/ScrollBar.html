@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple UI Module API Documentation - 3.0.2</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/ui/scroll/ScrollBar.html&amp;temple/ui/scroll/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ScrollBar</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple UI Module API Documentation - 3.1.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/ui/scroll/ScrollBar.html&amp;temple/ui/scroll/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ScrollBar</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("ScrollBar"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -410,15 +410,15 @@ package
             this.scrollComponent.bottom = 10;
             
             // the scrollbar should be at the right side of the ScrollComponent, attached to the top and bottom.
-            this.scrollComponent.scrollbar.top = 0;
-            this.scrollComponent.scrollbar.right = 0;
-            this.scrollComponent.scrollbar.bottom = 0;
+            this.scrollComponent.scrollBar.top = 0;
+            this.scrollComponent.scrollBar.right = 0;
+            this.scrollComponent.scrollBar.bottom = 0;
             
             // make the button of the scrollbar resize to the content of the ScrollComponent
-            this.scrollComponent.scrollbar.autoSizeButton = true;
+            this.scrollComponent.scrollBar.autoSizeButton = true;
             
             // Change the way the button reacts on drag out
-            MultiStateButton(this.scrollComponent.scrollbar.button).outOnDragOut = false;
+            MultiStateButton(this.scrollComponent.scrollBar.button).outOnDragOut = false;
             
         }
     }

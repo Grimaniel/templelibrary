@@ -35,6 +35,8 @@
 
 package temple.ui.behaviors 
 {
+	import temple.utils.TraceUtils;
+	import flash.events.Event;
 	import temple.core.behaviors.AbstractBehavior;
 
 	import flash.display.DisplayObject;
@@ -47,9 +49,19 @@ package temple.ui.behaviors
 	 */
 	public class AbstractDisplayObjectBehavior extends AbstractBehavior 
 	{
-		public function AbstractDisplayObjectBehavior(target:DisplayObject)
+		private var _destructOnRemove:Boolean;
+		
+		public function AbstractDisplayObjectBehavior(target:DisplayObject, destructOnRemove:Boolean = true)
 		{
 			super(target);
+			
+			construct::abstractDisplayObjectBehavior(target, destructOnRemove);
+		}
+		
+		construct function abstractDisplayObjectBehavior(target:Object, destructOnRemove:Boolean):void
+		{
+			this.destructOnRemove = destructOnRemove;
+			target;
 		}
 		
 		/**
@@ -59,5 +71,46 @@ package temple.ui.behaviors
 		{
 			return this.target as DisplayObject;
 		}
+
+		/**
+		 * A Boolean which indicates if this behavior should be destructed when the target is removed from stage.
+		 */
+		public function get destructOnRemove():Boolean
+		{
+			return this._destructOnRemove;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set destructOnRemove(value:Boolean):void
+		{
+			this._destructOnRemove = value;
+			
+			if (this._destructOnRemove)
+			{
+				this.displayObject.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage, false, int.MIN_VALUE);
+			}
+			else
+			{
+				this.displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			}
+		}
+
+		private function handleRemovedFromStage(event:Event):void
+		{
+			this.destruct();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void
+		{
+			if (this.displayObject) this.displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			
+			super.destruct();
+		}
+
 	}
 }

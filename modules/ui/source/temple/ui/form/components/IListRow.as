@@ -35,6 +35,7 @@
 
 package temple.ui.form.components 
 {
+	import temple.core.destruction.IDestructible;
 	import temple.common.interfaces.IFocusable;
 	import temple.common.interfaces.ISelectable;
 	import temple.core.display.IDisplayObject;
@@ -54,7 +55,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IListRow extends IDisplayObject, ILabel, IFocusable, ISelectable
+	public interface IListRow extends IDisplayObject, ILabel, IFocusable, ISelectable, IDestructible
 	{
 		/**
 		 * Data of the ListItem

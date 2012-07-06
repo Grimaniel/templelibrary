@@ -432,7 +432,7 @@ package temple.ui.form
 				// validate
 				if (this.validate())
 				{
-					if (this._debug) this.logDebug(ObjectUtils.traceObject(this.getModelData(), 1, false));
+					if (this._debug) this.logDebug(dump(this.getModelData()));
 					this.send();
 				}
 			}
@@ -543,7 +543,7 @@ package temple.ui.form
 		{
 			this._prefillData = data;
 			
-			if (this._debug) this.logDebug("prefillData: " + ObjectUtils.traceObject(data, 0, false));
+			if (this._debug) this.logDebug("prefillData: " + dump(data, 0));
 			
 			if (this._prefillData != null)
 			{
@@ -788,11 +788,11 @@ package temple.ui.form
 					
 			if (result.success)
 			{
-				if (this._debug) this.logDebug("onResult: success " + result.message);
+				if (this._debug) this.logDebug("onResult: success " + (result.message ? "\"" + result.message + "\"" : ""));
 			}
 			else
 			{
-				if (this._debug) this.logError("onResult: error " + result.message);
+				if (this._debug) this.logError("onResult: error " + (result.message ? "\"" + result.message + "\"" : ""));
 				
 				var element:FormElementData;
 				var focussed:Boolean;

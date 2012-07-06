@@ -35,7 +35,7 @@
 
 package temple.ui.form.services 
 {
-	import temple.data.url.URLManager;
+	import temple.data.url.urlManagerInstance;
 	import temple.ui.form.result.IFormResult;
 
 	/**
@@ -99,7 +99,7 @@ package temple.ui.form.services
 		 */
 		override public function submit(data:Object):IFormResult 
 		{
-			this.load(URLManager.getURLDataByName(this._urlName), data, this.method);
+			this.load(urlManagerInstance.getData(this._urlName), data, this.method);
 			
 			return null;
 		}
