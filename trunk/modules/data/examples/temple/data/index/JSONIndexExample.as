@@ -40,7 +40,7 @@ package
 			erikOutput.autoSize = TextFieldAutoSize.LEFT;
 			this.addChild(erikOutput);
 			erikOutput.width = 300;
-			erikOutput.text = ObjectUtils.traceObject(erik, 2, false);
+			erikOutput.text = dump(erik);
 			
 			// convert to JSON string
 			var json:String = JSONCoder.encode(erik, true);
@@ -61,7 +61,7 @@ package
 			this.addChild(personOutput);
 			personOutput.width = 600;
 			personOutput.y = jsonOutput.y + jsonOutput.height + 4;
-			personOutput.text =  ObjectUtils.traceObject(person, 2, false);
+			personOutput.text =  dump(person);
 			
 			// check if person and erik are the same object
 			if (erik === person)

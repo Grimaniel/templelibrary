@@ -13,7 +13,7 @@
  */
 package  
 {
-	import temple.data.url.URLManager;
+	import temple.data.url.urlManagerInstance;
 	import temple.data.xml.XMLManager;
 
 	import flash.text.TextField;
@@ -28,7 +28,7 @@ package
 			super("Temple - XMLManagerExample");
 			
 			// load urls.xml. XMLManager waits till the urls.xml are loaded, so we don't need to add listeners
-			URLManager.loadURLs("urls.xml");
+			urlManagerInstance.load("urls.xml");
 			
 			// set debug mode to get debug log messages from the XMLManager
 			XMLManager.getInstance().debug = true;
@@ -54,8 +54,8 @@ package
 }
 
 
-import temple.core.CoreObject;
 import temple.common.interfaces.IXMLParsable;
+import temple.core.CoreObject;
 
 class Person extends CoreObject implements IXMLParsable 
 {

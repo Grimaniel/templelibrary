@@ -75,6 +75,7 @@ package temple.data.xml
 	 * 
 	 * @author Thijs Broerse
 	 */
+	[Deprecated]
 	public class XMLLoader extends CoreEventDispatcher 
 	{
 		private var _waitingStack:DestructibleArray;

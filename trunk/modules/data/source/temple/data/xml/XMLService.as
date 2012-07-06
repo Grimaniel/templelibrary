@@ -73,6 +73,7 @@ package temple.data.xml
 	 * 
 	 * @author Thijs Broerse
 	 */
+	[Deprecated]
 	public class XMLService extends CoreEventDispatcher implements IDebuggable
 	{
 		protected var _loader:XMLLoader;

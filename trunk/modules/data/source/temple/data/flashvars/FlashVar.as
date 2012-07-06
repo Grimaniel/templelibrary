@@ -69,6 +69,14 @@ package temple.data.flashvars
 		{
 			return this._name;
 		}
+		
+		/**
+		 * Sets/overrides the FlashVar value
+		 */
+		public function set value(value:*):void
+		{
+			this._value = value;
+		}
 
 		/**
 		 * The value of the FlashVar. If the value is not set by the LoaderInfo, the defaultValue is returned.
@@ -138,7 +146,7 @@ package temple.data.flashvars
 			
 			if (this._type && this._defaultValue)
 			{
-				if (!(this._defaultValue is this._type)) throwError(new TempleArgumentError(this, 'defaultValue [' + this._defaultValue + '] is not of type ' + this._type));
+				if (!(this._defaultValue is this._type)) throwError(new TempleArgumentError(this, 'defaultValue "' + this._defaultValue + '" is not of type ' + this._type));
 			}
 		}
 

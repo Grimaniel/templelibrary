@@ -16,30 +16,40 @@
 package  
 {
 	import temple.data.url.URLEvent;
-	import flash.events.MouseEvent;
-	import flash.text.TextFormat;
-	import flash.text.TextField;
-	import flash.display.Sprite;
 	import temple.data.url.URLManager;
+	import temple.data.url.urlManagerInstance;
 	import temple.data.xml.XMLServiceEvent;
+
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 
 	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
 	public class URLManagerExample extends DocumentClassExample 
 	{
+		private var _urlManager:URLManager;
+		
 		public function URLManagerExample()
 		{
 			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
 			super("Temple - URLManagerExample");
 			
+			// Create of new URLManager
+			this._urlManager = new URLManager();
+			
+			// Or you you use the "Singleton" urlManager
+			//this._urlManager = urlManagerInstance;
+			
 			// set debug mode to get debug log messages from the URLManager
-			URLManager.getInstance().debug = true; 
+			this._urlManager.debug = true; 
 			
 			// add EventListeners
-			URLManager.addEventListenerOnce(XMLServiceEvent.COMPLETE, this.handleURLManagerComplete);
-			URLManager.addEventListener(URLEvent.OPEN, this.handleURLOpen);
+			this._urlManager.addEventListenerOnce(XMLServiceEvent.COMPLETE, this.handleURLManagerComplete);
+			this._urlManager.addEventListener(URLEvent.OPEN, this.handleURLOpen);
 			
 			// load urls.xml
-			URLManager.loadURLs("urls.xml");
+			this._urlManager.load("urls.xml");
 		}
 		
 		private function handleURLManagerComplete(event:XMLServiceEvent):void
@@ -53,7 +63,7 @@ package
 		private function handleButtonClick(event:MouseEvent):void
 		{
 			// Open url
-			URLManager.openURLByName("website");
+			this._urlManager.openByName("website");
 		}
 		
 		private function handleURLOpen(event:URLEvent):void

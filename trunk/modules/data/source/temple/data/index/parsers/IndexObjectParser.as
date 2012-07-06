@@ -43,7 +43,6 @@ package temple.data.index.parsers
 	import temple.data.index.ClassSubstitute;
 	import temple.data.index.IIndexable;
 	import temple.data.index.Indexer;
-	import temple.utils.types.ObjectUtils;
 
 	/**
 	 * The ObjectParser parses an Object (ig JSON) to an other object (ig a typed DataValueObject).
@@ -74,6 +73,12 @@ package temple.data.index.parsers
 			var a:Array = new Array();
 			
 			if (list == null) return a;
+			
+			// Check if this class has a static 'indexClass()' method which provides the indexClass, when no indexClass is given.
+			if (!indexClass && Indexer.INDEX_CLASS in objectClass && objectClass[Indexer.INDEX_CLASS] is Class)
+			{
+				indexClass = objectClass[Indexer.INDEX_CLASS];
+			}
 			
 			var len:int = list.length;
 			for (var i:int = 0;i < len; i++) 
@@ -115,7 +120,7 @@ package temple.data.index.parsers
 			
 			if (!id)
 			{
-				if (debug) Log.error("object has no property '" + key + "'\n" + ObjectUtils.traceObject(object, 3, false), IndexObjectParser);
+				if (debug) Log.error("object has no property '" + key + "'\n" + dump(object), IndexObjectParser);
 				return null;
 			}
 			
