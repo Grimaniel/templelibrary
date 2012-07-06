@@ -35,10 +35,7 @@
 
 package temple.utils.types
 {
-	import flash.text.TextField;
-	import temple.common.enum.Enumerator;
 	import temple.core.ICoreObject;
-	import temple.core.debug.getClassName;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.objectToString;
 	import temple.core.errors.TempleArgumentError;
@@ -47,12 +44,10 @@ package temple.utils.types
 	import temple.utils.AccessorAccess;
 
 	import flash.display.DisplayObject;
-	import flash.utils.ByteArray;
-	import flash.utils.Dictionary;
+	import flash.text.TextField;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
-
 
 	/**
 	 * This class contains some functions for Objects.
@@ -61,19 +56,6 @@ package temple.utils.types
 	 */
 	public final class ObjectUtils
 	{
-		/**
-		 * Indicates if a Date will be fully traced (including all properties) on traceObject() (true) or only as a simple String (false)
-		 */
-		public static var subTraceDate:Boolean = false;
-		/**
-		 * Indicates if a constant will be traced on traceObject() (true) or not (false)
-		 */
-		public static var traceConstants:Boolean = false;
-		/**
-		 * Indicates if a methods will be traced on traceObject() (true) or not (false)
-		 */
-		public static var traceMethods:Boolean = false;
-
 		/**
 		 * Checks if the value is a primitive (String, Number, int, uint or Boolean)
 		 */
@@ -84,258 +66,6 @@ package temple.utils.types
 				return true;
 			}
 			return false;
-		}
-
-		/**
-		 * Recursively traces the properties of an object
-		 * @param object object to trace
-		 * @param maxDepth indicates the recursive factor
-		 * @param doTrace indicates if the function will trace the output or only return it
-		 * 
-		 * @return the object tree as String
-		 */
-		public static function traceObject(object:Object, maxDepth:uint = 3, doTrace:Boolean = true, traceDuplicates:Boolean = true):String
-		{
-			var output:String = ObjectUtils._traceObject(object, maxDepth, traceDuplicates ? null : new Dictionary(true));
-
-			if (doTrace) trace(output);
-
-			return output;
-		}
-
-		private static function _traceObject(object:Object, maxDepth:uint = 3, objects:Dictionary = null, isInited:Boolean = false, tabs:String = ""):String
-		{
-			var output:String = "";
-			var openChar:String;
-
-			// every time this function is called we'll add another tab to the indention in the output window
-			tabs += "\t";
-
-			if (maxDepth < 0 )
-			{
-				output += tabs + "\n(...)";
-				return output;
-			}
-
-			if (!isInited)
-			{
-				isInited = true;
-				
-				// Array or Vector
-				if (object is Array || ObjectUtils.isVector(object))
-				{
-					output += getClassName(object) + " (" + object.length + (object.fixed ? ", fixed" : "") + ")";
-					if (object.length) openChar = "[";
-				}
-				else
-				{
-					output += ObjectUtils.convertToString(object) + " (" + getClassName(object) + ")";
-	
-					if (object is String)
-					{
-						output += " (" + (object as String).length + ")";
-						return output;
-					}
-					else if (object is uint || object is int)
-					{
-						output += " (0x" + Number(object).toString(16).toUpperCase() + ")";
-						return output;
-					}
-					else if (!ObjectUtils.isPrimitive(object))
-					{
-						openChar = "\u007B";
-	
-						if (ObjectUtils.isDynamic(object))
-						{
-							output += " (dynamic)";
-						}
-					}
-				}
-
-				if (openChar) output += "\n" + openChar;
-			}
-
-			var variables:Array = [];
-			var key:*;
-			var leni:int;
-			var i:int;
-
-			if (object is Array || ObjectUtils.isVector(object))
-			{
-				for (key in object)
-				{
-					variables.push(new ObjectVariableData(key));
-				}
-			}
-			else
-			{
-				// variables, getters, constants and methods
-				for each (var node:XML in describeType(object)
-					.children().
-					(
-						(	 
-							 name() == 'variable' 
-						  || name() == 'accessor' 
-						  || ObjectUtils.traceConstants && name() == 'constant' 
-						  || ObjectUtils.traceMethods && name() == 'method'
-						)
-						&&
-						(
-							// don't show setters and namespaced properties
-							(!hasOwnProperty("@access") || @access != "writeonly") && !hasOwnProperty("@uri")
-						)
-					)
-				)
-				{
-					variables.push(new ObjectVariableData(node.@name, node.@type, node));
-				}
-				
-				// dynamic values
-				for (key in object)
-				{
-					variables.push(new ObjectVariableData(key));
-				}
-				// sort variables alphabaticly
-				variables = variables.sortOn('name', Array.CASEINSENSITIVE);
-			}
-
-			var variable:*;
-
-			// an object for temporary storing the key. Needed to prefend duplicates
-			var keys:Object = {};
-
-			leni = variables.length;
-			for (i = 0; i < leni; i++)
-			{
-				var vardata:ObjectVariableData = variables[i] as ObjectVariableData;
-
-				if (vardata.name == "textSnapshot" || vardata.name == null || keys[vardata.name]) continue;
-
-				keys[vardata.name] = true;
-
-				try
-				{
-					variable = object[vardata.name];
-				}
-				catch (e:Error)
-				{
-					variable = e.message;
-				}
-
-				// determine what's inside...
-				switch (typeof(variable))
-				{
-					case ObjectType.STRING:
-					{
-						output += "\n" + tabs + vardata.name + ": \"" + variable + "\" (" + (vardata.type ? vardata.type : "String") + ")" ;
-						break;
-					}
-					case ObjectType.OBJECT:
-					{
-						// check to see if the variable is an Array or Vector.
-						if (variable is Array || ObjectUtils.isVector(variable))
-						{
-							if ((objects == null || !objects[variable]) && ObjectUtils.hasValues(variable) && maxDepth)
-							{
-								if (objects) objects[variable] = true;
-
-								output += "\n" + tabs + vardata.name + ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")";
-								if (variable.length) output += "\n" + tabs + "[";
-								output += ObjectUtils._traceObject(variable, maxDepth - 1, objects, isInited, tabs);
-								if (variable.length) output += "\n" + tabs + "]";
-							}
-							else
-							{
-								output += "\n" + tabs + vardata.name + ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")";
-							}
-						}
-						else if (variable is ByteArray)
-						{
-							output += "\n" + tabs + vardata.name + ": " + uint(ByteArray(variable).bytesAvailable / 1024) + "KB " + (['AMF0',,, 'AMF3'][(ByteArray(variable).objectEncoding)]) + " position:" + ByteArray(variable).position + " (ByteArray)";
-						}
-						else if (variable is Enumerator)
-						{
-							output += "\n" + tabs + vardata.name + ": " + variable + (vardata.type ? " (" + getClassName(variable || vardata.type) + ")" : "") + " (" + getClassName(Enumerator) + ")";
-						}
-						else
-						{
-							// object, make exception for Date
-							if ((objects == null || !objects[variable]) && (variable && maxDepth && (ObjectUtils.subTraceDate || !(variable is Date))))
-							{
-								if (objects) objects[variable] = true;
-
-								// recursive call
-								output += "\n" + tabs + vardata.name + ": " + variable;
-								if (ObjectUtils.hasValues(variable))
-								{
-									if (ObjectUtils.isDynamic(variable))
-									{
-										output += " (dynamic)";
-									}
-
-									output += "\n" + tabs + "\u007B";
-									output += ObjectUtils._traceObject(variable, maxDepth - 1, objects, isInited, tabs);
-									output += "\n" + tabs + "}";
-								}
-							}
-							else
-							{
-								output += "\n" + tabs + vardata.name + ": " + convertToString(variable) + (vardata.type ? " (" + (vardata.type == "*" ? vardata.type : getClassName(variable || vardata.type)) + ")" : "") + (objects && objects[variable] ? " (duplicate)" : "");
-							}
-						}
-						break;
-					}
-					case ObjectType.FUNCTION:
-					{
-						output += "\n" + tabs + vardata.name + "(";
-
-						if (vardata.xml && vardata.xml.parameter && vardata.xml.parameter is XMLList)
-						{
-							var lenj:int = (vardata.xml.parameter as XMLList).length();
-							var optional:Boolean = false;
-							for (var j:int = 0; j < lenj; j++)
-							{
-								if (j) output += ", ";
-								if (!optional && vardata.xml.parameter[j].@optional == "true")
-								{
-									optional = true;
-									output += "(";
-								}
-								output += "arg" + vardata.xml.parameter[j].@index + ":" + getClassName(String(vardata.xml.parameter[j].@type));
-							}
-							if (optional) output += ")";
-						}
-						output += ")" + (vardata.xml ? ":" + getClassName(String(vardata.xml.@returnType)) : "") + " (" + getClassName(variable) + ")";
-						break;
-					}
-					default:
-					{
-						vardata.type ||= getClassName(variable);
-
-						// variable is not an object nor string, just trace it out normally
-						output += "\n" + tabs + vardata.name + ": " + variable + " (" + vardata.type + ")";
-
-						// add value as hex for uints
-						if (vardata.type == "uint" || vardata.type == "int") output += " 0x" + uint(variable).toString(16).toUpperCase();
-
-						break;
-					}
-				}
-			}
-
-			// here we need to displaying the closing '}' or ']', so we bring
-			// the indent back a tab, and set the outerchar to be it's matching
-			// closing char, then display it in the output window
-			tabs = tabs.substr(0, tabs.length - 1);
-
-			if (openChar) output += "\n" + tabs + ((openChar == "[") ? "]" : "}");
-
-			return output;
-		}
-		
-		private static function isVector(object:Object):Boolean
-		{
-			 return getQualifiedClassName(object).indexOf("__AS3__.vec::Vector.") === 0;
 		}
 
 		/**
@@ -467,12 +197,23 @@ package temple.utils.types
 
 		/**
 		 * Get the keys and properties of an object.
+		 * 
+		 * @param object the object to get the properties of.
+		 * @param accessorAccess the type of access (read, write, readwrite) of the properties. If null, all properties are returned
+		 * @param namespaces a list of namespaces of the properties you want to receive.
+		 * 	If null, only properties without namespace are returned.
+		 * 	If the list is empty (length is 0), properties of all namespaces are returned
+		 * 
 		 * @return an Array of all the keys
+		 * 
+		 * @see temple.utils.AccessorAccess
 		 */
-		public static function getProperties(object:Object, accessorAccess:String = null):Array
+		public static function getProperties(object:Object, accessorAccess:String = null, namespaces:Vector.<Namespace> = null):Vector.<String>
 		{
-			var keys:Array = new Array();
+			var keys:Vector.<String> = new Vector.<String>();
 			var key:*;
+			
+			if (namespaces && namespaces.length) var uris:Vector.<String> = Vector.<String>(namespaces);
 
 			for (key in object)
 			{
@@ -486,11 +227,18 @@ package temple.utils.types
 				var leni:int = description.variable.length();
 				for (var i:int = 0; i < leni; i++)
 				{
-					keys.push(String(description.variable[i].@name));
+					if (namespaces == null && !description.variable[i].hasOwnProperty("@uri") || 
+						namespaces && 
+							(namespaces.length == 0
+							||
+							description.variable[i].hasOwnProperty("@uri") && uris.indexOf(String(description.variable[i].@uri)) != -1))
+					{
+						keys.push(String(description.variable[i].@name));
+					}
 				}
 
-				// getters
-				var getters:XMLList;
+				// getters / setters
+				var properties:XMLList;
 				
 				switch (accessorAccess)
 				{
@@ -498,28 +246,28 @@ package temple.utils.types
 					case AccessorAccess.WRITEONLY:
 					case AccessorAccess.READWRITE:
 					{
-						getters = description.accessor.(@access == AccessorAccess.READWRITE);
+						properties = description.accessor.(@access == AccessorAccess.READWRITE);
 						break;
 					}
 					case AccessorAccess.READ:
 					{
-						getters = description.accessor.(@access != AccessorAccess.WRITEONLY);
+						properties = description.accessor.(@access != AccessorAccess.WRITEONLY);
 						break;
 					}
 					case AccessorAccess.WRITE:
 					{
-						getters = description.accessor.(@access != AccessorAccess.READONLY);
+						properties = description.accessor.(@access != AccessorAccess.READONLY);
 						break;
 					}
 					case AccessorAccess.READ_OR_WRITE_ONLY:
 					{
-						getters = description.accessor.(@access != AccessorAccess.READONLY);
+						properties = description.accessor.(@access != AccessorAccess.READONLY);
 						break;
 					}
 					case AccessorAccess.ALL:
 					case null:
 					{
-						getters = description.accessor;
+						properties = description.accessor;
 						break;
 					}
 					default:
@@ -529,17 +277,25 @@ package temple.utils.types
 					}
 				}
 				
-
-				leni = getters.length();
+				if (namespaces == null)
+				{
+					properties = properties.(!hasOwnProperty("@uri"));
+				}
+				else if (uris)
+				{
+					properties = properties.accessor.(hasOwnProperty("@uri") && uri.indexOf(String(@uri)) != -1);
+				}
+				
+				leni = properties.length();
 
 				for (i = 0; i < leni; i++)
 				{
-					keys.push(String(getters[i].@name));
+					keys.push(String(properties[i].@name));
 				}
 			}
 			return keys;
 		}
-
+		
 		/**
 		 * Get the keys of an object.
 		 * @return an Array of all the keys
@@ -615,49 +371,21 @@ package temple.utils.types
 		}
 
 		/**
-		 * Lazy get a property from a object, with alt/default-value (if object is null or property is undefined)
-		 * 
-		 * very usefull for bulk JSON/Object-data import 
-		 */
-		public static function getValueAlt(obj:Object, name:String, alt:*):*
-		{
-			if (obj && obj && name in obj)
-			{
-				return obj[name];
-			}
-			return alt;
-		}
-
-		/**
-		 * Lazy get a boolean-property from an object (using BooleanUtils.getBoolean), with alt/default-value (if object is null or property is undefined)
-		 * 
-		 * very usefull for bulk JSON/Object-data import
-		 */
-		public static function getBooleanAlt(obj:Object, name:String, alt:Boolean):Boolean
-		{
-			if (obj && name in obj)
-			{
-				return BooleanUtils.getBoolean(obj[name]);
-			}
-			return alt;
-		}
-
-		/**
 		 * Compact format Object-properties to debug-string (Array.join()-like), usually simple non-recursive bulletted lists
 		 * - propaA = 11
 		 * - propaB = 22
 		 * - propaC = 33
 		 */
-		public static function simpleJoin(obj:Object, sort:Boolean = true, post:String = '\n', pre:String = ' - ', glue:String = ' = ', seperator:String = ''):String
+		public static function simpleJoin(object:Object, sort:Boolean = true, post:String = '\n', pre:String = ' - ', glue:String = ' = ', seperator:String = ''):String
 		{
-			if (!obj)
+			if (!object)
 			{
 				return '(null)' + post;
 			}
 			var arr:Array = [];
-			for (var name:String in obj)
+			for (var name:String in object)
 			{
-				arr.push(pre + name + glue + obj[name] + post);
+				arr.push(pre + name + glue + object[name] + post);
 			}
 			if (arr.length == 0)
 			{
@@ -674,9 +402,22 @@ package temple.utils.types
 		 * Compact Object-properties to one-line debug string 
 		 * propA:11,propB:22,propC:33
 		 */
-		public static function simpleJoinS(obj:Object):String
+		public static function simpleJoinS(object:Object):String
 		{
-			return ObjectUtils.simpleJoin(obj, true, '', '', ':', ',');
+			return ObjectUtils.simpleJoin(object, true, '', '', ':', ',');
+		}
+		
+		/**
+		 * Returns an inverted object with all values as key and keys as value.
+		 */
+		public static function invert(object:Object):Object
+		{
+			var inverted:Object = {};
+			for (var key : String in object)
+			{
+				inverted[object[key]] = key;
+			}
+			return inverted;
 		}
 
 		/**
@@ -686,19 +427,5 @@ package temple.utils.types
 		{
 			return objectToString(ObjectUtils);
 		}
-	}
-}
-
-final class ObjectVariableData
-{
-	public var name:*;
-	public var type:String;
-	public var xml:XML;
-
-	public function ObjectVariableData(name:* = null, type:String = null, xml:XML = null) 
-	{
-		this.name = name;
-		this.type = type;
-		this.xml = xml;
 	}
 }

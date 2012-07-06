@@ -22,6 +22,8 @@ package
 
 		public function DateFormatExample()
 		{
+			super("Temple - DateFormatExample");
+			
 			// Uncomment to set in Dutch
 			//DateUtils.setDutch();
 			

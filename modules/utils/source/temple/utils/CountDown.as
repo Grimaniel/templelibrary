@@ -84,6 +84,8 @@ package temple.utils
 		
 		/**
 		 * @private
+		 * Set the time difference in miliseconds to work with (instead of an end-date)
+		 * Use 2 constant times (endtime - now) and substract the getTimer
 		 */
 		public function set timeDiff(value:Number):void
 		{

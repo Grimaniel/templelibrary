@@ -45,7 +45,7 @@ package
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 0, traceDuplicates:Boolean = false, level:String = "info"):void 
+	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 0, duplicates:Boolean = false, level:String = "info"):void 
 	{
 		if (object == "__UNLOGGABLE_STRING__")
 		{
@@ -55,13 +55,13 @@ package
 		{
 			message += ": " + object;
 		}
-		else if (object is String || object is Number || object is Boolean || object is uint || object is int)
+		else if (object is String || object is Number || object is Boolean || object is uint || object is int || object is Function)
 		{
 			message += ": " + ObjectUtils.convertToString(object);
 		}
 		else
 		{
-			message += ": " + ObjectUtils.traceObject(object, maxDepth, false, traceDuplicates);
+			message += ": " + dump(object, maxDepth, duplicates);
 		}
 		
 		switch (level)

@@ -35,6 +35,7 @@
 
 package temple.utils.types 
 {
+	import flash.utils.getDefinitionByName;
 	import temple.core.debug.objectToString;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
@@ -153,6 +154,22 @@ package temple.utils.types
 		}
 
 		/**
+		 * Sorts the elements in a vector according
+		 * This method works the same as the Array.sort method.
+		 */
+		public static function sort(vector:*, ...args:*):void
+		{
+			var a:Array = VectorUtils.toArray(vector);
+			a.sort.apply(null, args);
+			
+			var fixed:Boolean = vector.fixed;
+			vector.fixed = false;
+			vector.length = 0;
+			vector.push.apply(null, a);
+			vector.fixed = fixed;
+		}
+
+		/**
 		 * Sorts the elements in a vector according to one or more fields in the vector.
 		 * This method works the same as the Array.sortOn method.
 		 */
@@ -190,6 +207,13 @@ package temple.utils.types
 		        vector[j] = temp;
 		    }
 		}
+
+		public static function getBaseType(vector:Class):Class
+		{
+			var string:String = String(vector); 
+			return getDefinitionByName(string.substring(15, string.length - 2)) as Class;
+		}
+
 
 		/**
 		 * @private
