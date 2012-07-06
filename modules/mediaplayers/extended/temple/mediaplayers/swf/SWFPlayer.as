@@ -282,6 +282,30 @@ package temple.mediaplayers.swf
 		/**
 		 * @inheritDoc
 		 */
+		public function get movieClip():MovieClip
+		{
+			return this._movieClipPlayer.movieClip;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set movieClip(value:MovieClip):void
+		{
+			this._movieClipPlayer.movieClip = value;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function goto(frame:Object, scene:String = null):void
+		{
+			this._movieClipPlayer.goto(frame, scene);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		override public function set debug(value:Boolean):void
 		{
 			this._movieClipPlayer.debug = super.debug = value;

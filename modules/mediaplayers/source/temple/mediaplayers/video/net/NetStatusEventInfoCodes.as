@@ -52,6 +52,7 @@ package temple.mediaplayers.video.net
 
 		public static const NETSTREAM_SEEK_INVALID_TIME:String = "NetStream.Seek.InvalidTime";
 		public static const NETSTREAM_SEEK_NOTIFY:String = "NetStream.Seek.Notify";
+		public static const NETSTREAM_SEEK_COMPLETE:String = "NetStream.Seek.Complete";
 
 		public static const NETSTREAM_PAUSE_NOTIFY:String = "NetStream.Pause.Notify";
 		public static const NETSTREAM_UNPAUSE_NOTIFY:String = "NetStream.Unpause.Notify";

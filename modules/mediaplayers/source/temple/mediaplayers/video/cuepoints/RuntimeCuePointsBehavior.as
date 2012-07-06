@@ -35,11 +35,14 @@
 
 package temple.mediaplayers.video.cuepoints 
 {
+	import temple.core.debug.IDebuggable;
+	import temple.core.behaviors.AbstractBehavior;
+	import temple.mediaplayers.players.IPlayer;
+	import temple.mediaplayers.players.PlayerStatus;
+	import temple.utils.types.VectorUtils;
+
 	import flash.events.Event;
 	import flash.utils.getTimer;
-	import temple.core.behaviors.AbstractBehavior;
-	import temple.mediaplayers.players.PlayerStatus;
-	import temple.mediaplayers.video.players.IVideoPlayer;
 
 	/**
 	 * Class for adding cuepoints in a VideoPlayer at runtime.
@@ -48,27 +51,28 @@ package temple.mediaplayers.video.cuepoints
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class RuntimeCuePointsBehavior extends AbstractBehavior 
+	public class RuntimeCuePointsBehavior extends AbstractBehavior implements IDebuggable
 	{
-		private var _cuepoints:Array;
+		private var _cuepoints:Vector.<VideoCuePoint>;
 		private var _previousPlayTime:Number;
 		private var _previousCheckTime:Number;
+		private var _debug:Boolean;
 
-		public function RuntimeCuePointsBehavior(target:IVideoPlayer)
+		public function RuntimeCuePointsBehavior(target:IPlayer)
 		{
 			super(target);
 			
-			this._cuepoints = new Array();
+			this._cuepoints = new Vector.<VideoCuePoint>();
 			
 			target.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
 		}
 
 		/**
-		 * Returns a reference to the VideoPlayer
+		 * Returns a reference to the player
 		 */
-		public function get videoPlayer():IVideoPlayer 
+		public function get videoPlayer():IPlayer 
 		{
-			return this.target as IVideoPlayer;
+			return this.target as IPlayer;
 		}
 
 		/**
@@ -77,7 +81,23 @@ package temple.mediaplayers.video.cuepoints
 		public function addCuePoint(cuepoint:VideoCuePoint):void 
 		{
 			this._cuepoints.push(cuepoint);
-			this._cuepoints.sortOn('time');
+			VectorUtils.sortOn(this._cuepoints, 'time', Array.NUMERIC);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
 		}
 
 		private function handleEnterFrame(event:Event):void 
