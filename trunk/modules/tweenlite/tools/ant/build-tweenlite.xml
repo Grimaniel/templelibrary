@@ -13,7 +13,7 @@
 	<target name="Full Build">
 		<antcall target="Prepare" />
 		<antcall target="Build" />
-		<antcall target="Extended" />
+		<antcall target="Extend" />
 		<antcall target="Package" />
 		<echo>Full Build successful</echo>
 	</target>
