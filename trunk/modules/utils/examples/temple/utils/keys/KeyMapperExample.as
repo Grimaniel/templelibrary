@@ -48,6 +48,8 @@ package
 			keyMapper.map(KeyCode.RIGHT + KeyMapper.SHIFT, this.moveHorizontal, [20]);
 			keyMapper.map(KeyCode.UP + KeyMapper.SHIFT, this.moveVertical, [-20]);
 			keyMapper.map(KeyCode.DOWN + KeyMapper.SHIFT, this.moveVertical, [20]);
+			
+			this.logInfo("Use the following keys to control the object:\n" + keyMapper.getInfo());
 		}
 
 		private function moveHorizontal(speed:Number):void 

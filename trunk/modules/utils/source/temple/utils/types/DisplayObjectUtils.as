@@ -296,6 +296,7 @@ package temple.utils.types
 
 		/**
 		 * Clears all the content of a displayObject. Removes all children and clears graphic.
+		 * Note: this method doesn't destruct the children.
 		 */
 		public static function clearContent(displayObject:DisplayObject):void
 		{

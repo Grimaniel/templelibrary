@@ -69,12 +69,14 @@ package temple.utils.types
 		}
 
 		/**
-		 * Trims the text to fit a given textfield.  
+		 * Trims the text to fit a given textfield.
+		 * 
 		 * @param textField the TextField to set the new text to.
-		 * @param abbreviatedString the text that indicates that trimming has occurred; commonly this is "..."
+		 * @param abbreviation the text that indicates that trimming has occurred; commonly this is "..."
+		 * 
 		 * @return a Boolean which indicates if the text in the TextField is trimmed.
 		 */  
-		public static function trimTextFieldText(textField:TextField, abbreviatedString:String = "..."):Boolean 
+		public static function trimText(textField:TextField, abbreviation:String = "..."):Boolean 
 		{
 			var text:String = textField.text;
 			var trimLength:int = text.length;
@@ -84,7 +86,7 @@ package temple.utils.types
 			{ 
 				--trimLength;
 				text = text.substr(0, trimLength);
-				text += abbreviatedString;
+				text += abbreviation;
 				textField.text = text;
 				trimmed = true;
 			}
@@ -92,12 +94,14 @@ package temple.utils.types
 		}
 
 		/**
-		 * Trims the htmlText to fit a given textfield.  
+		 * Trims the htmlText to fit a given textfield.
+		 * 
 		 * @param textField the TextField to set the new text to.
-		 * @param abbreviatedString the text that indicates that trimming has occurred; commonly this is "..."
+		 * @param abbreviation the text that indicates that trimming has occurred; commonly this is "..."
+		 * 
 		 * @return a Boolean which indicates if the text in the TextField is trimmed.
 		 */  
-		public static function trimTextFieldHTMLText(textField:TextField, abbreviatedString:String = "..."):Boolean 
+		public static function trimHTMLText(textField:TextField, abbreviation:String = "..."):Boolean 
 		{
 			var styleSheet:StyleSheet = textField.styleSheet;
 			textField.styleSheet = null;
@@ -107,9 +111,9 @@ package temple.utils.types
 			
 			while (textField.multiline && textField.textHeight > textField.height || !textField.multiline && textField.textWidth + TextFieldUtils._MAGICAL_TEXTWIDTH_PADDING > textField.width)
 			{
-				text = textField.getXMLText(0, textField.text.length - 1 - abbreviatedString.length);
+				text = textField.getXMLText(0, textField.text.length - 1 - abbreviation.length);
 				closeTag = text.lastIndexOf(')</textformat>');
-				text = text.substr(0, closeTag) + abbreviatedString + text.substr(closeTag);
+				text = text.substr(0, closeTag) + abbreviation + text.substr(closeTag);
 				textField.insertXMLText(0, textField.text.length, text);
 				trimmed = true;
 			}

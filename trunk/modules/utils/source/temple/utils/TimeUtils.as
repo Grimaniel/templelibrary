@@ -98,6 +98,18 @@ package temple.utils
 		{
 			return StringUtils.padLeft(Math.floor(milliseconds / 60000).toString(), 2, "0") + delimiter + StringUtils.padLeft((Math.floor(milliseconds * .001) % 60).toString(), 2, "0") + '.' + StringUtils.padLeft((Math.round(Math.floor(milliseconds % 1000))).toString(), 3, "0");
 		}
+		
+		/**
+		 * Format milliseconds as dd:hh:mm:ss.mmm 
+		 */
+		public static function formatTime2(milliseconds:Number, delimiter:String = ':'):String
+		{
+			return StringUtils.padLeft((Math.floor(milliseconds / 86400000)).toString(), 2, "0") +
+			delimiter + StringUtils.padLeft((Math.floor(milliseconds / 3600000) % 24).toString(), 2, "0") +
+			delimiter + StringUtils.padLeft((Math.floor(milliseconds / 60000) % 60).toString(), 2, "0") + 
+			delimiter + StringUtils.padLeft((Math.floor(milliseconds * .001) % 60).toString(), 2, "0") + 
+			'.' + StringUtils.padLeft((Math.round(Math.floor(milliseconds % 1000))).toString(), 3, "0");
+		}
 
 		/**
 		 * Format milliseconds as mm:ss

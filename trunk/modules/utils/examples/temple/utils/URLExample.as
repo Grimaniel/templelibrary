@@ -71,7 +71,7 @@ package
 		{
 			this._output.appendText(href + "\n");
 			
-			this._output.appendText(ObjectUtils.traceObject(new URL(href), 3, false) + "\n\n");
+			this._output.appendText(dump(new URL(href)) + "\n\n");
 		}
 	}
 }

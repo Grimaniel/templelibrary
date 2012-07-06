@@ -125,19 +125,6 @@ package temple.utils
 			return output;
 		}
 
-		/**
-		 * Wrapped function for an ObjectUtils function
-		 * 
-		 * Recursively traces the properties of an object
-		 * @param object object to trace
-		 * @param maxDepth indicates the recursive factor
-		 * @param doTrace indicates if the function will trace the output or only return it
-		 */
-		public static function traceObject(object:Object, maxDepth:Number = 3, doTrace:Boolean = true):String
-		{
-			return ObjectUtils.traceObject(object, maxDepth, doTrace);
-		}
-		
 		public static function doTrace(string:String):void
 		{
 			trace(string);

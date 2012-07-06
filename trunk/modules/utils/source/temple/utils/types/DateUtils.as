@@ -251,25 +251,6 @@ package temple.utils.types
 		}
 
 		/**
-		 *	Returns a string indicating whether the date represents a time in the
-		 *	ante meridiem (AM) or post meridiem (PM).
-		 *
-		 *	If the hour is less than 12 then "AM" will be returned.
-		 *
-		 *	If the hour is greater than 12 then "PM" will be returned.
-		 * 
-		 * 	@param date The Date from which to generate the 12 hour clock indicator.
-		 * 
-		 * 	@return A String ("AM" or "PM") indicating which half of the day the 
-		 *	hour represents.
-		 */	
-		public static function getAMPM(date:Date):String
-		{
-			return (date.hours > 11) ? "PM" : "AM";
-		}
-
-		
-		/**
 		 * Parses dates that conform to the W3C Date-time Format into Date objects.
 		 * This function is useful for parsing RSS 1.0 and Atom 1.0 dates.
 		 *
@@ -832,54 +813,112 @@ package temple.utils.types
 			
 			switch (char)
 			{
-				case 'a': return DateUtils.getAmPm(date);
-				case 'A': return DateUtils.getAmPm(date, true);
+				// Lowercase Ante meridiem and Post meridiem
+				case 'a': return DateUtils.getAMPM(date);
+				
+				// Uppercase Ante meridiem and Post meridiem
+				case 'A': return DateUtils.getAMPM(date).toUpperCase();
+				
+				// Swatch Internet time
 				case 'B': return DateUtils.getSwatchInternetTime(date);
+				
+				// ISO 8601 date
 				case 'c': return DateUtils.getIso8601(date);
-				case 'd': return DateUtils.getDayOfMonth(date);
+				
+				// Day of the month, 2 digits with leading zeros
+				case 'd': return DateUtils.addLeadingZero(date.getDate());
+				
+				// A textual representation of a day, three letters
 				case 'D': return DateUtils.getWeekDayAsText(date, true);
+				
+				// A full textual representation of a month, such as January or March
 				case 'F': return DateUtils.getMonthAsText(date);
-				case 'g': return DateUtils.getHours(date, false, true);
-				case 'G': return DateUtils.getHours(date, false);
-				case 'h': return DateUtils.getHours(date, true, true);
-				case 'H': return DateUtils.getHours(date);
-				case 'i': return DateUtils.getMinutes(date);
-				case 'I': return DateUtils.getSummertime(date);
-				case 'j': return DateUtils.getDayOfMonth(date, false);
+				
+				// 12-hour format of an hour without leading zeros
+				case 'g': return String(date.getHours() % 12);
+				
+				// 24-hour format of an hour without leading zeros
+				case 'G': return String(date.getHours());
+				
+				// 12-hour format of an hour with leading zeros
+				case 'h': return String(DateUtils.addLeadingZero(date.getHours() % 12));
+				
+				// 24-hour format of an hour with leading zeros
+				case 'H': return String(DateUtils.addLeadingZero(date.getHours()));
+				
+				// Minutes with leading zeros
+				case 'i': return DateUtils.addLeadingZero(date.getMinutes());
+				
+				// Whether or not the date is in daylight saving time
+				case 'I': return DateUtils.isSummertime(date) ? "1" : "0";
+				
+				// Day of the month without leading zeros
+				case 'j': return String(date.getDate());
+				
+				// A full textual representation of the day of the week
 				case 'l': return DateUtils.getWeekDayAsText(date);
-				case 'L': return DateUtils.getLeapYear(date);
-				case 'm': return DateUtils.getMonth(date);
+				
+				// Whether it's a leap year
+				case 'L': return DateUtils.isLeapYear(date.getFullYear()) ? "1" : "0";
+				
+				// Numeric representation of a month, with leading zeros
+				case 'm': return DateUtils.addLeadingZero(date.getDate());
+				
+				// A short textual representation of a month, three letters
 				case 'M': return DateUtils.getMonthAsText(date, true);
-				case 'n': return DateUtils.getMonth(date, false);
-				case 'N': return DateUtils.getIso8601Day(date);
+				
+				// Numeric representation of a month, without leading zeros
+				case 'n': return String(date.getMonth() + 1);
+				
+				// ISO-8601 numeric representation of the day of the week
+				case 'N': return String(_MONDAY_STARTING_WEEK[date.getDay()]);
+				
+				// Difference to Greenwich time (GMT) in hours
 				case 'O': return DateUtils.getDifferenceBetweenGmt(date);
+				
+				// Difference to Greenwich time (GMT) with colon between hours and minutes
 				case 'P': return DateUtils.getDifferenceBetweenGmt(date, ":");
+				
+				// RFC 2822 formatted date
 				case 'r': return DateUtils.getRfc2822(date);
-				case 's': return DateUtils.getSeconds(date);
+				
+				// Seconds, with leading zeros
+				case 's': return DateUtils.addLeadingZero(date.getSeconds());
+				
+				// English ordinal suffix for the day of the month, 2 characters
 				case 'S': return NumberUtils.ordinalSuffix(date.getDate());
+				
+				// Number of days in the given month
 				case 't': return String(DateUtils.getDaysOfMonth(date));
+				
+				// Timezone abbreviation
 				case 'T': return DateUtils.getTimezone(date);
-				case 'u': return DateUtils.getMilliseconds(date);
+				
+				// Microseconds
+				case 'u': return String(date.getMilliseconds());
+				
+				// Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)
 				case 'U': return DateUtils.getUnixTimestamp(date);
+				
+				// Numeric representation of the day of the week
 				case 'w': return DateUtils.getWeekDay(date);
+				
+				// ISO-8601 week number of year, weeks starting on Monday
 				case 'W': return String(DateUtils.getWeekOfYear(date));
-				case 'y': return DateUtils.getYear(date, true);
-				case 'Y': return DateUtils.getYear(date);
+				
+				// A two digit representation of a year
+				case 'y': return String(date.getFullYear()).substr(2, 2);
+				
+				// A full numeric representation of a year, 4 digits
+				case 'Y': return String(date.getFullYear());
+				
+				// The day of the year (starting from 0)
 				case 'z': return String(DateUtils.getDayOfYear(date));
-				case 'Z': return DateUtils.getTimezoneOffset(date);
+				
+				// Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
+				case 'Z': return String(date.getTimezoneOffset() * 60);
 			}
 			return char;
-		}
-
-		/**
-		 * returns 1 if it is summertime, else 0
-		 * 
-		 * @return String
-		 */
-		private static function getSummertime(date:Date):String
-		{
-			if (isSummertime(date)) return "1";
-			return "0";
 		}
 
 		/**
@@ -923,12 +962,7 @@ package temple.utils.types
 		 */
 		public static function getIso8601(date:Date):String
 		{
-			return DateUtils.getYear(date) + "-" + DateUtils.getMonth(date) + "-" + DateUtils.getDayOfMonth(date) + "T" + DateUtils.getHours(date) + ":" + DateUtils.getMinutes(date) + ":" + DateUtils.getSeconds(date) + DateUtils.getDifferenceBetweenGmt(date, ":");
-		}
-
-		private static function getIso8601Day(date:Date):String
-		{
-			return String(_MONDAY_STARTING_WEEK[date.getDay()]);
+			return date.getFullYear() + "-" + DateUtils.addLeadingZero(date.getMonth() + 1) + "-" + DateUtils.addLeadingZero(date.getDate()) + "T" + DateUtils.addLeadingZero(date.getHours()) + ":" + DateUtils.addLeadingZero(date.getMinutes()) + ":" + DateUtils.addLeadingZero(date.getSeconds()) + DateUtils.getDifferenceBetweenGmt(date, ":");
 		}
 
 		/**
@@ -939,7 +973,7 @@ package temple.utils.types
 		 */
 		public static function getRfc2822(date:Date):String
 		{
-			return DateUtils.getWeekDayAsText(date, true) + ", " + DateUtils.getDayOfMonth(date) + " " + DateUtils.getMonthAsText(date, true) + " " + DateUtils.getYear(date) + " " + DateUtils.getHours(date) + ":" + DateUtils.getMinutes(date) + ":" + DateUtils.getSeconds(date) + " " + DateUtils.getDifferenceBetweenGmt(date);
+			return DateUtils.getWeekDayAsText(date, true) + ", " + DateUtils.addLeadingZero(date.getDate()) + " " + DateUtils.getMonthAsText(date, true) + " " + date.getFullYear() + " " + DateUtils.addLeadingZero(date.getHours()) + ":" + DateUtils.addLeadingZero(date.getMinutes()) + ":" + DateUtils.addLeadingZero(date.getSeconds()) + " " + DateUtils.getDifferenceBetweenGmt(date);
 		}
 
 		/**
@@ -953,15 +987,15 @@ package temple.utils.types
 			// Thu, 25 Feb 2010 15:49:25 +0100
 			
 			// split RFC2822 string
-			var darr:Array = string.split(' ');
+			var a:Array = string.split(' ');
 			
 			// set all data for date
-			var date:Number = parseInt(darr[1]);
-			var month:Number = _MONTHS_TO_INTEGERS[darr[2]];
-			var year:Number = parseInt(darr[3]);
+			var date:Number = parseInt(a[1]);
+			var month:Number = _MONTHS_TO_INTEGERS[a[2]];
+			var year:Number = parseInt(a[3]);
 			
 			// also split time string
-			var tarr:Array = darr[4].split(':');
+			var tarr:Array = a[4].split(':');
 			var hour:Number = parseInt(tarr[0]);
 			var minute:Number  = parseInt(tarr[1]);
 			var second:Number  = parseInt(tarr[2]);
@@ -1028,16 +1062,6 @@ package temple.utils.types
 		}
 
 		/**
-		 * returns the timezone offset in seconds( between -43200 - 50400 )
-		 * 
-		 * @return String
-		 */
-		private static function getTimezoneOffset(date:Date):String
-		{
-			return String(date.getTimezoneOffset() * 60);
-		}
-
-		/**
 		 * number of days in the current month (such as 28-31)
 		 */
 		public static function getDaysOfMonth(date:Date):int
@@ -1068,94 +1092,22 @@ package temple.utils.types
 		 */
 		public static function getMonthAsText(date:Date, short:Boolean = false):String
 		{
-			if (short == true )	return DateUtils.getShortMonthName(date.month);	
-
-			return DateUtils.getMonthName(date.month);	
+			return short ? DateUtils.getShortMonthName(date.month) : DateUtils.getMonthName(date.month);	
 		}
 
 		/**
-		 * returns the milliseconds (such as 415)
+		 *	Returns a string indicating whether the date represents a time in the ante meridiem (AM) or post meridiem (PM).
+		 *
+		 *	If the hour is less than 12 then "AM" will be returned.
+		 *	If the hour is greater than 12 then "PM" will be returned.
 		 * 
-		 * @return String
-		 */
-		private static function getMilliseconds(date:Date):String
-		{
-			return String(date.getMilliseconds());
-		}
-
-		/**
-		 * return seconds (such as 0-59 or 00-59)
+		 * 	@param date The Date from which to generate the 12 hour clock indicator.
 		 * 
-		 * @param Flag to add leading zero, optional default = true
-		 * @return String
+		 * 	@return A String ("AM" or "PM") indicating which half of the day the hour represents.
 		 */	
-		private static function getSeconds(date:Date, leadingZero:Boolean = true):String
+		public static function getAMPM(date:Date):String
 		{
-			if (leadingZero == true && date.getSeconds() <= 9)
-			{
-				return "0" + date.getSeconds().toString();
-			}
-			return String(date.getSeconds());
-		}
-
-		/**
-		 * returns the minutes (such as 0-59 or 00-59)
-		 * 
-		 * @param flag for adding a leading zero, optional default = true
-		 * @return String
-		 */
-		private static function getMinutes(date:Date, leadingZero:Boolean = true ):String
-		{
-			if (leadingZero == true && date.getMinutes() <= 9)
-			{
-				return "0" + date.getMinutes().toString();
-			}
-			return String(date.getMinutes());
-		}
-
-		/**
-		 * returns the hours in diffrent formats( such as 0-12, 00-12, 0-23, 00-23 )
-		 * 
-		 * @param Boolean switch to add a leading zero, optional
-		 * @param Boolean switch to get in in 12h instead 24h, optional
-		 * @return String
-		 */
-		private static function getHours(date:Date, leadingZero:Boolean = true, twelfHours:Boolean = false ):String
-		{
-			var hours:int = date.getHours();
-			if (twelfHours == true )
-			{
-				hours = hours % 12;
-			}
-			
-			if (leadingZero == true && hours <= 9 )
-			{
-				return "0" + hours.toString();
-			}
-			return String(hours);
-		}
-
-		/**
-		 * returns am (ante meridiem) or pm (post meridiem)
-		 * 
-		 * @param Boolean flag to get an upper-case string
-		 * @return String am or pm
-		 * 
-		 * TODO: double getAMPM
-		 */
-		public static function getAmPm(date:Date, upperCase:Boolean = false ):String
-		{
-			var result:String = "am";
-			if (date.hours > 12 )
-			{
-				result = "pm";
-			}
-			
-			if (upperCase == true )
-			{
-				return result.toUpperCase();
-			}
-			return result;			
+			return (date.hours > 11) ? "PM" : "AM";
 		}
 
 		/**
@@ -1183,17 +1135,6 @@ package temple.utils.types
 			return DateUtils.WEEKDAYS[date.getDay() ];
 		}
 
-		/**
-		 * returns 1 if leap year, else 0 (as String)
-		 * 
-		 * return String
-		 */
-		private static function getLeapYear(date:Date):String
-		{
-			if (DateUtils.isLeapYear(date.getFullYear())) return "1";
-			return "0";
-		}
-		
 		/**
 		 * Returns the number of the current week for the year, a week starts with monday
 		 * 
@@ -1231,53 +1172,6 @@ package temple.utils.types
 		}
 
 		/**
-		 * returns the year (such as 2008 or 08)
-		 * 
-		 * @param Boolean flag to get the year as two digits
-		 * @return String
-		 */
-		private static function getYear(date:Date, twoDigits:Boolean = false):String
-		{
-			if (twoDigits == true )
-			{
-				//cut the year for the last two digits and return it
-				return String(date.getFullYear()).substr(2, 2);
-			}
-			return String(date.getFullYear());
-		}
-
-		/**
-		 * returns the month (1-12 or 01-12), with optional leading zero
-		 * 
-		 * @param Boolean optional flag to add a leading zero
-		 * @return String month (1-12 or 01-12)
-		 */
-		private static function getMonth(date:Date, leadingZero:Boolean = true ):String
-		{
-			var month:Number = date.getMonth() + 1;
-			if (leadingZero == true && month <= 9 )
-			{
-				return "0" + String(month);
-			}
-			return String(month);
-		}
-
-		/**
-		 * returns day of the month (1-31 or 01-31), with optional leading zero
-		 * 
-		 * @param Boolean optional flag to add a leading zero to the day 
-		 * @return day of the month (1-31 or 01-31)
-		 */
-		private static function getDayOfMonth(date:Date, leadingZero:Boolean = true ):String
-		{
-			if (leadingZero == true && date.getDate() <= 9 )
-			{
-				return "0" + String(date.getDate());
-			}
-			return String(date.getDate());
-		}
-		
-		/**
 		 * Gets the next date in the week for the given time and day. Useful for weekly countdowns
 		 * @param day The day for the countdown. 0 starts at sunday, so every monday at 20:00 is: getNextInWeekDatefor (1, 20);
 		 * @param hours The hours of the time
@@ -1297,6 +1191,21 @@ package temple.utils.types
 				targetDate.setDate(targetDate.getDate() + 7);
 			}
 			return targetDate;
+		}
+		
+		/**
+		 * Returns the difference in days between to days. Usefull for displaying a date like "today", "tomorrow" or "yesterday"
+		 */
+		public static function getDayDifference(date1:Date, date2:Date = null):int
+		{
+			date2 ||= new Date();
+			
+			return (new Date(date1.getFullYear(), date1.getMonth(), date1.getDate()).getTime() - new Date(date2.getFullYear(), date2.getMonth(), date2.getDate()).getTime()) / 86400000;
+		}
+
+		private static function addLeadingZero(value:int):String
+		{
+			return String(value < 10 ? "0" + value : value);
 		}
 		
 		/**

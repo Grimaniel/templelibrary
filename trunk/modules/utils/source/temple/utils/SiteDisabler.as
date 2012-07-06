@@ -35,13 +35,15 @@
 
 package temple.utils 
 {
+	import flash.events.Event;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.objectToString;
+	import temple.core.display.CoreSprite;
 	import temple.core.display.StageProvider;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
 
-	import flash.events.MouseEvent;
+	import flash.display.Stage;
 
 	/**
 	 * The SiteDisabler can prefend all DisplayObject to receive MouseEvents.
@@ -70,25 +72,32 @@ package temple.utils
 		private static const _TO_STRING_PROPS:Vector.<String> = Vector.<String>(['isSiteEnabled']);
 		
 		private static var _debug:Boolean;
+		private static var _mouseBlocker:CoreSprite;
+		private static var _stage:Stage;
 		
 		/**
 		 * Disables the site (not the SiteDisabler)
 		 */
 		public static function disableSite():void 
 		{
-			if (StageProvider.stage)
+			SiteDisabler._stage ||= StageProvider.stage;
+			if (SiteDisabler._stage)
 			{
-				StageProvider.stage.mouseChildren = false;
-				StageProvider.stage.addEventListener(MouseEvent.CLICK, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.DOUBLE_CLICK, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.MOUSE_DOWN, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.MOUSE_MOVE, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.MOUSE_OUT, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.MOUSE_OVER, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.MOUSE_UP, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.MOUSE_WHEEL, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.ROLL_OUT, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
-				StageProvider.stage.addEventListener(MouseEvent.ROLL_OVER, SiteDisabler.handleMouseEvent, true, int.MAX_VALUE);
+				if (!SiteDisabler._mouseBlocker)
+				{
+					SiteDisabler._mouseBlocker  = new CoreSprite();
+					SiteDisabler._mouseBlocker.graphics.beginFill(0xFF0000);
+					SiteDisabler._mouseBlocker.graphics.drawRect(0, 0, 1, 1);
+					SiteDisabler._mouseBlocker.graphics.endFill();
+					SiteDisabler._mouseBlocker.alpha = SiteDisabler._debug ? .1 : 0;
+				}
+				
+				SiteDisabler._mouseBlocker.width = SiteDisabler._stage.stageWidth;
+				SiteDisabler._mouseBlocker.height = SiteDisabler._stage.stageHeight;
+				SiteDisabler._stage.addChild(SiteDisabler._mouseBlocker);
+				SiteDisabler._stage.focus = SiteDisabler._mouseBlocker;
+				SiteDisabler._stage.addEventListener(Event.RESIZE, SiteDisabler.handleStageResize);
+				
 				if (SiteDisabler.debug) Log.debug("disableSite", SiteDisabler);
 			}
 			else
@@ -102,19 +111,11 @@ package temple.utils
 		 */
 		public static function enableSite():void 
 		{
-			if (StageProvider.stage)
+			SiteDisabler._stage ||= StageProvider.stage;
+			if (SiteDisabler._stage && SiteDisabler._mouseBlocker && SiteDisabler._mouseBlocker.parent)
 			{
-				StageProvider.stage.mouseChildren = true;
-				StageProvider.stage.removeEventListener(MouseEvent.CLICK, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.DOUBLE_CLICK, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.MOUSE_DOWN, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.MOUSE_MOVE, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.MOUSE_OUT, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.MOUSE_OVER, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.MOUSE_UP, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.ROLL_OUT, SiteDisabler.handleMouseEvent, true);
-				StageProvider.stage.removeEventListener(MouseEvent.ROLL_OVER, SiteDisabler.handleMouseEvent, true);
+				SiteDisabler._stage.removeEventListener(Event.RESIZE, SiteDisabler.handleStageResize);
+				SiteDisabler._mouseBlocker.parent.removeChild(SiteDisabler._mouseBlocker);
 				if (SiteDisabler.debug) Log.debug("enableSite", SiteDisabler);
 			}
 		}
@@ -135,11 +136,16 @@ package temple.utils
 		public static function set debug(value:Boolean):void
 		{
 			SiteDisabler._debug = value;
+			SiteDisabler._mouseBlocker.alpha = value ? .1 : 0;
 		}
 		
-		private static function handleMouseEvent(event:MouseEvent):void
+		private static function handleStageResize(event:Event):void
 		{
-			event.stopImmediatePropagation();
+			if (SiteDisabler._mouseBlocker && SiteDisabler._stage)
+			{
+				SiteDisabler._mouseBlocker.width = SiteDisabler._stage.stageWidth;
+				SiteDisabler._mouseBlocker.height = SiteDisabler._stage.stageHeight;
+			}
 		}
 		
 		/**

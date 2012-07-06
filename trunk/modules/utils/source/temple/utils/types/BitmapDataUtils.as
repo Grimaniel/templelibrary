@@ -37,6 +37,7 @@ package temple.utils.types
 {
 	import temple.common.enum.Align;
 	import temple.common.enum.ScaleMode;
+	import temple.core.debug.objectToString;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
 
@@ -51,7 +52,7 @@ package temple.utils.types
 	 * 
 	 * @author Arjan van Wijk
 	 */
-	public class BitmapDataUtils
+	public final class BitmapDataUtils
 	{
 		public static function crop(bitmapData:BitmapData, rect:Rectangle, align:String = 'center', scaleMode:String = 'noScale'):BitmapData
 		{
@@ -191,6 +192,34 @@ package temple.utils.types
 			{
 				target.applyFilter(target, target.rect, zero, filter);
 			}
+		}
+		
+		public static function clear(bitmapData:BitmapData):void
+		{
+			bitmapData.fillRect(new Rectangle(0, 0, bitmapData.width, bitmapData.height), 0);
+		}
+		
+		public static function rotate(bitmapData:BitmapData, angle:Number):BitmapData
+		{
+			var matrix:Matrix = new Matrix();
+			
+			var rotated:BitmapData = new BitmapData(bitmapData.width, bitmapData.height, bitmapData.transparent, 0);
+
+			matrix.translate(bitmapData.width * -.5, bitmapData.height * -.5);
+			matrix.rotate(angle * Math.PI / 180);
+			matrix.translate(bitmapData.width * .5, bitmapData.height * .5);
+
+			rotated.draw(bitmapData, matrix);
+			
+			return rotated;
+		}
+		
+		/**
+		 * @private
+		 */
+		public static function toString():String
+		{
+			return objectToString(BitmapDataUtils);
 		}
 	}
 }

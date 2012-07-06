@@ -35,21 +35,21 @@
 
 package temple.utils.keys 
 {
-	import flash.display.DisplayObject;
-	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 	import temple.common.interfaces.IEnableable;
-	import temple.core.CoreObject;
 	import temple.core.debug.IDebuggable;
 	import temple.core.destruction.Destructor;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
+	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 	import temple.utils.ClosureArgs;
+	import temple.utils.Enum;
 	import temple.utils.types.FunctionUtils;
 	import temple.utils.types.ObjectUtils;
 
-	import flash.display.Stage;
+	import flash.display.DisplayObject;
 	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
 
 
 	/**
@@ -96,6 +96,8 @@ package temple.utils.keys
 		 */
 		public static const ALT:uint = 2<<12;
 		
+		private static const _:String = "_";
+		
 		private var _map:Object;
 		private var _keyboardEvent:String;
 		private var _enabled:Boolean = true;
@@ -131,15 +133,15 @@ package temple.utils.keys
 		 */
 		public function map(key:uint, method:Function, arguments:Array = null):KeyMapper 
 		{
-			if (this._map[key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
+			if (this._map[_ + key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
 			
 			if (arguments && arguments.length)
 			{
-				this._map[key] = new ClosureArgs(method, arguments);
+				this._map[_ + key] = new ClosureArgs(method, arguments);
 			}
 			else
 			{
-				this._map[key] = method;
+				this._map[_ + key] = method;
 			}
 			return this;
 		}
@@ -149,7 +151,7 @@ package temple.utils.keys
 		 */
 		public function unmap(key:uint):void 
 		{
-			delete this._map[key];
+			delete this._map[_ + key];
 		}
 		
 		/**
@@ -190,19 +192,16 @@ package temple.utils.keys
 		 */
 		public function getInfo():String 
 		{
-			var info:String = "";
-			var shift:uint;
-			var control:uint;
-			var alt:uint;
-			var keyCode:uint;
+			var info:String = "", shift:uint, control:uint, alt:uint, keyCode:uint;
+			var keyNames:Object = ObjectUtils.invert(Enum.getHash(Keyboard));
 			for (var key:String in this._map)
 			{
-				keyCode =  uint(key);
+				keyCode =  uint(key.substr(1));
 				keyCode -= shift = keyCode & KeyMapper.SHIFT;
 				keyCode -= control = keyCode & KeyMapper.CONTROL;
 				keyCode -= alt = keyCode & KeyMapper.ALT;
 				
-				info += String.fromCharCode(keyCode);
+				info += keyCode < KeyCode.NUM_0 && keyCode in keyNames ? keyNames[keyCode] : String.fromCharCode(keyCode);
 				
 				info += shift || control || alt ? " +" : "\t";
 				info += shift ? "S" : "";
@@ -262,17 +261,17 @@ package temple.utils.keys
 			if (event.altKey) keyCode |= KeyMapper.ALT;
 			if (event.ctrlKey) keyCode |= KeyMapper.CONTROL;
 			
-			if (this._map && keyCode in this._map)
+			if (this._map && (_ + keyCode) in this._map)
 			{
 				if (this.debug) this.logDebug("handleKeyEvent: " + event);
 				
-				if (this._map[keyCode] is ClosureArgs)
+				if (this._map[_ + keyCode] is ClosureArgs)
 				{
-					ClosureArgs(this._map[keyCode]).execute();
+					ClosureArgs(this._map[_ + keyCode]).execute();
 				}
 				else
 				{
-					this._map[keyCode]();
+					this._map[_ + keyCode]();
 				}
 			}
 			else

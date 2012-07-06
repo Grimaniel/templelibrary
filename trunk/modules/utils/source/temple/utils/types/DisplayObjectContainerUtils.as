@@ -70,21 +70,25 @@ package temple.utils.types
 		 */
 		public static function findChildOfType(container:DisplayObjectContainer, type:Class, recursive:Boolean = false):DisplayObject
 		{
-			var child:DisplayObject;
-			var leni:int = container.numChildren;
-			for (var i:int = 0;i < leni;i++)
-			{
-				child = container.getChildAt(i);
+			if (recursive) var queue:Vector.<DisplayObjectContainer> = new Vector.<DisplayObjectContainer>();
+			
+			var i:uint, leni:int, child:DisplayObject;
 
-				if (child is type)
+			while (container)
+			{
+				for (i = 0, leni = container.numChildren; i < leni; i++)
 				{
-					return child;
+					child = container.getChildAt(i);
+					if (child is type)
+					{
+						return child;
+					}
+					else if (recursive && child is DisplayObjectContainer)
+					{
+						queue.push(child);
+					}
 				}
-				else if (recursive && child is DisplayObjectContainer)
-				{
-					child = DisplayObjectContainerUtils.findChildOfType(child as DisplayObjectContainer, type, recursive);
-					if (child != null) return child;
-				}
+				container = recursive && queue.length ? queue.shift() : null;
 			}
 			return null;
 		}
