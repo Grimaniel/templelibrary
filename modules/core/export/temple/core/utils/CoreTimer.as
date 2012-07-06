@@ -78,7 +78,7 @@ package temple.core.utils
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.1.0";
 		
 		/**
 		 * @private
@@ -97,13 +97,13 @@ package temple.core.utils
 		{
 			super(delay, repeatCount);
 			
-			construct::coreNetConnection(delay, repeatCount);
+			construct::coreTimer(delay, repeatCount);
 		}
 		
 		/**
 		 * @private
 		 */
-		construct function coreNetConnection(delay:Number, repeatCount:int):void
+		construct function coreTimer(delay:Number, repeatCount:int):void
 		{
 			this._registryId = Registry.add(this);
 			

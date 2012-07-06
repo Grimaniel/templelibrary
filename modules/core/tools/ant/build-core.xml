@@ -23,7 +23,7 @@
 		<antcall target="Check license extended" />
 		<antcall target="Check author" />
 		<antcall target="Check author extended" />
-		<antcall target="Check see tag" />
+		<antcall target="Check ASDoc tags" />
 		<antcall target="Update Readme" />
 		<echo>Prepared successful</echo>
 	</target>

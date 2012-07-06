@@ -89,6 +89,14 @@ package temple.core.destruction
 					Destructor.destruct(object.shift());
 				}
 			}
+			else
+			{
+				for (var key:* in object)
+				{
+					Destructor.destruct(object[key]);
+					delete object[key];
+				}
+			}
 			return null;
 		}
 

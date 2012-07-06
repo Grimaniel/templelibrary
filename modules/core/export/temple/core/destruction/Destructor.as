@@ -57,7 +57,7 @@ package temple.core.destruction
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.1.0";
 		
 		/**
 		 * Recursively destructs the object and all its descendants.
@@ -121,6 +121,14 @@ package temple.core.destruction
 				while (object.length)
 				{
 					Destructor.destruct(object.shift());
+				}
+			}
+			else
+			{
+				for (var key:* in object)
+				{
+					Destructor.destruct(object[key]);
+					delete object[key];
 				}
 			}
 			return null;
