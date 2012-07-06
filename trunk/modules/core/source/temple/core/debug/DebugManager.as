@@ -66,12 +66,7 @@ package temple.core.debug
 
 		public static function getInstance():DebugManager
 		{
-			if (DebugManager._instance == null)
-			{
-				DebugManager._instance = new DebugManager();
-				DebugManager.add(DebugManager._instance);
-			}
-			return DebugManager._instance;
+			return DebugManager._instance ||= new DebugManager();
 		}
 		
 		/**
@@ -379,6 +374,9 @@ package temple.core.debug
 			this._debuggableChildren = new Dictionary(true);
 			this._debuggableChildList = new Vector.<Vector.<uint>>();
 			this._debuggableChildQueue = new Dictionary(true);
+			
+			DebugManager._instance = this;
+			DebugManager.add(this);
 		}
 
 		/**
@@ -412,21 +410,5 @@ package temple.core.debug
 			
 			super.destruct();
 		}
-	}
-}
-
-final class DebuggableData
-{
-	public var object:String;
-	public var children:Array;
-	public var debug:Boolean;
-	public var id:uint;
-	
-	public function DebuggableData(object:String, children:Array, debug:Boolean, id:uint)
-	{
-		this.object = object;
-		this.children = children;
-		this.debug = debug;
-		this.id = id;
 	}
 }

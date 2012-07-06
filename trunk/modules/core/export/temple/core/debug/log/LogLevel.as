@@ -47,7 +47,7 @@ package temple.core.debug.log
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.1.0";
 		
 		/**
 		 * The information is only useful when debugging the application.

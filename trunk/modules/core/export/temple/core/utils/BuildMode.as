@@ -54,7 +54,7 @@ package temple.core.utils
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.0.2";
+		templelibrary static const VERSION:String = "3.1.0";
 		
 		/**
 		 * Returns true if the SWF is built in debug mode.

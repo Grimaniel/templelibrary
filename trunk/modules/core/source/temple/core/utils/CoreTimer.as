@@ -58,13 +58,13 @@ package temple.core.utils
 		{
 			super(delay, repeatCount);
 			
-			construct::coreNetConnection(delay, repeatCount);
+			construct::coreTimer(delay, repeatCount);
 		}
 		
 		/**
 		 * @private
 		 */
-		construct function coreNetConnection(delay:Number, repeatCount:int):void
+		construct function coreTimer(delay:Number, repeatCount:int):void
 		{
 			this._registryId = Registry.add(this);
 			
