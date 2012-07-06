@@ -21,7 +21,7 @@ function loadProperties()
 	properties.module = properties.url.match(/(modules\/)(\w+)/)[2];
 	
 	// general properties
-	var propertiesXML = new XML(xjsfl.file.load(xjsfl.file.makeURI("../ant/temple-properties.xml", true)));
+	var propertiesXML = new XML(xjsfl.file.load(URI.toURI("../ant/temple-properties.xml")));
 	for each (var property in propertiesXML.property)
 	{
 		if (property.@name) properties[property.@name] = property.@value.toString();
@@ -30,7 +30,7 @@ function loadProperties()
 	// module specific properties
 	if (properties.module)
 	{
-		var moduleXML =  new XML(xjsfl.file.load(xjsfl.file.makeURI("../../modules/" + properties.module + "/tools/ant/build-" + properties.module + ".xml", true))); 
+		var moduleXML =  new XML(xjsfl.file.load(URI.toURI("../../modules/" + properties.module + "/tools/ant/build-" + properties.module + ".xml"))); 
 		Output.inspect(moduleXML);
 		
 		for each (var property in moduleXML.property)
@@ -42,7 +42,7 @@ function loadProperties()
 	// example specific properties
 	if (properties.module)
 	{
-		var moduleXML =  new XML(xjsfl.file.load(xjsfl.file.makeURI(properties.url.substr(0, properties.url.length - 3) + "xml"))); 
+		var moduleXML =  new XML(xjsfl.file.load(URI.toURI(properties.url.substr(0, properties.url.length - 3) + "xml"))); 
 		Output.inspect(moduleXML);
 		
 		for each (var property in moduleXML.property)
@@ -98,5 +98,5 @@ function publish(properties)
 {
 	Superdoc.file.publish();
 
-	fl.compilerErrors.save(xjsfl.file.makeURI(properties["root.dir"] + "/tools/jsfl/output.txt"));
+	fl.compilerErrors.save(URI.toURI(properties["root.dir"] + "/tools/jsfl/output.txt"));
 }
