@@ -57,7 +57,7 @@
 		<antcall target="Check license extended" />
 		<antcall target="Check author" />
 		<antcall target="Check author extended" />
-		<antcall target="Check see tag" />
+		<antcall target="Check ASDoc tags" />
 		<antcall target="Update Readme" />
 		<echo>Prepared successful</echo>
 	</target>
@@ -306,7 +306,7 @@
 		<echo>Author checked</echo>
 	</target>
 	
-	<target name="Check see tag">
+	<target name="Check ASDoc tags">
 		<script language="javascript">
 			<![CDATA[
 			importPackage(java.net);
@@ -325,7 +325,7 @@
 			// Get the files
 			var sourceFiles = sourceFileset.getDirectoryScanner(project).getIncludedFiles();
 
-			var regExp = /(@see )[\w.]+/;
+			var regExp = /((@see )|(@copy ))[\w.]+/;
 			var fail;
 
 			// iterate over that array
@@ -404,7 +404,7 @@
 			
 			]]>
 		</script>
-		<echo>@see checked</echo>
+		<echo>ASDoc tags checked</echo>
 	</target>
 
 	<target name="Copy dependencies" if="dependencies">
@@ -645,6 +645,9 @@
 		<fileset dir="${examples.dir}/temple" id="wrongfileset-view" includes="**/*Example.as">
 			<not>
 				<containsregexp expression="\u003Ca.*href=\u0022http\u003A\u002F\u002F.*\.swf(\?.*)?\u0022" />
+			</not>
+			<not>
+				<containsregexp expression="\u003Ca.*href=\u0022http\u003A\u002F\u002F.*\.html(\?.*)?\u0022 target=\u0022_blank\u0022\u003EView this example\u003C\u002Fa\u003E" />
 			</not>
 		</fileset>
 		<property name="wrongfiles-view" refid="wrongfileset-view" />
