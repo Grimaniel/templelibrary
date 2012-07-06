@@ -49,9 +49,9 @@ package temple.data
 	 */
 	public final class Trivalent extends Enumerator
 	{
-		public static const TRUE:Trivalent = new Trivalent("true");
+		public static const TRUE:Trivalent = new Trivalent(true);
 		
-		public static const FALSE:Trivalent = new Trivalent("false");
+		public static const FALSE:Trivalent = new Trivalent(false);
 		
 		public static const UNDEFINED:Trivalent = null;
 		
@@ -67,9 +67,9 @@ package temple.data
 		/**
 		 * @private
 		 */
-		public function Trivalent(value:String)
+		public function Trivalent(value:Boolean)
 		{
-			super(value);
+			super(value.toString());
 		}
 	}
 }

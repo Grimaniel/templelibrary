@@ -48,17 +48,19 @@ package temple.data.url
 		private var _name:String;
 		private var _url:String;
 		private var _target:String;
+		private var _features:String;
 
 		/**
 		 * Creates a new URLData.
 		 * The constructor will be called without parameters by the Parser.
 		 */
-		public function URLData(name:String = null, url:String = null, target:String = null) 
+		public function URLData(name:String = null, url:String = null, target:String = null, features:String = null) 
 		{
 			this._name = name;
 			this._url = url;
 			this._target = target;
-			this.toStringProps.push('name', 'url', 'target');
+			this._features = features;
+			this.toStringProps.push('name', 'url', 'target', 'features');
 			this.emptyPropsInToString = false;
 		}
 		
@@ -93,6 +95,22 @@ package temple.data.url
 		{
 			return this._target;
 		}
+		
+		/**
+		 * A string that determines the various window features to be included in the popup window (like status bar, address bar etc)
+		 */
+		public function get features():String
+		{
+			return this._features;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set features(value:String):void
+		{
+			this._features = value;
+		}
 
 		/**
 		 * @inheritDoc
@@ -102,8 +120,9 @@ package temple.data.url
 			this._name = xml.@name;
 			this._url = xml.@url;
 			this._target = xml.@target;
+			this._features = xml.@features;
 			
-			return ((this._name != null) && (this._url != null));
+			return this._name && this._url;
 		}
 
 		/**
@@ -111,7 +130,7 @@ package temple.data.url
 		 */
 		public function clone():URLData
 		{
-			return new URLData(this._name, this._url, this._target);
+			return new URLData(this._name, this._url, this._target, this._features);
 		}
 	}
 }

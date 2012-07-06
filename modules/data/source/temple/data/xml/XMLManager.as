@@ -42,7 +42,7 @@ package temple.data.xml
 	import temple.data.collections.HashMap;
 	import temple.data.encoding.IDecoder;
 	import temple.data.url.URLData;
-	import temple.data.url.URLManager;
+	import temple.data.url.urlManagerInstance;
 	import temple.utils.FrameDelay;
 	import temple.utils.types.FunctionUtils;
 
@@ -603,15 +603,15 @@ package temple.data.xml
 				{
 					super.load(new URLData(url, url), sendData, method);
 				}
-				else if (URLManager.isLoaded)
+				else if (urlManagerInstance.isLoaded)
 				{
-					super.load(URLManager.getURLDataByName(name), sendData, method);
+					super.load(urlManagerInstance.getData(name), sendData, method);
 				}
 				else
 				{
-					URLManager.addEventListener(XMLServiceEvent.COMPLETE, handleURLManagerComplete);
+					urlManagerInstance.addEventListener(Event.COMPLETE, handleURLManagerComplete);
 					
-					if (!URLManager.isLoading) URLManager.loadURLs();
+					if (!urlManagerInstance.isLoading) urlManagerInstance.load();
 				}
 			}
 			return loadData;
@@ -649,15 +649,15 @@ package temple.data.xml
 			return list;
 		}
 
-		private function handleURLManagerComplete(event:XMLServiceEvent):void
+		private function handleURLManagerComplete(event:Event):void
 		{
-			URLManager.removeEventListener(XMLServiceEvent.COMPLETE, handleURLManagerComplete);
+			urlManagerInstance.removeEventListener(Event.COMPLETE, handleURLManagerComplete);
 			
 			for each (var xmlURLData : XMLLoadItem in this._xmlLoadDataList) 
 			{
 				if (xmlURLData.url == null && !xmlURLData.xml)
 				{
-					super.load(URLManager.getURLDataByName(xmlURLData.name), xmlURLData.sendData, xmlURLData.method);
+					super.load(urlManagerInstance.getData(xmlURLData.name), xmlURLData.sendData, xmlURLData.method);
 				}
 			}
 		}

@@ -393,7 +393,7 @@ package temple.data.encoding.json
 			{
 				// Loop over all of the variables and accessors in the class and 
 				// serialize them along with their values.
-				for each (var v:XML in classInfo..*.(name() == "variable" || (name() == "accessor" && (!this._skipReadOnlyVars || @access != "readonly"))))
+				for each (var v:XML in classInfo..*.(!hasOwnProperty("@uri") && (name() == "variable" || (name() == "accessor" && (!this._skipReadOnlyVars || @access != "readonly")))))
 				{
 					value = o[v.@name];
 

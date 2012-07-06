@@ -35,34 +35,47 @@
 
 package temple.data.url 
 {
-	import flash.utils.escapeMultiByte;
+	import temple.utils.types.ArrayUtils;
+	import flash.net.URLLoaderDataFormat;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.addToDebugManager;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
-	import temple.core.net.ILoader;
-	import temple.data.collections.HashMap;
+	import temple.core.events.CoreEventDispatcher;
+	import temple.core.net.CoreURLLoader;
 	import temple.data.xml.XMLParser;
-	import temple.data.xml.XMLService;
-	import temple.data.xml.XMLServiceEvent;
 	import temple.utils.TraceUtils;
-	import temple.utils.types.ArrayUtils;
 	import temple.utils.types.ObjectUtils;
 	import temple.utils.types.StringUtils;
 
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
+	import flash.utils.escapeMultiByte;
 	
 	/**
 	 * @eventType temple.data.url.URLEvent.OPEN
 	 */
 	[Event(name = "URLEvent.open", type = "temple.data.url.URLEvent")]
+
+	/**
+	 * Dispatched when loading and parsing of urls.xml is complete.
+	 * 
+	 * @eventType flash.events.Event.COMPLETE
+	 */
+	[Event(name = "complete", type = "flash.events.Event")]
 	
 	/**
-	 * The URLManager handles all URLs of a project. In most projects the URLs will depend on the environment. The live application uses different URLs as the development environment.
-	 * To handle this you can store the urls in an external XML file, 'urls.xml'. By changing the 'currentgroup' inside the XML you can easily switch between different URLs.
+	 * The URLManager handles all URLs of a project. In most projects the URLs will depend on the environment. The live
+	 * application uses different URLs as the development environment. To handle this you can store the urls in an
+	 * external XML file, 'urls.xml'. By changing the 'currentgroup' inside the XML you can easily switch between
+	 * different URLs.
+	 * 
 	 * The 'urls.xml' uses the following syntax:
 	 * <listing version="3.0">
 	 * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -80,13 +93,17 @@ package temple.data.url
 	 * &lt;/urls&gt;
 	 * </listing>
 	 * 
-	 * <p>Every 'url'-node has a 'name', 'url' and (optional) 'target' attribute. Environment-dependent URLs are place inside a 'group'-node, global-urls are placed outside a group-node.
-	 * It is also possible to use variables inside the urls.xml. You can define a variable by using a 'var'-node, with a 'name' and 'value' attribute. You can use the variable inside a URL with '{name-of-the-variable}', which will be replaced with the value.
-	 * By defining the variable in different 'groups' the actual URL will we different.</p>
+	 * <p>Every 'url'-node has a 'name', 'url' and (optional) 'target' attribute. Environment-dependent URLs are place
+	 * inside a 'group'-node, global-urls are placed outside a group-node. It is also possible to use variables inside
+	 * the urls.xml. You can define a variable by using a 'var'-node, with a 'name' and 'value' attribute. You can use
+	 * the variable inside a URL with '{name-of-the-variable}', which will be replaced with the value. By defining the
+	 * variable in different 'groups' the actual URL will we different.</p>
 	 * 
 	 * <p>The 'currentgroup' can be overruled by code. It is possible to supply different groups (comma-separated).</p>
 	 * 
-	 * <p>The URLManager is a singleton and can be accessed by URLManager.getInstance() or by his static functions.</p>
+	 * <p>The <code>URLManager</code> is no longer a singleton. If you want to have an easy accessible instance of the
+	 * <code>URLManager</code> you could use the constants <code>urlManagerInstance</code> inside the
+	 * <code>temple.data.url</code> package.</p>
 	 * 
 	 * <p>By enabling the debug-property more information is logged.</p>
 	 * 
@@ -96,219 +113,25 @@ package temple.data.url
 	 * 
 	 * @includeExample URLManagerExample.as
 	 * 
+	 * @see temple.data.url.#urlManagerInstance
+	 * 
 	 * @author Thijs Broerse, Arjan van Wijk
 	 */
-	public final class URLManager extends XMLService implements IDebuggable, ILoader
+	public class URLManager extends CoreEventDispatcher implements IURLManager, IDebuggable
 	{
-		private static var _instance:URLManager;
-
-		/** 
-		 * Default name for urls.xml
-		 */
-		private static const _URLS:String = "urls";
-
-		/**
-		 * Get named URL data
-		 * @param name name of the URL
-		 * @return the URLData, or null if none was found
-		 */
-		public static function getURLDataByName(name:String):URLData 
-		{
-			return URLManager.getInstance().getURLDataByName(name);
-		}
-
-		/**
-		 * Get named URL 
-		 * @param name name of the URL
-		 * @return URL as string or null if none was found.
-		 */
-		public static function getURLByName(name:String):String 
-		{
-			return URLManager.getInstance().getURLByName(name);
-		}
-
-		/**
-		 * Checks if a URL with a specific name is defined.
-		 * @param name name of the URL
-		 * @return a Boolean which indicates if the URL which the specific name is defined.
-		 */
-		public static function hasURLByName(name:String):Boolean 
-		{
-			return URLManager.getInstance().hasURLByName(name);
-		}
-
-		/**
-		 * Open a browser window for URL with specified name
-		 * @param name the name of the URL
-		 * @param variables an object with name-value pairs that replaces {}-var in the URL
-		 */
-		public static function openURLByName(name:String, variables:Object = null):void 
-		{
-			URLManager.getInstance().openURLByName(name, variables);
-		}
-
-		/**
-		 * Open a browser window for specified URL
-		 */
-		public static function openURL(url:String, target:String = ""):void 
-		{
-			URLManager.getInstance().openURL(url, target);
-		}
-		
-		/**
-		 * Load settings from specified URL if provided, or from default URL
-		 * @param url URL to load settings from
-		 * @param group set which group is used in the url.xml
-		 */
-		public static function loadURLs(url:String = "xml/urls.xml", group:String = null):void 
-		{
-			URLManager.getInstance().loadURLs(url, group);
-		}
-		
-		/**
-		 * Directly set the XML data instead of loading is. Useful if you already loaded the XML file with an external loader. Or when you use inline XML
-		 */
-		public static function parseXML(xml:XML, group:String = null):void
-		{
-			URLManager.getInstance().parseXML(xml, group);
-		}
-
-		/**
-		 * Indicates if the urls.xml is loaded yet
-		 */
-		public static function get isLoaded():Boolean
-		{
-			return URLManager.getInstance()._loaded;
-		}
-
-		/**
-		 * Indicates if the urls.xml is being loaded, but not loaded yet
-		 */
-		public static function get isLoading():Boolean
-		{
-			return URLManager.getInstance()._loading;
-		}
-		
-		/**
-		 * The used group in the urls.xml. When the XML is loaded, everything will be parsed again.
-		 */
-		public static function get group():String
-		{
-			return URLManager.getInstance()._group;
-		}
-
-		/**
-		 * @private
-		 */
-		public static function set group(value:String):void
-		{
-			if (URLManager.getInstance()._group == value) return;
-			
-			URLManager.getInstance()._group = value;
-			
-			if (URLManager.getInstance()._loaded) URLManager.getInstance().processXml();
-		}
-		
-		/**
-		 * Adds a groupname to the urlgroups. Will process the XML again.
-		 * @param value The groupname to add
-		 */
-		public static function addGroup(value:String):void
-		{
-			var instance:URLManager = URLManager.getInstance();
-			
-			instance._groups = instance._group.split(',');
-			instance._groups.push(value);
-			instance._groups = ArrayUtils.createUniqueCopy(instance._groups);
-			instance._group = instance._groups.join(',');
-			
-			if (instance._loaded) instance.processXml();
-		}
-
-		/**
-		 * Removes a groupname from the urlgroups. Will process the xml again.
-		 * @param value The groupname to remove
-		 */
-		public static function removeGroup(value:String):void
-		{
-			URLManager.getInstance()._groups = URLManager.getInstance()._group.split(',');
-			ArrayUtils.removeValueFromArray(URLManager.getInstance()._groups, value);
-			URLManager.getInstance()._group = URLManager.getInstance()._groups.join(','); 
-			
-			if (URLManager.getInstance()._loaded) URLManager.getInstance().processXml();
-		}
-		
-		
-		/**
-		 * Adds a variable, and if the xml's are loaded they are parsed again
-		 * @param name the variable name
-		 * @param value the variable value
-		 */
-		public static function setVariable(name:String, value:String):void
-		{
-			URLManager.getInstance()._variables[name] = value;
-			
-			if (URLManager.getInstance().isLoaded) URLManager.getInstance().processXml();
-		}
-		
-		/**
-		 * Wrapper function for URLManager.getInstance().addEventListener
-		 */
-		public static function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
-		{
-			URLManager.getInstance().addEventListener(type, listener, useCapture, priority, useWeakReference);
-		}
-
-		/**
-		 * Wrapper function for URLManager.getInstance().addEventListenerOnce
-		 */
-		public static function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void 
-		{
-			URLManager.getInstance().addEventListenerOnce(type, listener, useCapture, priority);
-		}
-
-		/**
-		 * Wrapper function for URLManager.getInstance().removeEventListener
-		 */
-		public static function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
-		{
-			URLManager.getInstance().removeEventListener(type, listener, useCapture);
-		}
-
-		/**
-		 * Wrapper function for URLManager.getInstance().removeAllEventListeners
-		 */
-		public static function removeAllEventListeners():void 
-		{
-			URLManager.getInstance().removeAllEventListeners();
-		}
-		
-		/**
-		 * Returns the instance of the URLManager
-		 */
-		public static function getInstance():URLManager 
-		{
-			return URLManager._instance ||= new URLManager();
-		}
-
-		private var _urls:Array;
-		private var _loaded:Boolean;
-		private var _loading:Boolean;
+		private var _urls:Object;
+		private var _variables:Object;
+		private var _isLoaded:Boolean;
+		private var _isLoading:Boolean;
 		private var _group:String;
-		private var _groups:Array;
-		private var _variables:HashMap;
 		private var _rawData:XML;
+		private var _loader:CoreURLLoader;
+		private var _debug:Boolean;
 
-		/**
-		 * @private
-		 */
 		public function URLManager() 
 		{
-			if (URLManager._instance) throwError(new TempleError(this, "Singleton, use URLManager.getInstance()"));
-			
-			this._urls = new Array();
-			this._variables = new HashMap("URLManager variables");
-			this._groups = new Array();
+			this._urls = {};
+			this._variables = {};
 			
 			addToDebugManager(this);
 		}
@@ -318,7 +141,7 @@ package temple.data.url
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._loaded;
+			return this._isLoaded;
 		}
 
 		/**
@@ -326,7 +149,7 @@ package temple.data.url
 		 */
 		public function get isLoading():Boolean
 		{
-			return this._loading;
+			return this._isLoading;
 		}
 		
 		/**
@@ -334,105 +157,126 @@ package temple.data.url
 		 * Variables are set as '{var}' and are only replaced onced, when the urls.xml is parsed.
 		 * So therefor is only useful to set a variable before the URLManager is complete. 
 		 */
-		public function get variables():HashMap
+		public function get variables():Object
 		{
 			return this._variables;
 		}
 
-		private function loadURLs(url:String, group:String):void 
+		/**
+		 * @inheritDoc
+		 */
+		public function load(url:String = "inc/xml/urls.xml", group:String = null):void 
 		{
-			if (this._loaded) throwError(new TempleError(this, "Data is already loaded"));
-			if (this._loading) throwError(new TempleError(this, "Data is already loading"));
+			if (this._isLoaded) throwError(new TempleError(this, "Data is already loaded"));
+			if (this._isLoading) throwError(new TempleError(this, "Data is already loading"));
 			
-			this._loading = true;
+			this._isLoading = true;
 			if (group) this._group = group;
-			this.load(new URLData(URLManager._URLS, url));
-		}
-		
-		private function parseXML(xml:XML, group:String):void
-		{
-			if (this._loaded) throwError(new TempleError(this, "Data is already loaded"));
-			if (this._loading) throwError(new TempleError(this, "Data is already loading"));
 			
-			this._loaded = true;
-			if (group) this._group = group;
-			this.processData(xml, URLManager._URLS);
+			if (!this._loader)
+			{
+				this._loader = new CoreURLLoader();
+				this._loader.dataFormat = URLLoaderDataFormat.TEXT;
+				this._loader.addEventListener(Event.COMPLETE, this.handleURLLoaderEvent);
+				this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.handleURLLoaderEvent);
+				this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleURLLoaderEvent);
+				this._loader.addEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
+			}
+			this._loader.load(new URLRequest(url));
 		}
 
-		private function getURLDataByName(name:String):URLData 
+		/**
+		 * @inheritDoc
+		 */
+		public function parse(xml:XML, group:String = null):void
+		{
+			if (this._isLoaded) throwError(new TempleError(this, "Data is already loaded"));
+			if (this._isLoading) throwError(new TempleError(this, "Data is already loading"));
+			
+			if (group) this._group = group;
+			this.processData(xml);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function getData(name:String):URLData 
 		{
 			if (name == null) throwError(new TempleArgumentError(this, "name can not be null"));
 			
-			if (!this._loaded)
+			if (!this._isLoaded)
 			{
 				this.logError("getURLDataByName: URLs are not loaded yet");
 				return null;
 			}
 			
-			var ud:URLData;
-			var len:Number = this._urls.length;
-			for (var i:Number = 0;i < len; i++) 
-			{
-				ud = URLData(this._urls[i]);
-				if (ud.name == name) return ud;
-			}
+			if (name in this._urls) return this._urls[name];
+			
 			this.logError("getURLDataByName: url with name '" + name + "' not found. Check urls.xml!");
 			this.logError(TraceUtils.stackTrace());
 			
 			return null;
 		}
 
-		private function getURLByName(name:String):String 
+		/**
+		 * @inheritDoc
+		 */
+		public function get(name:String, variables:Object = null):String 
 		{
 			if (name == null) throwError(new TempleArgumentError(this, "name can not be null"));
 			
-			if (!this._loaded)
+			if (!this._isLoaded)
 			{
 				this.logError("getURLByName: URLs are not loaded yet");
 				return null;
 			}
 			
-			var ud:URLData;
-			var len:Number = this._urls.length;
-			for (var i:Number = 0;i < len; i++) 
+			if (name in this._urls)
 			{
-				ud = URLData(this._urls[i]);
-				if (ud.name == name) return ud.url;
+				var url:String = URLData(this._urls[name]).url;
+				return variables ? StringUtils.replaceVars(url, variables) : url;
 			}
+			
 			this.logError("getURLByName: url with name '" + name + "' not found. Check urls.xml!");
 			return null;
 		}
 		
-		private function hasURLByName(name:String):Boolean
+		/**
+		 * @inheritDoc
+		 */
+		public function has(name:String):Boolean
 		{
-			var ud:URLData;
-			var len:Number = this._urls.length;
-			for (var i:Number = 0;i < len; i++) 
-			{
-				ud = URLData(this._urls[i]);
-				if (ud.name == name) return true;
-			}
-			return false;
+			return name in this._urls;
 		}
 
-		private function openURLByName(name:String, variables:Object = null):void 
+		/**
+		 * @inheritDoc
+		 */
+		public function openByName(name:String, variables:Object = null):void 
 		{
-			var ud:URLData = URLManager.getURLDataByName(name);
+			var ud:URLData = this.getData(name);
 			if (!ud) return;
 			
 			var url:String = ud.url;
 			
 			if (variables) url = StringUtils.replaceVars(url, variables);
 			
-			this.openURL(url, ud.target, name);
+			this.open(url, ud.target, name, ud.features);
 		}
 
-		private function openURL(url:String, target:String, name:String = null):void
+		/**
+		 * @inheritDoc
+		 */
+		public function open(url:String, target:String = null, name:String = null, features:String = null):void
 		{
 			if (url == null) throwError(new TempleArgumentError(this, "url can not be null"));
-			this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
 			
-			if (this.debug) this.logDebug("openURL: \"" + url + "\", target=\"" + target + "\"");
+			// only track before opening if SELF, PARENT of TOP
+			if (target == Target.SELF || target == Target.PARENT || target == Target.TOP)
+			{
+				this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
+				if (this.debug) this.logDebug("openURL: \"" + url + "\", target=\"" + target + "\"");
+			}
 			
 			if (!ExternalInterface.available)
 			{
@@ -440,19 +284,125 @@ package temple.data.url
 			}
 			else
 			{
-				var userAgent:String = String(ExternalInterface.call(<script><![CDATA[function(){ return navigator.userAgent; }]]></script>)).toLowerCase();
-				
-				/**
-				 * Use JavaScript to open the URL when the browser is FireFox or Internet Explorer 7 or higher
-				 */
-				if (userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7))
+				if (features)
 				{
-					if (this.debug) this.logDebug("openURL using JavaScript, userAgent=\"" + userAgent + "\"");
-					ExternalInterface.call(String(<script><![CDATA[function(){ window.open("{url}", "{target}");}]]></script>).replace("{url}", url).replace("{target}", target));
+					if (this.debug) this.logDebug("openURL using JavaScript, with features=\"" + features + "\"");
+					ExternalInterface.call(String(<script><![CDATA[function(){ window.open("{url}", "{target}", "{features}");}]]></script>).replace("{url}", url).replace("{target}", target).replace("{features}", features));
 				}
 				else
 				{
-					navigateToURL(new URLRequest(url), target);
+					var userAgent:String = String(ExternalInterface.call(<script><![CDATA[function(){ return navigator.userAgent; }]]></script>)).toLowerCase();
+					
+					/**
+					 * Use JavaScript to open the URL when the browser is FireFox or Internet Explorer 7 or higher
+					 */
+					if (userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7))
+					{
+						if (this.debug) this.logDebug("openURL using JavaScript, userAgent=\"" + userAgent + "\"");
+						ExternalInterface.call(String(<script><![CDATA[function(){ window.open("{url}", "{target}");}]]></script>).replace("{url}", url).replace("{target}", target));
+					}
+					else
+					{
+						navigateToURL(new URLRequest(url), target);
+					}
+				}
+			}
+			
+			// track afterwards to prevent popup-blocking if not SELF
+			if (target != Target.SELF && target != Target.PARENT && target != Target.TOP)
+			{
+				this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
+				if (this.debug) this.logDebug("openURL: \"" + url + "\", target=\"" + target + "\"");
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get group():String
+		{
+			return this._group;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set group(value:String):void
+		{
+			if (this._group == value) return;
+			this._group = value;
+			if (this._isLoaded) this.processXml();
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function addGroup(group:String):void
+		{
+			if (this._group)
+			{
+				var groups:Array = this._group.split(",");
+				groups.push(group);
+				groups = ArrayUtils.createUniqueCopy(groups);
+				this.group = groups.join(",");
+			}
+			else
+			{
+				this.group = group;
+			}
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function removeGroup(group:String):void
+		{
+			var groups:Array = this._group.split(",");
+			ArrayUtils.removeValueFromArray(groups, group);
+			this.group = groups.join(",");
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function setVariable(name:String, value:String):void
+		{
+			this._variables[name] = value;
+			if (this.isLoaded) this.processXml();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
+		}
+		
+		private function handleURLLoaderEvent(event:Event):void
+		{
+			switch (event.type)
+			{
+				case Event.COMPLETE:
+				{
+					this.processData(XML(this._loader.data));
+					break;
+				}
+				case IOErrorEvent.IO_ERROR:
+				case SecurityErrorEvent.SECURITY_ERROR:
+				{
+					this._isLoaded = false;
+					this._isLoading = false;
+					this.dispatchEvent(event);
+					break;
 				}
 			}
 		}
@@ -460,21 +410,16 @@ package temple.data.url
 		/**
 		 * @private
 		 */
-		override protected function processData(data:XML, name:String):void 
+		private function processData(data:XML):void 
 		{
 			this._rawData = data;
 			
 			this.processXml();
 
-			this._loaded = true;
-			this._loading = false;
+			this._isLoaded = true;
+			this._isLoading = false;
 			
-			this._loader.destruct();
-			this._loader = null;
-
-			// send event we're done
-			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name)); 
-			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.ALL_COMPLETE)); 
+			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function processXml():void
@@ -489,15 +434,15 @@ package temple.data.url
 				if (this.debug) this.logInfo("processData: group is '" + this._group + "'");
 			}
 			
-			this._groups = this._group.split(',');
+			var groups:Array = this._group.split(',');
 			
 			var i:int;
 			
 			// get grouped variables
 			var vars:XMLList= new XMLList();
-			for (i = 0; i < this._groups.length; i++)
+			for (i = 0; i < groups.length; i++)
 			{
-				vars += this._rawData.group.(@id == (this._groups[i])).child('var');
+				vars += this._rawData.group.(@id == (groups[i])).child('var');
 			}
 			
 			// add ungrouped variables
@@ -556,29 +501,39 @@ package temple.data.url
 			}
 
 			
-			this._urls = new Array();
+			this._urls = {};
 			var urls:XMLList = new XMLList();
 			
 			// get grouped urls
-			for (i = 0; i < this._groups.length; i++)
+			for (i = 0; i < groups.length; i++)
 			{
 				// check if currentgroup is valid
-				if (this._groups[i] && this._rawData.group.(@id == (this._groups[i])) == undefined)
+				if (groups[i] && this._rawData.group.(@id == (groups[i])) == undefined)
 				{
-					this.logError("processData: group '" + this._groups[i] + "' not found, check urls.xml");
+					this.logError("processData: group '" + groups[i] + "' not found, check urls.xml");
 				}
 				else
 				{
-					urls += this._rawData.group.(@id == (this._groups[i])).url;
+					urls += this._rawData.group.(@id == (groups[i])).url;
 				}
 			}
 
 			// add ungrouped urls
 			urls += this._rawData.url;
 			
-			this._urls = XMLParser.parseList(urls, URLData, false, this.debug);
-			
 			var ud:URLData;
+			
+			for each (ud in XMLParser.parseList(urls, URLData, false, this.debug))
+			{
+				if (ud.name in this._urls)
+				{
+					this.logError("Duplicate URL name '" + ud.name + "'");
+				}
+				else
+				{
+					this._urls[ud.name] = ud;
+				}
+			}
 			
 			if (this.debug)
 			{
@@ -609,7 +564,6 @@ package temple.data.url
 				{
 					s += "\n\t" + ud.name + ": " + ud.url;
 				}
-				
 				this.logDebug("Current urls in URLManager: " + s);
 			}
 		}
@@ -619,11 +573,15 @@ package temple.data.url
 		 */
 		override public function destruct():void
 		{
-			URLManager._instance = null;
+			if (this._loader)
+			{
+				this._loader.destruct();
+			}
+			this._loader = null;
 			this._urls = null;
 			this._rawData = null;
 			this._group = null;
-			this._groups = null;
+			
 			super.destruct();
 		}
 	}

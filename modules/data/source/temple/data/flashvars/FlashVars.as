@@ -215,6 +215,31 @@ package temple.data.flashvars
 			
 			return FlashVar(FlashVars._flashvars[name]).value;
 		}
+		
+		/**
+		 * Sets/overwrites the flashvar value
+		 * 
+		 * @param name The flashvar name (use FlashVarNames.NAME)
+		 * @param value The new value
+		 * 
+		 * @throws temple.debug.errors.TempleError When not initialized
+		 * 
+		 * @example
+		 * <listing version="3.0">
+		 * FlashVars.setValue(FlashVarNames.LANGUAGE, 'en');
+		 * </listing>
+		 */
+		public static function setValue(name:String, value:*):void
+		{
+			if (!FlashVars._flashvars) throwError(new TempleError(FlashVar, 'FlashVars is not initialized yet!'));
+			
+			if (!FlashVars.isSet(name))
+			{
+				Log.warn('No such flashvar : ' + name, FlashVars);
+			}
+			
+			FlashVar(FlashVars._flashvars[name]).value = value;
+		}
 
 		/**
 		 * Returns information about all the flashvars
