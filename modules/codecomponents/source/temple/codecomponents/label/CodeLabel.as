@@ -40,7 +40,6 @@ package temple.codecomponents.label
 	import temple.codecomponents.style.CodeStyle;
 	import temple.ui.label.LiquidLabel;
 
-
 	/**
 	 * @author Thijs Broerse
 	 */

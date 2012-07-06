@@ -222,10 +222,13 @@ package temple.codecomponents.windows
 			/**
 			 * ToolTip info
 			 */
-			ToolTip.add(this._closeButton, "Close window");
-			ToolTip.add(this._expandButton, "Open window");
-			ToolTip.add(this._collapseButton, "Minimize window");
-			ToolTip.add(this._resizeButton, "Resize window");
+			if (ToolTip.clip)
+			{
+				ToolTip.add(this._closeButton, "Close window");
+				ToolTip.add(this._expandButton, "Open window");
+				ToolTip.add(this._collapseButton, "Minimize window");
+				ToolTip.add(this._resizeButton, "Resize window");
+			}
 		}
 
 		public function get label():String
@@ -471,7 +474,7 @@ package temple.codecomponents.windows
 		
 		private function handleScaling(event:ScaleBehaviorEvent):void
 		{
-			ToolTip.add(this._resizeButton, "Resize window (" + this.width + ", " + this.height + ")");
+			if (ToolTip.clip) ToolTip.add(this._resizeButton, "Resize window (" + this.width + ", " + this.height + ")");
 		}
 		
 		override public function destruct():void
