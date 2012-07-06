@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="Export" basedir="../../../../tools/ant" name="Temple-Common">
+<project default="Export" name="Temple-Common">
 
 	<property name="module" value="common" />
 	<property name="name" value="Temple Common Module" />
