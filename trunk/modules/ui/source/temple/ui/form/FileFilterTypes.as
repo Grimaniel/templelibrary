@@ -102,6 +102,14 @@ package temple.ui.form
 		}
 
 		/**
+		 * Returns a FileFilter for Flash video files
+		 */
+		public static function get FLASH_VIDEO_FLV():FileFilter
+		{
+			return FileFilterTypes._VIDEO ||= new FileFilter("Videos (*.flv)", "*.flv");
+		}
+
+		/**
 		 * Returns a FileFilter for compressed files
 		 */
 		public static function get COMPRESSED():FileFilter

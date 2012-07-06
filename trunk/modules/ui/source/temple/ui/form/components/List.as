@@ -191,7 +191,7 @@ package temple.ui.form.components
 							}
 						}
 					}
-					
+					row.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRowRemovedFromStage, false, int.MAX_VALUE);
 					this._rows.push(row);
 
 					this.content.removeChildAt(i);
@@ -277,6 +277,7 @@ package temple.ui.form.components
 				
 				this.content.addChild(DisplayObject(row));
 				this._rows.push(row);
+				row.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRowRemovedFromStage, false, int.MAX_VALUE);
 				row.addEventListener(Event.CHANGE, this.handleItemChange);
 			}
 		}
@@ -644,9 +645,9 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function get selectedLabels():Array
+		public function get selectedLabels():Vector.<String>
 		{
-			var items:Array = new Array();
+			var items:Vector.<String> = new Vector.<String>();
 			
 			var leni:int = this._items.length;
 			var item:ListItemData;
@@ -661,7 +662,7 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function set selectedLabels(value:Array):void
+		public function set selectedLabels(value:Vector.<String>):void
 		{
 			var leni:int = this._items.length;
 			var item:ListItemData;
@@ -1541,6 +1542,12 @@ package temple.ui.form.components
 				return item.data['label'];
 			}
 			return String(item.data);
+		}
+		
+		private function handleRowRemovedFromStage(event:Event):void
+		{
+			event.stopImmediatePropagation();
+			event.stopPropagation();
 		}
 
 		/**

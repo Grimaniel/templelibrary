@@ -49,15 +49,15 @@ package
 			this.scrollComponent.bottom = 10;
 			
 			// the scrollbar should be at the right side of the ScrollComponent, attached to the top and bottom.
-			this.scrollComponent.scrollbar.top = 0;
-			this.scrollComponent.scrollbar.right = 0;
-			this.scrollComponent.scrollbar.bottom = 0;
+			this.scrollComponent.scrollBar.top = 0;
+			this.scrollComponent.scrollBar.right = 0;
+			this.scrollComponent.scrollBar.bottom = 0;
 			
 			// make the button of the scrollbar resize to the content of the ScrollComponent
-			this.scrollComponent.scrollbar.autoSizeButton = true;
+			this.scrollComponent.scrollBar.autoSizeButton = true;
 			
 			// Change the way the button reacts on drag out
-			MultiStateButton(this.scrollComponent.scrollbar.button).outOnDragOut = false;
+			MultiStateButton(this.scrollComponent.scrollBar.button).outOnDragOut = false;
 			
 		}
 	}

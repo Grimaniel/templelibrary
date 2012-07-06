@@ -35,6 +35,7 @@
 
 package temple.ui.layout.liquid 
 {
+	import temple.utils.TraceUtils;
 	import temple.common.interfaces.IEnableable;
 	import temple.core.behaviors.IBehavior;
 	import temple.core.debug.IDebuggable;
@@ -146,8 +147,8 @@ package temple.ui.layout.liquid
 
 		private var _enabled:Boolean;
 		private var _snapToPixels:Boolean = true;
-		private var _resetScale:Boolean = true;
-		private var _adjustRelated:Boolean = false;
+		private var _resetScale:Boolean;
+		private var _adjustRelated:Boolean;
 		private var _keepAspectRatio:Boolean;
 		private var _reUpdatePossible:Boolean = true;
 		private var _debug:Boolean;
@@ -155,6 +156,7 @@ package temple.ui.layout.liquid
 		private var _debugShape:CoreShape;
 		private var _blockRequest:Boolean;
 		private var _allowNegativePosition:Boolean;
+		private var _useScale:Boolean;
 
 		/**
 		 * Create the possibility to align or scale an object related to an other object (or stage)
@@ -691,7 +693,14 @@ package temple.ui.layout.liquid
 						// do not set width if displayObject does not have a width
 						if ((this.displayObject.width || this.displayObject is ILiquidObject) && this.displayObject.width != toWidth)
 						{
-							this.displayObject.width = toWidth;
+							if (this._useScale)
+							{
+								this.displayObject.scaleX *= toWidth / this.displayObject.width;
+							}
+							else
+							{
+								this.displayObject.width = toWidth;
+							}
 							resized = true;
 						}
 					}
@@ -722,7 +731,14 @@ package temple.ui.layout.liquid
 						// do not set height if displayObject does not have a height
 						if ((this.displayObject.height || this.displayObject is ILiquidObject) && this.displayObject.height != toHeight)
 						{
-							this.displayObject.height = toHeight;
+							if (this._useScale)
+							{
+								this.displayObject.scaleY *= toHeight / this.displayObject.height;
+							}
+							else
+							{
+								this.displayObject.height = toHeight;
+							}
 							resized = true;
 						}
 					}
@@ -789,6 +805,7 @@ package temple.ui.layout.liquid
 					{
 						this._reUpdatePossible = false;
 						this.update();
+						resized = true;
 					}
 					this._reUpdatePossible = true;
 				}
@@ -966,6 +983,25 @@ package temple.ui.layout.liquid
 		public function set allowNegativePosition(value:Boolean):void
 		{
 			this._allowNegativePosition = value;
+		}
+		
+		/**
+		 * If set to <code>true</code> <code>scaleX</code> and <code>scaleY</code> are adjusted instead of
+		 * <code>width</code> and <code>height</code> when the dimensions of the object must be changed.
+		 * 
+		 * @default false
+		 */
+		public function get useScale():Boolean
+		{
+			return this._useScale;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set useScale(value:Boolean):void
+		{
+			this._useScale = value;
 		}
 		
 		/**

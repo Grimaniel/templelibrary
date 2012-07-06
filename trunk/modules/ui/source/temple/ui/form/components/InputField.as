@@ -384,6 +384,7 @@ package temple.ui.form.components
 		public function reset():void 
 		{
 			this.text = this._prefillText ? this._prefillText : "";
+			this.textField.scrollH = this.textField.scrollV = 0;
 		}
 		
 		/**

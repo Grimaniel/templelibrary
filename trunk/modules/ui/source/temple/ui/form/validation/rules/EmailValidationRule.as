@@ -46,7 +46,7 @@ package temple.ui.form.validation.rules
 	 */
 	public class EmailValidationRule extends RegExpValidationRule 
 	{
-		private static const _REG_EXP:RegExp = /(\w|[_.\-])+@((\w|-)+\.)+\w{2,4}+/;
+		private static const _REG_EXP:RegExp = /^(\w|[_.\-\+])+@((\w|-)+\.)+\w{2,4}$/;
 		
 		public function EmailValidationRule(target:IHasValue) 
 		{

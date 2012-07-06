@@ -218,12 +218,12 @@ package
 				}
 				case FormEvent.VALIDATE_ERROR:
 				{
-					logError("Validate error: " + ObjectUtils.traceObject(event.result, 3, false));
+					logError("Validate error: " + dump(event.result));
 					break;
 				}
 				case FormEvent.SUBMIT_SUCCESS:
 				{
-					logInfo("Submit success: " + ObjectUtils.traceObject(event.result.data, 3, false));
+					logInfo("Submit success: " + dump(event.result.data));
 					break;
 				}
 				case FormEvent.SUBMIT_ERROR:

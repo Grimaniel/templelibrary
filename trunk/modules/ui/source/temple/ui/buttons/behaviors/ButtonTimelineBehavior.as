@@ -761,7 +761,7 @@ package temple.ui.buttons.behaviors
 				this._labels[this.movieClip.totalFrames] = this._labels[ButtonTimelineLabels.OVER] = new FrameLabelData(ButtonTimelineLabels.OVER, this.movieClip.totalFrames);
 			}
 			
-			if (this.debug) this.logInfo("Labels: " + ObjectUtils.traceObject(this._labels, 3, false));
+			if (this.debug) this.logInfo("Labels: " + dump(this._labels));
 		}
 		
 		private function gotoFrame(frame:int):void

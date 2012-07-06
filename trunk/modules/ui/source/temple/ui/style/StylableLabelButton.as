@@ -150,8 +150,8 @@ package temple.ui.style
 		public function set cssClass(value:String):void
 		{
 			this._cssClass = value;
-			StyleManager.getInstance().addTextField((this._label as ITextFieldLabel).textField, this._cssClass, this._styleSheetName);
-			StyleManager.getInstance().addObject(this, this._cssClass, this._styleSheetName);
+			styleManagerInstance.addTextField((this._label as ITextFieldLabel).textField, this._cssClass, this._styleSheetName);
+			styleManagerInstance.addObject(this, this._cssClass, this._styleSheetName);
 		}
 		
 		/**
@@ -169,8 +169,8 @@ package temple.ui.style
 		public function set styleSheetName(value:String):void
 		{
 			this._styleSheetName = value;
-			StyleManager.getInstance().addTextField((this._label as ITextFieldLabel).textField, this._cssClass, this._styleSheetName);
-			StyleManager.getInstance().addObject(this, this._cssClass, this._styleSheetName);
+			styleManagerInstance.addTextField((this._label as ITextFieldLabel).textField, this._cssClass, this._styleSheetName);
+			styleManagerInstance.addObject(this, this._cssClass, this._styleSheetName);
 		}
 		
 		/**

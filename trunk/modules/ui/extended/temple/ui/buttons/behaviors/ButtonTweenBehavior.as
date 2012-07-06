@@ -36,7 +36,6 @@
 package temple.ui.buttons.behaviors 
 {
 	import temple.data.collections.HashMap;
-	import temple.utils.types.ObjectUtils;
 
 	import com.greensock.OverwriteManager;
 	import com.greensock.TweenMax;
@@ -338,7 +337,7 @@ package temple.ui.buttons.behaviors
 			}
 			if (isChanged)
 			{
-				if (this.debug) this.logDebug("update: duration: " + duration + ", vars: " + ObjectUtils.traceObject(vars, 3, false));
+				if (this.debug) this.logDebug("update: duration: " + duration + ", vars: " + dump(vars));
 				
 				if (isNaN(duration)) duration = 0;
 				if (vars['ease'] is String) vars['ease'] = EaseLookup.find(vars['ease']);
@@ -358,7 +357,7 @@ package temple.ui.buttons.behaviors
 			data.vars = vars;
 			this._states[state] = data;
 			
-			if (this.debug) this.logDebug(state + ": " + ObjectUtils.traceObject(vars, 3, false));
+			if (this.debug) this.logDebug(state + ": " + dump(vars));
 			this.update(this);
 		}
 

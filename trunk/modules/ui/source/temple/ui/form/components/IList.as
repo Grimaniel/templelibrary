@@ -193,12 +193,12 @@ package temple.ui.form.components
 		/**
 		 * Get the labels of the selected items
 		 */
-		function get selectedLabels():Array
+		function get selectedLabels():Vector.<String>
 		
 		/**
 		 * @private
 		 */
-		function set selectedLabels(value:Array):void
+		function set selectedLabels(value:Vector.<String>):void
 		
 		/**
 		 * Gets the number of items in the list.

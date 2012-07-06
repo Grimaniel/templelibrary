@@ -37,7 +37,6 @@ package temple.ui.style
 {
 	import temple.core.debug.IDebuggable;
 	import temple.core.errors.TempleArgumentError;
-	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
 	import temple.core.events.CoreEventDispatcher;
 	import temple.data.collections.HashMap;
@@ -52,7 +51,7 @@ package temple.ui.style
 	import flash.utils.Dictionary;
 
 	/**
-	 * Singleton with manage the style of <code>IStylable</code> objects with CSS.
+	 * Singleton which manage the style of <code>IStylable</code> objects with CSS.
 	 * 
 	 * @see temple.ui.style.IStylable 
 	 * 
@@ -64,8 +63,6 @@ package temple.ui.style
 		
 		public static const LARGE_FONT_SIZE:uint = 48;
 		
-		private static var _instance:StyleManager;
-		
 		private var _defaultStyle:String = 'body';
 		private var _styleSheets:HashMap;
 		private var _textFields:Dictionary;
@@ -74,40 +71,15 @@ package temple.ui.style
 		private var _debug:Boolean;
 
 		/**
-		 * Returns an instance of the StyleManager
-		 */
-		public static function getInstance():StyleManager
-		{
-			if (StyleManager._instance == null)
-			{
-				StyleManager._instance = new StyleManager(new Private());
-			}
-			return StyleManager._instance;
-		}
-		
-		/**
 		 * @private
 		 */
-		public function StyleManager(access:Private)
+		public function StyleManager()
 		{
-			if (access == null)
-			{
-				throwError(new TempleError(this, "StyleManager is a Singleton, use StyleManager.getInstance()"));
-			}
-			
 			this._styleSheets = new HashMap("StyleManager StyleSheets");
 			this._styleSheets[StyleManager.DEFAULT_STYLESHEET] = new StyleSheet();
 			
 			this._textFields = new Dictionary(true);
 			this._objects = new Dictionary(true);
-		}
-		
-		/**
-		 * Wrapper for StyleManager.getInstance().getStyleSheet();
-		 */
-		public static function getStyleSheet(name:String = StyleManager.DEFAULT_STYLESHEET, createIfNull:Boolean = true):StyleSheet
-		{
-			return StyleManager.getInstance().getStyleSheet(name, createIfNull);
 		}
 		
 		/**
@@ -125,15 +97,6 @@ package temple.ui.style
 		}
 		
 		/**
-		 * Wrapper for StyleManager.getInstance().getStyleNames();
-		 */
-		public static function getStyleNames(stylesheetName:String = StyleManager.DEFAULT_STYLESHEET):Array
-		{
-			return StyleManager.getInstance().getStyleNames(stylesheetName);
-			
-		}
-		
-		/**
 		 * An array that contains the names (as strings) of all of the styles registered in the StyleManager. 
 		 */
 		public function getStyleNames(stylesheetName:String = StyleManager.DEFAULT_STYLESHEET):Array
@@ -141,14 +104,6 @@ package temple.ui.style
 			return this.getStyleSheet(stylesheetName).styleNames;
 		}
 		
-		/**
-		 * Wrapper for StyleManager.getInstance().parseCSS();
-		 */
-		public static function parseCSS(cssText:String, apply:Boolean = true, stylesheetName:String = StyleManager.DEFAULT_STYLESHEET):void
-		{
-			StyleManager.getInstance().parseCSS(cssText, apply, stylesheetName);
-		}
-
 		/**
 		 * Parses the CSS in CSSText and loads the style sheet with it. If a style in CSSText is already in styleSheet, the properties in styleSheet are retained, and only the ones in CSSText are added or changed in styleSheet.
 		 * @param cssText the CSS text to parse.
@@ -166,14 +121,6 @@ package temple.ui.style
 			if (this._debug) this.logDebug("Stylesheet '" + stylesheetName + "' has styleNames: " + this.getStyleSheet(stylesheetName).styleNames);
 			
 			if (apply) this.applyStyles();
-		}
-		
-		/**
-		 * Wrapper for StyleManager.getInstance().applyStyles();
-		 */
-		public static function applyStyles():void
-		{
-			StyleManager.getInstance().applyStyles();
 		}
 		
 		/**
@@ -195,13 +142,6 @@ package temple.ui.style
 			}
 		}
 		
-		/**
-		 * Wrapper for StyleManager.getInstance().applyStyles();
-		 */
-		public static function addTextField(textField:TextField, cssClass:String = null, stylesheetName:String = StyleManager.DEFAULT_STYLESHEET, setStyleSheet:Boolean = true):void
-		{
-			StyleManager.getInstance().addTextField(textField, cssClass, stylesheetName, setStyleSheet);
-		}
 
 		/**
 		 * Add a TextField to the StyleManager. By now the style of the TextField is controlled by the StyleManager.
@@ -239,14 +179,6 @@ package temple.ui.style
 		}
 		
 		/**
-		 * Wrapper for StyleManager.getInstance().addObject();
-		 */
-		public static function addObject(object:Object, cssClass:String = null, stylesheetName:String = StyleManager.DEFAULT_STYLESHEET):void
-		{
-			StyleManager.getInstance().addObject(object, cssClass, stylesheetName);
-		}
-		
-		/**
 		 * Add an object to the StyleManager that need to be styled. Every kind of object can (possibly) be styled
 		 * @param object The object to style
 		 * @param cssClass The name of the class in the css file that is used to style the object. If no cssClass is given the defaultStyle is used
@@ -272,14 +204,6 @@ package temple.ui.style
 		}
 		
 		/**
-		 * Wrapper for StyleManager.getInstance().defaultStyle;
-		 */
-		public static function get defaultStyle():String
-		{
-			return StyleManager.getInstance().defaultStyle;
-		}
-
-		/**
 		 * The default css class of all TextFields when now cssClass is given with the TextField
 		 */
 		public function get defaultStyle():String
@@ -290,22 +214,9 @@ package temple.ui.style
 		/**
 		 * @private
 		 */
-		public static  function set defaultStyle(value:String):void
-		{
-			StyleManager.getInstance().defaultStyle = value;
-		}
-		
-		/**
-		 * @private
-		 */
 		public function set defaultStyle(value:String):void
 		{
 			this._defaultStyle = value;
-		}
-		
-		public static function get debug():Boolean
-		{
-			return StyleManager.getInstance().debug;
 		}
 		
 		/**
@@ -314,11 +225,6 @@ package temple.ui.style
 		public function get debug():Boolean
 		{
 			return this._debug;
-		}
-		
-		public static function set debug(value:Boolean):void
-		{
-			StyleManager.getInstance().debug = value;
 		}
 		
 		/**
@@ -391,8 +297,3 @@ package temple.ui.style
 		}
 	}
 }
-
-/**
- * Inner class which restricts constructor access to private
-*/
-final class Private {}
