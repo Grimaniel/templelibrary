@@ -1188,6 +1188,7 @@ package temple.mediaplayers.video.players
 					break;
 				}
 				
+				case NetStatusEventInfoCodes.NETSTREAM_SEEK_COMPLETE:
 				case NetStatusEventInfoCodes.NETSTREAM_PLAY_RESET:
 				case NetStatusEventInfoCodes.NETSTREAM_UNPAUSE_NOTIFY:
 				case NetStatusEventInfoCodes.NETSTREAM_PAUSE_NOTIFY:

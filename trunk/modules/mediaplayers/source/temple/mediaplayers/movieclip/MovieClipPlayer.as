@@ -64,13 +64,16 @@ package temple.mediaplayers.movieclip
 		}
 		
 		/**
-		 * Returns a reference to the MovieClip.
+		 * @inheritDoc
 		 */
 		public function get movieClip():MovieClip
 		{
 			return this._movieClip;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set movieClip(value:MovieClip):void
 		{
 			if (this._movieClip) this._movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
@@ -83,6 +86,24 @@ package temple.mediaplayers.movieclip
 				this.volume = this._volume;
 			}
 			this._status = PlayerStatus.PAUSED;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function goto(frame:Object, scene:String = null):void
+		{
+			if (this._movieClip)
+			{
+				if (this.status == PlayerStatus.PLAYING && this._movieClip)
+				{
+					this._movieClip.gotoAndPlay(frame, scene);
+				}
+				else if (this._movieClip) 
+				{
+					this._movieClip.gotoAndStop(frame, scene);
+				}
+			}
 		}
 
 		/**

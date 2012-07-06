@@ -45,8 +45,6 @@ package temple.mediaplayers.players.controls
 	import temple.ui.layout.liquid.LiquidContainer;
 	import temple.utils.TimeUtils;
 
-
-
 	/**
 	 * @author Thijs Broerse
 	 */
@@ -62,9 +60,15 @@ package temple.mediaplayers.players.controls
 		 */
 		public static var progressBarInstanceName:String = "mcProgressBar";
 		
+		/**
+		 * Instance name of a child which acts as knob.
+		 */
+		public static var knobInstanceName:String = "mcKnob";
+		
 		private var _player:IPlayer;
 		private var _loadBar:DisplayObject;
 		private var _progressBar:DisplayObject;
+		private var _knob:DisplayObject;
 		private var _progressLabel:ILabel;
 		
 		public function PlayerProgressBar(width:Number = NaN, height:Number = NaN)
@@ -81,6 +85,7 @@ package temple.mediaplayers.players.controls
 		{
 			this.loadBar ||= this.getChildByName(loadBarInstanceName) as DisplayObject;
 			this.progressBar ||= this.getChildByName(progressBarInstanceName) as DisplayObject;
+			this.knob ||= this.getChildByName(knobInstanceName) as DisplayObject;
 			
 			this.mouseChildren = false;
 			this.buttonMode = true;
@@ -140,6 +145,16 @@ package temple.mediaplayers.players.controls
 			this._progressLabel = value;
 		}
 		
+		public function get knob():DisplayObject
+		{
+			return this._knob;
+		}
+
+		public function set knob(value:DisplayObject):void
+		{
+			this._knob = value;
+		}
+		
 		private function handleEnterFrame(event:Event):void
 		{
 			if (this.debug) this.logDebug("handleEnterFrame: ");
@@ -148,22 +163,30 @@ package temple.mediaplayers.players.controls
 			{
 				if (this._progressBar)
 				{
-					this._progressBar.width = this._player.currentPlayFactor * this.width || .1;
+					this._progressBar.width = Math.max(this._player.currentPlayFactor * this.width, .1);
 				}
 				if (this._loadBar && this._player is IProgressiveDownloadPlayer)
 				{
 					this._loadBar.width = IProgressiveDownloadPlayer(this._player).bytesLoaded / IProgressiveDownloadPlayer(this._player).bytesTotal * this.width || .1;
 				}
+				else if (this._loadBar)
+				{
+					this._loadBar.width = this.width;
+				}
 				if (this._progressLabel)
 				{
 					this._progressLabel.label = TimeUtils.secondsToString(this._player.currentPlayTime);
+				}
+				if (this._knob)
+				{
+					this._knob.x = this._player.currentPlayFactor * this.width;
 				}
 			}
 		}
 		
 		private function handleClick(event:MouseEvent):void
 		{
-			if (this._player)
+			if (this._player && this.enabled)
 			{
 				this._player.seek(this._player.duration * (this.mouseX / this.width));
 			}

@@ -37,11 +37,28 @@ package temple.mediaplayers.movieclip
 {
 	import temple.common.interfaces.IAudible;
 	import temple.mediaplayers.players.IPlayer;
+
+	import flash.display.MovieClip;
 	/**
 	 * @author Thijs Broerse
 	 */
 	public interface IMovieClipPlayer extends IPlayer, IAudible
 	{
+		/**
+		 * Returns a reference to the MovieClip.
+		 */
+		function get movieClip():MovieClip;
+		
+		/**
+		 * @private
+		 */
+		function set movieClip(value:MovieClip):void
+		
+		/**
+		 * If MovieClip is playing is does a gotoAndPlay() otherwise gotoAndStop()
+		 */
+		function goto(frame:Object, scene:String = null):void;
+		
 		/**
 		 * FrameRate which is used to calculate duration, currentPlayTime and seek.
 		 */

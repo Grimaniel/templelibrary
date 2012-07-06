@@ -344,7 +344,7 @@ package temple.mediaplayers.players.controls
 		{
 			super.show(instant);
 			this._autoHideTimer.reset();
-			if (this._autoHide) this._autoHideTimer.start();
+			if (this._autoHide && this.enabled) this._autoHideTimer.start();
 		}
 		
 		override public function hide(instant:Boolean = false):void
@@ -396,6 +396,12 @@ package temple.mediaplayers.players.controls
 					ISelectable(this._muteButton).selected = !audible.volume;
 				}
 			}
+		}
+		
+		override public function set enabled(value:Boolean):void
+		{
+			this.mouseEnabled = this.mouseChildren = super.enabled = value;
+			if (this._progressBar) this._progressBar.enabled = value;
 		}
 		
 		/**
@@ -465,17 +471,17 @@ package temple.mediaplayers.players.controls
 		
 		private function handleAutoHideTimerEvent(event:TimerEvent):void
 		{
-			if (this._autoHide) this.hide();
+			if (this._autoHide && this.enabled) this.hide();
 		}
 		
 		private function handleMouseMove(event:MouseEvent):void
 		{
-			this.show();
+			if (this._autoHide && this.enabled && !this.shown) this.show();
 		}
 		
 		private function handlePlayerRollOut(event:MouseEvent):void
 		{
-			if (this._autoHide) this.hide();
+			if (this._autoHide && this.shown) this.hide();
 		}
 		
 		private function handlePlayerVolumeChanged(event:SoundEvent):void
