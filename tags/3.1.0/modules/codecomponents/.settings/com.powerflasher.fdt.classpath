@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="true" type="lib" useAsSharedCode="false">frameworks/libs/player/{playerVersion}/playerglobal.swc</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="true" type="lib" useAsSharedCode="false">frameworks/libs/flex.swc</AS3Classpath>
+    <AS3Classpath generateProblems="true" sdkBased="false" type="source" useAsSharedCode="false">lib</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="false" type="source" useAsSharedCode="false">TempleCommon</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="false" type="source" useAsSharedCode="false">TempleCore</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="false" type="source" useAsSharedCode="false">TempleData</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="false" type="source" useAsSharedCode="false">TempleUtils</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="false" type="source" useAsSharedCode="false">TempleUI</AS3Classpath>
+    <AS3Classpath generateProblems="false" sdkBased="false" type="source" useAsSharedCode="false">TempleTweenLite</AS3Classpath>
+</AS3Classpath>
