@@ -115,7 +115,6 @@ package temple.ui.buttons
 		private var _buttonBehavior:ButtonBehavior;
 		private var _timelineBehavior:ButtonTimelineBehavior;
 		private var _stateBehavior:ButtonStateBehavior;
-		private var _debug:Boolean;
 
 		public function MultiStateButton()
 		{
@@ -365,23 +364,6 @@ package temple.ui.buttons
 			if (this._buttonBehavior) this._buttonBehavior.clickOnEnter = value;
 		}
 
-		/**
-		 * @inheritDoc
-		 */
-		public function get debug():Boolean
-		{
-			return this._debug;
-		}
-			
-		/**
-		 * @inheritDoc
-		 */
-		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
-		public function set debug(value:Boolean):void
-		{
-			this._debug = value;
-		}
-		
 		/**
 		 * @inheritDoc
 		 */

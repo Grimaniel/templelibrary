@@ -35,6 +35,8 @@
 
 package temple.ui.behaviors 
 {
+	import temple.utils.keys.KeyCode;
+	import flash.events.KeyboardEvent;
 	import temple.common.interfaces.IEnableable;
 	import temple.utils.propertyproxy.IPropertyProxy;
 
@@ -106,6 +108,9 @@ package temple.ui.behaviors
 		private var _dragVertical:Boolean;
 		private var _dragHorizontal:Boolean;
 		private var _positionProxy:IPropertyProxy;
+		private var _useCursorKeys:Boolean;
+		private var _cursorStepSize:Number = 1;
+		private var _cursorBigStepSize:Number = 10;
 
 		/**
 		 * Create the possibility to drag an object
@@ -113,14 +118,14 @@ package temple.ui.behaviors
 		 * @param bounds limits the dragging
 		 * @param dragButton an InteractiveObject that does the dragging, if there is no dragButton, the target does the dragging
 		 */
-		public function DragBehavior(target:InteractiveObject, bounds:Rectangle = null, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true) 
+		public function DragBehavior(target:InteractiveObject, bounds:Rectangle = null, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true, useCursorKeys:Boolean = false) 
 		{
 			super(target, bounds);
 			
-			construct::dragBehavior(target, bounds, dragButton, dragHorizontal, dragVertical);
+			construct::dragBehavior(target, bounds, dragButton, dragHorizontal, dragVertical, useCursorKeys);
 		}
 
-		construct function dragBehavior(target:InteractiveObject, bounds:Rectangle, dragButton:InteractiveObject, dragHorizontal:Boolean, dragVertical:Boolean):void
+		construct function dragBehavior(target:InteractiveObject, bounds:Rectangle, dragButton:InteractiveObject, dragHorizontal:Boolean, dragVertical:Boolean, useCursorKeys:Boolean):void
 		{
 			this._dragButton = dragButton || target;
 			this.enabled = true;
@@ -132,10 +137,11 @@ package temple.ui.behaviors
 			this.addEventListener(DragBehaviorEvent.DRAG_STOP, target.dispatchEvent);
 			this.addEventListener(DragBehaviorEvent.DRAGGING, target.dispatchEvent);
 			
+			this.useCursorKeys = useCursorKeys;
+			
 			bounds;
 		}
 
-		
 		/**
 		 * An InteractiveObject that does the dragging, if there is no dragButton, the target does the dragging
 		 */
@@ -309,6 +315,148 @@ package temple.ui.behaviors
 		}
 		
 		/**
+		 * Enables moving the object using the cursor keys.
+		 */
+		public function get useCursorKeys():Boolean 
+		{
+			return this._useCursorKeys; 
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set useCursorKeys(value:Boolean):void 
+		{ 
+			this._useCursorKeys = value;
+			
+			if (this._useCursorKeys)
+			{
+				this._dragButton.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+			}
+			else
+			{
+				this._dragButton.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+			}
+		}
+		
+		/**
+		 * Default step size when using the cursor keys.
+		 */
+		public function get cursorStepSize():Number
+		{
+			return this._cursorStepSize;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set cursorStepSize(value:Number):void
+		{
+			this._cursorStepSize = value;
+		}
+
+		/**
+		 * Step size when using the cursor keys while pressing the shift key.
+		 */
+		public function get cursorBigStepSize():Number
+		{
+			return this._cursorBigStepSize;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set cursorBigStepSize(value:Number):void
+		{
+			this._cursorBigStepSize = value;
+		}
+
+		private function handleKeyDown(event:KeyboardEvent):void
+		{
+			var step:Number = event.shiftKey ? this._cursorBigStepSize : this._cursorStepSize;
+			
+			switch (event.keyCode)
+			{
+				case KeyCode.LEFT:
+				{
+					if (this._dragHorizontal)
+					{
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+						if (this._positionProxy)
+						{
+							this._positionProxy.setValue(this.displayObject, "x", this.displayObject.x - step);
+						}
+						else
+						{
+							this.displayObject.x -= step;
+						}
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+						this.keepInBounds();
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+					}
+					break;
+				}
+				case KeyCode.RIGHT:
+				{
+					if (this._dragHorizontal)
+					{
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+						if (this._positionProxy)
+						{
+							this._positionProxy.setValue(this.displayObject, "x", this.displayObject.x + step);
+						}
+						else
+						{
+							this.displayObject.x += step;
+						}
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+						this.keepInBounds();
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+					}
+					break;
+				}
+				case KeyCode.UP:
+				{
+					if (this._dragVertical)
+					{
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+						if (this._positionProxy)
+						{
+							this._positionProxy.setValue(this.displayObject, "y", this.displayObject.x - step);
+						}
+						else
+						{
+							this.displayObject.y -= step;
+						}
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+						this.keepInBounds();
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+					}
+					break;
+				}
+				case KeyCode.DOWN:
+				{
+					if (this._dragVertical)
+					{
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+						if (this._positionProxy)
+						{
+							this._positionProxy.setValue(this.displayObject, "y", this.displayObject.x + step);
+						}
+						else
+						{
+							this.displayObject.y += step;
+						}
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+						this.keepInBounds();
+						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+					}
+					break;
+				}
+			}
+		}
+		
+		/**
 		 * @private
 		 */
 		protected function handleMouseDown(event:MouseEvent):void 
@@ -349,6 +497,7 @@ package temple.ui.behaviors
 			if (this._dragButton)
 			{
 				this._dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
+				this._dragButton.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
 				this._dragButton = null;
 			}
 			this._startDragOffset = null;

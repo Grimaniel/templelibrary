@@ -38,7 +38,6 @@ package temple.ui.buttons.behaviors
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
 	import temple.data.collections.HashMap;
-	import temple.utils.types.ObjectUtils;
 
 	import flash.display.FrameLabel;
 	import flash.display.MovieClip;

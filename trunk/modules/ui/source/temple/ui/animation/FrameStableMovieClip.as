@@ -58,10 +58,8 @@ package temple.ui.animation
 		private var _frameTime:Number = 1000 / _frameRate;
 		private var _useStageFrameRate:Boolean;
 		private var _startTime:uint;
-		private var _frameScripts:Array;
 		private var _previousFrame:int;
 		private var _startFrame:uint;
-		private var _debug:Boolean;
 		private var _scriptFrame:int;
 
 		public function FrameStableMovieClip(frameRate:Number = NaN)
@@ -69,7 +67,6 @@ package temple.ui.animation
 			super.stop();
 
 			this.frameRate = frameRate;
-			this._frameScripts = new Array();
 			
 			this.play();
 			
@@ -119,20 +116,6 @@ package temple.ui.animation
 			super.gotoAndStop(frame, scene);
 			this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
 			this._scriptFrame = -1;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function addFrameScript(...args:*):void
-		{
-			super.addFrameScript.apply(null, args);
-			
-			var leni:int = args.length;
-			for (var i:int = 0;i < leni;i += 2)
-			{
-				this._frameScripts[args[i]] = args[i + 1];
-			}
 		}
 
 		/**
@@ -190,22 +173,6 @@ package temple.ui.animation
 			}
 		}
 
-		/**
-		 * @inheritDoc
-		 */
-		public function set debug(value:Boolean):void
-		{
-			this._debug = value;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function get debug():Boolean
-		{
-			return this._debug;
-		}
-
 		private function handleAddedToStage(event:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
@@ -226,20 +193,20 @@ package temple.ui.animation
 			{
 				if (this._previousFrame <= 0)
 				{
-					this._scriptFrame = this._previousFrame + this.totalFrames + 1;
-					if (this._frameScripts[this._previousFrame + this.totalFrames])
+					this._scriptFrame = this._previousFrame + this.totalFrames;
+					if (this.hasFrameScript(this._previousFrame + this.totalFrames))
 					{
 						if (this.debug) this.logDebug("handleEnterFrame: execute skipped framescript of frame " + (this._previousFrame + this.totalFrames + 1));
-						this._frameScripts[this._previousFrame + this.totalFrames]();
+						this.getFrameScript(this._previousFrame + this.totalFrames)();
 					}
 				}
 				else
 				{
-					this._scriptFrame = this._previousFrame + 1;
-					if (this._frameScripts[this._previousFrame])
+					this._scriptFrame = this._previousFrame;
+					if (this.hasFrameScript(this._previousFrame))
 					{
 						if (this.debug) this.logDebug("handleEnterFrame: execute skipped framescript of frame " + (this._previousFrame + 1));
-						this._frameScripts[this._previousFrame]();
+						this.getFrameScript(this._previousFrame)();
 					}
 				}
 				this._previousFrame++;
@@ -258,12 +225,10 @@ package temple.ui.animation
 			this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
 
-			this._frameScripts = null;
 			this._frameRate = NaN;
 			this._previousFrame = NaN;
 			this._useStageFrameRate = false;
 			this._frameTime = NaN;
-			this._debug = false;
 			this._startFrame = NaN;
 			this._startTime = NaN;
 			this._scriptFrame = NaN;

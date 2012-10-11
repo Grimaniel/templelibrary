@@ -105,6 +105,7 @@ package temple.ui.buttons.behaviors
 			this._highSpeedDelay = highSpeedDelay;
 			
 			target.addEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
+			target.addEventListener(MouseEvent.CLICK, this.dispatchEvent);
 			target.addEventListener(DestructEvent.DESTRUCT, this.handleTargetDestructed);
 
 			this._timer = new CoreTimer(this._initDelay);
@@ -184,7 +185,6 @@ package temple.ui.buttons.behaviors
 			this._stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp, false, 0, true);
 			
 			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
-			this.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
 			this.displayObject.addEventListener(MouseEvent.ROLL_OUT, this.handleTargetRollOut);
 			this.displayObject.addEventListener(MouseEvent.ROLL_OVER, this.handleTargetRollOver);
 

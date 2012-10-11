@@ -128,6 +128,12 @@ package temple.ui.form.components
 		 */
 		public function InputField(textField:TextField = null) 
 		{
+			if (textField && !this.contains(textField))
+			{
+				textField.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
+				textField.addEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
+			}
+			
 			this._textField = textField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField || this.addChild(new TextField()) as TextField;
 
 			this.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
@@ -951,6 +957,8 @@ package temple.ui.form.components
 				this._textField.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
 				this._textField.removeEventListener(TextEvent.TEXT_INPUT, this.handleTextInput);
 				this._textField.removeEventListener(Event.SCROLL, this.handleTextFieldScroll);
+				this._textField.removeEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
+				this._textField.removeEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
 				this._textField = null;
 			}
 			

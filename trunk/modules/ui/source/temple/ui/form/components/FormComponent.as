@@ -107,18 +107,10 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function get debug():Boolean
+		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
+		override public function set debug(value:Boolean):void
 		{
-			return this._form.debug;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		[Inspectable(name="Debug mode", type="Boolean")]
-		public function set debug(value:Boolean):void
-		{
-			this._form.debug = value;
+			super.debug = this._form.debug = value;
 		}
 		
 		protected function findComponents():void
