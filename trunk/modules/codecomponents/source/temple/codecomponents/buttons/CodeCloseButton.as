@@ -38,20 +38,17 @@ package temple.codecomponents.buttons
 	import temple.codecomponents.icons.CodeCross;
 
 	/**
-	 * @includeExample CodeCloseButtonExample
+	 * @includeExample CodeCloseButtonExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CodeCloseButton extends CodeButton
+	public class CodeCloseButton extends CodeIconButton
 	{
 		public function CodeCloseButton(width:Number = 14, height:Number = 14, x:Number = 0, y:Number = 0)
 		{
-			super(width, height, x, y);
+			super(new CodeCross(0, 9, 1), width, height, x, y);
 			
-			var cross:CodeCross = new CodeCross(0, 9, 1);
-			this.addChild(cross).x = width * .5;
-			this.addChild(cross).y = height * .5;
-			cross.rotation = 45;
+			this.icon.rotation = 45;
 		}
 	}
 }

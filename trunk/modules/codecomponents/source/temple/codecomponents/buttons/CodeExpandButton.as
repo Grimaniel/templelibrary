@@ -38,7 +38,7 @@ package temple.codecomponents.buttons
 	import temple.codecomponents.icons.CodeCross;
 
 	/**
-	 * @includeExample CodeExpandButton
+	 * @includeExample CodeExpandButton.as
 	 * 
 	 * @author Thijs Broerse
 	 */

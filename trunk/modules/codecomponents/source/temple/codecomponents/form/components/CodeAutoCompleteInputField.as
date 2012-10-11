@@ -78,6 +78,7 @@ package temple.codecomponents.form.components
 			focus.filters = CodeStyle.focusFilters;
 			
 			this.list.y = height;
+			this.list.filters = CodeStyle.comboBoxListFilter;
 			
 			// icon
 			var icon:CoreShape = new CoreShape();

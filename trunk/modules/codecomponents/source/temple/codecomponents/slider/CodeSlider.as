@@ -57,7 +57,7 @@ package temple.codecomponents.slider
 		private var _button:InteractiveObject;
 		private var _slider:Slider;
 		
-		public function CodeSlider(width:Number = 200, height:Number = 10, direction:String = Direction.ASCENDING)
+		public function CodeSlider(width:Number = 200, height:Number = 10, direction:String = Direction.ASCENDING, value:Number = 0)
 		{
 			this._track = this.addChild(new CodeBackground(width, height)) as InteractiveObject;
 			this._button = this.addChild(new CodeButton(Math.min(width, height), Math.min(width, height))) as InteractiveObject;
@@ -68,6 +68,8 @@ package temple.codecomponents.slider
 			this._slider.addEventListener(SliderEvent.SLIDING, this.handleSliding);
 			this._slider.addEventListener(SliderEvent.SLIDE_STOP, this.dispatchEvent);
 			this._slider.addEventListener(Event.CHANGE, this.dispatchEvent);
+			
+			this.value = value;
 		}
 
 		public function get track():InteractiveObject

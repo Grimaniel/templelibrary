@@ -14,6 +14,7 @@ package
 {
 	import temple.codecomponents.buttons.CodeCollapseButton;
 
+	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeCollapseButtonExample extends DocumentClassExample
 	{
 		public function CodeCollapseButtonExample()

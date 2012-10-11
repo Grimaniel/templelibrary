@@ -35,15 +35,16 @@
 
 package temple.codecomponents.scroll 
 {
-	import flash.display.InteractiveObject;
 	import temple.codecomponents.buttons.CodeButton;
 	import temple.codecomponents.graphics.CodeBackground;
 	import temple.common.enum.Direction;
 	import temple.common.enum.Orientation;
 	import temple.ui.scroll.IScrollPane;
 	import temple.ui.scroll.ScrollBar;
+	import temple.ui.scroll.ScrollEvent;
 
-
+	import flash.display.InteractiveObject;
+	import flash.events.MouseEvent;
 
 	/**
 	 * @author Thijs Broerse
@@ -51,6 +52,26 @@ package temple.codecomponents.scroll
 	public class CodeScrollBar extends ScrollBar 
 	{
 		public function CodeScrollBar(orientation:String = Orientation.VERTICAL, size:Number = 160, autoHide:Boolean = true, scrollPane:IScrollPane = null)
+		{
+			construct::codeScrollBar(orientation, size, autoHide, scrollPane);
+		}
+		
+		/**
+		 * @private
+		 */
+		override construct function scrollBar():void
+		{
+			this.liquidBehavior.adjustRelated = true;
+			this.addEventListener(ScrollEvent.SCROLL, this.handleScroll);
+			this.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
+
+			this.toStringProps.push("orientation");
+		}
+
+		/**
+		 * @private
+		 */
+		construct function codeScrollBar(orientation:String, size:Number, autoHide:Boolean, scrollPane:IScrollPane):void
 		{
 			this.orientation = orientation;
 			
@@ -74,6 +95,7 @@ package temple.codecomponents.scroll
 			
 			this.scrollPane = scrollPane;
 		}
+
 
 		private function createUI():void 
 		{

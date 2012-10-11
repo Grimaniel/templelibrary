@@ -78,6 +78,9 @@ package temple.codecomponents.windows
 		public static const HEADER_SIZE:Number = 20;
 		public static const BORDER_SIZE:Number = 4;
 		
+		public static const HORIZONTAL_MARGIN:Number = 2 * BORDER_SIZE;
+		public static const VERTICAL_MARGIN:Number = HEADER_SIZE + BORDER_SIZE;
+		
 		private var _label:CodeLabel;
 		private var _dragBehavior:DragBehavior;
 		private var _moveBehavior:MoveBehavior;
@@ -101,8 +104,11 @@ package temple.codecomponents.windows
 		private var _verticalScrollBar:CodeScrollBar;
 		private var _horizontalScrollBar:CodeScrollBar;
 
-		public function CodeWindow(width:Number = 200, height:Number = 100, label:String = null)
+		public function CodeWindow(width:Number = 200, height:Number = 100, label:String = null, closable:Boolean = true, setInnerSize:Boolean = false)
 		{
+			if (setInnerSize) width += HORIZONTAL_MARGIN;
+			if (setInnerSize) height += VERTICAL_MARGIN;
+			
 			super(width, height, ScaleMode.NO_SCALE, Align.TOP_LEFT, true);
 			
 			this._content = this.addChild(new LiquidContainer(10, 10, ScaleMode.NO_SCALE, Align.TOP_LEFT, true)) as LiquidContainer;
@@ -229,6 +235,8 @@ package temple.codecomponents.windows
 				ToolTip.add(this._collapseButton, "Minimize window");
 				ToolTip.add(this._resizeButton, "Resize window");
 			}
+			
+			this.closable = closable;
 		}
 
 		public function get label():String

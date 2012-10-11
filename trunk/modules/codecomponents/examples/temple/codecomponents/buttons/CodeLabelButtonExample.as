@@ -15,6 +15,7 @@ package
 	import flash.display.DisplayObject;
 	import temple.codecomponents.buttons.CodeLabelButton;
 
+	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeLabelButtonExample extends DocumentClassExample
 	{
 		public function CodeLabelButtonExample()

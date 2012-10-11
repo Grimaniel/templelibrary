@@ -38,19 +38,15 @@ package temple.codecomponents.buttons
 	import temple.codecomponents.icons.CodeDash;
 
 	/**
-	 * @includeExample CodeCollapseButton
+	 * @includeExample CodeCollapseButton.as
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CodeCollapseButton extends CodeButton
+	public class CodeCollapseButton extends CodeIconButton
 	{
 		public function CodeCollapseButton(width:Number = 14, height:Number = 14, x:Number = 0, y:Number = 0)
 		{
-			super(width, height, x, y);
-			
-			var dash:CodeDash = new CodeDash(0, 7, 1);
-			this.addChild(dash).x = width * .5;
-			this.addChild(dash).y = height * .5;
+			super(new CodeDash(0, 7, 1), width, height, x, y);
 		}
 	}
 }
