@@ -99,7 +99,7 @@ package temple.data.flashvars
 		 * 
 		 * @param name The flashvar name (use FlashVarNames.NAME)
 		 * @param defaultValue The defaultValue if the flashvar is not set or is empty
-		 * @param type The class to cast this FlashVar to. Array will use split(',').
+		 * @param type The class to cast this FlashVar to. Array will use split(','). If null, <code>String</code> is used.
 		 * @param enum a class which contains possible values as 'public static const'. If value is not in the enum class, the default will be used.
 		 * 
 		 * @throws temple.debug.errors.TempleArgumentError When defaultValue is not of type
@@ -121,8 +121,8 @@ package temple.data.flashvars
 			
 			if (!flashVar) flashVar = FlashVars._flashvars[name] = new FlashVar(name, null);
 			
-			flashVar.type = type;
 			flashVar.defaultValue = defaultValue;
+			flashVar.type = type || String;
 			
 			// Check enum
 			if (enum)

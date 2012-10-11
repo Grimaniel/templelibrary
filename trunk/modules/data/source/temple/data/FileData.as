@@ -123,6 +123,12 @@ package temple.data
 		[Transient(whenNull)]
 		public var pointer:String;
 		
+		public function FileData(data:ByteArray = null, pointer:String = null)
+		{
+			this.data = data;
+			this.pointer = pointer;
+		}
+		
 		public function clone():FileData
 		{
 			var fd:FileData = new FileData();

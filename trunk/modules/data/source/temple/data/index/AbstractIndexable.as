@@ -79,9 +79,9 @@ package temple.data.index
 			}
 			else if (this._id)
 			{
-				throwError(new TempleError(this, "Id is already set and can not be overwritten"));
+				throwError(new TempleError(this, "Id is already set (" + this._id + ") and can not be overwritten (" + value + ")"));
 			}
-			else
+			else if (value)
 			{
 				this._id = value;
 				Indexer.add(this, this.indexClass);

@@ -36,7 +36,6 @@
 package temple.data.cache 
 {
 	import temple.core.events.CoreEventDispatcher;
-	import temple.core.net.ILoader;
 
 	import flash.events.Event;
 	import flash.utils.ByteArray;
@@ -47,21 +46,21 @@ package temple.data.cache
 	 * 
 	 * @author Bart van der Schoor, Thijs Broerse
 	 */
-	public class LoaderCacheData extends CoreEventDispatcher implements ILoader
+	internal class LoaderCacheItem extends CoreEventDispatcher implements ILoaderCacheItem
 	{
 		private var _url:String;
 		private var _bytes:ByteArray;
 		private var _time:uint;
 		private var _purgeable:Boolean = true;
 		
-		public function LoaderCacheData(url:String)
+		public function LoaderCacheItem(url:String)
 		{
 			this._url = url;
 			this.toStringProps.push('url', 'isLoaded');
 		}
 
 		/**
-		 * The URL of the file that is stored in cache.
+		 * @inheritDoc
 		 */
 		public function get url():String
 		{
@@ -69,7 +68,7 @@ package temple.data.cache
 		}
 		
 		/**
-		 * The bytes of the file that is stored in cache.
+		 * @inheritDoc
 		 */
 		public function get bytes():ByteArray
 		{
@@ -78,7 +77,7 @@ package temple.data.cache
 		}
 		
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		public function set bytes(value:ByteArray):void
 		{
@@ -104,7 +103,7 @@ package temple.data.cache
 		}
 		
 		/**
-		 * The last time (in milliseconds) this data is used
+		 * @inheritDoc
 		 */
 		public function get time():uint
 		{
@@ -112,7 +111,7 @@ package temple.data.cache
 		}
 		
 		/**
-		 * Indicates if this object is destructed if the LoaderCache purges
+		 * @inheritDoc
 		 */
 		public function get purgeable():Boolean
 		{
@@ -141,7 +140,7 @@ package temple.data.cache
 			if (this._url) LoaderCache.clear(this._url);
 			
 			// clearing URL must be done after DestructEvent is dispatched, so we can check the URL in the handler.
-			//this._url = null;
+			this._url = null;
 		}
 	}
 }
