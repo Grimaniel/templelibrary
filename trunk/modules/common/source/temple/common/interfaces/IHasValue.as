@@ -44,8 +44,7 @@ package temple.common.interfaces
 	public interface IHasValue 
 	{
 		/**
-		 * Return the value to be validated
-		 * It is expected that the IValidationRule implementation that validates this, knows what to cast the value to
+		 * Returns the value of the object.
 		 */
 		function get value():*;
 	}

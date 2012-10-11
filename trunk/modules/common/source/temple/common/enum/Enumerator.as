@@ -35,6 +35,7 @@
 
 package temple.common.enum
 {
+	import flash.utils.Dictionary;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
@@ -125,20 +126,20 @@ person.gender = new Gender("some value");</listing>
 		 * 
 		 * <listing version="3.0">var gender:Gender = Enumerator.get(Gender, "male") as Gender;</listing>
 		 */
-		public static function get(enumClass:Class, value:String):Enumerator
+		public static function get(enumClass:Class, value:*):Enumerator
 		{
 			var className:String = getQualifiedClassName(enumClass);
 			return Enumerator._lookup[className] ? Enumerator._lookup[className][value] : null;
 		}
 		
-		private var _value:String;
+		private var _value:*;
 		
 		/**
 		 * Abstract class. This class cannot be instantiated directly. You always need extend this class.
 		 * 
 		 * @private
 		 */
-		public function Enumerator(value:String)
+		public function Enumerator(value:*)
 		{
 			var className:String = getQualifiedClassName(this);
 			var definition:Object = getDefinitionByName(className);
@@ -155,7 +156,7 @@ person.gender = new Gender("some value");</listing>
 			{
 				this._value = value;
 				
-				if (!Enumerator._lookup[className]) Enumerator._lookup[className] = {};
+				if (!Enumerator._lookup[className]) Enumerator._lookup[className] = new Dictionary();
 				if (Enumerator._lookup[className][this._value])
 				{
 					throwError(new TempleArgumentError(this, "An Enumerator of type '" + className + "' with the same value ('" + this._value + "') is already registered."));
@@ -170,7 +171,7 @@ person.gender = new Gender("some value");</listing>
 		/**
 		 * The value of the Enumarator.
 		 */
-		public final function get value():String
+		public final function get value():*
 		{
 			return this._value;
 		}
@@ -178,7 +179,15 @@ person.gender = new Gender("some value");</listing>
 		/**
 		 * @private
 		 */
-		public final function toString() : String
+		public function valueOf():*
+		{
+			return this._value;
+		}
+		
+		/**
+		 * @private
+		 */
+		public final function toString():*
 		{
 			return value;
 		}

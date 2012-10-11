@@ -35,7 +35,7 @@
 
 package temple.common.events
 {
-	import temple.core.debug.objectToString;
+	import temple.core.events.CoreEvent;
 
 	import flash.events.Event;
 
@@ -44,7 +44,7 @@ package temple.common.events
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class SelectEvent extends Event
+	public class SelectEvent extends CoreEvent
 	{
 		/**
 		 * Dispatched when an item is selected.
@@ -63,6 +63,8 @@ package temple.common.events
 			super(type, bubbles);
 			
 			this._item = item;
+			
+			this.toStringProps.splice(1, 0, "item");
 		}
 
 		/**
@@ -76,11 +78,6 @@ package temple.common.events
 		override public function clone():Event
 		{
 			return new SelectEvent(this.type, this.item, this.bubbles);
-		}
-		
-		override public function toString():String
-		{
-			return objectToString(this, Vector.<String>(["type", "bubbles", "item"]));
 		}
 	}
 }
