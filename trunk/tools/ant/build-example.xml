@@ -2,7 +2,7 @@
 <project default="Build" name="Example">
 	
 	<target name="Build">
-		<property name="startswf" value="false"/>
+		<property name="startswf" value="true"/>
 		
 		<script language="javascript">
 			<![CDATA[
@@ -15,7 +15,6 @@
 			}
 			var root = project.getProperty("root.dir");
 			var version = project.getProperty("version");
-			
 			
 			var libraries = [project.getProperty("examples.dir") + "/templates/analytics.swc"];
 			for each (var module in dependencies)
@@ -72,7 +71,7 @@
 	
 	    	]]>
 		</script>
-		<exec executable="${flash}">
+		<exec executable="${flash}" spawn="true">
 			<arg line="'${root.dir}/tools/jsfl/build.jsfl'"/>
 			<arg line="'${fla}'"/>
 		</exec>

@@ -80,8 +80,24 @@ function updateLibraryPath(properties)
 		
 		for (var i = 0; i < extra.length; i++)
 		{
-			libraries.push(prefix + "../../modules/" + extra[i] + "/bin/temple-" + extra[i] + "_" + properties.version + ".swc");
+			if (extra[i].indexOf("extended") == -1)
+			{
+				libraries.push(prefix + "../../modules/" + extra[i] + "/bin/temple-" + extra[i] + "_" + properties.version + ".swc");
+			}
+			else
+			{
+				libraries.push(prefix + "../../modules/" + extra[i].split("-")[0] + "/bin/temple-" + extra[i] + "_" + properties.version + ".swc");
+			}
 		}
+	}
+	if (properties['libraries'])
+	{
+		var libs = properties['libraries'].split(",");
+		for (var i = 0; i < libs.length; i++)
+		{
+			libraries.push(prefix + "lib/" + libs[i]);
+		}
+		
 	}
 	
 	Output.inspect(libraries);
