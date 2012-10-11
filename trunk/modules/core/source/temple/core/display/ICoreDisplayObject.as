@@ -46,6 +46,11 @@ package temple.core.display
 		 * <p>Needed since <code>parent</code> property can't be trusted for timeline objects.</p>
 		 */
 		function get hasParent():Boolean;
+		
+		/**
+		 * Removes the object from his parent.
+		 */
+		function removeFromParent():void;
 	
 		/**
 		 * Same as <code>alpha</code>, but the visible property will automatically be set. 

@@ -48,7 +48,8 @@ package temple.core.display
 	public interface ICoreDisplayObjectContainer extends ICoreDisplayObject, IDisplayObjectContainer 
 	{
 		/**
-		 * Returns all children as Vector. The Vector is generated on demand. Modifying the Vector does not changes the object.
+		 * Returns all children as Vector. The Vector is generated on demand. Modifying the Vector does not changes the
+		 * object.
 		 */
 		function get children():Vector.<DisplayObject>;
 	}

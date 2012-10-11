@@ -64,7 +64,7 @@ package temple.core.display
 		private var _disposeBitmapDataOnDestruct:Boolean;
 		private var _emptyPropsInToString:Boolean = true;
 
-		public function CoreBitmap(bitmapData:BitmapData = null, pixelSnapping:String = "auto", smoothing:Boolean = false, disposeBitmapDataOnDestruct:Boolean = true)
+		public function CoreBitmap(bitmapData:BitmapData = null, pixelSnapping:String = "auto", smoothing:Boolean = false, disposeBitmapDataOnDestruct:Boolean = false)
 		{
 			super(bitmapData, pixelSnapping, smoothing);
 

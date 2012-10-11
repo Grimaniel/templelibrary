@@ -48,7 +48,7 @@ package temple.core.display
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CoreSprite extends Sprite implements ICoreDisplayObjectContainer
+	public class CoreSprite extends Sprite implements ICoreDisplayObjectContainer, ISprite
 	{
 		include "../includes/Version.as.inc";
 		

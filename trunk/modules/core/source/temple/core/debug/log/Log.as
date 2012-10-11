@@ -226,7 +226,7 @@ package temple.core.debug.log
 
 		private static function formatTime(milliseconds:int):String
 		{
-			return Log.padLeft(Math.floor(milliseconds / 60000).toString(), 2) + ":" + Log.padLeft(Math.floor(milliseconds * .001).toString(), 2) + '.' + Log.padLeft((Math.round(Math.floor(milliseconds % 1000))).toString(), 3);
+			return Log.padLeft(Math.floor(milliseconds / 60000).toString(), 2) + ":" + Log.padLeft((Math.floor(milliseconds * .001) % 60).toString(), 2) + '.' + Log.padLeft((Math.round(Math.floor(milliseconds % 1000))).toString(), 3);
 		}
 		
 		private static function padLeft(string:String, length:int):String

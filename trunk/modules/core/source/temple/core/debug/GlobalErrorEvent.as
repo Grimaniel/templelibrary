@@ -5,6 +5,7 @@ include "../includes/License.as.inc";
 package temple.core.debug
 {
 	import flash.events.Event;
+	import temple.core.events.CoreEvent;
 	import temple.core.templelibrary;
 	
 	/**
@@ -14,7 +15,7 @@ package temple.core.debug
 	 * 
 	 * @author Arjan van Wijk
 	 */
-	public class GlobalErrorEvent extends Event
+	public class GlobalErrorEvent extends CoreEvent
 	{
 		include "../includes/Version.as.inc";
 		
@@ -25,8 +26,8 @@ package temple.core.debug
 		public function GlobalErrorEvent(type:String, error:*)
 		{
 			super(type);
-			
 			this._error = error;
+			this.toStringProps.splice(1, 0, 'error');
 		}
 
 		/**

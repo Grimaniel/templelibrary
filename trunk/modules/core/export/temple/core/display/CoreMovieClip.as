@@ -35,20 +35,22 @@
 
 package temple.core.display 
 {
-	import flash.display.DisplayObject;
-	import flash.display.Loader;
-	import flash.display.MovieClip;
-	import flash.display.Stage;
-	import flash.events.Event;
-	import flash.geom.Point;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.log.LogLevel;
 	import temple.core.debug.objectToString;
 	import temple.core.destruction.DestructEvent;
 	import temple.core.destruction.Destructor;
+	import temple.core.errors.TempleArgumentError;
+	import temple.core.errors.throwError;
 	import temple.core.events.EventListenerManager;
 	import temple.core.templelibrary;
+	import flash.display.DisplayObject;
+	import flash.display.Loader;
+	import flash.display.MovieClip;
+	import flash.display.Stage;
+	import flash.events.Event;
+	import flash.geom.Point;
 
 
 	/**
@@ -79,12 +81,12 @@ package temple.core.display
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CoreMovieClip extends MovieClip implements ICoreDisplayObjectContainer
+	public class CoreMovieClip extends MovieClip implements ICoreMovieClip
 	{
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.1.0";
+		templelibrary static const VERSION:String = "3.2.0";
 		
 		/**
 		 * @private
@@ -101,6 +103,8 @@ package temple.core.display
 		private var _registryId:uint;
 		private var _destructOnUnload:Boolean = true;
 		private var _emptyPropsInToString:Boolean = true;
+		private var _frameScripts:Vector.<Function>;
+		private var _debug:Boolean;
 
 		public function CoreMovieClip()
 		{
@@ -121,6 +125,113 @@ package temple.core.display
 			super.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
 			super.addEventListener(Event.REMOVED, this.handleRemoved);
 			super.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+		}
+		
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function addFrameScript(...args):void
+		{
+			super.addFrameScript.apply(null, args);
+			
+			this._frameScripts ||= new Vector.<Function>(this.totalFrames, true);
+			
+			for (var i:int = 0, leni:int = args.length; i < leni; i += 2)
+			{
+				this._frameScripts[args[i]] = args[i+1];
+				
+				if (this.debug) this.logDebug("FrameScript " + (args[i+1] == null ? "cleared" : "set") + " on frame " + (args[i] + 1));
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function hasFrameScript(frame:uint):Boolean
+		{
+			if (frame == 0)
+			{
+				return throwError(new TempleArgumentError(this, "frame cannot be 0"));
+			}
+			else if (frame > this.totalFrames)
+			{
+				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + this.totalFrames));
+			}
+			return this._frameScripts &&  this._frameScripts[frame - 1] != null;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get hasFrameScripts():Boolean
+		{
+			return this._frameScripts != null;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function getFrameScript(frame:uint):Function
+		{
+			if (frame == 0)
+			{
+				return throwError(new TempleArgumentError(this, "frame cannot be 0"));
+			}
+			else if (frame > this.totalFrames)
+			{
+				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + this.totalFrames));
+			}
+			return this._frameScripts[frame + 1];
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function setFrameScript(frame:uint, script:Function):void
+		{
+			if (frame == 0)
+			{
+				throwError(new TempleArgumentError(this, "frame cannot be 0"));
+				return;
+			}
+			else if (frame > this.totalFrames)
+			{
+				throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + this.totalFrames));
+				return;
+			}
+			this.addFrameScript(frame - 1, script);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function clearFrameScript(frame:uint):void
+		{
+			this.addFrameScript(frame - 1, null);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function clearFrameScripts():void
+		{
+			if (this._frameScripts)
+			{
+				for (var i:int = 0, leni:int = this._frameScripts.length; i < leni; i++)
+				{
+					if (this._frameScripts[i] != null) this.addFrameScript(i, null);
+				}
+			}
+		}
+
+		/**
+		 * Returns a list of all Frame Scripts. Modifying this list does not have effect on the actual scripts on the
+		 * frames.
+		 */
+		templelibrary function get frameScripts():Vector.<Function>
+		{
+			return this._frameScripts;
 		}
 
 		[Temple]
@@ -176,9 +287,7 @@ package temple.core.display
 		 */
 		override public function get stage():Stage
 		{
-			if (!super.stage) return StageProvider.stage;
-			
-			return super.stage;
+			return super.stage || StageProvider.stage;
 		}
 		
 		/**
@@ -195,6 +304,14 @@ package temple.core.display
 		public function get hasParent():Boolean
 		{
 			return this._onParent;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function removeFromParent():void
+		{
+			if (this.parent && this._onParent) this.parent.removeChild(this);
 		}
 		
 		/**
@@ -236,8 +353,7 @@ package temple.core.display
 		 */
 		public function get scale():Number
 		{
-			if (this.scaleX == this.scaleY) return this.scaleX;
-			return NaN;
+			return this.scaleX == this.scaleY ? this.scaleX : NaN;
 		}
 		
 		/**
@@ -281,8 +397,8 @@ package temple.core.display
 		/**
 		 * @inheritDoc
 		 * 
-		 * Check implemented if object hasEventListener, must speed up the application
-		 * http://www.gskinner.com/blog/archives/2008/12/making_dispatch.html
+		 * Checks if this object has event listeners of this event before dispatching the event. Should speed up the
+		 * application.
 		 */
 		override public function dispatchEvent(event:Event):Boolean 
 		{
@@ -369,6 +485,23 @@ package temple.core.display
 				return null;
 			}
 			return this._eventListenerManager ||= new EventListenerManager(this);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
 		}
 		
 		/**
@@ -569,6 +702,8 @@ package temple.core.display
 			// clear mask, so it won't keep a reference to an other object
 			this.mask = null;
 			this.stop();
+			this.clearFrameScripts();
+			this._frameScripts = null;
 			
 			if (this.stage && this.stage.focus == this) this.stage.focus = null;
 			

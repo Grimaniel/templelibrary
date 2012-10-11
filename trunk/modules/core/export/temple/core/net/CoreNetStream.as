@@ -37,8 +37,11 @@ package temple.core.net
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.NetStatusEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
+	import temple.core.debug.IDebuggable;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.log.LogLevel;
@@ -63,14 +66,14 @@ package temple.core.net
 	 * 
 	 * @see temple.core.Temple#registerObjectsInMemory
 	 * 
-	 * @author Arjan van Wijk
+	 * @author Arjan van Wijk, Thijs Broerse
 	 */
-	public class CoreNetStream extends NetStream implements ICoreLoader
+	public class CoreNetStream extends NetStream implements ICoreLoader, IDebuggable
 	{
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.1.0";
+		templelibrary static const VERSION:String = "3.2.0";
 		
 		/**
 		 * @private
@@ -89,20 +92,25 @@ package temple.core.net
 		private var _logErrors:Boolean;
 		private var _url:String;
 		private var _emptyPropsInToString:Boolean = true;
+		private var _debug:Boolean;
 
-		public function CoreNetStream(netConnection:NetConnection)
+		public function CoreNetStream(netConnection:NetConnection, logErrors:Boolean = true)
 		{
 			super(netConnection);
 			
-			construct::coreNetStream(netConnection);
+			construct::coreNetStream(netConnection, logErrors);
 		}
 		
 		/**
 		 * @private
 		 */
-		construct function coreNetStream(netConnection:NetConnection):void
+		construct function coreNetStream(netConnection:NetConnection, logErrors:Boolean):void
 		{
 			this._registryId = Registry.add(this);
+			
+			super.addEventListener(NetStatusEvent.NET_STATUS, this.handleNetStatusEvent);
+			super.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			this._logErrors = logErrors;
 			
 			netConnection;
 		}
@@ -185,8 +193,8 @@ package temple.core.net
 		/**
 		 * @inheritDoc
 		 * 
-		 * Check implemented if object hasEventListener, must speed up the application
-		 * http://www.gskinner.com/blog/archives/2008/12/making_dispatch.html
+		 * Checks if this object has event listeners of this event before dispatching the event. Should speed up the
+		 * application.
 		 */
 		override public function dispatchEvent(event:Event):Boolean 
 		{
@@ -348,6 +356,22 @@ package temple.core.net
 		}
 		
 		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
+		}
+		
+		/**
 		 * List of property names which are output in the toString() method.
 		 */
 		protected final function get toStringProps():Vector.<String>
@@ -416,6 +440,16 @@ package temple.core.net
 			return this._isDestructed;
 		}
 		
+		private function handleNetStatusEvent(event:NetStatusEvent):void
+		{
+			if (this._debug) this.logDebug(event.type + ": " + event.info.code);
+		}
+
+		private function handleSecurityError(event:SecurityErrorEvent):void
+		{
+			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -424,6 +458,9 @@ package temple.core.net
 			if (this._isDestructed) return;
 			
 			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			
+			super.removeEventListener(NetStatusEvent.NET_STATUS, this.handleNetStatusEvent);
+			super.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
 			
 			this.removeAllEventListeners();
 			this.client = this;

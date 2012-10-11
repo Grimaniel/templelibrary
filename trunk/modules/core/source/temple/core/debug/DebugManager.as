@@ -313,11 +313,10 @@ package temple.core.debug
 			}
 			date = new Date();
 			info += "\n\tCurrent date: " + date.fullYear + "-" + (date.month+1) + "-" + date.date;
-			info += "\n\tPlayer version: " + Capabilities.version;
+			info += "\n\tPlayer version: " + Capabilities.version + (Capabilities.isDebugger ? " (Debug)" : "");
 			info += "\n\tEnvironment: " + Environment.getEnvironment();
 			info += "\n\tOperation System: " + Capabilities.os;
 			info += "\n\tManufacturer: " + Capabilities.manufacturer;
-			info += "\n\tisDebugger: " + Capabilities.isDebugger;
 			info += "\n\tBuildMode: " + (BuildMode.isDebugBuild() ? "debug" : "release");
 			info += "\n\tDebugMode: " + DebugManager.debugMode;
 			if (StageProvider.stage)

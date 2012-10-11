@@ -42,9 +42,7 @@
 		 */
 		override public function get stage():Stage
 		{
-			if (!super.stage) return StageProvider.stage;
-			
-			return super.stage;
+			return super.stage || StageProvider.stage;
 		}
 		
 		/**
@@ -61,6 +59,14 @@
 		public function get hasParent():Boolean
 		{
 			return this._onParent;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function removeFromParent():void
+		{
+			if (this.parent && this._onParent) this.parent.removeChild(this);
 		}
 		
 		/**
@@ -102,8 +108,7 @@
 		 */
 		public function get scale():Number
 		{
-			if (this.scaleX == this.scaleY) return this.scaleX;
-			return NaN;
+			return this.scaleX == this.scaleY ? this.scaleX : NaN;
 		}
 		
 		/**

@@ -4,17 +4,17 @@ include "../includes/License.as.inc";
 
 package temple.core.behaviors 
 {
-	import flash.events.Event;
-	import temple.core.debug.objectToString;
+	import temple.core.events.CoreEvent;
 	import temple.core.templelibrary;
 
 	/**
 	 * Abstract implementation of a BehaviorEvent. This class is used as super class for other BehaviorEvents.
-	 * This class will never be instantiated directly but will always be derived. So therefore this class is an 'Abstract' class.
+	 * This class will never be instantiated directly but will always be derived. So therefore this class is an
+	 * 'Abstract' class.
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractBehaviorEvent extends Event implements IBehaviorEvent
+	public class AbstractBehaviorEvent extends CoreEvent implements IBehaviorEvent
 	{
 		include "../includes/Version.as.inc";
 		
@@ -28,8 +28,8 @@ package temple.core.behaviors
 		public function AbstractBehaviorEvent(type:String, behavior:IBehavior, bubbles:Boolean = false)
 		{
 			super(type, bubbles);
-			
 			this._behavior = behavior;
+			this.toStringProps.splice(1, 0, 'behaviorTarget');
 		}
 
 		/**
@@ -46,14 +46,6 @@ package temple.core.behaviors
 		public function get behaviorTarget():Object
 		{
 			return this._behavior.target;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String
-		{
-			return objectToString(this, Vector.<String>(['type', 'behaviorTarget']));
 		}
 	}
 }

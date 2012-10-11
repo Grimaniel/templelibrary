@@ -4,12 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.net 
 {
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
@@ -19,6 +13,13 @@ package temple.core.net
 	import temple.core.destruction.IDestructibleOnError;
 	import temple.core.events.EventListenerManager;
 	import temple.core.templelibrary;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
+	import flash.net.URLRequest;
 
 	/**
 	 * @eventType temple.core.destruction.DestructEvent.DESTRUCT
@@ -62,22 +63,30 @@ package temple.core.net
 		private var _debug:Boolean;
 
 		/**
-		 * Creates a CoreURLLoader
-		 * @param request optional URLRequest to load
-		 * @param destructOnError if set to true (default) this object wil automatically be destructed on an Error (IOError or SecurityError)
-		 * @param logErrors if set to true an error message wil be logged on an Error (IOError or SecurityError)
+		 * Creates a CoreURLLoader.
+		 * 
+		 * @param request optional <code>URLRequest</code> to load
+		 * @param dataFormat Controls whether the downloaded data is received as text
+		 * 	(<code>URLLoaderDataFormat.TEXT</code>), raw binary data (<code>URLLoaderDataFormat.BINARY</code>), or
+		 * 	URL-encoded variables (<code>URLLoaderDataFormat.VARIABLES</code>).
+		 * @param destructOnError if set to true (default) this object wil automatically be destructed on an Error
+		 * 	(<code>IOError</code> or <code>SecurityError</code>)
+		 * @param logErrors if set to true an error message wil be logged on an Error (<code>IOError</code> or 
+		 * 	<code>SecurityError</code>)
 		 */
-		public function CoreURLLoader(request:URLRequest = null, destructOnError:Boolean = true, logErrors:Boolean = true)
+		public function CoreURLLoader(request:URLRequest = null, dataFormat:String = "text", destructOnError:Boolean = true, logErrors:Boolean = true)
 		{
-			construct::coreURLLoader(request, destructOnError, logErrors);
+			construct::coreURLLoader(request, dataFormat, destructOnError, logErrors);
 			
 			super(request);
+			
+			this.dataFormat = dataFormat;
 		}
 		
 		/**
 		 * @private
 		 */
-		construct function coreURLLoader(request:URLRequest, destructOnError:Boolean, logErrors:Boolean):void
+		construct function coreURLLoader(request:URLRequest, dataFormat:String, destructOnError:Boolean, logErrors:Boolean):void
 		{
 			this._destructOnError = destructOnError;
 			this._logErrors = logErrors;
@@ -94,6 +103,7 @@ package temple.core.net
 			super.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
 			
 			request;
+			dataFormat;
 		}
 		
 		/**

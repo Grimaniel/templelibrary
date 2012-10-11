@@ -4,16 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.display 
 {
-	import flash.display.Loader;
-	import flash.display.Stage;
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.geom.Point;
-	import flash.net.URLRequest;
-	import flash.system.LoaderContext;
-	import flash.utils.ByteArray;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
@@ -21,8 +11,21 @@ package temple.core.display
 	import temple.core.debug.objectToString;
 	import temple.core.destruction.DestructEvent;
 	import temple.core.events.EventListenerManager;
+	import temple.core.net.CoreURLLoader;
 	import temple.core.net.ICoreLoader;
 	import temple.core.templelibrary;
+
+	import flash.display.Loader;
+	import flash.display.Stage;
+	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
+	import flash.geom.Point;
+	import flash.net.URLRequest;
+	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
 
 
 	/**
@@ -122,6 +125,11 @@ package temple.core.display
 	{
 		include "../includes/Version.as.inc";
 		
+		/**
+		 * Hashmap of CoreURLLoaders which loads policy files (crossdomain.xml files)
+		 */
+		templelibrary static const POLICYFILE_LOADERS:Object = {};
+		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name', 'url']);
@@ -137,19 +145,21 @@ package temple.core.display
 		private var _registryId:uint;
 		private var _destructOnUnload:Boolean = true;
 		private var _emptyPropsInToString:Boolean = true;
+		private var _context:LoaderContext;
+		private var _policyFileLoader:CoreURLLoader;
 
 		/**
 		 * Creates a new CoreLoader
 		 */
-		public function CoreLoader(logErrors:Boolean = true)
+		public function CoreLoader(request:URLRequest = null, context:LoaderContext = null, logErrors:Boolean = true)
 		{
-			construct::coreLoader(logErrors);
+			construct::coreLoader(request, context, logErrors);
 		}
 		
 		/**
 		 * @private
 		 */
-		construct function coreLoader(logErrors:Boolean):void
+		construct function coreLoader(request:URLRequest, context:LoaderContext, logErrors:Boolean):void
 		{
 			this._logErrors = logErrors;
 			
@@ -173,6 +183,9 @@ package temple.core.display
 			this.contentLoaderInfo.addEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError, false, 0, true);
 			this.contentLoaderInfo.addEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError, false, 0, true);
 			this.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError, false, 0, true);
+			this.contentLoaderInfo.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.handleHTTPStatus, false, 0, true);
+			
+			if (request) this.load(request, context);
 		}
 		
 		/**
@@ -191,6 +204,7 @@ package temple.core.display
 			this._isLoading = true;
 			this._isLoaded = false;
 			this._url = request.url;
+			this._context = context;
 			super.load(request, context);
 		}
 
@@ -266,6 +280,23 @@ package temple.core.display
 		
 		include "../includes/CoreDisplayObjectMethods.as.inc";
 		
+		/**
+		 * A <code>Boolean</code> which indicates of the <code>CoreLoader</code> is redirected to an other url
+		 */
+		public function get isRedirected():Boolean
+		{
+			return this._url && this.contentLoaderInfo.url && this._url != this.contentLoaderInfo.url;
+		}
+		
+		/**
+		 * Indicates if the <code>checkPolicyFile</code> property of the <code>LoaderContext</code> of the last load
+		 * was set to <code>true</code>.
+		 */
+		public function get checkPolicyFile():Boolean
+		{
+			return this._context && this._context.checkPolicyFile;
+		}
+		
 		include "../includes/CoreEventDispatcherMethods.as.inc";
 		
 		include "../includes/DebuggableMethods.as.inc";
@@ -280,30 +311,78 @@ package temple.core.display
 		
 		private function handleOpen(event:Event):void
 		{
-			if (this.debug) this.logDebug("handleOpen");
-			
-			this.dispatchEvent(event.clone());
+			if (this.debug) this.logDebug(event.type);
+			this.dispatchEvent(event);
 		}
 
 		private function handleProgress(event:ProgressEvent):void
 		{
-			if (this.debug) this.logDebug("handleProgress: " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
-			this.dispatchEvent(event.clone());
+			if (this.debug) this.logDebug(event.type + ": " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
+			this.dispatchEvent(event);
 		}
 		
 		private function handleInit(event:Event):void
 		{
-			this.dispatchEvent(event.clone());
+			if (this.debug) this.logDebug(event.type);
+			if (this.isRedirected && this.checkPolicyFile)
+			{
+				var url:String = this.contentLoaderInfo.url;
+				
+				// Redirected, load correct policy file
+				var policyFile:String = url.substring(0, url.indexOf("/", url.indexOf("//") + 2)) + "/crossdomain.xml";
+				
+				if (this.debug) this.logDebug("Redirected to '" + url + "', we need to check the policy file: '" + policyFile + "'");
+
+				this._policyFileLoader = CoreLoader.templelibrary::POLICYFILE_LOADERS[policyFile] ||= new CoreURLLoader();
+				
+				if (this._policyFileLoader.isLoaded)
+				{
+					// Policy file is already loaded, continue
+					if (this.debug) this.logDebug("Policy file is already loaded");
+					this._policyFileLoader = null;
+				}
+				else
+				{
+					this._policyFileLoader.addEventListener(Event.COMPLETE, this.handlePolicyFileEvent);
+					this._policyFileLoader.addEventListener(IOErrorEvent.IO_ERROR, this.handlePolicyFileEvent);
+					this._policyFileLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handlePolicyFileEvent);
+					
+					if (!this._policyFileLoader.isLoading) this._policyFileLoader.load(new URLRequest(policyFile));
+				}
+			}
+			else
+			{
+				this.dispatchEvent(event);
+			}
+		}
+		
+		private function handlePolicyFileEvent(event:Event):void
+		{
+			this._policyFileLoader.removeEventListener(Event.COMPLETE, this.handlePolicyFileEvent);
+			this._policyFileLoader.removeEventListener(IOErrorEvent.IO_ERROR, this.handlePolicyFileEvent);
+			this._policyFileLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handlePolicyFileEvent);
+			
+			if (this.debug) this.logDebug("policyFile: " + event.type);
+			
+			this._policyFileLoader = null;
+			this._isLoading = false;
+			this._isLoaded = true;
+			
+			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function handleComplete(event:Event):void
 		{
-			if (this.debug) this.logDebug("handleComplete");
+			if (this.debug) this.logDebug(event.type);
 			
-			this._isLoading = false;
-			this._isLoaded = true;
-			
-			this.dispatchEvent(event.clone());
+			if (!this._policyFileLoader)
+			{
+				this._isLoading = false;
+				this._isLoaded = true;
+				
+				this.dispatchEvent(event);
+			}
+			else if (this.debug) this.logDebug("Policy file not loaded yet");
 		}
 		
 		/**
@@ -315,7 +394,7 @@ package temple.core.display
 			
 			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
 			
-			this.dispatchEvent(event.clone());
+			this.dispatchEvent(event);
 		}
 		
 		/**
@@ -328,7 +407,13 @@ package temple.core.display
 			
 			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
 			
-			this.dispatchEvent(event.clone());
+			this.dispatchEvent(event);
+		}
+		
+		private function handleHTTPStatus(event:HTTPStatusEvent):void
+		{
+			if (this.debug) this.logDebug(event.type);
+			this.dispatchEvent(event);
 		}
 		
 		include "../includes/IsDestructed.as.inc";
@@ -346,6 +431,16 @@ package temple.core.display
 			{
 				this._eventListenerManager.destruct();
 				this._eventListenerManager = null;
+			}
+			
+			this._context = null;
+			
+			if (this._policyFileLoader)
+			{
+				this._policyFileLoader.removeEventListener(Event.COMPLETE, this.handlePolicyFileEvent);
+				this._policyFileLoader.removeEventListener(IOErrorEvent.IO_ERROR, this.handlePolicyFileEvent);
+				this._policyFileLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handlePolicyFileEvent);
+				this._policyFileLoader = null;
 			}
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
@@ -391,6 +486,7 @@ package temple.core.display
 				this.contentLoaderInfo.removeEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError);
 				this.contentLoaderInfo.removeEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError);
 				this.contentLoaderInfo.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+				this.contentLoaderInfo.removeEventListener(HTTPStatusEvent.HTTP_STATUS, this.handleHTTPStatus);
 			}
 			
 			if (this.parent)
