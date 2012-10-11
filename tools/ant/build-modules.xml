@@ -3,8 +3,8 @@
 
 	<import file="temple-properties.xml"/>
 	
-	<property name="core-modules" value="core,common,utils,tweenlite,data,control,ui,yalog" />
-	<property name="extended-modules" value="codecomponents,mediaplayers,camera" />
+	<property name="core-modules" value="core,common,utils,tweenlite,data,control,ui,yalog,net" />
+	<property name="extended-modules" value="mediaplayers,camera,microphone,speech,codecomponents" />
 	
 	<property name="targets" value="Prepare,Compile,Extend,Package" />
 	

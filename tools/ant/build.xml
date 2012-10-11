@@ -166,18 +166,22 @@
 			prop.setName("sourcepath");
 			prop.setValue(sourcepath.length ? sourcepath.join(" ") : "");
 			prop.perform();
-
+			
 	    	]]>
 		</script>
 		
 		<condition property="docsources" value="-doc-sources ${source.dir} -doc-sources ${extended.dir}" else="-doc-sources ${source.dir}">
 			 <isset property="extended.dir"/>
 		</condition>
+		<condition property="librarypath" value="-library-path ${lib.dir}" else="">
+			<available file="${lib.dir}" type="dir"/>
+		</condition>
 		
 		<exec executable="${asdoc}" failonerror="true">
 			<arg line="-source-path ${source.dir}" />
 			<arg line="${sourcepath}" />
 			<arg line="${docsources}" />
+			<arg line="${librarypath}" />
 			<arg line="-output ${doc.dir}" />
 			<arg line="-main-title '${name} API Documentation - ${version}'" />
 			<arg line="-window-title '${name} API Documentation'" />
@@ -409,7 +413,7 @@
 
 	<target name="Copy dependencies" if="dependencies">
 		<delete>
-			<fileset dir="${lib.dir}" includes="**/*.swc" />
+			<fileset dir="${lib.dir}" includes="**/*.swc" excludes="${libraries}" />
 		</delete>
 		<script language="javascript">
 			<![CDATA[
