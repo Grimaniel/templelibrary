@@ -58,16 +58,22 @@ package temple.mediaplayers.video.net
 	 */
 	dynamic public class VideoNetStream extends CoreNetStream 
 	{
-		public function VideoNetStream(nc:NetConnection) 
+		public function VideoNetStream(netConnection:NetConnection, logErrors:Boolean = true) 
 		{
-			super(nc);
+			super(netConnection, logErrors);
 		}
 
+		/**
+		 * @private
+		 */
 		public function onMetaData(info:Object):void 
 		{
 			this.dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.METADATA, new VideoMetaData(info)));
 		}
 
+		/**
+		 * @private
+		 */
 		public function onCuePoint(info:Object):void 
 		{
 			var cuepoint:VideoCuePoint = new VideoCuePoint();

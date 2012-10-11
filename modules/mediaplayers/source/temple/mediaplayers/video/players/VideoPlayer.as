@@ -36,6 +36,27 @@
 package temple.mediaplayers.video.players 
 {
 	import temple.common.enum.Align;
+	import temple.common.enum.ScaleMode;
+	import temple.common.events.SoundEvent;
+	import temple.common.events.StatusEvent;
+	import temple.common.interfaces.IHasBackground;
+	import temple.core.debug.addToDebugManager;
+	import temple.core.display.CoreSprite;
+	import temple.core.errors.TempleError;
+	import temple.core.errors.throwError;
+	import temple.core.media.CoreVideo;
+	import temple.mediaplayers.players.PlayerEvent;
+	import temple.mediaplayers.players.PlayerStatus;
+	import temple.mediaplayers.video.cuepoints.CuePointEvent;
+	import temple.mediaplayers.video.cuepoints.VideoCuePoint;
+	import temple.mediaplayers.video.metadata.VideoMetaData;
+	import temple.mediaplayers.video.metadata.VideoMetaDataEvent;
+	import temple.mediaplayers.video.net.NetStatusEventInfoCodes;
+	import temple.mediaplayers.video.net.VideoNetConnection;
+	import temple.mediaplayers.video.net.VideoNetStream;
+	import temple.utils.FrameDelay;
+	import temple.utils.TimeUtils;
+
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.AsyncErrorEvent;
@@ -49,25 +70,6 @@ package temple.mediaplayers.video.players
 	import flash.net.ObjectEncoding;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-	import temple.common.enum.ScaleMode;
-	import temple.common.events.SoundEvent;
-	import temple.common.events.StatusEvent;
-	import temple.common.interfaces.IHasBackground;
-	import temple.core.debug.addToDebugManager;
-	import temple.core.display.CoreSprite;
-	import temple.core.errors.TempleError;
-	import temple.core.errors.throwError;
-	import temple.mediaplayers.players.PlayerEvent;
-	import temple.mediaplayers.players.PlayerStatus;
-	import temple.mediaplayers.video.cuepoints.CuePointEvent;
-	import temple.mediaplayers.video.cuepoints.VideoCuePoint;
-	import temple.mediaplayers.video.metadata.VideoMetaData;
-	import temple.mediaplayers.video.metadata.VideoMetaDataEvent;
-	import temple.mediaplayers.video.net.NetStatusEventInfoCodes;
-	import temple.mediaplayers.video.net.VideoNetConnection;
-	import temple.mediaplayers.video.net.VideoNetStream;
-	import temple.utils.FrameDelay;
-	import temple.utils.TimeUtils;
 
 
 
@@ -171,7 +173,7 @@ package temple.mediaplayers.video.players
 
 		private var _netConnection:VideoNetConnection;
 		private var _cuePoint:VideoCuePoint;
-		private var _video:Video;
+		private var _video:CoreVideo;
 		private var _videoPath:String;
 		private var _status:String;
 		private var _netConnectionCommand:String;
@@ -244,7 +246,7 @@ package temple.mediaplayers.video.players
 			this.addChild(new Bitmap(this._screenShot));
 			
 			// create actual video
-			this._video = new Video(this._width, this._height);
+			this._video = new CoreVideo(this._width, this._height);
 			this._video.smoothing = smoothing;
 			this.addChild(this._video);
 			
@@ -864,7 +866,8 @@ package temple.mediaplayers.video.players
 			if (this._video)
 			{
 				// due to a known bug, clear doens't work. So we just make a copy of the video
-				var video:Video = new Video();
+				this._video.destruct();
+				var video:CoreVideo = new CoreVideo();
 				video.x = this._video.x;
 				video.y = this._video.y;
 				video.width = this._video.width;
@@ -1521,9 +1524,9 @@ package temple.mediaplayers.video.players
 			}
 			this._metaData = null;
 			
-			if (this._video.parent && this._video.parent == this)
+			if (this._video)
 			{
-				this.removeChild(this._video);
+				this._video.destruct();
 				this._video = null;
 			}
 			

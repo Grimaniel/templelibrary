@@ -94,7 +94,6 @@ package temple.mediaplayers.players.controls
 		private var _toggleResumePauseButtonsVisibility:Boolean;
 		private var _autoHide:Boolean;
 		private var _autoHideTimer:CoreTimer;
-		private var _debug:Boolean;
 		
 		public function PlayerControls()
 		{
@@ -340,16 +339,16 @@ package temple.mediaplayers.players.controls
 			if (this._player) this.updateToStatus(this._player.status);
 		}
 		
-		override public function show(instant:Boolean = false):void
+		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			super.show(instant);
+			super.show(instant, onComplete);
 			this._autoHideTimer.reset();
 			if (this._autoHide && this.enabled) this._autoHideTimer.start();
 		}
 		
-		override public function hide(instant:Boolean = false):void
+		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			super.hide(instant);
+			super.hide(instant, onComplete);
 			if (this._autoHideTimer) this._autoHideTimer.reset();
 		}
 		
@@ -404,22 +403,6 @@ package temple.mediaplayers.players.controls
 			if (this._progressBar) this._progressBar.enabled = value;
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
-		public function get debug():Boolean
-		{
-			return this._debug;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function set debug(value:Boolean):void
-		{
-			this._debug = value;
-		}
-
 		private function handleClick(event:MouseEvent):void
 		{
 			if (this.debug) this.logDebug("handleClick: " + event.target);
