@@ -151,20 +151,37 @@ package temple.utils.types
 			return bmd;
 		}
 		
-		public static function getScaledBitmap(target:BitmapData, scaleX:Number, scaleY:Number, smooth:Boolean=true):BitmapData
+		public static function getScaledBitmap(source:BitmapData, scaleX:Number, scaleY:Number, smooth:Boolean = true):BitmapData
 		{
-			if(!target) throwError(new TempleArgumentError(BitmapDataUtils, 'null or empty target'));
-			if(isNaN(scaleX)) throwError(new TempleArgumentError(BitmapDataUtils, 'NaN scaleX'));
-			if(isNaN(scaleY)) throwError(new TempleArgumentError(BitmapDataUtils, 'NaN scaleY'));
+			if (!source) throwError(new TempleArgumentError(BitmapDataUtils, 'null or empty source'));
+			if (isNaN(scaleX)) throwError(new TempleArgumentError(BitmapDataUtils, 'NaN scaleX'));
+			if (isNaN(scaleY)) throwError(new TempleArgumentError(BitmapDataUtils, 'NaN scaleY'));
 			
-			var width:int = Math.round(target.width * scaleX);
-			var height:int = Math.round(target.height * scaleY);
+			var width:int = Math.round(source.width * scaleX);
+			var height:int = Math.round(source.height * scaleY);
 			
 			var matrix:Matrix = new Matrix();
 			matrix.scale(scaleX, scaleY);
 			
-			var bitmap:BitmapData = new BitmapData(width, height, target.transparent, 0x00000000);
-			bitmap.draw(target, matrix, null, null, null, smooth);
+			var bitmap:BitmapData = new BitmapData(width, height, source.transparent, 0x00000000);
+			bitmap.draw(source, matrix, null, null, null, smooth);
+			return bitmap;
+		}
+		
+		/**
+		 * Returns a smaller version of the image.
+		 */
+		public static function createSmallerBitmap(source:BitmapData, maxWidth:Number, maxHeight:Number, smooth:Boolean = true):BitmapData
+		{
+			var scale:Number = Math.min(1, maxWidth / source.width || 1, maxHeight / source.height || 1);
+			
+			if (scale == 1) return source;
+			
+			var matrix:Matrix = new Matrix();
+			matrix.scale(scale, scale);
+			
+			var bitmap:BitmapData = new BitmapData(source.width * scale, source.height * scale, source.transparent, 0x00000000);
+			bitmap.draw(source, matrix, null, null, null, smooth);
 			return bitmap;
 		}
 		

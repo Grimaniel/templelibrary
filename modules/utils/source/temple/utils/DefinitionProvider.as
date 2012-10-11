@@ -48,6 +48,7 @@ package temple.utils
 	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
 	import flash.media.Sound;
+	import flash.net.getClassByAlias;
 	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
@@ -104,7 +105,7 @@ package temple.utils
 				}
 				else
 				{
-					//loop up in registered ApplicationDomain's
+					//loop up in registered ApplicationDomains
 					var def:Class;
 					for each (var appDomain:ApplicationDomain in DefinitionProvider._domainRegister)
 					{
@@ -149,6 +150,14 @@ package temple.utils
 							return def;
 						}
 					}
+					// check alias
+					def = getClassByAlias(name);
+					if (def)
+					{
+						DefinitionProvider._definitionCache[name] = def;
+						return def;
+					}
+					
 					//cannot find it
 					throwError(new TempleArgumentError(DefinitionProvider, 'DefinitionProvider cannot find a definiton for \''+name+'\' in the loaded library\'s'));
 					return null;

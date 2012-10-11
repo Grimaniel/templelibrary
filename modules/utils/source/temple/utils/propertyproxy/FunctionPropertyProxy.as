@@ -61,9 +61,10 @@ package temple.utils.propertyproxy
 			this._method = value;
 		}
 		
-		public function setValue(target:Object, property:String, value:*):void
+		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			target[property] = this._method(value);
+			if (onComplete != null) onComplete();
 		}
 
 		/**

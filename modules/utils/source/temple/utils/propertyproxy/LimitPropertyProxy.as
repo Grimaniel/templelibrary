@@ -87,14 +87,14 @@ package temple.utils.propertyproxy
 		/**
 		 * @inheritDoc
 		 */
-		override public function setValue(target:Object, property:String, value:*):void
+		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			if (!isNaN(value))
 			{
 				if (!isNaN(this._min)) value = Math.max(value, this._min);
 				if (!isNaN(this._max)) value = Math.min(value, this._max);
 			}
-			super.setValue(target, property, value);
+			super.setValue(target, property, value, onComplete);
 		}
 		
 	}

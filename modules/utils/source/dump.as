@@ -6,7 +6,7 @@ package
 	 * Recursively dumps the object and all his properties.
 	 * 
 	 * @param object object to dump
-	 * @param maxDepth indicates the recursive factor
+	 * @param depth indicates the recursive factor
 	 * @param duplicates indicates if duplicate objects should be dumped again
 	 * @param constants indicates if constants will be included (true) or not (false)
 	 * @param methods indicates if methods will be included (true) or not (false)
@@ -14,11 +14,18 @@ package
 	 * 
 	 * @return the object tree as String
 	 * 
+	 * @example
+	 * <listing version="3.0">
+	 * 
+	 *  trace(dump(myObject));
+	 * 
+	 * </listing>
+	 * 
 	 * @author Thijs Broerse
 	 */
-	public function dump(object:Object, maxDepth:uint = 3, duplicates:Boolean = true, constants:Boolean = false, namespaces:Boolean = false, methods:Boolean = false, dates:Boolean = false):String
+	public function dump(object:Object, depth:uint = 3, duplicates:Boolean = true, constants:Boolean = false, namespaces:Boolean = false, methods:Boolean = false, dates:Boolean = false):String
 	{
-		return Functions.dump(object, maxDepth, duplicates ? null : new Dictionary(true), constants, namespaces, methods, dates, false, "");
+		return Functions.dump(object, depth, duplicates ? null : new Dictionary(true), constants, namespaces, methods, dates, false, "");
 	}
 }
 import temple.utils.types.ObjectUtils;
@@ -33,7 +40,7 @@ import flash.utils.getQualifiedClassName;
 
 class Functions
 {
-	internal static function dump(object:Object, maxDepth:uint, objects:Dictionary, constants:Boolean, namespaces:Boolean, methods:Boolean, dates:Boolean, isInited:Boolean, tabs:String):String
+	internal static function dump(object:Object, depth:uint, objects:Dictionary, constants:Boolean, namespaces:Boolean, methods:Boolean, dates:Boolean, isInited:Boolean, tabs:String):String
 	{
 		var output:String = "";
 		var openChar:String;
@@ -41,7 +48,7 @@ class Functions
 		// every time this function is called we'll add another tab to the indention in the output window
 		tabs += "\t";
 
-		if (maxDepth < 0 )
+		if (depth < 0 )
 		{
 			output += tabs + "\n(...)";
 			return output;
@@ -90,7 +97,7 @@ class Functions
 		var leni:int;
 		var i:int;
 
-		if (object is Array || Functions.isVector(object))
+		if (object is Array || Functions.isVector(object) || object is XMLList)
 		{
 			for (key in object)
 			{
@@ -178,18 +185,18 @@ class Functions
 					// check to see if the variable is an Array or Vector.
 					if (variable is Array || Functions.isVector(variable))
 					{
-						if ((objects == null || !objects[variable]) && ObjectUtils.hasValues(variable) && maxDepth)
+						if ((objects == null || !objects[variable]) && ObjectUtils.hasValues(variable) && depth)
 						{
 							if (objects) objects[variable] = true;
 
 							output += ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")";
 							if (variable.length) output += "\n" + tabs + "[";
-							output += Functions.dump(variable, maxDepth - 1, objects, constants, namespaces, methods, dates, isInited, tabs);
+							output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, isInited, tabs);
 							if (variable.length) output += "\n" + tabs + "]";
 						}
 						else
 						{
-							output += ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")";
+							output += ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")" + (objects && objects[variable] ? " (duplicate)" : "");;
 						}
 					}
 					else if (variable is ByteArray)
@@ -198,12 +205,12 @@ class Functions
 					}
 					else if (variable is Enumerator)
 					{
-						output += ": " + variable + (vardata.type ? " (" + getClassName(variable || vardata.type) + ")" : "") + " (" + getClassName(Enumerator) + ")";
+						output += ": " + variable + " (" + getClassName(vardata.type ? variable || vardata.type : getQualifiedClassName(variable)) + ") (" + getClassName(Enumerator) + ")";
 					}
 					else
 					{
 						// object, make exception for Date
-						if ((objects == null || !objects[variable]) && (variable && maxDepth && (dates || !(variable is Date))))
+						if ((objects == null || !objects[variable]) && (variable && depth && (dates || !(variable is Date))))
 						{
 							if (objects) objects[variable] = true;
 
@@ -217,7 +224,7 @@ class Functions
 								}
 
 								output += "\n" + tabs + "\u007B";
-								output += Functions.dump(variable, maxDepth - 1, objects, constants, namespaces, methods, dates, isInited, tabs);
+								output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, isInited, tabs);
 								output += "\n" + tabs + "}";
 							}
 						}

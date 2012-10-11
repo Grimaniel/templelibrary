@@ -178,7 +178,7 @@ package temple.utils
 		 */
 		public function get paused():Boolean
 		{
-			return !this._timer.running;
+			return this._timer ? !this._timer.running : false;
 		}
 
 		/**

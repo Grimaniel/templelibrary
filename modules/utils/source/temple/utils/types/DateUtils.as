@@ -862,7 +862,7 @@ package temple.utils.types
 				case 'L': return DateUtils.isLeapYear(date.getFullYear()) ? "1" : "0";
 				
 				// Numeric representation of a month, with leading zeros
-				case 'm': return DateUtils.addLeadingZero(date.getDate());
+				case 'm': return DateUtils.addLeadingZero(date.getMonth() + 1);
 				
 				// A short textual representation of a month, three letters
 				case 'M': return DateUtils.getMonthAsText(date, true);

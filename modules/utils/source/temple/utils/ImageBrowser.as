@@ -35,6 +35,7 @@
 
 package temple.utils
 {
+	import temple.core.debug.IDebuggable;
 	import temple.core.display.CoreLoader;
 	import temple.core.events.CoreEventDispatcher;
 	import temple.core.net.CoreFileReference;
@@ -46,6 +47,16 @@ package temple.utils
 	import flash.events.IOErrorEvent;
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
+	
+	/**
+	 * @eventType flash.events.Event.COMPLETE
+	 */
+	[Event(name = "complete", type = "flash.events.Event")]
+
+	/**
+	 * @eventType flash.events.ErrorEvent.ERROR
+	 */
+	[Event(name = "error", type = "flash.events.ErrorEvent")]
 
 	/**
 	 * Opens a file select window for selecting an image. Loads the images and converts to BitmapData.
@@ -65,7 +76,7 @@ package temple.utils
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ImageBrowser extends CoreEventDispatcher
+	public class ImageBrowser extends CoreEventDispatcher implements IDebuggable
 	{
 		public static const _IMAGES_FILTER:FileFilter = new FileFilter("Images (*.jpg, *.jpeg, *.gif, *.png)", "*.jpg;*.jpeg;*.gif;*.png");
 		
@@ -73,6 +84,7 @@ package temple.utils
 		private var _loader:CoreLoader;
 		private var _maxImageSize:Number;
 		private var _instantLoad:Boolean;
+		private var _debug:Boolean;
 
 		public function ImageBrowser(instantLoad:Boolean = true)
 		{
@@ -80,6 +92,7 @@ package temple.utils
 
 			this._file = new CoreFileReference();
 			this._file.addEventListener(Event.SELECT, this.handleFileSelect);
+			this._file.addEventListener(Event.CANCEL, this.handleFileCancel);
 			this._file.addEventListener(Event.COMPLETE, this.handleFileComplete);
 
 			this._loader = new CoreLoader();
@@ -89,6 +102,7 @@ package temple.utils
 
 		public function browse():Boolean
 		{
+			if (this.debug) this.logDebug("browse");
 			return this._file.browse([_IMAGES_FILTER]);
 		}
 
@@ -119,14 +133,32 @@ package temple.utils
 
 		public function load():void
 		{
+			if (this.debug) this.logDebug("load");
 			if (this._file.data)
 			{
 				this._loader.loadBytes(this._file.data);
 			}
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
+		}
 
 		private function handleFileSelect(event:Event):void
 		{
+			if (this.debug) this.logDebug("handleFileSelect: '" + this._file.name + "'");
 			if (!isNaN(this._maxImageSize) && this._file.size > this._maxImageSize * 1024)
 			{
 				this.dispatchEvent(new ErrorEvent(ErrorEvent.ERROR));
@@ -136,10 +168,17 @@ package temple.utils
 				this._file.load();
 			}
 		}
+		
+		private function handleFileCancel(event:Event):void
+		{
+			if (this.debug) this.logDebug("handleFileCancel");
+			this.dispatchEvent(new Event(Event.CANCEL));
+		}
 
 		private function handleFileComplete(event:Event):void
 		{
-			if(this._instantLoad)
+			if (this.debug) this.logDebug("handleFileComplete: '" + this._file.name + "'");
+			if (this._instantLoad)
 			{
 				this._loader.loadBytes(this._file.data);
 			}
@@ -147,9 +186,13 @@ package temple.utils
 
 		private function handleLoaderComplete(event:Event):void
 		{
+			if (this.debug) this.logDebug("handleLoaderComplete");
 			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function destruct():void
 		{
 			if (this._file)

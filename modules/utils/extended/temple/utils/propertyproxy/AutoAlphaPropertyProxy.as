@@ -51,7 +51,7 @@ package temple.utils.propertyproxy
 			TweenPlugin.activate([AutoAlphaPlugin]);
 		}
 
-		override public function setValue(target:Object, property:String, value:*):void
+		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			if (property == "visible")
 			{
@@ -59,7 +59,7 @@ package temple.utils.propertyproxy
 				value = value ? 1 : 0; 
 			}
 			
-			super.setValue(target, property, value);
+			super.setValue(target, property, value, onComplete);
 		}
 	}
 }

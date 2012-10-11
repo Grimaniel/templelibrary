@@ -79,9 +79,9 @@ package temple.utils.propertyproxy
 			return (target[property]- this._min) / (this._max - this._min);
 		}
 
-		override public function setValue(target:Object, property:String, value:*):void
+		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			super.setValue(target, property, this._min + (this._max - this._min) * value);
+			super.setValue(target, property, this._min + (this._max - this._min) * value, onComplete);
 		}
 	}
 }

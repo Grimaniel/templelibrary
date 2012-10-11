@@ -37,6 +37,8 @@ package temple.utils
 {
 	import temple.common.interfaces.IHasValue;
 	import temple.core.CoreObject;
+	import temple.core.errors.TempleArgumentError;
+	import temple.core.errors.throwError;
 	import temple.utils.propertyproxy.IPropertyProxy;
 
 	import flash.events.Event;
@@ -56,6 +58,10 @@ package temple.utils
 		
 		public function ValueBinder(source:IHasValue, target:Object, property:String, propertyProxy:IPropertyProxy = null, eventType:String = Event.CHANGE)
 		{
+			if (!source) throwError(new TempleArgumentError(this, "source cannot be null"));
+			if (!target) throwError(new TempleArgumentError(this, "target cannot be null"));
+			if (!property) throwError(new TempleArgumentError(this, "property cannot be null"));
+			
 			this._source = source;
 			this._target = target;
 			this._property = property;
