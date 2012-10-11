@@ -44,7 +44,7 @@ package temple.codecomponents.buttons
 
 
 	/**
-	 * @includeExample CodeLabelButton
+	 * @includeExample CodeLabelButtonExample.as
 	 * 
 	 * @author Thijs Broerse
 	 */

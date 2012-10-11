@@ -14,6 +14,7 @@ package
 {
 	import temple.codecomponents.buttons.CodeCloseButton;
 
+	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeCloseButtonExample extends DocumentClassExample
 	{
 		public function CodeCloseButtonExample()

@@ -31,6 +31,15 @@
  */
 package
 {
+	import temple.codecomponents.buttons.CodePauseButton;
+	import temple.codecomponents.buttons.CodeNextButton;
+	import temple.codecomponents.buttons.CodeFastForwardButton;
+	import temple.codecomponents.buttons.CodePlayBackwardButton;
+	import temple.codecomponents.buttons.CodeFastBackwardButton;
+	import temple.codecomponents.buttons.CodePreviousButton;
+	import temple.ui.layout.HBox;
+	import temple.codecomponents.buttons.CodePlayButton;
+	import temple.common.enum.Orientation;
 	import temple.codecomponents.buttons.CodeButton;
 	import temple.codecomponents.buttons.CodeCloseButton;
 	import temple.codecomponents.buttons.CodeCollapseButton;
@@ -49,7 +58,6 @@ package
 	import temple.codecomponents.slider.CodeStepSlider;
 	import temple.codecomponents.tooltip.CodeToolTip;
 	import temple.codecomponents.windows.CodeWindow;
-	import temple.common.enum.Orientation;
 	import temple.ui.form.components.RadioGroup;
 	import temple.ui.tooltip.ToolTip;
 
@@ -150,6 +158,21 @@ package
 			add(new CodeLabel("CodeWindow"), _COLUMN3, line + 2);
 			add(new CodeWindow(200, 100, "Lorem ipsum"), _COLUMN4, line);
 			line += 120;
+			
+			add(new CodeLabel("Other"), _COLUMN3, line + 2);
+			
+			var hbox:HBox = new HBox(5);
+			
+			ToolTip.add(hbox.addChild(new CodePreviousButton()), "CodePreviousButton");
+			ToolTip.add(hbox.addChild(new CodeFastBackwardButton()), "CodeFastBackwardButton");
+			ToolTip.add(hbox.addChild(new CodePlayBackwardButton()), "CodePlayBackwardButton");
+			ToolTip.add(hbox.addChild(new CodePauseButton()), "CodePauseButton");
+			ToolTip.add(hbox.addChild(new CodePlayButton()), "CodePlayButton");
+			ToolTip.add(hbox.addChild(new CodeFastForwardButton()), "CodeFastForwardButton");
+			ToolTip.add(hbox.addChild(new CodeNextButton()), "CodeNextButton");
+			
+			add(hbox, _COLUMN4, line);
+			line += _LINE_HEIGHT;
 		}
 
 		private function add(child:DisplayObject, x:Number, y:Number):DisplayObject

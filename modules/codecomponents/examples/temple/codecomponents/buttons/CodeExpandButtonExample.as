@@ -14,6 +14,7 @@ package
 {
 	import temple.codecomponents.buttons.CodeExpandButton;
 
+	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeExpandButtonExample extends DocumentClassExample
 	{
 		public function CodeExpandButtonExample()

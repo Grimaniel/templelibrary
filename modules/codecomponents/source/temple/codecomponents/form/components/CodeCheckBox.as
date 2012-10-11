@@ -52,7 +52,7 @@ package temple.codecomponents.form.components
 	 */
 	public class CodeCheckBox extends CheckBox 
 	{
-		public function CodeCheckBox(label:String = null, value:* = null, selected:Boolean = false, unselectedValue:* = false) 
+		public function CodeCheckBox(label:String = null, selectedValue:* = null, selected:Boolean = false, unselectedValue:* = false) 
 		{
 			this.addChild(new TextField());
 			
@@ -61,7 +61,7 @@ package temple.codecomponents.form.components
 			this.createUI();
 			
 			if (label) this.label = label;
-			this.selectedValue = value == null ? (label ? label : true) : value;
+			this.selectedValue = selectedValue == null ? (label ? label : true) : selectedValue;
 			this.unselectedValue = unselectedValue;
 			this.selected = selected;
 		}
