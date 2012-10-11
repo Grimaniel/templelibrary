@@ -57,12 +57,12 @@ package temple.data.cache
 	public class CacheURLLoader extends CoreURLLoader implements ICacheable
 	{
 		private var _cache:Boolean;
-		private var _cacheData:LoaderCacheData;
+		private var _cacheData:ILoaderCacheItem;
 		private var _owner:Boolean;
 		
 		public function CacheURLLoader(request:URLRequest = null, destructOnError:Boolean = true, logErrors:Boolean = true, cache:Boolean = true)
 		{
-			super(null, destructOnError, logErrors);
+			super(null, URLLoaderDataFormat.BINARY, destructOnError, logErrors);
 			
 			this._cache = cache;
 			

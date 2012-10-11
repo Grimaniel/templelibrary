@@ -105,8 +105,10 @@ package temple.data.encoding.json
 		 * Creates a new JSONEncoder.
 		 *
 		 * @param o The object to encode as a JSON string
-		 * @param useExplicitType a Boolean which indicates if the '_explicitType' property (if defined with registerClassAlias()) should be added to the object.
-		 * @param skipTransientVars a Boolean which indicates if properties with the [Transient] metadata tag should be ignored.
+		 * @param useExplicitType a Boolean which indicates if the '_explicitType' property (if defined with
+		 * <code>registerClassAlias()</code>) should be added to the object.
+		 * @param skipTransientVars a Boolean which indicates if properties with the <code>[Transient]</code> metadata
+		 * tag should be ignored.
 		 * @param skipReadOnlyVars a Boolean which indicates if read-only properties should be ignored.
 		 */
 		public function JSONEncoder(value:* = null, useExplicitType:Boolean = false, skipTransientVars:Boolean = true, skipReadOnlyVars:Boolean = true) 
@@ -191,6 +193,55 @@ package temple.data.encoding.json
 		{
 			this._explicitEncoders ||= new HashMap("expicitEncoders");
 			this._explicitEncoders[getQualifiedClassName(type)] = encoder;
+		}
+		
+		/**
+		 * A Boolean which indicates if the '_explicitType' property (if defined with <code>registerClassAlias()</code>)
+		 * should be added to the object.
+		 */
+		public function get useExplicitType():Boolean
+		{
+			return this._useExplicitType;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set useExplicitType(value:Boolean):void
+		{
+			this._useExplicitType = value;
+		}
+
+		/**
+		 * A Boolean which indicates if properties with the <code>[Transient]</code> metadata tag should be ignored.
+		 */
+		public function get skipTransientVars():Boolean
+		{
+			return this._skipTransientVars;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set skipTransientVars(value:Boolean):void
+		{
+			this._skipTransientVars = value;
+		}
+
+		/**
+		 * A Boolean which indicates if read-only properties should be ignored.
+		 */
+		public function get skipReadOnlyVars():Boolean
+		{
+			return this._skipReadOnlyVars;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set skipReadOnlyVars(value:Boolean):void
+		{
+			this._skipReadOnlyVars = value;
 		}
 
 		/**

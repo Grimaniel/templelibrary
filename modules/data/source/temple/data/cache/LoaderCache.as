@@ -39,9 +39,11 @@ package temple.data.cache
 	import temple.core.debug.objectToString;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
+	import temple.core.events.CoreEventDispatcher;
 	import temple.core.utils.CoreTimer;
 	import temple.data.collections.HashMap;
 
+	import flash.events.IEventDispatcher;
 	import flash.events.TimerEvent;
 	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
@@ -51,9 +53,10 @@ package temple.data.cache
 	 * 
 	 * @author Thijs Broerse, Bart van der Schoor
 	 */
-	public final class LoaderCache 
+	public final class LoaderCache
 	{
 		private static const _cache:HashMap = new HashMap("LoaderCache");
+		private static const _dispatcher:CoreEventDispatcher = new CoreEventDispatcher();
 
 		private static var _maxSeconds:Number;
 		private static var _autoPurgeTimer:CoreTimer;
@@ -61,21 +64,25 @@ package temple.data.cache
 		/**
 		 * Get data from cache.
 		 */
-		public static function get(url:String):LoaderCacheData
+		public static function get(url:String):LoaderCacheItem
 		{
-			return LoaderCache._cache[url] as LoaderCacheData;
+			return LoaderCache._cache[url] as LoaderCacheItem;
 		}
 
 		/**
 		 * Creates a new LoaderCacheData for a specific url. Data can be filled later.
 		 */
-		public static function create(url:String):LoaderCacheData 
+		public static function create(url:String):ILoaderCacheItem 
 		{
 			if (LoaderCache._cache[url] != undefined)
 			{
 				throwError(new TempleError(LoaderCache, "LoaderCacheData for url \"" + url + "\" already exists"));
 			}
-			return LoaderCache._cache[url] = new LoaderCacheData(url);
+			var item:ILoaderCacheItem = LoaderCache._cache[url] = new LoaderCacheItem(url);
+			
+			LoaderCache._dispatcher.dispatchEvent(new LoaderCacheEvent(LoaderCacheEvent.CREATE, item));
+			
+			return item;
 		}
 
 		/**
@@ -85,9 +92,9 @@ package temple.data.cache
 		{
 			if (LoaderCache._cache[url] == undefined)
 			{
-				LoaderCache._cache[url] = new LoaderCacheData(url);
+				LoaderCache._cache[url] = new LoaderCacheItem(url);
 			}
-			LoaderCacheData(LoaderCache._cache[url]).bytes = data;
+			LoaderCacheItem(LoaderCache._cache[url]).bytes = data;
 		}
 
 		/**
@@ -105,7 +112,7 @@ package temple.data.cache
 			}
 			else if (LoaderCache._cache[url])
 			{
-				var data:LoaderCacheData = LoaderCacheData(LoaderCache._cache[url]);
+				var data:LoaderCacheItem = LoaderCacheItem(LoaderCache._cache[url]);
 				delete LoaderCache._cache[url];
 				data.destruct();
 			}
@@ -117,7 +124,7 @@ package temple.data.cache
 		public static function purge(maxSeconds:Number):void
 		{
 			var limit:Number = getTimer() - (maxSeconds * 1000);
-			for each (var data:LoaderCacheData in LoaderCache._cache)
+			for each (var data:LoaderCacheItem in LoaderCache._cache)
 			{
 				if (data.purgeable && data.time < limit)
 				{
@@ -153,6 +160,11 @@ package temple.data.cache
 				LoaderCache._autoPurgeTimer.destruct();
 				LoaderCache._autoPurgeTimer = null;
 			}
+		}
+		
+		public static function get dispatcher():IEventDispatcher
+		{
+			return LoaderCache._dispatcher;
 		}
 
 		private static function handlePurgeTimer(event:TimerEvent):void

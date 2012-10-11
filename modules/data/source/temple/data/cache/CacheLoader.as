@@ -65,7 +65,7 @@ package temple.data.cache
 
 		public function CacheLoader(logErrors:Boolean = true, cache:Boolean = true, reloadAfterError:Boolean = true)
 		{
-			super(logErrors);
+			super(null, null, logErrors);
 			
 			this._cacheURLLoader = new CacheURLLoader(null, false, logErrors, cache);
 			this._cacheURLLoader.addEventListener(Event.COMPLETE, this.handleURLLoaderComplete);
@@ -83,7 +83,6 @@ package temple.data.cache
 			this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
 						
 			addToDebugManager(this._cacheURLLoader, this);
-			
 			
 			this.cache = cache;
 			this._reloadAfterError = reloadAfterError;

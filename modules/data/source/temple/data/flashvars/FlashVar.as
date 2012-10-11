@@ -86,10 +86,6 @@ package temple.data.flashvars
 			switch (this._type)
 			{
 				default:
-				{	
-					this.logWarn("value: can't convert to " + this._type + ", result will be a String");
-					// no break
-				}
 				case null:
 				case String:
 				{
@@ -164,6 +160,13 @@ package temple.data.flashvars
 		public function set type(value:Class):void
 		{
 			this._type = value;
+			
+			var val:* = this.value;
+			
+			if (this._type && !(val is this._type) && val is String)
+			{
+				this.logWarn("value: can't convert to " + this._type + ", result will be a String");
+			}
 		}
 
 		/**

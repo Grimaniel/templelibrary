@@ -43,16 +43,61 @@ package temple.data
 	 * indeterminate third value. This is contrasted with the more commonly known bivalent logics (such as classical
 	 * sentential or boolean logic) which provide only for true and false.
 	 * 
+	 * <p><strong>NOTE:</strong> since casting an object to <code>Boolean</code> always results in <code>true</code>,
+	 * always compare these enum values!</p>
+	 * 
+	 * @example
+	 * 
+	 * <p>Don't do:</p>
+	 * <listing version="3.0">
+	 * 
+	 * var trivalent:Trivalent = Trivalent.FALSE
+	 * 
+	 * if (trivalent) // will also be true if trivalent == Trivalent.FALSE
+	 * {
+	 * 	
+	 * }
+	 * </listing>
+	 * 
+	 * <p>But do this:</p>
+	 * <listing version="3.0">
+	 * var trivalent:Trivalent = Trivalent.FALSE
+	 * 
+	 * if (trivalent.value) // will only be true if trivalent == Trivalent.TRUE
+	 * {
+	 * 	
+	 * }
+	 * </listing>
+	 * 
+	 * <p>Or:</p>
+	 * <listing version="3.0">
+	 * var trivalent:Trivalent = Trivalent.FALSE
+	 * 
+	 * if (trivalent == Trivalent.TRUE) // will only be true if trivalent == Trivalent.TRUE
+	 * {
+	 * 	
+	 * }
+	 * </listing>
+	 * 
 	 * @see http://en.wikipedia.org/wiki/Ternary_logic
 	 * 
 	 * @author Thijs Broerse
 	 */
 	public final class Trivalent extends Enumerator
 	{
+		/**
+		 * Use this value if the property should be <code>true</code>.
+		 */
 		public static const TRUE:Trivalent = new Trivalent(true);
 		
+		/**
+		 * Use this value if the property should be <code>false</code>.
+		 */
 		public static const FALSE:Trivalent = new Trivalent(false);
 		
+		/**
+		 * Use this when the value of the property is not known.
+		 */
 		public static const UNDEFINED:Trivalent = null;
 		
 		/**
@@ -69,7 +114,7 @@ package temple.data
 		 */
 		public function Trivalent(value:Boolean)
 		{
-			super(value.toString());
+			super(value);
 		}
 	}
 }
