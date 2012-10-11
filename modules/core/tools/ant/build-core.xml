@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="Full Build Core" name="Temple-Core">
+<project default="Full Build" name="Temple-Core">
 
 	<property name="module" value="core" />
 	<property name="name" value="Temple Core Module" />
@@ -7,13 +7,6 @@
 	<import file="../../../../tools/ant/build.xml" />
 	
 	<property name="export.dir" value="${base.dir}/export" />
-	
-	<target name="Full Build Core">
-		<antcall target="Check version" />
-		<antcall target="Update Temple properties" />
-		<antcall target="Generate Export" />
-		<antcall target="Full Build" />
-	</target>
 	
 	<target name="Prepare">
 		<antcall target="Check version" />

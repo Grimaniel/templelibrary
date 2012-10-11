@@ -36,7 +36,7 @@
 package temple.core.debug.log 
 {
 	import flash.events.Event;
-	import temple.core.debug.objectToString;
+	import temple.core.events.CoreEvent;
 	import temple.core.templelibrary;
 
 	/**
@@ -47,20 +47,18 @@ package temple.core.debug.log
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class LogEvent extends Event 
+	public class LogEvent extends CoreEvent 
 	{
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.1.0";
+		templelibrary static const VERSION:String = "3.2.0";
 		
 		/**
 		 * Event type
 		 */
 		public static const EVENT:String = "LogEvent.Event";
 		
-		private static const _TO_STRING_PROPS:Vector.<String> = Vector.<String>(['level', 'data', 'sender', 'objectId']);
-
 		private var _level:String;
 		private var _data:*;
 		private var _sender:String;
@@ -83,6 +81,9 @@ package temple.core.debug.log
 			this._sender = sender;
 			this._senderId = senderId;
 			this._stackTrace = stackTrace;
+			
+			this.toStringProps.length = 0;
+			this.toStringProps.push('level', 'data', 'sender', 'objectId');
 		}
 
 		/**
@@ -135,14 +136,6 @@ package temple.core.debug.log
 		override public function clone():Event 
 		{
 			return new LogEvent(this._level, this._data, this._sender, this._senderId);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String 
-		{
-			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }

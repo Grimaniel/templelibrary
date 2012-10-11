@@ -54,7 +54,7 @@ package temple.core.utils
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.1.0";
+		templelibrary static const VERSION:String = "3.2.0";
 		
 		/**
 		 * Returns true if the SWF is built in debug mode.
@@ -86,6 +86,9 @@ package temple.core.utils
 			if (displayObject.loaderInfo.hasOwnProperty('bytes'))
 			{
 				var bytes:ByteArray = displayObject.loaderInfo['bytes'] as ByteArray;
+				
+				if (bytes == null) return null;
+				
 				bytes.endian = Endian.LITTLE_ENDIAN;
 				// Signature + Version + FileLength + FrameSize + FrameRate + FrameCount
 				bytes.position = 3 + 1 + 4 + (Math.ceil(((bytes[8] >> 3) * 4 - 3) / 8) + 1) + 2 + 2;

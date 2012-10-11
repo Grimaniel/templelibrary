@@ -1,8 +1,8 @@
 		/**
 		 * @inheritDoc
 		 * 
-		 * Check implemented if object hasEventListener, must speed up the application
-		 * http://www.gskinner.com/blog/archives/2008/12/making_dispatch.html
+		 * Checks if this object has event listeners of this event before dispatching the event. Should speed up the
+		 * application.
 		 */
 		override public function dispatchEvent(event:Event):Boolean 
 		{

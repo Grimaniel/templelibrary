@@ -4,16 +4,16 @@ include "../includes/License.as.inc";
 
 package temple.core.destruction 
 {
-	import temple.core.templelibrary;
-	
 	import flash.events.Event;
+	import temple.core.events.CoreEvent;
+	import temple.core.templelibrary;
 
 	/**
 	 * Event for destruction. Just before an object is destructed it will dispatch a DestructEvent.destruct event.
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class DestructEvent extends Event 
+	public class DestructEvent extends CoreEvent 
 	{
 		include "../includes/Version.as.inc";
 		
