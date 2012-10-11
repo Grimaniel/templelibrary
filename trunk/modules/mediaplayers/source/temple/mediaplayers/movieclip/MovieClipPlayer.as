@@ -58,9 +58,10 @@ package temple.mediaplayers.movieclip
 		private var _volume:Number = 1;
 		private var _frameRate:Number;
 		
-		public function MovieClipPlayer(movieClip:MovieClip = null)
+		public function MovieClipPlayer(movieClip:MovieClip = null, status:String = null)
 		{
 			this.movieClip = movieClip;
+			this._status = status;
 		}
 		
 		/**
@@ -81,7 +82,6 @@ package temple.mediaplayers.movieclip
 			this._movieClip = value;
 			if (this._movieClip)
 			{
-				this._movieClip.stop();
 				this._movieClip.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
 				this.volume = this._volume;
 			}
@@ -117,6 +117,7 @@ package temple.mediaplayers.movieclip
 			{
 				this._status = PlayerStatus.PLAYING;
 				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+				this.dispatchEvent(new PlayerEvent(PlayerEvent.PLAY_STARTED));
 			}
 		}
 
