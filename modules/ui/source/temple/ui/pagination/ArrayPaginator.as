@@ -35,15 +35,22 @@
 
 package temple.ui.pagination
 {
-	import temple.core.CoreObject;
 	import temple.core.debug.IDebuggable;
+	import temple.core.events.CoreEventDispatcher;
+
+	import flash.events.Event;
+	
+	/**
+	 * @eventType flash.events.Event.CHANGE
+	 */
+	[Event(name = "change", type = "flash.events.Event")]
 
 	/**
 	 * Divides an <code>Array</code> into paginated data and makes the Array paginatable.
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ArrayPaginator extends CoreObject implements IPaginator, IPaginatedData, IDebuggable
+	public class ArrayPaginator extends CoreEventDispatcher implements IPaginator, IPaginatedData, IDebuggable
 	{
 		private var _array:Array;
 		private var _resultsPerPage:uint;
@@ -71,6 +78,7 @@ package temple.ui.pagination
 		public function set array(value:Array):void
 		{
 			this._array = value;
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -104,6 +112,7 @@ package temple.ui.pagination
 		{
 			this._resultsPerPage = value;
 			if (this.debug) this.logDebug("resultsPerPage: " + value);
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -121,6 +130,7 @@ package temple.ui.pagination
 		{
 			this._currentPage = value;
 			if (this.debug) this.logDebug("currentPage: " + this._currentPage);
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -145,6 +155,7 @@ package temple.ui.pagination
 		public function nextPage():void
 		{
 			if (this.hasNextPage) this._currentPage++;
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -153,6 +164,7 @@ package temple.ui.pagination
 		public function previousPage():void
 		{
 			if (this.hasPreviousPage) this._currentPage--;
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -162,6 +174,7 @@ package temple.ui.pagination
 		{
 			this._currentPage = 0;
 			if (this.debug) this.logDebug("firstPage");
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -171,6 +184,7 @@ package temple.ui.pagination
 		{
 			this._currentPage = this.totalPages - 1;
 			if (this.debug) this.logDebug("lastPage");
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -180,6 +194,7 @@ package temple.ui.pagination
 		{
 			this._currentPage = page;
 			if (this.debug) this.logDebug("gotoPage: " + page);
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**

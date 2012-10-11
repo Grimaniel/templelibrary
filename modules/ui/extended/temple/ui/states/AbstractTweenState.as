@@ -68,17 +68,17 @@ package temple.ui.states
 		/**
 		 * @inheritDoc
 		 */
-		override public function show(instant:Boolean = false):void
+		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			this.tween(true, instant ? 0 : this._showDuration, this._showVars);
+			this.tween(true, instant ? 0 : this._showDuration, this._showVars, onComplete);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function hide(instant:Boolean = false):void
+		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			this.tween(false, instant ? 0 : this._hideDuration, this._hideVars);
+			this.tween(false, instant ? 0 : this._hideDuration, this._hideVars, onComplete);
 		}
 		
 		/**
@@ -135,7 +135,7 @@ package temple.ui.states
 			this._hideDuration = value;
 		}
 		
-		private function tween(show:Boolean, duration:Number, vars:Object):void
+		private function tween(show:Boolean, duration:Number, vars:Object, onComplete:Function):void
 		{
 			if (vars == null)
 			{
@@ -145,6 +145,7 @@ package temple.ui.states
 			if (this.enabled == false || this._shown == show && duration > 0) return;
 			this._shown = show;
 			vars.immediateRender = duration == 0;
+			if (onComplete != null) vars.onComplete = onComplete;
 			if (this._tween) this._tween.kill();
 			this._tween = TweenMax.to(this, duration, vars);
 		}

@@ -63,6 +63,7 @@ package temple.ui.states
 		protected static var _LABEL_HIDE:String = 'hide';
 
 		private var _labels:HashMap;
+		private var _onComplete:Function;
 
 		public function BaseTimelineState()
 		{
@@ -84,19 +85,21 @@ package temple.ui.states
 		{
 			super.stop();
 			MovieClipUtils.stop(this, false);
+			if (this._onComplete != null) this._onComplete();
+			this._onComplete = null;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function show(instant:Boolean = false):void
+		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
 			if (this.enabled == false || this._shown && !instant) return;
 			this._shown = true;
 			MovieClipUtils.stop(this);
-			
 			if (instant)
 			{
+				this._onComplete = null;
 				if (this._labels[BaseTimelineState._LABEL_HIDE])
 				{
 					this.gotoAndStop(FrameLabel(this._labels[BaseTimelineState._LABEL_HIDE]).frame - 1);
@@ -105,9 +108,11 @@ package temple.ui.states
 				{
 					this.gotoAndStop(this.totalFrames);
 				}
+				if (onComplete != null) onComplete();
 			}
 			else
 			{
+				this._onComplete = onComplete;
 				if (this._labels[BaseTimelineState._LABEL_SHOW])
 				{
 					this.gotoAndStop(BaseTimelineState._LABEL_SHOW);
@@ -119,14 +124,14 @@ package temple.ui.states
 		/**
 		 * @inheritDoc
 		 */
-		override public function hide(instant:Boolean = false):void
+		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
 			if (this.enabled == false || !this._shown && !instant) return;
 			this._shown = false;
 			MovieClipUtils.stop(this);
-			
 			if (instant)
 			{
+				this._onComplete = null;
 				if (this._labels[BaseTimelineState._LABEL_HIDE])
 				{
 					this.gotoAndStop(this.totalFrames);
@@ -135,9 +140,11 @@ package temple.ui.states
 				{
 					this.gotoAndStop(1);
 				}
+				if (onComplete != null) onComplete();
 			}
 			else
 			{
+				this._onComplete = onComplete;
 				if (this._labels[BaseTimelineState._LABEL_HIDE])
 				{
 					this.gotoAndStop(BaseTimelineState._LABEL_HIDE);
@@ -173,6 +180,7 @@ package temple.ui.states
 		override public function destruct():void
 		{
 			this._labels = null;
+			this._onComplete = null;
 			
 			super.destruct();
 		}

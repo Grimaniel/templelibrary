@@ -837,7 +837,7 @@ package temple.ui.form.components
 		{
 			if (this._autoClose && event.currentTarget == this._list && event.target is IListRow || !this._list.contains(event.target as DisplayObject))
 			{
-				if (this._isOpen)
+				if (this._isOpen && !this.allowMultipleSelection)
 				{
 					this.close();
 				}

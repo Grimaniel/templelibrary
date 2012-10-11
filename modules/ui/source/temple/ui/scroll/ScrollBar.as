@@ -165,6 +165,14 @@ package temple.ui.scroll
 		
 		public function ScrollBar()
 		{
+			construct::scrollBar();
+		}
+
+		/**
+		 * @private
+		 */
+		construct function scrollBar():void
+		{
 			this.liquidBehavior.adjustRelated = true;
 			this.addEventListener(ScrollEvent.SCROLL, this.handleScroll);
 			this.addEventListener(Event.ACTIVATE, this.handleActivate);
@@ -178,6 +186,9 @@ package temple.ui.scroll
 			this.rightButton ||= this.getChildByName(rightButtonInstanceName) as InteractiveObject;
 			
 			this.toStringProps.push("orientation");
+			
+			if (!this._track) this.logError("No track found.");
+			if (!this._button) this.logError("No button found.");
 		}
 		
 		/**
@@ -353,7 +364,7 @@ package temple.ui.scroll
 				}
 			}
 			this._button = value;
-			if (this._button)
+			if (this._button && this._track)
 			{
 				this._slider = new Slider(this._button, this._track ? this._track.getRect(this) : null, this.orientation);
 				this._slider.addEventListener(SliderEvent.SLIDE_START, this.handleSlideStart);
@@ -428,6 +439,11 @@ package temple.ui.scroll
 					
 					// auto flip orientation of ScrollBar is rotated
 					if (this.rotation == 90 || this.rotation == -90) this.orientation = this._slider.orientation == Orientation.VERTICAL ? Orientation.HORIZONTAL : Orientation.VERTICAL;
+				}
+				else if (this._button)
+				{
+					// reset button to force creation of Slider
+					this.button = this._button;
 				}
 			}
 		}
@@ -710,7 +726,7 @@ package temple.ui.scroll
 		/**
 		 * @inheritDoc
 		 */
-		public function show(instant:Boolean = false):void
+		public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
 			if (!this._shown)
 			{
@@ -718,15 +734,16 @@ package temple.ui.scroll
 
 				if (!instant && this._showProxy)
 				{
-					this._showProxy.setValue(this, "visible", true);
+					this._showProxy.setValue(this, "visible", true, onComplete);
 				}
 				else if (!instant && ScrollBar._showProxy)
 				{
-					ScrollBar._showProxy.setValue(this, "visible", true);
+					ScrollBar._showProxy.setValue(this, "visible", true, onComplete);
 				}
 				else
 				{
 					this.visible = true;
+					if (onComplete != null) onComplete(); 
 				}
 			}
 		}
@@ -734,7 +751,7 @@ package temple.ui.scroll
 		/**
 		 * @inheritDoc
 		 */
-		public function hide(instant:Boolean = false):void
+		public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
 			if (this._shown)
 			{
@@ -742,15 +759,16 @@ package temple.ui.scroll
 				
 				if (!instant && this._showProxy)
 				{
-					this._showProxy.setValue(this, "visible", false);
+					this._showProxy.setValue(this, "visible", false, onComplete);
 				}
 				else if (!instant && ScrollBar._showProxy)
 				{
-					ScrollBar._showProxy.setValue(this, "visible", false);
+					ScrollBar._showProxy.setValue(this, "visible", false, onComplete);
 				}
 				else
 				{
 					this.visible = false;
+					if (onComplete != null) onComplete();
 				}
 			}
 		}
@@ -1003,7 +1021,7 @@ package temple.ui.scroll
 			this._blockUpdate = false;
 		}
 		
-		private function handleScroll(event:ScrollEvent):void
+		protected function handleScroll(event:ScrollEvent):void
 		{
 			if (this._scrollPane && !this._dontUpdateScrollPane)
 			{
@@ -1184,7 +1202,7 @@ package temple.ui.scroll
 			}
 		}
 		
-		private function handleMouseWheel(event:MouseEvent):void
+		protected function handleMouseWheel(event:MouseEvent):void
 		{
 			if (this._mouseWheelEnabled)
 			{

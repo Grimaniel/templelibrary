@@ -377,17 +377,19 @@ package temple.ui.tooltip
 		/**
 		 * @inheritDoc
 		 */
-		public function show(instant:Boolean = false):void
+		public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
 			this.visible = true;
+			if (onComplete != null) onComplete();
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function hide(instant:Boolean = false):void
+		public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
 			this.visible = false;
+			if (onComplete != null) onComplete();
 		}
 
 		/**

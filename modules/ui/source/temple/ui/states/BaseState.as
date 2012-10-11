@@ -51,21 +51,23 @@ package temple.ui.states
 		/**
 		 * @inheritDoc
 		 */
-		override public function show(instant:Boolean = false):void
+		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
 			if (this.enabled == false || this._shown) return;
 			this._shown = true;
 			this.visible = true;
+			if (onComplete != null) onComplete();
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function hide(instant:Boolean = false):void
+		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
 			if (this.enabled == false || !this._shown) return;
 			this._shown = false;
 			this.visible = false;
+			if (onComplete != null) onComplete();
 		}
 	}
 }

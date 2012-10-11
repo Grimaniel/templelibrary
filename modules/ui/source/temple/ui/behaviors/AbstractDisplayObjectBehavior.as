@@ -35,11 +35,10 @@
 
 package temple.ui.behaviors 
 {
-	import temple.utils.TraceUtils;
-	import flash.events.Event;
 	import temple.core.behaviors.AbstractBehavior;
 
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 
 
 	/**
@@ -51,7 +50,7 @@ package temple.ui.behaviors
 	{
 		private var _destructOnRemove:Boolean;
 		
-		public function AbstractDisplayObjectBehavior(target:DisplayObject, destructOnRemove:Boolean = true)
+		public function AbstractDisplayObjectBehavior(target:DisplayObject, destructOnRemove:Boolean = false)
 		{
 			super(target);
 			

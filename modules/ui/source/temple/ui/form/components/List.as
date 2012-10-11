@@ -1265,9 +1265,10 @@ package temple.ui.form.components
 		private function setRows():void
 		{
 			var leni:int = this._rows.length;
+			var totalItems:int = this._items.length;
 			for (var i:int = 0; i < leni; i++)
 			{
-				this.setRow(this._rows[i], this._items[i + this._rowDataOffset]);
+				this.setRow(this._rows[i], i + this._rowDataOffset < totalItems ? this._items[i + this._rowDataOffset] : null);
 			}
 		}
 
@@ -1556,6 +1557,8 @@ package temple.ui.form.components
 		override public function destruct():void
 		{
 			this.removeAllStrongEventListenersForType(Event.CHANGE);
+			this.removeAllStrongEventListenersForType(Event.RESIZE);
+			this.removeAllStrongEventListenersForType(ScrollEvent.SCROLL);
 			
 			if (this._items)
 			{

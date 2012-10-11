@@ -57,7 +57,6 @@ package temple.ui.layout.liquid
 	public class LiquidMovieClip extends CoreMovieClip implements ILiquidObject, IDebuggable
 	{
 		private var _liquidBehavior:LiquidBehavior;
-		private var _debug:Boolean;
 
 		public function LiquidMovieClip(relatedObject:ILiquidObject = null)
 		{
@@ -603,18 +602,10 @@ package temple.ui.layout.liquid
 		/**
 		 * @inheritDoc
 		 */
-		public function get debug():Boolean
-		{
-			return this._debug;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
 		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
-		public function set debug(value:Boolean):void
+		override public function set debug(value:Boolean):void
 		{
-			this.liquidBehavior.debug = this._debug = value;
+			super.debug = this.liquidBehavior.debug = value;
 		}
 		
 		/**

@@ -35,9 +35,13 @@
 
 package temple.ui.behaviors 
 {
+	import temple.core.debug.IDebuggable;
+	import temple.ui.Dot;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
 	/**
@@ -56,8 +60,9 @@ package temple.ui.behaviors
 	[Event(name = "ZoomBehaviorEvent.zoomStop", type = "temple.ui.behaviors.ZoomBehaviorEvent")]
 	
 	/**
-	 * The ZoomBehavior makes it possible to zoom in or out on a DisplayObject. The ZoomBehavior uses the decorator pattern,
-	 * so you won't have to change the code of the DisplayObject. The DisplayObject can be zoomed by using code or the MouseWheel.
+	 * The ZoomBehavior makes it possible to zoom in or out on a DisplayObject. The ZoomBehavior uses the decorator
+	 * pattern, so you won't have to change the code of the DisplayObject. The DisplayObject can be zoomed by using code
+	 * or the MouseWheel.
 	 * 
 	 * <p>If you have a MovieClip called 'mcClip' add ZoomBehavior like:</p>
 	 * 
@@ -74,12 +79,12 @@ package temple.ui.behaviors
 	 * new ZoomBehavior(mcClip, new Reactangle(100, 100, 200, 200);
 	 * </listing>
 	 *
-	 * <p>It is not nessessary to store a reference to the ZoomBehavior since the ZoomBehavior is automatically destructed
-	 * if the DisplayObject is destructed.</p>
+	 * <p>It is not nessessary to store a reference to the ZoomBehavior since the ZoomBehavior is automatically
+	 * destructed if the DisplayObject is destructed.</p>
 	 * 
-	 * @author Arjan van Wijk
+	 * @author Arjan van Wijk, Thijs Broerse
 	 */
-	public class ZoomBehavior extends BoundsBehavior 
+	public class ZoomBehavior extends BoundsBehavior implements IDebuggable
 	{
 		private var _zoom:Number;
 		private var _minZoom:Number;
@@ -88,6 +93,8 @@ package temple.ui.behaviors
 		private var _newX:Number;
 		private var _newY:Number;
 		private var _running:Boolean;
+		private var _debug:Boolean;
+		private var _dot:Dot;
 
 		/**
 		 * @param target The target to zoom
@@ -120,12 +127,12 @@ package temple.ui.behaviors
 		/**
 		 * Zooms to a specific zoom level
 		 * @param zoom the level to zoom to
-		 * @param useCenter indicates if the zooming should be calculated from the center of the object (true) or the current mouse position (false), default: false
+		 * @param center a point which is used as the center of the zooming, if null the center of the object is used.
 		 */
-		public function zoomTo(zoom:Number, useCenter:Boolean = false):void
+		public function zoomTo(zoom:Number, point:Point = null):void
 		{
 			this._zoom = Math.log(zoom) / Math.log(2);
-			this.updateZoom(useCenter);
+			this.updateZoom(point || this.getCenter());
 		}
 
 		/**
@@ -184,10 +191,10 @@ package temple.ui.behaviors
 		/**
 		 * @private
 		 */
-		public function set zoom(zoom:Number):void
+		public function set zoom(value:Number):void
 		{
-			this._zoom = Math.log(zoom) / Math.log(2);
-			this.updateZoom();
+			this._zoom = Math.log(value) / Math.log(2);
+			this.updateZoom(this.getCenter());
 		}
 
 		/**
@@ -196,6 +203,30 @@ package temple.ui.behaviors
 		public function get zoomLevel():Number
 		{
 			return this._zoom;
+		}
+
+		/**
+		 * Recalculates the zoom based on the targets current scale.
+		 */
+		public function recalculateZoom():void
+		{
+			this._zoom = Math.log(this.displayObject.scaleX) / Math.log(2);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return this._debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			this._debug = value;
 		}
 
 		/**
@@ -225,18 +256,14 @@ package temple.ui.behaviors
 		protected function handleMouseWheel(event:MouseEvent):void
 		{
 			this._zoom += (event.delta / 3) / 4;
-			this.updateZoom();
+			this.updateZoom(new Point((this.displayObject.mouseX * this.displayObject.scaleX) / this.displayObject.width, (this.displayObject.mouseY * this.displayObject.scaleY) / this.displayObject.height));
 		}
 
 		/**
 		 * @private
 		 */
-		protected function updateZoom(useCenter:Boolean = false):void
+		protected function updateZoom(point:Point):void
 		{
-			var rect:Rectangle = this.displayObject.getRect(this.target as DisplayObject);
-			var rX:Number = useCenter ? rect.x/rect.width + .5 : (this.displayObject.mouseX * this.displayObject.scaleX) / this.displayObject.width;
-			var rY:Number = useCenter ? rect.y/rect.height + .5 : (this.displayObject.mouseY * this.displayObject.scaleY) / this.displayObject.height;
-			
 			var prevW:Number = this.displayObject.width;
 			var prevH:Number = this.displayObject.height;
 			
@@ -244,8 +271,8 @@ package temple.ui.behaviors
 			
 			this._zoom = Math.log(this._newScale) / Math.log(2);
 			
-			this._newX = this.displayObject.x + rX * (prevW - (this.displayObject.width / this.displayObject.scaleX * this._newScale));
-			this._newY = this.displayObject.y + rY * (prevH - (this.displayObject.height / this.displayObject.scaleY * this._newScale));
+			this._newX = this.displayObject.x + point.x * (prevW - (this.displayObject.width / this.displayObject.scaleX * this._newScale));
+			this._newY = this.displayObject.y + point.y * (prevH - (this.displayObject.height / this.displayObject.scaleY * this._newScale));
 			
 			if (this._running == false)
 			{
@@ -254,7 +281,31 @@ package temple.ui.behaviors
 				this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_START, this));
 			}
 			this.dispatchEvent(new Event(Event.CHANGE));
+			
+			if (this._debug)
+			{
+				this._dot ||= new Dot();
+				
+				DisplayObjectContainer(this.displayObject).addChild(this._dot);
+				this._dot.x = point.x * (this.displayObject.width / this.displayObject.scaleX);
+				this._dot.y = point.y * (this.displayObject.height / this.displayObject.scaleY);
+				this._dot.scaleX = 1 / this.displayObject.scaleX;
+				this._dot.scaleY = 1 / this.displayObject.scaleY;
+				
+				this.logDebug("Zoom: " + point.x + ", " + point.y);
+			}
+			else if (this._dot && this._dot.parent)
+			{
+				 this._dot.parent.removeChild(this._dot);
+			}
 		}
+
+		private function getCenter():Point
+		{
+			var rect:Rectangle = this.displayObject.getRect(this.displayObject);
+			return new Point(rect.x/rect.width + .5, rect.y/rect.height + .5);
+		}
+
 
 		/**
 		 * @inheritDoc

@@ -62,7 +62,6 @@ package temple.ui.buttons
 	{
 		private var _timelineBehavior:ButtonTimelineBehavior;
 		private var _stateBehavior:ButtonStateBehavior;
-		private var _debug:Boolean;
 
 		public function MultiStateElement()
 		{
@@ -109,25 +108,6 @@ package temple.ui.buttons
 		public function set playMode(value:*):void
 		{
 			if (this._timelineBehavior) this._timelineBehavior.playMode = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get debug():Boolean
-		{
-			return this._debug;
-		}
-			
-		/**
-		 * @inheritDoc
-		 */
-		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
-		public function set debug(value:Boolean):void
-		{
-			this._debug = value;
-			if (this._timelineBehavior) this._timelineBehavior.debug = value;
-			if (this._stateBehavior) this._stateBehavior.debug = value;
 		}
 		
 		/**
