@@ -35,6 +35,8 @@
 
 package temple.common.events
 {
+	import temple.core.events.CoreEvent;
+
 	import flash.events.Event;
 
 	/**
@@ -42,7 +44,7 @@ package temple.common.events
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class SoundEvent extends Event 
+	public class SoundEvent extends CoreEvent 
 	{
 		public static const VOLUME_CHANGE:String = "SoundEvent.volumeChange";
 		public static const SOUND_COMPLETE:String = "SoundEvent.soundComplete";
@@ -55,6 +57,8 @@ package temple.common.events
 			super(type);
 			
 			this._name = name;
+			
+			this.toStringProps.splice(1, 0, "name");
 		}
 		
 		/**

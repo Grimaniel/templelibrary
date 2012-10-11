@@ -36,7 +36,7 @@
 package temple.common.events
 {
 	import temple.common.interfaces.IPendingCall;
-	import temple.core.debug.objectToString;
+	import temple.core.events.CoreEvent;
 
 	import flash.events.Event;
 
@@ -47,7 +47,7 @@ package temple.common.events
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class PendingCallEvent extends Event
+	public class PendingCallEvent extends CoreEvent
 	{
 		/**
 		 * Dispatched when the call is invoked.
@@ -66,6 +66,8 @@ package temple.common.events
 			super(type, bubbles);
 			
 			this._call = call;
+			
+			this.toStringProps.splice(1, 0, "call");
 		}
 
 		/**
@@ -79,11 +81,6 @@ package temple.common.events
 		override public function clone():Event
 		{
 			return new PendingCallEvent(this.type, this.call, this.bubbles);
-		}
-		
-		override public function toString():String
-		{
-			return objectToString(this, Vector.<String>(["type", "call", "bubbles"]));
 		}
 	}
 }

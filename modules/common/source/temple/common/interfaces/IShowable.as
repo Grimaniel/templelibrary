@@ -45,14 +45,16 @@ package temple.common.interfaces
 		/**
 		 * Show the object
 		 * @param instant if set to true animation will be skipped.
+		 * @param onComplete a callback method which is called when show animation is complete.
 		 */
-		function show(instant:Boolean = false):void;
+		function show(instant:Boolean = false, onComplete:Function = null):void;
 		
 		/**
 		 * Hide the object
 		 * @param instant if set to true animation will be skipped.
+		 * @param onComplete a callback method which is called when hide animation is complete.
 		 */
-		function hide(instant:Boolean = false):void;
+		function hide(instant:Boolean = false, onComplete:Function = null):void;
 		
 		/**
 		 * Getter/setter wrapper for show and hide method. Where shown=true mains show() and shown=false means hide()

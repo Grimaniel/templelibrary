@@ -36,7 +36,7 @@
 package temple.common.events 
 {
 	import temple.common.interfaces.IHasStatus;
-	import temple.core.debug.objectToString;
+	import temple.core.events.CoreEvent;
 
 	import flash.events.Event;
 
@@ -45,7 +45,7 @@ package temple.common.events
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class StatusEvent extends Event implements IHasStatus
+	public class StatusEvent extends CoreEvent implements IHasStatus
 	{
 		public static const STATUS_CHANGE:String = "StatusEvent.statusChange";
 		
@@ -56,6 +56,7 @@ package temple.common.events
 			super(type, bubbles);
 			
 			this._status = status;
+			this.toStringProps.splice(1, 0, "status");
 		}
 		
 		/**
@@ -69,11 +70,6 @@ package temple.common.events
 		override public function clone():Event
 		{
 			return new StatusEvent(this.type, this._status, this.bubbles);
-		}
-
-		override public function toString():String
-		{
-			return objectToString(this, Vector.<String>(["type", "status", "bubbles"]));
 		}
 	}
 }
