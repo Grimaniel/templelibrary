@@ -41,11 +41,32 @@ package
 	import temple.utils.types.ObjectUtils;
 	
 	/**
-	 * Creates a log message
+	 * Quick way to send a message to the <code>Log</code> class.
+	 * 
+	 * @param message the message which is sent to the Log.
+	 * @param object an object wich is added to the message. The object will be added with all his properties, using the
+	 * 	<code>dump()</code> method.
+	 * @param depth indicates the depth of recursion of the properties of the object. If set to 0 only the properties of
+	 * 	the object will be added, if set to 1 also the properties of each property will be added etcetera.
+	 * @param duplicates a Boolean which indicates if duplicate objects in the properties of the object should be added
+	 * every time the object occurs (<code>true</code>) or only should be added once and ignored for the other occasions.
+	 * @param level the level of the log message. Possible values are "error", "warn", "debug", "info", "fatal" and
+	 * 	"status".
+	 * 
+	 *  @example
+	 * <listing version="3.0">
+	 * 
+	 *  log("myObject", myObject);
+	 * 
+	 * </listing>
+	 * 
+	 * @see dump
+	 * @see temple.core.debug.log.Log
+	 * @see temple.core.debug.log.LogLevel
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", maxDepth:uint = 0, duplicates:Boolean = false, level:String = "info"):void 
+	public function log(message:*, object:* = "__UNLOGGABLE_STRING__", depth:uint = 0, duplicates:Boolean = false, level:String = "info"):void 
 	{
 		if (object == "__UNLOGGABLE_STRING__")
 		{
@@ -61,7 +82,7 @@ package
 		}
 		else
 		{
-			message += ": " + dump(object, maxDepth, duplicates);
+			message += ": " + dump(object, depth, duplicates);
 		}
 		
 		switch (level)

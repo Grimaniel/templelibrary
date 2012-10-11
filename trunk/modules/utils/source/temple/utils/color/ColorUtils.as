@@ -51,7 +51,7 @@ package temple.utils.color
 		{
 			var argb:ARGB = ColorUtils.getARGB(color);
 
-			return new ColorTransform(1 - alpha, 1 - alpha, 1 - alpha, 1, argb.r * alpha, argb.g * alpha, argb.b * alpha, 0);
+			return new ColorTransform(1 - alpha, 1 - alpha, 1 - alpha, 1, argb.red * alpha, argb.green * alpha, argb.blue * alpha, 0);
 		}
 
 		/**
@@ -161,10 +161,10 @@ package temple.utils.color
 		public static function getARGB(color:uint):ARGB
 		{
 			var c:ARGB = new ARGB();
-			c.a = color >> 24 & 0xFF;
-			c.r = color >> 16 & 0xFF;
-			c.g = color >> 8 & 0xFF;
-			c.b = color & 0xFF;
+			c.alpha = color >> 24 & 0xFF;
+			c.red = color >> 16 & 0xFF;
+			c.green = color >> 8 & 0xFF;
+			c.blue = color & 0xFF;
 			return c;
 		}
 

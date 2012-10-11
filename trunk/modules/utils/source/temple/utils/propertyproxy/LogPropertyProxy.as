@@ -51,11 +51,10 @@ package temple.utils.propertyproxy
 		/**
 		 * @inheritDoc
 		 */
-		override public function setValue(target:Object, property:String, value:*):void
+		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			super.setValue(target, property, value);
-			
 			this.logInfo(target + "." + property + ": " + value);
+			super.setValue(target, property, value, onComplete);
 		}
 	}
 }

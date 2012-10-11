@@ -102,9 +102,10 @@ package temple.utils.propertyproxy
 		/**
 		 * @inheritDoc
 		 */
-		public function setValue(target:Object, property:String, value:*):void
+		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			target[property] = String(value in this._texts ? this._texts[value] : this._text).replace(_REPLACEMENT, value);
+			if (onComplete != null) onComplete();
 		}
 
 		/**

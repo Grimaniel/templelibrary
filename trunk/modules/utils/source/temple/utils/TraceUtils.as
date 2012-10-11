@@ -35,9 +35,8 @@
 
 package temple.utils 
 {
-	import temple.core.templelibrary;
 	import temple.core.debug.objectToString;
-	import temple.utils.types.ObjectUtils;
+	import temple.core.templelibrary;
 
 	import flash.display.DisplayObject;
 	import flash.display.Stage;

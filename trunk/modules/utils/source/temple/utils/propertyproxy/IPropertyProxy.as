@@ -49,11 +49,11 @@ package temple.utils.propertyproxy
 	public interface IPropertyProxy extends IDestructible, ICancellable
 	{
 		/**
-		 * Set the value of a property through the proxy
-		 * @param target the object that has the property to affect
-		 * @param property the name of the property
-		 * @param value the value to be set
+		 * Set the value of a property through the proxy.
+		 * @param target the object that has the property to affect.
+		 * @param property the name of the property.
+		 * @param value the value to be set.
 		 */
-		function setValue(target:Object, property:String, value:*):void;
+		function setValue(target:Object, property:String, value:*, onComplete:Function = null):void;
 	}
 }

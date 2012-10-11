@@ -55,9 +55,9 @@ package temple.utils.propertyproxy
 		/**
 		 * @inheritDoc
 		 */
-		override public function setValue(target:Object, property:String, value:*):void
+		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			this._timeOut = new TimeOut(super.setValue, this._milliseconds, [target, property, value]);
+			this._timeOut = new TimeOut(super.setValue, this._milliseconds, [target, property, value, onComplete]);
 		}
 
 		/**

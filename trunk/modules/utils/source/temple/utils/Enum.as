@@ -75,7 +75,7 @@ package temple.utils
 		{
 			var arr:Array = [];
 			var className:String = constType ? getQualifiedClassName(constType) : null;
-			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
+			for each (var node:XML in describeType(type).children().((name() == 'variable' || name() == 'constant') && !hasOwnProperty("@uri")))
 			{
 				if (constType == null || node.@['type'] == className)
 				{

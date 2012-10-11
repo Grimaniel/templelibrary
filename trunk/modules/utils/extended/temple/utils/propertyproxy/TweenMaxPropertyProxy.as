@@ -100,7 +100,7 @@ package temple.utils.propertyproxy
 		/**
 		 * @inheritDoc
 		 */
-		public function setValue(target:Object, property:String, value:*):void
+		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			if (this._vars == null) this._vars = {};
 			
@@ -108,7 +108,7 @@ package temple.utils.propertyproxy
 			var vars:Object = ObjectUtils.clone(this._vars);
 			
 			vars[property] = value;
-			
+			if (onComplete != null) vars.onComplete = onComplete;
 			this._tween = TweenMax.to(target, this._duration, vars);
 		}
 		

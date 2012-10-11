@@ -70,13 +70,13 @@ package temple.utils.propertyproxy
 		/**
 		 * @inheritDoc
 		 */
-		override public function setValue(target:Object, property:String, value:*):void
+		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			if (!isNaN(value))
 			{
 				value = NumberUtils.roundToNearest(value, this._nearest);
 			}
-			super.setValue(target, property, value);
+			super.setValue(target, property, value, onComplete);
 		}
 	}
 }

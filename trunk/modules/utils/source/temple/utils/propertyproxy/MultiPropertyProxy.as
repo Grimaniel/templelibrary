@@ -44,12 +44,12 @@ package temple.utils.propertyproxy
 	 */
 	public class MultiPropertyProxy extends CoreObject implements IPropertyProxy
 	{
-		private var _proxies:Array;
+		private var _proxies:Vector.<IPropertyProxy>;
 		private var _value:*;
 		
 		public function MultiPropertyProxy(...args)
 		{
-			this._proxies = new Array();
+			this._proxies = new Vector.<IPropertyProxy>();
 			
 			var leni:int = args.length;
 			for (var i:int = 0; i < leni; i++)
@@ -81,18 +81,19 @@ package temple.utils.propertyproxy
 
 		public function cancel():Boolean
 		{
-			for each (var proxy : IPropertyProxy in this._proxies)
+			for each (var proxy:IPropertyProxy in this._proxies)
 			{
 				proxy.cancel();
 			}
 			return true;
 		}
 
-		public function setValue(target:Object, property:String, value:*):void
+		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			this._value = value;
 			var leni:int = this._proxies.length;
 			var proxy:IPropertyProxy;
+			// TODO: chain proxies using onComplete
 			for (var i:int = 0; i < leni; i++)
 			{
 				proxy = this._proxies[i];
@@ -105,6 +106,7 @@ package temple.utils.propertyproxy
 					proxy.setValue(this, "value", this._value);
 				}
 			}
+			if (onComplete != null) onComplete();
 		}
 
 		override public function destruct():void

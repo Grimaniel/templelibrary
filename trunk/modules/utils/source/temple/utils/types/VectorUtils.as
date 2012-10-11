@@ -99,7 +99,7 @@ package temple.utils.types
 		 */
 		public static function toArray(vector:*):Array 
 		{
-			if (!VectorUtils.isVector(vector)) throwError(new TempleArgumentError(VectorUtils, vector + " is not a Vector " + getQualifiedClassName(vector)));
+			if (!VectorUtils.isVector(vector)) throwError(new TempleArgumentError(VectorUtils, vector + " is not a Vector, is a(n) " + getQualifiedClassName(vector)));
 			
 			var array:Array = new Array(vector.length);
 			var i:int=vector.length;

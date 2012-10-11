@@ -51,9 +51,10 @@ package temple.utils.propertyproxy
 		/**
 		 * @inheritDoc
 		 */
-		public function setValue(target:Object, property:String, value:*):void
+		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			target[property] = value;
+			if (onComplete != null) onComplete();
 		}
 
 		/**
