@@ -1,5 +1,5 @@
 xjsfl.init(this);
 
-xjsfl.file.load(xjsfl.file.makeURI("functions.jsfl", true));
+xjsfl.file.load(URI.toURI("functions.jsfl"));
 
 test();

@@ -605,10 +605,17 @@
 				var echo = project.createTask("echo");
 				echo.setMessage("Build example: " + fileName + "\n");
 				echo.perform();
+				
+				var ant = project.createTask("ant");
+				ant.setAntfile(exampleDir + "/" + fileName);
+				ant.setUseNativeBasedir(true);
+				ant.setInheritAll(false);
+				ant.perform();
 			
 				var ant = project.createTask("ant");
 				ant.setAntfile(exampleDir + "/" + fileName);
 				ant.setUseNativeBasedir(true);
+				ant.setTarget("Close Fla");
 				ant.setInheritAll(false);
 				ant.perform();
 			}

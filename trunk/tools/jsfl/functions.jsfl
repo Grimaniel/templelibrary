@@ -6,6 +6,8 @@ function build()
 	updateLibraryPath(properties);
 	
 	publish(properties);
+	
+	save(properties);
 }
 
 function test()
@@ -103,7 +105,6 @@ function updateLibraryPath(properties)
 	Output.inspect(libraries);
 	
 	Superdoc.settings.as3.libraryPath = libraries.join(";");
-	Superdoc.file.operations.save();
 }
 
 /**
@@ -115,4 +116,10 @@ function publish(properties)
 	Superdoc.file.publish();
 
 	fl.compilerErrors.save(URI.toURI(properties["root.dir"] + "/tools/jsfl/output.txt"));
+}
+
+function save(properties)
+{
+	// Temporary save to an other name to force a save
+	fl.saveDocument(fl.documents[0], properties.url);
 }

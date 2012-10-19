@@ -120,6 +120,7 @@
 		</script>
 		<sleep seconds="2"/>
 		<delete file="${jsfl-output}" quiet="true" />
+		<sleep seconds="2"/>
 	</target>
 
 	<target name="Test Fla">
@@ -135,8 +136,14 @@
 	    	]]>
 		</script>
 		<exec executable="${flash}">
-			<arg line="'${root}/tools/jsfl/test.jsfl'"/>
+			<arg line="'${root.dir}/tools/jsfl/test.jsfl'"/>
 			<arg line="'${fla}'"/>
+		</exec>
+	</target>
+	
+	<target name="Close Fla">
+		<exec executable="${flash}">
+			<arg line="'${root.dir}/tools/jsfl/close.jsfl'"/>
 		</exec>
 	</target>
 

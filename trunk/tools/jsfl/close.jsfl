@@ -1,0 +1,1 @@
+if (fl.documents[0]) fl.closeDocument(fl.documents[0]);
