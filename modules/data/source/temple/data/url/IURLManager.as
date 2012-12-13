@@ -120,6 +120,16 @@ package temple.data.url
 		function removeGroup(group:String):void
 		
 		/**
+		 * Checks if a variable with a specific name is defined.
+		 */
+		function hasVariable(name:String):Boolean;
+		
+		/**
+		 * Returns the value of a variable
+		 */
+		function getVariable(name:String):String;
+
+		/**
 		 * Adds a variable, and if the xml's are loaded they are parsed again
 		 * @param name the variable name
 		 * @param value the variable value

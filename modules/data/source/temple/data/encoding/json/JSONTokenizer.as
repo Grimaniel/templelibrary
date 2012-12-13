@@ -124,7 +124,7 @@ package temple.data.encoding.json
 			skipIgnored();
 						
 			// examine the new character and see what we have...
-			switch ( ch )
+			switch (ch)
 			{	
 				case '{':
 					token.type = JSONTokenType.LEFT_BRACE;
@@ -252,7 +252,7 @@ package temple.data.encoding.json
 					{						
 						// not sure what was in the input string - it's not
 						// anything we expected
-						parseError("Unexpected " + ch + " encountered:\n" + jsonString + "\n");
+						parseError("Unexpected '" + ch + "' encountered");
 					}
 				}
 			}

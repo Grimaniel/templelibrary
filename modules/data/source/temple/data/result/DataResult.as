@@ -47,7 +47,7 @@ package temple.data.result
 	 */
 	public class DataResult extends Result implements IDataResult, IObjectParsable 
 	{
-		protected var _data:*;
+		private var _data:*;
 
 		public function DataResult(data:*, success:Boolean = true, message:String = null, code:String = null)
 		{
@@ -71,9 +71,9 @@ package temple.data.result
 		{
 			if (!object || !object.hasOwnProperty('success')) return false;
 			
-			this._success = object.success;
-			this._message = object.message;
-			this._code = object.code;
+			this.success = object.success;
+			this.message = object.message;
+			this.code = object.code;
 			this._data = object.data;
 			
 			return true;

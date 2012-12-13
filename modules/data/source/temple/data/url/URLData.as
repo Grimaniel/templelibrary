@@ -122,7 +122,7 @@ package temple.data.url
 			this._target = xml.@target;
 			this._features = xml.@features;
 			
-			return this._name && this._url;
+			return this._name != null;
 		}
 
 		/**

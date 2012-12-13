@@ -95,6 +95,8 @@ package temple.data.encoding.json
 	 */
 	public class JSONDecoder extends CoreObject implements IDestringifier
 	{
+		private static const _EXPLICIT_TYPE:String = "_explicitType";
+		
 		/** 
 		 * Flag indicating if the parser should be strict about the format
 		 * of the JSON string it is attempting to decode.
@@ -124,16 +126,13 @@ package temple.data.encoding.json
 			this._strict = strict;
 			this._skipNulls = skipNulls;
 			
-			if (string)
-			{
-				this.destringify(string);
-			}
+			if (string) this.destringify(string);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function destringify(value:String):*
+		public function destringify(value:*):*
 		{
 			this._tokenizer = new JSONTokenizer(value, this._strict);
 			this.nextToken();
@@ -360,12 +359,11 @@ package temple.data.encoding.json
 		
 		private function checkExplicitType(o:Object):Object
 		{
-			// hack narie
-			if (o.hasOwnProperty('_explicitType'))
+			if (_EXPLICIT_TYPE in o)
 			{
 				try
 				{
-					var classRef:Class = getClassByAlias(o['_explicitType']);
+					var classRef:Class = getClassByAlias(o[_EXPLICIT_TYPE]);
 				}
 				catch (error:ReferenceError)
 				{
@@ -388,19 +386,19 @@ package temple.data.encoding.json
 					{
 						if (!IObjectParsable(obj).parseObject(o))
 						{
-							this.logError('Error parsing object ' + o['_explicitType']);
+							this.logError('Error parsing object ' + o[_EXPLICIT_TYPE]);
 						}
 					}
 					else
 					{
 						for (var prop:String in o)
 						{
-							if (prop == '_explicitType') continue;
+							if (prop == _EXPLICIT_TYPE) continue;
 							
 							// skip null values (if enabled)
 							if (this._skipNulls && o[prop] == null) continue;
 							
-							if (obj.hasOwnProperty(prop))
+							if (prop in obj)
 							{
 								try
 								{
@@ -411,7 +409,8 @@ package temple.data.encoding.json
 									// hack TyZ for Enumerator
 									// Here we can get the following error: "TypeError: Error #1034: Type Coercion failed: cannot convert <> to <>"
 									// This can happen when we try to set an Enumerator. So we need to look up the correct Enumerator based on the value.
-									var typeName:String = describeType(obj).children().((name() == "variable" || name() == "accessor") && @name == prop).@type;
+									var description:XML = describeType(obj);
+									var typeName:String = description.variable.(@name == prop).@type || description.accessor.(@name == prop).@type;
 									if (typeName)
 									{
 										try
@@ -475,8 +474,6 @@ package temple.data.encoding.json
 					return obj;
 				}
 			}
-			// end hack narie
-			
 			return o;
 		}
 		

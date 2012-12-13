@@ -444,7 +444,9 @@ package temple.data.encoding.json
 			{
 				// Loop over all of the variables and accessors in the class and 
 				// serialize them along with their values.
-				for each (var v:XML in classInfo..*.(!hasOwnProperty("@uri") && (name() == "variable" || (name() == "accessor" && (!this._skipReadOnlyVars || @access != "readonly")))))
+				for each (var v:XML in 
+					classInfo..accessor.(!hasOwnProperty("@uri") && (!this._skipReadOnlyVars || @access != "readonly"))	+
+					classInfo..variable.(!hasOwnProperty("@uri")))
 				{
 					value = o[v.@name];
 
@@ -477,7 +479,7 @@ package temple.data.encoding.json
 				}
 				
 				// hack narie
-				if (this._useExplicitType && describeType(o).@alias.toString() != "") s += ', "_explicitType":"' + describeType(o).@alias + '"';
+				if (this._useExplicitType && classInfo.@alias.toString() != "") s += ', "_explicitType":"' + classInfo.@alias + '"';
 			}
 			
 			return "{" + s + "}";
