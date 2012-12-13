@@ -7,6 +7,6 @@
 	<property name="asdoc" value="${FLEX_HOME}/bin/asdoc.exe" />
 
 	<!-- Path to Flash -->
-	<property name="flash" value="C:/Program Files (x86)/Adobe/Adobe Flash CS5/Flash.exe" />
+	<property name="flash" value="C:/Program Files (x86)/Adobe/Adobe Flash CS6/Flash.exe" />
 
 </project>
