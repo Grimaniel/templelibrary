@@ -44,12 +44,12 @@ package temple.core.net
 	import temple.core.destruction.IDestructibleOnError;
 	import temple.core.events.EventListenerManager;
 	import temple.core.templelibrary;
+
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 
 	/**
@@ -80,7 +80,7 @@ package temple.core.net
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.2.0";
+		templelibrary static const VERSION:String = "3.3.0";
 		
 		/**
 		 * @private

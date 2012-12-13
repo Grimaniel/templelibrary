@@ -86,7 +86,7 @@ package temple.core.display
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.2.0";
+		templelibrary static const VERSION:String = "3.3.0";
 		
 		/**
 		 * @private
@@ -119,6 +119,7 @@ package temple.core.display
 			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
 			
 			this._registryId = Registry.add(this);
+			if (super.stage) StageProvider.stage ||= super.stage;
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
 			super.addEventListener(Event.ADDED, this.handleAdded);

@@ -61,7 +61,7 @@ package temple.core.events
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.2.0";
+		templelibrary static const VERSION:String = "3.3.0";
 		
 		/**
 		 * If set to <code>true</code> the <code>EventListenerManager</code> will log a debug message when a weak event
@@ -325,7 +325,14 @@ package temple.core.events
 					var listener:Function = eventData.listener;
 					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
 					eventData.destruct();
-					listener(event);
+					if (listener.length == 1)
+					{
+						listener(event);
+					}
+					else
+					{
+						listener();
+					}
 				}
 			}
 			this._blockRequest = false;

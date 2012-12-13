@@ -291,7 +291,14 @@ package temple.core.events
 					var listener:Function = eventData.listener;
 					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
 					eventData.destruct();
-					listener(event);
+					if (listener.length == 1)
+					{
+						listener(event);
+					}
+					else
+					{
+						listener();
+					}
 				}
 			}
 			this._blockRequest = false;

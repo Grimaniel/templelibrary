@@ -50,7 +50,7 @@ package temple.core.events
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.2.0";
+		templelibrary static const VERSION:String = "3.3.0";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['type', 'bubbles', 'cancelable', 'eventPhase']);
 		

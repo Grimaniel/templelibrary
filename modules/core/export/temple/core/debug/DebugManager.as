@@ -72,6 +72,8 @@ package temple.core.debug
 	 * DebugManager.debugMode = DebugManager.ALL;
 	 * </listing>
 	 * 
+	 * @includeExample DebugManagerExample.as
+	 * 
 	 * @author Arjan van Wijk, Thijs Broerse
 	 */
 	public final class DebugManager extends CoreObject implements IDebuggable
@@ -79,7 +81,12 @@ package temple.core.debug
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.2.0";
+		templelibrary static const VERSION:String = "3.3.0";
+		
+		/**
+		 * Set this key if you want to enable runtime debugging
+		 */
+		templelibrary static var KEY:String;
 		
 		private static var _instance:DebugManager;
 		private static var _debugMode:String;
@@ -114,13 +121,13 @@ package temple.core.debug
 			if (DebugManager._debug) DebugManager.getInstance().logDebug("add: " + object);
 			
 			// check via javascript if debug is set in the url
-			if (!DebugManager._debugMode && ExternalInterface.available)
+			if (DebugManager.templelibrary::KEY && ExternalInterface.available)
 			{
 				try
 				{
-					var debugMode:String = ExternalInterface.call(<script><![CDATA[function(){var a = document.location.href.toString().split("?").pop().split("#").shift().split("&");var o = {};for (var i = 0; i < a.length; ++i){var p = a[i].split("=");o[p[0]] = p[1];}return o["debug"];} ]]></script>);
-					if (DebugManager.debug) DebugManager.getInstance().logInfo("debugMode from query string: '" + debugMode + "' (url='" + ExternalInterface.call(<script><![CDATA[function(){ return document.location.href; } ]]></script>) + "')");
-					if (debugMode) DebugManager.debugMode = debugMode; 
+					var key:String = ExternalInterface.call(<script><![CDATA[function(){var a = document.location.href.toString().split("?").pop().split("#").shift().split("&");var o = {};for (var i = 0; i < a.length; ++i){var p = a[i].split("=");o[p[0]] = p[1];}return o["debug"];} ]]></script>);
+					if (DebugManager.debug) DebugManager.getInstance().logInfo("debug key from query string: '" + key + "' (url='" + ExternalInterface.call(<script><![CDATA[function(){ return document.location.href; } ]]></script>) + "')");
+					if (key == DebugManager.templelibrary::KEY) DebugManager.debugMode = DebugMode.ALL; 
 				}
 				catch (error:SecurityError)
 				{
@@ -132,6 +139,7 @@ package temple.core.debug
 			if (!DebugManager._debugMode)
 			{
 				DebugManager.debugMode = Temple.defaultDebugMode;
+				DebugManager.templelibrary::KEY = null;
 			}
 			
 			var objectId:uint = Registry.getId(object);
