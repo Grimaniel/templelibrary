@@ -49,17 +49,12 @@ package temple.speech.googlespeech.data
 
 		public function set data(value:GoogleSpeechResultData):void
 		{
-			this._data = value;
+			this.data = value;
 		}
 
-		public function set success(value:Boolean):void
-		{
-			this._success = value;
-		}
-		
 		override public function get code():String
 		{
-			return this._data ? GoogleSpeechResultData(this._data).status.toString() : "10";
+			return this.data ? GoogleSpeechResultData(this.data).status.toString() : "10";
 		}
 	}
 }
