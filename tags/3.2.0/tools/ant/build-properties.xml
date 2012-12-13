@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<!-- Path to Flex -->
+	<property name="FLEX_HOME" value="D:/FDT/sdks/flex_sdk_4.6.0.23201" />
+
+	<!-- Path to asdoc -->
+	<property name="asdoc" value="${FLEX_HOME}/bin/asdoc.exe" />
+
+	<!-- Path to Flash -->
+	<property name="flash" value="C:/Program Files (x86)/Adobe/Adobe Flash CS5/Flash.exe" />
+
+</project>

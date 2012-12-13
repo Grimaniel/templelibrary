@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build Fla" name="SwitchButtonExample">
+	<import file="../../../../tools/ant/build-ui.xml" />
+</project>
