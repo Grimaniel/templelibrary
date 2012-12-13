@@ -65,11 +65,22 @@ package temple.mediaplayers.players.controls
 		 */
 		public static var knobInstanceName:String = "mcKnob";
 		
+		/**
+		 * Instance name of a child which acts as progressLabel.
+		 */
+		public static var progressLabelInstanceName:String = "mcProgressLabel";
+		
+		/**
+		 * Instance name of a child which acts as durationLabel.
+		 */
+		public static var durationLabelInstanceName:String = "mcDurationLabel";
+
 		private var _player:IPlayer;
 		private var _loadBar:DisplayObject;
 		private var _progressBar:DisplayObject;
 		private var _knob:DisplayObject;
 		private var _progressLabel:ILabel;
+		private var _durationLabel:ILabel;
 		
 		public function PlayerProgressBar(width:Number = NaN, height:Number = NaN)
 		{
@@ -86,6 +97,8 @@ package temple.mediaplayers.players.controls
 			this.loadBar ||= this.getChildByName(loadBarInstanceName) as DisplayObject;
 			this.progressBar ||= this.getChildByName(progressBarInstanceName) as DisplayObject;
 			this.knob ||= this.getChildByName(knobInstanceName) as DisplayObject;
+			this.progressLabel ||= this.getChildByName(progressLabelInstanceName) as ILabel;
+			this.durationLabel ||= this.getChildByName(durationLabelInstanceName) as ILabel;
 			
 			this.mouseChildren = false;
 			this.buttonMode = true;
@@ -145,6 +158,16 @@ package temple.mediaplayers.players.controls
 			this._progressLabel = value;
 		}
 		
+		public function get durationLabel():ILabel
+		{
+			return this._durationLabel;
+		}
+
+		public function set durationLabel(value:ILabel):void
+		{
+			this._durationLabel = value;
+		}
+				
 		public function get knob():DisplayObject
 		{
 			return this._knob;
@@ -176,6 +199,10 @@ package temple.mediaplayers.players.controls
 				if (this._progressLabel)
 				{
 					this._progressLabel.label = TimeUtils.secondsToString(this._player.currentPlayTime);
+				}
+				if (this._durationLabel)
+				{
+					this._durationLabel.label = TimeUtils.secondsToString(this._player.duration);
 				}
 				if (this._knob)
 				{
