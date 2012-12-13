@@ -28,9 +28,8 @@ package
 			super("Temple - LiquidExample");
 			
 			// set a minimal size on stage
-			if (!LiquidStage.getInstance()) new LiquidStage(this.stage);
-			LiquidStage.getInstance().minimalHeight = 200;
-			LiquidStage.getInstance().minimalWidth = 200;
+			LiquidStage.getInstance(stage).minimalHeight = 200;
+			LiquidStage.getInstance(stage).minimalWidth = 200;
 			
 			// header
 			with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)

@@ -344,6 +344,7 @@ package temple.ui.form.components
 					return;
 				}
 			}
+			if (this._selected) this._selected.selected = false;
 			this._selected = null;
 			this._dispatchChangeEvent = true;
 			

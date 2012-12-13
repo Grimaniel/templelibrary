@@ -114,9 +114,10 @@ package temple.ui.behaviors.textfield
 				textField.addEventListener(Event.CHANGE, this.handleTextFieldChange);
 				textField.addEventListener(KeyboardEvent.KEY_UP, this.handleTextFieldChange);
 				textField.addEventListener(TextEvent.TEXT_INPUT, this.handleTextFieldChange);
+				textField.addEventListener(Event.SCROLL, this.handleTextFieldScroll);
 			}
 		}
-		
+
 		/**
 		 * Updates the size of the font of the TextField.
 		 * The AutoFontSizeBehavior will set the maximal fontsize that will fit in the TextField 
@@ -124,6 +125,7 @@ package temple.ui.behaviors.textfield
 		public function update():void
 		{
 			this.textField.scrollV = 0;
+			this.textField.scrollH = 0;
  
 			if (this._previousText.length > this.textField.length)
 			{
@@ -212,6 +214,12 @@ package temple.ui.behaviors.textfield
 		{
 			this.update();
 		}
+		
+		private function handleTextFieldScroll(event:Event):void
+		{
+			this.textField.scrollV = 0;
+			this.textField.scrollH = 0;
+		}
 
 		/**
 		 * @inheritDoc
@@ -225,6 +233,7 @@ package temple.ui.behaviors.textfield
 				this.textField.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
 				this.textField.removeEventListener(KeyboardEvent.KEY_UP, this.handleTextFieldChange);
 				this.textField.removeEventListener(TextEvent.TEXT_INPUT, this.handleTextFieldChange);
+				this.textField.removeEventListener(Event.SCROLL, this.handleTextFieldScroll);
 			}
 			super.destruct();
 		}

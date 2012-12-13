@@ -59,7 +59,6 @@ package temple.ui.form.components
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 
-
 	/**
 	 * @eventType flash.events.Event.CHANGE
 	 */
@@ -106,7 +105,7 @@ package temple.ui.form.components
 		private var _text:String;
 		private var _hintText:String;
 		private var _prefillText:String;
-		protected var _showsHint:Boolean;
+		private var _showsHint:Boolean;
 		private var _textColor:uint;
 		private var _hintTextColor:uint;
 		private var _errorTextColor:uint;
@@ -122,6 +121,7 @@ package temple.ui.form.components
 		private var _minimalFontSize:Number;
 		private var _selectTextOnFocus:Boolean = true;
 		private var _enabled:Boolean = true;
+		private var _updateHintOnChange:Boolean;
 
 		/**
 		 * Constructor
@@ -817,7 +817,34 @@ package temple.ui.form.components
 		{
 			this._selectTextOnFocus = value;
 		}
+		
+		/**
+		 * A Boolean which indicates if currently the hint text is shown.
+		 */
+		public function get showsHint():Boolean
+		{
+			return this._showsHint;
+		}
 
+		/**
+		 * A Boolean which indicates if the hintText should be removed when the InputField gets focus (false) or when
+		 * the text changed (true). Default value is false.
+		 * 
+		 * @default false
+		 */
+		public function get updateHintOnChange():Boolean
+		{
+			return this._updateHintOnChange;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set updateHintOnChange(value:Boolean):void
+		{
+			this._updateHintOnChange = value;
+		}
+		
 		/**
 		 * @private
 		 */
@@ -825,7 +852,7 @@ package temple.ui.form.components
 		{
 			super.handleFocusIn(event);
 			
-			this.updateHint();
+			if (!this._updateHintOnChange) this.updateHint();
 			if (this._selectTextOnFocus)
 			{
 				FocusManager.focus = this.textField;
@@ -847,6 +874,19 @@ package temple.ui.form.components
 		 */
 		protected function handleTextFieldChange(event:Event):void
 		{
+			if (this._showsHint) updateHint();
+			
+			if (this._updateHintOnChange && this._textField.text == "")
+			{
+				this._showsHint = true;
+				if (this._hintText)
+				{
+					this._textField.text = this._hintText;
+					this._textField.textColor = this._hintTextColor;
+					this._textField.displayAsPassword = false;
+				}
+			}
+			
 			if (!isNaN(this._minimalFontSize))
 			{
 				this.fontSize = this._normalFontSize;
@@ -898,13 +938,7 @@ package temple.ui.form.components
 			}
 			else if (!this.focus && !this._showsHint && (this._textField.text == "")) 
 			{
-				this._showsHint = true;
-				if (this._hintText)
-				{
-					this._textField.text = this._hintText;
-					this._textField.textColor = this._hintTextColor;
-					this._textField.displayAsPassword = false;
-				}
+				this.showHint();
 			}
 			else if (this._textField.text != this._hintText && !this.hasError)
 			{
@@ -913,6 +947,18 @@ package temple.ui.form.components
 				this._textField.displayAsPassword = this._displayAsPassword;
 			}
 		}
+
+		protected function showHint():void
+		{
+			this._showsHint = true;
+			if (this._hintText)
+			{
+				this._textField.text = this._hintText;
+				this._textField.textColor = this._hintTextColor;
+				this._textField.displayAsPassword = false;
+			}
+		}
+
 		
 		/**
 		 * @private
@@ -940,6 +986,7 @@ package temple.ui.form.components
 		protected function handleTextInput(event:TextEvent):void
 		{
 			this._previousText = this._textField.text;
+			if (this._showsHint) this.updateHint();
 		}
 		
 		/**

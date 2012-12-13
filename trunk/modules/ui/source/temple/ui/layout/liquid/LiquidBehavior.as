@@ -35,6 +35,8 @@
 
 package temple.ui.layout.liquid 
 {
+	import temple.common.enum.Align;
+	import temple.common.enum.ScaleMode;
 	import temple.common.interfaces.IEnableable;
 	import temple.core.behaviors.IBehavior;
 	import temple.core.debug.IDebuggable;
@@ -49,7 +51,6 @@ package temple.ui.layout.liquid
 	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
 	import temple.utils.PropertyApplier;
 	import temple.utils.color.ColorUtils;
-
 	import flash.display.CapsStyle;
 	import flash.display.DisplayObject;
 	import flash.display.JointStyle;
@@ -156,6 +157,8 @@ package temple.ui.layout.liquid
 		private var _blockRequest:Boolean;
 		private var _allowNegativePosition:Boolean;
 		private var _useScale:Boolean;
+		private var _scaleMode:String;
+		private var _align:String;
 
 		/**
 		 * Create the possibility to align or scale an object related to an other object (or stage)
@@ -185,16 +188,7 @@ package temple.ui.layout.liquid
 				if (this.relatedObject == null && target.stage && (!(target is ICoreDisplayObject) || ICoreDisplayObject(target).onStage))
 				{
 					// still no related object found, take the stage
-					if (LiquidStage.getInstance())
-					{
-						this.relatedObject = LiquidStage.getInstance();
-					}
-					else
-					{
-						// target has a stage, convert it to be liquid and use it.
-						new LiquidStage(target.stage);
-						this.relatedObject = LiquidStage.getInstance();
-					}
+					this.relatedObject = LiquidStage.getInstance(target.stage);
 				}
 			}
 			target.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
@@ -218,7 +212,7 @@ package temple.ui.layout.liquid
 			this.update();
 			this.dispatchEvent(new Event(Event.INIT));
 		}
-
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -295,6 +289,14 @@ package temple.ui.layout.liquid
 			this._left = NaN;
 			this._right = NaN;
 			this._horizontalCenter = NaN;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function get x():Number
+		{
+			return this.displayObject.x;
 		}
 
 		/**
@@ -441,6 +443,14 @@ package temple.ui.layout.liquid
 			this._top = NaN;
 			this._bottom = NaN;
 			this._verticalCenter = NaN;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function get y():Number
+		{
+			return this.displayObject.y;
 		}
 
 		/**
@@ -813,6 +823,87 @@ package temple.ui.layout.liquid
 				{
 					this.displayObject.dispatchEvent(new Event(Event.RESIZE));
 				}
+				
+				if (this._scaleMode && this._scaleMode != ScaleMode.EXACT_FIT)
+				{
+					switch (this._scaleMode)
+					{
+						case ScaleMode.NO_BORDER:
+						{
+							this.displayObject.scaleX = this.displayObject.scaleY = Math.max(this.displayObject.scaleX, this.displayObject.scaleY);
+							break;
+						}
+						case ScaleMode.SHOW_ALL:
+						{
+							this.displayObject.scaleX = this.displayObject.scaleY = Math.min(this.displayObject.scaleX, this.displayObject.scaleY);
+							break;
+						}
+						case ScaleMode.NO_SCALE:
+						{
+							this.displayObject.scaleX = this.displayObject.scaleY = 1;
+							break;
+						}
+						default:
+						{
+							throwError(new TempleError(this, "Unhandled value for scaleMode: '" + this._scaleMode + "'"));
+							break;
+						}
+					}
+					// Align horizontal
+					switch (this._align)
+					{
+						case Align.LEFT:
+						case Align.BOTTOM_LEFT:
+						case Align.TOP_LEFT:
+						{
+							// do nothing
+							break;
+						}
+						case Align.BOTTOM:
+						case Align.CENTER:
+						case Align.MIDDLE:
+						case Align.TOP:
+						case null:
+						{
+							this.displayObject.x += .5 * (toWidth - this.displayObject.width);
+							break;
+						}
+						case Align.RIGHT:
+						case Align.BOTTOM_RIGHT:
+						case Align.TOP_RIGHT:
+						{
+							this.displayObject.x += toWidth - this.displayObject.width;
+							break;
+						}
+					}
+					// Align vertizal
+					switch (this._align)
+					{
+						case Align.TOP:
+						case Align.TOP_LEFT:
+						case Align.TOP_RIGHT:
+						{
+							// do nothing
+							break;
+						}
+						case Align.LEFT:
+						case Align.CENTER:
+						case Align.MIDDLE:
+						case Align.RIGHT:
+						case null:
+						{
+							this.displayObject.y += .5 * (toHeight - this.displayObject.height);
+							break;
+						}
+						case Align.BOTTOM:
+						case Align.BOTTOM_LEFT:
+						case Align.BOTTOM_RIGHT:
+						{
+							this.displayObject.y += toHeight - this.displayObject.height;
+							break;
+						}
+					}
+				}
 			}
 			this._blockRequest = false;
 		}
@@ -1004,6 +1095,77 @@ package temple.ui.layout.liquid
 		}
 		
 		/**
+		 * @see temple.common.enum.ScaleMode
+		 */
+		public function get scaleMode():String
+		{
+			return this._scaleMode;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set scaleMode(value:String):void
+		{
+			switch (value)
+			{
+				case ScaleMode.NO_BORDER:
+				case ScaleMode.NO_SCALE:
+				case ScaleMode.SHOW_ALL:
+				case ScaleMode.EXACT_FIT:
+				case null:
+				{
+					this._scaleMode = value;
+					break;
+				}
+				default:
+				{
+					throwError(new TempleArgumentError(this, "Invalid value for scaleMode: '" + value + "'"));
+					break;
+				}
+			}
+		}
+
+		/**
+		 * @see temple.common.enum.Align
+		 */
+		public function get align():String
+		{
+			return this._align;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set align(value:String):void
+		{
+			switch (value)
+			{
+				case Align.BOTTOM:
+				case Align.BOTTOM_LEFT:
+				case Align.BOTTOM_RIGHT:
+				case Align.CENTER:
+				case Align.LEFT:
+				case Align.RIGHT:
+				case Align.TOP:
+				case Align.TOP_LEFT:
+				case Align.TOP_RIGHT:
+				case Align.NONE:
+				case null:
+				{
+					this._align = value;
+					break;
+				}
+				default:
+				{
+					throwError(new TempleArgumentError(this, "Invalid value for scaleMode: '" + value + "'"));
+					break;
+				}
+			}
+			
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function get debug():Boolean
@@ -1058,14 +1220,7 @@ package temple.ui.layout.liquid
 				
 				if (!this.relatedObject)
 				{
-					if (LiquidStage.getInstance())
-					{
-						this.relatedObject = LiquidStage.getInstance();
-					}
-					else
-					{
-						this.relatedObject = new LiquidStage(this.displayObject.stage);
-					}
+					this.relatedObject = LiquidStage.getInstance(this.displayObject.stage);
 				}
 			}
 			this.update();

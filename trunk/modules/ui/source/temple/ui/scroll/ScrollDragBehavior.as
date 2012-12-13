@@ -48,9 +48,61 @@ package temple.ui.scroll
 	 */
 	public class ScrollDragBehavior extends DragBehavior 
 	{
-		public function ScrollDragBehavior(target:InteractiveObject, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true)
+		private var _invertHorizontal:Boolean;
+		private var _invertVertical:Boolean;
+		
+		public function ScrollDragBehavior(target:InteractiveObject, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true, invert:Boolean = false)
 		{
 			super(target, target.scrollRect, dragButton, dragHorizontal, dragVertical);
+			this.invert = invert;
+		}
+		
+		/**
+		 * 
+		 */
+		public function get invertHorizontal():Boolean
+		{
+			return this._invertHorizontal;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set invertHorizontal(value:Boolean):void
+		{
+			this._invertHorizontal = value;
+		}
+
+		/**
+		 * 
+		 */
+		public function get invertVertical():Boolean
+		{
+			return this._invertVertical;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set invertVertical(value:Boolean):void
+		{
+			this._invertVertical = value;
+		}
+		
+		/**
+		 * 
+		 */
+		public function get invert():Boolean
+		{
+			return this._invertHorizontal && this._invertVertical;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set invert(value:Boolean):void
+		{
+			this._invertHorizontal = this._invertVertical = value;
 		}
 		
 		/**
@@ -67,15 +119,19 @@ package temple.ui.scroll
 			
 			this.displayObject.scrollRect = scrollRect;
 		}
-
+		
 		/**
 		 * @private
 		 */
 		override protected function handleMouseDown(event:MouseEvent):void
 		{
-			super.handleMouseDown(event);
-			
-			this._startDragOffset = new Point(this.displayObject.scrollRect.topLeft.x - this.displayObject.parent.mouseX, this.displayObject.scrollRect.topLeft.y - this.displayObject.parent.mouseY);
+			if (this.displayObject.scrollRect)
+			{
+				super.handleMouseDown(event);
+				this._startDragOffset = new Point(
+					(this._invertHorizontal ? -1 : 1) * this.displayObject.scrollRect.topLeft.x - this.displayObject.parent.mouseX,
+					(this._invertVertical ? -1 : 1) * this.displayObject.scrollRect.topLeft.y - this.displayObject.parent.mouseY);
+			}
 		}
 
 		/**
@@ -87,12 +143,12 @@ package temple.ui.scroll
 			
 			if (this.dragHorizontal)
 			{
-				scrollRect.x = this._startDragOffset.x + this.displayObject.parent.mouseX;
+				scrollRect.x = (this._invertHorizontal ? -1 : 1) * (this._startDragOffset.x + this.displayObject.parent.mouseX);
 			}
 			
 			if (this.dragVertical)
 			{
-				scrollRect.y = this._startDragOffset.y + this.displayObject.parent.mouseY;
+				scrollRect.y = (this._invertHorizontal ? -1 : 1) * (this._startDragOffset.y + this.displayObject.parent.mouseY);
 			}
 			
 			this.displayObject.scrollRect = scrollRect;
@@ -102,7 +158,5 @@ package temple.ui.scroll
 			
 			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
 		}
-
-		
 	}
 }

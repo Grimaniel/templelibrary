@@ -172,10 +172,10 @@ imageLoaderExample.load("image.jpg");</listing>
 		 * @param url The date of the image to load
 		 * @param context Used for securety settings
 		 */
-		public function loadBytes(image:ByteArray, context:LoaderContext = null):void
+		public function loadBytes(bytes:ByteArray, context:LoaderContext = null):void
 		{
 			if (this._loaderContext) this._loaderContext.checkPolicyFile = false;
-			this._loader.loadBytes(image, !context && this._loaderContext ? this._loaderContext : context);
+			this._loader.loadBytes(bytes, !context && this._loaderContext ? this._loaderContext : context);
 		}
 		
 		/**

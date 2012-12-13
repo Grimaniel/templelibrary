@@ -65,6 +65,22 @@ package temple.ui.form.result
 		}
 
 		/**
+		 * @inheritDoc 
+		 */
+		public function get errors():Vector.<IFormFieldError>
+		{
+			return this._errors;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set errors(value:Vector.<IFormFieldError>):void
+		{
+			this._errors = value;
+		}
+		
+		/**
 		 * Default parser
 		 * Result XML is formed as:
 		 * 
@@ -88,20 +104,12 @@ package temple.ui.form.result
 		 */
 		public function parseXML(xml:XML):Boolean 
 		{
-			this._success = xml.child('success') == "true" || xml.child('success') == "1";
-			this._message = xml.child('message');
-			this._code = xml.child('message').@code;
+			this.success = xml.child('success') == "true" || xml.child('success') == "1";
+			this.message = xml.child('message');
+			this.code = xml.child('message').@code;
 			this._errors = new Vector.<IFormFieldError>(XMLParser.parseList(xml.errors.error, FormFieldError));
 			
 			return true;
-		}
-
-		/**
-		 * @inheritDoc 
-		 */
-		public function get errors():Vector.<IFormFieldError>
-		{
-			return this._errors;
 		}
 		
 		/**

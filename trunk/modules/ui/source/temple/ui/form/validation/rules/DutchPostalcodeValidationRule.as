@@ -46,9 +46,9 @@ package temple.ui.form.validation.rules
 	{
 		private static const _REG_EXP:RegExp = /[1-9][0-9]{3} {0,1}[a-zA-Z]{2}/;
 		
-		public function DutchPostalcodeValidationRule(target:IHasValue) 
+		public function DutchPostalcodeValidationRule(target:IHasValue, optional:Boolean = false) 
 		{
-			super(target, _REG_EXP);
+			super(target, _REG_EXP, true, optional);
 		}
 	}
 }
