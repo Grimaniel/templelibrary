@@ -232,7 +232,7 @@ package temple.utils.types
 				var rect:Rectangle;
 				var container:DisplayObjectContainer = DisplayObjectContainer(target);
 				var disp:DisplayObject;
-				if(recurse > 0)
+				if (recurse > 0)
 				{
 					for(i = 0;i < container.numChildren;i++)
 					{
@@ -252,10 +252,6 @@ package temple.utils.types
 								rect = DisplayObjectUtils.getVisibleBounds(disp, space, recurse - 1);
 							}
 						}
-						/*else
-						{
-						log('-> skipped ' + disp);
-						}*/
 					}
 				}
 				else
@@ -278,10 +274,6 @@ package temple.utils.types
 								rect = disp.getBounds(space);
 							}
 						}
-						/*else
-						{
-						log('-> skipped ' + disp);
-						}*/
 					}
 				}
 				if(rect)
@@ -378,6 +370,32 @@ package temple.utils.types
 			if (!displayObject || !displayObject.transform) return;
 			displayObject.transform.matrix = DisplayObjectUtils.convertTransformMatrix(displayObject, newParent);
 			newParent.addChildAt(displayObject, index);
+		}
+		
+		/**
+		 * Gets the absolute scaleX (his scaleX multiplied the scaleX of all his parents)
+		 */
+		public static function getAbsoluteScaleX(displayObject:DisplayObject):Number
+		{
+			var scaleX:Number = displayObject.scaleX;
+			while (displayObject = displayObject.parent)
+			{
+				scaleX *= displayObject.scaleX;
+			}
+			return scaleX;
+		}
+
+		/**
+		 * Gets the absolute scaleY (his scaleY multiplied the scaleY of all his parents)
+		 */
+		public static function getAbsoluteScaleY(displayObject:DisplayObject):Number
+		{
+			var scaleY:Number = displayObject.scaleY;
+			while (displayObject = displayObject.parent)
+			{
+				scaleY *= displayObject.scaleY;
+			}
+			return scaleY;
 		}
 
 		/**

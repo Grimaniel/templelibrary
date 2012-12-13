@@ -378,13 +378,20 @@ package temple.utils
 			}
 			else
 			{
-				if (this._variables)
+				try
 				{
-					this._variables.decode(value);
+					if (this._variables)
+					{
+						this._variables.decode(value);
+					}
+					else
+					{
+						this._variables = new URLVariables(value);
+					}
 				}
-				else
+				catch (error:Error)
 				{
-					this._variables = new URLVariables(value);
+					// ignore
 				}
 			}
 		}

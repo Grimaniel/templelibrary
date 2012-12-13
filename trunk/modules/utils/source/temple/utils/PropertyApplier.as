@@ -57,51 +57,51 @@ package temple.utils
 		 * @param debug if set to true, warnings are logged when properties can't be applied
 		 * @return the object
 		 */
-		public static function apply(object:Object, properties:Object, debug:Boolean = false):Object
+				public static function apply(target:Object, properties:Object, debug:Boolean = false):Object
 		{
-			if (object == null)
+			if (target == null)
 			{
-				Log.error("Object can not be null", PropertyApplier);
-				return object;
+				Log.error("Target can not be null", PropertyApplier);
+				return target;
 			}
 			if (properties == null)
 			{
 				Log.error("Properties can not be null", PropertyApplier);
-				return object;
+				return target;
 			}
 			
 			for (var key:String in properties)
 			{
-				if (object.hasOwnProperty(key))
+				if (key in target)
 				{
 					try
 					{
-						switch (typeof(object[key]))
+						switch (typeof(target[key]))
 						{
 							case ObjectType.BOOLEAN:
 							{
-								object[key] = BooleanUtils.getBoolean(properties[key]);
+								target[key] = BooleanUtils.getBoolean(properties[key]);
 								break;
 							}
 							default:
 							{
-								object[key] = properties[key];
+								target[key] = properties[key];
 								break;
 							}
 						}
 					}
 					catch (error:Error)
 					{
-						if (debug) Log.warn("property '" + key + "' can not be applied to " + object, PropertyApplier);
+						if (debug) Log.warn("property '" + key + "' can not be applied to " + target, PropertyApplier);
 					}
 				}
 				else
 				{
-					if (debug) Log.warn("Object '" + object + "' has no property '" + key + "'", PropertyApplier);
+					if (debug) Log.warn("Target '" + target + "' has no property '" + key + "'", PropertyApplier);
 				}
 			}
 			
-			return object;
+			return target;
 		}
 
 		/**

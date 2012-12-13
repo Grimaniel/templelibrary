@@ -35,6 +35,7 @@
 
 package temple.utils.types
 {
+	import flash.utils.Proxy;
 	import temple.core.ICoreObject;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.objectToString;
@@ -366,6 +367,18 @@ package temple.utils.types
 			else if (object is Function)
 			{
 				return FunctionUtils.functionToString(object);
+			}
+			else if (object is Proxy)
+			{
+				try
+				{
+					return String(object);
+				}
+				catch (error:Error)
+				{
+					return "?";
+				}
+				
 			}
 			return String(object);
 		}

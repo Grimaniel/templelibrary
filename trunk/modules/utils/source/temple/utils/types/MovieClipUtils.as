@@ -276,7 +276,14 @@ package temple.utils.types
 					MovieClipUtils.deepGotoAndStop(DisplayObjectContainer(child), frame);
 					if (child is MovieClip)
 					{
-						MovieClip(child).gotoAndStop(frame);
+						if (frame is String)
+						{
+							if (FrameLabelUtils.hasLabel(MovieClip(child), frame)) MovieClip(child).gotoAndStop(frame);
+						}
+						else
+						{
+							MovieClip(child).gotoAndStop(frame);
+						}
 					}
 				}
 			}
@@ -301,7 +308,14 @@ package temple.utils.types
 					MovieClipUtils.deepGotoAndPlay(DisplayObjectContainer(child), frame);
 					if (child is MovieClip)
 					{
-						MovieClip(child).gotoAndPlay(frame);
+						if (frame is String)
+						{
+							if (FrameLabelUtils.hasLabel(MovieClip(child), frame)) MovieClip(child).gotoAndPlay(frame);
+						}
+						else
+						{
+							MovieClip(child).gotoAndPlay(frame);
+						}
 					}
 				}
 			}

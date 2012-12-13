@@ -55,6 +55,7 @@ package temple.utils
 		private var _target:Object;
 		private var _property:String;
 		private var _propertyProxy:IPropertyProxy;
+		private var _eventType:String;
 		
 		public function ValueBinder(source:IHasValue, target:Object, property:String, propertyProxy:IPropertyProxy = null, eventType:String = Event.CHANGE)
 		{
@@ -66,11 +67,9 @@ package temple.utils
 			this._target = target;
 			this._property = property;
 			this._propertyProxy = propertyProxy;
+			this._eventType = eventType;
 			
-			if (this._source is IEventDispatcher)
-			{
-				IEventDispatcher(this._source).addEventListener(eventType, this.handleChange);
-			}
+			if (this._source is IEventDispatcher) IEventDispatcher(this._source).addEventListener(this._eventType, this.handleChange);
 			this.update();
 		}
 
@@ -94,6 +93,11 @@ package temple.utils
 			return this._target;
 		}
 		
+		public function get eventType():String
+		{
+			return this._eventType;
+		}
+		
 		public function update():void
 		{
 			if (this._propertyProxy)
@@ -113,6 +117,7 @@ package temple.utils
 
 		override public function destruct():void
 		{
+			if (this._source && this._source is IEventDispatcher) IEventDispatcher(this._source).removeEventListener(this._eventType, this.handleChange);
 			this._source = null;
 			this._target = null;
 			this._propertyProxy = null;
