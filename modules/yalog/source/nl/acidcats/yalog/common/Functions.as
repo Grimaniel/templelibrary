@@ -17,7 +17,7 @@ limitations under the License.
 package nl.acidcats.yalog.common 
 {
 
-	public class Functions {
+	public final class Functions {
 		// Used channels
 		public static var CHANNEL:String = "_yala";
 		public static var CHANNEL_PING:String = "_yalog";
@@ -25,10 +25,10 @@ package nl.acidcats.yalog.common
 		public static var MAX_CHANNEL_COUNT:Number = 10;
 		
 		// Command functions (from Yala to Yalog)
-		public static var FUNC_PONG:String = "pong";	// ()
+		public static var FUNC_PONG:String = "pong";
 
 		// Log functions (from Yalog to Yala)
-		public static var FUNC_PING:String = "ping";	// ()
-		public static var FUNC_WRITELOG:String = "writelog";	// (inMessage:MessageData)
+		public static var FUNC_PING:String = "ping";
+		public static var FUNC_WRITELOG:String = "writelog";
 	}		
 }
