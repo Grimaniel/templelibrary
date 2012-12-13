@@ -33,22 +33,17 @@
  *	repository with their own license!
  */
 
-package temple.common.interfaces 
+package temple.common.interfaces
 {
-	import temple.core.events.ICoreEventDispatcher;
-	import temple.core.net.ILoader;
-
-	
 	/**
-	 * Interface for asynchronous calls.
-	 * 
-	 * @author Arjan van Wijk
+	 * @author Thijs Broerse
 	 */
-	public interface IPendingCall extends ICoreEventDispatcher, ILoader, ICancellable
+	public interface IOpenable
 	{
-		/**
-		 * Gets the result if the call is completed
-		 */
-		function get result():IDataResult
+		function open():void;
+
+		function close():void;
+
+		function get isOpen():Boolean;
 	}
 }
