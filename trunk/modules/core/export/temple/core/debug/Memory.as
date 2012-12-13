@@ -67,7 +67,7 @@ package temple.core.debug
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.2.0";
+		templelibrary static const VERSION:String = "3.3.0";
 		
 		private static var _registry:Dictionary;
 		private static var _debug:Boolean; 

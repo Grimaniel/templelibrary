@@ -49,7 +49,7 @@ package temple.core.errors
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.2.0";
+		templelibrary static const VERSION:String = "3.3.0";
 		
 		private var _sender:Object;
 		

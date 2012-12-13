@@ -4,11 +4,13 @@ include "../includes/License.as.inc";
 
 package temple.core.debug.log 
 {
-	import flash.events.EventDispatcher;
-	import flash.utils.getTimer;
+	import temple.core.debug.FrameCounter;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
 	import temple.core.templelibrary;
+
+	import flash.events.EventDispatcher;
+	import flash.utils.getTimer;
 
 
 	/**
@@ -72,7 +74,8 @@ package temple.core.debug.log
 	{
 		include "../../includes/Version.as.inc";
 		
-		private static var _instance:Log;
+		private static const _instance:Log = new Log();
+		
 		private static var _showTrace:Boolean = true;
 		private static var _stackTrace:Boolean = false;
 		
@@ -196,47 +199,62 @@ package temple.core.debug.log
 		 */
 		templelibrary static function send(data:*, sender:String, level:String, objectId:uint = 0, stackLine:uint = 3):void 
 		{
-			var stack:String;
-			
-			if (Log._stackTrace)
+			if (Log._showTrace || Log._instance.hasEventListener(LogEvent.EVENT))
 			{
-				stack = new Error().getStackTrace();
+				var stack:String;
 				
-				if (stack)
+				if (Log._stackTrace)
 				{
-					var lines:Array = stack.split("\n");
-					stack = String(lines[stackLine]).substr(4);
-					var i:int = stack.indexOf('::');
-					if (i != -1) stack = stack.substr(i+2);
-					stack = stack.replace("/", ".");
-					i = stack.lastIndexOf(':');
-					if (i != -1)
+					stack = new Error().getStackTrace();
+					
+					if (stack)
 					{
-						stack = stack.substr(0, stack.indexOf('()') + 2) + stack.substring(i, stack.length - 1);
+						var lines:Array = stack.split("\n");
+						stack = String(lines[stackLine]).substr(4);
+						var i:int = stack.indexOf('::');
+						if (i != -1) stack = stack.substr(i+2);
+						stack = stack.replace("/", ".");
+						i = stack.lastIndexOf(':');
+						if (i != -1)
+						{
+							stack = stack.substr(0, stack.indexOf('()') + 2) + stack.substring(i, stack.length - 1);
+						}
 					}
 				}
+				var frame:uint = FrameCounter.frame;
+				var time:uint = getTimer();
+				
+				if (Log._showTrace) 
+				{
+					trace(Log.padLeft(String(frame % 1000), 3, " ") + " " + Log.formatTime(time) + " \t" + level + ": \t" + String(data) + " \t-- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#") + (stack ? " " + stack : ""));
+				}
+				
+				if (Log._instance.hasEventListener(LogEvent.EVENT))
+				{
+					Log._instance.dispatchEvent(new LogEvent(level, data, sender ? sender.toString() : 'null', objectId, stack, time, frame));
+				}
 			}
-			
-			if (Log._showTrace) 
-			{
-				trace(Log.formatTime(getTimer()) + " \t" + level + ": \t" + String(data) + " \t-- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#") + (stack ? " " + stack : ""));
-			}
-			Log.getInstance().dispatchEvent(new LogEvent(level, data, sender ? sender.toString() : 'null', objectId, stack));
 		}
 
-		private static function formatTime(milliseconds:int):String
+		/**
+		 * @private
+		 */
+		public static function formatTime(milliseconds:int):String
 		{
-			return Log.padLeft(Math.floor(milliseconds / 60000).toString(), 2) + ":" + Log.padLeft((Math.floor(milliseconds * .001) % 60).toString(), 2) + '.' + Log.padLeft((Math.round(Math.floor(milliseconds % 1000))).toString(), 3);
+			return Log.padLeft(Math.floor(milliseconds / 60000).toString(), 2, "0") + ":" + Log.padLeft((Math.floor(milliseconds * .001) % 60).toString(), 2, "0") + '.' + Log.padLeft((Math.round(Math.floor(milliseconds % 1000))).toString(), 3, "0");
 		}
 		
-		private static function padLeft(string:String, length:int):String
+		/**
+		 * @private
+		 */
+		public static function padLeft(string:String, length:int, fillChar:String):String
 		{
 			if (string.length < length)
 			{
 				var iLim:int = length - string.length;
 				for (var i:int = 0; i < iLim;i++)
 				{
-					string = "0" + string;
+					string = fillChar + string;
 				}
 			}
 			return string;
@@ -259,7 +277,7 @@ package temple.core.debug.log
 		 */
 		public static function addLogListener(handler:Function):void 
 		{
-			Log.getInstance().addListener(handler);
+			Log._instance.addEventListener(LogEvent.EVENT, handler);
 		}
 
 		/**
@@ -268,7 +286,7 @@ package temple.core.debug.log
 		 */
 		public static function removeLogListener(handler:Function):void 
 		{
-			Log.getInstance().removeListener(handler);
+			Log._instance.removeEventListener(LogEvent.EVENT, handler);
 		}
 
 		/**
@@ -307,43 +325,11 @@ package temple.core.debug.log
 		}
 
 		/**
-		 * @return singleton instance of Logger
-		 */
-		private static function getInstance():Log 
-		{
-			return Log._instance ||= new Log();
-		}
-		
-		/**
 		 * @private
 		 */
 		public function Log()
 		{
-			if (Log._instance) throwError(new TempleError(this, "Singleton, please use static methods"));
-		}
-
-		/**
-		 *	Add a function to the event listeners
-		 */
-		private function addListener(handler:Function):void 
-		{
-			this.addEventListener(LogEvent.EVENT, handler);
-		}
-
-		/**
-		 *	Remove a function from the event listeners
-		 */
-		private function removeListener(handler:Function):void 
-		{
-			this.removeEventListener(LogEvent.EVENT, handler);
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public static function destruct():void
-		{
-			Log._instance = null;
+			if (_instance) throwError(new TempleError(this, "Singleton, please use static methods"));
 		}
 	}
 }

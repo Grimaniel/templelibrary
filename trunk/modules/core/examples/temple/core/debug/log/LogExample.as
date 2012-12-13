@@ -6,8 +6,6 @@
  * 
  * <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/core/doc/temple/core/debug/log/Log.html">Log</a>.</p>
  * 
- * <p>This example uses Yalala to log debug information. Go to <a href="http://yalala.tyz.nl" target="_blank">http://yalala.tyz.nl</a> to view the debug messages.</p>
- * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/core/examples/temple/core/debug/log/LogExample.swf" target="_blank">View this example</a></p>
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/core/examples/temple/core/debug/log/LogExample.as" target="_blank">View source</a></p>
@@ -35,8 +33,8 @@ package
 			this._txtLog.width = this.stage.stageWidth;
 			this.addChild(this._txtLog);
 			
-			// Add listenener to log. Used for example, not nessessary if you open Yalala
-			Log.addLogListener(this.handleLog);
+			// Add listenener to log
+			Log.addLogListener(this.handleLogEvent);
 			
 			
 			// log an info message
@@ -54,9 +52,9 @@ package
 			this.logFatal("This is a fatal message");
 		}
 		
-		private function handleLog(e:LogEvent):void
+		private function handleLogEvent(event:LogEvent):void
 		{
-			this._txtLog.appendText(e.level + ": \t" + e.data + "\n");
+			this._txtLog.appendText(event.level + ": \t" + event.data + "\n");
 		}
 
 	}

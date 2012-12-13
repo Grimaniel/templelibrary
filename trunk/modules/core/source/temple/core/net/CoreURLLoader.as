@@ -13,12 +13,12 @@ package temple.core.net
 	import temple.core.destruction.IDestructibleOnError;
 	import temple.core.events.EventListenerManager;
 	import temple.core.templelibrary;
+
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 
 	/**

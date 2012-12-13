@@ -54,7 +54,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.2.0";
+		templelibrary static const VERSION:String = "3.3.0";
 		
 		/**
 		 * The name of the Temple.
@@ -64,7 +64,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library.
 		 */
-		public static const VERSION:String = "3.2.0";
+		public static const VERSION:String = "3.3.0";
 		
 		/**
 		 * The Authors of the Temple.
@@ -76,7 +76,7 @@ package temple.core
 		 * (Format: 'yyyy-mm-dd')
 		 * 
 		 */
-		public static const DATE:String = "2012-10-11";
+		public static const DATE:String = "2012-12-13";
 
 		/**
 		 * The official website of the Temple.
