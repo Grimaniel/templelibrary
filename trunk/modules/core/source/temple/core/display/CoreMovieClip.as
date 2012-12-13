@@ -144,7 +144,7 @@ package temple.core.display
 			{
 				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + this.totalFrames));
 			}
-			return this._frameScripts[frame + 1];
+			return this._frameScripts[frame - 1];
 		}
 
 		/**
