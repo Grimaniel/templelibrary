@@ -133,6 +133,12 @@ package temple.data.url
 			this._urls = {};
 			this._variables = {};
 			
+			// add some methods which can be used when a variable is used in an url
+			this._variables.escape = escape;
+			this._variables.escapeMultiByte = escapeMultiByte;
+			this._variables.encodeURI = encodeURI;
+			this._variables.encodeURIComponent = encodeURIComponent;
+			
 			addToDebugManager(this);
 		}
 		
@@ -234,7 +240,7 @@ package temple.data.url
 			if (name in this._urls)
 			{
 				var url:String = URLData(this._urls[name]).url;
-				return variables ? StringUtils.replaceVars(url, variables) : url;
+				return variables ? StringUtils.replaceVars(url, variables, true) : url;
 			}
 			
 			this.logError("getURLByName: url with name '" + name + "' not found. Check urls.xml!");
@@ -259,7 +265,7 @@ package temple.data.url
 			
 			var url:String = ud.url;
 			
-			if (variables) url = StringUtils.replaceVars(url, variables);
+			if (variables) url = StringUtils.replaceVars(url, variables, true);
 			
 			this.open(url, ud.target, name, ud.features);
 		}
@@ -287,7 +293,7 @@ package temple.data.url
 				if (features)
 				{
 					if (this.debug) this.logDebug("openURL using JavaScript, with features=\"" + features + "\"");
-					ExternalInterface.call(String(<script><![CDATA[function(){ window.open("{url}", "{target}", "{features}");}]]></script>).replace("{url}", url).replace("{target}", target).replace("{features}", features));
+					ExternalInterface.call(<script><![CDATA[window.open]]></script>, url, target, features);
 				}
 				else
 				{
@@ -299,7 +305,7 @@ package temple.data.url
 					if (userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7))
 					{
 						if (this.debug) this.logDebug("openURL using JavaScript, userAgent=\"" + userAgent + "\"");
-						ExternalInterface.call(String(<script><![CDATA[function(){ window.open("{url}", "{target}");}]]></script>).replace("{url}", url).replace("{target}", target));
+						ExternalInterface.call(<script><![CDATA[window.open]]></script>, url, target);
 					}
 					else
 					{
@@ -360,6 +366,22 @@ package temple.data.url
 			var groups:Array = this._group.split(",");
 			ArrayUtils.removeValueFromArray(groups, group);
 			this.group = groups.join(",");
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function hasVariable(name:String):Boolean
+		{
+			return name in this._variables;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function getVariable(name:String):String
+		{
+			return this._variables[name];
 		}
 
 		/**
@@ -460,10 +482,9 @@ package temple.data.url
 				}
 				else
 				{
-					if (!node.hasOwnProperty('@value')) this.logWarn("variable '" + node.@name + "' has no value attribute: " + node.toXMLString());
 					if (!this._variables.hasOwnProperty(node.@name))
 					{
-						var value:String = node.@value;
+						var value:String = node.hasOwnProperty('@value') ? node.@value : node.toString();
 						if (node.hasOwnProperty('@escape') && node.@escape == "true") value = escape(value);
 						if (node.hasOwnProperty('@escapemultibyte') && node.@escapemultibyte == "true") value = escapeMultiByte(value);
 						this._variables[node.@name] = value;
@@ -479,12 +500,13 @@ package temple.data.url
 					var changed:Boolean = false;
 					for (var key1:String in this._variables)
 					{
-						for (var key2:String in this._variables)
+						if (this._variables[key1] is String)
 						{
 							var prevValue:String = this._variables[key1]; 
-							this._variables[key1] = this._variables[key1].split('{' + key2 + '}').join(this._variables[key2]);
+							this._variables[key1] = StringUtils.replaceVars(prevValue, this._variables, true);
 							if (prevValue != this._variables[key1]) changed = true;
 						}
+
 					}
 				}
 				while (changed);
@@ -550,10 +572,7 @@ package temple.data.url
 			{
 				for each (ud in this._urls)
 				{
-					for (key in this._variables)
-					{
-						ud.url = ud.url.split('{' + key + '}').join(this._variables[key]);
-					}
+					ud.url = StringUtils.replaceVars(ud.url, this._variables, true);
 				}
 			}
 			

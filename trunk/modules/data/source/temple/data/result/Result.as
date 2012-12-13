@@ -47,9 +47,9 @@ package temple.data.result
 	 */
 	public class Result extends CoreObject implements IResult 
 	{
-		protected var _success:Boolean;
-		protected var _message:String;
-		protected var _code:String;
+		private var _success:Boolean;
+		private var _message:String;
+		private var _code:String;
 
 		public function Result(success:Boolean = false, message:String = null, code:String = null)
 		{
@@ -70,11 +70,27 @@ package temple.data.result
 		}
 		
 		/**
+		 * @private
+		 */
+		public function set success(value:Boolean):void
+		{
+			this._success = value;
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function get message():String
 		{
 			return this._message;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set message(value:String):void
+		{
+			this._message = value;
 		}
 		
 		/**
@@ -83,6 +99,14 @@ package temple.data.result
 		public function get code():String
 		{
 			return this._code;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set code(value:String):void
+		{
+			this._code = value;
 		}
 	}
 }

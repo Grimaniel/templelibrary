@@ -92,7 +92,7 @@ class DateCoder implements IStringifier, IDestringifier
 		return "\"" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "\"";
 	}
 
-	public function destringify(value:String):*
+	public function destringify(value:*):*
 	{
 		if (value && value.indexOf("-"))
 		{

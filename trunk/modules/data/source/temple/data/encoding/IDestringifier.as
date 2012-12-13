@@ -42,6 +42,6 @@ package temple.data.encoding
 	 */
 	public interface IDestringifier
 	{
-		function destringify(value:String):* 
+		function destringify(value:*):* 
 	}
 }

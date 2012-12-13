@@ -167,7 +167,7 @@ package temple.data.index
 		}
 
 		
-		public static function toString() : String
+		public static function toString():String
 		{
 			return objectToString(Indexer);
 		}

@@ -43,5 +43,5 @@ package temple.data.url
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public const urlManagerInstance:URLManager = new URLManager();
+	public const urlManagerInstance:IURLManager = new URLManager();
 }
