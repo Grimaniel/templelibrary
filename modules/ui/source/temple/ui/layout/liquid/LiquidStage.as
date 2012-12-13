@@ -64,6 +64,16 @@ package temple.ui.layout.liquid
 		private static var _originalHeight:Number;
 		
 		private static var _instance:LiquidStage;
+
+		/**
+		 * Returns the instance of the LiquidStage.
+		 * 
+		 * @param stage if stage is not null an instance of the LiquidStage is created when there is
+		 */
+		public static function getInstance(stage:Stage):LiquidStage
+		{
+			return LiquidStage._instance || (stage ? new LiquidStage(stage) : null);
+		}
 		
 		private var _minimalWidth:Number;
 		private var _minimalHeight:Number;
@@ -71,13 +81,8 @@ package temple.ui.layout.liquid
 		private var _resizeDelay:FrameDelay;
 		private var _offset:Point = new Point(0,0);
 
-		/**
-		 * Returns the instance of the LiquidStage
-		 */
-		public static function getInstance():LiquidStage
-		{
-			return LiquidStage._instance;
-		}
+		private var _width:Number;
+		private var _height:Number;
 		
 		/**
 		 * The original width of the stage. Only needed if you want to use relative positions
@@ -118,6 +123,8 @@ package temple.ui.layout.liquid
 		private var _stage:Stage;
 		
 		/**
+		 * @private
+		 * 
 		 * Don't call constructor directly, use 'LiquidStage.getInstance()'
 		 */
 		public function LiquidStage(stage:Stage) 
@@ -146,11 +153,20 @@ package temple.ui.layout.liquid
 		}
 		
 		/**
-		 * Returns the stageWidth or minimalWidth
+		 * Returns the stageWidth or minimalWidth or width
 		 */
 		public function get width():Number
 		{
+			if (!isNaN(this._width)) return this._width;
 			return isNaN(this._minimalWidth) || this._stage.stageWidth > this._minimalWidth ? this._stage.stageWidth : this._minimalWidth;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set width(value:Number):void
+		{
+			this._width = value;
 		}
 
 		/**
@@ -184,7 +200,16 @@ package temple.ui.layout.liquid
 		 */
 		public function get height():Number
 		{
+			if (!isNaN(this._height)) return this._height;
 			return isNaN(this._minimalHeight) || this._stage.stageHeight > this._minimalHeight ? this._stage.stageHeight : this._minimalHeight;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set height(value:Number):void
+		{
+			this._height = value;
 		}
 
 		/**

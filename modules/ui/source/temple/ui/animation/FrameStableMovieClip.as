@@ -65,11 +65,8 @@ package temple.ui.animation
 		public function FrameStableMovieClip(frameRate:Number = NaN)
 		{
 			super.stop();
-
 			this.frameRate = frameRate;
-			
 			this.play();
-			
 			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
 		}
 
@@ -189,7 +186,7 @@ package temple.ui.animation
 			
 			if (this._previousFrame > this.currentFrame) this._previousFrame -= this.totalFrames;
 			
-			while (this._previousFrame < this.currentFrame - 1)
+			while (++this._previousFrame < this.currentFrame)
 			{
 				if (this._previousFrame <= 0)
 				{
@@ -209,8 +206,6 @@ package temple.ui.animation
 						this.getFrameScript(this._previousFrame)();
 					}
 				}
-				this._previousFrame++;
-				
 				if (this._scriptFrame == -1) return;
 			}
 			this._scriptFrame = -1;

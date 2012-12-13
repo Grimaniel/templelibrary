@@ -35,6 +35,7 @@
 
 package temple.ui.form.components 
 {
+	import temple.common.interfaces.IOpenable;
 	import temple.common.interfaces.IHasValue;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
@@ -96,7 +97,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class ComboBox extends InputField implements IList, ILabel
+	public class ComboBox extends InputField implements IList, ILabel, IOpenable
 	{
 		private var _list:IList;
 		private var _isOpen:Boolean;
@@ -750,7 +751,7 @@ package temple.ui.form.components
 		
 		override protected function updateHint():void 
 		{
-			if (!this.focus || !this._showsHint || this.textField.type == TextFieldType.INPUT) 
+			if (!this.focus || !this.showsHint || this.textField.type == TextFieldType.INPUT) 
 			{
 				super.updateHint();
 			}
@@ -835,7 +836,7 @@ package temple.ui.form.components
 
 		protected function handleClick(event:MouseEvent):void
 		{
-			if (this._autoClose && event.currentTarget == this._list && event.target is IListRow || !this._list.contains(event.target as DisplayObject))
+			if (!this.isDestructed && (this._autoClose && event.currentTarget == this._list && event.target is IListRow || !this._list.contains(event.target as DisplayObject)))
 			{
 				if (this._isOpen && !this.allowMultipleSelection)
 				{

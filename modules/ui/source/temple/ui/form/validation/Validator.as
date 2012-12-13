@@ -75,11 +75,13 @@ package temple.ui.form.validation
 		private var _rules:Vector.<RuleData>;
 		private var _errorMessage:String;
 		private var _errorMessages:Vector.<String>;
+		private var _autoFocus:Boolean;
 		private var _debug:Boolean;
 
-		public function Validator() 
+		public function Validator(autoFocus:Boolean = true) 
 		{
 			this._rules = new Vector.<RuleData>();
+			this._autoFocus = autoFocus;
 			addToDebugManager(this);
 		}
 
@@ -150,7 +152,7 @@ package temple.ui.form.validation
 		public function isValid(keepValidating:Boolean = true, showErrors:Boolean = true):Boolean 
 		{
 			var valid:Boolean = true;
-			var focussed:Boolean = false;
+			var focussed:Boolean = !this._autoFocus;
 			this._errorMessage = null;
 			this._errorMessages = new Vector.<String>();
 			
@@ -195,7 +197,7 @@ package temple.ui.form.validation
 					}
 					else
 					{
-						if (showErrors)
+						if (!dictionary[target] && showErrors)
 						{
 							IHasError(target).showError(ruleData.message);
 							if (target is IFocusable && !focussed)
@@ -204,7 +206,7 @@ package temple.ui.form.validation
 								focussed = true;
 							}
 						}
-						dictionary[target] = false;
+						dictionary[target] = true;
 					}
 					if (target is IEventDispatcher && keepValidating)
 					{
@@ -306,6 +308,23 @@ package temple.ui.form.validation
 		public function getErrorMessages():Vector.<String>
 		{
 			return this._errorMessages;
+		}
+		
+		/**
+		 * Indicates if the <code>Validator</code> should set the focus on the first element with an error when the
+		 * <code>isValid()</code> method is called.
+		 */
+		public function get autoFocus():Boolean
+		{
+			return _autoFocus;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set autoFocus(autoFocus:Boolean):void
+		{
+			_autoFocus = autoFocus;
 		}
 		
 		/**

@@ -65,21 +65,29 @@ package temple.ui.form.result
 		/**
 		 * @inheritDoc 
 		 */
-		public function parseXML(xml:XML):Boolean
-		{
-			this._field = xml.@field;
-			this._code = xml.@code;
-			this._message = xml;
-			
-			return true;
-		}
-		
-		/**
-		 * @inheritDoc 
-		 */
 		public function get field():String
 		{
 			return this._field;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set field(value:String):void
+		{
+			this._field = value;
+		}
+
+		/**
+		 * @inheritDoc 
+		 */
+		public function parseXML(xml:XML):Boolean
+		{
+			this.field = xml.@field;
+			this.code = xml.@code;
+			this.message = xml;
+			
+			return true;
 		}
 	}
 }

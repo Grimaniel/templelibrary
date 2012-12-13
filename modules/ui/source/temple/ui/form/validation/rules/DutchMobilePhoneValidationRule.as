@@ -46,9 +46,9 @@ package temple.ui.form.validation.rules
 	{
 		private static const _REG_EXP:RegExp = /06[0-9]{8}/;
 		
-		public function DutchMobilePhoneValidationRule(target:IHasValue)
+		public function DutchMobilePhoneValidationRule(target:IHasValue, optional:Boolean = false)
 		{
-			super(target, _REG_EXP);
+			super(target, _REG_EXP, true, optional);
 		}
 	}
 }
