@@ -62,18 +62,30 @@ package temple.net.sharedobject
 	 * 
 	 * @author Arjan van Wijk, Bart van der Schoor
 	 */
-	public final class SharedObjectService extends CoreEventDispatcher
+	public final class SharedObjectService extends CoreEventDispatcher implements ISharedObjectService
 	{
+		//to compare to returned values
+		public static const FP_SO_FLUSH_SUCCESS:String = 'SharedObject.Flush.Success';
+		public static const FP_SO_FLUSH_FAIL:String = 'SharedObject.Flush.Failed';
+		
 		private static var _instances:HashMap;
+		
+		/**
+		 * This class is used as a Multiton. SharedObjects are always saved in the / path
+		 * @param name The name of the SharedObject
+		 */
+		public static function getInstance(name:String = 'default'):ISharedObjectService
+		{
+			if (SharedObjectService._instances == null) SharedObjectService._instances = new HashMap("SharedObjectService instances");
+			if (SharedObjectService._instances[name] == null) SharedObjectService._instances[name] = new SharedObjectService(name);
+			
+			return SharedObjectService._instances[name];
+		}
 		
 		private var _so:SharedObject;
 		private var _data:Object;
 		private var _name:String;
 		private var _expectedSize:int;
-		
-		//to compare to returned values
-		public static const FP_SO_FLUSH_SUCCESS:String = 'SharedObject.Flush.Success';
-		public static const FP_SO_FLUSH_FAIL:String = 'SharedObject.Flush.Failed';
 		
 		public function SharedObjectService(name:String, path:String='/', expectedSize:int=0)
 		{
@@ -101,34 +113,8 @@ package temple.net.sharedobject
 			}
 		}
 		
-		private function handleNetStatusEvent(event:NetStatusEvent):void
-		{
-			if(event.info && event.info['code'] == FP_SO_FLUSH_SUCCESS)
-			{
-				this.dispatchEvent(new SharedObjectServiceEvent(SharedObjectServiceEvent.FLUSHED));
-			}
-			else
-			{
-				this.dispatchEvent(new SharedObjectServiceEvent(SharedObjectServiceEvent.FLUSH_ERROR));
-			}	
-		}
-
 		/**
-		 * This class is used as a Multiton. SharedObjects are always saved in the / path
-		 * @param name The name of the SharedObject
-		 */
-		public static function getInstance(name:String = 'default'):SharedObjectService
-		{
-			if (SharedObjectService._instances == null) SharedObjectService._instances = new HashMap("SharedObjectService instances");
-			if (SharedObjectService._instances[name] == null) SharedObjectService._instances[name] = new SharedObjectService(name);
-			
-			return SharedObjectService._instances[name];
-		}
-		
-		/**
-		 * Sets a property on the SharedObject
-		 * @param name The name of the property
-		 * @param value The value of the property
+		 * @inheritDoc
 		 */
 		public function setProperty(name:String, value:*):void
 		{
@@ -137,10 +123,7 @@ package temple.net.sharedobject
 		}
 		
 		/**
-		 * Gets a property of the SharedObject
-		 * @param name The name of the property
-		 * @param alt Return value if the property is not defined
-		 * @return The value of the property
+		 * @inheritDoc
 		 */
 		public function getProperty(name:String, alt:*=null):*
 		{
@@ -148,9 +131,7 @@ package temple.net.sharedobject
 		}
 		
 		/**
-		 * Check if a property is defined
-		 * @param name The name of the property
-		 * @return The value of the property
+		 * @inheritDoc
 		 */
 		public function hasProperty(name:String):*
 		{
@@ -158,8 +139,7 @@ package temple.net.sharedobject
 		}
 		
 		/**
-		 * Remove a property on the SharedObject
-		 * @param name The name of the property
+		 * @inheritDoc
 		 */
 		public function removeProperty(name:String):void
 		{
@@ -171,11 +151,11 @@ package temple.net.sharedobject
 		}
 
 		/**
-		 * Purges all of the data and deletes the shared object from the disk
+		 * @inheritDoc
 		 */
 		public function clear():void 
 		{
-			if(this._so)
+			if (this._so)
 			{
 				this._so.clear();
 				this._data = this._so.data;
@@ -189,25 +169,6 @@ package temple.net.sharedobject
 		/**
 		 * @inheritDoc
 		 */
-		override public function destruct():void
-		{
-			if (SharedObjectService._instances)
-			{
-				delete SharedObjectService._instances[this._name];
-				
-				// check if there are some NotificationCenters left
-				for (var key:String in SharedObjectService._instances);
-				if (key == null) SharedObjectService._instances = null;
-			}
-			this._data = null;
-			if (this._so)
-			{
-				this._so.close();
-				this._so = null;
-			}
-			super.destruct();
-		}
-
 		public function flush(expectedSize:int=0):String
 		{
 			if (expectedSize != 0 && expectedSize > this._expectedSize)
@@ -238,14 +199,55 @@ package temple.net.sharedobject
 			return status;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get so():SharedObject
 		{
 			return this._so;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function data():Object 
 		{
 			return this._data;
 		}
+		
+		private function handleNetStatusEvent(event:NetStatusEvent):void
+		{
+			if(event.info && event.info['code'] == FP_SO_FLUSH_SUCCESS)
+			{
+				this.dispatchEvent(new SharedObjectServiceEvent(SharedObjectServiceEvent.FLUSHED));
+			}
+			else
+			{
+				this.dispatchEvent(new SharedObjectServiceEvent(SharedObjectServiceEvent.FLUSH_ERROR));
+			}	
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function destruct():void
+		{
+			if (SharedObjectService._instances)
+			{
+				delete SharedObjectService._instances[this._name];
+				
+				// check if there are some NotificationCenters left
+				for (var key:String in SharedObjectService._instances);
+				if (key == null) SharedObjectService._instances = null;
+			}
+			this._data = null;
+			if (this._so)
+			{
+				this._so.close();
+				this._so = null;
+			}
+			super.destruct();
+		}
+		
 	}
 }
