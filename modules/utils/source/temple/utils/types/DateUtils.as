@@ -116,7 +116,12 @@ package temple.utils.types
 			{
 				return null;
 			}
-			var date:Date = new Date(Date.parse(dateTime.split('-').join('/')));
+			dateTime = dateTime.replace(/-/g, "/");
+			dateTime = dateTime.replace("T", " ");
+			dateTime = dateTime.replace("Z", " GMT-0000");
+			dateTime = dateTime.replace( /\.[0-9]{3}/g, "");
+			
+			var date:Date = new Date(Date.parse(dateTime));
 			
 			if (date.toString() == 'Invalid Date')
 			{

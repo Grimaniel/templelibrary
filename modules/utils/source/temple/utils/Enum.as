@@ -75,7 +75,7 @@ package temple.utils
 		{
 			var arr:Array = [];
 			var className:String = constType ? getQualifiedClassName(constType) : null;
-			for each (var node:XML in describeType(type).children().((name() == 'variable' || name() == 'constant') && !hasOwnProperty("@uri")))
+			for each (var node:XML in Enum.getXMLList(type))
 			{
 				if (constType == null || node.@['type'] == className)
 				{
@@ -95,7 +95,7 @@ package temple.utils
 		{
 			var obj:Object = {};
 			var className:String = constType ? getQualifiedClassName(constType) : null;
-			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
+			for each (var node:XML in Enum.getXMLList(type))
 			{
 				if (constType == null || node.@['type'] == className)
 				{
@@ -117,7 +117,7 @@ package temple.utils
 		public static function getValue(type:Class, value:*, alt:*=null, constType:Class = null):*
 		{
 			var className:String = constType ? getQualifiedClassName(constType) : null;
-			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
+			for each (var node:XML in Enum.getXMLList(type))
 			{
 				if ((constType == null || node.@['type'] == className) && type[node.@['name']] == value)
 				{
@@ -138,7 +138,7 @@ package temple.utils
 		public static function hasValue(type:Class, value:*, constType:Class = null):Boolean
 		{
 			var className:String = constType ? getQualifiedClassName(constType) : null;
-			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
+			for each (var node:XML in Enum.getXMLList(type))
 			{
 				if ((constType == null || node.@['type'] == className) && value == type[node.@['name']])
 				{
@@ -158,7 +158,7 @@ package temple.utils
 		public static function hasConstant(type:Class, constant:String, constType:Class = null):Boolean
 		{
 			var className:String = constType ? getQualifiedClassName(constType) : null;
-			for each (var node:XML in describeType(type).children().(name() == 'variable' || name() == 'constant'))
+			for each (var node:XML in Enum.getXMLList(type))
 			{
 				if ((constType == null || node.@['type'] == className) && node.@['name'] == constant)
 				{
@@ -166,6 +166,12 @@ package temple.utils
 				}
 			}
 			return false;
+		}
+
+		private static function getXMLList(type:Class):XMLList
+		{
+			var description:XML = describeType(type);
+			return description.constant.(!hasOwnProperty("@uri")) + description.variable.(!hasOwnProperty("@uri"));
 		}
 	}
 }

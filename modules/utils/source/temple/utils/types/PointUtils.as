@@ -62,12 +62,39 @@ package temple.utils.types
 			
 			var p:Point = new Point((b1 * c2 - b2 * c1) / denom, (a2 * c1 - a1 * c2) / denom);
 
-			if (Point.distance(p, p2) > Point.distance(p1, p2)) return null;
-			if (Point.distance(p, p1) > Point.distance(p1, p2)) return null;
-			if (Point.distance(p, p4) > Point.distance(p3, p4)) return null;
-			if (Point.distance(p, p3) > Point.distance(p3, p4)) return null;
-
+			if ((p.x - p2.x) * (p.x - p2.x) + (p.y - p2.y) * (p.y - p2.y) > (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)) return null;
+			if ((p.x - p1.x) * (p.x - p1.x) + (p.y - p1.y) * (p.y - p1.y) > (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)) return null;
+			if ((p.x - p4.x) * (p.x - p4.x) + (p.y - p4.y) * (p.y - p4.y) > (p3.x - p4.x) * (p3.x - p4.x) + (p3.y - p4.y) * (p3.y - p4.y)) return null;
+			if ((p.x - p3.x) * (p.x - p3.x) + (p.y - p3.y) * (p.y - p3.y) > (p3.x - p4.x) * (p3.x - p4.x) + (p3.y - p4.y) * (p3.y - p4.y)) return null;
+			
 			return p;
+		}
+		
+		public static function squaredDistance(p0:Point, p1:Point):Number
+		{
+			return ((p0.x - p1.x) * (p0.x - p1.x) + (p0.y - p1.y) * (p0.y - p1.y));
+		}
+		
+		public static function getDividersForQuad(p0:Point, p1:Point, p2:Point, p3:Point):Vector.<Number>
+		{
+			// Central point
+			var pc:Point = PointUtils.getIntersection(p0, p3, p1, p2);
+
+			// If no intersection between two diagonals, doesn't draw anything
+			if (!Boolean(pc)) return null;
+
+			// Lengths of first diagonal
+			var ll1:Number = Point.distance(p0, pc);
+			var ll2:Number = Point.distance(pc, p3);
+
+			// Lengths of second diagonal
+			var lr1:Number = Point.distance(p1, pc);
+			var lr2:Number = Point.distance(pc, p2);
+
+			// Ratio between diagonals
+			var f:Number = (ll1 + ll2) / (lr1 + lr2);
+			
+			return Vector.<Number>([(1 / ll2) * f, (1 / lr2), (1 / lr1), (1 / ll1) * f]);
 		}
 		
 		/**

@@ -163,6 +163,31 @@ package temple.utils.types
 			}
 			return closest != clip.totalFrames ? closest -1 : clip.totalFrames;
 		}
+		
+		/**
+		 *	The current labels in which the playhead is located in the timeline of the MovieClip instance.
+		 *	If the current frame has no labels, currentLabels is set to the name of the previous frame that includes a label.
+		 *	If the current frame and previous frames do not include a label, currentLabel returns null.
+		 */
+		public static function getCurrentLabels(clip:MovieClip):Vector.<FrameLabel>
+		{
+			var labels:Vector.<FrameLabel> = new Vector.<FrameLabel>();
+			
+			// get current label
+			var frameNumber:uint = FrameLabelUtils.getFrameForLabel(clip, clip.currentLabel);
+			
+			// check all labels if there are other labels on this frame
+			for (var i:int = 0; i < clip.currentLabels.length; i++)
+			{
+				var frame:uint = FrameLabelUtils.getFrameForLabel(clip, FrameLabel(clip.currentLabels[i]).name);
+				if (frame == frameNumber)
+				{
+					labels.push(clip.currentLabels[i]);
+				}
+			}
+			
+			return labels;
+		}
 
 		public static function dumpLabels(clip:MovieClip):String
 		{

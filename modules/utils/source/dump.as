@@ -107,22 +107,14 @@ class Functions
 		else
 		{
 			// variables, getters, constants and methods
-			for each (var node:XML in describeType(object)
-				.children().
-				(
-					(	 
-						 name() == 'variable' 
-					  || name() == 'accessor' 
-					  || constants && name() == 'constant' 
-					  || methods && name() == 'method'
-					)
-					&&
-					(
-						// don't show setters and namespaced properties
-						(!hasOwnProperty("@access") || @access != "writeonly") && (namespaces || !hasOwnProperty("@uri"))
-					)
-				)
-			)
+			var description:XML = describeType(object);
+			
+			var list:XMLList  = description.variable.(namespaces || !hasOwnProperty("@uri"));
+			list += description.accessor.((!hasOwnProperty("@access") || @access != "writeonly") && (namespaces || !hasOwnProperty("@uri")));
+			if (constants) list += description.constant.(namespaces || !hasOwnProperty("@uri"));
+			if (methods) list += description.method.(namespaces || !hasOwnProperty("@uri"));
+			
+			for each (var node:XML in list)
 			{
 				variables.push(new ObjectVariableData(node.@name, node.@type, node, node.@uri));
 			}

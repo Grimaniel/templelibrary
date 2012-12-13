@@ -325,6 +325,12 @@ package temple.utils.types
 		 * Replaces vars in a String. Vars defined between {}: '{var}'. The var can be prefix with an (optional) $.
 		 * Searches for a value in de object with the same name as the var.
 		 * 
+		 * @param string the String containing variable which must be replaced
+		 * @param object an object containing all the properties for the replacement (as name-value pair)
+		 * @param keepIrreplaceableVars a Boolean which indicates if variables which can not be replaced should be
+		 * removed (false) or should be kept (true) in the string
+		 * @param debug if set true the replacement will not be executed in a try-catch statement.
+		 * 
 		 * @example
 		 * <listing version="3.0">
 		 * trace(StringUtils.replaceVars("hi, my name is {name}", {name:'Thijs'})); // hi, my name is Thijs
@@ -335,7 +341,7 @@ package temple.utils.types
 		 * trace(StringUtils.replaceVars("hi, my name is ${name}", {name:'Thijs'})); // hi, my name is Thijs
 		 * </listing>
 		 */
-		public static function replaceVars(string:String, object:Object, debug:Boolean = false):String
+		public static function replaceVars(string:String, object:Object, keepIrreplaceableVars:Boolean = true, debug:Boolean = false):String
 		{
 			if (string == null) throwError(new TempleArgumentError(StringUtils, "String can not be null"));
 			if (object == null) throwError(new TempleArgumentError(StringUtils, "Object can not be null"));
@@ -347,15 +353,21 @@ package temple.utils.types
 				{
 					if (object[prop] is Function && arguments[2])
 					{
+						if (arguments[3])
+						{
+							var args:Array = String(arguments[3]).split(",");
+							for (var i:int = 0, leni:int = args.length; i < leni; i++) args[i] = StringUtils.replaceVars(args[i], object);
+						}
+												
 						if (debug)
 						{
-							return (object[prop] as Function).apply(null, arguments[3] ? String(arguments[3]).split(",") : undefined);
+							return (object[prop] as Function).apply(null, args);
 						}
 						else
 						{
 							try
 							{
-								return (object[prop] as Function).apply(null, arguments[3] ? String(arguments[3]).split(",") : undefined);
+								return (object[prop] as Function).apply(null, args);
 							}
 							catch (error:Error)
 							{
@@ -365,6 +377,7 @@ package temple.utils.types
 					}
 					else return object[prop];
 				}
+				if (keepIrreplaceableVars) return "{" + prop + "}";
 				if (debug) return '*VALUE \'' + prop + '\' NOT FOUND*';
 				return '';
 			});

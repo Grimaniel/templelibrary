@@ -213,7 +213,7 @@ package temple.utils.types
 		
 		public static function clear(bitmapData:BitmapData):void
 		{
-			bitmapData.fillRect(new Rectangle(0, 0, bitmapData.width, bitmapData.height), 0);
+			bitmapData.fillRect(bitmapData.rect, 0);
 		}
 		
 		public static function rotate(bitmapData:BitmapData, angle:Number):BitmapData
