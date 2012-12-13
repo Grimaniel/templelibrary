@@ -43,99 +43,20 @@ package nl.acidcats.yalog
 	 * 
 	 * @author Stephan Bezoen (modified by Thijs Broerse)
 	 */
-	public class Yalog 
+	public final class Yalog 
 	{
-		private static const _BUFFER_SIZE:Number = 250;
+		private static const _BUFFER_SIZE:uint = 250;
 		private static const _MAX_PACKAGE_BYTES:uint = 40000;
 
 		private static var _instance:Yalog;
-		private static var _bufferSize:Number = Yalog._BUFFER_SIZE;
+		private static var _bufferSize:uint = Yalog._BUFFER_SIZE;
 		private static var _showTrace:Boolean = true;
 		private static var _sendAsByteArray:Boolean = true;
 		
 		// Identifiers for this connection
 		private static const _connectionId:Number = new Date().time;
 		private static var _connectionName:String;
-
-		private var _sender:LocalConnection;
-		private var _senderConnected:Boolean;
-
-		private var _receiver:PongConnection;
-
-		private var _buffer:Array;
-		private var _writePointer:Number;
-		private var _fullCircle:Boolean;
 		
-		/**
-		 * The instance of this class is only used in static functions, so not accessible from the outside
-		 * @return singleton instance of yalog.Yalog
-		 */
-		private static function getInstance():Yalog 
-		{
-			if (Yalog._instance == null) Yalog._instance = new Yalog();
-			return Yalog._instance;
-		}
-
-		/*
-		 * Constructor; private not allowed in AS3
-		 */
-		function Yalog() 
-		{
-			if (Yalog._instance) throwError(new Error(this, "Singleton, use Yalog.getInstance()"));
-			
-			// create send connection
-			this._sender = new LocalConnection();
-			this._sender.addEventListener(StatusEvent.STATUS, this.handleSenderStatus, false, 0, true);
-
-			// create buffer for buffering messages while not connected
-			this._buffer = new Array(Yalog._bufferSize);
-			this._writePointer = 0;
-
-			// send a "ping" on the main channel to check for availability of any viewer application		
-			this.ping();
-		}
-
-		/**
-		 *	Send a "ping" on the main channel if a free receive channel is available
-		 */
-		private function ping():void 
-		{
-			if (this.createReceiver()) 
-			{
-				try 
-				{
-					this._sender.send(Functions.CHANNEL, Functions.FUNC_PING, this._receiver.receiverChannel + ";" + Yalog._connectionId);
-				}
-				catch (error:ArgumentError) 
-				{
-				}
-			}
-		}
-
-		/**
-		 *	Create receiver local connection to handle pong from viewer application
-		 */
-		private function createReceiver():Boolean 
-		{
-			this._receiver = new PongConnection();
-			this._receiver.addEventListener(StatusEvent.STATUS, this.handleReceiverStatus, false, 0, true);
-			this._receiver.addEventListener(PongConnection.EVENT_PONG_RECEIVED, this.handlePong, false, 0, true);
-			
-			return this._receiver.start();
-		}
-
-		/**
-		 *	Handle event from receiver connection that a pong was received
-		 */
-		private function handlePong(event:Event):void 
-		{
-			// flag we're connected to viewer
-			this._senderConnected = true;
-			
-			// dump any buffered messages to the viewer
-			this.dumpData();
-		}
-
 		/**
 		 *	Set the number of messages to be kept as history.
 		 *	Note: this will clear the current buffer, so make sure this is the first thing you do!
@@ -271,6 +192,83 @@ package nl.acidcats.yalog
 		{
 			Yalog._connectionName = value;
 		}
+
+		private static function getInstance():Yalog
+		{
+			return Yalog._instance ||= new Yalog();
+		}
+
+		private var _sender:LocalConnection;
+		private var _senderConnected:Boolean;
+
+		private var _receiver:PongConnection;
+
+		private var _buffer:Vector.<MessageData>;
+		private var _writePointer:uint;
+		private var _fullCircle:Boolean;
+		
+		/*
+		 * Constructor; private not allowed in AS3
+		 */
+		public function Yalog() 
+		{
+			if (_instance) throwError(new Error(this, "Singleton, use Yalog.getInstance()"));
+			
+			// create send connection
+			this._sender = new LocalConnection();
+			this._sender.client = this._sender;
+			this._sender.addEventListener(StatusEvent.STATUS, this.handleSenderStatus, false, 0, true);
+
+			// create buffer for buffering messages while not connected
+			this._buffer = new Vector.<MessageData>(_bufferSize);
+
+			// send a "ping" on the main channel to check for availability of any viewer application		
+			this.ping();
+		}
+
+		/**
+		 *	Send a "ping" on the main channel if a free receive channel is available
+		 */
+		private function ping():void 
+		{
+			if (this.createReceiver()) 
+			{
+				try 
+				{
+					this._sender.send(Functions.CHANNEL, Functions.FUNC_PING, this._receiver.receiverChannel + ";" + Yalog._connectionId);
+				}
+				catch (error:ArgumentError) 
+				{
+					trace(error);
+				}
+			}
+		}
+
+		/**
+		 *	Create receiver local connection to handle pong from viewer application
+		 */
+		private function createReceiver():Boolean 
+		{
+			this._receiver = new PongConnection();
+			this._receiver.addEventListener(StatusEvent.STATUS, this.handleReceiverStatus, false, 0, true);
+			this._receiver.addEventListener(PongConnection.EVENT_PONG_RECEIVED, this.handlePong, false, 0, true);
+			
+			return this._receiver.start();
+		}
+
+		/**
+		 *	Handle event from receiver connection that a pong was received
+		 */
+		private function handlePong(event:Event):void 
+		{
+			// flag we're connected to viewer
+			this._senderConnected = true;
+			
+			// dump any buffered messages to the viewer
+			this.dumpData();
+		}
+
+		
 		
 		/**
 		 *	Process message data
@@ -426,11 +424,11 @@ package nl.acidcats.yalog
 		/**
 		 *	Set the buffer size for storing messages
 		 */
-		private function setBufSize(size:Number):void 
+		private function setBufSize(size:uint):void 
 		{
 			Yalog._bufferSize = size;
 			
-			this._buffer = new Array(Yalog._bufferSize);
+			this._buffer.length = Yalog._bufferSize;
 			this._writePointer = 0;
 			this._fullCircle = false;
 		}
@@ -457,13 +455,7 @@ import flash.net.LocalConnection;
 /**-------------------------------------------------------
  * Private class for handling "pong" call on local connection from viewer application
  */
-
-
-
-
-
-
-dynamic class PongConnection extends LocalConnection 
+dynamic final class PongConnection extends LocalConnection 
 {
 	public static var EVENT_PONG_RECEIVED:String = "onPongReceived";
 
@@ -476,8 +468,9 @@ dynamic class PongConnection extends LocalConnection
 	public function PongConnection() 
 	{
 		// allow connection from anywhere
-		allowDomain("*");
-		allowInsecureDomain("*");
+		this.allowDomain("*");
+		this.allowInsecureDomain("*");
+		this.client = this;
 	}
 
 	/**

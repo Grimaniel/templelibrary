@@ -30,7 +30,7 @@ package nl.acidcats.yalog.util
 	 * 
 	 * @see temple.core.debug.log.Log
 	 */
-	public class YaLogConnector 
+	public final class YaLogConnector 
 	{
 		private static var _instance:YaLogConnector;
 
