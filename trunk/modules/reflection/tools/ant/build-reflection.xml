@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Full Build" basedir="../../../../tools/ant" name="Temple-Reflection">
+
+	<property name="module" value="reflection" />
+	<property name="name" value="Temple Reflection Module" />
+	<property name="dependencies" value="core,utils" />
+	<property name="extended-dependencies" value="" />
+	
+	<property name="skip-license" value="true" />
+	<property name="skip-examples" value="true" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+</project>
