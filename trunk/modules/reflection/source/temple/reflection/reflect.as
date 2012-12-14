@@ -1,7 +1,7 @@
 package temple.reflection
 {
 	/**
-	 * Returns the output of the <code>descrypeType</code> method for an object. Uses a caching system for better performance.
+	 * Returns the output of the <code>describeType</code> method for an object. Uses a caching system for better performance.
 	 * 
 	 * @see Reflection#get()
 	 * 
