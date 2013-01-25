@@ -78,7 +78,7 @@ package temple.core.utils
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		/**
 		 * @private
@@ -105,7 +105,7 @@ package temple.core.utils
 		 */
 		construct function coreTimer(delay:Number, repeatCount:int):void
 		{
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 			
 			delay;
 			repeatCount;
@@ -359,17 +359,17 @@ package temple.core.utils
 		 */
 		public function destruct():void 
 		{
-			if (this._isDestructed) return;
+			if (_isDestructed) return;
 			
-			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			this.stop();
-			if (this._eventListenerManager)
+			stop();
+			if (_eventListenerManager)
 			{
-				this._eventListenerManager.destruct();
-				this._eventListenerManager = null;
+				_eventListenerManager.destruct();
+				_eventListenerManager = null;
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

@@ -77,18 +77,17 @@ package temple.core.display
 		 */
 		construct function coreMovieClip():void
 		{
-			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
+			if (loaderInfo) loaderInfo.addEventListener(Event.UNLOAD, handleUnload, false, 0, true);
 			
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 			if (super.stage) StageProvider.stage ||= super.stage;
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
-			super.addEventListener(Event.ADDED, this.handleAdded);
-			super.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-			super.addEventListener(Event.REMOVED, this.handleRemoved);
-			super.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			super.addEventListener(Event.ADDED, handleAdded);
+			super.addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+			super.addEventListener(Event.REMOVED, handleRemoved);
+			super.addEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 		}
-		
 		
 		/**
 		 * @inheritDoc
@@ -97,13 +96,13 @@ package temple.core.display
 		{
 			super.addFrameScript.apply(null, args);
 			
-			this._frameScripts ||= new Vector.<Function>(this.totalFrames, true);
+			_frameScripts ||= new Vector.<Function>(totalFrames, true);
 			
 			for (var i:int = 0, leni:int = args.length; i < leni; i += 2)
 			{
-				this._frameScripts[args[i]] = args[i+1];
+				_frameScripts[args[i]] = args[i+1];
 				
-				if (this.debug) this.logDebug("FrameScript " + (args[i+1] == null ? "cleared" : "set") + " on frame " + (args[i] + 1));
+				if (_debug) logDebug("FrameScript " + (args[i+1] == null ? "cleared" : "set") + " on frame " + (args[i] + 1));
 			}
 		}
 		
@@ -116,11 +115,11 @@ package temple.core.display
 			{
 				return throwError(new TempleArgumentError(this, "frame cannot be 0"));
 			}
-			else if (frame > this.totalFrames)
+			else if (frame > totalFrames)
 			{
-				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + this.totalFrames));
+				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + totalFrames));
 			}
-			return this._frameScripts &&  this._frameScripts[frame - 1] != null;
+			return _frameScripts &&  _frameScripts[frame - 1] != null;
 		}
 
 		/**
@@ -128,7 +127,7 @@ package temple.core.display
 		 */
 		public function get hasFrameScripts():Boolean
 		{
-			return this._frameScripts != null;
+			return _frameScripts != null;
 		}
 
 		/**
@@ -140,11 +139,11 @@ package temple.core.display
 			{
 				return throwError(new TempleArgumentError(this, "frame cannot be 0"));
 			}
-			else if (frame > this.totalFrames)
+			else if (frame > totalFrames)
 			{
-				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + this.totalFrames));
+				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + totalFrames));
 			}
-			return this._frameScripts[frame - 1];
+			return _frameScripts[frame - 1];
 		}
 
 		/**
@@ -157,12 +156,12 @@ package temple.core.display
 				throwError(new TempleArgumentError(this, "frame cannot be 0"));
 				return;
 			}
-			else if (frame > this.totalFrames)
+			else if (frame > totalFrames)
 			{
-				throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + this.totalFrames));
+				throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + totalFrames));
 				return;
 			}
-			this.addFrameScript(frame - 1, script);
+			addFrameScript(frame - 1, script);
 		}
 		
 		/**
@@ -170,7 +169,7 @@ package temple.core.display
 		 */
 		public function clearFrameScript(frame:uint):void
 		{
-			this.addFrameScript(frame - 1, null);
+			addFrameScript(frame - 1, null);
 		}
 
 		/**
@@ -178,11 +177,11 @@ package temple.core.display
 		 */
 		public function clearFrameScripts():void
 		{
-			if (this._frameScripts)
+			if (_frameScripts)
 			{
-				for (var i:int = 0, leni:int = this._frameScripts.length; i < leni; i++)
+				for (var i:int = 0, leni:int = _frameScripts.length; i < leni; i++)
 				{
-					if (this._frameScripts[i] != null) this.addFrameScript(i, null);
+					if (_frameScripts[i] != null) addFrameScript(i, null);
 				}
 			}
 		}
@@ -193,7 +192,7 @@ package temple.core.display
 		 */
 		templelibrary function get frameScripts():Vector.<Function>
 		{
-			return this._frameScripts;
+			return _frameScripts;
 		}
 
 		include "../includes/CoreObjectMethods.as.inc";
@@ -209,7 +208,7 @@ package temple.core.display
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -218,7 +217,7 @@ package temple.core.display
 		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		include "../includes/LogMethods.as.inc";
@@ -236,59 +235,59 @@ package temple.core.display
 		 */
 		public function destruct():void 
 		{
-			if (this._isDestructed) return;
+			if (_isDestructed) return;
 			
-			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
 			// clear mask, so it won't keep a reference to an other object
-			this.mask = null;
-			this.stop();
-			this.clearFrameScripts();
-			this._frameScripts = null;
+			mask = null;
+			stop();
+			clearFrameScripts();
+			_frameScripts = null;
 			
-			if (this.stage && this.stage.focus == this) this.stage.focus = null;
+			if (stage && stage.focus == this) stage.focus = null;
 			
-			if (this.loaderInfo) this.loaderInfo.removeEventListener(Event.UNLOAD, this.handleUnload);
+			if (loaderInfo) loaderInfo.removeEventListener(Event.UNLOAD, handleUnload);
 			
-			if (this._eventListenerManager)
+			if (_eventListenerManager)
 			{
-				this._eventListenerManager.destruct();
-				this._eventListenerManager = null;
+				_eventListenerManager.destruct();
+				_eventListenerManager = null;
 			}
 			
-			super.removeEventListener(Event.ENTER_FRAME, this.handleDestructedFrameDelay);
-			super.removeEventListener(Event.ADDED, this.handleAdded);
-			super.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-			super.removeEventListener(Event.REMOVED, this.handleRemoved);
-			super.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			super.removeEventListener(Event.ENTER_FRAME, handleDestructedFrameDelay);
+			super.removeEventListener(Event.ADDED, handleAdded);
+			super.removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+			super.removeEventListener(Event.REMOVED, handleRemoved);
+			super.removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 			
 			Destructor.destructChildren(this);
-			if (this.parent)
+			if (parent)
 			{
-				if (this.parent is Loader)
+				if (parent is Loader)
 				{
-					Loader(this.parent).unload();
+					Loader(parent).unload();
 				}
 				else
 				{
-					if (this._onParent)
+					if (_onParent)
 					{
-						if (this.name && this.parent.hasOwnProperty(this.name)) this.parent[this.name] = null;
-						this.parent.removeChild(this);
+						if (name && parent.hasOwnProperty(name)) parent[name] = null;
+						parent.removeChild(this);
 					}
 					else
 					{
 						// something weird happened, since we have a parent but didn't receive an ADDED event. So do the try-catch thing
 						try
 						{
-							if (this.name && this.parent.hasOwnProperty(this.name)) this.parent[this.name] = null;
-							this.parent.removeChild(this);
+							if (name && parent.hasOwnProperty(name)) parent[name] = null;
+							parent.removeChild(this);
 						}
 						catch (e:Error){}
 					}
 				}
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

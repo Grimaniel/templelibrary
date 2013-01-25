@@ -59,12 +59,12 @@ package temple.core.debug
 					{
 						Log.warn("Temple.registerObjectsWithStack is turned off", MemoryDebugger);
 					}
-					this._includeCreationStack = includeCreationStack;
+					_includeCreationStack = includeCreationStack;
 				}
 				
-				this._timer = new CoreTimer(interval);
-				this._timer.addEventListener(TimerEvent.TIMER, this.handleTimerEvent);
-				this._timer.start();
+				_timer = new CoreTimer(interval);
+				_timer.addEventListener(TimerEvent.TIMER, handleTimerEvent);
+				_timer.start();
 			}
 			else
 			{
@@ -77,7 +77,7 @@ package temple.core.debug
 		 */
 		public function get includeCreationStack():Boolean
 		{
-			return this._includeCreationStack;
+			return _includeCreationStack;
 		}
 		
 		/**
@@ -85,7 +85,7 @@ package temple.core.debug
 		 */
 		public function set includeCreationStack(value:Boolean):void
 		{
-			this._includeCreationStack = value;
+			_includeCreationStack = value;
 		}
 
 		private function handleTimerEvent(event:TimerEvent):void 
@@ -103,7 +103,7 @@ package temple.core.debug
 				{
 					totalDestructed++;
 					destructed += "\n\t" + String(object) + " (" + getClassName(object) + ")";
-					if (this._includeCreationStack) destructed += "\n" + RegistryInfo(Memory.templelibrary::registry[object]).stack;
+					if (_includeCreationStack) destructed += "\n" + RegistryInfo(Memory.templelibrary::registry[object]).stack;
 				}
 			}
 			if (totalDestructed)

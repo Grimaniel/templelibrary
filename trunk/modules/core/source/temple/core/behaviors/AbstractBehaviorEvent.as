@@ -28,8 +28,8 @@ package temple.core.behaviors
 		public function AbstractBehaviorEvent(type:String, behavior:IBehavior, bubbles:Boolean = false)
 		{
 			super(type, bubbles);
-			this._behavior = behavior;
-			this.toStringProps.splice(1, 0, 'behaviorTarget');
+			_behavior = behavior;
+			toStringProps.splice(1, 0, 'behaviorTarget');
 		}
 
 		/**
@@ -37,7 +37,7 @@ package temple.core.behaviors
 		 */
 		public function get behavior():IBehavior 
 		{
-			return this._behavior;
+			return _behavior;
 		}
 
 		/**
@@ -45,7 +45,7 @@ package temple.core.behaviors
 		 */
 		public function get behaviorTarget():Object
 		{
-			return this._behavior.target;
+			return _behavior.target;
 		}
 	}
 }

@@ -62,7 +62,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		/**
 		 * @private
@@ -86,7 +86,7 @@ package temple.core
 		 */
 		construct function coreObject():void
 		{
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 		}
 
 		[Temple]
@@ -227,7 +227,7 @@ package temple.core
 		 */
 		public function toString():String
 		{
-			return objectToString(this, this.toStringProps, !this.emptyPropsInToString);
+			return objectToString(this, toStringProps, !emptyPropsInToString);
 		}
 
 		[Temple]
@@ -249,7 +249,7 @@ package temple.core
 				Destructor.destruct(this[key]);
 				delete this[key];
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

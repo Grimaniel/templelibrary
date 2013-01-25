@@ -46,21 +46,21 @@ package temple.core.destruction
 		 *		
 		 *		// always check if variable is not null, since it could cause a "null object reference"-error the next
 		 *		// time this object is destructed
-		 *		if (this._myCoreTimer)
+		 *		if (_myCoreTimer)
 		 *		{
-		 *			this._myCoreTimer.destruct();
-		 *			this._myCoreTimer = null;
+		 *			_myCoreTimer.destruct();
+		 *			_myCoreTimer = null;
 		 *		}
 		 *		
 		 *		// if you used any Tweens in your class, kill them here
 		 *		// TweenLite.killTweensOf(this);
 		 *		
 		 *		// also remove event listeners to other object
-		 *		// if (this.stage) this.stage.removeEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp);
+		 *		// if (stage) stage.removeEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
 		 *		
 		 *		// It is not necessary to destruct DisplayObject, they get destructed automatically. Only set the
 		 *		// reference to null
-		 *		this.mcMovieClip = null; 
+		 *		mcMovieClip = null; 
 		 * 
 		 *		// always calls super.destruct() in the end!
 		 *		super.destruct();

@@ -54,7 +54,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		/**
 		 * The name of the Temple.
@@ -64,19 +64,19 @@ package temple.core
 		/**
 		 * The current version of the Temple Library.
 		 */
-		public static const VERSION:String = "3.3.0";
+		public static const VERSION:String = "3.4.0";
 		
 		/**
 		 * The Authors of the Temple.
 		 */
-		public static const AUTHOR:String = "MediaMonks: Thijs Broerse, Arjan van Wijk, Quinten Beek, Bart van der Schoor, Stephan Bezoen";
+		public static const AUTHOR:String = "MediaMonks: Thijs Broerse, Arjan van Wijk, Quinten Beek, Bart van der Schoor, Stephan Bezoen, Mark Knol";
 		
 		/**
 		 * Last modified date of the Temple.
 		 * (Format: 'yyyy-mm-dd')
 		 * 
 		 */
-		public static const DATE:String = "2012-12-13";
+		public static const DATE:String = "2013-01-25";
 
 		/**
 		 * The official website of the Temple.

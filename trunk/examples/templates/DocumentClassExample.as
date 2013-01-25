@@ -41,18 +41,18 @@ package
 		// Constructor of the Example, we pass the name of the application as an optional parameter, so we can override this value in a subclass.
 		public function DocumentClassExample(name:String = "Temple - Example")
 		{
-			this.stage.align = StageAlign.TOP_LEFT;
-			this.stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			// Create an Analytics object, so we can track some usage statistics. Note: 'analytics.swc' must be added to the classpath.
 			try
 			{
-				this._tracker = new GATracker(this, "UA-353608-71"); // This is the Analytics account of the Temple, change this to your own account if you want to use Analytics tracking in your project. 
-				this._tracker.trackPageview(name);
+				_tracker = new GATracker(this, "UA-353608-71"); // This is the Analytics account of the Temple, change this to your own account if you want to use Analytics tracking in your project. 
+				_tracker.trackPageview(name);
 			}
 			catch (error:Error)
 			{
-				this.logError(error.message);
+				logError(error.message);
 			}
 			
 			// For debug purpose we log some info about this SWF and the player, using the DebugMananger
@@ -61,7 +61,7 @@ package
 
 		public function get tracker():GATracker
 		{
-			return this._tracker;
+			return _tracker;
 		}
 	}
 }

@@ -46,14 +46,14 @@ package temple.core.events
 		 */
 		public function EventListenerManager(eventDispatcher:ICoreEventDispatcher) 
 		{
-			this._target = eventDispatcher;
-			this._events = new Vector.<EventData>();
+			_target = eventDispatcher;
+			_events = new Vector.<EventData>();
 			
 			super();
 			
 			if (eventDispatcher == null) throwError(new TempleArgumentError(this, "dispatcher can not be null"));
 			if (eventDispatcher.eventListenerManager) throwError(new TempleError(this, "dispatcher already has an EventListenerManager"));
-			this.toStringProps.push('target');
+			toStringProps.push('target');
 		}
 		
 		/**
@@ -61,7 +61,7 @@ package temple.core.events
 		 */
 		public function get target():IEventDispatcher
 		{
-			return this._target;
+			return _target;
 		}
 
 		/**
@@ -78,20 +78,20 @@ package temple.core.events
 			// Don't store weak reference info, since storing the listener will make it strong
 			if (useWeakReference)
 			{
-				if (EventListenerManager.logWeakListeners) this.logDebug("Weak listener used for '" + type + "'");
+				if (EventListenerManager.logWeakListeners) logDebug("Weak listener used for '" + type + "'");
 				return;
 			}
 			
-			var i:int = this._events.length;
+			var i:int = _events.length;
 			while (i--)
 			{
-				if (this._events[i].equals(type, listener, useCapture))
+				if (_events[i].equals(type, listener, useCapture))
 				{
-					this._events[i].once = false;
+					_events[i].once = false;
 					return;
 				}
 			}
-			this._events.push(new EventData(type, listener, useCapture, false, priority));
+			_events.push(new EventData(type, listener, useCapture, false, priority));
 		}
 		
 		/**
@@ -99,14 +99,14 @@ package temple.core.events
 		 */
 		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
 		{
-			var i:int = this._events.length;
+			var i:int = _events.length;
 			while (i--)
 			{
-				if (this._events[i].equals(type, listener, useCapture)) return;
+				if (_events[i].equals(type, listener, useCapture)) return;
 			}
-			this._events.push(new EventData(type, listener, useCapture, true, priority));
-			this._events.sort(this.sort);
-			this._target.addEventListener(type, this.handleOnceEvent, useCapture, priority);
+			_events.push(new EventData(type, listener, useCapture, true, priority));
+			_events.sort(sort);
+			_target.addEventListener(type, handleOnceEvent, useCapture, priority);
 		}
 
 		/**
@@ -114,7 +114,7 @@ package temple.core.events
 		 */
 		public function dispatchEvent(event:Event):Boolean 
 		{
-			return this._target.dispatchEvent(event);
+			return _target.dispatchEvent(event);
 		}
 
 		/**
@@ -122,7 +122,7 @@ package temple.core.events
 		 */
 		public function hasEventListener(type:String):Boolean 
 		{
-			return this._target.hasEventListener(type);
+			return _target.hasEventListener(type);
 		}
 
 		/**
@@ -130,7 +130,7 @@ package temple.core.events
 		 */
 		public function willTrigger(type:String):Boolean 
 		{
-			return this._target.willTrigger(type);
+			return _target.willTrigger(type);
 		}
 
 		/**
@@ -142,13 +142,13 @@ package temple.core.events
 		 */
 		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
 		{
-			if (this._blockRequest || !this._events) return;
-			var i:int = this._events.length;
+			if (_blockRequest || !_events) return;
+			var i:int = _events.length;
 			while (i--)
 			{
-				if (this._events[i].equals(type, listener, useCapture))
+				if (_events[i].equals(type, listener, useCapture))
 				{
-					EventData(this._events.splice(i, 1)[0]).destruct();
+					EventData(_events.splice(i, 1)[0]).destruct();
 				}
 			}
 		}
@@ -158,21 +158,21 @@ package temple.core.events
 		 */
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
-			this._blockRequest = true;
+			_blockRequest = true;
 			
-			var i:int = this._events.length;
+			var i:int = _events.length;
 			var eventData:EventData;
 			while (i--) 
 			{
-				eventData = this._events[i];
+				eventData = _events[i];
 				if (eventData.type == type) 
 				{
-					eventData = this._events.splice(i, 1)[0];
-					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+					eventData = _events.splice(i, 1)[0];
+					if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
 					eventData.destruct();
 				}
 			}
-			this._blockRequest = false;
+			_blockRequest = false;
 		}
 		
 		/**
@@ -180,20 +180,20 @@ package temple.core.events
 		 */
 		public function removeAllOnceEventListenersForType(type:String):void 
 		{
-			this._blockRequest = true;
-			var i:int = this._events.length;
+			_blockRequest = true;
+			var i:int = _events.length;
 			var eventData:EventData;
 			while (i--) 
 			{
-				eventData = this._events[i];
+				eventData = _events[i];
 				if (eventData.type == type && eventData.once) 
 				{
-					eventData = this._events.splice(i, 1)[0];
-					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+					eventData = _events.splice(i, 1)[0];
+					if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
 					eventData.destruct();
 				}
 			}
-			this._blockRequest = false;
+			_blockRequest = false;
 		}
 
 		/**
@@ -201,23 +201,23 @@ package temple.core.events
 		 */
 		public function removeAllStrongEventListenersForListener(listener:Function):void 
 		{
-			this._blockRequest = true;
-			var i:int = this._events.length;
+			_blockRequest = true;
+			var i:int = _events.length;
 			var eventData:EventData;
 			while (i--) 
 			{
-				eventData = this._events[i];
+				eventData = _events[i];
 				
 				if (eventData.listener == listener) 
 				{
-					eventData = this._events.splice(i, 1)[0];
+					eventData = _events.splice(i, 1)[0];
 					
-					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+					if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
 					
 					eventData.destruct();
 				}
 			}
-			this._blockRequest = false;
+			_blockRequest = false;
 		}
 
 		/**
@@ -225,23 +225,23 @@ package temple.core.events
 		 */
 		public function removeAllEventListeners():void 
 		{
-			this._blockRequest = true;
-			if (this._events)
+			_blockRequest = true;
+			if (_events)
 			{
-				var i:int = this._events.length;
+				var i:int = _events.length;
 				var eventData:EventData;
 				while (i--) 
 				{
-					eventData = this._events.splice(i, 1)[0];
+					eventData = _events.splice(i, 1)[0];
 					
 					if (!eventData.isDestructed)
 					{
-						if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+						if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
 						eventData.destruct();
 					}
 				}
 			}
-			this._blockRequest = false;
+			_blockRequest = false;
 		}
 		
 		/**
@@ -258,11 +258,11 @@ package temple.core.events
 		public function getInfo():Vector.<String>
 		{
 			var list:Vector.<String> = new Vector.<String>();
-			if (this._events &&  this._events.length)
+			if (_events &&  _events.length)
 			{
-				for each (var eventData:EventData in this._events)
+				for each (var eventData:EventData in _events)
 				{
-					list.push(eventData.type + ": " + this.functionToString(eventData.listener));
+					list.push(eventData.type + ": " + functionToString(eventData.listener));
 				}
 			}
 			return list;
@@ -273,23 +273,23 @@ package temple.core.events
 		 */
 		public function get numListeners():uint 
 		{
-			return this._events ? this._events.length : 0;
+			return _events ? _events.length : 0;
 		}
 		
 		private function handleOnceEvent(event:Event):void 
 		{
-			this._blockRequest = true;
-			var i:int = this._events ? this._events.length : 0;
+			_blockRequest = true;
+			var i:int = _events ? _events.length : 0;
 			var eventData:EventData;
 			while (i--) 
 			{
-				if (this._events == null) break;
-				eventData = this._events[i];
+				if (_events == null) break;
+				eventData = _events[i];
 				if (eventData && eventData.type == event.type && eventData.once) 
 				{
-					eventData = this._events.splice(i, 1)[0];
+					eventData = _events.splice(i, 1)[0];
 					var listener:Function = eventData.listener;
-					if (this._target) this._target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
+					if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
 					eventData.destruct();
 					if (listener.length == 1)
 					{
@@ -301,7 +301,7 @@ package temple.core.events
 					}
 				}
 			}
-			this._blockRequest = false;
+			_blockRequest = false;
 		}
 		
 		private function functionToString(func:Function):String 
@@ -343,12 +343,12 @@ package temple.core.events
 		 */
 		override public function destruct():void 
 		{
-			this.removeAllEventListeners();
+			removeAllEventListeners();
 			
-			for each (var eventData:EventData in this._events) eventData.destruct();
+			for each (var eventData:EventData in _events) eventData.destruct();
 			
-			this._target = null;
-			this._events = null;
+			_target = null;
+			_events = null;
 			
 			super.destruct();
 		}
@@ -372,7 +372,7 @@ final class EventData extends CoreObject
 		this.once = once;
 		this.priority = priority;
 		super();
-		this.toStringProps.push('type');
+		toStringProps.push('type');
 	}
 
 	public function equals(type:String, listener:Function, useCapture:Boolean):Boolean 
@@ -385,7 +385,7 @@ final class EventData extends CoreObject
 	 */
 	override public function destruct():void
 	{
-		this.type = null;
-		this.listener = null;
+		type = null;
+		listener = null;
 	}
 }

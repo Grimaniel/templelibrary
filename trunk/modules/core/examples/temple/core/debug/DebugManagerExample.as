@@ -45,28 +45,28 @@ package
 			addToDebugManager(this);
 			
 			// Adds a TextField to the stage. 
-			this._txtLog.defaultTextFormat = new TextFormat("Arial", 11, 0x333333);
-			this._txtLog.height = this.stage.stageHeight;
-			this._txtLog.width = this.stage.stageWidth;
-			this.addChild(this._txtLog);
+			_txtLog.defaultTextFormat = new TextFormat("Arial", 11, 0x333333);
+			_txtLog.height = stage.stageHeight;
+			_txtLog.width = stage.stageWidth;
+			addChild(_txtLog);
 			
 			// Add listenener to log. Used for example, not nessessary if you open Yalala
-			Log.addLogListener(this.handleLogEvent);
+			Log.addLogListener(handleLogEvent);
 			
 			// Check if debug is enabled
-			if (this.debug)
+			if (debug)
 			{
-				this.logDebug("Debug enabled"); 
+				logDebug("Debug enabled"); 
 			}
 			else
 			{
-				this.logDebug("Debug disabled"); 
+				logDebug("Debug disabled"); 
 			}
 		}
 		
 		private function handleLogEvent(event:LogEvent):void
 		{
-			this._txtLog.appendText(event.data + "\n");
+			_txtLog.appendText(event.data + "\n");
 		}
 	}
 }

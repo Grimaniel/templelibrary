@@ -88,19 +88,19 @@ package temple.core.net
 		 */
 		construct function coreURLLoader(request:URLRequest, dataFormat:String, destructOnError:Boolean, logErrors:Boolean):void
 		{
-			this._destructOnError = destructOnError;
-			this._logErrors = logErrors;
+			_destructOnError = destructOnError;
+			_logErrors = logErrors;
 			
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 			
 			// Add default listeners to Error events and preloader support
-			super.addEventListener(ProgressEvent.PROGRESS, this.handleProgress);
-			super.addEventListener(Event.COMPLETE, this.handleComplete);
-			super.addEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
-			super.addEventListener(IOErrorEvent.DISK_ERROR, this.handleIOError);
-			super.addEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError);
-			super.addEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError);
-			super.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			super.addEventListener(ProgressEvent.PROGRESS, handleProgress);
+			super.addEventListener(Event.COMPLETE, handleComplete);
+			super.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+			super.addEventListener(IOErrorEvent.DISK_ERROR, handleIOError);
+			super.addEventListener(IOErrorEvent.NETWORK_ERROR, handleIOError);
+			super.addEventListener(IOErrorEvent.VERIFY_ERROR, handleIOError);
+			super.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
 			
 			request;
 			dataFormat;
@@ -111,16 +111,16 @@ package temple.core.net
 		 */
 		override public function load(request:URLRequest):void
 		{
-			if (this._isDestructed)
+			if (_isDestructed)
 			{
-				this.logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
+				logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
 				return;
 			}
-			if (this.debug) this.logDebug("load: " + request.url);
+			if (_debug) logDebug("load: " + request.url);
 			
-			this._url = request.url;
-			this._isLoading = true;
-			this._isLoaded = false;
+			_url = request.url;
+			_isLoading = true;
+			_isLoaded = false;
 			super.load(request);
 		}
 
@@ -131,14 +131,14 @@ package temple.core.net
 		 */ 
 		override public function close():void
 		{
-			if (this._isLoading)
+			if (_isLoading)
 			{
 				super.close();
 				
-				this._isLoading = false;
-				this._url = null;
+				_isLoading = false;
+				_url = null;
 			}
-			else if (this._debug) this.logInfo('Nothing is loading, so closing is useless');
+			else if (_debug) logInfo('Nothing is loading, so closing is useless');
 		}
 		
 		
@@ -147,7 +147,7 @@ package temple.core.net
 		 */
 		public function get destructOnError():Boolean
 		{
-			return this._destructOnError;
+			return _destructOnError;
 		}
 		
 		/**
@@ -155,7 +155,7 @@ package temple.core.net
 		 */
 		public function set destructOnError(value:Boolean):void
 		{
-			this._destructOnError = value;
+			_destructOnError = value;
 		}
 		
 		include "../includes/CoreLoaderMethods.as.inc";
@@ -174,14 +174,14 @@ package temple.core.net
 		
 		private function handleProgress(event:ProgressEvent):void
 		{
-			if (this.debug) this.logDebug("handleProgress: " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
+			if (_debug) logDebug("handleProgress: " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
 		}
 		
 		private function handleComplete(event:Event):void
 		{
-			if (this._debug) this.logDebug("handleComplete");
-			this._isLoading = false;
-			this._isLoaded = true;
+			if (_debug) logDebug("handleComplete");
+			_isLoading = false;
+			_isLoaded = true;
 		}
 		
 		/**
@@ -191,9 +191,9 @@ package temple.core.net
 		 */
 		private function handleIOError(event:IOErrorEvent):void
 		{
-			this._isLoading = false;
-			if (this._logErrors) this.logError(event.type + ': ' + event.text);
-			if (this._destructOnError) this.destruct();
+			_isLoading = false;
+			if (_logErrors) logError(event.type + ': ' + event.text);
+			if (_destructOnError) destruct();
 		}
 		
 		/**
@@ -203,9 +203,9 @@ package temple.core.net
 		 */
 		private function handleSecurityError(event:SecurityErrorEvent):void
 		{
-			this._isLoading = false;
-			if (this._logErrors) this.logError(event.type + ': ' + event.text);
-			if (this._destructOnError) this.destruct();
+			_isLoading = false;
+			if (_logErrors) logError(event.type + ': ' + event.text);
+			if (_destructOnError) destruct();
 		}
 		
 		include "../includes/IsDestructed.as.inc";
@@ -215,35 +215,35 @@ package temple.core.net
 		 */
 		public function destruct():void 
 		{
-			if (this._isDestructed) return;
+			if (_isDestructed) return;
 			
-			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			super.removeEventListener(ProgressEvent.PROGRESS, this.handleProgress);
-			super.removeEventListener(Event.COMPLETE, this.handleComplete);
-			super.removeEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
-			super.removeEventListener(IOErrorEvent.DISK_ERROR, this.handleIOError);
-			super.removeEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError);
-			super.removeEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError);
-			super.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			super.removeEventListener(ProgressEvent.PROGRESS, handleProgress);
+			super.removeEventListener(Event.COMPLETE, handleComplete);
+			super.removeEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+			super.removeEventListener(IOErrorEvent.DISK_ERROR, handleIOError);
+			super.removeEventListener(IOErrorEvent.NETWORK_ERROR, handleIOError);
+			super.removeEventListener(IOErrorEvent.VERIFY_ERROR, handleIOError);
+			super.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
 			
-			if (this._isLoading)
+			if (_isLoading)
 			{
 				try
 				{
-					this.close();
+					close();
 				}
-				catch(error:Error)
+				catch (error:Error)
 				{
-					if (this.debug) this.logWarn("destruct: " + error.message);
+					if (_debug) logWarn("destruct: " + error.message);
 				}
 			}
-			if (this._eventListenerManager)
+			if (_eventListenerManager)
 			{
-				this._eventListenerManager.destruct();
-				this._eventListenerManager = null;
+				_eventListenerManager.destruct();
+				_eventListenerManager = null;
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

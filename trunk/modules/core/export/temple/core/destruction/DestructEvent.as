@@ -49,7 +49,7 @@ package temple.core.destruction
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		/**
 		 * Dispatched just before the object is destructed.
@@ -63,7 +63,7 @@ package temple.core.destruction
 		
 		override public function clone():Event
 		{
-			return new DestructEvent(this.type);
+			return new DestructEvent(type);
 		}
 	}
 }

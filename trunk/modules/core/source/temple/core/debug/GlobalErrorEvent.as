@@ -26,8 +26,8 @@ package temple.core.debug
 		public function GlobalErrorEvent(type:String, error:*)
 		{
 			super(type);
-			this._error = error;
-			this.toStringProps.splice(1, 0, 'error');
+			_error = error;
+			toStringProps.splice(1, 0, 'error');
 		}
 
 		/**
@@ -35,12 +35,12 @@ package temple.core.debug
 		 */
 		public function get error():*
 		{
-			return this._error;
+			return _error;
 		}
 		
 		override public function clone():Event
 		{
-			return new GlobalErrorEvent(this.type, this._error);
+			return new GlobalErrorEvent(type, _error);
 		}
 	}
 }

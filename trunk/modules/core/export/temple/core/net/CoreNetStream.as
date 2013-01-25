@@ -35,7 +35,7 @@
 
 package temple.core.net 
 {
-	import flash.display.Sprite;
+	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
@@ -73,7 +73,7 @@ package temple.core.net
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		/**
 		 * @private
@@ -86,7 +86,7 @@ package temple.core.net
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
 		private var _isLoaded:Boolean;
-		private var _framePulseSprite:Sprite;
+		private var _framePulser:Shape;
 		private var _registryId:uint;
 		private var _isLoading:Boolean;
 		private var _logErrors:Boolean;
@@ -106,11 +106,11 @@ package temple.core.net
 		 */
 		construct function coreNetStream(netConnection:NetConnection, logErrors:Boolean):void
 		{
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 			
-			super.addEventListener(NetStatusEvent.NET_STATUS, this.handleNetStatusEvent);
-			super.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
-			this._logErrors = logErrors;
+			super.addEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
+			super.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
+			_logErrors = logErrors;
 			
 			netConnection;
 		}
@@ -120,24 +120,24 @@ package temple.core.net
 		 */
 		override public function play(...args:*):void
 		{
-			this._isLoaded = false;
-			this._isLoading = true;
-			this._url = args[0];
+			_isLoaded = false;
+			_isLoading = true;
+			_url = args[0];
 			
-			this._framePulseSprite ||= new Sprite();
-			this._framePulseSprite.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			_framePulser ||= new Shape();
+			_framePulser.addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			
 			super.play.apply(this, args);
 		}
 		
 		private function handleEnterFrame(event:Event):void
 		{
-			if (this.bytesLoaded == this.bytesTotal && this.bytesLoaded > 0)
+			if (bytesLoaded == bytesTotal && bytesLoaded > 0)
 			{
-				this._framePulseSprite.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				_framePulser.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 				
-				this._isLoaded = true;
-				this._isLoading = false;
+				_isLoaded = true;
+				_isLoading = false;
 			}
 		}
 		
@@ -442,12 +442,12 @@ package temple.core.net
 		
 		private function handleNetStatusEvent(event:NetStatusEvent):void
 		{
-			if (this._debug) this.logDebug(event.type + ": " + event.info.code);
+			if (_debug) logDebug(event.type + ": " + event.info.code);
 		}
 
 		private function handleSecurityError(event:SecurityErrorEvent):void
 		{
-			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
+			if (_logErrors || _debug) logError(event.type + ': ' + event.text);
 		}
 		
 		/**
@@ -455,29 +455,29 @@ package temple.core.net
 		 */
 		public function destruct():void 
 		{
-			if (this._isDestructed) return;
+			if (_isDestructed) return;
 			
-			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			super.removeEventListener(NetStatusEvent.NET_STATUS, this.handleNetStatusEvent);
-			super.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			super.removeEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
+			super.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
 			
-			this.removeAllEventListeners();
-			this.client = this;
-			this.close();
+			removeAllEventListeners();
+			client = this;
+			close();
 			
-			if (this._framePulseSprite)
+			if (_framePulser)
 			{
-				this._framePulseSprite.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this._framePulseSprite = null;
+				_framePulser.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				_framePulser = null;
 			}
 			
-			if (this._eventListenerManager)
+			if (_eventListenerManager)
 			{
-				this._eventListenerManager.destruct();
-				this._eventListenerManager = null;
+				_eventListenerManager.destruct();
+				_eventListenerManager = null;
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

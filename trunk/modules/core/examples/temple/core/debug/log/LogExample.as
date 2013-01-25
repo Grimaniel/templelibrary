@@ -28,13 +28,13 @@ package
 			super("Temple - LogExample");
 			
 			// Adds a TextField to the stage. 
-			this._txtLog.defaultTextFormat = new TextFormat("Arial", 11, 0x333333);
-			this._txtLog.height = this.stage.stageHeight;
-			this._txtLog.width = this.stage.stageWidth;
-			this.addChild(this._txtLog);
+			_txtLog.defaultTextFormat = new TextFormat("Arial", 11, 0x333333);
+			_txtLog.height = stage.stageHeight;
+			_txtLog.width = stage.stageWidth;
+			addChild(_txtLog);
 			
 			// Add listenener to log
-			Log.addLogListener(this.handleLogEvent);
+			Log.addLogListener(handleLogEvent);
 			
 			
 			// log an info message
@@ -44,17 +44,17 @@ package
 			Log.error("This is an error", this);
 			
 			// For all core object there is a shortcut for logging:
-			this.logInfo("This is also an info message");
+			logInfo("This is also an info message");
 			
 			// or
-			this.logWarn("This is a warning");
-			this.logDebug("This is a debug message");
-			this.logFatal("This is a fatal message");
+			logWarn("This is a warning");
+			logDebug("This is a debug message");
+			logFatal("This is a fatal message");
 		}
 		
 		private function handleLogEvent(event:LogEvent):void
 		{
-			this._txtLog.appendText(event.level + ": \t" + event.data + "\n");
+			_txtLog.appendText(event.level + ": \t" + event.data + "\n");
 		}
 
 	}

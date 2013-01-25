@@ -64,7 +64,7 @@ package temple.core.net
 		 */
 		construct function coreFileReference():void
 		{
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 		}
 		
 		include "../includes/CoreObjectMethods.as.inc";
@@ -84,18 +84,18 @@ package temple.core.net
 		 */
 		public function destruct():void 
 		{
-			if (this._isDestructed) return;
+			if (_isDestructed) return;
 			
-			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			this.cancel();
+			cancel();
 			
-			if (this._eventListenerManager)
+			if (_eventListenerManager)
 			{
-				this._eventListenerManager.destruct();
-				this._eventListenerManager = null;
+				_eventListenerManager.destruct();
+				_eventListenerManager = null;
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

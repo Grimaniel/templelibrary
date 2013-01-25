@@ -50,7 +50,7 @@ package temple.core.behaviors
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		private var _behavior:IBehavior;
 
@@ -62,8 +62,8 @@ package temple.core.behaviors
 		public function AbstractBehaviorEvent(type:String, behavior:IBehavior, bubbles:Boolean = false)
 		{
 			super(type, bubbles);
-			this._behavior = behavior;
-			this.toStringProps.splice(1, 0, 'behaviorTarget');
+			_behavior = behavior;
+			toStringProps.splice(1, 0, 'behaviorTarget');
 		}
 
 		/**
@@ -71,7 +71,7 @@ package temple.core.behaviors
 		 */
 		public function get behavior():IBehavior 
 		{
-			return this._behavior;
+			return _behavior;
 		}
 
 		/**
@@ -79,7 +79,7 @@ package temple.core.behaviors
 		 */
 		public function get behaviorTarget():Object
 		{
-			return this._behavior.target;
+			return _behavior.target;
 		}
 	}
 }

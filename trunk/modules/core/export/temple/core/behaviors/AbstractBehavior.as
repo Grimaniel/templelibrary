@@ -60,7 +60,7 @@ package temple.core.behaviors
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		private var _target:Object;
 		
@@ -76,15 +76,15 @@ package temple.core.behaviors
 		construct function abstractBehavior(target:Object):void
 		{
 			if (target == null) throwError(new TempleArgumentError(this, "target cannot be null"));
-			this.toStringProps.push('target');
-			this._target = target;
-			if (this._target is IEventDispatcher)
+			toStringProps.push('target');
+			_target = target;
+			if (_target is IEventDispatcher)
 			{
-				(this._target as IEventDispatcher).addEventListener(DestructEvent.DESTRUCT, this.handleTargetDestructed);
+				(_target as IEventDispatcher).addEventListener(DestructEvent.DESTRUCT, handleTargetDestructed);
 			}
 			else
 			{
-				this.logWarn("This object is not an IEventDispatcher, so it will not be auto-destructed");
+				logWarn("This object is not an IEventDispatcher, so it will not be auto-destructed");
 			}
 		}
 		
@@ -93,12 +93,12 @@ package temple.core.behaviors
 		 */
 		public final function get target():Object
 		{
-			return this._target;
+			return _target;
 		}
 		
 		private function handleTargetDestructed(event:DestructEvent):void
 		{
-			this.destruct();
+			destruct();
 		}
 
 		/**
@@ -106,11 +106,11 @@ package temple.core.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this._target)
+			if (_target)
 			{
-				if (this._target is IEventDispatcher) (this._target as IEventDispatcher).removeEventListener(DestructEvent.DESTRUCT, this.handleTargetDestructed);
+				if (_target is IEventDispatcher) (_target as IEventDispatcher).removeEventListener(DestructEvent.DESTRUCT, handleTargetDestructed);
 				// Store target as String, so we do not have the real reverence anymore, but we can still see what is was.
-				this._target = String(this._target);
+				_target = String(_target);
 			}
 			super.destruct();
 		}

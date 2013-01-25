@@ -54,7 +54,7 @@ package temple.core.destruction
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		protected static var _instance:DestructController;
 
@@ -66,7 +66,7 @@ package temple.core.destruction
 		 */
 		public function DestructController()
 		{
-			this._list = new Dictionary(true);
+			_list = new Dictionary(true);
 		}
 
 		/**
@@ -74,8 +74,8 @@ package temple.core.destruction
 		 */
 		public function add(object:Object):void
 		{
-			this._list[object] = true;
-			if (this._debug) this.logDebug("Add " + object);
+			_list[object] = true;
+			if (_debug) logDebug("Add " + object);
 		}
 
 		/**
@@ -83,11 +83,11 @@ package temple.core.destruction
 		 */
 		public function destructAll():void
 		{
-			for (var object:Object in this._list) 
+			for (var object:Object in _list) 
 			{
-				if (this._debug) this.logDebug("Destruct " + object);
+				if (_debug) logDebug("Destruct " + object);
 				Destructor.destruct(object);
-				delete this._list[object];
+				delete _list[object];
 			}
 		}
 
@@ -96,7 +96,7 @@ package temple.core.destruction
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -104,7 +104,7 @@ package temple.core.destruction
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		/**
@@ -112,10 +112,10 @@ package temple.core.destruction
 		 */
 		override public function destruct():void
 		{
-			if (this._list)
+			if (_list)
 			{
-				this.destructAll();
-				this._list = null;
+				destructAll();
+				_list = null;
 			}
 			super.destruct();
 		}

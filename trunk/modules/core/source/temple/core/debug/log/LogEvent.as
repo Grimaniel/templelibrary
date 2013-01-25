@@ -44,16 +44,16 @@ package temple.core.debug.log
 		{
 			super(LogEvent.EVENT);
 			
-			this._level = level;
-			this._data = data;
-			this._sender = sender;
-			this._senderId = senderId;
-			this._stackTrace = stackTrace;
-			this._time = time;
-			this._frame = frame;
+			_level = level;
+			_data = data;
+			_sender = sender;
+			_senderId = senderId;
+			_stackTrace = stackTrace;
+			_time = time;
+			_frame = frame;
 			
-			this.toStringProps.length = 0;
-			this.toStringProps.push('level', 'data', 'sender', 'objectId');
+			toStringProps.length = 0;
+			toStringProps.push('level', 'data', 'sender', 'objectId');
 		}
 
 		/**
@@ -62,7 +62,7 @@ package temple.core.debug.log
 		 */
 		public function get level():String
 		{
-			return this._level;
+			return _level;
 		}
 		
 		/**
@@ -70,7 +70,7 @@ package temple.core.debug.log
 		 */
 		public function get data():*
 		{
-			return this._data;
+			return _data;
 		}
 		
 		/**
@@ -78,7 +78,7 @@ package temple.core.debug.log
 		 */
 		public function get sender():String
 		{
-			return this._sender;
+			return _sender;
 		}
 		
 		/**
@@ -88,7 +88,7 @@ package temple.core.debug.log
 		 */
 		public function get objectId():uint
 		{
-			return this._senderId;
+			return _senderId;
 		}
 		
 		/**
@@ -97,7 +97,7 @@ package temple.core.debug.log
 		 */
 		public function get stackTrace():String
 		{
-			return this._stackTrace;
+			return _stackTrace;
 		}
 		
 		/**
@@ -105,7 +105,7 @@ package temple.core.debug.log
 		 */
 		public function get time():uint
 		{
-			return this._time;
+			return _time;
 		}
 		
 		/**
@@ -113,7 +113,7 @@ package temple.core.debug.log
 		 */
 		public function get frame():uint
 		{
-			return this._frame;
+			return _frame;
 		}
 		
 		/**
@@ -121,7 +121,7 @@ package temple.core.debug.log
 		 */
 		override public function clone():Event 
 		{
-			return new LogEvent(this._level, this._data, this._sender, this._senderId, this._stackTrace, this._frame);
+			return new LogEvent(_level, _data, _sender, _senderId, _stackTrace, _frame);
 		}
 	}
 }

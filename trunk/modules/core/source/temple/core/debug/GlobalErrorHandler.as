@@ -20,9 +20,9 @@ package temple.core.debug
 	 * 
 	 * @example
 	 * <listing version="3.0">
-	 * 	var geh:GlobalErrorHandler = new GlobalErrorHandler(this.loaderInfo, true);
+	 * 	var geh:GlobalErrorHandler = new GlobalErrorHandler(loaderInfo, true);
 	 * 	geh.preventDefault = true;
-	 * 	geh.addEventListener(GlobalErrorEvent.GLOBAL_ERROR, this.handleGlobalError);
+	 * 	geh.addEventListener(GlobalErrorEvent.GLOBAL_ERROR, handleGlobalError);
 	 * 	
 	 * 	private function handleGlobalError(event:GlobalErrorEvent):void
 	 * 	{
@@ -56,35 +56,35 @@ package temple.core.debug
 		
 		public function GlobalErrorHandler(loaderInfo:LoaderInfo, debug:Boolean = true, preventDefault:Boolean = false)
 		{
-			this._debug = debug;
-			this._preventDefault = preventDefault;
+			_debug = debug;
+			_preventDefault = preventDefault;
 			
 			if (loaderInfo.hasOwnProperty("uncaughtErrorEvents"))
 			{
-				loaderInfo["uncaughtErrorEvents"].addEventListener("uncaughtError", this.handleUncaughtError);
+				loaderInfo["uncaughtErrorEvents"].addEventListener("uncaughtError", handleUncaughtError);
 			}
 		}
 
 		private function handleUncaughtError(event:*):void
 		{
-			this.dispatchEvent(new GlobalErrorEvent(GlobalErrorEvent.GLOBAL_ERROR, event.error));
+			dispatchEvent(new GlobalErrorEvent(GlobalErrorEvent.GLOBAL_ERROR, event.error));
 			
 			if (event.error is Error)
 			{
 				var error:Error = event.error as Error;
-				if (this._debug) Log.error("Uncaught Error :: " + error.name + "::" + error.errorID + "::" + error.message + "::\n" + error.getStackTrace(), this.toString());
+				if (_debug) Log.error("Uncaught Error :: " + error.name + "::" + error.errorID + "::" + error.message + "::\n" + error.getStackTrace(), toString());
 			}
 			else if (event.error is ErrorEvent)
 			{
 				var errorEvent:ErrorEvent = event.error as ErrorEvent;
-				if (this._debug) Log.error("Uncaught ErrorEvent :: " + errorEvent.text, this.toString());
+				if (_debug) Log.error("Uncaught ErrorEvent :: " + errorEvent.text, toString());
 			}
 			else
 			{
-				if (this._debug) Log.error("Unknown Error(Event) :: " + event.error, this.toString());
+				if (_debug) Log.error("Unknown Error(Event) :: " + event.error, toString());
 			}
 
-			if (this._preventDefault) Event(event).preventDefault();
+			if (_preventDefault) Event(event).preventDefault();
 		}
 		
 		/**
@@ -94,7 +94,7 @@ package temple.core.debug
 		 */
 		public function get preventDefault():Boolean
 		{
-			return this._preventDefault;
+			return _preventDefault;
 		}
 		
 		/**
@@ -102,7 +102,7 @@ package temple.core.debug
 		 */
 		public function set preventDefault(value:Boolean):void
 		{
-			this._preventDefault = value;
+			_preventDefault = value;
 		}
 
 		/**
@@ -110,7 +110,7 @@ package temple.core.debug
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -118,7 +118,7 @@ package temple.core.debug
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 	}
 }
