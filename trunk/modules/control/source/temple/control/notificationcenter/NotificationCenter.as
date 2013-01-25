@@ -140,11 +140,11 @@ package temple.control.notificationcenter
 		 */
 		public function NotificationCenter(name:String = null) 
 		{
-			this._name = name;
+			_name = name;
 			super();
-			this._eventDispatcher = new CoreEventDispatcher();
+			_eventDispatcher = new CoreEventDispatcher();
 			addToDebugManager(this);
-			this.toStringProps.push('name');
+			toStringProps.push('name');
 		}
 
 		/**
@@ -152,7 +152,7 @@ package temple.control.notificationcenter
 		 */
 		public function get name():String
 		{
-			return this._name;
+			return _name;
 		}
 		
 		/**
@@ -172,9 +172,9 @@ package temple.control.notificationcenter
 		 */
 		public function addObserver(type:String, listener:Function, useWeakReference:Boolean = true):void
 		{
-			if (this._debug) this.logDebug("addObserver: '" + type + "' ");
+			if (_debug) logDebug("addObserver: '" + type + "' ");
 			
-			this._eventDispatcher.addEventListener(type, listener, false, 0, useWeakReference);
+			_eventDispatcher.addEventListener(type, listener, false, 0, useWeakReference);
 		}
 		
 		/**
@@ -192,7 +192,7 @@ package temple.control.notificationcenter
 		 */
 		public function removeObserver(type:String, listener:Function):void
 		{
-			this._eventDispatcher.removeEventListener(type, listener);
+			_eventDispatcher.removeEventListener(type, listener);
 		}
 		
 		/**
@@ -210,16 +210,16 @@ package temple.control.notificationcenter
 		 */
 		public function post(type:String, data:* = null):void
 		{
-			if (this._debug)
+			if (_debug)
 			{
-				this.logDebug("post: '" + type + "', data: " + data);
+				logDebug("post: '" + type + "', data: " + data);
 				
-				if (!this._eventDispatcher.hasEventListener(type))
+				if (!_eventDispatcher.hasEventListener(type))
 				{
-					this.logWarn("NotificationCenter has no observers for '" + type + "'");
+					logWarn("NotificationCenter has no observers for '" + type + "'");
 				}
 			}
-			this._eventDispatcher.dispatchEvent(new Notification(this, type, data));
+			_eventDispatcher.dispatchEvent(new Notification(this, type, data));
 		}
 
 		/**
@@ -227,7 +227,7 @@ package temple.control.notificationcenter
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -235,7 +235,7 @@ package temple.control.notificationcenter
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		/**
@@ -243,15 +243,15 @@ package temple.control.notificationcenter
 		 */
 		override public function destruct():void
 		{
-			if (this._eventDispatcher)
+			if (_eventDispatcher)
 			{
-				this._eventDispatcher.destruct();
-				this._eventDispatcher = null;
+				_eventDispatcher.destruct();
+				_eventDispatcher = null;
 			}
 			
 			if (NotificationCenter._instances)
 			{
-				delete NotificationCenter._instances[this._name];
+				delete NotificationCenter._instances[_name];
 				
 				// check if there are some NotificationCenters left
 				for (var key:String in NotificationCenter._instances);

@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Control Module API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/control/notificationcenter/NotificationCenter.html&amp;temple/control/notificationcenter/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">NotificationCenter</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Control Module API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/control/notificationcenter/NotificationCenter.html&amp;temple/control/notificationcenter/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">NotificationCenter</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("NotificationCenter"); titleBar_setSubNav(false,true,false,false,false,false,false,false,true,true,false	,false,false,false,false,false);}	
@@ -180,29 +180,29 @@ package
         {
             super("Temple - NotificationCenterExample");
 
-            this._output = new TextField();
-            this._output.width = this.stage.stageWidth;
-            this._output.height = this.stage.stageHeight;
-            this.addChild(this._output);
-            this._output.text = "Press a key to send a Notification\n\n";
+            _output = new TextField();
+            _output.width = stage.stageWidth;
+            _output.height = stage.stageHeight;
+            addChild(_output);
+            _output.text = "Press a key to send a Notification\n\n";
 
-            Log.addLogListener(this.handleLogEvent);
+            Log.addLogListener(handleLogEvent);
 
             NotificationCenter.getInstance().debug = true;
 
-            NotificationCenter.getInstance().addObserver("key-press", this.handleNotifications);
+            NotificationCenter.getInstance().addObserver("key-press", handleNotifications);
 
-            this.stage.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
         }
 
         private function handleLogEvent(event:LogEvent):void
         {
-            this._output.appendText(event.data + "\n");
+            _output.appendText(event.data + "\n");
         }
 
         private function handleNotifications(note:Notification):void
         {
-            this._output.appendText("Received Notification: '" + note.type + "', data = " + note.data + "\n");
+            _output.appendText("Received Notification: '" + note.type + "', data = " + note.data + "\n");
         }
 
         private function handleKeyDown(event:KeyboardEvent):void

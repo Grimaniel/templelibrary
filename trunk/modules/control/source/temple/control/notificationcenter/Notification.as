@@ -67,8 +67,8 @@ package temple.control.notificationcenter
 		{
 			super(type);
 			
-			this._notificationCenter = notificationCenter;
-			this._data = data;
+			_notificationCenter = notificationCenter;
+			_data = data;
 
 			if (type == null) throwError(new TempleArgumentError(this, "type can't be null"));
 		}
@@ -78,7 +78,7 @@ package temple.control.notificationcenter
 		 */
 		public function get name():String
 		{
-			return this.type;
+			return type;
 		}
 		
 		/**
@@ -86,7 +86,7 @@ package temple.control.notificationcenter
 		 */
 		public function get data():*
 		{
-			return this._data;
+			return _data;
 		}
 
 		/**
@@ -94,7 +94,7 @@ package temple.control.notificationcenter
 		 */
 		override public function clone():Event
 		{
-			return new Notification(this._notificationCenter, this.type, this._data);
+			return new Notification(_notificationCenter, type, _data);
 		}
 
 		/**
@@ -102,7 +102,7 @@ package temple.control.notificationcenter
 		 */
 		override public function get target():Object
 		{
-			return this._notificationCenter;
+			return _notificationCenter;
 		}
 
 		/**
@@ -110,7 +110,7 @@ package temple.control.notificationcenter
 		 */
 		override public function get currentTarget():Object
 		{
-			return this._notificationCenter;
+			return _notificationCenter;
 		}
 		
 		/**
@@ -119,7 +119,7 @@ package temple.control.notificationcenter
 		 */
 		public function get notificationCenter():NotificationCenter
 		{
-			return this._notificationCenter;
+			return _notificationCenter;
 		}
 
 		/**

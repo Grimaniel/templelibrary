@@ -29,29 +29,29 @@ package
 		{
 			super("Temple - NotificationCenterExample");
 
-			this._output = new TextField();
-			this._output.width = this.stage.stageWidth;
-			this._output.height = this.stage.stageHeight;
-			this.addChild(this._output);
-			this._output.text = "Press a key to send a Notification\n\n";
+			_output = new TextField();
+			_output.width = stage.stageWidth;
+			_output.height = stage.stageHeight;
+			addChild(_output);
+			_output.text = "Press a key to send a Notification\n\n";
 
-			Log.addLogListener(this.handleLogEvent);
+			Log.addLogListener(handleLogEvent);
 
 			NotificationCenter.getInstance().debug = true;
 
-			NotificationCenter.getInstance().addObserver("key-press", this.handleNotifications);
+			NotificationCenter.getInstance().addObserver("key-press", handleNotifications);
 
-			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 		}
 
 		private function handleLogEvent(event:LogEvent):void
 		{
-			this._output.appendText(event.data + "\n");
+			_output.appendText(event.data + "\n");
 		}
 
 		private function handleNotifications(note:Notification):void
 		{
-			this._output.appendText("Received Notification: '" + note.type + "', data = " + note.data + "\n");
+			_output.appendText("Received Notification: '" + note.type + "', data = " + note.data + "\n");
 		}
 
 		private function handleKeyDown(event:KeyboardEvent):void
