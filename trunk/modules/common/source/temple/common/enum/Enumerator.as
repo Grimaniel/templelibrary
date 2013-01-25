@@ -154,16 +154,16 @@ person.gender = new Gender("some value");</listing>
 			}
 			else
 			{
-				this._value = value;
+				_value = value;
 				
 				if (!Enumerator._lookup[className]) Enumerator._lookup[className] = new Dictionary();
-				if (Enumerator._lookup[className][this._value])
+				if (Enumerator._lookup[className][_value])
 				{
-					throwError(new TempleArgumentError(this, "An Enumerator of type '" + className + "' with the same value ('" + this._value + "') is already registered."));
+					throwError(new TempleArgumentError(this, "An Enumerator of type '" + className + "' with the same value ('" + _value + "') is already registered."));
 				}
 				else
 				{
-					Enumerator._lookup[className][this._value] = this;
+					Enumerator._lookup[className][_value] = this;
 				}
 			}
 		}
@@ -173,7 +173,7 @@ person.gender = new Gender("some value");</listing>
 		 */
 		public final function get value():*
 		{
-			return this._value;
+			return _value;
 		}
 		
 		/**
@@ -181,7 +181,7 @@ person.gender = new Gender("some value");</listing>
 		 */
 		public function valueOf():*
 		{
-			return this._value;
+			return _value;
 		}
 		
 		/**

@@ -65,9 +65,9 @@ package temple.common.events
 		{
 			super(type, bubbles);
 			
-			this._call = call;
+			_call = call;
 			
-			this.toStringProps.splice(1, 0, "call");
+			toStringProps.splice(1, 0, "call");
 		}
 
 		/**
@@ -75,12 +75,12 @@ package temple.common.events
 		 */
 		public function get call():IPendingCall
 		{
-			return this._call;
+			return _call;
 		}
 		
 		override public function clone():Event
 		{
-			return new PendingCallEvent(this.type, this.call, this.bubbles);
+			return new PendingCallEvent(type, call, bubbles);
 		}
 	}
 }

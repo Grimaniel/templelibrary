@@ -62,9 +62,9 @@ package temple.common.events
 		{
 			super(type, bubbles);
 			
-			this._item = item;
+			_item = item;
 			
-			this.toStringProps.splice(1, 0, "item");
+			toStringProps.splice(1, 0, "item");
 		}
 
 		/**
@@ -72,12 +72,12 @@ package temple.common.events
 		 */
 		public function get item():*
 		{
-			return this._item;
+			return _item;
 		}
 		
 		override public function clone():Event
 		{
-			return new SelectEvent(this.type, this.item, this.bubbles);
+			return new SelectEvent(type, item, bubbles);
 		}
 	}
 }
