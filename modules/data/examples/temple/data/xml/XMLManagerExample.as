@@ -34,7 +34,7 @@ package
 			XMLManager.getInstance().debug = true;
 			
 			// load XML named "people" (see urls.xml) and parse it to PersonData objects.
-			XMLManager.loadListByName("people", Person, "person", this.onData);
+			XMLManager.loadListByName("people", Person, "person", onData);
 		}
 
 		private function onData(list:Array):void
@@ -45,10 +45,10 @@ package
 			// Show xml content in a TextField.
 			var label:TextField = new TextField();
 			label.defaultTextFormat = new TextFormat("Arial", 11, 0x333333);
-			label.height = this.stage.stageHeight;
-			label.width = this.stage.stageWidth;
+			label.height = stage.stageHeight;
+			label.width = stage.stageWidth;
 			label.text = list.join('\n'); // Note the toStringProps inside PersonData are used to output friendly
-			this.addChild(label);
+			addChild(label);
 		}
 	}
 }
@@ -67,38 +67,38 @@ class Person extends CoreObject implements IXMLParsable
 	public function Person()
 	{
 		// Add the properties you want to be returned in the 'toString()' method
-		this.toStringProps.push('id', 'name', 'age', 'gender');
+		toStringProps.push('id', 'name', 'age', 'gender');
 	}
 	
 	public function parseXML(xml:XML):Boolean
 	{
 		// map XML values to properties
-		this._id = xml.@id;
-		this._name = xml['name'];
-		this._age = xml['age'];
-		this._gender = xml['gender'];
+		_id = xml.@id;
+		_name = xml['name'];
+		_age = xml['age'];
+		_gender = xml['gender'];
 		
 		// check if id and name are filled
-		return this._id && this._name != null;
+		return _id && _name != null;
 	}
 	
 	public function get id():uint
 	{
-		return this._id;
+		return _id;
 	}
 	
 	public function get name():String
 	{
-		return this._name;
+		return _name;
 	}
 	
 	public function get age():uint
 	{
-		return this._age;
+		return _age;
 	}
 	
 	public function get gender():String
 	{
-		return this._gender;
+		return _gender;
 	}
 }

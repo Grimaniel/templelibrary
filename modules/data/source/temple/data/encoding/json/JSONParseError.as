@@ -94,8 +94,8 @@ package temple.data.encoding.json
 		public function JSONParseError(sender:Object, message:String = "", location:int = 0, text:String = "") 
 		{
 			super(sender, message);
-			this._location = location;
-			this._text = text;
+			_location = location;
+			_text = text;
 		}
 
 		/**
@@ -105,7 +105,7 @@ package temple.data.encoding.json
 		 */
 		public function get location():int 
 		{
-			return this._location;
+			return _location;
 		}
 
 		/**
@@ -115,7 +115,7 @@ package temple.data.encoding.json
 		 */
 		public function get text():String 
 		{
-			return this._text;
+			return _text;
 		}
 	}
 }

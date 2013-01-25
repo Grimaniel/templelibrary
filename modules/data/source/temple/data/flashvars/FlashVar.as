@@ -56,10 +56,10 @@ package temple.data.flashvars
 
 		public function FlashVar(name:String, value:*, external:Boolean = false)
 		{
-			this._name = name;
-			this._value = value == "null" ? null : value;
-			this._external = external;
-			this.toStringProps.push('name', 'defaultValue', 'value', 'type', 'external');
+			_name = name;
+			_value = value == "null" ? null : value;
+			_external = external;
+			toStringProps.push('name', 'defaultValue', 'value', 'type', 'external');
 		}
 
 		/**
@@ -67,7 +67,7 @@ package temple.data.flashvars
 		 */
 		public function get name():String
 		{
-			return this._name;
+			return _name;
 		}
 		
 		/**
@@ -75,7 +75,7 @@ package temple.data.flashvars
 		 */
 		public function set value(value:*):void
 		{
-			this._value = value;
+			_value = value;
 		}
 
 		/**
@@ -83,46 +83,46 @@ package temple.data.flashvars
 		 */
 		public function get value():*
 		{
-			switch (this._type)
+			switch (_type)
 			{
 				default:
 				case null:
 				case String:
 				{
-					return (this._value == '' || this._value == undefined || this._value == null) && this._defaultValue != null ? this._defaultValue : this._value;
+					return (_value == '' || _value == undefined || _value == null) && _defaultValue != null ? _defaultValue : _value;
 				}
 			
 				case Boolean:
 				{
-					return (this._value == '' || this._value == undefined) && this._defaultValue ? this._defaultValue : BooleanUtils.getBoolean(this._value);
+					return (_value == '' || _value == undefined) && _defaultValue ? _defaultValue : BooleanUtils.getBoolean(_value);
 				}
 			
 				case Number:
 				{
-					return (this._value == '' || this._value == undefined) && this._defaultValue ? this._defaultValue : Number(this._value);
+					return (_value == '' || _value == undefined) && _defaultValue ? _defaultValue : Number(_value);
 				}
 			
 				case int:
 				{
-					return (this._value == '' || this._value == undefined) && this._defaultValue ? this._defaultValue : int(this._value);
+					return (_value == '' || _value == undefined) && _defaultValue ? _defaultValue : int(_value);
 				}
 
 				case uint:
 				{
-					return (this._value == '' || this._value == undefined) && this._defaultValue ? this._defaultValue : uint(this._value);
+					return (_value == '' || _value == undefined) && _defaultValue ? _defaultValue : uint(_value);
 				}
 			
 				case Array:
 				{
-					return (this._value == '' || this._value == undefined) && this._defaultValue ? this._defaultValue : String(this._value).split(',');
+					return (_value == '' || _value == undefined) && _defaultValue ? _defaultValue : String(_value).split(',');
 				}
 			
 				case XML:
 				{
-					return (this._value == '' || this._value == undefined) && this._defaultValue ? this._defaultValue : XML(this._value);
+					return (_value == '' || _value == undefined) && _defaultValue ? _defaultValue : XML(_value);
 				}
 			}
-			return this._value;
+			return _value;
 		}
 		
 		/**
@@ -130,7 +130,7 @@ package temple.data.flashvars
 		 */
 		public function get defaultValue():*
 		{
-			return this._defaultValue;
+			return _defaultValue;
 		}
 
 		/**
@@ -138,11 +138,11 @@ package temple.data.flashvars
 		 */
 		public function set defaultValue(value:*):void
 		{
-			this._defaultValue = value;
+			_defaultValue = value;
 			
-			if (this._type && this._defaultValue)
+			if (_type && _defaultValue)
 			{
-				if (!(this._defaultValue is this._type)) throwError(new TempleArgumentError(this, 'defaultValue "' + this._defaultValue + '" is not of type ' + this._type));
+				if (!(_defaultValue is _type)) throwError(new TempleArgumentError(this, 'defaultValue "' + _defaultValue + '" is not of type ' + _type));
 			}
 		}
 
@@ -151,7 +151,7 @@ package temple.data.flashvars
 		 */
 		public function get type():Class
 		{
-			return this._type;
+			return _type;
 		}
 
 		/**
@@ -159,13 +159,13 @@ package temple.data.flashvars
 		 */
 		public function set type(value:Class):void
 		{
-			this._type = value;
+			_type = value;
 			
-			var val:* = this.value;
+			var val:* = value;
 			
-			if (this._type && !(val is this._type) && val is String)
+			if (_type && !(val is _type) && val is String)
 			{
-				this.logWarn("value: can't convert to " + this._type + ", result will be a String");
+				logWarn("value: can't convert to " + _type + ", result will be a String");
 			}
 		}
 
@@ -174,7 +174,7 @@ package temple.data.flashvars
 		 */
 		public function get external():Boolean
 		{
-			return this._external;
+			return _external;
 		}
 	}
 }

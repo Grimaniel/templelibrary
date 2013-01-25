@@ -87,10 +87,10 @@ package temple.data.xml
 		 */
 		public function XMLLoader(loaderCount:uint = 1) 
 		{
-			this._loaderCount = loaderCount;
+			_loaderCount = loaderCount;
 			
-			this._waitingStack = new DestructibleArray();
-			this._loadingStack = new DestructibleArray();
+			_waitingStack = new DestructibleArray();
+			_loadingStack = new DestructibleArray();
 		}
 		
 		/**
@@ -98,7 +98,7 @@ package temple.data.xml
 		 */
 		public function get loaderCount():uint 
 		{
-			return this._loaderCount;
+			return _loaderCount;
 		}
 
 		/**
@@ -106,7 +106,7 @@ package temple.data.xml
 		 */
 		public function set loaderCount(value:uint):void 
 		{
-			this._loaderCount = value;
+			_loaderCount = value;
 		}
 		
 		/**
@@ -125,9 +125,9 @@ package temple.data.xml
 			}
 
 			var xld:XMLLoaderData = new XMLLoaderData(url, name, variables, requestMethod);
-			this._waitingStack.push(xld);
+			_waitingStack.push(xld);
 			
-			this.loadNext();
+			loadNext();
 		}
 
 		/**
@@ -141,38 +141,38 @@ package temple.data.xml
 			var i:int;
 			
 			// first check if load is in waitingStack
-			leni = this._waitingStack.length;
+			leni = _waitingStack.length;
 			for (i = 0; i < leni ; i++)
 			{
-				xld = this._waitingStack[i];
+				xld = _waitingStack[i];
 				
 				if (xld.name == name)
 				{
-					this.logInfo("cancelLoad: succesfull removed form waiting stack");
+					logInfo("cancelLoad: succesfull removed form waiting stack");
 					
 					// found, remove from list and return
 					xld.destruct();
-					this._waitingStack.splice(i,1);
+					_waitingStack.splice(i,1);
 					return true;
 				}
 			}
 			// maybe it's in the loadingStack
-			leni = this._loadingStack.length;
+			leni = _loadingStack.length;
 			for (i = 0; i < leni ; i++)
 			{
-				xld = this._loadingStack[i];
+				xld = _loadingStack[i];
 				
 				if (xld.name == name)
 				{
-					this.logInfo("cancelLoad: succesfull removed form loading stack");
+					logInfo("cancelLoad: succesfull removed form loading stack");
 					// found, remove form list and return
 					xld.destruct();
-					this._loadingStack.splice(i,1);
+					_loadingStack.splice(i,1);
 					return true;
 				}
 			}
 			// not found, log error
-			this.logError("cancelLoad: could not cancel load '" + name + "'");
+			logError("cancelLoad: could not cancel load '" + name + "'");
 			return false;
 		}
 
@@ -182,20 +182,20 @@ package temple.data.xml
 		private function loadNext():void 
 		{
 			// quit if all loaders taken
-			if (this._loadingStack.length == this._loaderCount) return;
+			if (_loadingStack.length == _loaderCount) return;
 			
 			// quit if no waiting data
-			if (this._waitingStack.length == 0) return;
+			if (_waitingStack.length == 0) return;
 
 			// get the data
-			var xld:XMLLoaderData = this._waitingStack.shift() as XMLLoaderData;
+			var xld:XMLLoaderData = _waitingStack.shift() as XMLLoaderData;
 			
 			// create loader
 			var loader:CoreURLLoader = new CoreURLLoader();
-			loader.addEventListener(Event.COMPLETE, this.handleURLLoaderEvent);
-			loader.addEventListener(IOErrorEvent.IO_ERROR, this.handleURLLoaderEvent);
-			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleURLLoaderEvent);
-			loader.addEventListener(ProgressEvent.PROGRESS, this.handleURLLoaderProgressEvent);
+			loader.addEventListener(Event.COMPLETE, handleURLLoaderEvent);
+			loader.addEventListener(IOErrorEvent.IO_ERROR, handleURLLoaderEvent);
+			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleURLLoaderEvent);
+			loader.addEventListener(ProgressEvent.PROGRESS, handleURLLoaderProgressEvent);
 
 			// create request
 			var request:URLRequest = new URLRequest(xld.url);
@@ -206,7 +206,7 @@ package temple.data.xml
 			xld.loader = loader;
 			
 			// store data in loading stack
-			this._loadingStack.push(xld);
+			_loadingStack.push(xld);
 			
 			// start loading
 			loader.load(request);
@@ -227,12 +227,12 @@ package temple.data.xml
 			var e:XMLLoaderEvent;
 			
 			// get data for loader
-			var xld:XMLLoaderData = this.getDataForLoader(loader);
+			var xld:XMLLoaderData = getDataForLoader(loader);
 			if (xld == null) 
 			{
-				this.logError("handleURLLoaderEvent: data for loader not found");
+				logError("handleURLLoaderEvent: data for loader not found");
 				e = new XMLLoaderEvent(XMLLoaderEvent.ERROR, xld.name);
-				this.dispatchEvent(e);
+				dispatchEvent(e);
 				return;
 			}
 
@@ -252,30 +252,30 @@ package temple.data.xml
 				}
 				catch (error:Error) 
 				{
-					this.logError("An error has occurred : " + error.message + "\n" + loader.data);
+					logError("An error has occurred : " + error.message + "\n" + loader.data);
 					e = new XMLLoaderEvent(XMLLoaderEvent.ERROR, xld.name, null);
 					e.error = error.message;
 				}
 			}
-			this.dispatchEvent(e);
+			dispatchEvent(e);
 			
 			xld.destruct();
 			
 			
 			// this loader can be destructed after dispatching the event
 			// if so, this code cannot be executed
-			if (this.isDestructed != true)
+			if (isDestructed != true)
 			{
 				// remove data from stack
-				this._loadingStack.splice(this._loadingStack.indexOf(xld), 1);
+				_loadingStack.splice(_loadingStack.indexOf(xld), 1);
 				
 				// continue loading
-				this.loadNext();
+				loadNext();
 				
 				// check if we're done loading
-				if ((this._waitingStack.length == 0) && (this._loadingStack.length == 0)) 
+				if ((_waitingStack.length == 0) && (_loadingStack.length == 0)) 
 				{
-					this.dispatchEvent(new XMLLoaderEvent(XMLLoaderEvent.ALL_COMPLETE, xld.name));
+					dispatchEvent(new XMLLoaderEvent(XMLLoaderEvent.ALL_COMPLETE, xld.name));
 				}
 			}
 		}
@@ -293,7 +293,7 @@ package temple.data.xml
 			var xld:XMLLoaderData = getDataForLoader(loader);
 			if (xld == null) 
 			{
-				this.logError("handleURLLoaderProgressEvent: data for loader not found");
+				logError("handleURLLoaderProgressEvent: data for loader not found");
 				return;
 			}
 
@@ -301,7 +301,7 @@ package temple.data.xml
 			var e:XMLLoaderEvent = new XMLLoaderEvent(XMLLoaderEvent.PROGRESS, xld.name);
 			e.bytesLoaded = event.bytesLoaded;
 			e.bytesTotal = event.bytesTotal;
-			this.dispatchEvent(e);
+			dispatchEvent(e);
 		}
 
 		/**
@@ -311,10 +311,10 @@ package temple.data.xml
 		 */
 		private function getDataForLoader(loader:CoreURLLoader):XMLLoaderData 
 		{
-			var len:int = this._loadingStack.length;
+			var len:int = _loadingStack.length;
 			for (var i:int = 0;i < len; i++) 
 			{
-				var xld:XMLLoaderData = this._loadingStack[i] as XMLLoaderData;
+				var xld:XMLLoaderData = _loadingStack[i] as XMLLoaderData;
 				if (xld.loader == loader) return xld;
 			}
 			return null;
@@ -325,15 +325,15 @@ package temple.data.xml
 		 */
 		override public function destruct():void
 		{
-			if (this._waitingStack)
+			if (_waitingStack)
 			{
-				this._waitingStack.destruct();
-				this._waitingStack = null;
+				_waitingStack.destruct();
+				_waitingStack = null;
 			}
-			if (this._loadingStack)
+			if (_loadingStack)
 			{
-				this._loadingStack.destruct();
-				this._loadingStack = null;
+				_loadingStack.destruct();
+				_loadingStack = null;
 			}
 			super.destruct();
 		}
@@ -364,22 +364,22 @@ final class XMLLoaderData implements IDestructible
 	
 	public function get isDestructed():Boolean
 	{
-		return this._isDestructed;
+		return _isDestructed;
 	}
 	
 	public function destruct():void
 	{
-		this.variables = null;
-		if (this.loader)
+		variables = null;
+		if (loader)
 		{
-			this.loader.destruct();
-			this.loader = null;
+			loader.destruct();
+			loader = null;
 		}
 		
-		this.url = null;
-		this.name = null;
-		this.requestMethod = null;
+		url = null;
+		name = null;
+		requestMethod = null;
 		
-		this._isDestructed = true;
+		_isDestructed = true;
 	}
 }

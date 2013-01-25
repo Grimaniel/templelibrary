@@ -38,7 +38,7 @@ package
 			// Out put Erik
 			var erikOutput:TextField = new TextField();
 			erikOutput.autoSize = TextFieldAutoSize.LEFT;
-			this.addChild(erikOutput);
+			addChild(erikOutput);
 			erikOutput.width = 300;
 			erikOutput.text = dump(erik);
 			
@@ -48,7 +48,7 @@ package
 			// out put JSON
 			var jsonOutput:TextField = new TextField();
 			jsonOutput.autoSize = TextFieldAutoSize.LEFT;
-			this.addChild(jsonOutput);
+			addChild(jsonOutput);
 			jsonOutput.width = 600;
 			jsonOutput.y = erikOutput.y + erikOutput.height + 4;
 			jsonOutput.text = json;
@@ -58,7 +58,7 @@ package
 			
 			var personOutput:TextField = new TextField();
 			personOutput.autoSize = TextFieldAutoSize.LEFT;
-			this.addChild(personOutput);
+			addChild(personOutput);
 			personOutput.width = 600;
 			personOutput.y = jsonOutput.y + jsonOutput.height + 4;
 			personOutput.text =  dump(person);
@@ -66,11 +66,11 @@ package
 			// check if person and erik are the same object
 			if (erik === person)
 			{
-				this.logInfo("erik === person");
+				logInfo("erik === person");
 			}
 			else
 			{
-				this.logError("erik != person");
+				logError("erik != person");
 			}
 		}
 	}

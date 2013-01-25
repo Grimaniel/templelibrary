@@ -63,57 +63,57 @@ package temple.data.xml
 
 		public function XMLLoadItem(name:String, url:String, xmlObjectData:XMLObjectData, sendData:Object, method:String, cache:Boolean, decoder:IDecoder) 
 		{
-			this.toStringProps.push('name');
-			this._name = name;
-			this._url = url;
-			this._xmlObjectDataList = new Array;
-			this.addXMLObjectData(xmlObjectData);
-			this._sendData = sendData;
-			this._method = method;
-			this._cache = cache;
-			this._decoder = decoder;
-			this._isLoading = true;
+			toStringProps.push('name');
+			_name = name;
+			_url = url;
+			_xmlObjectDataList = new Array;
+			addXMLObjectData(xmlObjectData);
+			_sendData = sendData;
+			_method = method;
+			_cache = cache;
+			_decoder = decoder;
+			_isLoading = true;
 		}
 		
 		public function get name():String
 		{
-			return this._name;
+			return _name;
 		}
 		
 		public function get url():String
 		{
-			return this._url;
+			return _url;
 		}
 		
 		public function get sendData():Object
 		{
-			return this._sendData;
+			return _sendData;
 		}
 		
 		public function get method():String
 		{
-			return this._method;
+			return _method;
 		}
 		
 		public function get xml():XML
 		{
-			return this._xml;
+			return _xml;
 		}
 		
 		internal function get cache():Boolean
 		{
-			return this._cache;
+			return _cache;
 		}
 		
 		internal function get decoder():IDecoder
 		{
-			return this._decoder;
+			return _decoder;
 		}
 		
 		internal function setLoaded():void
 		{
-			this._isLoaded = true;
-			this.dispatchEvent(new Event(Event.COMPLETE));
+			_isLoaded = true;
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		/**
@@ -121,7 +121,7 @@ package temple.data.xml
 		 */
 		public function get isLoading():Boolean
 		{
-			return this._isLoading;
+			return _isLoading;
 		}
 
 		/**
@@ -129,14 +129,14 @@ package temple.data.xml
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._isLoaded;
+			return _isLoaded;
 		}
 
 		internal function addXMLObjectData(xmlObjectData:XMLObjectData):void
 		{
-			this._isLoading = false;
-			this._xmlObjectDataList.push(xmlObjectData);
-			this.dispatchEvent(new Event(Event.COMPLETE));
+			_isLoading = false;
+			_xmlObjectDataList.push(xmlObjectData);
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 
 		/**
@@ -145,13 +145,13 @@ package temple.data.xml
 		 */
 		public function cancel():Boolean
 		{
-			this._isLoading = false;
-			return XMLManager.getInstance().cancelLoad(this._name);
+			_isLoading = false;
+			return XMLManager.getInstance().cancelLoad(_name);
 		}
 
 		internal function findXMLObjectData(objectClass:Class, node:String):XMLObjectData
 		{
-			for each (var data:XMLObjectData in this._xmlObjectDataList) 
+			for each (var data:XMLObjectData in _xmlObjectDataList) 
 			{
 				if (data.objectClass == objectClass && data.node == node)
 				{
@@ -163,13 +163,13 @@ package temple.data.xml
 
 		public function get xmlObjectDataList():Array
 		{
-			return this._xmlObjectDataList;
+			return _xmlObjectDataList;
 		}
 		
 		public function get data():Array
 		{
 			var a:Array = new Array();
-			for each (var data:XMLObjectData in this._xmlObjectDataList) 
+			for each (var data:XMLObjectData in _xmlObjectDataList) 
 			{
 				a.push(data.object ? data.object : data.list);
 			}
@@ -181,17 +181,17 @@ package temple.data.xml
 		 */
 		override public function destruct():void
 		{
-			if (this._isLoading) this.cancel();
-			this._sendData = null;
-			this._xml = null;
-			this._decoder = null;
-			if (this._xmlObjectDataList)
+			if (_isLoading) cancel();
+			_sendData = null;
+			_xml = null;
+			_decoder = null;
+			if (_xmlObjectDataList)
 			{
-				for each (var xmlObject : XMLObjectData in this._xmlObjectDataList) 
+				for each (var xmlObject : XMLObjectData in _xmlObjectDataList) 
 				{
 					xmlObject.destruct();
 				}
-				this._xmlObjectDataList = null;
+				_xmlObjectDataList = null;
 			}
 			
 			super.destruct();

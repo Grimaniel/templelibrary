@@ -53,12 +53,12 @@ package temple.data.result
 
 		public function Result(success:Boolean = false, message:String = null, code:String = null)
 		{
-			this._success = success;
-			this._message = message;
-			this._code = code;
+			_success = success;
+			_message = message;
+			_code = code;
 			
-			this.toStringProps.push('success', 'message', 'code');
-			this.emptyPropsInToString = false;
+			toStringProps.push('success', 'message', 'code');
+			emptyPropsInToString = false;
 		}
 		
 		/**
@@ -66,7 +66,7 @@ package temple.data.result
 		 */
 		public function get success():Boolean
 		{
-			return this._success;
+			return _success;
 		}
 		
 		/**
@@ -74,7 +74,7 @@ package temple.data.result
 		 */
 		public function set success(value:Boolean):void
 		{
-			this._success = value;
+			_success = value;
 		}
 		
 		/**
@@ -82,7 +82,7 @@ package temple.data.result
 		 */
 		public function get message():String
 		{
-			return this._message;
+			return _message;
 		}
 
 		/**
@@ -90,7 +90,7 @@ package temple.data.result
 		 */
 		public function set message(value:String):void
 		{
-			this._message = value;
+			_message = value;
 		}
 		
 		/**
@@ -98,7 +98,7 @@ package temple.data.result
 		 */
 		public function get code():String
 		{
-			return this._code;
+			return _code;
 		}
 
 		/**
@@ -106,7 +106,7 @@ package temple.data.result
 		 */
 		public function set code(value:String):void
 		{
-			this._code = value;
+			_code = value;
 		}
 	}
 }

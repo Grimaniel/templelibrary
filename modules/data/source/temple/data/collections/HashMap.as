@@ -50,7 +50,7 @@ package temple.data.collections
 		 */
 		public function HashMap(name:String)
 		{
-			this.toStringProps.push(name);
+			toStringProps.push(name);
 		}
 
 		/**

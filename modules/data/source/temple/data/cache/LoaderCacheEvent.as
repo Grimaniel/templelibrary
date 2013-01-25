@@ -54,19 +54,19 @@ package temple.data.cache
 		{
 			super(type);
 			
-			this._item = item;
+			_item = item;
 			
-			this.toStringProps.push("item");
+			toStringProps.push("item");
 		}
 
 		public function get item():ILoaderCacheItem
 		{
-			return this._item;
+			return _item;
 		}
 
 		override public function clone():Event
 		{
-			return new LoaderCacheEvent(this.type, this.item);
+			return new LoaderCacheEvent(type, item);
 		}
 
 	}

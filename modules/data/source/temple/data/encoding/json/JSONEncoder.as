@@ -113,10 +113,10 @@ package temple.data.encoding.json
 		 */
 		public function JSONEncoder(value:* = null, useExplicitType:Boolean = false, skipTransientVars:Boolean = true, skipReadOnlyVars:Boolean = true) 
 		{
-			this._useExplicitType = useExplicitType;
-			this._skipTransientVars = skipTransientVars;
-			this._skipReadOnlyVars = skipReadOnlyVars;
-			if (value) this._jsonString = this.stringify(value);
+			_useExplicitType = useExplicitType;
+			_skipTransientVars = skipTransientVars;
+			_skipReadOnlyVars = skipReadOnlyVars;
+			if (value) _jsonString = stringify(value);
 		}
 
 		/**
@@ -126,7 +126,7 @@ package temple.data.encoding.json
 		 */
 		public function getString():String 
 		{
-			return this._jsonString;
+			return _jsonString;
 		}
 
 		/**
@@ -139,15 +139,15 @@ package temple.data.encoding.json
 			var className:String = getQualifiedClassName(value);
 			
 			// check if there is an explicit encoder defined for this type
-			if (this._explicitEncoders && this._explicitEncoders[className])
+			if (_explicitEncoders && _explicitEncoders[className])
 			{
-				return IStringifier(this._explicitEncoders[className]).stringify(value);
+				return IStringifier(_explicitEncoders[className]).stringify(value);
 			}
 			// determine what value is and convert it based on it's type
 			else if (value is String) 
 			{
 				// escape the string so it's formatted correctly
-				return this.escapeString(value as String);
+				return escapeString(value as String);
 			}
 			else if (value is Number) 
 			{
@@ -162,22 +162,22 @@ package temple.data.encoding.json
 			else if (value is Array) 
 			{
 				// call the helper method to convert an array
-				return this.arrayToString(value as Array);
+				return arrayToString(value as Array);
 			}
 			else if (getQualifiedClassName(value).indexOf("__AS3__.vec::Vector.") === 0) // Vector 
 			{
 				// call the helper method to convert an array
-				return this.vectorToString(value);
+				return vectorToString(value);
 			}
 			else if (value is Enumerator) 
 			{
 				// return the value
-				return this.escapeString((value as Enumerator).value);
+				return escapeString((value as Enumerator).value);
 			}
 			else if (value is Object && value != null) 
 			{
 				// call the helper method to convert an object
-				return this.objectToString(value);
+				return objectToString(value);
 			}
 			return "null";
 		}
@@ -191,8 +191,8 @@ package temple.data.encoding.json
 		 */
 		public function setExplicitEncoder(type:Class, encoder:IStringifier):void
 		{
-			this._explicitEncoders ||= new HashMap("expicitEncoders");
-			this._explicitEncoders[getQualifiedClassName(type)] = encoder;
+			_explicitEncoders ||= new HashMap("expicitEncoders");
+			_explicitEncoders[getQualifiedClassName(type)] = encoder;
 		}
 		
 		/**
@@ -201,7 +201,7 @@ package temple.data.encoding.json
 		 */
 		public function get useExplicitType():Boolean
 		{
-			return this._useExplicitType;
+			return _useExplicitType;
 		}
 
 		/**
@@ -209,7 +209,7 @@ package temple.data.encoding.json
 		 */
 		public function set useExplicitType(value:Boolean):void
 		{
-			this._useExplicitType = value;
+			_useExplicitType = value;
 		}
 
 		/**
@@ -217,7 +217,7 @@ package temple.data.encoding.json
 		 */
 		public function get skipTransientVars():Boolean
 		{
-			return this._skipTransientVars;
+			return _skipTransientVars;
 		}
 
 		/**
@@ -225,7 +225,7 @@ package temple.data.encoding.json
 		 */
 		public function set skipTransientVars(value:Boolean):void
 		{
-			this._skipTransientVars = value;
+			_skipTransientVars = value;
 		}
 
 		/**
@@ -233,7 +233,7 @@ package temple.data.encoding.json
 		 */
 		public function get skipReadOnlyVars():Boolean
 		{
-			return this._skipReadOnlyVars;
+			return _skipReadOnlyVars;
 		}
 
 		/**
@@ -241,7 +241,7 @@ package temple.data.encoding.json
 		 */
 		public function set skipReadOnlyVars(value:Boolean):void
 		{
-			this._skipReadOnlyVars = value;
+			_skipReadOnlyVars = value;
 		}
 
 		/**
@@ -341,7 +341,7 @@ package temple.data.encoding.json
 				}
 				
 				// convert the value to a string
-				s += this.stringify(a[i]);	
+				s += stringify(a[i]);	
 			}
 			
 			// KNOWN ISSUE:  In ActionScript, Arrays can also be associative
@@ -388,7 +388,7 @@ package temple.data.encoding.json
 				}
 				
 				// convert the value to a string
-				s += this.stringify(v[i]);	
+				s += stringify(v[i]);	
 			}
 			
 			// close the vector and return it's string value
@@ -436,7 +436,7 @@ package temple.data.encoding.json
 						s += ",";
 					}
 					
-					s += escapeString(key) + ":" + this.stringify(value);
+					s += escapeString(key) + ":" + stringify(value);
 				}
 			}
 			else 
@@ -445,13 +445,13 @@ package temple.data.encoding.json
 				// Loop over all of the variables and accessors in the class and 
 				// serialize them along with their values.
 				for each (var v:XML in 
-					classInfo..accessor.(!hasOwnProperty("@uri") && (!this._skipReadOnlyVars || @access != "readonly"))	+
+					classInfo..accessor.(!hasOwnProperty("@uri") && (!_skipReadOnlyVars || @access != "readonly"))	+
 					classInfo..variable.(!hasOwnProperty("@uri")))
 				{
 					value = o[v.@name];
 
 					// check for Transient metadata 
-					if (this._skipTransientVars)
+					if (_skipTransientVars)
 					{
 						var transient:XMLList = v.metadata.(@name == "Transient");
 						
@@ -475,11 +475,11 @@ package temple.data.encoding.json
 						s += ",";
 					}
 					
-					s += escapeString(v.@name.toString()) + ":" + this.stringify(o[v.@name]);
+					s += escapeString(v.@name.toString()) + ":" + stringify(o[v.@name]);
 				}
 				
 				// hack narie
-				if (this._useExplicitType && classInfo.@alias.toString() != "") s += ', "_explicitType":"' + classInfo.@alias + '"';
+				if (_useExplicitType && classInfo.@alias.toString() != "") s += ', "_explicitType":"' + classInfo.@alias + '"';
 			}
 			
 			return "{" + s + "}";
@@ -490,8 +490,8 @@ package temple.data.encoding.json
 		 */
 		override public function destruct():void
 		{
-			this._jsonString = null;
-			this._explicitEncoders = null;
+			_jsonString = null;
+			_explicitEncoders = null;
 			
 			super.destruct();
 		}

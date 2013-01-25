@@ -218,7 +218,7 @@ package temple.data.xml
 		 * 		<strong>NOTE:</strong> the function must accept one (and only one) argument of type array (2nd argument), since the parsed object is returned
 		 *  @example
 		 *	<listing version="3.0">
-		 *	XMLManager.loadListByName("people", PersonData, "person", this.onData);
+		 *	XMLManager.loadListByName("people", PersonData, "person", onData);
 		 *	
 		 *	private function onData(list:Array):void
 		 *	{
@@ -350,7 +350,7 @@ package temple.data.xml
 			super();
 
 			if (_instance) throwError(new TempleError(this, "Singleton, use XMLManager.getInstance() or use static functions"));
-			this._xmlLoadDataList = new HashMap("XMLManager xmlLoadDataList");
+			_xmlLoadDataList = new HashMap("XMLManager xmlLoadDataList");
 			
 			addToDebugManager(this);
 		}
@@ -375,13 +375,13 @@ package temple.data.xml
 		 */
 		override protected function handleLoaderEvent(event:XMLLoaderEvent):void 
 		{
-			var xmlUrlData:XMLLoadItem = XMLLoadItem(this._xmlLoadDataList[event.name]);
+			var xmlUrlData:XMLLoadItem = XMLLoadItem(_xmlLoadDataList[event.name]);
 			
 			if (event.data && xmlUrlData.decoder)
 			{
-				if (this.debug) this.logDebug("handleLoaderEvent: data before decoding: " + event.data);
+				if (debug) logDebug("handleLoaderEvent: data before decoding: " + event.data);
 				event.data = XML(xmlUrlData.decoder.decode(event.data));
-				if (this.debug) this.logDebug("handleLoaderEvent: data after decoding: " + event.data);
+				if (debug) logDebug("handleLoaderEvent: data after decoding: " + event.data);
 			}
 			super.handleLoaderEvent(event);
 		}
@@ -391,25 +391,25 @@ package temple.data.xml
 		 */
 		override protected function processData(data:XML, name:String):void 
 		{
-			if (this.debug) this.logDebug("processData: '" + name + "' " + data);
+			if (debug) logDebug("processData: '" + name + "' " + data);
 			
-			var xmlUrlData:XMLLoadItem = XMLLoadItem(this._xmlLoadDataList[name]);
+			var xmlUrlData:XMLLoadItem = XMLLoadItem(_xmlLoadDataList[name]);
 			xmlUrlData._xml = data;
 			
 			for (var i:int = xmlUrlData.xmlObjectDataList.length - 1;i > -1; --i)
 			{
 				var xmlObjectData:XMLObjectData = xmlUrlData.xmlObjectDataList[i]; 
-				var object:Object = this.getXMLNode(data, xmlObjectData.node, xmlObjectData.type == XMLObjectData.OBJECT ? XML : XMLList);
+				var object:Object = getXMLNode(data, xmlObjectData.node, xmlObjectData.type == XMLObjectData.OBJECT ? XML : XMLList);
 				
 				if (object == null)
 				{
-					this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, null, null, null));
-					this.logError("processData: node '" + xmlObjectData.node + "' does not exist");
+					dispatchEvent(new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, null, null, null));
+					logError("processData: node '" + xmlObjectData.node + "' does not exist");
 				}
 				else
 				{
-					if (this.debug && xmlObjectData.node != null) this.logDebug("processData: node = '" + xmlObjectData.node + "' ");
-					if (this.debug) this.logDebug("processData: object = '" + object + "' ");
+					if (debug && xmlObjectData.node != null) logDebug("processData: node = '" + xmlObjectData.node + "' ");
+					if (debug) logDebug("processData: object = '" + object + "' ");
 					
 					var callback:Function;
 					
@@ -417,9 +417,9 @@ package temple.data.xml
 					{
 						case XMLObjectData.LIST:
 						{
-							xmlObjectData.setList(this.parseList(XMLList(object), xmlObjectData.objectClass, name));
-							if (this.debug) this.logDebug("processData: Complete");
-							this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, xmlObjectData.list, null));
+							xmlObjectData.setList(parseList(XMLList(object), xmlObjectData.objectClass, name));
+							if (debug) logDebug("processData: Complete");
+							dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, xmlObjectData.list, null));
 							if (xmlObjectData.callback != null)
 							{
 								// Do the callback. First empty the callback before calling it!
@@ -427,20 +427,20 @@ package temple.data.xml
 								xmlObjectData.callback = null;
 								callback.call(null, xmlObjectData.list);
 							}
-							else if (this.debug) this.logDebug("processData: no callback");
+							else if (debug) logDebug("processData: no callback");
 							break;
 						}
 						case XMLObjectData.OBJECT:
 						{
-							xmlObjectData.setObject(XMLParser.parseXML(XML(object), xmlObjectData.objectClass, false, this.debug));
+							xmlObjectData.setObject(XMLParser.parseXML(XML(object), xmlObjectData.objectClass, false, debug));
 							if (xmlObjectData.object == null)
 							{
-								this.onDataParseError(name);
+								onDataParseError(name);
 							}
 							else
 							{
-								if (this.debug) this.logDebug("processData: Complete");
-								this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, null, xmlObjectData.object));
+								if (debug) logDebug("processData: Complete");
+								dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, null, xmlObjectData.object));
 								if (xmlObjectData.callback != null)
 								{
 									// Do the callback. First empty the callback before calling it!
@@ -448,20 +448,20 @@ package temple.data.xml
 									xmlObjectData.callback = null;
 									callback.call(null, xmlObjectData.object);
 								}
-								else if (this.debug) this.logDebug("processData: no callback");
+								else if (debug) logDebug("processData: no callback");
 							}
 							break;
 						}	
 						default:
 						{
-							this.logError("processData: unknown XMLData type: '" + xmlObjectData.type + "'");
+							logError("processData: unknown XMLData type: '" + xmlObjectData.type + "'");
 							break;
 						}
 					}
 					
 					if (xmlObjectData.cache == false){
 						xmlUrlData.xmlObjectDataList.splice(i, 1);
-						if (this.debug) this.logDebug("processData: cache for XMLObjectData disabled, remove XMLObjectData");
+						if (debug) logDebug("processData: cache for XMLObjectData disabled, remove XMLObjectData");
 					}
 				}
 			}
@@ -469,8 +469,8 @@ package temple.data.xml
 			
 			if (xmlUrlData.cache == false)
 			{
-				delete this._xmlLoadDataList[name];
-				if (this.debug) this.logDebug("processData: cache for XMLUrlData disabled, remove XMLUrlData");
+				delete _xmlLoadDataList[name];
+				if (debug) logDebug("processData: cache for XMLUrlData disabled, remove XMLUrlData");
 			}
 		}
 		
@@ -480,30 +480,30 @@ package temple.data.xml
 		override protected function handleLoadError(event:XMLLoaderEvent):void 
 		{
 			super.handleLoadError(event);
-			delete this._xmlLoadDataList[event.name];
+			delete _xmlLoadDataList[event.name];
 		}
 
 		private function _load(type:int, name:String, url:String, objectClass:Class, node:String = null, callback:Function = null, sendData:Object = null, method:String = URLRequestMethod.GET, forceReload:Boolean = false, cacheXML:int = DEFAULT_CACHE_SETTING, cacheObject:int = DEFAULT_CACHE_SETTING, decoder:IDecoder = null):XMLLoadItem
 		{
 			// Check if we have allready loaded this file, and we don't have to reload (if xml of urlData is filled, it's loaded)
-			var loadData:XMLLoadItem = this._xmlLoadDataList[name] as XMLLoadItem;
+			var loadData:XMLLoadItem = _xmlLoadDataList[name] as XMLLoadItem;
 			var xmlObjectData:XMLObjectData;
 			
 			if (!forceReload && loadData && loadData.xml)
 			{
-				if (this.debug) this.logDebug("_load: get XML '" + name + "' from cache");
+				if (debug) logDebug("_load: get XML '" + name + "' from cache");
 				
 				// check if we have allready parsed this xml
 				xmlObjectData = loadData.findXMLObjectData(objectClass, node);
 				if (!xmlObjectData)
 				{
-					if (this.debug) this.logDebug("_load: parse data");
+					if (debug) logDebug("_load: parse data");
 					
 					// parse data
-					xmlObjectData = new XMLObjectData(type, objectClass, node, this.getCacheSetting(cacheObject, XMLManager._CACHE_OBJECT));
+					xmlObjectData = new XMLObjectData(type, objectClass, node, getCacheSetting(cacheObject, XMLManager._CACHE_OBJECT));
 					if (xmlObjectData.cache) loadData.addXMLObjectData(xmlObjectData);
 				}
-				else if (this.debug) this.logDebug("_load: get parsed object from cache");
+				else if (debug) logDebug("_load: get parsed object from cache");
 				
 				switch (type)
 				{
@@ -511,15 +511,15 @@ package temple.data.xml
 					{
 						if (xmlObjectData.object == null)
 						{
-							var xml:XML = this.getXMLNode(loadData.xml, xmlObjectData.node, XML) as XML;
+							var xml:XML = getXMLNode(loadData.xml, xmlObjectData.node, XML) as XML;
 							if (xml == null)
 							{
-								this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, null, null, null));
-								this.logError("processData: node '" + xmlObjectData.node + "' does not exist");
+								dispatchEvent(new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, null, null, null));
+								logError("processData: node '" + xmlObjectData.node + "' does not exist");
 							}
 							else
 							{
-								xmlObjectData.setObject(XMLParser.parseXML(xml, objectClass, false, this.debug));
+								xmlObjectData.setObject(XMLParser.parseXML(xml, objectClass, false, debug));
 							}
 						}
 						if (callback != null && xmlObjectData.object) callback(xmlObjectData.object as objectClass);
@@ -529,45 +529,45 @@ package temple.data.xml
 					{
 						if (xmlObjectData.list == null)
 						{
-							var xmlList:XMLList = this.getXMLNode(loadData.xml, xmlObjectData.node, XMLList) as XMLList;
+							var xmlList:XMLList = getXMLNode(loadData.xml, xmlObjectData.node, XMLList) as XMLList;
 							if (xmlList == null)
 							{
-								this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, null, null, null));
-								this.logError("processData: node '" + xmlObjectData.node + "' does not exists");
+								dispatchEvent(new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, null, null, null));
+								logError("processData: node '" + xmlObjectData.node + "' does not exists");
 							}
 							else
 							{
-								xmlObjectData.setList(XMLParser.parseList(xmlList, objectClass, false, this.debug));
+								xmlObjectData.setList(XMLParser.parseList(xmlList, objectClass, false, debug));
 							}
 						}
 						if (callback != null && xmlObjectData.list) callback(xmlObjectData.list);
 						break;
 					}
 				}
-				if (this.debug) this.logDebug("_load: Complete");
-				this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, xmlObjectData.list, xmlObjectData.object));
+				if (debug) logDebug("_load: Complete");
+				dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, xmlObjectData.list, xmlObjectData.object));
 				
 				// Wait a frame before dispatching 'all complete' event, maybe there are more loads
-				if (!this._dispatchAllCompleteEvent)
+				if (!_dispatchAllCompleteEvent)
 				{
-					this._dispatchAllCompleteEvent = true;
-					this._delayedAllCompleteEventCall = new FrameDelay(this.dispatchAllCompleteEvent);
+					_dispatchAllCompleteEvent = true;
+					_delayedAllCompleteEventCall = new FrameDelay(dispatchAllCompleteEvent);
 				}
 			}
 			else if (!forceReload && loadData)
 			{
 				// we have this object, but it's not loaded yet. Add to urlData for later parsing
-				if (this.debug) this.logDebug("_load: loading current XML started, add to parse queue");
-				loadData.addXMLObjectData(new XMLObjectData(type, objectClass, node, this.getCacheSetting(cacheXML, _CACHE_OBJECT), callback));
+				if (debug) logDebug("_load: loading current XML started, add to parse queue");
+				loadData.addXMLObjectData(new XMLObjectData(type, objectClass, node, getCacheSetting(cacheXML, _CACHE_OBJECT), callback));
 			}
 			else
 			{
 				// we don't have the object or forceReload is true, so load it.
 
-				if (this._delayedAllCompleteEventCall != null)
+				if (_delayedAllCompleteEventCall != null)
 				{
 					// We have to load stuff, but next frame the 'all complete' event is dispatched. Kill the call
-					this._delayedAllCompleteEventCall.destruct();
+					_delayedAllCompleteEventCall.destruct();
 				}
 				
 				if (loadData)
@@ -576,14 +576,14 @@ package temple.data.xml
 					loadData._decoder = decoder;
 					loadData._isLoaded = false;
 					loadData._method = method;
-					loadData._cache = this.getCacheSetting(cacheXML, _CACHE_OBJECT);
+					loadData._cache = getCacheSetting(cacheXML, _CACHE_OBJECT);
 
 					xmlObjectData = loadData.findXMLObjectData(objectClass, node);
 				}
 				
 				if (xmlObjectData == null)
 				{
-					xmlObjectData = new XMLObjectData(type, objectClass, node, this.getCacheSetting(cacheXML, _CACHE_OBJECT), callback);
+					xmlObjectData = new XMLObjectData(type, objectClass, node, getCacheSetting(cacheXML, _CACHE_OBJECT), callback);
 					
 					if (loadData)
 					{
@@ -591,7 +591,7 @@ package temple.data.xml
 					}
 					else
 					{
-						loadData = this._xmlLoadDataList[name] = new XMLLoadItem(name, url, xmlObjectData, sendData, method, this.getCacheSetting(cacheXML, _CACHE_XML), decoder);
+						loadData = _xmlLoadDataList[name] = new XMLLoadItem(name, url, xmlObjectData, sendData, method, getCacheSetting(cacheXML, _CACHE_XML), decoder);
 					}
 				}
 				else if (callback != null)
@@ -636,7 +636,7 @@ package temple.data.xml
 			
 			if (n is XML && XML(n).toXMLString() == "" || n is XMLList && XMLList(n).toXMLString() == "")
 			{
-				this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, null, null, null));
+				dispatchEvent(new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, null, null, null));
 				return null;
 			}
 			
@@ -653,7 +653,7 @@ package temple.data.xml
 		{
 			urlManagerInstance.removeEventListener(Event.COMPLETE, handleURLManagerComplete);
 			
-			for each (var xmlURLData : XMLLoadItem in this._xmlLoadDataList) 
+			for each (var xmlURLData : XMLLoadItem in _xmlLoadDataList) 
 			{
 				if (xmlURLData.url == null && !xmlURLData.xml)
 				{
@@ -664,9 +664,9 @@ package temple.data.xml
 		
 		private function dispatchAllCompleteEvent():void
 		{
-			if (this.debug) this.logDebug("dispatchAllCompleteEvent: ");
-			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.ALL_COMPLETE));
-			this._dispatchAllCompleteEvent = false;
+			if (debug) logDebug("dispatchAllCompleteEvent: ");
+			dispatchEvent(new XMLServiceEvent(XMLServiceEvent.ALL_COMPLETE));
+			_dispatchAllCompleteEvent = false;
 		}
 		
 		private function getCacheSetting(cacheXML:int, defaultSetting:Boolean):Boolean
@@ -702,8 +702,8 @@ package temple.data.xml
 		override public function destruct():void
 		{
 			XMLManager._instance = null;
-			this._xmlLoadDataList = null;
-			this._delayedAllCompleteEventCall = null;
+			_xmlLoadDataList = null;
+			_delayedAllCompleteEventCall = null;
 			
 			super.destruct();
 		}

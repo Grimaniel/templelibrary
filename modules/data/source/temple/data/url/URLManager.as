@@ -130,14 +130,14 @@ package temple.data.url
 
 		public function URLManager() 
 		{
-			this._urls = {};
-			this._variables = {};
+			_urls = {};
+			_variables = {};
 			
 			// add some methods which can be used when a variable is used in an url
-			this._variables.escape = escape;
-			this._variables.escapeMultiByte = escapeMultiByte;
-			this._variables.encodeURI = encodeURI;
-			this._variables.encodeURIComponent = encodeURIComponent;
+			_variables.escape = escape;
+			_variables.escapeMultiByte = escapeMultiByte;
+			_variables.encodeURI = encodeURI;
+			_variables.encodeURIComponent = encodeURIComponent;
 			
 			addToDebugManager(this);
 		}
@@ -147,7 +147,7 @@ package temple.data.url
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._isLoaded;
+			return _isLoaded;
 		}
 
 		/**
@@ -155,7 +155,7 @@ package temple.data.url
 		 */
 		public function get isLoading():Boolean
 		{
-			return this._isLoading;
+			return _isLoading;
 		}
 		
 		/**
@@ -165,7 +165,7 @@ package temple.data.url
 		 */
 		public function get variables():Object
 		{
-			return this._variables;
+			return _variables;
 		}
 
 		/**
@@ -173,22 +173,22 @@ package temple.data.url
 		 */
 		public function load(url:String = "inc/xml/urls.xml", group:String = null):void 
 		{
-			if (this._isLoaded) throwError(new TempleError(this, "Data is already loaded"));
-			if (this._isLoading) throwError(new TempleError(this, "Data is already loading"));
+			if (_isLoaded) throwError(new TempleError(this, "Data is already loaded"));
+			if (_isLoading) throwError(new TempleError(this, "Data is already loading"));
 			
-			this._isLoading = true;
-			if (group) this._group = group;
+			_isLoading = true;
+			if (group) _group = group;
 			
-			if (!this._loader)
+			if (!_loader)
 			{
-				this._loader = new CoreURLLoader();
-				this._loader.dataFormat = URLLoaderDataFormat.TEXT;
-				this._loader.addEventListener(Event.COMPLETE, this.handleURLLoaderEvent);
-				this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.handleURLLoaderEvent);
-				this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleURLLoaderEvent);
-				this._loader.addEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
+				_loader = new CoreURLLoader();
+				_loader.dataFormat = URLLoaderDataFormat.TEXT;
+				_loader.addEventListener(Event.COMPLETE, handleURLLoaderEvent);
+				_loader.addEventListener(IOErrorEvent.IO_ERROR, handleURLLoaderEvent);
+				_loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleURLLoaderEvent);
+				_loader.addEventListener(ProgressEvent.PROGRESS, dispatchEvent);
 			}
-			this._loader.load(new URLRequest(url));
+			_loader.load(new URLRequest(url));
 		}
 
 		/**
@@ -196,11 +196,11 @@ package temple.data.url
 		 */
 		public function parse(xml:XML, group:String = null):void
 		{
-			if (this._isLoaded) throwError(new TempleError(this, "Data is already loaded"));
-			if (this._isLoading) throwError(new TempleError(this, "Data is already loading"));
+			if (_isLoaded) throwError(new TempleError(this, "Data is already loaded"));
+			if (_isLoading) throwError(new TempleError(this, "Data is already loading"));
 			
-			if (group) this._group = group;
-			this.processData(xml);
+			if (group) _group = group;
+			processData(xml);
 		}
 
 		/**
@@ -210,16 +210,16 @@ package temple.data.url
 		{
 			if (name == null) throwError(new TempleArgumentError(this, "name can not be null"));
 			
-			if (!this._isLoaded)
+			if (!_isLoaded)
 			{
-				this.logError("getURLDataByName: URLs are not loaded yet");
+				logError("getURLDataByName: URLs are not loaded yet");
 				return null;
 			}
 			
-			if (name in this._urls) return this._urls[name];
+			if (name in _urls) return _urls[name];
 			
-			this.logError("getURLDataByName: url with name '" + name + "' not found. Check urls.xml!");
-			this.logError(TraceUtils.stackTrace());
+			logError("getURLDataByName: url with name '" + name + "' not found. Check urls.xml!");
+			logError(TraceUtils.stackTrace());
 			
 			return null;
 		}
@@ -231,19 +231,19 @@ package temple.data.url
 		{
 			if (name == null) throwError(new TempleArgumentError(this, "name can not be null"));
 			
-			if (!this._isLoaded)
+			if (!_isLoaded)
 			{
-				this.logError("getURLByName: URLs are not loaded yet");
+				logError("getURLByName: URLs are not loaded yet");
 				return null;
 			}
 			
-			if (name in this._urls)
+			if (name in _urls)
 			{
-				var url:String = URLData(this._urls[name]).url;
+				var url:String = URLData(_urls[name]).url;
 				return variables ? StringUtils.replaceVars(url, variables, true) : url;
 			}
 			
-			this.logError("getURLByName: url with name '" + name + "' not found. Check urls.xml!");
+			logError("getURLByName: url with name '" + name + "' not found. Check urls.xml!");
 			return null;
 		}
 		
@@ -252,7 +252,7 @@ package temple.data.url
 		 */
 		public function has(name:String):Boolean
 		{
-			return name in this._urls;
+			return name in _urls;
 		}
 
 		/**
@@ -260,14 +260,14 @@ package temple.data.url
 		 */
 		public function openByName(name:String, variables:Object = null):void 
 		{
-			var ud:URLData = this.getData(name);
+			var ud:URLData = getData(name);
 			if (!ud) return;
 			
 			var url:String = ud.url;
 			
 			if (variables) url = StringUtils.replaceVars(url, variables, true);
 			
-			this.open(url, ud.target, name, ud.features);
+			open(url, ud.target, name, ud.features);
 		}
 
 		/**
@@ -280,8 +280,8 @@ package temple.data.url
 			// only track before opening if SELF, PARENT of TOP
 			if (target == Target.SELF || target == Target.PARENT || target == Target.TOP)
 			{
-				this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
-				if (this.debug) this.logDebug("openURL: \"" + url + "\", target=\"" + target + "\"");
+				dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
+				if (debug) logDebug("openURL: \"" + url + "\", target=\"" + target + "\"");
 			}
 			
 			if (!ExternalInterface.available)
@@ -292,7 +292,7 @@ package temple.data.url
 			{
 				if (features)
 				{
-					if (this.debug) this.logDebug("openURL using JavaScript, with features=\"" + features + "\"");
+					if (debug) logDebug("openURL using JavaScript, with features=\"" + features + "\"");
 					ExternalInterface.call(<script><![CDATA[window.open]]></script>, url, target, features);
 				}
 				else
@@ -304,7 +304,7 @@ package temple.data.url
 					 */
 					if (userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7))
 					{
-						if (this.debug) this.logDebug("openURL using JavaScript, userAgent=\"" + userAgent + "\"");
+						if (debug) logDebug("openURL using JavaScript, userAgent=\"" + userAgent + "\"");
 						ExternalInterface.call(<script><![CDATA[window.open]]></script>, url, target);
 					}
 					else
@@ -317,8 +317,8 @@ package temple.data.url
 			// track afterwards to prevent popup-blocking if not SELF
 			if (target != Target.SELF && target != Target.PARENT && target != Target.TOP)
 			{
-				this.dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
-				if (this.debug) this.logDebug("openURL: \"" + url + "\", target=\"" + target + "\"");
+				dispatchEvent(new URLEvent(URLEvent.OPEN, url, target, name));
+				if (debug) logDebug("openURL: \"" + url + "\", target=\"" + target + "\"");
 			}
 		}
 		
@@ -327,7 +327,7 @@ package temple.data.url
 		 */
 		public function get group():String
 		{
-			return this._group;
+			return _group;
 		}
 
 		/**
@@ -335,9 +335,9 @@ package temple.data.url
 		 */
 		public function set group(value:String):void
 		{
-			if (this._group == value) return;
-			this._group = value;
-			if (this._isLoaded) this.processXml();
+			if (_group == value) return;
+			_group = value;
+			if (_isLoaded) processXml();
 		}
 
 		/**
@@ -345,9 +345,9 @@ package temple.data.url
 		 */
 		public function addGroup(group:String):void
 		{
-			if (this._group)
+			if (_group)
 			{
-				var groups:Array = this._group.split(",");
+				var groups:Array = _group.split(",");
 				groups.push(group);
 				groups = ArrayUtils.createUniqueCopy(groups);
 				this.group = groups.join(",");
@@ -363,7 +363,7 @@ package temple.data.url
 		 */
 		public function removeGroup(group:String):void
 		{
-			var groups:Array = this._group.split(",");
+			var groups:Array = _group.split(",");
 			ArrayUtils.removeValueFromArray(groups, group);
 			this.group = groups.join(",");
 		}
@@ -373,7 +373,7 @@ package temple.data.url
 		 */
 		public function hasVariable(name:String):Boolean
 		{
-			return name in this._variables;
+			return name in _variables;
 		}
 
 		/**
@@ -381,7 +381,7 @@ package temple.data.url
 		 */
 		public function getVariable(name:String):String
 		{
-			return this._variables[name];
+			return _variables[name];
 		}
 
 		/**
@@ -389,8 +389,8 @@ package temple.data.url
 		 */
 		public function setVariable(name:String, value:String):void
 		{
-			this._variables[name] = value;
-			if (this.isLoaded) this.processXml();
+			_variables[name] = value;
+			if (isLoaded) processXml();
 		}
 		
 		/**
@@ -398,7 +398,7 @@ package temple.data.url
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -406,7 +406,7 @@ package temple.data.url
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		private function handleURLLoaderEvent(event:Event):void
@@ -415,15 +415,15 @@ package temple.data.url
 			{
 				case Event.COMPLETE:
 				{
-					this.processData(XML(this._loader.data));
+					processData(XML(_loader.data));
 					break;
 				}
 				case IOErrorEvent.IO_ERROR:
 				case SecurityErrorEvent.SECURITY_ERROR:
 				{
-					this._isLoaded = false;
-					this._isLoading = false;
-					this.dispatchEvent(event);
+					_isLoaded = false;
+					_isLoading = false;
+					dispatchEvent(event);
 					break;
 				}
 			}
@@ -434,29 +434,29 @@ package temple.data.url
 		 */
 		private function processData(data:XML):void 
 		{
-			this._rawData = data;
+			_rawData = data;
 			
-			this.processXml();
+			processXml();
 
-			this._isLoaded = true;
-			this._isLoading = false;
+			_isLoaded = true;
+			_isLoading = false;
 			
-			this.dispatchEvent(new Event(Event.COMPLETE));
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function processXml():void
 		{
-			if (this._group)
+			if (_group)
 			{
-				if (this.debug) this.logInfo("processData: group is set to '" + this._group + "'");
+				if (debug) logInfo("processData: group is set to '" + _group + "'");
 			}
 			else
 			{
-				this._group = this._rawData.@currentgroup; 
-				if (this.debug) this.logInfo("processData: group is '" + this._group + "'");
+				_group = _rawData.@currentgroup; 
+				if (debug) logInfo("processData: group is '" + _group + "'");
 			}
 			
-			var groups:Array = this._group.split(',');
+			var groups:Array = _group.split(',');
 			
 			var i:int;
 			
@@ -464,11 +464,11 @@ package temple.data.url
 			var vars:XMLList= new XMLList();
 			for (i = 0; i < groups.length; i++)
 			{
-				vars += this._rawData.group.(@id == (groups[i])).child('var');
+				vars += _rawData.group.(@id == (groups[i])).child('var');
 			}
 			
 			// add ungrouped variables
-			vars += this._rawData.child('var');
+			vars += _rawData.child('var');
 			
 			var key:String, node:XML;
 			
@@ -478,33 +478,33 @@ package temple.data.url
 				
 				if (!node.hasOwnProperty('@name'))
 				{
-					this.logError("variable has no name attribute: " + node.toXMLString());
+					logError("variable has no name attribute: " + node.toXMLString());
 				}
 				else
 				{
-					if (!this._variables.hasOwnProperty(node.@name))
+					if (!_variables.hasOwnProperty(node.@name))
 					{
 						var value:String = node.hasOwnProperty('@value') ? node.@value : node.toString();
 						if (node.hasOwnProperty('@escape') && node.@escape == "true") value = escape(value);
 						if (node.hasOwnProperty('@escapemultibyte') && node.@escapemultibyte == "true") value = escapeMultiByte(value);
-						this._variables[node.@name] = value;
+						_variables[node.@name] = value;
 					}
 				}
 			}
 			
 			// parse vars in vars
-			if (ObjectUtils.hasValues(this._variables))
+			if (ObjectUtils.hasValues(_variables))
 			{
 				do
 				{
 					var changed:Boolean = false;
-					for (var key1:String in this._variables)
+					for (var key1:String in _variables)
 					{
-						if (this._variables[key1] is String)
+						if (_variables[key1] is String)
 						{
-							var prevValue:String = this._variables[key1]; 
-							this._variables[key1] = StringUtils.replaceVars(prevValue, this._variables, true);
-							if (prevValue != this._variables[key1]) changed = true;
+							var prevValue:String = _variables[key1]; 
+							_variables[key1] = StringUtils.replaceVars(prevValue, _variables, true);
+							if (prevValue != _variables[key1]) changed = true;
 						}
 
 					}
@@ -512,78 +512,78 @@ package temple.data.url
 				while (changed);
 			}
 			
-			if (this.debug)
+			if (debug)
 			{
 				var s:String = "";
-				for (key in this._variables)
+				for (key in _variables)
 				{
-					s += "\n\t" + key + ": " + this._variables[key];
+					s += "\n\t" + key + ": " + _variables[key];
 				}
-				this.logDebug("Current vars in URLManager: " + s);
+				logDebug("Current vars in URLManager: " + s);
 			}
 
 			
-			this._urls = {};
+			_urls = {};
 			var urls:XMLList = new XMLList();
 			
 			// get grouped urls
 			for (i = 0; i < groups.length; i++)
 			{
 				// check if currentgroup is valid
-				if (groups[i] && this._rawData.group.(@id == (groups[i])) == undefined)
+				if (groups[i] && _rawData.group.(@id == (groups[i])) == undefined)
 				{
-					this.logError("processData: group '" + groups[i] + "' not found, check urls.xml");
+					logError("processData: group '" + groups[i] + "' not found, check urls.xml");
 				}
 				else
 				{
-					urls += this._rawData.group.(@id == (groups[i])).url;
+					urls += _rawData.group.(@id == (groups[i])).url;
 				}
 			}
 
 			// add ungrouped urls
-			urls += this._rawData.url;
+			urls += _rawData.url;
 			
 			var ud:URLData;
 			
-			for each (ud in XMLParser.parseList(urls, URLData, false, this.debug))
+			for each (ud in XMLParser.parseList(urls, URLData, false, debug))
 			{
-				if (ud.name in this._urls)
+				if (ud.name in _urls)
 				{
-					this.logError("Duplicate URL name '" + ud.name + "'");
+					logError("Duplicate URL name '" + ud.name + "'");
 				}
 				else
 				{
-					this._urls[ud.name] = ud;
+					_urls[ud.name] = ud;
 				}
 			}
 			
-			if (this.debug)
+			if (debug)
 			{
 				s = "";
-				for each (ud in this._urls)
+				for each (ud in _urls)
 				{
 					s += "\n\t" + ud.name + ": " + ud.url;
 				}
-				this.logDebug("Current urls in XML: " + s);
+				logDebug("Current urls in XML: " + s);
 			}
 			
 			// replace vars in urls
-			if (ObjectUtils.hasValues(this._variables))
+			if (ObjectUtils.hasValues(_variables))
 			{
-				for each (ud in this._urls)
+				for each (ud in _urls)
 				{
-					ud.url = StringUtils.replaceVars(ud.url, this._variables, true);
+					ud.url = StringUtils.replaceVars(ud.url, _variables, true);
 				}
 			}
 			
-			if (this.debug)
+			if (debug)
 			{
 				s = "";
-				for each (ud in this._urls)
+				for each (ud in _urls)
 				{
 					s += "\n\t" + ud.name + ": " + ud.url;
 				}
-				this.logDebug("Current urls in URLManager: " + s);
+				logDebug("Current urls in URLManager: " + s);
 			}
 		}
 
@@ -592,14 +592,14 @@ package temple.data.url
 		 */
 		override public function destruct():void
 		{
-			if (this._loader)
+			if (_loader)
 			{
-				this._loader.destruct();
+				_loader.destruct();
 			}
-			this._loader = null;
-			this._urls = null;
-			this._rawData = null;
-			this._group = null;
+			_loader = null;
+			_urls = null;
+			_rawData = null;
+			_group = null;
 			
 			super.destruct();
 		}

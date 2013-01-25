@@ -52,7 +52,7 @@ package temple.data.collections
 		public function DestructibleArray()
 		{
 			// Register object for destruction testing
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 		}
 
 		/**
@@ -60,7 +60,7 @@ package temple.data.collections
 		 */
 		public final function get registryId():uint
 		{
-			return this._registryId;
+			return _registryId;
 		}
 		
 		/**
@@ -68,7 +68,7 @@ package temple.data.collections
 		 */
 		public function get isDestructed():Boolean
 		{
-			return this.length == 0 && this._isDestructed;
+			return length == 0 && _isDestructed;
 		}
 		
 		/**
@@ -76,8 +76,8 @@ package temple.data.collections
 		 */
 		public function destruct():void
 		{
-			while (this.length) Destructor.destruct(this.shift());
-			this._isDestructed = true;
+			while (length) Destructor.destruct(shift());
+			_isDestructed = true;
 		}
 	}
 }

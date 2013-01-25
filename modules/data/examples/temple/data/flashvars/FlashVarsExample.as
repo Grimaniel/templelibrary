@@ -24,7 +24,7 @@ package
 		
 		public function FlashVarsExample()
 		{
-			FlashVars.initialize(this.loaderInfo.parameters);
+			FlashVars.initialize(loaderInfo.parameters);
 			
 			FlashVars.configureVar(_LANGUAGE, 'nl', String);
 			FlashVars.configureVar(_VERSION, 1, int);
@@ -34,7 +34,7 @@ package
 			txt.border = true;
 			txt.width = 550;
 			txt.height = 400;
-			this.addChild(txt);
+			addChild(txt);
 			
 			txt.appendText('defaults : ' + "\n");
 			txt.appendText('LANGUAGE : nl' + "\n");

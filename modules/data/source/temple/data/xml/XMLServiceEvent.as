@@ -92,7 +92,7 @@ package temple.data.xml
 
 		override public function clone():Event 
 		{
-			return new XMLServiceEvent(this.type, this.name, this.list, this.object, this.error);
+			return new XMLServiceEvent(type, name, list, object, error);
 		}
 
 		override public function toString():String 

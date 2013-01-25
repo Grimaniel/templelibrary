@@ -133,15 +133,15 @@ package temple.data
 		{
 			var fd:FileData = new FileData();
 			
-			fd.name = this.name;
-			fd.type = this.type;
-			fd.size = this.size;
-			fd.creator = this.creator;
-			fd.creationDate = this.creationDate;
-			fd.modificationDate = this.modificationDate;
-			fd.data = this.data;
-			fd.pointer = this.pointer;
-			fd.url = this.url;
+			fd.name = name;
+			fd.type = type;
+			fd.size = size;
+			fd.creator = creator;
+			fd.creationDate = creationDate;
+			fd.modificationDate = modificationDate;
+			fd.data = data;
+			fd.pointer = pointer;
+			fd.url = url;
 			
 			return fd;
 		}
@@ -151,15 +151,15 @@ package temple.data
 		 */
 		override public function destruct():void
 		{
-			this.name = null;
-			this.type = null;
-			this.size = 0;
-			this.creator = null;
-			this.creationDate = null;
-			this.modificationDate = null;
-			this.data = null;
-			this.pointer = null;
-			this.url = null;
+			name = null;
+			type = null;
+			size = 0;
+			creator = null;
+			creationDate = null;
+			modificationDate = null;
+			data = null;
+			pointer = null;
+			url = null;
 			
 			super.destruct();
 		}

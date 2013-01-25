@@ -67,25 +67,25 @@ package temple.data.cache
 		{
 			super(null, null, logErrors);
 			
-			this._cacheURLLoader = new CacheURLLoader(null, false, logErrors, cache);
-			this._cacheURLLoader.addEventListener(Event.COMPLETE, this.handleURLLoaderComplete);
-			this._cacheURLLoader.addEventListener(Event.OPEN, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(Event.INIT, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(Event.UNLOAD, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(IOErrorEvent.IO_ERROR, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(IOErrorEvent.DISK_ERROR, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(IOErrorEvent.NETWORK_ERROR, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(IOErrorEvent.VERIFY_ERROR, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.dispatchEvent);
-			this._cacheURLLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.dispatchEvent);
+			_cacheURLLoader = new CacheURLLoader(null, false, logErrors, cache);
+			_cacheURLLoader.addEventListener(Event.COMPLETE, handleURLLoaderComplete);
+			_cacheURLLoader.addEventListener(Event.OPEN, dispatchEvent);
+			_cacheURLLoader.addEventListener(Event.INIT, dispatchEvent);
+			_cacheURLLoader.addEventListener(Event.UNLOAD, dispatchEvent);
+			_cacheURLLoader.addEventListener(ProgressEvent.PROGRESS, dispatchEvent);
+			_cacheURLLoader.addEventListener(IOErrorEvent.IO_ERROR, dispatchEvent);
+			_cacheURLLoader.addEventListener(IOErrorEvent.DISK_ERROR, dispatchEvent);
+			_cacheURLLoader.addEventListener(IOErrorEvent.NETWORK_ERROR, dispatchEvent);
+			_cacheURLLoader.addEventListener(IOErrorEvent.VERIFY_ERROR, dispatchEvent);
+			_cacheURLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, dispatchEvent);
+			_cacheURLLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, dispatchEvent);
 			
-			this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
 						
-			addToDebugManager(this._cacheURLLoader, this);
+			addToDebugManager(_cacheURLLoader, this);
 			
 			this.cache = cache;
-			this._reloadAfterError = reloadAfterError;
+			_reloadAfterError = reloadAfterError;
 		}
 		
 		/**
@@ -93,7 +93,7 @@ package temple.data.cache
 		 */
 		override public function get isLoading():Boolean
 		{
-			return super.isLoading || this._cacheURLLoader.isLoading;
+			return super.isLoading || _cacheURLLoader.isLoading;
 		}
 		
 		/**
@@ -101,7 +101,7 @@ package temple.data.cache
 		 */
 		override public function get isLoaded():Boolean
 		{
-			return super.isLoaded && !this.isLoading;
+			return super.isLoaded && !isLoading;
 		}
 		
 		/**
@@ -109,7 +109,7 @@ package temple.data.cache
 		 */
 		override public function get url():String
 		{
-			return super.url || (this._cacheURLLoader ? this._cacheURLLoader.url : null);
+			return super.url || (_cacheURLLoader ? _cacheURLLoader.url : null);
 		}
 
 		/**
@@ -117,7 +117,7 @@ package temple.data.cache
 		 */
 		override public function set debug(value:Boolean):void 
 		{
-			this._cacheURLLoader.debug = super.debug = value;
+			_cacheURLLoader.debug = super.debug = value;
 		}
 
 		/**
@@ -125,7 +125,7 @@ package temple.data.cache
 		 */
 		public function get cache():Boolean
 		{
-			return this._cacheURLLoader.cache;
+			return _cacheURLLoader.cache;
 		}
 		
 		/**
@@ -133,8 +133,8 @@ package temple.data.cache
 		 */
 		public function set cache(value:Boolean):void
 		{
-			this._cacheURLLoader.cache = value;
-			if (this.debug) this.logDebug("cache: " + value);
+			_cacheURLLoader.cache = value;
+			if (debug) logDebug("cache: " + value);
 		}
 		
 		/**
@@ -142,7 +142,7 @@ package temple.data.cache
 		 */
 		public function get reloadAfterError():Boolean
 		{
-			return this._reloadAfterError;
+			return _reloadAfterError;
 		}
 
 		/**
@@ -150,7 +150,7 @@ package temple.data.cache
 		 */
 		public function set reloadAfterError(value:Boolean):void
 		{
-			this._reloadAfterError = value;
+			_reloadAfterError = value;
 		}
 
 		/**
@@ -158,18 +158,18 @@ package temple.data.cache
 		 */
 		override public function load(request:URLRequest, context:LoaderContext = null):void
 		{
-			if (this.cache) this.unload();
+			if (cache) unload();
 			
-			this._context = context;
+			_context = context;
 			
-			if (this.cache)
+			if (cache)
 			{
-				if (this.debug) this.logDebug("load: cache enabled ");
-				this._cacheURLLoader.load(request);
+				if (debug) logDebug("load: cache enabled ");
+				_cacheURLLoader.load(request);
 			}
 			else
 			{
-				if (this.debug) this.logDebug("load: cache disabled");
+				if (debug) logDebug("load: cache disabled");
 				super.load(request, context);
 			}
 		}
@@ -179,7 +179,7 @@ package temple.data.cache
 		 */
 		override public function close():void 
 		{
-			this._cacheURLLoader.close();
+			_cacheURLLoader.close();
 		}
 		
 		/**
@@ -187,22 +187,22 @@ package temple.data.cache
 		 */
 		public function get bytes():ByteArray
 		{
-			return this._cacheURLLoader.data || this.contentLoaderInfo.bytes;
+			return _cacheURLLoader.data || contentLoaderInfo.bytes;
 		}
 
 		private function handleURLLoaderComplete(event:Event):void
 		{
-			if (this._context) this._context.checkPolicyFile = false;
-			this.loadBytes(this._cacheURLLoader.data, this._context);
+			if (_context) _context.checkPolicyFile = false;
+			loadBytes(_cacheURLLoader.data, _context);
 		}
 		
 		private function handleSecurityError(event:SecurityErrorEvent):void 
 		{
-			if (this.cache && this._reloadAfterError)
+			if (cache && _reloadAfterError)
 			{
-				this.logWarn("SecurityError: Cache is switched off. Reload...");
-				this.cache = false;
-				this.load(new URLRequest(this.url));
+				logWarn("SecurityError: Cache is switched off. Reload...");
+				cache = false;
+				load(new URLRequest(url));
 			}
 		}
 
@@ -211,12 +211,12 @@ package temple.data.cache
 		 */
 		override public function destruct():void
 		{
-			if (this._cacheURLLoader)
+			if (_cacheURLLoader)
 			{
-				this._cacheURLLoader.destruct();
-				this._cacheURLLoader = null;
+				_cacheURLLoader.destruct();
+				_cacheURLLoader = null;
 			}
-			this._context = null;
+			_context = null;
 			super.destruct();
 		}
 	}

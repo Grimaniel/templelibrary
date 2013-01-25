@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Data Module API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/data/url/URLManager.html&amp;temple/data/url/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">URLManager</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Data Module API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/data/url/URLManager.html&amp;temple/data/url/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">URLManager</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("URLManager"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -247,34 +247,34 @@ package
             super("Temple - URLManagerExample");
             
             // Create of new URLManager
-            this._urlManager = new URLManager();
+            _urlManager = new URLManager();
             
             // Or you you use the "Singleton" urlManager
-            //this._urlManager = urlManagerInstance;
+            //_urlManager = urlManagerInstance;
             
             // set debug mode to get debug log messages from the URLManager
-            this._urlManager.debug = true; 
+            _urlManager.debug = true; 
             
             // add EventListeners
-            this._urlManager.addEventListenerOnce(XMLServiceEvent.COMPLETE, this.handleURLManagerComplete);
-            this._urlManager.addEventListener(URLEvent.OPEN, this.handleURLOpen);
+            _urlManager.addEventListenerOnce(XMLServiceEvent.COMPLETE, handleURLManagerComplete);
+            _urlManager.addEventListener(URLEvent.OPEN, handleURLOpen);
             
             // load urls.xml
-            this._urlManager.load("urls.xml");
+            _urlManager.load("urls.xml");
         }
         
         private function handleURLManagerComplete(event:XMLServiceEvent):void
         {
             // create a button, with listener
-            var button:Sprite = this.createButton("Click here: Open URL!");
+            var button:Sprite = createButton("Click here: Open URL!");
             button.addEventListener(MouseEvent.CLICK, handleButtonClick);
-            this.addChild(button);
+            addChild(button);
         }
         
         private function handleButtonClick(event:MouseEvent):void
         {
             // Open url
-            this._urlManager.openByName("website");
+            _urlManager.openByName("website");
         }
         
         private function handleURLOpen(event:URLEvent):void
@@ -282,7 +282,7 @@ package
             // Manual log URLManager information. See log message at: http://yalala.tyz.nl/
             logInfo("Open URL:" + event.url + "    Target window:" + event.targetFrame);
             
-            this.tracker.trackEvent("URLManagerExample", "Open URL", event.name);
+            tracker.trackEvent("URLManagerExample", "Open URL", event.name);
         }
         
         private function createButton(label:String):Sprite

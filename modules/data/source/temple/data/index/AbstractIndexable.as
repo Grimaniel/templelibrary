@@ -57,7 +57,7 @@ package temple.data.index
 		{
 			if (indexClass) this.indexClass = indexClass;
 			if (id) this.id = id;
-			this.toStringProps.push('id', 'indexClass');
+			toStringProps.push('id', 'indexClass');
 		}
 		
 		/**
@@ -65,7 +65,7 @@ package temple.data.index
 		 */
 		public function get id():String
 		{
-			return this._id;
+			return _id;
 		}
 		
 		/**
@@ -73,18 +73,18 @@ package temple.data.index
 		 */
 		public function set id(value:String):void
 		{
-			if (value == this._id)
+			if (value == _id)
 			{
 				return;
 			}
-			else if (this._id)
+			else if (_id)
 			{
-				throwError(new TempleError(this, "Id is already set (" + this._id + ") and can not be overwritten (" + value + ")"));
+				throwError(new TempleError(this, "Id is already set (" + _id + ") and can not be overwritten (" + value + ")"));
 			}
 			else if (value)
 			{
-				this._id = value;
-				Indexer.add(this, this.indexClass);
+				_id = value;
+				Indexer.add(this, indexClass);
 			}
 		}
 		
@@ -95,21 +95,22 @@ package temple.data.index
 		[Transient]
 		public function get indexClass():Class
 		{
-			return this._indexClass;
+			return _indexClass;
 		}
 		
 		/**
 		 * @private
 		 */
+		[Temple]
 		public function set indexClass(type:Class):void
 		{
-			if (this._id)
+			if (_id)
 			{
 				throwError(new TempleError(this, "indexClass can not be set when the id is already set."));
 			}
 			else
 			{
-				this._indexClass = type;
+				_indexClass = type;
 			}
 		}
 
@@ -118,7 +119,7 @@ package temple.data.index
 		 */
 		override public function destruct():void 
 		{
-			Indexer.remove(this, this.indexClass);
+			Indexer.remove(this, indexClass);
 			
 			super.destruct();
 		}

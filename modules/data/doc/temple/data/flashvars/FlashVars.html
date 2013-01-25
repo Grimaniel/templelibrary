@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Data Module API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/data/flashvars/FlashVars.html&amp;temple/data/flashvars/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">FlashVars</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Data Module API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/data/flashvars/FlashVars.html&amp;temple/data/flashvars/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">FlashVars</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("FlashVars"); titleBar_setSubNav(false,false,false,false,false,false,false,false,true,true,false	,false,false,false,false,false);}	
@@ -85,7 +85,7 @@
 		 Use this in the Main.as to initialize the flashvars.
 		 If you don't use an HTML file, but still want to use the FlashVars class for configuration, use {}
 		 
-		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">parameters</span>:Object</code> &mdash; The parameters object (this.stage.loaderInfo.parameters)
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">parameters</span>:Object</code> &mdash; The parameters object (stage.loaderInfo.parameters)
 		 </td></tr></table></p></div><a name="isEmpty()"></a><a name="isEmpty(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isEmpty</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function isEmpty(name:String):Boolean</code><p></p><p>
 		 Checks if the flashvar has a value (null or undefined or "")
 		 
@@ -135,7 +135,7 @@
          </pre></div>
 		 </div></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="detailBody">
 	 <div class="listing" version="3.0"><pre>
-     FlashVars.initialize(this.stage.loaderInfo.parameters);
+     FlashVars.initialize(stage.loaderInfo.parameters);
      
      FlashVars.configureVar(FlashVarNames.LANGUAGE, 'nl', String);
      FlashVars.configureVar(FlashVarNames.VERSION, 1, int);
@@ -172,7 +172,7 @@ package
         
         public function FlashVarsExample()
         {
-            FlashVars.initialize(this.loaderInfo.parameters);
+            FlashVars.initialize(loaderInfo.parameters);
             
             FlashVars.configureVar(_LANGUAGE, 'nl', String);
             FlashVars.configureVar(_VERSION, 1, int);
@@ -182,7 +182,7 @@ package
             txt.border = true;
             txt.width = 550;
             txt.height = 400;
-            this.addChild(txt);
+            addChild(txt);
             
             txt.appendText('defaults : ' + "\n");
             txt.appendText('LANGUAGE : nl' + "\n");

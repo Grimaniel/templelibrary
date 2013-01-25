@@ -56,12 +56,12 @@ package temple.data.url
 		 */
 		public function URLData(name:String = null, url:String = null, target:String = null, features:String = null) 
 		{
-			this._name = name;
-			this._url = url;
-			this._target = target;
-			this._features = features;
-			this.toStringProps.push('name', 'url', 'target', 'features');
-			this.emptyPropsInToString = false;
+			_name = name;
+			_url = url;
+			_target = target;
+			_features = features;
+			toStringProps.push('name', 'url', 'target', 'features');
+			emptyPropsInToString = false;
 		}
 		
 		/**
@@ -69,7 +69,7 @@ package temple.data.url
 		 */
 		public function get name():String
 		{
-			return this._name;
+			return _name;
 		}
 		
 		/**
@@ -77,7 +77,7 @@ package temple.data.url
 		 */
 		public function get url():String
 		{
-			return this._url;
+			return _url;
 		}
 		
 		/**
@@ -85,7 +85,7 @@ package temple.data.url
 		 */
 		public function set url(value:String):void
 		{
-			this._url = value;
+			_url = value;
 		}
 		
 		/**
@@ -93,7 +93,7 @@ package temple.data.url
 		 */
 		public function get target():String
 		{
-			return this._target;
+			return _target;
 		}
 		
 		/**
@@ -101,7 +101,7 @@ package temple.data.url
 		 */
 		public function get features():String
 		{
-			return this._features;
+			return _features;
 		}
 
 		/**
@@ -109,7 +109,7 @@ package temple.data.url
 		 */
 		public function set features(value:String):void
 		{
-			this._features = value;
+			_features = value;
 		}
 
 		/**
@@ -117,12 +117,12 @@ package temple.data.url
 		 */
 		public function parseXML(xml:XML):Boolean 
 		{
-			this._name = xml.@name;
-			this._url = xml.@url;
-			this._target = xml.@target;
-			this._features = xml.@features;
+			_name = xml.@name;
+			_url = xml.@url;
+			_target = xml.@target;
+			_features = xml.@features;
 			
-			return this._name != null;
+			return _name != null;
 		}
 
 		/**
@@ -130,7 +130,7 @@ package temple.data.url
 		 */
 		public function clone():URLData
 		{
-			return new URLData(this._name, this._url, this._target, this._features);
+			return new URLData(_name, _url, _target, _features);
 		}
 	}
 }
