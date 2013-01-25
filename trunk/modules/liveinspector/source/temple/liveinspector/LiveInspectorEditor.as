@@ -44,13 +44,13 @@ package temple.liveinspector
 
 		public function LiveInspectorEditor(scope:Object, propertyName:*, typeOfProperty:String, color:uint)
 		{
-			this._typeOfProperty = typeOfProperty;
-			this._propertyName = propertyName;
-			this._scope = scope;
+			_typeOfProperty = typeOfProperty;
+			_propertyName = propertyName;
+			_scope = scope;
 			
 			this.type = TextFieldType.INPUT;
 			this.defaultTextFormat = LiveInspector.THEME_EDITOR_TEXTFORMAT;
-			this.filters = [new GlowFilter(color, .1, 5, 5, 2, 3)];
+			filters = [new GlowFilter(color, .1, 5, 5, 2, 3)];
 			
 			this.background = true;
 			this.backgroundColor = LiveInspector.THEME_BACKGROUND_COLOR;
@@ -58,11 +58,11 @@ package temple.liveinspector
 			this.border = true;
 			this.borderColor = LiveInspector.THEME_BORDER_COLOR;
 			
-			this.addEventListener(Event.CHANGE, handleValueChange, false, 0, true);
-			this.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyPress, false, 0, true);
-			this.addEventListener(MouseEvent.MOUSE_WHEEL, handleScrollWheel, false, 0, true);
+			addEventListener(Event.CHANGE, handleValueChange, false, 0, true);
+			addEventListener(KeyboardEvent.KEY_DOWN, handleKeyPress, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_WHEEL, handleScrollWheel, false, 0, true);
 			
-			switch (this._typeOfProperty)
+			switch (_typeOfProperty)
 			{
 				case 'int':
 				{
@@ -89,38 +89,38 @@ package temple.liveinspector
 		
 		private function handleScrollWheel(event:MouseEvent):void
 		{
-			var value:* = this._scope[this._propertyName];
+			var value:* = _scope[_propertyName];
 			
 			try
 			{
-				switch (this._typeOfProperty)
+				switch (_typeOfProperty)
 				{
 					case 'Number':
 					{
-						if (this._scope[this._propertyName] < 1 && this._scope[this._propertyName] > -1)
+						if (_scope[_propertyName] < 1 && _scope[_propertyName] > -1)
 						{
-							this._scope[this._propertyName] += event.delta > 0 ? .1 : -.1;
+							_scope[_propertyName] += event.delta > 0 ? .1 : -.1;
 						}
 						else
 						{
-							this._scope[this._propertyName] += event.delta;
+							_scope[_propertyName] += event.delta;
 						}
 						break;
 					}
 					case 'int':
 					case 'uint':
 					{
-						this._scope[this._propertyName] += event.delta;
+						_scope[_propertyName] += event.delta;
 						break;
 					}
 					case 'Boolean':
 					{
-						this._scope[this._propertyName] = !value;
+						_scope[_propertyName] = !value;
 						break;
 					}
 					case 'String':
 					{
-						this._scope[this._propertyName] = this.getSpecialStringValue(event.delta > 0 ? 1 : -1, value);
+						_scope[_propertyName] = getSpecialStringValue(event.delta > 0 ? 1 : -1, value);
 						break;
 					}
 				}
@@ -132,41 +132,41 @@ package temple.liveinspector
 		
 		private function handleKeyPress(event:KeyboardEvent):void
 		{
-			var value:* = this._scope[this._propertyName];
+			var value:* = _scope[_propertyName];
 			
 			if (event.keyCode === Keyboard.UP || event.keyCode === Keyboard.DOWN)
 			{
 				try
 				{
 					var amount:Number = (event.keyCode === Keyboard.UP) ? 1 : -1;
-					switch (this._typeOfProperty)
+					switch (_typeOfProperty)
 					{
 						case 'Number':
 						{
-							if (this._scope[this._propertyName] < 1 && this._scope[this._propertyName] > -1)
+							if (_scope[_propertyName] < 1 && _scope[_propertyName] > -1)
 							{
-								this._scope[this._propertyName] += amount * .1;
+								_scope[_propertyName] += amount * .1;
 							}
 							else
 							{
-								this._scope[this._propertyName] += amount;
+								_scope[_propertyName] += amount;
 							}
 							break;
 						}
 						case 'int':
 						case 'uint':
 						{
-							this._scope[this._propertyName] += amount;
+							_scope[_propertyName] += amount;
 							break;
 						}
 						case 'Boolean':
 						{
-							this._scope[this._propertyName] = !value;
+							_scope[_propertyName] = !value;
 							break;
 						}
 						case 'String':
 						{
-							this._scope[this._propertyName] = this.getSpecialStringValue(amount, value);
+							_scope[_propertyName] = getSpecialStringValue(amount, value);
 							break;
 						}
 					}
@@ -179,43 +179,43 @@ package temple.liveinspector
 
 		private function handleValueChange(event:Event):void
 		{
-			var scope:* = this._scope;
+			var scope:* = _scope;
 			
 			if (scope && "isDestructed" in scope && scope.isDestructed)
 			{
 				scope = null;
 			}
 			
-			if (scope && this._propertyName in scope) 
+			if (scope && _propertyName in scope) 
 			{
 				try
 				{
 					var text:String = TextField(event.currentTarget).text;
-					switch (this._typeOfProperty)
+					switch (_typeOfProperty)
 					{
 						case 'Number':
 						{
-							scope[this._propertyName] = Number(text);
+							scope[_propertyName] = Number(text);
 							break;
 						}
 						case 'uint':
 						{
-							scope[this._propertyName] = uint(text);
+							scope[_propertyName] = uint(text);
 							break;
 						}
 						case 'int':
 						{
-							scope[this._propertyName] = int(text);
+							scope[_propertyName] = int(text);
 							break;
 						}
 						case 'Boolean':
 						{
-							scope[this._propertyName] = (text === "true");
+							scope[_propertyName] = (text === "true");
 							break;
 						}
 						case 'String':
 						{
-							scope[this._propertyName] = text;
+							scope[_propertyName] = text;
 							break;
 						}
 					}
@@ -233,12 +233,12 @@ package temple.liveinspector
 				var classPropertyNames:Object = _propertyClassTypeMappings[key];
 				if (DefinitionProvider.hasDefinition(key))
 				{
-					if (this._propertyName in classPropertyNames)
+					if (_propertyName in classPropertyNames)
 					{
-						var mappedClassName:String = classPropertyNames[this._propertyName];
+						var mappedClassName:String = classPropertyNames[_propertyName];
 						if (DefinitionProvider.hasDefinition(mappedClassName))
 						{
-							return this.iterateOnClassType(amount, DefinitionProvider.getDefinition(mappedClassName), value);
+							return iterateOnClassType(amount, DefinitionProvider.getDefinition(mappedClassName), value);
 						}
 					}
 				}

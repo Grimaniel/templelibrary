@@ -48,13 +48,13 @@ package temple.codecomponents.buttons
 	{
 		public function CodeButton(width:Number = 14, height:Number = 14, x:Number = 0, y:Number = 0)
 		{
-			this.addChild(new CodeGraphicsRectangle(width, height, CodeStyle.buttonColor, CodeStyle.buttonAlpha)).filters = CodeStyle.buttonFilters;
+			addChild(new CodeGraphicsRectangle(width, height, CodeStyle.buttonColor, CodeStyle.buttonAlpha)).filters = CodeStyle.buttonFilters;
 			
 			this.x = x;
 			this.y = y;
 			
-			this.addChild(new ButtonOverState(width, height));
-			this.addChild(new ButtonDownState(width, height));
+			addChild(new ButtonOverState(width, height));
+			addChild(new ButtonDownState(width, height));
 		}
 	}
 }
@@ -68,10 +68,10 @@ class ButtonOverState extends OverFadeState
 	{
 		super(.1, .25);
 		
-		this.graphics.beginFill(CodeStyle.buttonOverstateColor, CodeStyle.buttonOverstateAlpha);
-		this.graphics.drawRect(0, 0, width, height);
-		this.graphics.endFill();
-		this.filters = CodeStyle.buttonFilters;
+		graphics.beginFill(CodeStyle.buttonOverstateColor, CodeStyle.buttonOverstateAlpha);
+		graphics.drawRect(0, 0, width, height);
+		graphics.endFill();
+		filters = CodeStyle.buttonFilters;
 	}
 }
 
@@ -81,9 +81,9 @@ class ButtonDownState extends DownFadeState
 	{
 		super(0, .25);
 		
-		this.graphics.beginFill(CodeStyle.buttonDownstateColor, CodeStyle.buttonDownstateAlpha);
-		this.graphics.drawRect(0, 0, width, height);
-		this.graphics.endFill();
-		this.filters = CodeStyle.buttonDownFilters;
+		graphics.beginFill(CodeStyle.buttonDownstateColor, CodeStyle.buttonDownstateAlpha);
+		graphics.drawRect(0, 0, width, height);
+		graphics.endFill();
+		filters = CodeStyle.buttonDownFilters;
 	}
 }

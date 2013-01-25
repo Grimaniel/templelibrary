@@ -63,8 +63,8 @@ package temple.camera
 
 		public function CameraDetector(debug:Boolean = false)
 		{
-			this._videos = new Array();
-			this._cameras = new Array();
+			_videos = new Array();
+			_cameras = new Array();
 			
 			this.debug = debug;
 		}
@@ -74,23 +74,23 @@ package temple.camera
 		 */
 		public function detectActiveCamera():void
 		{
-			this._defaultCamera = Camera.getCamera();
+			_defaultCamera = Camera.getCamera();
 
-			if (this._activeCamera)
+			if (_activeCamera)
 			{
-				this.dispatchEvent(new CameraDetectorEvent(CameraDetectorEvent.ACTIVE_CAMERA_FOUND, this._activeCamera));
+				dispatchEvent(new CameraDetectorEvent(CameraDetectorEvent.ACTIVE_CAMERA_FOUND, _activeCamera));
 			}
-			else if (this._defaultCamera == null)
+			else if (_defaultCamera == null)
 			{
-				if (this._debug) this.logDebug("detectActiveCamera: no camera's found");
-				this.dispatchEvent(new CameraDetectorEvent(CameraDetectorEvent.NO_CAMERA_FOUND));
-				this.clear();
+				if (_debug) logDebug("detectActiveCamera: no camera's found");
+				dispatchEvent(new CameraDetectorEvent(CameraDetectorEvent.NO_CAMERA_FOUND));
+				clear();
 			}
 			else
 			{
-				if (this._debug) this.logDebug("detectActiveCamera: available webcams: " + Camera.names);
+				if (_debug) logDebug("detectActiveCamera: available webcams: " + Camera.names);
 				
-				this.checkCamera(this._defaultCamera);
+				checkCamera(_defaultCamera);
 			}
 		}
 		
@@ -99,7 +99,7 @@ package temple.camera
 		 */
 		public function get activeCamera():Camera
 		{
-			return this._activeCamera;
+			return _activeCamera;
 		}
 		
 		/**
@@ -107,7 +107,7 @@ package temple.camera
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -115,54 +115,54 @@ package temple.camera
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function checkCamera(camera:Camera):void
 		{
 			if (camera == null) return;
-			if (this._debug) this.logDebug("checkCamera: '" + camera.name + "'");
+			if (_debug) logDebug("checkCamera: '" + camera.name + "'");
 			
-			camera.addEventListener(ActivityEvent.ACTIVITY, this.handleCameraActivity);
-			camera.addEventListener(StatusEvent.STATUS, this.handleCameraStatus);
+			camera.addEventListener(ActivityEvent.ACTIVITY, handleCameraActivity);
+			camera.addEventListener(StatusEvent.STATUS, handleCameraStatus);
 			
-			this._cameras.push(camera);
+			_cameras.push(camera);
 			
 			var video:Video = new Video();
 			video.attachCamera(camera);
-			this._videos.push(video);
+			_videos.push(video);
 		}
 
 		private function handleCameraActivity(event:ActivityEvent):void
 		{
 			var camera:Camera = Camera(event.target);
-			if (this._debug) this.logDebug("handleCameraActivity: '" + camera.name + "', activating :" + event.activating);
+			if (_debug) logDebug("handleCameraActivity: '" + camera.name + "', activating :" + event.activating);
 			
 			if (event.activating)
 			{
-				this._activeCamera = camera;
-				this.dispatchEvent(new CameraDetectorEvent(CameraDetectorEvent.ACTIVE_CAMERA_FOUND, camera));
-				this.clear();
+				_activeCamera = camera;
+				dispatchEvent(new CameraDetectorEvent(CameraDetectorEvent.ACTIVE_CAMERA_FOUND, camera));
+				clear();
 			}
-			else if (camera == this._defaultCamera)
+			else if (camera == _defaultCamera)
 			{
-				this.checkAllCameras();
-				this._defaultCamera = null;
+				checkAllCameras();
+				_defaultCamera = null;
 			}
 		}
 		
 		private function checkAllCameras():void
 		{
-			this._timerOut.destruct();
+			_timerOut.destruct();
 			
 			var camera:Camera;
 			var leni:int = Camera.names.length;
 			for (var i:int = 0; i < leni; i++)
 			{
 				camera = Camera.getCamera(String(i));
-				if (camera != this._defaultCamera)
+				if (camera != _defaultCamera)
 				{
-					this.checkCamera(camera);
+					checkCamera(camera);
 				}
 			}
 		}
@@ -170,18 +170,18 @@ package temple.camera
 		private function handleCameraStatus(event:StatusEvent):void
 		{
 			var camera:Camera = Camera(event.target);
-			if (this._debug) this.logDebug("handleCameraStatus: '" + camera.name + "', status " + event.code);
+			if (_debug) logDebug("handleCameraStatus: '" + camera.name + "', status " + event.code);
 			
-			if (camera == this._defaultCamera)
+			if (camera == _defaultCamera)
 			{
 				switch (event.code)
 				{
 					case CameraStatusEventCode.CAMERA_MUTED:
-						this.dispatchEvent(new CameraDetectorEvent(CameraDetectorEvent.CAMERA_NOT_ALLOWED));
-						this.clear();
+						dispatchEvent(new CameraDetectorEvent(CameraDetectorEvent.CAMERA_NOT_ALLOWED));
+						clear();
 						break;
 					case CameraStatusEventCode.CAMERA_UNMUTED:
-						if (Camera.names.length > 1) this._timerOut = new TimeOut(this.checkAllCameras, 2000);
+						if (Camera.names.length > 1) _timerOut = new TimeOut(checkAllCameras, 2000);
 						break;
 				}
 			}
@@ -189,24 +189,24 @@ package temple.camera
 		
 		private function clear():void
 		{
-			if (this._debug) this.logDebug("clear: ");
+			if (_debug) logDebug("clear: ");
 			
-			if (this._cameras)
+			if (_cameras)
 			{
-				for each (var camera : Camera in this._cameras) 
+				for each (var camera : Camera in _cameras) 
 				{
-					camera.removeEventListener(ActivityEvent.ACTIVITY, this.handleCameraActivity);
-					camera.removeEventListener(StatusEvent.STATUS, this.handleCameraStatus);
+					camera.removeEventListener(ActivityEvent.ACTIVITY, handleCameraActivity);
+					camera.removeEventListener(StatusEvent.STATUS, handleCameraStatus);
 				}
-				this._cameras = null;
+				_cameras = null;
 			}
 			
-			if (this._timerOut)
+			if (_timerOut)
 			{
-				this._timerOut.destruct();
-				this._timerOut = null;
+				_timerOut.destruct();
+				_timerOut = null;
 			}
-			new FrameDelay(this.destruct);
+			new FrameDelay(destruct);
 		}
 
 		/**
@@ -214,32 +214,32 @@ package temple.camera
 		 */
 		override public function destruct():void
 		{
-			if (this._debug) this.logDebug("destruct: ");
+			if (_debug) logDebug("destruct: ");
 			
-			if (this._cameras)
+			if (_cameras)
 			{
-				for each (var camera : Camera in this._cameras) 
+				for each (var camera : Camera in _cameras) 
 				{
-					camera.removeEventListener(ActivityEvent.ACTIVITY, this.handleCameraActivity);
-					camera.removeEventListener(StatusEvent.STATUS, this.handleCameraStatus);
+					camera.removeEventListener(ActivityEvent.ACTIVITY, handleCameraActivity);
+					camera.removeEventListener(StatusEvent.STATUS, handleCameraStatus);
 				}
-				this._cameras = null;
+				_cameras = null;
 			}
-			if (this._videos)
+			if (_videos)
 			{
-				for each (var video : Video in this._videos) 
+				for each (var video : Video in _videos) 
 				{
 					video.attachCamera(null);
 				}
-				this._videos = null;
+				_videos = null;
 			}
-			if (this._timerOut)
+			if (_timerOut)
 			{
-				this._timerOut.destruct();
-				this._timerOut = null;
+				_timerOut.destruct();
+				_timerOut = null;
 			}
 			
-			this._defaultCamera = null;
+			_defaultCamera = null;
 			
 			super.destruct();
 		}

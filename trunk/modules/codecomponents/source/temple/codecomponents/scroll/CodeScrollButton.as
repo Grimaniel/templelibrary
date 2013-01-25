@@ -57,7 +57,7 @@ package temple.codecomponents.scroll
 			
 			// draw icon
 			var icon:CoreShape = new CoreShape();
-			this.addChild(icon);
+			addChild(icon);
 			icon.x = width * .5;
 			icon.y = height * .5;
 			

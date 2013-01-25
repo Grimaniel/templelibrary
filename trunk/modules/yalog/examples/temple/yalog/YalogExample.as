@@ -29,9 +29,9 @@ package
 			// View Yalog outout in Yalala: http://yalala.tyz.nl/
 			var textField:TextField = new TextField();
 			textField.defaultTextFormat = new TextFormat("Arial", 12, 0x333333, true);
-			this.addChild(textField);
-			textField.width = this.stage.stageWidth;
-			textField.height = this.stage.stageHeight;
+			addChild(textField);
+			textField.width = stage.stageWidth;
+			textField.height = stage.stageHeight;
 			var style:StyleSheet = new StyleSheet();
 			style.parseCSS("a {text-decoration: underline;}");
 			textField.styleSheet = style;

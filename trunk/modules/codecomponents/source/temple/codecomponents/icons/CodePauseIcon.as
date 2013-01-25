@@ -46,10 +46,10 @@ package temple.codecomponents.icons
 		{
 			super("CodePlauseIcon");
 			
-			this.graphics.beginFill(color, alpha);
-			this.graphics.drawRect(-size * .5, -size * .5, size / 3, size);
-			this.graphics.drawRect(size / 6, -size * .5, size / 3, size);
-			this.graphics.endFill();
+			graphics.beginFill(color, alpha);
+			graphics.drawRect(-size * .5, -size * .5, size / 3, size);
+			graphics.drawRect(size / 6, -size * .5, size / 3, size);
+			graphics.endFill();
 		}
 	}
 }

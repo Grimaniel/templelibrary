@@ -47,35 +47,35 @@ package temple.speech.googlespeech.data
 
 		public function GoogleSpeechHypothese()
 		{
-			this.toStringProps.push('utterance', 'confidence');
+			toStringProps.push('utterance', 'confidence');
 		}
 
 		public function parseObject(object:Object):Boolean
 		{
-			if ('utterance' in object) this._utterance = object['utterance'];
-			if ('confidence' in object) this._confidence = object['confidence'];
+			if ('utterance' in object) _utterance = object['utterance'];
+			if ('confidence' in object) _confidence = object['confidence'];
 			
-			return this.utterance != null;
+			return utterance != null;
 		}
 		
 		public function get utterance():String
 		{
-			return this._utterance;
+			return _utterance;
 		}
 
 		public function set utterance(value:String):void
 		{
-			this._utterance = value;
+			_utterance = value;
 		}
 
 		public function get confidence():Number
 		{
-			return this._confidence;
+			return _confidence;
 		}
 
 		public function set confidence(value:Number):void
 		{
-			this._confidence = value;
+			_confidence = value;
 		}
 	}
 }

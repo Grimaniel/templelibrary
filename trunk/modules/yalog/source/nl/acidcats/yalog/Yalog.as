@@ -215,15 +215,15 @@ package nl.acidcats.yalog
 			if (_instance) throwError(new Error(this, "Singleton, use Yalog.getInstance()"));
 			
 			// create send connection
-			this._sender = new LocalConnection();
-			this._sender.client = this._sender;
-			this._sender.addEventListener(StatusEvent.STATUS, this.handleSenderStatus, false, 0, true);
+			_sender = new LocalConnection();
+			_sender.client = _sender;
+			_sender.addEventListener(StatusEvent.STATUS, handleSenderStatus, false, 0, true);
 
 			// create buffer for buffering messages while not connected
-			this._buffer = new Vector.<MessageData>(_bufferSize);
+			_buffer = new Vector.<MessageData>(_bufferSize);
 
 			// send a "ping" on the main channel to check for availability of any viewer application		
-			this.ping();
+			ping();
 		}
 
 		/**
@@ -231,11 +231,11 @@ package nl.acidcats.yalog
 		 */
 		private function ping():void 
 		{
-			if (this.createReceiver()) 
+			if (createReceiver()) 
 			{
 				try 
 				{
-					this._sender.send(Functions.CHANNEL, Functions.FUNC_PING, this._receiver.receiverChannel + ";" + Yalog._connectionId);
+					_sender.send(Functions.CHANNEL, Functions.FUNC_PING, _receiver.receiverChannel + ";" + Yalog._connectionId);
 				}
 				catch (error:ArgumentError) 
 				{
@@ -249,11 +249,11 @@ package nl.acidcats.yalog
 		 */
 		private function createReceiver():Boolean 
 		{
-			this._receiver = new PongConnection();
-			this._receiver.addEventListener(StatusEvent.STATUS, this.handleReceiverStatus, false, 0, true);
-			this._receiver.addEventListener(PongConnection.EVENT_PONG_RECEIVED, this.handlePong, false, 0, true);
+			_receiver = new PongConnection();
+			_receiver.addEventListener(StatusEvent.STATUS, handleReceiverStatus, false, 0, true);
+			_receiver.addEventListener(PongConnection.EVENT_PONG_RECEIVED, handlePong, false, 0, true);
 			
-			return this._receiver.start();
+			return _receiver.start();
 		}
 
 		/**
@@ -262,10 +262,10 @@ package nl.acidcats.yalog
 		private function handlePong(event:Event):void 
 		{
 			// flag we're connected to viewer
-			this._senderConnected = true;
+			_senderConnected = true;
 			
 			// dump any buffered messages to the viewer
-			this.dumpData();
+			dumpData();
 		}
 
 		
@@ -275,13 +275,13 @@ package nl.acidcats.yalog
 		 */
 		private function handleData(data:MessageData):void 
 		{
-			if (!this._senderConnected) 
+			if (!_senderConnected) 
 			{
-				this.storeData(data);
+				storeData(data);
 			} 
 			else 
 			{
-				this.sendData(data);
+				sendData(data);
 			}
 		}
 
@@ -290,13 +290,13 @@ package nl.acidcats.yalog
 		 */
 		private function sendData(data:MessageData):void 
 		{
-			data.channelID = this._receiver.channelID;
+			data.channelID = _receiver.channelID;
 			data.connectionId = Yalog.connectionId;
 			data.connectionName = Yalog.connectionName;
 			
 			if (!Yalog._sendAsByteArray)
 			{
-				this._sender.send(Functions.CHANNEL, Functions.FUNC_WRITELOG, data);
+				_sender.send(Functions.CHANNEL, Functions.FUNC_WRITELOG, data);
 			}
 			else
 			{
@@ -364,7 +364,7 @@ package nl.acidcats.yalog
 				{
 					try
 					{
-						this._sender.send(Functions.CHANNEL, Functions.FUNC_WRITELOG, dataPackages[i]);
+						_sender.send(Functions.CHANNEL, Functions.FUNC_WRITELOG, dataPackages[i]);
 					}
 					catch(error:Error)
 					{
@@ -380,12 +380,12 @@ package nl.acidcats.yalog
 		 */
 		private function storeData(data:MessageData):void 
 		{
-			this._buffer[this._writePointer++] = data;
+			_buffer[_writePointer++] = data;
 			
-			if (this._writePointer >= _BUFFER_SIZE) 
+			if (_writePointer >= _BUFFER_SIZE) 
 			{
-				this._fullCircle = true;
-				this._writePointer = 0;
+				_fullCircle = true;
+				_writePointer = 0;
 			}
 		}
 
@@ -396,18 +396,18 @@ package nl.acidcats.yalog
 		{
 			if (!_fullCircle && (_writePointer == 0)) return;
 			
-			this.sendData(new MessageData("-- START DUMP --", Levels.STATUS, getTimer(), toString()));
+			sendData(new MessageData("-- START DUMP --", Levels.STATUS, getTimer(), toString()));
 			
 			if (_fullCircle) 
 			{
-				this.dumpRange(_writePointer, _BUFFER_SIZE - 1);
+				dumpRange(_writePointer, _BUFFER_SIZE - 1);
 			}
-			this.dumpRange(0, _writePointer - 1);
+			dumpRange(0, _writePointer - 1);
 
-			this.sendData(new MessageData("-- END DUMP --", Levels.STATUS, getTimer(), toString()));
+			sendData(new MessageData("-- END DUMP --", Levels.STATUS, getTimer(), toString()));
 			
-			this._writePointer = 0;
-			this._fullCircle = false;
+			_writePointer = 0;
+			_fullCircle = false;
 		}
 
 		/**
@@ -417,7 +417,7 @@ package nl.acidcats.yalog
 		{
 			for (var i:Number = start;i <= end;i++) 
 			{
-				this.sendData(MessageData(_buffer[i]));
+				sendData(MessageData(_buffer[i]));
 			}
 		}
 
@@ -428,9 +428,9 @@ package nl.acidcats.yalog
 		{
 			Yalog._bufferSize = size;
 			
-			this._buffer.length = Yalog._bufferSize;
-			this._writePointer = 0;
-			this._fullCircle = false;
+			_buffer.length = Yalog._bufferSize;
+			_writePointer = 0;
+			_fullCircle = false;
 		}
 
 		private function handleReceiverStatus(event:StatusEvent):void 
@@ -468,9 +468,9 @@ dynamic final class PongConnection extends LocalConnection
 	public function PongConnection() 
 	{
 		// allow connection from anywhere
-		this.allowDomain("*");
-		this.allowInsecureDomain("*");
-		this.client = this;
+		allowDomain("*");
+		allowInsecureDomain("*");
+		client = this;
 	}
 
 	/**
@@ -480,18 +480,18 @@ dynamic final class PongConnection extends LocalConnection
 	public function start():Boolean 
 	{
 		var receiverConnected:Boolean = false;
-		this._channelID = 0;
+		_channelID = 0;
 
 		// loop available channels, try to connect
 		do 
 		{
-			this._channelID++;
-			this._receiverChannel = Functions.CHANNEL_PING + _channelID;
+			_channelID++;
+			_receiverChannel = Functions.CHANNEL_PING + _channelID;
 			
 			try 
 			{
 				receiverConnected = true;
-				this.connect(this._receiverChannel);
+				connect(_receiverChannel);
 			}
 			catch (e:ArgumentError) 
 			{
@@ -502,7 +502,7 @@ dynamic final class PongConnection extends LocalConnection
 		
 		if (receiverConnected) 
 		{
-			this[Functions.FUNC_PONG] = this.onPong;
+			this[Functions.FUNC_PONG] = onPong;
 		}
 		return receiverConnected;
 	}
@@ -512,12 +512,12 @@ dynamic final class PongConnection extends LocalConnection
 	 */
 	public function get receiverChannel():String 
 	{
-		return this._receiverChannel;
+		return _receiverChannel;
 	}
 	
 	public function get channelID():int
 	{
-		return this._channelID;
+		return _channelID;
 	}
 
 	/**
@@ -525,7 +525,7 @@ dynamic final class PongConnection extends LocalConnection
 	 */
 	private function onPong():void 
 	{
-		this.close();
-		this.dispatchEvent(new Event(EVENT_PONG_RECEIVED));
+		close();
+		dispatchEvent(new Event(EVENT_PONG_RECEIVED));
 	}
 }

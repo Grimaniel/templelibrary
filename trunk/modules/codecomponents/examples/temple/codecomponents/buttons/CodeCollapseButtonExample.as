@@ -21,9 +21,9 @@ package
 		{
 			super("Temple - CodeCollapseButtonExample");
 			
-			this.addChild(new CodeCollapseButton(14, 14, 10, 10));
-			this.addChild(new CodeCollapseButton(20, 20, 30, 10));
-			this.addChild(new CodeCollapseButton(100, 30, 10, 40));
+			addChild(new CodeCollapseButton(14, 14, 10, 10));
+			addChild(new CodeCollapseButton(20, 20, 30, 10));
+			addChild(new CodeCollapseButton(100, 30, 10, 40));
 		}
 	}
 }

@@ -48,7 +48,7 @@ package temple.codecomponents.buttons
 		{
 			super(new CodeFastForwardIcon(), width, height, x, y);
 			
-			this.icon.scaleX = -1;
+			icon.scaleX = -1;
 		}
 	}
 }

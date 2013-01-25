@@ -51,15 +51,15 @@ package temple.codecomponents.buttons
 		{
 			super(width, height, x, y);
 			
-			this._icon = icon;
-			this._icon.x = width * .5;
-			this._icon.y = height * .5;
-			this.addChild(icon);
+			_icon = icon;
+			_icon.x = width * .5;
+			_icon.y = height * .5;
+			addChild(icon);
 		}
 
 		public function get icon():DisplayObject
 		{
-			return this._icon;
+			return _icon;
 		}
 	}
 }

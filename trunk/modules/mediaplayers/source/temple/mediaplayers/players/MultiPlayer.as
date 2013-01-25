@@ -55,13 +55,13 @@ package temple.mediaplayers.players
 		
 		public function MultiPlayer(primaryPlayer:IPlayer)
 		{
-			this._primaryPlayer = primaryPlayer;
-			this._players = [this._primaryPlayer];
+			_primaryPlayer = primaryPlayer;
+			_players = [_primaryPlayer];
 			
-			this._primaryPlayer.addEventListener(StatusEvent.STATUS_CHANGE, this.handlePrimaryPlayerStatusChange);
-			this._primaryPlayer.addEventListener(PlayerEvent.PLAY_STARTED, this.dispatchEvent);
-			this._primaryPlayer.addEventListener(PlayerEvent.SEEK_NOTIFY, this.handleSeek);
-			this._primaryPlayer.addEventListener(SoundEvent.VOLUME_CHANGE, this.handleVolumeChange);
+			_primaryPlayer.addEventListener(StatusEvent.STATUS_CHANGE, handlePrimaryPlayerStatusChange);
+			_primaryPlayer.addEventListener(PlayerEvent.PLAY_STARTED, dispatchEvent);
+			_primaryPlayer.addEventListener(PlayerEvent.SEEK_NOTIFY, handleSeek);
+			_primaryPlayer.addEventListener(SoundEvent.VOLUME_CHANGE, handleVolumeChange);
 		}
 
 		/**
@@ -69,7 +69,7 @@ package temple.mediaplayers.players
 		 */
 		public function add(player:IPlayer):void
 		{
-			this._players.push(player);
+			_players.push(player);
 		}
 
 		/**
@@ -77,7 +77,7 @@ package temple.mediaplayers.players
 		 */
 		public function remove(player:IPlayer):void
 		{
-			ArrayUtils.removeValueFromArray(this._players, player);
+			ArrayUtils.removeValueFromArray(_players, player);
 		}
 
 		/**
@@ -85,7 +85,7 @@ package temple.mediaplayers.players
 		 */
 		public function pause():void
 		{
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				player.pause();
 			}
@@ -96,7 +96,7 @@ package temple.mediaplayers.players
 		 */
 		public function resume():void
 		{
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				player.resume();
 			}
@@ -107,7 +107,7 @@ package temple.mediaplayers.players
 		 */
 		public function get paused():Boolean
 		{
-			return this._primaryPlayer.paused;
+			return _primaryPlayer.paused;
 		}
 
 		/**
@@ -115,7 +115,7 @@ package temple.mediaplayers.players
 		 */
 		public function get status():String
 		{
-			return this._primaryPlayer.status;
+			return _primaryPlayer.status;
 		}
 
 		/**
@@ -123,7 +123,7 @@ package temple.mediaplayers.players
 		 */
 		public function play():void
 		{
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				player.play();
 			}
@@ -134,7 +134,7 @@ package temple.mediaplayers.players
 		 */
 		public function stop():void
 		{
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				player.stop();
 			}
@@ -145,7 +145,7 @@ package temple.mediaplayers.players
 		 */
 		public function seek(seconds:Number = 0):void
 		{
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				player.seek(seconds);
 			}
@@ -156,7 +156,7 @@ package temple.mediaplayers.players
 		 */
 		public function get currentPlayTime():Number
 		{
-			return this._primaryPlayer.currentPlayTime;
+			return _primaryPlayer.currentPlayTime;
 		}
 
 		/**
@@ -164,7 +164,7 @@ package temple.mediaplayers.players
 		 */
 		public function get duration():Number
 		{
-			return this._primaryPlayer.duration;
+			return _primaryPlayer.duration;
 		}
 
 		/**
@@ -172,7 +172,7 @@ package temple.mediaplayers.players
 		 */
 		public function get currentPlayFactor():Number
 		{
-			return this._primaryPlayer.currentPlayFactor;
+			return _primaryPlayer.currentPlayFactor;
 		}
 
 		/**
@@ -180,7 +180,7 @@ package temple.mediaplayers.players
 		 */
 		public function get autoRewind():Boolean
 		{
-			return this._primaryPlayer.autoRewind;
+			return _primaryPlayer.autoRewind;
 		}
 
 		/**
@@ -188,7 +188,7 @@ package temple.mediaplayers.players
 		 */
 		public function set autoRewind(value:Boolean):void
 		{
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				player.autoRewind = value;
 			}
@@ -200,7 +200,7 @@ package temple.mediaplayers.players
 		public function get bytesLoaded():uint
 		{
 			var bytesLoaded:uint;
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				if (player is IProgressiveDownloadPlayer) bytesLoaded += (player as IProgressiveDownloadPlayer).bytesLoaded;
 			}
@@ -213,7 +213,7 @@ package temple.mediaplayers.players
 		public function get bytesTotal():uint
 		{
 			var bytesTotal:uint;
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				if (player is IProgressiveDownloadPlayer) bytesTotal += (player as IProgressiveDownloadPlayer).bytesTotal;
 			}
@@ -250,7 +250,7 @@ package temple.mediaplayers.players
 		 */
 		public function get bufferLength():Number
 		{
-			return this._primaryPlayer is IProgressiveDownloadPlayer ? IProgressiveDownloadPlayer(this._primaryPlayer).bufferLength : NaN;
+			return _primaryPlayer is IProgressiveDownloadPlayer ? IProgressiveDownloadPlayer(_primaryPlayer).bufferLength : NaN;
 		}
 
 		/**
@@ -258,7 +258,7 @@ package temple.mediaplayers.players
 		 */
 		public function get bufferTime():Number
 		{
-			return this._primaryPlayer is IProgressiveDownloadPlayer ? IProgressiveDownloadPlayer(this._primaryPlayer).bufferTime : NaN;
+			return _primaryPlayer is IProgressiveDownloadPlayer ? IProgressiveDownloadPlayer(_primaryPlayer).bufferTime : NaN;
 		}
 
 		/**
@@ -274,7 +274,7 @@ package temple.mediaplayers.players
 		 */
 		public function get volume():Number
 		{
-			return this._primaryPlayer is IAudible ? IAudible(this._primaryPlayer).volume : NaN;
+			return _primaryPlayer is IAudible ? IAudible(_primaryPlayer).volume : NaN;
 		}
 
 		/**
@@ -282,7 +282,7 @@ package temple.mediaplayers.players
 		 */
 		public function set volume(value:Number):void
 		{
-			for each (var player : IPlayer in this._players)
+			for each (var player : IPlayer in _players)
 			{
 				if (player is IAudible) (player as IAudible).volume = value;
 			}
@@ -293,7 +293,7 @@ package temple.mediaplayers.players
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -301,34 +301,34 @@ package temple.mediaplayers.players
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		private function handlePrimaryPlayerStatusChange(event:StatusEvent):void
 		{
-			if (this.debug) this.logDebug("handlePrimaryPlayerStatusChange: " + event.status);
+			if (debug) logDebug("handlePrimaryPlayerStatusChange: " + event.status);
 			
 			var player : IPlayer;
 			switch (event.status)
 			{
 				case PlayerStatus.LOADING:
 				{
-					for each (player in this._players) if (player != this._primaryPlayer) player.pause();
+					for each (player in _players) if (player != _primaryPlayer) player.pause();
 					break;
 				}
 				case PlayerStatus.PAUSED:
 				{
-					for each (player in this._players) if (player != this._primaryPlayer) player.pause();
+					for each (player in _players) if (player != _primaryPlayer) player.pause();
 					break;
 				}
 				case PlayerStatus.PLAYING:
 				{
-					for each (player in this._players) if (player != this._primaryPlayer) player.resume();
+					for each (player in _players) if (player != _primaryPlayer) player.resume();
 					break;
 				}
 				case PlayerStatus.STOPPED:
 				{
-					for each (player in this._players) if (player != this._primaryPlayer) player.stop();
+					for each (player in _players) if (player != _primaryPlayer) player.stop();
 					break;
 				}
 				default:
@@ -337,26 +337,26 @@ package temple.mediaplayers.players
 					break;
 				}
 			}
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 		
 		private function handleVolumeChange(event:SoundEvent):void
 		{
-			if (this.debug) this.logDebug("handleVolumeChange: ");
+			if (debug) logDebug("handleVolumeChange: ");
 			
-			if (this._primaryPlayer is IAudible)
+			if (_primaryPlayer is IAudible)
 			{
-				for each (var player : IPlayer in this._players) if (player != this._primaryPlayer && player is IAudible) IAudible(player).volume = IAudible(this._primaryPlayer).volume;
+				for each (var player : IPlayer in _players) if (player != _primaryPlayer && player is IAudible) IAudible(player).volume = IAudible(_primaryPlayer).volume;
 			}
 			
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 		
 		private function handleSeek(event:PlayerEvent):void
 		{
-			if (this.debug) this.logDebug("handleSeek: " + this._primaryPlayer.currentPlayTime);
+			if (debug) logDebug("handleSeek: " + _primaryPlayer.currentPlayTime);
 			
-			for each (var player : IPlayer in this._players) if (player != this._primaryPlayer) player.seek(this._primaryPlayer.currentPlayTime);
+			for each (var player : IPlayer in _players) if (player != _primaryPlayer) player.seek(_primaryPlayer.currentPlayTime);
 		}
 		
 		/**
@@ -364,17 +364,17 @@ package temple.mediaplayers.players
 		 */
 		override public function destruct():void
 		{
-			if (this._primaryPlayer)
+			if (_primaryPlayer)
 			{
-				this._primaryPlayer.removeEventListener(StatusEvent.STATUS_CHANGE, this.dispatchEvent);
-				this._primaryPlayer.removeEventListener(PlayerEvent.PLAY_STARTED, this.dispatchEvent);
-				this._primaryPlayer.removeEventListener(SoundEvent.VOLUME_CHANGE, this.dispatchEvent);
-				this._primaryPlayer = null;
+				_primaryPlayer.removeEventListener(StatusEvent.STATUS_CHANGE, dispatchEvent);
+				_primaryPlayer.removeEventListener(PlayerEvent.PLAY_STARTED, dispatchEvent);
+				_primaryPlayer.removeEventListener(SoundEvent.VOLUME_CHANGE, dispatchEvent);
+				_primaryPlayer = null;
 			}
-			if (this._players)
+			if (_players)
 			{
-				this._players.length = 0;
-				this._players = null;
+				_players.length = 0;
+				_players = null;
 			}
 			
 			super.destruct();

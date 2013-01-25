@@ -63,9 +63,9 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function VideoMetaData(data:Object = null) 
 		{
-			if (data) this.parseObject(data);
+			if (data) parseObject(data);
 			
-			this.toStringProps.push("duration", "width", "height", "framerate", "canSeekToEnd", "cuePoints");
+			toStringProps.push("duration", "width", "height", "framerate", "canSeekToEnd", "cuePoints");
 		}
 
 		/**
@@ -73,29 +73,29 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function parseObject(object:Object):Boolean
 		{
-			this._audiocodecid = isNaN(object.audiocodecid) ? null : object.audiocodecid;
-			this._audiodatarate = isNaN(object.audiodatarate) ? null : object.audiodatarate;
-			this._audiodelay = isNaN(object.audiodelay) ? null : object.audiodelay;
-			this._canSeekToEnd = (object.canSeekToEnd == undefined) ? false : object.canSeekToEnd;
-			this._duration = isNaN(object.duration) ? null : object.duration;
-			this._framerate = isNaN(object.framerate) ? null : object.framerate;
-			this._height = isNaN(object.height) ? null : object.height;
-			this._videocodecid = (object.videocodecid == undefined) ? null : object.videocodecid;
-			this._videodatarate = isNaN(object.videodatarate) ? null : object.videodatarate;
-			this._width = isNaN(object.width) ? null : object.width;
+			_audiocodecid = isNaN(object.audiocodecid) ? null : object.audiocodecid;
+			_audiodatarate = isNaN(object.audiodatarate) ? null : object.audiodatarate;
+			_audiodelay = isNaN(object.audiodelay) ? null : object.audiodelay;
+			_canSeekToEnd = (object.canSeekToEnd == undefined) ? false : object.canSeekToEnd;
+			_duration = isNaN(object.duration) ? null : object.duration;
+			_framerate = isNaN(object.framerate) ? null : object.framerate;
+			_height = isNaN(object.height) ? null : object.height;
+			_videocodecid = (object.videocodecid == undefined) ? null : object.videocodecid;
+			_videodatarate = isNaN(object.videodatarate) ? null : object.videodatarate;
+			_width = isNaN(object.width) ? null : object.width;
 			
 			if (object.cuePoints is Array)
 			{
 				var cuePoint:VideoCuePoint;
-				this._cuePoints = new Vector.<VideoCuePoint>();
+				_cuePoints = new Vector.<VideoCuePoint>();
 				for (var i:int = 0, leni:int = object.cuePoints.length; i < leni; i++)
 				{
 					cuePoint = new VideoCuePoint();
 					cuePoint.parseObject(object.cuePoints[i]);
-					this._cuePoints.push(cuePoint);
+					_cuePoints.push(cuePoint);
 				}
 			}
-			this._rawData = object;
+			_rawData = object;
 			
 			return true;
 		}
@@ -105,7 +105,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get audiocodecid():Number
 		{
-			return this._audiocodecid;
+			return _audiocodecid;
 		}
 		
 		/**
@@ -113,7 +113,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get audiodatarate():Number
 		{
-			return this._audiodatarate;
+			return _audiodatarate;
 		}
 		
 		/**
@@ -121,7 +121,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get audiodelay():Number
 		{
-			return this._audiodelay;
+			return _audiodelay;
 		}
 		
 		/**
@@ -129,7 +129,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get canSeekToEnd():Boolean
 		{
-			return this._canSeekToEnd;
+			return _canSeekToEnd;
 		}
 		
 		/**
@@ -137,7 +137,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get duration():Number
 		{
-			return this._duration;
+			return _duration;
 		}
 		
 		/**
@@ -145,7 +145,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get framerate():Number
 		{
-			return this._framerate;
+			return _framerate;
 		}
 		
 		/**
@@ -153,7 +153,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get height():Number
 		{
-			return this._height;
+			return _height;
 		}
 		
 		/**
@@ -161,7 +161,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get videocodecid():Number
 		{
-			return this._videocodecid;
+			return _videocodecid;
 		}
 		
 		/**
@@ -169,7 +169,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get videodatarate():Number
 		{
-			return this._videodatarate;
+			return _videodatarate;
 		}
 		
 		/**
@@ -177,7 +177,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get width():Number
 		{
-			return this._width;
+			return _width;
 		}
 		
 		/**
@@ -185,7 +185,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get cuePoints():Vector.<VideoCuePoint>
 		{
-			return this._cuePoints;
+			return _cuePoints;
 		}
 
 		/**
@@ -193,7 +193,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		public function get rawData():Object
 		{
-			return this._rawData;
+			return _rawData;
 		}
 	}
 }

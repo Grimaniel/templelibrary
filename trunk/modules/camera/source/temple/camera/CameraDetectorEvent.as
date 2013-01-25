@@ -53,17 +53,17 @@ package temple.camera
 		{
 			super(type);
 			
-			this._camera = camera; 
+			_camera = camera; 
 		}
 		
 		public function get camera():Camera
 		{
-			return this._camera;
+			return _camera;
 		}
 		
 		override public function clone():Event
 		{
-			return new CameraDetectorEvent(this.type, this.camera);
+			return new CameraDetectorEvent(type, camera);
 		}
 		
 	}

@@ -51,15 +51,15 @@ package temple.codecomponents.windows
 		{
 			super(width, height, ScaleMode.NO_SCALE, Align.TOP_LEFT);
 			
-			this.addEventListener(Event.ADDED, this.handleAdded);
-			this.addEventListener(WindowEvent.ADD, this.handleWindowAdd);
+			addEventListener(Event.ADDED, handleAdded);
+			addEventListener(WindowEvent.ADD, handleWindowAdd);
 		}
 
 		private function handleAdded(event:Event):void
 		{
 			if (event.target is IWindow)
 			{
-				this.dispatchEvent(new WindowEvent(WindowEvent.ADD, IWindow(event.target)));
+				dispatchEvent(new WindowEvent(WindowEvent.ADD, IWindow(event.target)));
 			}
 		}
 
@@ -68,7 +68,7 @@ package temple.codecomponents.windows
 			if (event.window.parent != this)
 			{
 				event.stopPropagation();
-				this.addChild(DisplayObject(event.window));
+				addChild(DisplayObject(event.window));
 			}
 		}
 	}

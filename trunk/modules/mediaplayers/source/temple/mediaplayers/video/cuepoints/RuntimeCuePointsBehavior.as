@@ -62,9 +62,9 @@ package temple.mediaplayers.video.cuepoints
 		{
 			super(target);
 			
-			this._cuepoints = new Vector.<VideoCuePoint>();
+			_cuepoints = new Vector.<VideoCuePoint>();
 			
-			target.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			target.addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 
 		/**
@@ -72,7 +72,7 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function get videoPlayer():IPlayer 
 		{
-			return this.target as IPlayer;
+			return target as IPlayer;
 		}
 
 		/**
@@ -80,8 +80,8 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function addCuePoint(cuepoint:VideoCuePoint):void 
 		{
-			this._cuepoints.push(cuepoint);
-			VectorUtils.sortOn(this._cuepoints, 'time', Array.NUMERIC);
+			_cuepoints.push(cuepoint);
+			VectorUtils.sortOn(_cuepoints, 'time', Array.NUMERIC);
 		}
 		
 		/**
@@ -89,7 +89,7 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -97,37 +97,37 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleEnterFrame(event:Event):void 
 		{
-			var playTime:Number = this.videoPlayer.currentPlayTime;
+			var playTime:Number = videoPlayer.currentPlayTime;
 			var checkTime:Number = getTimer() * .001;
-			if (this.videoPlayer.status == PlayerStatus.PLAYING)
+			if (videoPlayer.status == PlayerStatus.PLAYING)
 			{
-				if (this._previousPlayTime > playTime || isNaN(this._previousPlayTime)) this._previousPlayTime = 0;
+				if (_previousPlayTime > playTime || isNaN(_previousPlayTime)) _previousPlayTime = 0;
 				
-				if (playTime != this._previousPlayTime && playTime - this._previousPlayTime <= checkTime - this._previousCheckTime + .1)
+				if (playTime != _previousPlayTime && playTime - _previousPlayTime <= checkTime - _previousCheckTime + .1)
 				{
-					var leni:int = this._cuepoints.length;
+					var leni:int = _cuepoints.length;
 					var cuepoint:VideoCuePoint;
 					for (var i:int = 0; i < leni; i++)
 					{
-						cuepoint = VideoCuePoint(this._cuepoints[i]);
+						cuepoint = VideoCuePoint(_cuepoints[i]);
 						if (cuepoint.time > playTime)
 						{
 							break;
 						}
-						else if (cuepoint.time > this._previousPlayTime || this._previousPlayTime == 0)
+						else if (cuepoint.time > _previousPlayTime || _previousPlayTime == 0)
 						{
-							this.videoPlayer.dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, cuepoint));
+							videoPlayer.dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, cuepoint));
 						}
 					}
 				}
 			}
-			this._previousPlayTime = playTime;
-			this._previousCheckTime = checkTime;
+			_previousPlayTime = playTime;
+			_previousCheckTime = checkTime;
 		}
 
 		/**
@@ -135,11 +135,11 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		override public function destruct():void 
 		{
-			if (this.videoPlayer)
+			if (videoPlayer)
 			{
-				this.videoPlayer.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				videoPlayer.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			}
-			this._cuepoints = null;
+			_cuepoints = null;
 			
 			super.destruct();
 		}

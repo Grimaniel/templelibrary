@@ -59,7 +59,7 @@ package temple.mediaplayers.audio
 		 */
 		override public function clone():Event 
 		{
-			return new AudioMetaDataEvent(this.type, this.metadata, this.bubbles);
+			return new AudioMetaDataEvent(type, metadata, bubbles);
 		}
 	}
 }

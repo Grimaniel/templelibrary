@@ -63,7 +63,7 @@ package nl.acidcats.yalog.util
 
 		public function YaLogConnector() 
 		{
-			Log.addLogListener(this.handleLogEvent);
+			Log.addLogListener(handleLogEvent);
 			Yalog.showTrace = false;
 		}
 

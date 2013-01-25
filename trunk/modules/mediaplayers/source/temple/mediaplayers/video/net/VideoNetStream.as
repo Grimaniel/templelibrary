@@ -68,7 +68,7 @@ package temple.mediaplayers.video.net
 		 */
 		public function onMetaData(info:Object):void 
 		{
-			this.dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.METADATA, new VideoMetaData(info)));
+			dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.METADATA, new VideoMetaData(info)));
 		}
 
 		/**
@@ -78,7 +78,7 @@ package temple.mediaplayers.video.net
 		{
 			var cuepoint:VideoCuePoint = new VideoCuePoint();
 			cuepoint.parseObject(info);
-			this.dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, cuepoint));
+			dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, cuepoint));
 		}
 	}
 }

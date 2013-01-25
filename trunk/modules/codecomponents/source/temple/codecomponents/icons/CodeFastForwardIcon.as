@@ -50,17 +50,17 @@ package temple.codecomponents.icons
 		{
 			super("CodeFastForwardIcon");
 			
-			this.graphics.beginFill(color, alpha);
-			this.graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
-			this.graphics.moveTo(-size, -size * .5);
-			this.graphics.lineTo(0, 0);
-			this.graphics.lineTo(-size, size * .5);
-			this.graphics.moveTo(-size, -size * .5);
-			this.graphics.moveTo(0, -size * .5);
-			this.graphics.lineTo(size, 0);
-			this.graphics.lineTo(0, size * .5);
-			this.graphics.moveTo(0, -size * .5);
-			this.graphics.endFill();
+			graphics.beginFill(color, alpha);
+			graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
+			graphics.moveTo(-size, -size * .5);
+			graphics.lineTo(0, 0);
+			graphics.lineTo(-size, size * .5);
+			graphics.moveTo(-size, -size * .5);
+			graphics.moveTo(0, -size * .5);
+			graphics.lineTo(size, 0);
+			graphics.lineTo(0, size * .5);
+			graphics.moveTo(0, -size * .5);
+			graphics.endFill();
 		}
 	}
 }

@@ -118,12 +118,12 @@ package temple.net.multipart
 
 		public function MultipartURLLoader()
 		{
-			this._fileNames = new Array();
-			this._files = new Dictionary();
-			this._variableNames = new Array();
-			this._variables = new Dictionary();
-			this._loader = new CoreURLLoader(null, URLLoaderDataFormat.TEXT, false);
-			this.requestHeaders = new Array();
+			_fileNames = new Array();
+			_files = new Dictionary();
+			_variableNames = new Array();
+			_variables = new Dictionary();
+			_loader = new CoreURLLoader(null, URLLoaderDataFormat.TEXT, false);
+			requestHeaders = new Array();
 		}
 
 		/**
@@ -140,24 +140,24 @@ package temple.net.multipart
 				return;
 			}
 
-			this._path = path;
-			this._async = async;
+			_path = path;
+			_async = async;
 
-			if (this._async)
+			if (_async)
 			{
-				if (!this._prepared)
+				if (!_prepared)
 				{
-					this.constructPostDataAsync();
+					constructPostDataAsync();
 				}
 				else
 				{
-					this.doSend();
+					doSend();
 				}
 			}
 			else
 			{
-				this._data = constructPostData();
-				this.doSend();
+				_data = constructPostData();
+				doSend();
 			}
 		}
 
@@ -166,18 +166,18 @@ package temple.net.multipart
 		 */
 		public function startLoad():void
 		{
-			if (this._path == null || this._path == '' || this._async == false )
+			if (_path == null || _path == '' || _async == false )
 			{
 				throwError(new IllegalOperationError('You can use this method only if loading asynchronous.'));
 				return;
 			}
-			if (!this._prepared && this._async )
+			if (!_prepared && _async )
 			{
 				throwError(new IllegalOperationError('You should prepare data before sending when using asynchronous.'));
 				return;
 			}
 
-			this.doSend();
+			doSend();
 		}
 
 		/**
@@ -185,7 +185,7 @@ package temple.net.multipart
 		 */
 		public function prepareData():void
 		{
-			this.constructPostDataAsync();
+			constructPostDataAsync();
 		}
 
 		/**
@@ -195,7 +195,7 @@ package temple.net.multipart
 		{
 			try
 			{
-				this._loader.close();
+				_loader.close();
 			}
 			catch( e:Error )
 			{
@@ -321,49 +321,49 @@ package temple.net.multipart
 				throwError(new IllegalOperationError('Illegal URLLoader Data Format'));
 				return;
 			}
-			this._loader.dataFormat = format;
+			_loader.dataFormat = format;
 		}
 
 		public function get loader():URLLoader
 		{
-			return this._loader;
+			return _loader;
 		}
 		
 		public function get urlRequestMethod():String
 		{
-			return this._urlRequestMethod;
+			return _urlRequestMethod;
 		}
 
 		public function set urlRequestMethod(value:String):void
 		{
-			this._urlRequestMethod = value;
+			_urlRequestMethod = value;
 		}
 
 		private function doSend():void
 		{
 			var urlRequest:URLRequest = new URLRequest();
-			urlRequest.url = this._path;
-			urlRequest.method = this._urlRequestMethod;
-			urlRequest.data = this._data;
+			urlRequest.url = _path;
+			urlRequest.method = _urlRequestMethod;
+			urlRequest.data = _data;
 
-			urlRequest.requestHeaders.push(new URLRequestHeader('Content-type', 'multipart/form-data; boundary=' + this.getBoundary()));
+			urlRequest.requestHeaders.push(new URLRequestHeader('Content-type', 'multipart/form-data; boundary=' + getBoundary()));
 
 			if (requestHeaders.length)
 			{
-				urlRequest.requestHeaders = urlRequest.requestHeaders.concat(this.requestHeaders);
+				urlRequest.requestHeaders = urlRequest.requestHeaders.concat(requestHeaders);
 			}
 
-			this.addListener();
+			addListener();
 
-			this._loader.load(urlRequest);
+			_loader.load(urlRequest);
 		}
 
 		private function constructPostDataAsync():void
 		{
-			if (this._asyncWriteTimeoutId)
+			if (_asyncWriteTimeoutId)
 			{
-				this._asyncWriteTimeoutId.destruct();
-				this._asyncWriteTimeoutId = null;
+				_asyncWriteTimeoutId.destruct();
+				_asyncWriteTimeoutId = null;
 			}
 
 			_data = new ByteArray();
@@ -411,7 +411,7 @@ package temple.net.multipart
 			var i:uint;
 			var bytes:String;
 
-			for each (var name:String in this._variableNames)
+			for each (var name:String in _variableNames)
 			{
 				postData = BOUNDARY(postData);
 				postData = LINEBREAK(postData);
@@ -420,10 +420,10 @@ package temple.net.multipart
 				{
 					postData.writeByte(bytes.charCodeAt(i));
 				}
-				if (VariablePart(this._variables[name]).contentType != '' && VariablePart(this._variables[name]).contentType != null)
+				if (VariablePart(_variables[name]).contentType != '' && VariablePart(_variables[name]).contentType != null)
 				{
 					postData = LINEBREAK(postData);
-					bytes = 'Content-Type: ' + VariablePart(this._variables[name]).contentType;
+					bytes = 'Content-Type: ' + VariablePart(_variables[name]).contentType;
 					for ( i = 0; i < bytes.length; i++ )
 					{
 						postData.writeByte(bytes.charCodeAt(i));
@@ -431,7 +431,7 @@ package temple.net.multipart
 				}
 				postData = LINEBREAK(postData);
 				postData = LINEBREAK(postData);
-				postData.writeUTFBytes(VariablePart(this._variables[name]).value || "");
+				postData.writeUTFBytes(VariablePart(_variables[name]).value || "");
 				postData = LINEBREAK(postData);
 			}
 
@@ -442,14 +442,14 @@ package temple.net.multipart
 		{
 			var i:uint;
 
-			if (this._fileNames.length)
+			if (_fileNames.length)
 			{
-				for each (var name:String in this._fileNames)
+				for each (var name:String in _fileNames)
 				{
-					postData = getFilePartHeader(postData, this._files[name] as FilePart);
-					postData = getFilePartData(postData, this._files[name] as FilePart);
+					postData = getFilePartHeader(postData, _files[name] as FilePart);
+					postData = getFilePartData(postData, _files[name] as FilePart);
 
-					if (i != this._fileNames.length - 1)
+					if (i != _fileNames.length - 1)
 					{
 						postData = LINEBREAK(postData);
 					}
@@ -533,48 +533,48 @@ package temple.net.multipart
 
 		private function handleProgress(event:ProgressEvent):void
 		{
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 
 		private function handleComplete(event:Event):void
 		{
-			this.removeListener();
-			this.dispatchEvent(event);
+			removeListener();
+			dispatchEvent(event);
 		}
 
 		private function handleIOError(event:IOErrorEvent):void
 		{
-			this.removeListener();
-			this.dispatchEvent(event);
+			removeListener();
+			dispatchEvent(event);
 		}
 
 		private function handleSecurityError(event:SecurityErrorEvent):void
 		{
-			this.removeListener();
-			this.dispatchEvent(event);
+			removeListener();
+			dispatchEvent(event);
 		}
 
 		private function handleHTTPStatus(event:HTTPStatusEvent):void
 		{
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 
 		private function addListener():void
 		{
-			this._loader.addEventListener(Event.COMPLETE, this.handleComplete);
-			this._loader.addEventListener(ProgressEvent.PROGRESS, this.handleProgress);
-			this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
-			this._loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.handleHTTPStatus);
-			this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			_loader.addEventListener(Event.COMPLETE, handleComplete);
+			_loader.addEventListener(ProgressEvent.PROGRESS, handleProgress);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+			_loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleHTTPStatus);
+			_loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
 		}
 
 		private function removeListener():void
 		{
-			this._loader.removeEventListener(Event.COMPLETE, this.handleComplete);
-			this._loader.removeEventListener(ProgressEvent.PROGRESS, this.handleProgress);
-			this._loader.removeEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
-			this._loader.removeEventListener(HTTPStatusEvent.HTTP_STATUS, this.handleHTTPStatus);
-			this._loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
+			_loader.removeEventListener(Event.COMPLETE, handleComplete);
+			_loader.removeEventListener(ProgressEvent.PROGRESS, handleProgress);
+			_loader.removeEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+			_loader.removeEventListener(HTTPStatusEvent.HTTP_STATUS, handleHTTPStatus);
+			_loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
 		}
 
 		private function BOUNDARY(p:ByteArray):ByteArray
@@ -610,24 +610,24 @@ package temple.net.multipart
 		{
 			var fp:FilePart;
 
-			if (this._asyncFilePointer < this._fileNames.length)
+			if (_asyncFilePointer < _fileNames.length)
 			{
-				fp = this._files[this._fileNames[this._asyncFilePointer]] as FilePart;
-				this._data = this.getFilePartHeader(this._data, fp);
+				fp = _files[_fileNames[_asyncFilePointer]] as FilePart;
+				_data = getFilePartHeader(_data, fp);
 
-				this._asyncWriteTimeoutId = new TimeOut(writeChunkLoop, 10, [this._data, fp.fileContent, 0]);
+				_asyncWriteTimeoutId = new TimeOut(writeChunkLoop, 10, [_data, fp.fileContent, 0]);
 
-				this._asyncFilePointer++;
+				_asyncFilePointer++;
 			}
 			else
 			{
-				this._data = this.closeFilePartsData(this._data);
-				this._data = this.closeDataObject(this._data);
+				_data = closeFilePartsData(_data);
+				_data = closeDataObject(_data);
 
-				this._prepared = true;
+				_prepared = true;
 
-				this.dispatchEvent(new MultipartURLLoaderEvent(MultipartURLLoaderEvent.DATA_PREPARE_PROGRESS, this.totalFilesSize, this.totalFilesSize));
-				this.dispatchEvent(new MultipartURLLoaderEvent(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE));
+				dispatchEvent(new MultipartURLLoaderEvent(MultipartURLLoaderEvent.DATA_PREPARE_PROGRESS, totalFilesSize, totalFilesSize));
+				dispatchEvent(new MultipartURLLoaderEvent(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE));
 			}
 		}
 
@@ -640,43 +640,43 @@ package temple.net.multipart
 			{
 				// Finished writing file bytearray
 				dest = LINEBREAK(dest);
-				this.nextAsyncLoop();
+				nextAsyncLoop();
 				return;
 			}
 
 			p += len;
-			this._writtenBytes += len;
-			if (this._writtenBytes % BLOCK_SIZE * 2 == 0 )
+			_writtenBytes += len;
+			if (_writtenBytes % BLOCK_SIZE * 2 == 0 )
 			{
-				this.dispatchEvent(new MultipartURLLoaderEvent(MultipartURLLoaderEvent.DATA_PREPARE_PROGRESS, _writtenBytes, totalFilesSize));
+				dispatchEvent(new MultipartURLLoaderEvent(MultipartURLLoaderEvent.DATA_PREPARE_PROGRESS, _writtenBytes, totalFilesSize));
 			}
 
-			this._asyncWriteTimeoutId = new TimeOut(writeChunkLoop, 10, [dest, data, p]);
+			_asyncWriteTimeoutId = new TimeOut(writeChunkLoop, 10, [dest, data, p]);
 		}
 
 		override public function destruct():void
 		{
-			if (this._asyncWriteTimeoutId)
+			if (_asyncWriteTimeoutId)
 			{
-				this._asyncWriteTimeoutId.destruct();
-				this._asyncWriteTimeoutId = null;
+				_asyncWriteTimeoutId.destruct();
+				_asyncWriteTimeoutId = null;
 			}
 
-			this.close();
+			close();
 
-			if (this._loader)
+			if (_loader)
 			{
-				this._loader.destruct();
-				this._loader = null;
+				_loader.destruct();
+				_loader = null;
 			}
 
-			this._boundary = null;
-			this._variableNames = null;
-			this._variables = null;
-			this._fileNames = null;
-			this._files = null;
-			this.requestHeaders = null;
-			this._data = null;
+			_boundary = null;
+			_variableNames = null;
+			_variables = null;
+			_fileNames = null;
+			_files = null;
+			requestHeaders = null;
+			_data = null;
 
 			super.destruct();
 		}
@@ -701,10 +701,10 @@ internal class FilePart
 
 	public function dispose():void
 	{
-		this.fileContent = null;
-		this.fileName = null;
-		this.dataField = null;
-		this.contentType = null;
+		fileContent = null;
+		fileName = null;
+		dataField = null;
+		contentType = null;
 	}
 }
 internal class VariablePart

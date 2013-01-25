@@ -152,7 +152,7 @@ package
 			
 			add(new CodeLabel("CodeToolTip"), _COLUMN3, line + 2);
 			ToolTip.add(add(new CodeLabel("hover here"), _COLUMN4, line + 2), "Lorem ipsum");
-			this.stage.addChild((ToolTip.clip = add(new CodeToolTip(), _COLUMN4, line) as CodeToolTip) as DisplayObject);
+			stage.addChild((ToolTip.clip = add(new CodeToolTip(), _COLUMN4, line) as CodeToolTip) as DisplayObject);
 			line += _LINE_HEIGHT;
 			
 			add(new CodeLabel("CodeWindow"), _COLUMN3, line + 2);
@@ -177,7 +177,7 @@ package
 
 		private function add(child:DisplayObject, x:Number, y:Number):DisplayObject
 		{
-			this.addChild(child);
+			addChild(child);
 			child.x = x;
 			child.y = y;
 			

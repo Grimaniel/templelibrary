@@ -21,9 +21,9 @@ package
 		{
 			super("Temple - CodeNextButtonExample");
 			
-			this.addChild(new CodeNextButton(14, 14, 10, 10));
-			this.addChild(new CodeNextButton(20, 20, 30, 10));
-			this.addChild(new CodeNextButton(100, 30, 10, 40));
+			addChild(new CodeNextButton(14, 14, 10, 10));
+			addChild(new CodeNextButton(20, 20, 30, 10));
+			addChild(new CodeNextButton(100, 30, 10, 40));
 		}
 	}
 }

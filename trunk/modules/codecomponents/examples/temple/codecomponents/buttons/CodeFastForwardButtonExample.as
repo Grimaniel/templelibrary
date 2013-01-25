@@ -21,9 +21,9 @@ package
 		{
 			super("Temple - CodeFastForwardButtonExample");
 			
-			this.addChild(new CodeFastForwardButton(14, 14, 10, 10));
-			this.addChild(new CodeFastForwardButton(20, 20, 30, 10));
-			this.addChild(new CodeFastForwardButton(100, 30, 10, 40));
+			addChild(new CodeFastForwardButton(14, 14, 10, 10));
+			addChild(new CodeFastForwardButton(20, 20, 30, 10));
+			addChild(new CodeFastForwardButton(100, 30, 10, 40));
 		}
 	}
 }

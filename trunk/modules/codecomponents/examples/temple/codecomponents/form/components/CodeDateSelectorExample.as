@@ -26,7 +26,7 @@ package
 			
 			// Default CodeDateSelector
 			selector = new CodeDateSelector();
-			this.addChild(selector);
+			addChild(selector);
 			selector.x = 10;
 			selector.y = 10;
 			// set a format to the date output
@@ -34,7 +34,7 @@ package
 			
 			// Create a label for displaying the output of the CodeDateSelector
 			output = new CodeLabel();
-			this.addChild(output);
+			addChild(output);
 			output.x = 200;
 			output.y = 10;
 
@@ -44,7 +44,7 @@ package
 
 			// CodeDateSelector with only dates in the future
 			selector = new CodeDateSelector(new Date());
-			this.addChild(selector);
+			addChild(selector);
 			selector.x = 10;
 			selector.y = 40;
 			// set a format to the date output
@@ -52,7 +52,7 @@ package
 			
 			// Create a label for displaying the output of the CodeDateSelector
 			output = new CodeLabel();
-			this.addChild(output);
+			addChild(output);
 			output.x = 200;
 			output.y = 40;
 
@@ -62,7 +62,7 @@ package
 
 			// CodeDateSelector with only dates in the past
 			selector = new CodeDateSelector(null, new Date());
-			this.addChild(selector);
+			addChild(selector);
 			selector.x = 10;
 			selector.y = 70;
 			// set a format to the date output
@@ -73,7 +73,7 @@ package
 			
 			// Create a label for displaying the output of the CodeDateSelector
 			output = new CodeLabel();
-			this.addChild(output);
+			addChild(output);
 			output.x = 200;
 			output.y = 70;
 

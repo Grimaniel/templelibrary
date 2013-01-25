@@ -59,20 +59,20 @@ package temple.microphone.recorder.events
 		public function RecordingEvent(type:String, time:Number = NaN, valid:Boolean = true)
 		{
 			super(type, false, false);
-			this._time = time;
-			this._valid = valid;
+			_time = time;
+			_valid = valid;
 			
-			this.toStringProps.push("time", "valid");
+			toStringProps.push("time", "valid");
 		}
 
 		public function get time():Number
 		{
-			return this._time;
+			return _time;
 		}
 
 		public function get valid():Boolean
 		{
-			return this._valid;
+			return _valid;
 		}
 		
 		public override function clone():Event

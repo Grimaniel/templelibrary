@@ -32,7 +32,7 @@ package
 
 		private function handleScaleModeChange(event:Event):void
 		{
-			this.mcVideoPlayer.scaleMode = this.mcScaleModeGroupGroup.value;
+			this.mcVideoPlayer.scaleMode = mcScaleModeGroupGroup.value;
 		}
 	}
 }

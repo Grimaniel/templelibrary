@@ -26,10 +26,10 @@ package
 			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
 			super("Temple - VideoPlayerExample");
 			
-			this.stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			var videoPlayer:VideoPlayer = new VideoPlayer(800, 450);
-			this.addChild(videoPlayer);
+			addChild(videoPlayer);
 			
 			// set the scale mode
 			videoPlayer.scaleMode = ScaleMode.NO_SCALE;

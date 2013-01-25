@@ -23,7 +23,7 @@ package
 			super("Temple - CodeVideoPlayerExample");
 			
 			var videoPlayer:CodeVideoPlayer = new CodeVideoPlayer(800, 450, true, ScaleMode.SHOW_ALL);
-			this.addChild(videoPlayer);
+			addChild(videoPlayer);
 			videoPlayer.playUrl('http://www.mediamonks.com/video/reel_en.flv');
 			videoPlayer.left = 0;
 			videoPlayer.right = 0;

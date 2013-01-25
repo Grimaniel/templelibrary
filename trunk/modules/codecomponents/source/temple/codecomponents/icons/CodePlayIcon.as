@@ -50,13 +50,13 @@ package temple.codecomponents.icons
 		{
 			super("CodePlayIcon");
 			
-			this.graphics.beginFill(color, alpha);
-			this.graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
-			this.graphics.moveTo(-size * .5, -size * .5);
-			this.graphics.lineTo(size * .5, 0);
-			this.graphics.lineTo(-size * .5, size * .5);
-			this.graphics.moveTo(-size * .5, -size * .5);
-			this.graphics.endFill();
+			graphics.beginFill(color, alpha);
+			graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
+			graphics.moveTo(-size * .5, -size * .5);
+			graphics.lineTo(size * .5, 0);
+			graphics.lineTo(-size * .5, size * .5);
+			graphics.moveTo(-size * .5, -size * .5);
+			graphics.endFill();
 		}
 	}
 }

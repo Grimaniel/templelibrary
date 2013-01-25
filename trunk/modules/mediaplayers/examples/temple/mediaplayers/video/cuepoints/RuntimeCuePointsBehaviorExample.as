@@ -34,17 +34,17 @@ package
 			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
 			super("Temple - RuntimeCuePointsBehaviorExample");
 			
-			this.stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
-			this._videoPlayer = new VideoPlayer(800, 450);
-			this.addChild(this._videoPlayer);
+			_videoPlayer = new VideoPlayer(800, 450);
+			addChild(_videoPlayer);
 			
 			// add listener to receive cue point messages
-			this._videoPlayer.addEventListener(CuePointEvent.CUEPOINT, this.handleCuePoint);
-			this._videoPlayer.playUrl('http://www.mediamonks.com/video/reel_en.flv');
+			_videoPlayer.addEventListener(CuePointEvent.CUEPOINT, handleCuePoint);
+			_videoPlayer.playUrl('http://www.mediamonks.com/video/reel_en.flv');
 			
 			// create RuntimeCuePointsBehavior, assign the _videoPlayer as target
-			var runtimeCuepoints:RuntimeCuePointsBehavior = new RuntimeCuePointsBehavior(this._videoPlayer);
+			var runtimeCuepoints:RuntimeCuePointsBehavior = new RuntimeCuePointsBehavior(_videoPlayer);
 			runtimeCuepoints.addCuePoint(new VideoCuePoint("Hello world!", 0));
 			runtimeCuepoints.addCuePoint(new VideoCuePoint("This is the RuntimeCuePointBehavior Example", 3));
 			runtimeCuepoints.addCuePoint(new VideoCuePoint("Happy coding", 5));
@@ -52,20 +52,20 @@ package
 
 		private function handleCuePoint(event:CuePointEvent):void 
 		{
-			this.logInfo("Cuepoint: " + event.cuepoint);
+			logInfo("Cuepoint: " + event.cuepoint);
 			
 			// display the cuepoint name as message on screen
 			
-			if (this._message)
+			if (_message)
 			{
-				this.removeChild(this._message);
-				this._message = null;
+				removeChild(_message);
+				_message = null;
 			}
 			
-			this._message = this.createMessage(event.cuepoint.name, 0xE5ECF9, 0x6B90DA);
-			this._message.x = (this._videoPlayer.width - this._message.width) / 2;
-			this._message.y = this._videoPlayer.height - 40;
-			this.addChild(this._message);
+			_message = createMessage(event.cuepoint.name, 0xE5ECF9, 0x6B90DA);
+			_message.x = (_videoPlayer.width - _message.width) / 2;
+			_message.y = _videoPlayer.height - 40;
+			addChild(_message);
 		}
 		
 		

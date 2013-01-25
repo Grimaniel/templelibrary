@@ -21,9 +21,9 @@ package
 		{
 			super("Temple - CodeCloseButtonExample");
 			
-			this.addChild(new CodeCloseButton(14, 14, 10, 10));
-			this.addChild(new CodeCloseButton(20, 20, 30, 10));
-			this.addChild(new CodeCloseButton(100, 30, 10, 40));
+			addChild(new CodeCloseButton(14, 14, 10, 10));
+			addChild(new CodeCloseButton(20, 20, 30, 10));
+			addChild(new CodeCloseButton(100, 30, 10, 40));
 		}
 	}
 }

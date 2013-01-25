@@ -62,106 +62,106 @@ package temple.net
 		
 		public function MultiPendingCall(callback:Function = null)
 		{
-			this._callback = callback;
-			this._queue = [];
+			_callback = callback;
+			_queue = [];
 			
-			this.toStringProps.push("isLoading", "isLoaded", "length", "result");
+			toStringProps.push("isLoading", "isLoaded", "length", "result");
 		}
 
 		public function add(call:IPendingCall):void
 		{
-			if (this.isLoaded)
+			if (isLoaded)
 			{
 				throwError(new TempleError(this, "MultiPendingCall is already finished, can't add calls anymore"));
 			}
 			else if (!call.isLoaded)
 			{
-				this._queue.push(call);
-				call.addEventListener(Event.COMPLETE, this.handleCallComplete);
+				_queue.push(call);
+				call.addEventListener(Event.COMPLETE, handleCallComplete);
 			}
 		}
 
 		public function get isLoading():Boolean
 		{
-			return this._queue.length > 0;
+			return _queue.length > 0;
 		}
 
 		public function get isLoaded():Boolean
 		{
-			return this._result != null;
+			return _result != null;
 		}
 
 		public function cancel():Boolean
 		{
-			var leni:int = this._queue.length;
+			var leni:int = _queue.length;
 			for (var i:int = 0; i < leni; i++)
 			{
-				IPendingCall(this._queue[i]).cancel();
+				IPendingCall(_queue[i]).cancel();
 			}
 			return true;
 		}
 
 		public function get result():IDataResult
 		{
-			return this._result;
+			return _result;
 		}
 
 		public function get length():int
 		{
-			return this._queue ? this._queue.length : 0;
+			return _queue ? _queue.length : 0;
 		}
 		
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		private function handleCallComplete(event:Event):void
 		{
 			var call:IPendingCall = IPendingCall(event.target);
 			
-			if (this.debug) this.logDebug("handleCallComplete: " + call);
+			if (debug) logDebug("handleCallComplete: " + call);
 			
-			ArrayUtils.removeValueFromArray(this._queue, call);
-			call.removeEventListener(PendingCallEvent.RESULT, this.handleCallComplete);
+			ArrayUtils.removeValueFromArray(_queue, call);
+			call.removeEventListener(PendingCallEvent.RESULT, handleCallComplete);
 			
 			if (!call.result.success)
 			{
-				this._success = false;
+				_success = false;
 			}
-			this._data ||= [];
-			this._data.push(call.result.data);
+			_data ||= [];
+			_data.push(call.result.data);
 			
-			if (this._queue.length == 0)
+			if (_queue.length == 0)
 			{
-				this._result = new DataResult(this._data, this._success);
+				_result = new DataResult(_data, _success);
 				
-				if (this.debug) this.logDebug("Ready");
+				if (debug) logDebug("Ready");
 				
-				if (this._callback != null)
+				if (_callback != null)
 				{
-					this._callback(this._result);
+					_callback(_result);
 				}
-				this.dispatchEvent(new PendingCallEvent(PendingCallEvent.RESULT, this));
-				this.destruct();
+				dispatchEvent(new PendingCallEvent(PendingCallEvent.RESULT, this));
+				destruct();
 			}
 		}
 
 		override public function destruct():void
 		{
-			if (this._queue)
+			if (_queue)
 			{
-				while (this._queue.length) IPendingCall(this._queue.shift()).removeEventListener(PendingCallEvent.RESULT, this.handleCallComplete);
-				this._queue = null;
+				while (_queue.length) IPendingCall(_queue.shift()).removeEventListener(PendingCallEvent.RESULT, handleCallComplete);
+				_queue = null;
 			}
-			this._callback = null;
-			this._data = null;
-			this._result = null;
+			_callback = null;
+			_data = null;
+			_result = null;
 			
 			super.destruct();
 		}

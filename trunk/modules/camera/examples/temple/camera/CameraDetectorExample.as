@@ -30,26 +30,26 @@ package
 		{
 			super("Temple - CameraDetectorExample");
 			
-			var button:Sprite = this.createButton("Click here: Detect camera!");
-			button.addEventListener(MouseEvent.CLICK, this.handleButtonClick);
-			this.addChild(button);
+			var button:Sprite = createButton("Click here: Detect camera!");
+			button.addEventListener(MouseEvent.CLICK, handleButtonClick);
+			addChild(button);
 			
-			this._video = new Video(this.stage.stageWidth, this.stage.stageHeight);
-			this._video.smoothing = true;
-			this.addChild(this._video);
+			_video = new Video(stage.stageWidth, stage.stageHeight);
+			_video.smoothing = true;
+			addChild(_video);
 			
-			this._cameraDetector = new CameraDetector();
-			this._cameraDetector.debug = true;
+			_cameraDetector = new CameraDetector();
+			_cameraDetector.debug = true;
 			
-			this._cameraDetector.addEventListener(CameraDetectorEvent.ACTIVE_CAMERA_FOUND, this.handleCameraDetectorEvent);
-			this._cameraDetector.addEventListener(CameraDetectorEvent.CAMERA_NOT_ALLOWED, this.handleCameraDetectorEvent);
-			this._cameraDetector.addEventListener(CameraDetectorEvent.NO_CAMERA_FOUND, this.handleCameraDetectorEvent);
+			_cameraDetector.addEventListener(CameraDetectorEvent.ACTIVE_CAMERA_FOUND, handleCameraDetectorEvent);
+			_cameraDetector.addEventListener(CameraDetectorEvent.CAMERA_NOT_ALLOWED, handleCameraDetectorEvent);
+			_cameraDetector.addEventListener(CameraDetectorEvent.NO_CAMERA_FOUND, handleCameraDetectorEvent);
 			
 		}
 
 		private function handleButtonClick(event:MouseEvent):void
 		{
-			this._cameraDetector.detectActiveCamera();
+			_cameraDetector.detectActiveCamera();
 		}
 
 		private function handleCameraDetectorEvent(event:CameraDetectorEvent):void
@@ -60,25 +60,25 @@ package
 			{
 				case CameraDetectorEvent.ACTIVE_CAMERA_FOUND: 
 				{
-					this._video.attachCamera(event.camera);
-					this.logInfo("Camera found");
+					_video.attachCamera(event.camera);
+					logInfo("Camera found");
 					break;
 				}
 				case CameraDetectorEvent.CAMERA_NOT_ALLOWED: 
 				{
-					this.logError("No camera; not allowed");
-					message = this.createMessage("No camera; not allowed", 0xE5ECF9, 0x6B90DA);
+					logError("No camera; not allowed");
+					message = createMessage("No camera; not allowed", 0xE5ECF9, 0x6B90DA);
 					break;
 				}
 				case CameraDetectorEvent.NO_CAMERA_FOUND: 
 				{
-					this.logError("No camera found");
-					message = this.createMessage("No camera found", 0xE5ECF9, 0x6B90DA);
+					logError("No camera found");
+					message = createMessage("No camera found", 0xE5ECF9, 0x6B90DA);
 					break;
 				}			
 				default:
 				{
-					this.logError("handleCameraDetectorEvent: unhandled event '" + event.type + "'");
+					logError("handleCameraDetectorEvent: unhandled event '" + event.type + "'");
 					break;
 				}
 			}
@@ -86,12 +86,12 @@ package
 			{
 				message.x = (stage.stageWidth - message.width) / 2;
 				message.y = (stage.stageHeight - message.height) / 1.6;
-				this.addChild(message);
+				addChild(message);
 			}
 		}
 		private function createButton(label:String):Sprite
 		{
-			var button:Sprite = this.createMessage(label, 0xDEDEDA ,0x808080);
+			var button:Sprite = createMessage(label, 0xDEDEDA ,0x808080);
 			button.x = (stage.stageWidth - button.width) / 2;
 			button.y = (stage.stageHeight - button.height) / 2;
 			button.buttonMode = true;

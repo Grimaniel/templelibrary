@@ -46,12 +46,12 @@ package temple.codecomponents.icons
 		{
 			super("CodeCross");
 			
-			this.graphics.beginFill(color);
-			this.graphics.drawRect(-.5 * thickness, -.5 * size, thickness, size);
-			this.graphics.endFill();
-			this.graphics.beginFill(color);
-			this.graphics.drawRect(-.5 * size, -.5 * thickness, size, thickness);
-			this.graphics.endFill();
+			graphics.beginFill(color);
+			graphics.drawRect(-.5 * thickness, -.5 * size, thickness, size);
+			graphics.endFill();
+			graphics.beginFill(color);
+			graphics.drawRect(-.5 * size, -.5 * thickness, size, thickness);
+			graphics.endFill();
 		}
 	}
 }

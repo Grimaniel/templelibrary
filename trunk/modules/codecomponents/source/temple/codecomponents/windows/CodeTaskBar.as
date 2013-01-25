@@ -60,20 +60,20 @@ package temple.codecomponents.windows
 		{
 			super(width, height, orientation, direction, spacing);
 			
-			this._taskBarDictionary = new Dictionary(true);
+			_taskBarDictionary = new Dictionary(true);
 			this.desktop = desktop;
 		}
 
 		public function get desktop():DisplayObjectContainer
 		{
-			return this._desktop;
+			return _desktop;
 		}
 
 		public function set desktop(value:DisplayObjectContainer):void
 		{
-			if (this._desktop) this._desktop.removeEventListener(Event.ADDED, this.handleAdded);
-			this._desktop = value;
-			if (this._desktop) this._desktop.addEventListener(Event.ADDED, this.handleAdded);
+			if (_desktop) _desktop.removeEventListener(Event.ADDED, handleAdded);
+			_desktop = value;
+			if (_desktop) _desktop.addEventListener(Event.ADDED, handleAdded);
 		}
 
 		private function handleAdded(event:Event):void
@@ -84,40 +84,40 @@ package temple.codecomponents.windows
 				
 				var button:CodeLabelButton = new CodeLabelButton(window.label);
 				button.top = 3;
-				this.addChild(button);
-				button.addEventListener(MouseEvent.CLICK, this.handleClick);
-				this._taskBarDictionary[button] = window;
-				this._taskBarDictionary[window] = button;
-				window.addEventListener(Event.CHANGE, this.handleWindowChange);
-				window.addEventListener(DestructEvent.DESTRUCT, this.handleWindowDestruct);
+				addChild(button);
+				button.addEventListener(MouseEvent.CLICK, handleClick);
+				_taskBarDictionary[button] = window;
+				_taskBarDictionary[window] = button;
+				window.addEventListener(Event.CHANGE, handleWindowChange);
+				window.addEventListener(DestructEvent.DESTRUCT, handleWindowDestruct);
 			}
 		}
 
 		private function handleClick(event:MouseEvent):void
 		{
-			if (this._taskBarDictionary[event.target] is IFocusable)
+			if (_taskBarDictionary[event.target] is IFocusable)
 			{
-				IFocusable(this._taskBarDictionary[event.target]).focus = true;
+				IFocusable(_taskBarDictionary[event.target]).focus = true;
 			}
 			else
 			{
-				FocusManager.focus = this._taskBarDictionary[event.target] as InteractiveObject;
+				FocusManager.focus = _taskBarDictionary[event.target] as InteractiveObject;
 			}
 		}
 		
 		private function handleWindowChange(event:Event):void
 		{
-			CodeLabelButton(this._taskBarDictionary[event.target]).label = IWindow(event.target).label;
+			CodeLabelButton(_taskBarDictionary[event.target]).label = IWindow(event.target).label;
 		}
 		
 		private function handleWindowDestruct(event:DestructEvent):void
 		{
-			var button:CodeLabelButton = this._taskBarDictionary[event.target] as CodeLabelButton;
+			var button:CodeLabelButton = _taskBarDictionary[event.target] as CodeLabelButton;
 			if (button)
 			{
 				button.destruct();
-				delete this._taskBarDictionary[event.target];
-				delete this._taskBarDictionary[button];
+				delete _taskBarDictionary[event.target];
+				delete _taskBarDictionary[button];
 			}
 		}
 	}

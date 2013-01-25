@@ -27,15 +27,15 @@ package
 			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
 			super('Temple - F4VPlayerExample');
 			
-			this.stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			var videoPlayer:F4VPlayer = new F4VPlayer(800, 450);
-			this.addChild(videoPlayer);
+			addChild(videoPlayer);
 			
 			videoPlayer.playUrl('complete_intro.f4v');
 			
 			// listen for cue points
-			videoPlayer.addEventListener(CuePointEvent.CUEPOINT, this.handleCuePoint);
+			videoPlayer.addEventListener(CuePointEvent.CUEPOINT, handleCuePoint);
 			
 			// set debug mode to show and log debug information from the F4VPlayer
 			videoPlayer.debug = true;
@@ -43,7 +43,7 @@ package
 
 		private function handleCuePoint(event:CuePointEvent):void 
 		{
-			this.logInfo("Cuepoint: " + event.cuepoint);
+			logInfo("Cuepoint: " + event.cuepoint);
 		}
 	}
 }

@@ -52,12 +52,12 @@ package temple.mediaplayers.audio
 		 */
 		public function AudioMetaData(data:ID3Info = null) 
 		{
-			this.parseObject(data);
+			parseObject(data);
 		}
 
 		public function parseObject(object:Object):Boolean
 		{
-			this._duration = object['TLEN'];
+			_duration = object['TLEN'];
 			
 			return true;
 		}

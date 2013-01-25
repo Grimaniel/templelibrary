@@ -51,8 +51,8 @@ package temple.net.sharedobject
 	 * 
 	 * //also:
 	 * 
-	 * this._sharedObjectSite = new SharedObjectService('projectName', '');
-	 * this._sharedObjectGame = new SharedObjectService('projectName', '/game');
+	 * _sharedObjectSite = new SharedObjectService('projectName', '');
+	 * _sharedObjectGame = new SharedObjectService('projectName', '/game');
 	 * 
 	 * //tip: extend and provide typed accessors with prefilled default-values
 	 *
@@ -89,27 +89,27 @@ package temple.net.sharedobject
 		
 		public function SharedObjectService(name:String, path:String='/', expectedSize:int=0)
 		{
-			this._name = name;
-			this._expectedSize = expectedSize;
+			_name = name;
+			_expectedSize = expectedSize;
 			
 			try
 			{
-				this._so = SharedObject.getLocal(this._name, path);
+				_so = SharedObject.getLocal(_name, path);
 			}
 			catch(e:Error)
 			{
-				this.logError('error while reading Shared Object ' + this._name + ': ' + e);
+				logError('error while reading Shared Object ' + _name + ': ' + e);
 			}
 			
-			if(this._so == null)
+			if(_so == null)
 			{
-				this.logError('cannot retrieve SharedObject ' + this._name + ', local fallback');
-				this._data = new Object();
+				logError('cannot retrieve SharedObject ' + _name + ', local fallback');
+				_data = new Object();
 			}
 			else
 			{
-				this._data = this._so.data;
-				this._so.addEventListener(NetStatusEvent.NET_STATUS, this.handleNetStatusEvent);
+				_data = _so.data;
+				_so.addEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
 			}
 		}
 		
@@ -118,8 +118,8 @@ package temple.net.sharedobject
 		 */
 		public function setProperty(name:String, value:*):void
 		{
-			this._data[name] = value;
-			this.flush();
+			_data[name] = value;
+			flush();
 		}
 		
 		/**
@@ -127,7 +127,7 @@ package temple.net.sharedobject
 		 */
 		public function getProperty(name:String, alt:*=null):*
 		{
-			return name in this._data ? this._data[name] : alt;
+			return name in _data ? _data[name] : alt;
 		}
 		
 		/**
@@ -135,7 +135,7 @@ package temple.net.sharedobject
 		 */
 		public function hasProperty(name:String):*
 		{
-			return name in this._data;
+			return name in _data;
 		}
 		
 		/**
@@ -143,11 +143,11 @@ package temple.net.sharedobject
 		 */
 		public function removeProperty(name:String):void
 		{
-			if(name in this._data)
+			if(name in _data)
 			{
-				delete this._data[name];
+				delete _data[name];
 			}
-			this.flush();
+			flush();
 		}
 
 		/**
@@ -155,14 +155,14 @@ package temple.net.sharedobject
 		 */
 		public function clear():void 
 		{
-			if (this._so)
+			if (_so)
 			{
-				this._so.clear();
-				this._data = this._so.data;
+				_so.clear();
+				_data = _so.data;
 			}
 			else
 			{
-				this._data = new Object();
+				_data = new Object();
 			}
 		}
 		
@@ -171,22 +171,22 @@ package temple.net.sharedobject
 		 */
 		public function flush(expectedSize:int=0):String
 		{
-			if (expectedSize != 0 && expectedSize > this._expectedSize)
+			if (expectedSize != 0 && expectedSize > _expectedSize)
 			{
-				this._expectedSize = expectedSize;
+				_expectedSize = expectedSize;
 			}
 			
 			var status:String = SharedObjectServiceEvent.FLUSH_ERROR;
 					
-			if (this._so)
+			if (_so)
 			{
 				try
 				{
-					status = this._so.flush(this._expectedSize);
+					status = _so.flush(_expectedSize);
 				}
 				catch(e:Error)
 				{
-					this.logError('error while flushing Shared Object ' + this._name + ': ' + e);
+					logError('error while flushing Shared Object ' + _name + ': ' + e);
 				}
 			}
 			else
@@ -194,7 +194,7 @@ package temple.net.sharedobject
 				status = SharedObjectServiceEvent.FLUSHED;
 			}
 		
-			this.dispatchEvent(new SharedObjectServiceEvent(status));
+			dispatchEvent(new SharedObjectServiceEvent(status));
 			
 			return status;
 		}
@@ -204,7 +204,7 @@ package temple.net.sharedobject
 		 */
 		public function get so():SharedObject
 		{
-			return this._so;
+			return _so;
 		}
 		
 		/**
@@ -212,18 +212,18 @@ package temple.net.sharedobject
 		 */
 		public function data():Object 
 		{
-			return this._data;
+			return _data;
 		}
 		
 		private function handleNetStatusEvent(event:NetStatusEvent):void
 		{
 			if(event.info && event.info['code'] == FP_SO_FLUSH_SUCCESS)
 			{
-				this.dispatchEvent(new SharedObjectServiceEvent(SharedObjectServiceEvent.FLUSHED));
+				dispatchEvent(new SharedObjectServiceEvent(SharedObjectServiceEvent.FLUSHED));
 			}
 			else
 			{
-				this.dispatchEvent(new SharedObjectServiceEvent(SharedObjectServiceEvent.FLUSH_ERROR));
+				dispatchEvent(new SharedObjectServiceEvent(SharedObjectServiceEvent.FLUSH_ERROR));
 			}	
 		}
 		
@@ -234,17 +234,17 @@ package temple.net.sharedobject
 		{
 			if (SharedObjectService._instances)
 			{
-				delete SharedObjectService._instances[this._name];
+				delete SharedObjectService._instances[_name];
 				
 				// check if there are some NotificationCenters left
 				for (var key:String in SharedObjectService._instances);
 				if (key == null) SharedObjectService._instances = null;
 			}
-			this._data = null;
-			if (this._so)
+			_data = null;
+			if (_so)
 			{
-				this._so.close();
-				this._so = null;
+				_so.close();
+				_so = null;
 			}
 			super.destruct();
 		}

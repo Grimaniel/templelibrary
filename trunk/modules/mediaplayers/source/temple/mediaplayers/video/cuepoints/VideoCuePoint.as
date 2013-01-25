@@ -54,11 +54,11 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function VideoCuePoint(name:String = null, time:Number = NaN, type:String = "event", parameters:Object = null)
 		{
-			this._name = name;
-			this._time = time;
-			this._type = type;
-			this._parameters = parameters;
-			this.toStringProps.push('type', 'name', 'time');
+			_name = name;
+			_time = time;
+			_type = type;
+			_parameters = parameters;
+			toStringProps.push('type', 'name', 'time');
 		}
 
 		/**
@@ -66,10 +66,10 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function parseObject(data:Object):Boolean
 		{
-			this._name = (data.name == undefined) ? null : data.name;
-			this._parameters = data.parameters;
-			this._time = isNaN(data.time) ? null : data.time;
-			this._type = (data.type == undefined) ? 'event' : data.type;
+			_name = (data.name == undefined) ? null : data.name;
+			_parameters = data.parameters;
+			_time = isNaN(data.time) ? null : data.time;
+			_type = (data.type == undefined) ? 'event' : data.type;
 			
 			return true;
 		}
@@ -79,7 +79,7 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function get name():String
 		{
-			return this._name;
+			return _name;
 		}
 		
 		/**
@@ -87,7 +87,7 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function get parameters():Object
 		{
-			return this._parameters;
+			return _parameters;
 		}
 		
 		/**
@@ -95,7 +95,7 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function get time():Number
 		{
-			return this._time;
+			return _time;
 		}
 		
 		/**
@@ -103,7 +103,7 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		public function get type():String
 		{
-			return this._type;
+			return _type;
 		}
 	}
 }

@@ -72,9 +72,9 @@ package temple.codecomponents.tooltip
 			background.graphics.drawRect(0, 0, 10, 10);
 			background.graphics.endFill();
 			
-			this.addChildAt(background, 0);
+			addChildAt(background, 0);
 			textField = new TextField();
-			this.addChild(textField);
+			addChild(textField);
 			textField.defaultTextFormat = CodeStyle.toolTipTextFormat;
 			textField.multiline = true;
 			textField.wordWrap = true;
@@ -82,32 +82,32 @@ package temple.codecomponents.tooltip
 			
 			super.init();
 			
-			this.autoSize = TextFieldAutoSize.LEFT;
-			this.padding = 0;
-			this.paddingLeft = this.paddingRight = 2;
+			autoSize = TextFieldAutoSize.LEFT;
+			padding = 0;
+			paddingLeft = paddingRight = 2;
 			
-			this.filters = CodeStyle.toolTipFilters;
+			filters = CodeStyle.toolTipFilters;
 		}
 
 		
 		override public function set label(value:String):void 
 		{
-			this.textField.width = 400;
+			textField.width = 400;
 			super.label = value;
 			
-			var height:Number = this.textField.height;
+			var height:Number = textField.height;
 			
 			do
 			{
-				this.textField.width--;
+				textField.width--;
 			}
-			while (this.textField.height == height);
+			while (textField.height == height);
 			
-			this.textField.width++;
+			textField.width++;
 			
-			if (this.textField.width < 400)
+			if (textField.width < 400)
 			{
-				this.textField.dispatchEvent(new Event(Event.RESIZE));
+				textField.dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 
@@ -116,16 +116,16 @@ package temple.codecomponents.tooltip
 		 */
 		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (this.enabled == false || this._shown) return;
-			this._shown = true;
+			if (enabled == false || _shown) return;
+			_shown = true;
 			if (instant)
 			{
-				this.autoAlpha = 1;
+				autoAlpha = 1;
 				if (onComplete != null) onComplete();
 			}
 			else
 			{
-				TweenLite.to(this, this._showDuration, {autoAlpha:1, onComplete:onComplete});
+				TweenLite.to(this, _showDuration, {autoAlpha:1, onComplete:onComplete});
 			}
 		}
 
@@ -134,16 +134,16 @@ package temple.codecomponents.tooltip
 		 */
 		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (this.enabled == false || !this._shown) return;
-			this._shown = false;
+			if (enabled == false || !_shown) return;
+			_shown = false;
 			if (instant)
 			{
-				this.autoAlpha = 0;
+				autoAlpha = 0;
 				if (onComplete != null) onComplete();
 			}
 			else
 			{
-				TweenLite.to(this, this._hideDuration, {autoAlpha:0, onComplete:onComplete});
+				TweenLite.to(this, _hideDuration, {autoAlpha:0, onComplete:onComplete});
 			}
 		}
 		
@@ -152,7 +152,7 @@ package temple.codecomponents.tooltip
 		 */
 		public function get showDuration():Number
 		{
-			return this._showDuration;
+			return _showDuration;
 		}
 		
 		/**
@@ -163,7 +163,7 @@ package temple.codecomponents.tooltip
 		{
 			if (isNaN(value)) throwError(new TempleArgumentError(this, "showDuration can not be NaN"));
 			
-			this._showDuration = value;
+			_showDuration = value;
 		}
 		
 		/**
@@ -171,7 +171,7 @@ package temple.codecomponents.tooltip
 		 */
 		public function get hideDuration():Number
 		{
-			return this._hideDuration;
+			return _hideDuration;
 		}
 		
 		/**
@@ -182,7 +182,7 @@ package temple.codecomponents.tooltip
 		{
 			if (isNaN(value)) throwError(new TempleArgumentError(this, "hideDuration can not be NaN"));
 			
-			this._hideDuration = value;
+			_hideDuration = value;
 		}
 	}
 }

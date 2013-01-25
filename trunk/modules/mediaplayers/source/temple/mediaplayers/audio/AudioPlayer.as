@@ -74,9 +74,9 @@ package temple.mediaplayers.audio
 
 		public function AudioPlayer(debug:Boolean = false)
 		{
-			this._debug = debug;
+			_debug = debug;
 			
-			this.toStringProps.push("url", "volume");
+			toStringProps.push("url", "volume");
 		}
 
 		/**
@@ -84,10 +84,10 @@ package temple.mediaplayers.audio
 		 */
 		public function playUrl(url:String):void
 		{
-			if (this._debug) this.logDebug("playAudio: " + url);
+			if (_debug) logDebug("playAudio: " + url);
 			
-			this._playWhenLoaded = true;
-			this.loadUrl(url);
+			_playWhenLoaded = true;
+			loadUrl(url);
 		}
 
 		/**
@@ -95,22 +95,22 @@ package temple.mediaplayers.audio
 		 */
 		public function loadUrl(url:String):void
 		{
-			if (this._debug) this.logDebug("loadAudio: " + url);
+			if (_debug) logDebug("loadAudio: " + url);
 			
-			this._status = PlayerStatus.PAUSED;
+			_status = PlayerStatus.PAUSED;
 			
-			if (this._sound)
+			if (_sound)
 			{
-				this._sound.removeEventListener(Event.COMPLETE, this.handleSoundComplete);
-				this._sound.removeEventListener(IOErrorEvent.IO_ERROR, this.handleIOErrorEvent);
+				_sound.removeEventListener(Event.COMPLETE, handleSoundComplete);
+				_sound.removeEventListener(IOErrorEvent.IO_ERROR, handleIOErrorEvent);
 			}
-			this._position = 0;
-			this._sound = new Sound();
-			this._sound.addEventListener(Event.COMPLETE, this.handleSoundComplete);
-			this._sound.addEventListener(IOErrorEvent.IO_ERROR, this.handleIOErrorEvent);
-			this._sound.load(new URLRequest(url));
+			_position = 0;
+			_sound = new Sound();
+			_sound.addEventListener(Event.COMPLETE, handleSoundComplete);
+			_sound.addEventListener(IOErrorEvent.IO_ERROR, handleIOErrorEvent);
+			_sound.load(new URLRequest(url));
 			
-			this._url = url;
+			_url = url;
 		}
 		
 		/**
@@ -118,7 +118,7 @@ package temple.mediaplayers.audio
 		 */
 		public function get url():String
 		{
-			return this._url;
+			return _url;
 		}
 		
 		/**
@@ -126,16 +126,16 @@ package temple.mediaplayers.audio
 		 */
 		public function play():void
 		{
-			if (this._debug) this.logDebug("play: ");
+			if (_debug) logDebug("play: ");
 			
-			this.clearSoundChannel();
+			clearSoundChannel();
 			
-			if (this._sound.length)
+			if (_sound.length)
 			{
-				this._soundChannel = this._sound.play();
-				this._soundChannel.addEventListener(Event.SOUND_COMPLETE, this.handleSoundChannelComplete);
-				this.updateVolume();
-				this._status = PlayerStatus.PLAYING;
+				_soundChannel = _sound.play();
+				_soundChannel.addEventListener(Event.SOUND_COMPLETE, handleSoundChannelComplete);
+				updateVolume();
+				_status = PlayerStatus.PLAYING;
 			}
 		}
 
@@ -144,11 +144,11 @@ package temple.mediaplayers.audio
 		 */
 		public function pause():void
 		{
-			if (this._debug) this.logDebug("pause: ");
+			if (_debug) logDebug("pause: ");
 			
-			this._position = this._soundChannel ? this._soundChannel.position : 0;
-			if (this._soundChannel) this._soundChannel.stop();
-			this._status = PlayerStatus.PAUSED;
+			_position = _soundChannel ? _soundChannel.position : 0;
+			if (_soundChannel) _soundChannel.stop();
+			_status = PlayerStatus.PAUSED;
 		}
 
 		/**
@@ -156,20 +156,20 @@ package temple.mediaplayers.audio
 		 */
 		public function resume():void
 		{
-			if (this._debug) this.logDebug("resume: status = " + this.__status);
+			if (_debug) logDebug("resume: status = " + __status);
 			
-			if (this.__status != PlayerStatus.PLAYING)
+			if (__status != PlayerStatus.PLAYING)
 			{
-				this.clearSoundChannel();
+				clearSoundChannel();
 				
-				if (this._sound.length)
+				if (_sound.length)
 				{
-					this._soundChannel = this._sound.play(this._position);
-					this._soundChannel.addEventListener(Event.SOUND_COMPLETE, this.handleSoundChannelComplete);
-					this.updateVolume();
-					this._status = PlayerStatus.PLAYING;
+					_soundChannel = _sound.play(_position);
+					_soundChannel.addEventListener(Event.SOUND_COMPLETE, handleSoundChannelComplete);
+					updateVolume();
+					_status = PlayerStatus.PLAYING;
 				}
-				this._playWhenLoaded = true;
+				_playWhenLoaded = true;
 			}
 		}
 		
@@ -178,7 +178,7 @@ package temple.mediaplayers.audio
 		 */
 		public function get paused():Boolean
 		{
-			return this.__status == PlayerStatus.PAUSED;
+			return __status == PlayerStatus.PAUSED;
 		}
 
 		/**
@@ -186,10 +186,10 @@ package temple.mediaplayers.audio
 		 */
 		public function stop():void
 		{
-			if (this._debug) this.logDebug("stop: ");
+			if (_debug) logDebug("stop: ");
 			
-			this.clearSoundChannel();
-			this._status = PlayerStatus.STOPPED;
+			clearSoundChannel();
+			_status = PlayerStatus.STOPPED;
 		}
 
 		/**
@@ -197,20 +197,20 @@ package temple.mediaplayers.audio
 		 */
 		public function seek(seconds:Number = 0):void
 		{
-			if (this._debug) this.logDebug("seek: " + seconds);
+			if (_debug) logDebug("seek: " + seconds);
 			
-			if (this._sound)
+			if (_sound)
 			{
-				if (this.__status == PlayerStatus.PLAYING)
+				if (__status == PlayerStatus.PLAYING)
 				{
-					this.clearSoundChannel();
-					this._soundChannel = this._sound.play(seconds * 1000);
-					this._soundChannel.addEventListener(Event.SOUND_COMPLETE, this.handleSoundChannelComplete);
-					this.updateVolume();
+					clearSoundChannel();
+					_soundChannel = _sound.play(seconds * 1000);
+					_soundChannel.addEventListener(Event.SOUND_COMPLETE, handleSoundChannelComplete);
+					updateVolume();
 				}
 				else
 				{
-					this._position = seconds * 1000;
+					_position = seconds * 1000;
 				}
 			}
 		}
@@ -220,7 +220,7 @@ package temple.mediaplayers.audio
 		 */
 		public function get status():String
 		{
-			return this.__status;
+			return __status;
 		}
 
 		/**
@@ -228,14 +228,14 @@ package temple.mediaplayers.audio
 		 */
 		public function get currentPlayTime():Number
 		{
-			switch (this.__status)
+			switch (__status)
 			{
 				case PlayerStatus.PLAYING:
-					return this._soundChannel ? this._soundChannel.position * 0.001 : 0;
+					return _soundChannel ? _soundChannel.position * 0.001 : 0;
 					break;
 				
 				case PlayerStatus.PAUSED:
-					return this._position * 0.001;
+					return _position * 0.001;
 					break;
 				default:
 					return 0;
@@ -249,11 +249,11 @@ package temple.mediaplayers.audio
 		 */
 		public function get duration():Number
 		{
-			if (this._sound == null) return NaN;
+			if (_sound == null) return NaN;
 			
-			if (this._sound.bytesLoaded != this._sound.bytesTotal) return (this._sound.length * 0.001) * (this._sound.bytesTotal / this._sound.bytesLoaded);
+			if (_sound.bytesLoaded != _sound.bytesTotal) return (_sound.length * 0.001) * (_sound.bytesTotal / _sound.bytesLoaded);
 			
-			return this._sound.length * 0.001;
+			return _sound.length * 0.001;
 		}
 
 		/**
@@ -261,12 +261,12 @@ package temple.mediaplayers.audio
 		 */
 		public function get currentPlayFactor():Number
 		{
-			if (isNaN(this.duration) && this._sound)
+			if (isNaN(duration) && _sound)
 			{
-				return this.currentPlayTime / ((this._sound.length * 0.001) * (this._sound.bytesTotal / this._sound.bytesLoaded));
+				return currentPlayTime / ((_sound.length * 0.001) * (_sound.bytesTotal / _sound.bytesLoaded));
 			}
 			
-			return this.currentPlayTime / this.duration;
+			return currentPlayTime / duration;
 		}
 		
 		/**
@@ -274,7 +274,7 @@ package temple.mediaplayers.audio
 		 */
 		public function get autoRewind():Boolean
 		{
-			return this._autoRewind;
+			return _autoRewind;
 		}
 		
 		/**
@@ -282,9 +282,9 @@ package temple.mediaplayers.audio
 		 */
 		public function set autoRewind(value:Boolean):void
 		{
-			this._autoRewind = value;
+			_autoRewind = value;
 			
-			if (this._debug) this.logDebug("autoRewind: " + this._autoRewind);
+			if (_debug) logDebug("autoRewind: " + _autoRewind);
 		}
 		
 		/**
@@ -292,7 +292,7 @@ package temple.mediaplayers.audio
 		 */
 		public function get bytesLoaded():uint
 		{
-			return this._sound ? this._sound.bytesLoaded : 0;
+			return _sound ? _sound.bytesLoaded : 0;
 		}
 		
 		/**
@@ -300,7 +300,7 @@ package temple.mediaplayers.audio
 		 */
 		public function get bytesTotal():uint
 		{
-			return this._sound ? this._sound.bytesTotal : 0;
+			return _sound ? _sound.bytesTotal : 0;
 		}
 		
 		/**
@@ -334,7 +334,7 @@ package temple.mediaplayers.audio
 		 */
 		public function get volume():Number
 		{
-			return this._volume;
+			return _volume;
 		}
 
 		/**
@@ -342,14 +342,14 @@ package temple.mediaplayers.audio
 		 */
 		public function set volume(value:Number):void
 		{
-			if (this._debug) this.logDebug("volume: " + value);
+			if (_debug) logDebug("volume: " + value);
 			
-			if (this._volume != value)
+			if (_volume != value)
 			{
-				this._volume = value;
+				_volume = value;
 				
-				this.updateVolume();
-				this.dispatchEvent(new SoundEvent(SoundEvent.VOLUME_CHANGE));
+				updateVolume();
+				dispatchEvent(new SoundEvent(SoundEvent.VOLUME_CHANGE));
 			}
 		}
 		
@@ -358,7 +358,7 @@ package temple.mediaplayers.audio
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -366,62 +366,62 @@ package temple.mediaplayers.audio
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		private function updateVolume():void
 		{
-			if (this._soundChannel == null) return;
+			if (_soundChannel == null) return;
 			
-			var st:SoundTransform = this._soundChannel.soundTransform;
+			var st:SoundTransform = _soundChannel.soundTransform;
 			
-			st.volume = this._volume;
+			st.volume = _volume;
 			
-			this._soundChannel.soundTransform = st;
+			_soundChannel.soundTransform = st;
 		}
 		
 		private function set _status(value:String):void
 		{
-			if (this.__status != value)
+			if (__status != value)
 			{
-				this.__status = value;
-				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.__status));
+				__status = value;
+				dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, __status));
 			}
 		}
 		
 		private function handleSoundComplete(event:Event):void
 		{
-			if (this._debug) this.logDebug("handleSoundComplete: ");
-			if (this._playWhenLoaded) this.play();
+			if (_debug) logDebug("handleSoundComplete: ");
+			if (_playWhenLoaded) play();
 		}
 		
 		private function handleSoundChannelComplete(event:Event):void
 		{
-			if (this._debug) this.logDebug("handleSoundChannelComplete: ");
-			if (this._autoRewind)
+			if (_debug) logDebug("handleSoundChannelComplete: ");
+			if (_autoRewind)
 			{
-				this.seek(0);
-				this.pause();
+				seek(0);
+				pause();
 			}
 			else
 			{
-				this.stop();
+				stop();
 			}
 		}
 		
 		private function clearSoundChannel():void
 		{
-			if (this._soundChannel)
+			if (_soundChannel)
 			{
-				this._soundChannel.stop();
-				this._soundChannel.removeEventListener(Event.SOUND_COMPLETE, this.handleSoundChannelComplete);
-				this._soundChannel = null;
+				_soundChannel.stop();
+				_soundChannel.removeEventListener(Event.SOUND_COMPLETE, handleSoundChannelComplete);
+				_soundChannel = null;
 			}
 		}
 		
 		private function handleIOErrorEvent(event:IOErrorEvent):void
 		{
-			this.logError("handleIOErrorEvent: " + event.text);
+			logError("handleIOErrorEvent: " + event.text);
 		}
 
 		/**
@@ -429,12 +429,12 @@ package temple.mediaplayers.audio
 		 */
 		override public function destruct():void
 		{
-			if (this._sound)
+			if (_sound)
 			{
-				this._sound.removeEventListener(Event.COMPLETE, this.handleSoundComplete);
-				this._sound = null;
+				_sound.removeEventListener(Event.COMPLETE, handleSoundComplete);
+				_sound = null;
 			}
-			this.clearSoundChannel();
+			clearSoundChannel();
 			
 			super.destruct();
 		}

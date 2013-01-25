@@ -41,13 +41,13 @@ package temple.liveinspector
 
 		public function LiveInspector(initObject:Object = null)
 		{
-			this._container = new VBox(-1);
+			_container = new VBox(-1);
 			
 			if (initObject)
 			{
 				for (var prop:String in initObject)
 				{
-					if (prop in this._container) this._container[prop] = initObject[prop];
+					if (prop in _container) _container[prop] = initObject[prop];
 				}
 			}
 		}
@@ -79,9 +79,9 @@ package temple.liveinspector
 		{
 			if (Temple.defaultDebugMode != DebugMode.NONE)
 			{
-				if (StageProvider.stage && !StageProvider.stage.contains(this._container)) 
+				if (StageProvider.stage && !StageProvider.stage.contains(_container)) 
 				{
-					StageProvider.stage.addChild(this._container);
+					StageProvider.stage.addChild(_container);
 					
 					if (!DefinitionProvider.isInitialized)
 					{
@@ -90,11 +90,11 @@ package temple.liveinspector
 					}
 				}
 				
-				if (propertyColor === -1) propertyColor = this.getRandomColor();
+				if (propertyColor === -1) propertyColor = getRandomColor();
 				
 				if (!props)
 				{
-					this.addPropertyWithName(scope, null, depth, propertyColor);
+					addPropertyWithName(scope, null, depth, propertyColor);
 				}
 				else
 				{
@@ -102,17 +102,17 @@ package temple.liveinspector
 					{
 						case props as Array:
 						{
-							this.addPropertiesWithNames(scope, props as Array, depth, propertyColor);
+							addPropertiesWithNames(scope, props as Array, depth, propertyColor);
 							break;
 						}
 						case props as Class:
 						{
-							this.addPropertyWithClassType(scope, props as Class, depth, propertyColor);
+							addPropertyWithClassType(scope, props as Class, depth, propertyColor);
 							break;
 						}
 						default:
 						{
-							this.addPropertyWithName(scope, props, depth, propertyColor);
+							addPropertyWithName(scope, props, depth, propertyColor);
 							break;
 						}
 					}
@@ -125,7 +125,7 @@ package temple.liveinspector
 		 */ 
 		private function addPropertyWithName(scope:Object, propertyName:*, depth:uint = 0, propertyColor:int = -1):void
 		{
-			this._container.addChild(new LiveInspectorItem(scope, propertyName, depth, propertyColor));
+			_container.addChild(new LiveInspectorItem(scope, propertyName, depth, propertyColor));
 		}
 		
 		/**
@@ -136,7 +136,7 @@ package temple.liveinspector
 			var i:uint = 0, leni:uint;
 			for (i = 0, leni = propertyNames.length; i < leni; i++)
 			{
-				this._container.addChild(new LiveInspectorItem(scope, propertyNames[i], depth, propertyColor));
+				_container.addChild(new LiveInspectorItem(scope, propertyNames[i], depth, propertyColor));
 			}
 		}
 		
@@ -154,7 +154,7 @@ package temple.liveinspector
 				{
 					if (ReflectionUtils.getNameOfTypeOfProperty(scope, properties[i]) === getQualifiedClassName(className))
 					{
-						this._container.addChild(new LiveInspectorItem(scope, properties[i], depth, propertyColor));
+						_container.addChild(new LiveInspectorItem(scope, properties[i], depth, propertyColor));
 					}
 				}
 				catch(e:Error)
@@ -168,7 +168,7 @@ package temple.liveinspector
 		 */
 		public function placeContainerOnTopOfStage():void
 		{
-			StageProvider.stage.setChildIndex(this._container, StageProvider.stage.numChildren - 1);
+			StageProvider.stage.setChildIndex(_container, StageProvider.stage.numChildren - 1);
 		}
 
 		private function getRandomColor():uint
@@ -187,7 +187,7 @@ package temple.liveinspector
 
 		override public function destruct():void
 		{
-			this._container = Destructor.destruct(this._container);
+			_container = Destructor.destruct(_container);
 			
 			super.destruct();
 		}

@@ -22,14 +22,14 @@ package
 		{
 			super("Temple - CodeLabelButtonExample");
 			
-			this.add(new CodeLabelButton("TEST"), 10, 10);
+			add(new CodeLabelButton("TEST"), 10, 10);
 
-			this.add(new CodeLabelButton("A button with\nsome more text", true), 10, 40);
+			add(new CodeLabelButton("A button with\nsome more text", true), 10, 40);
 		}
 
 		private function add(child:DisplayObject, x:Number, y:Number):void
 		{
-			this.addChild(child);
+			addChild(child);
 			child.x = x;
 			child.y = y;
 		}

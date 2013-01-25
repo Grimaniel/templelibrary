@@ -21,9 +21,9 @@ package
 		{
 			super("Temple - CodeExpandButtonExample");
 			
-			this.addChild(new CodeExpandButton(14, 14, 10, 10));
-			this.addChild(new CodeExpandButton(20, 20, 30, 10));
-			this.addChild(new CodeExpandButton(100, 30, 10, 40));
+			addChild(new CodeExpandButton(14, 14, 10, 10));
+			addChild(new CodeExpandButton(20, 20, 30, 10));
+			addChild(new CodeExpandButton(100, 30, 10, 40));
 		}
 	}
 }

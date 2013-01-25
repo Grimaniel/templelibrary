@@ -50,16 +50,16 @@ package temple.codecomponents.icons
 		{
 			super("CodeCheck");
 			
-			this.graphics.beginFill(color, alpha);
-			this.graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
-			this.graphics.moveTo(3, 6);
-			this.graphics.lineTo(6, 9);
-			this.graphics.lineTo(12, 3);
-			this.graphics.lineTo(12, 6);
-			this.graphics.lineTo(6, 12);
-			this.graphics.lineTo(3, 9);
-			this.graphics.lineTo(3, 6);
-			this.graphics.endFill();
+			graphics.beginFill(color, alpha);
+			graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
+			graphics.moveTo(3, 6);
+			graphics.lineTo(6, 9);
+			graphics.lineTo(12, 3);
+			graphics.lineTo(12, 6);
+			graphics.lineTo(6, 12);
+			graphics.lineTo(3, 9);
+			graphics.lineTo(3, 6);
+			graphics.endFill();
 		}
 	}
 }

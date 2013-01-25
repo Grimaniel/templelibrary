@@ -35,77 +35,29 @@
 
 package temple.codecomponents.slider
 {
-	import flash.display.InteractiveObject;
-	import flash.events.Event;
 	import temple.codecomponents.buttons.CodeButton;
 	import temple.codecomponents.graphics.CodeBackground;
 	import temple.common.enum.Direction;
-	import temple.common.enum.Orientation;
 	import temple.common.interfaces.IHasValue;
-	import temple.core.display.CoreSprite;
 	import temple.ui.form.components.ISetValue;
-	import temple.ui.slider.Slider;
-	import temple.ui.slider.SliderEvent;
+	import temple.ui.slider.SliderComponent;
 
+	import flash.display.InteractiveObject;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class CodeSlider extends CoreSprite implements IHasValue, ISetValue
+	public class CodeSlider extends SliderComponent implements IHasValue, ISetValue
 	{
-		private var _track:InteractiveObject;
-		private var _button:InteractiveObject;
-		private var _slider:Slider;
-		
 		public function CodeSlider(width:Number = 200, height:Number = 10, direction:String = Direction.ASCENDING, value:Number = 0)
 		{
-			this._track = this.addChild(new CodeBackground(width, height)) as InteractiveObject;
-			this._button = this.addChild(new CodeButton(Math.min(width, height), Math.min(width, height))) as InteractiveObject;
-			this._slider = new Slider(this._button, this._track.getRect(this), height > width ? Orientation.VERTICAL : Orientation.HORIZONTAL, direction);
-			CodeButton(this._button).outOnDragOut = false;
+			track = addChild(new CodeBackground(width, height)) as InteractiveObject;
+			button = addChild(new CodeButton(Math.min(width, height), Math.min(width, height))) as InteractiveObject;
+			CodeButton(button).outOnDragOut = false;
 			
-			this._slider.addEventListener(SliderEvent.SLIDE_START, this.dispatchEvent);
-			this._slider.addEventListener(SliderEvent.SLIDING, this.handleSliding);
-			this._slider.addEventListener(SliderEvent.SLIDE_STOP, this.dispatchEvent);
-			this._slider.addEventListener(Event.CHANGE, this.dispatchEvent);
+			slider.direction = direction;
 			
 			this.value = value;
-		}
-
-		public function get track():InteractiveObject
-		{
-			return this._track;
-		}
-
-		public function get button():InteractiveObject
-		{
-			return this._button;
-		}
-
-		public function get slider():Slider
-		{
-			return this._slider;
-		}
-
-		public function get value():*
-		{
-			return this._slider.value;
-		}
-
-		public function set value(value:*):void
-		{
-			this._slider.value = value;
-		}
-		
-		public function get isSliding():Boolean
-		{
-			return this._slider.isSliding;
-		}
-		
-		private function handleSliding(event:SliderEvent):void
-		{
-			this.dispatchEvent(event);
-			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 	}
 }

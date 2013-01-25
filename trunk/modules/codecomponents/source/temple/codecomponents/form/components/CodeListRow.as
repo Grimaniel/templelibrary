@@ -59,56 +59,56 @@ package temple.codecomponents.form.components
 
 		public function CodeListRow(width:Number = 160, height:Number = 18)
 		{
-			this.addChild(new TextField());
+			addChild(new TextField());
 			
 			super();
 			
-			this.textField.width = width;
-			this.textField.height = height;
-			this.textField.defaultTextFormat = CodeStyle.textFormat;
+			textField.width = width;
+			textField.height = height;
+			textField.defaultTextFormat = CodeStyle.textFormat;
 			
 			// background
-			this._background = new CoreShape();
-			this._background.graphics.beginFill(CodeStyle.backgroundColor, CodeStyle.backgroundAlpha);
-			this._background.graphics.drawRect(0, 0, width, height);
-			this._background.graphics.endFill();
-			this.addChildAt(this._background, 0);
+			_background = new CoreShape();
+			_background.graphics.beginFill(CodeStyle.backgroundColor, CodeStyle.backgroundAlpha);
+			_background.graphics.drawRect(0, 0, width, height);
+			_background.graphics.endFill();
+			addChildAt(_background, 0);
 			
 			// over state
-			this._over = new OverFadeState();
-			this._over.graphics.beginFill(CodeStyle.listItemOverstateColor, CodeStyle.listItemOverstateAlpha);
-			this._over.graphics.drawRect(0, 0, width, height);
-			this._over.graphics.endFill();
-			this.addChildAt(this._over, 1);
+			_over = new OverFadeState();
+			_over.graphics.beginFill(CodeStyle.listItemOverstateColor, CodeStyle.listItemOverstateAlpha);
+			_over.graphics.drawRect(0, 0, width, height);
+			_over.graphics.endFill();
+			addChildAt(_over, 1);
 
 			// select state
-			this._select = new SelectFadeState(.25, .25);
-			this._select.graphics.beginFill(CodeStyle.listItemSelectstateColor, CodeStyle.listItemSelectstateAlpha);
-			this._select.graphics.drawRect(0, 0, width, height);
-			this._select.graphics.endFill();
-			this.addChildAt(this._select, 2);
+			_select = new SelectFadeState(.25, .25);
+			_select.graphics.beginFill(CodeStyle.listItemSelectstateColor, CodeStyle.listItemSelectstateAlpha);
+			_select.graphics.drawRect(0, 0, width, height);
+			_select.graphics.endFill();
+			addChildAt(_select, 2);
 			
 			// focus state
-			this._focus = new FocusFadeState(.25, .25);
-			this._focus.graphics.lineStyle(CodeStyle.focusThickness, CodeStyle.focusColor, CodeStyle.focusAlpha, true, LineScaleMode.NONE);
-			this._focus.graphics.drawRect(CodeStyle.focusThickness * .5, CodeStyle.focusThickness * .5, width - CodeStyle.focusThickness, height - CodeStyle.focusThickness);
-			this.addChildAt(this._focus, 3);
+			_focus = new FocusFadeState(.25, .25);
+			_focus.graphics.lineStyle(CodeStyle.focusThickness, CodeStyle.focusColor, CodeStyle.focusAlpha, true, LineScaleMode.NONE);
+			_focus.graphics.drawRect(CodeStyle.focusThickness * .5, CodeStyle.focusThickness * .5, width - CodeStyle.focusThickness, height - CodeStyle.focusThickness);
+			addChildAt(_focus, 3);
 		}
 
 		override public function set index(value:uint):void 
 		{
 			super.index = value;
 			
-			this._background.alpha = value % 2 ? .2 : .4;
+			_background.alpha = value % 2 ? .2 : .4;
 		}
 		
 		override public function set width(value:Number) : void
 		{
-			this._background.width = value;
-			this._over.width = value;
-			this._select.width = value;
-			this._focus.width = value - CodeStyle.focusThickness;
-			this.textField.width = value;
+			_background.width = value;
+			_over.width = value;
+			_select.width = value;
+			_focus.width = value - CodeStyle.focusThickness;
+			textField.width = value;
 		}
 	}
 }
