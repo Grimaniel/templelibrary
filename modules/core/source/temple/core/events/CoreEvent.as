@@ -32,7 +32,7 @@ package temple.core.events
 		 */
 		override public function clone():Event
 		{
-			return new CoreEvent(this.type, this.bubbles, this.cancelable);
+			return new CoreEvent(type, bubbles, cancelable);
 		}
 		
 		include "../includes/ToStringPropsMethods.as.inc";
@@ -42,7 +42,7 @@ package temple.core.events
 		 */
 		override public function toString():String
 		{
-			return objectToString(this, this.toStringProps, !this.emptyPropsInToString);
+			return objectToString(this, toStringProps, !emptyPropsInToString);
 		}
 	}
 }

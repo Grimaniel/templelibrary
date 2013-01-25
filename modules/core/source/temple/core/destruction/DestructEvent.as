@@ -29,7 +29,7 @@ package temple.core.destruction
 		
 		override public function clone():Event
 		{
-			return new DestructEvent(this.type);
+			return new DestructEvent(type);
 		}
 	}
 }

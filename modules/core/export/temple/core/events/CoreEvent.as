@@ -50,7 +50,7 @@ package temple.core.events
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['type', 'bubbles', 'cancelable', 'eventPhase']);
 		
@@ -66,7 +66,7 @@ package temple.core.events
 		 */
 		override public function clone():Event
 		{
-			return new CoreEvent(this.type, this.bubbles, this.cancelable);
+			return new CoreEvent(type, bubbles, cancelable);
 		}
 		
 		/**
@@ -126,7 +126,7 @@ package temple.core.events
 		 */
 		override public function toString():String
 		{
-			return objectToString(this, this.toStringProps, !this.emptyPropsInToString);
+			return objectToString(this, toStringProps, !emptyPropsInToString);
 		}
 	}
 }

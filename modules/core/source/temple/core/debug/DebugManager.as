@@ -377,10 +377,10 @@ package temple.core.debug
 		{
 			if (DebugManager._instance) throwError(new TempleError(this, "Singleton, use DebugManager.getInstance()"));
 			
-			this._debuggables = new Dictionary(true);
-			this._debuggableChildren = new Dictionary(true);
-			this._debuggableChildList = new Vector.<Vector.<uint>>();
-			this._debuggableChildQueue = new Dictionary(true);
+			_debuggables = new Dictionary(true);
+			_debuggableChildren = new Dictionary(true);
+			_debuggableChildList = new Vector.<Vector.<uint>>();
+			_debuggableChildQueue = new Dictionary(true);
 			
 			DebugManager._instance = this;
 			DebugManager.add(this);
@@ -410,10 +410,10 @@ package temple.core.debug
 		override public function destruct():void
 		{
 			DebugManager._instance = null;
-			this._debuggables = null;
-			this._debuggableChildren = null;
-			this._debuggableChildList = null;
-			this._debuggableChildQueue = null;
+			_debuggables = null;
+			_debuggableChildren = null;
+			_debuggableChildList = null;
+			_debuggableChildQueue = null;
 			
 			super.destruct();
 		}

@@ -57,14 +57,14 @@ package temple.core.destruction
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		/**
 		 * Recursively destructs the object and all its descendants.
 		 * Note: This method always returns null. Useful if you want to destruct and clear an object in one line of code:
 		 * 
 		 * <listing version="3.0">
-		 * this._someObject = Destructor.destruct(this._someObject);
+		 * _someObject = Destructor.destruct(_someObject);
 		 * </listing>
 		 * 
 		 * @returns untyped null 

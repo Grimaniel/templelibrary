@@ -30,7 +30,7 @@ package temple.core.destruction
 		 * Note: This method always returns null. Useful if you want to destruct and clear an object in one line of code:
 		 * 
 		 * <listing version="3.0">
-		 * this._someObject = Destructor.destruct(this._someObject);
+		 * _someObject = Destructor.destruct(_someObject);
 		 * </listing>
 		 * 
 		 * @returns untyped null 

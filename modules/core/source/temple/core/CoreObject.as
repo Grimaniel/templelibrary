@@ -47,7 +47,7 @@ package temple.core
 		 */
 		construct function coreObject():void
 		{
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 		}
 
 		include "./includes/CoreObjectMethods.as.inc";
@@ -61,7 +61,7 @@ package temple.core
 		 */
 		public function toString():String
 		{
-			return objectToString(this, this.toStringProps, !this.emptyPropsInToString);
+			return objectToString(this, toStringProps, !emptyPropsInToString);
 		}
 
 		include "./includes/IsDestructed.as.inc";
@@ -76,7 +76,7 @@ package temple.core
 				Destructor.destruct(this[key]);
 				delete this[key];
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

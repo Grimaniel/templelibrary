@@ -134,8 +134,8 @@ package temple.core.display
 	 * @example
 	 * <listing version="3.0">
 	 * var loader:CoreLoader = new CoreLoader();
-	 * loader.addEventListener(Event.COMPLETE, this.handleLoaderComplete);
-	 * this.addChild(loader);
+	 * loader.addEventListener(Event.COMPLETE, handleLoaderComplete);
+	 * addChild(loader);
 	 * loader.load(new URLRequest('http://code.google.com/p/templelibrary/logo'));
 	 * 
 	 * function handleLoaderComplete(event:Event):void
@@ -157,7 +157,7 @@ package temple.core.display
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		/**
 		 * Hashmap of CoreURLLoaders which loads policy files (crossdomain.xml files)
@@ -200,31 +200,31 @@ package temple.core.display
 		 */
 		construct function coreLoader(request:URLRequest, context:LoaderContext, logErrors:Boolean):void
 		{
-			this._logErrors = logErrors;
+			_logErrors = logErrors;
 			
-			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
+			if (loaderInfo) loaderInfo.addEventListener(Event.UNLOAD, handleUnload, false, 0, true);
 			
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
-			super.addEventListener(Event.ADDED, this.handleAdded);
-			super.addEventListener(Event.ADDED_TO_STAGE,this.handleAddedToStage);
-			super.addEventListener(Event.REMOVED, this.handleRemoved);
-			super.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			super.addEventListener(Event.ADDED, handleAdded);
+			super.addEventListener(Event.ADDED_TO_STAGE,handleAddedToStage);
+			super.addEventListener(Event.REMOVED, handleRemoved);
+			super.addEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 			
 			// Add listeners on contentLoaderInfo
-			this.contentLoaderInfo.addEventListener(Event.OPEN, this.handleOpen, false, 0, true);
-			this.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, this.handleProgress, false, 0, true);
-			this.contentLoaderInfo.addEventListener(Event.INIT, this.handleInit, false, 0, true);
-			this.contentLoaderInfo.addEventListener(Event.COMPLETE, this.handleComplete, false, 0, true);
-			this.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.handleIOError, false, 0, true);
-			this.contentLoaderInfo.addEventListener(IOErrorEvent.DISK_ERROR, this.handleIOError, false, 0, true);
-			this.contentLoaderInfo.addEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError, false, 0, true);
-			this.contentLoaderInfo.addEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError, false, 0, true);
-			this.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError, false, 0, true);
-			this.contentLoaderInfo.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.handleHTTPStatus, false, 0, true);
+			contentLoaderInfo.addEventListener(Event.OPEN, handleOpen, false, 0, true);
+			contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, handleProgress, false, 0, true);
+			contentLoaderInfo.addEventListener(Event.INIT, handleInit, false, 0, true);
+			contentLoaderInfo.addEventListener(Event.COMPLETE, handleComplete, false, 0, true);
+			contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, handleIOError, false, 0, true);
+			contentLoaderInfo.addEventListener(IOErrorEvent.DISK_ERROR, handleIOError, false, 0, true);
+			contentLoaderInfo.addEventListener(IOErrorEvent.NETWORK_ERROR, handleIOError, false, 0, true);
+			contentLoaderInfo.addEventListener(IOErrorEvent.VERIFY_ERROR, handleIOError, false, 0, true);
+			contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError, false, 0, true);
+			contentLoaderInfo.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleHTTPStatus, false, 0, true);
 			
-			if (request) this.load(request, context);
+			if (request) load(request, context);
 		}
 		
 		/**
@@ -232,18 +232,18 @@ package temple.core.display
 		 */ 
 		override public function load(request:URLRequest, context:LoaderContext = null):void
 		{
-			if (this._isDestructed)
+			if (_isDestructed)
 			{
-				this.logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
+				logWarn("load: This object is destructed (probably because 'desctructOnErrors' is set to true, so it cannot load anything");
 				return;
 			}
 			
-			if (this._debug) this.logDebug("load");
+			if (_debug) logDebug("load");
 			
-			this._isLoading = true;
-			this._isLoaded = false;
-			this._url = request.url;
-			this._context = context;
+			_isLoading = true;
+			_isLoaded = false;
+			_url = request.url;
+			_context = context;
 			super.load(request, context);
 		}
 
@@ -252,14 +252,14 @@ package temple.core.display
 		 */ 
 		override public function loadBytes(bytes:ByteArray, context:LoaderContext = null):void
 		{
-			if (this._isDestructed)
+			if (_isDestructed)
 			{
-				this.logWarn("load: This object is destructed (probably because 'destructOnErrors' is set to true, so it cannot load anything");
+				logWarn("load: This object is destructed (probably because 'destructOnErrors' is set to true, so it cannot load anything");
 				return;
 			}
-			if (this._debug) this.logDebug("loadBytes, context:" + context);
+			if (_debug) logDebug("loadBytes, context:" + context);
 			
-			this._isLoading = true;
+			_isLoading = true;
 			super.loadBytes(bytes, context);
 		}
 		
@@ -270,14 +270,14 @@ package temple.core.display
 		 */
 		override public function unload():void
 		{
-			if (this._isLoaded)
+			if (_isLoaded)
 			{
 				super.unload();
 				
-				this._isLoaded = false;
-				this._url = null;
+				_isLoaded = false;
+				_url = null;
 			}
-			else if (this._debug) this.logInfo('Nothing is loaded, so unloading is useless');
+			else if (_debug) logInfo('Nothing is loaded, so unloading is useless');
 		}
 		
 		/**
@@ -287,14 +287,14 @@ package temple.core.display
 		 */ 
 		override public function close():void
 		{
-			if (this._isLoading)
+			if (_isLoading)
 			{
 				super.close();
 				
-				this._isLoading = false;
-				this._url = null;
+				_isLoading = false;
+				_url = null;
 			}
-			else if (this._debug) this.logInfo('Nothing is loading, so closing is useless');
+			else if (_debug) logInfo('Nothing is loading, so closing is useless');
 		}
 		
 		/**
@@ -302,7 +302,7 @@ package temple.core.display
 		 */
 		public function get bytesLoaded():uint
 		{
-			return this.contentLoaderInfo ? this.contentLoaderInfo.bytesLoaded : 0;
+			return contentLoaderInfo ? contentLoaderInfo.bytesLoaded : 0;
 		}
 		
 		/**
@@ -310,7 +310,7 @@ package temple.core.display
 		 */
 		public function get bytesTotal():uint
 		{
-			return this.contentLoaderInfo ? this.contentLoaderInfo.bytesTotal : 0;
+			return contentLoaderInfo ? contentLoaderInfo.bytesTotal : 0;
 		}
 		
 		/**
@@ -504,7 +504,7 @@ package temple.core.display
 		 */
 		public function get isRedirected():Boolean
 		{
-			return this._url && this.contentLoaderInfo.url && this._url != this.contentLoaderInfo.url;
+			return _url && contentLoaderInfo.url && _url != contentLoaderInfo.url;
 		}
 		
 		/**
@@ -513,7 +513,7 @@ package temple.core.display
 		 */
 		public function get checkPolicyFile():Boolean
 		{
-			return this._context && this._context.checkPolicyFile;
+			return _context && _context.checkPolicyFile;
 		}
 		
 		/**
@@ -804,78 +804,78 @@ package temple.core.display
 		
 		private function handleOpen(event:Event):void
 		{
-			if (this.debug) this.logDebug(event.type);
-			this.dispatchEvent(event);
+			if (_debug) logDebug(event.type);
+			dispatchEvent(event);
 		}
 
 		private function handleProgress(event:ProgressEvent):void
 		{
-			if (this.debug) this.logDebug(event.type + ": " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
-			this.dispatchEvent(event);
+			if (_debug) logDebug(event.type + ": " + Math.round(100 * (event.bytesLoaded / event.bytesTotal)) + "%, loaded: " + event.bytesLoaded + ", total: " + event.bytesTotal);
+			dispatchEvent(event);
 		}
 		
 		private function handleInit(event:Event):void
 		{
-			if (this.debug) this.logDebug(event.type);
-			if (this.isRedirected && this.checkPolicyFile)
+			if (_debug) logDebug(event.type);
+			if (isRedirected && checkPolicyFile)
 			{
-				var url:String = this.contentLoaderInfo.url;
+				var url:String = contentLoaderInfo.url;
 				
 				// Redirected, load correct policy file
 				var policyFile:String = url.substring(0, url.indexOf("/", url.indexOf("//") + 2)) + "/crossdomain.xml";
 				
-				if (this.debug) this.logDebug("Redirected to '" + url + "', we need to check the policy file: '" + policyFile + "'");
+				if (_debug) logDebug("Redirected to '" + url + "', we need to check the policy file: '" + policyFile + "'");
 
-				this._policyFileLoader = CoreLoader.templelibrary::POLICYFILE_LOADERS[policyFile] ||= new CoreURLLoader();
+				_policyFileLoader = CoreLoader.templelibrary::POLICYFILE_LOADERS[policyFile] ||= new CoreURLLoader();
 				
-				if (this._policyFileLoader.isLoaded)
+				if (_policyFileLoader.isLoaded)
 				{
 					// Policy file is already loaded, continue
-					if (this.debug) this.logDebug("Policy file is already loaded");
-					this._policyFileLoader = null;
+					if (_debug) logDebug("Policy file is already loaded");
+					_policyFileLoader = null;
 				}
 				else
 				{
-					this._policyFileLoader.addEventListener(Event.COMPLETE, this.handlePolicyFileEvent);
-					this._policyFileLoader.addEventListener(IOErrorEvent.IO_ERROR, this.handlePolicyFileEvent);
-					this._policyFileLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handlePolicyFileEvent);
+					_policyFileLoader.addEventListener(Event.COMPLETE, handlePolicyFileEvent);
+					_policyFileLoader.addEventListener(IOErrorEvent.IO_ERROR, handlePolicyFileEvent);
+					_policyFileLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handlePolicyFileEvent);
 					
-					if (!this._policyFileLoader.isLoading) this._policyFileLoader.load(new URLRequest(policyFile));
+					if (!_policyFileLoader.isLoading) _policyFileLoader.load(new URLRequest(policyFile));
 				}
 			}
 			else
 			{
-				this.dispatchEvent(event);
+				dispatchEvent(event);
 			}
 		}
 		
 		private function handlePolicyFileEvent(event:Event):void
 		{
-			this._policyFileLoader.removeEventListener(Event.COMPLETE, this.handlePolicyFileEvent);
-			this._policyFileLoader.removeEventListener(IOErrorEvent.IO_ERROR, this.handlePolicyFileEvent);
-			this._policyFileLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handlePolicyFileEvent);
+			_policyFileLoader.removeEventListener(Event.COMPLETE, handlePolicyFileEvent);
+			_policyFileLoader.removeEventListener(IOErrorEvent.IO_ERROR, handlePolicyFileEvent);
+			_policyFileLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handlePolicyFileEvent);
 			
-			if (this.debug) this.logDebug("policyFile: " + event.type);
+			if (_debug) logDebug("policyFile: " + event.type);
 			
-			this._policyFileLoader = null;
-			this._isLoading = false;
-			this._isLoaded = true;
+			_policyFileLoader = null;
+			_isLoading = false;
+			_isLoaded = true;
 			
-			this.dispatchEvent(new Event(Event.COMPLETE));
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function handleComplete(event:Event):void
 		{
-			if (this.debug) this.logDebug(event.type);
+			if (_debug) logDebug(event.type);
 			
-			if (!this._policyFileLoader)
+			if (!_policyFileLoader)
 			{
-				this._isLoading = false;
-				this._isLoaded = true;
+				_isLoading = false;
+				_isLoaded = true;
 				
-				this.dispatchEvent(event);
+				dispatchEvent(event);
 			}
-			else if (this.debug) this.logDebug("Policy file not loaded yet");
+			else if (_debug) logDebug("Policy file not loaded yet");
 		}
 		
 		/**
@@ -883,11 +883,11 @@ package temple.core.display
 		 */
 		private function handleIOError(event:IOErrorEvent):void
 		{
-			this._isLoading = false;
+			_isLoading = false;
 			
-			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
+			if (_logErrors || _debug) logError(event.type + ': ' + event.text);
 			
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 		
 		/**
@@ -896,17 +896,17 @@ package temple.core.display
 		 */
 		private function handleSecurityError(event:SecurityErrorEvent):void
 		{
-			this._isLoading = false;
+			_isLoading = false;
 			
-			if (this._logErrors || this._debug) this.logError(event.type + ': ' + event.text);
+			if (_logErrors || _debug) logError(event.type + ': ' + event.text);
 			
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 		
 		private function handleHTTPStatus(event:HTTPStatusEvent):void
 		{
-			if (this.debug) this.logDebug(event.type);
-			this.dispatchEvent(event);
+			if (_debug) logDebug(event.type);
+			dispatchEvent(event);
 		}
 		
 		[Temple]
@@ -923,51 +923,51 @@ package temple.core.display
 		 */
 		public function destruct():void 
 		{
-			if (this._isDestructed) return;
+			if (_isDestructed) return;
 			
-			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			if (this._eventListenerManager)
+			if (_eventListenerManager)
 			{
-				this._eventListenerManager.destruct();
-				this._eventListenerManager = null;
+				_eventListenerManager.destruct();
+				_eventListenerManager = null;
 			}
 			
-			this._context = null;
+			_context = null;
 			
-			if (this._policyFileLoader)
+			if (_policyFileLoader)
 			{
-				this._policyFileLoader.removeEventListener(Event.COMPLETE, this.handlePolicyFileEvent);
-				this._policyFileLoader.removeEventListener(IOErrorEvent.IO_ERROR, this.handlePolicyFileEvent);
-				this._policyFileLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handlePolicyFileEvent);
-				this._policyFileLoader = null;
+				_policyFileLoader.removeEventListener(Event.COMPLETE, handlePolicyFileEvent);
+				_policyFileLoader.removeEventListener(IOErrorEvent.IO_ERROR, handlePolicyFileEvent);
+				_policyFileLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handlePolicyFileEvent);
+				_policyFileLoader = null;
 			}
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
-			super.removeEventListener(Event.ADDED, this.handleAdded);
-			super.removeEventListener(Event.ADDED_TO_STAGE,this.handleAddedToStage);
-			super.removeEventListener(Event.REMOVED, this.handleRemoved);
-			super.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			super.removeEventListener(Event.ADDED, handleAdded);
+			super.removeEventListener(Event.ADDED_TO_STAGE,handleAddedToStage);
+			super.removeEventListener(Event.REMOVED, handleRemoved);
+			super.removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 			
-			if (this._isLoading)
+			if (_isLoading)
 			{
 				try
 				{
-					this.close();
+					close();
 				}
 				catch (e:Error){}
 			}
 			
 			try
 			{
-				if (this.hasOwnProperty("unloadAndStop"))
+				if (hasOwnProperty("unloadAndStop"))
 				{
 					//Flash Player 10 and later only
 					(this as Object)["unloadAndStop"](true);
 				}
 				else
 				{
-					this.unload();
+					unload();
 				}
 			}
 			catch (e:ArgumentError)
@@ -975,44 +975,44 @@ package temple.core.display
 				//the loader.content is addChilded somewhere else, so it cannot be unloaded
 			}
 			
-			if (this.contentLoaderInfo)
+			if (contentLoaderInfo)
 			{
-				this.contentLoaderInfo.removeEventListener(Event.OPEN, this.handleOpen);
-				this.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, this.handleProgress);
-				this.contentLoaderInfo.removeEventListener(Event.INIT, this.handleInit);
-				this.contentLoaderInfo.removeEventListener(Event.COMPLETE, this.handleComplete);
-				this.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
-				this.contentLoaderInfo.removeEventListener(IOErrorEvent.DISK_ERROR, this.handleIOError);
-				this.contentLoaderInfo.removeEventListener(IOErrorEvent.NETWORK_ERROR, this.handleIOError);
-				this.contentLoaderInfo.removeEventListener(IOErrorEvent.VERIFY_ERROR, this.handleIOError);
-				this.contentLoaderInfo.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
-				this.contentLoaderInfo.removeEventListener(HTTPStatusEvent.HTTP_STATUS, this.handleHTTPStatus);
+				contentLoaderInfo.removeEventListener(Event.OPEN, handleOpen);
+				contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, handleProgress);
+				contentLoaderInfo.removeEventListener(Event.INIT, handleInit);
+				contentLoaderInfo.removeEventListener(Event.COMPLETE, handleComplete);
+				contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+				contentLoaderInfo.removeEventListener(IOErrorEvent.DISK_ERROR, handleIOError);
+				contentLoaderInfo.removeEventListener(IOErrorEvent.NETWORK_ERROR, handleIOError);
+				contentLoaderInfo.removeEventListener(IOErrorEvent.VERIFY_ERROR, handleIOError);
+				contentLoaderInfo.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
+				contentLoaderInfo.removeEventListener(HTTPStatusEvent.HTTP_STATUS, handleHTTPStatus);
 			}
 			
-			if (this.parent)
+			if (parent)
 			{
-				if (this.parent is Loader)
+				if (parent is Loader)
 				{
-					Loader(this.parent).unload();
+					Loader(parent).unload();
 				}
 				else
 				{
-					if (this._onParent)
+					if (_onParent)
 					{
-						this.parent.removeChild(this);
+						parent.removeChild(this);
 					}
 					else
 					{
 						// something weird happened, since we have a parent but didn't receive an ADDED event. So do the try-catch thing
 						try
 						{
-							this.parent.removeChild(this);
+							parent.removeChild(this);
 						}
 						catch (e:Error){}
 					}
 				}
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

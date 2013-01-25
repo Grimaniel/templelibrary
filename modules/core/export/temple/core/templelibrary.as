@@ -38,5 +38,5 @@ package temple.core
 	/**
 	 * @author Thijs Broerse
 	 */
-	public namespace templelibrary = "http://code.google.com/p/templelibrary/";
+	public namespace templelibrary = "http://www.temple.as";
 }

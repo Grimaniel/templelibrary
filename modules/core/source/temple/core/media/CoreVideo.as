@@ -78,15 +78,15 @@ package temple.core.media
 		 */
 		construct function coreVideo(width:int, height:int):void
 		{
-			if (this.loaderInfo) this.loaderInfo.addEventListener(Event.UNLOAD, this.handleUnload, false, 0, true);
+			if (loaderInfo) loaderInfo.addEventListener(Event.UNLOAD, handleUnload, false, 0, true);
 			
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 			
 			// Set listeners to keep track of object is on stage, since we can't trust the .parent property
-			super.addEventListener(Event.ADDED, this.handleAdded);
-			super.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-			super.addEventListener(Event.REMOVED, this.handleRemoved);
-			super.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			super.addEventListener(Event.ADDED, handleAdded);
+			super.addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+			super.addEventListener(Event.REMOVED, handleRemoved);
+			super.addEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 			
 			width;
 			height;
@@ -99,7 +99,7 @@ package temple.core.media
 		 */
 		public function get camera():Camera 
 		{
-			return this._camera; 
+			return _camera; 
 		}
 		
 		/**
@@ -107,7 +107,7 @@ package temple.core.media
 		 */
 		public function set camera(value:Camera):void 
 		{ 
-			this.attachCamera(value); 
+			attachCamera(value); 
 		}
 		
 		/**
@@ -117,7 +117,7 @@ package temple.core.media
 		 */
 		public function get netStream():NetStream 
 		{
-			return this._netStream; 
+			return _netStream; 
 		}
 		
 		/**
@@ -125,7 +125,7 @@ package temple.core.media
 		 */
 		public function set netStream(value:NetStream):void 
 		{ 
-			this.attachNetStream(value); 
+			attachNetStream(value); 
 		}
 		
 		/**
@@ -134,7 +134,7 @@ package temple.core.media
 		override public function attachCamera(camera:Camera):void
 		{
 			super.attachCamera(camera);
-			this._camera = camera;
+			_camera = camera;
 		}
 		
 		/**
@@ -144,7 +144,7 @@ package temple.core.media
 		 */
 		public function detachCamera():void
 		{
-			if (this._camera) this.attachCamera(null);
+			if (_camera) attachCamera(null);
 		}
 		
 		/**
@@ -153,7 +153,7 @@ package temple.core.media
 		override public function attachNetStream(netStream:NetStream):void
 		{
 			super.attachNetStream(netStream);
-			this._netStream = netStream;
+			_netStream = netStream;
 		}
 		
 		/**
@@ -163,7 +163,7 @@ package temple.core.media
 		 */
 		public function detachNetStream():void
 		{
-			if (this._netStream) this.attachNetStream(null);
+			if (_netStream) attachNetStream(null);
 		}
 		
 		include "../includes/CoreObjectMethods.as.inc";
@@ -187,58 +187,58 @@ package temple.core.media
 		 */
 		public function destruct():void 
 		{
-			if (this._isDestructed) return;
+			if (_isDestructed) return;
 			
-			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
 			// clear mask, so it won't keep a reference to an other object
-			this.mask = null;
+			mask = null;
 			
-			this.detachCamera();
-			this.detachNetStream();
+			detachCamera();
+			detachNetStream();
 			
-			if (this.loaderInfo) this.loaderInfo.removeEventListener(Event.UNLOAD, this.handleUnload);
+			if (loaderInfo) loaderInfo.removeEventListener(Event.UNLOAD, handleUnload);
 			
-			this.removeEventListener(Event.ENTER_FRAME, this.handleDestructedFrameDelay);
+			removeEventListener(Event.ENTER_FRAME, handleDestructedFrameDelay);
 			
-			if (this._eventListenerManager)
+			if (_eventListenerManager)
 			{
-				this._eventListenerManager.destruct();
-				this._eventListenerManager = null;
+				_eventListenerManager.destruct();
+				_eventListenerManager = null;
 			}
 			
-			super.removeEventListener(Event.ENTER_FRAME, this.handleDestructedFrameDelay);
-			super.removeEventListener(Event.ADDED, this.handleAdded);
-			super.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-			super.removeEventListener(Event.REMOVED, this.handleRemoved);
-			super.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			super.removeEventListener(Event.ENTER_FRAME, handleDestructedFrameDelay);
+			super.removeEventListener(Event.ADDED, handleAdded);
+			super.removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+			super.removeEventListener(Event.REMOVED, handleRemoved);
+			super.removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 			
-			if (this.parent)
+			if (parent)
 			{
-				if (this.parent is Loader)
+				if (parent is Loader)
 				{
-					Loader(this.parent).unload();
+					Loader(parent).unload();
 				}
 				else
 				{
-					if (this._onParent)
+					if (_onParent)
 					{
-						if (this.name && this.parent.hasOwnProperty(this.name)) this.parent[this.name] = null;
-						this.parent.removeChild(this);
+						if (name && parent.hasOwnProperty(name)) parent[name] = null;
+						parent.removeChild(this);
 					}
 					else
 					{
 						// something weird happened, since we have a parent but didn't receive an ADDED event. So do the try-catch thing
 						try
 						{
-							if (this.name && this.parent.hasOwnProperty(this.name)) this.parent[this.name] = null;
-							this.parent.removeChild(this);
+							if (name && parent.hasOwnProperty(name)) parent[name] = null;
+							parent.removeChild(this);
 						}
 						catch (e:Error){}
 					}
 				}
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

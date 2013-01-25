@@ -23,18 +23,18 @@ package
 		
 		public function CoreLoaderExample()
 		{
-			this._loader = new CoreLoader();
+			_loader = new CoreLoader();
 			// add the listener on the loader instead of the contentLoaderInfo
-			this._loader.addEventListenerOnce(Event.COMPLETE, this.handleLoaderComplete);
-			this._loader.load(new URLRequest('http://code.google.com/p/templelibrary/logo'));
+			_loader.addEventListenerOnce(Event.COMPLETE, handleLoaderComplete);
+			_loader.load(new URLRequest('http://code.google.com/p/templelibrary/logo'));
 		}
 
 		private function handleLoaderComplete(event:Event):void
 		{
-			this.addChild(this._loader);
+			addChild(_loader);
 			// center on stage
-			this._loader.x = Math.round(.5 * (this.stage.stageWidth - this._loader.width));
-			this._loader.y = Math.round(.5 * (this.stage.stageHeight - this._loader.height));
+			_loader.x = Math.round(.5 * (stage.stageWidth - _loader.width));
+			_loader.y = Math.round(.5 * (stage.stageHeight - _loader.height));
 		}
 	}
 }

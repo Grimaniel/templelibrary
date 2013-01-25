@@ -49,7 +49,7 @@ package temple.core.errors
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 		
 		private var _sender:Object;
 		
@@ -62,10 +62,10 @@ package temple.core.errors
 		 */
 		public function TempleArgumentError(sender:Object, message:*, id:* = 0)
 		{
-			this._sender = sender;
+			_sender = sender;
 			super(message, id);
 			
-			var stack:String = this.getStackTrace();
+			var stack:String = getStackTrace();
 			if (stack)
 			{
 				Log.error(stack + " id:" + id, String(sender));
@@ -81,7 +81,7 @@ package temple.core.errors
 		 */
 		public function get sender():Object
 		{
-			return this._sender;
+			return _sender;
 		}
 	}
 }

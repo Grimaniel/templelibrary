@@ -74,7 +74,7 @@ package temple.core.events
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.3.0";
+		templelibrary static const VERSION:String = "3.4.0";
 
 		/**
 		 * @private
@@ -106,7 +106,7 @@ package temple.core.events
 		 */
 		construct function coreEventDispatcher(target:IEventDispatcher):void
 		{
-			this._registryId = Registry.add(this);
+			_registryId = Registry.add(this);
 			target;
 		}
 		
@@ -358,16 +358,16 @@ package temple.core.events
 		 */
 		public function destruct():void 
 		{
-			if (this._isDestructed) return;
+			if (_isDestructed) return;
 			
-			this.dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
+			dispatchEvent(new DestructEvent(DestructEvent.DESTRUCT));
 			
-			if (this._eventListenerManager)
+			if (_eventListenerManager)
 			{
-				this._eventListenerManager.destruct();
-				this._eventListenerManager = null;
+				_eventListenerManager.destruct();
+				_eventListenerManager = null;
 			}
-			this._isDestructed = true;
+			_isDestructed = true;
 		}
 	}
 }

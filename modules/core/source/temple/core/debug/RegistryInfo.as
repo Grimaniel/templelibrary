@@ -24,24 +24,24 @@ package temple.core.debug
 	
 		public function RegistryInfo(stack:String, objectId:uint) 
 		{
-			this._timestamp = getTimer();
-			this._stack = stack;
-			this._objectId = objectId;
+			_timestamp = getTimer();
+			_stack = stack;
+			_objectId = objectId;
 		}
 	
 		public function get stack():String
 		{
-			return this._stack;
+			return _stack;
 		}
 		
 		public function get timestamp():int
 		{
-			return this._timestamp;
+			return _timestamp;
 		}
 		
 		public function get objectId():uint
 		{
-			return this._objectId;
+			return _objectId;
 		}
 		
 		public function toString():String

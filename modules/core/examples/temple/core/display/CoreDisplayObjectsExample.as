@@ -62,25 +62,25 @@ package
 		public function CoreDisplayObjectsExample()
 		{
 			// create a TextField for displaying the output of the Log
-			this._output = new TextField();
-			this._output.textColor = 0xffffff;
-			this._output.autoSize = TextFieldAutoSize.LEFT;
-			this.addChild(this._output);
-			this._output.doubleClickEnabled = true;
+			_output = new TextField();
+			_output.textColor = 0xffffff;
+			_output.autoSize = TextFieldAutoSize.LEFT;
+			addChild(_output);
+			_output.doubleClickEnabled = true;
 			// double clicking the TextField destructs all objects
-			this._output.addEventListener(MouseEvent.DOUBLE_CLICK, this.handleOutputDoubleClick);
+			_output.addEventListener(MouseEvent.DOUBLE_CLICK, handleOutputDoubleClick);
 			
 			// add a listener on the Log to get the log messages
-			Log.addLogListener(this.handleLogEvent);
+			Log.addLogListener(handleLogEvent);
 			
 			// create an instance of the MemoryDebugger, which checks the Memory for possible leaks
 			new MemoryDebugger();
 			
 			// create a timer for creating objects 
-			this._timer = new CoreTimer(500, 10);
-			this._timer.addEventListener(TimerEvent.TIMER, this.handleTimer);
-			this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
-			this._timer.start();
+			_timer = new CoreTimer(500, 10);
+			_timer.addEventListener(TimerEvent.TIMER, handleTimer);
+			_timer.addEventListener(TimerEvent.TIMER_COMPLETE, handleTimerComplete);
+			_timer.start();
 		}
 
 		private function handleTimer(event:TimerEvent):void
@@ -94,9 +94,9 @@ package
 					sprite.graphics.beginFill(0x0000ff, .5);
 					sprite.graphics.lineStyle(1, 0x0000ff);
 					sprite.graphics.drawRect(0, 0, 50, 50);
-					sprite.addEventListener(MouseEvent.CLICK, this.handleClick);
+					sprite.addEventListener(MouseEvent.CLICK, handleClick);
 					sprite.buttonMode = true;
-					this.addOnStage(sprite);
+					addOnStage(sprite);
 					break;
 				}
 				case 1:
@@ -105,9 +105,9 @@ package
 					movieClip.graphics.beginFill(0x00ff00, .5);
 					movieClip.graphics.lineStyle(1, 0x00ff00);
 					movieClip.graphics.drawRect(0, 0, 50, 50);
-					movieClip.addEventListener(MouseEvent.CLICK, this.handleClick);
+					movieClip.addEventListener(MouseEvent.CLICK, handleClick);
 					movieClip.buttonMode = true;
-					this.addOnStage(movieClip);
+					addOnStage(movieClip);
 					break;
 				}
 				case 2:
@@ -116,7 +116,7 @@ package
 					shape.graphics.beginFill(0xff0000, .5);
 					shape.graphics.lineStyle(1, 0xff0000);
 					shape.graphics.drawRect(0, 0, 50, 50);
-					this.addOnStage(shape);
+					addOnStage(shape);
 					break;
 				}
 				case 3:
@@ -124,8 +124,8 @@ package
 					var loader:CoreLoader = new CoreLoader();
 					loader.load(new URLRequest('http://code.google.com/p/templelibrary/logo'));
 					// don't add the COMPLETE listener on the contentLoaderInfo, but on the loader
-					loader.addEventListenerOnce(Event.COMPLETE, this.handleLoaderComplete);
-					loader.addEventListener(MouseEvent.CLICK, this.handleClick);
+					loader.addEventListenerOnce(Event.COMPLETE, handleLoaderComplete);
+					loader.addEventListener(MouseEvent.CLICK, handleClick);
 					break;
 				}
 				case 4:
@@ -133,41 +133,41 @@ package
 					var bitmapData:BitmapData = new BitmapData(50, 50, false, 0xffff00);
 					var bitmap:CoreBitmap = new CoreBitmap(bitmapData);
 					bitmap.alpha = .7;
-					this.addOnStage(bitmap);
+					addOnStage(bitmap);
 				}
 			}
 			
 			// don't allow more than 50 objects
-			if (this.numChildren > 50)
+			if (numChildren > 50)
 			{
-				IDestructible(this.getChildAt(1)).destruct();
+				IDestructible(getChildAt(1)).destruct();
 			}
 		}
 
 		private function addOnStage(object:ICoreDisplayObject):void
 		{
 			// add to stage on a random positon
-			this.addChild(object as DisplayObject);
-			object.position = new Point(int(Math.random() * (this.stage.stageWidth - object.width)), int(Math.random() * (this.stage.stageHeight - object.height)));
+			addChild(object as DisplayObject);
+			object.position = new Point(int(Math.random() * (stage.stageWidth - object.width)), int(Math.random() * (stage.stageHeight - object.height)));
 		}
 
 
 		private function handleTimerComplete(event:TimerEvent):void
 		{
 			// destruct the timer (just for testing) and create a new one
-			this._timer.destruct();
-			this._timer = null;
+			_timer.destruct();
+			_timer = null;
 			
-			this._timer = new CoreTimer(500, 10);
-			this._timer.addEventListener(TimerEvent.TIMER, this.handleTimer);
-			this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
-			this._timer.start();
+			_timer = new CoreTimer(500, 10);
+			_timer.addEventListener(TimerEvent.TIMER, handleTimer);
+			_timer.addEventListener(TimerEvent.TIMER_COMPLETE, handleTimerComplete);
+			_timer.start();
 		}
 
 		private function handleLogEvent(event:LogEvent):void
 		{
 			// put the log output in the TextField
-			this._output.text = "Memory info: (double click to delete all objects)\n" + event.data;
+			_output.text = "Memory info: (double click to delete all objects)\n" + event.data;
 		}
 		
 		private function handleClick(event:MouseEvent):void
@@ -179,7 +179,7 @@ package
 		private function handleLoaderComplete(event:Event):void
 		{
 			// image is loaded, add on stage
-			this.addOnStage(CoreLoader(event.target));
+			addOnStage(CoreLoader(event.target));
 		}
 		
 		private function handleOutputDoubleClick(event:MouseEvent):void
@@ -188,7 +188,7 @@ package
 			Destructor.destructChildren(this);
 			
 			// the TextField is also destructed, so put it back on stage
-			this.addChild(this._output);
+			addChild(_output);
 			
 			System.gc();
 		}
