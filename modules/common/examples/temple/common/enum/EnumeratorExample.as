@@ -30,13 +30,13 @@ package
 			super("Temple - EnumeratorExample");
 			
 			// Create a TextField for displaying the output of the Log
-			this._output = new TextField();	
-			this._output.width = this.stage.stageWidth;
-			this._output.height = this.stage.stageHeight;
-			this.addChild(this._output);
+			_output = new TextField();	
+			_output.width = stage.stageWidth;
+			_output.height = stage.stageHeight;
+			addChild(_output);
 			
 			// Set a listener on the Log
-			Log.addLogListener(this.handleLogEvent);
+			Log.addLogListener(handleLogEvent);
 			
 			// create a new instance of Person
 			var person:Person = new Person();
@@ -53,19 +53,19 @@ package
 			}
 			catch (error:Error)
 			{
-				this.logError(error.message);
+				logError(error.message);
 			}
 			
 			// if you want to lookup a valid value of gender by the String value you can do the following:
 			var gender:Gender = Enumerator.get(Gender, "male") as Gender;
 			
 			// view this message at http://yalala.tyz.nl
-			this.logInfo("gender = " + gender);
+			logInfo("gender = " + gender);
 		}
 
 		private function handleLogEvent(event:LogEvent):void
 		{
-			this._output.appendText(event.data + "\n\n");
+			_output.appendText(event.data + "\n\n");
 		}
 
 	}

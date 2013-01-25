@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Common Module API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/common/enum/Enumerator.html&amp;temple/common/enum/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Enumerator</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Common Module API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/common/enum/Enumerator.html&amp;temple/common/enum/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Enumerator</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Enumerator"); titleBar_setSubNav(false,true,false,false,false,false,false,false,true,true,false	,false,false,false,false,false);}	
@@ -119,13 +119,13 @@ package
             super("Temple - EnumeratorExample");
             
             // Create a TextField for displaying the output of the Log
-            this._output = new TextField();    
-            this._output.width = this.stage.stageWidth;
-            this._output.height = this.stage.stageHeight;
-            this.addChild(this._output);
+            _output = new TextField();    
+            _output.width = stage.stageWidth;
+            _output.height = stage.stageHeight;
+            addChild(_output);
             
             // Set a listener on the Log
-            Log.addLogListener(this.handleLogEvent);
+            Log.addLogListener(handleLogEvent);
             
             // create a new instance of Person
             var person:Person = new Person();
@@ -142,19 +142,19 @@ package
             }
             catch (error:Error)
             {
-                this.logError(error.message);
+                logError(error.message);
             }
             
             // if you want to lookup a valid value of gender by the String value you can do the following:
             var gender:Gender = Enumerator.get(Gender, "male") as Gender;
             
             // view this message at http://yalala.tyz.nl
-            this.logInfo("gender = " + gender);
+            logInfo("gender = " + gender);
         }
 
         private function handleLogEvent(event:LogEvent):void
         {
-            this._output.appendText(event.data + "\n\n");
+            _output.appendText(event.data + "\n\n");
         }
 
     }

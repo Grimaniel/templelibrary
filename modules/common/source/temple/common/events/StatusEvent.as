@@ -55,8 +55,8 @@ package temple.common.events
 		{
 			super(type, bubbles);
 			
-			this._status = status;
-			this.toStringProps.splice(1, 0, "status");
+			_status = status;
+			toStringProps.splice(1, 0, "status");
 		}
 		
 		/**
@@ -64,12 +64,12 @@ package temple.common.events
 		 */
 		public function get status():String
 		{
-			return this._status;
+			return _status;
 		}
 
 		override public function clone():Event
 		{
-			return new StatusEvent(this.type, this._status, this.bubbles);
+			return new StatusEvent(type, _status, bubbles);
 		}
 	}
 }

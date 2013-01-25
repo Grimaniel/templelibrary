@@ -56,9 +56,9 @@ package temple.common.events
 		{
 			super(type);
 			
-			this._name = name;
+			_name = name;
 			
-			this.toStringProps.splice(1, 0, "name");
+			toStringProps.splice(1, 0, "name");
 		}
 		
 		/**
@@ -66,7 +66,7 @@ package temple.common.events
 		 */
 		public function get name():String
 		{
-			return this._name;
+			return _name;
 		}
 
 		/**
@@ -74,7 +74,7 @@ package temple.common.events
 		 */
 		override public function clone():Event 
 		{
-			return new SoundEvent(this.type, this._name);
+			return new SoundEvent(type, _name);
 		}
 	}
 }
