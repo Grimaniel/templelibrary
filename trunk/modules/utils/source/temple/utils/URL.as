@@ -106,24 +106,24 @@ package temple.utils
 		 */
 		public function get href():String
 		{
-			if (this._protocol == URL.MAILTO)
+			if (_protocol == URL.MAILTO)
 			{
-				return this.scheme + this.email;
+				return scheme + email;
 			}
 			
-			var href:String = this.scheme || "";
-			var auth:String = this.authentication;
+			var href:String = scheme || "";
+			var auth:String = authentication;
 			if (auth)
 			{
 				href += auth + "@";
 			}
-			if (this._domain) href += this._domain;
-			if (this._port) href += ":" + this._port;
-			if (this._path) href += this._path;
+			if (_domain) href += _domain;
+			if (_port) href += ":" + _port;
+			if (_path) href += _path;
 			
-			var query:String = this.query;
+			var query:String = query;
 			if (query) href += "?" + query;
-			if (this._hashList) href += "#" + this.hash;
+			if (_hashList) href += "#" + hash;
 			
 			return href;
 		}
@@ -133,71 +133,71 @@ package temple.utils
 		 */
 		public function set href(value:String):void
 		{
-			this._protocol = null; 
-			this._domain = null;   
-			this._port = 0;       
-			this._path = null;     
-			this._variables = null;
-			this._hashList = null;
-			this._username = null;
-			this._password = null;
+			_protocol = null; 
+			_domain = null;   
+			_port = 0;       
+			_path = null;     
+			_variables = null;
+			_hashList = null;
+			_username = null;
+			_password = null;
 			
 			if (value)
 			{
 				var temp:Array = value.split('#');
-				this.hash = temp[1];
+				hash = temp[1];
 				
 				temp = String(temp[0]).split('?');
-				this.query = temp[1];
+				query = temp[1];
 				
 				var href:String = temp[0];
 				
 				if (href.indexOf(":") != -1)
 				{
-					this._protocol = href.split(":")[0];
+					_protocol = href.split(":")[0];
 				}
 				
-				if (this._protocol)
+				if (_protocol)
 				{
-					href = href.substr(this._protocol.length + 1);
+					href = href.substr(_protocol.length + 1);
 					if (href.substr(0, 2) == "//") href = href.substr(2);
 				}
 				
-				if (this._protocol == URL.MAILTO)
+				if (_protocol == URL.MAILTO)
 				{
-					this.email = href;
+					email = href;
 				}
-				else if (this._protocol)
+				else if (_protocol)
 				{
 					var slash:int = href.indexOf("/");
 					if (slash != -1)
 					{
-						this._domain = href.substr(0, slash);
-						this._path = href.substr(slash);
+						_domain = href.substr(0, slash);
+						_path = href.substr(slash);
 					}
 					else
 					{
-						this._domain = href;
-						this._path = null;
+						_domain = href;
+						_path = null;
 					}
-					if (this._domain.indexOf("@") != -1)
+					if (_domain.indexOf("@") != -1)
 					{
-						temp = this._domain.split("@");
-						this.authentication = temp[0];
-						this._domain = temp[1];
+						temp = _domain.split("@");
+						authentication = temp[0];
+						_domain = temp[1];
 					}
-					if (this._domain.indexOf(":") != -1)
+					if (_domain.indexOf(":") != -1)
 					{
-						temp = this._domain.split(":");
-						this._domain = temp[0];
-						this._port = temp[1];
+						temp = _domain.split(":");
+						_domain = temp[0];
+						_port = temp[1];
 					}
 				}
 				else
 				{
-					this._domain = null;
-					this._path = href || null;
-					this._port = 0;
+					_domain = null;
+					_path = href || null;
+					_port = 0;
 				}
 			} 
 		}
@@ -215,7 +215,7 @@ package temple.utils
 		 */
 		public function get protocol():String
 		{
-			return this._protocol;
+			return _protocol;
 		}
 
 		/**
@@ -223,7 +223,7 @@ package temple.utils
 		 */
 		public function set protocol(value:String):void
 		{
-			this._protocol = value;
+			_protocol = value;
 		}
 
 		/**
@@ -231,7 +231,7 @@ package temple.utils
 		 */
 		public function setProtocol(value:String):URL
 		{
-			this._protocol = value;
+			_protocol = value;
 			return this;
 		}
 
@@ -240,7 +240,7 @@ package temple.utils
 		 */
 		public function get domain():String
 		{
-			return this._domain;
+			return _domain;
 		}
 
 		/**
@@ -248,7 +248,7 @@ package temple.utils
 		 */
 		public function set domain(value:String):void
 		{
-			this._domain = value;
+			_domain = value;
 		}
 
 		/**
@@ -256,7 +256,7 @@ package temple.utils
 		 */
 		public function setDomain(value:String):URL
 		{
-			this._domain = value;
+			_domain = value;
 			return this;
 		}
 
@@ -267,7 +267,7 @@ package temple.utils
 		 */
 		public function get port():uint
 		{
-			return this._port;
+			return _port;
 		}
 
 		/**
@@ -275,7 +275,7 @@ package temple.utils
 		 */
 		public function set port(value:uint):void
 		{
-			this._port = value;
+			_port = value;
 		}
 
 		/**
@@ -283,7 +283,7 @@ package temple.utils
 		 */
 		public function setPort(value:uint):URL
 		{
-			this._port = value;
+			_port = value;
 			return this;
 		}
 		
@@ -292,7 +292,7 @@ package temple.utils
 		 */
 		public function get path():String
 		{
-			return this._path;
+			return _path;
 		}
 
 		/**
@@ -300,7 +300,7 @@ package temple.utils
 		 */
 		public function set path(value:String):void
 		{
-			this._path = value;
+			_path = value;
 		}
 
 		/**
@@ -308,7 +308,7 @@ package temple.utils
 		 */
 		public function get variables():URLVariables
 		{
-			return this._variables;
+			return _variables;
 		}
 
 		/**
@@ -316,7 +316,7 @@ package temple.utils
 		 */
 		public function set variables(value:URLVariables):void
 		{
-			this._variables = value;
+			_variables = value;
 		}
 
 		/**
@@ -324,7 +324,7 @@ package temple.utils
 		 */
 		public function hasVariable(name:String):Boolean
 		{
-			return this._variables && this._variables.hasOwnProperty(name);
+			return _variables && _variables.hasOwnProperty(name);
 		}
 
 		/**
@@ -332,7 +332,7 @@ package temple.utils
 		 */
 		public function getVariable(name:String):*
 		{
-			return this._variables ? this._variables[name] : null;
+			return _variables ? _variables[name] : null;
 		}
 
 		/**
@@ -340,8 +340,8 @@ package temple.utils
 		 */
 		public function setVariable(name:String, value:*):URL
 		{
-			if (!this._variables) this._variables = new URLVariables();
-			this._variables[name] = value;
+			if (!_variables) _variables = new URLVariables();
+			_variables[name] = value;
 			
 			return this;
 		}
@@ -351,7 +351,7 @@ package temple.utils
 		 */
 		public function deleteVariable(name:String):void
 		{
-			delete this._variables[name];
+			delete _variables[name];
 		}
 
 		/**
@@ -364,7 +364,7 @@ package temple.utils
 		 */
 		public function get query():String
 		{
-			return this._variables ? this._variables.toString() : null;
+			return _variables ? _variables.toString() : null;
 		}
 
 		/**
@@ -374,19 +374,19 @@ package temple.utils
 		{
 			if (!value)
 			{
-				this._variables = null;
+				_variables = null;
 			}
 			else
 			{
 				try
 				{
-					if (this._variables)
+					if (_variables)
 					{
-						this._variables.decode(value);
+						_variables.decode(value);
 					}
 					else
 					{
-						this._variables = new URLVariables(value);
+						_variables = new URLVariables(value);
 					}
 				}
 				catch (error:Error)
@@ -406,7 +406,7 @@ package temple.utils
 		 */
 		public function get hash():String
 		{
-			var length:uint = this._hashList ? this._hashList.length : 0;
+			var length:uint = _hashList ? _hashList.length : 0;
 			
 			if (!length)
 			{
@@ -414,14 +414,14 @@ package temple.utils
 			}
 			else if (length == 1)
 			{
-				return this._hashList[0];
+				return _hashList[0];
 			}
 			else
 			{
 				var hash:String = "";
 				for (var i:int = 0; i < length; i++)
 				{
-					hash += "/" + (this._hashList[i] || "-");
+					hash += "/" + (_hashList[i] || "-");
 				}
 				return hash;
 			}
@@ -435,11 +435,11 @@ package temple.utils
 			if (value)
 			{
 				if (value.charAt() == "/") value = value.substr(1);
-				this._hashList = Vector.<String>(value.split("/"));
+				_hashList = Vector.<String>(value.split("/"));
 			}
 			else
 			{
-				this._hashList;
+				_hashList;
 			}
 		}
 
@@ -448,7 +448,7 @@ package temple.utils
 		 */
 		public function setHash(value:String):URL
 		{
-			this.hash = value;
+			hash = value;
 			return this;
 		}
 		
@@ -457,7 +457,7 @@ package temple.utils
 		 */
 		public function get hashList():Vector.<String>
 		{
-			return this._hashList;
+			return _hashList;
 		}
 
 		/**
@@ -465,7 +465,7 @@ package temple.utils
 		 */
 		public function getHashPart(index:uint):String
 		{
-			return index < this._hashList.length ? this._hashList[index] : null;
+			return index < _hashList.length ? _hashList[index] : null;
 		}
 
 		/**
@@ -473,13 +473,13 @@ package temple.utils
 		 */
 		public function setHashPart(index:uint, value:String):URL
 		{
-			this._hashList ||= new Vector.<String>(index + 1);
+			_hashList ||= new Vector.<String>(index + 1);
 			
-			if (index >= this._hashList.length)
+			if (index >= _hashList.length)
 			{
-				this._hashList.length = index + 1;
+				_hashList.length = index + 1;
 			}
-			this._hashList[index] = value;
+			_hashList[index] = value;
 			
 			return this;
 		}
@@ -495,7 +495,7 @@ package temple.utils
 		 */
 		public function get isAbsolute():Boolean
 		{
-			return this._protocol != null;
+			return _protocol != null;
 		}
 
 		/**
@@ -508,7 +508,7 @@ package temple.utils
 		 */
 		public function get isRelative():Boolean
 		{
-			return this._protocol == null;
+			return _protocol == null;
 		}
 
 		/**
@@ -518,7 +518,7 @@ package temple.utils
 		 */
 		public function get isSecure():Boolean
 		{
-			return this._protocol == URL.HTTPS || this._protocol == URL.SFTP;
+			return _protocol == URL.HTTPS || _protocol == URL.SFTP;
 		}
 
 		/**
@@ -533,7 +533,7 @@ package temple.utils
 		 */
 		public function get scheme():String
 		{
-			switch (this._protocol)
+			switch (_protocol)
 			{
 				case null:
 					return null;
@@ -543,11 +543,11 @@ package temple.utils
 				case URL.FTP:
 				case URL.SFTP:
 				case URL.FILE:
-					return this._protocol + "://";
+					return _protocol + "://";
 
 				case URL.MAILTO:
 				default:
-					return this._protocol + ":";
+					return _protocol + ":";
 			}
 		}
 		
@@ -556,12 +556,12 @@ package temple.utils
 		 */
 		public function set scheme(value:String):void
 		{
-			this._protocol = value ? value.split(":")[0] : null;
+			_protocol = value ? value.split(":")[0] : null;
 		}
 
 		public function get username():String
 		{
-			return this._username;
+			return _username;
 		}
 
 		/**
@@ -569,12 +569,12 @@ package temple.utils
 		 */
 		public function set username(value:String):void
 		{
-			this._username = value;
+			_username = value;
 		}
 
 		public function get password():String
 		{
-			return this._password;
+			return _password;
 		}
 
 		/**
@@ -582,7 +582,7 @@ package temple.utils
 		 */
 		public function set password(value:String):void
 		{
-			this._password = value;
+			_password = value;
 		}
 
 		/**
@@ -595,15 +595,15 @@ package temple.utils
 		 */
 		public function get authentication():String
 		{
-			if (this._protocol != URL.MAILTO && this._username)
+			if (_protocol != URL.MAILTO && _username)
 			{
-				if (this._password)
+				if (_password)
 				{
-					return this._username + ":" + this._password;
+					return _username + ":" + _password;
 				}
 				else
 				{
-					return this._username;
+					return _username;
 				}
 			}
 			return null;
@@ -617,13 +617,13 @@ package temple.utils
 			if (value)
 			{
 				var a:Array = value.split(":");
-				this._username = a[0];
-				this._password = a[1];
+				_username = a[0];
+				_password = a[1];
 			}
 			else
 			{
-				this._username = null;
-				this._password = null;
+				_username = null;
+				_password = null;
 			}
 		}
 		
@@ -637,7 +637,7 @@ package temple.utils
 		 */
 		public function get email():String
 		{
-			return this._protocol == URL.MAILTO && this._username && this._domain ? this._username + "@" + this._domain : null;
+			return _protocol == URL.MAILTO && _username && _domain ? _username + "@" + _domain : null;
 		}
 
 		/**
@@ -645,18 +645,18 @@ package temple.utils
 		 */
 		public function set email(value:String):void
 		{
-			this._protocol = URL.MAILTO;
+			_protocol = URL.MAILTO;
 			if (value)
 			{
 				var temp:Array = value.split("@"); 
-				this._username = temp[0];
-				this._domain = temp[1];
+				_username = temp[0];
+				_domain = temp[1];
 			}
 		}
 
 		public function toString():String
 		{
-			return this.href;
+			return href;
 		}
 	}
 }

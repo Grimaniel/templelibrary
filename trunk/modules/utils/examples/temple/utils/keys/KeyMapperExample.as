@@ -26,13 +26,13 @@ package
 			super("Temple - KeyMapperExample");
 			
 			// Create a new Sprite
-			this._sprite = new CoreSprite();
-			this._sprite.graphics.beginFill(0x000000);
-			this._sprite.graphics.drawRect(0, 0, 20, 20);
-			this._sprite.graphics.endFill();
-			this.addChild(this._sprite);
-			this._sprite.x = 200;
-			this._sprite.y = 200;
+			_sprite = new CoreSprite();
+			_sprite.graphics.beginFill(0x000000);
+			_sprite.graphics.drawRect(0, 0, 20, 20);
+			_sprite.graphics.endFill();
+			addChild(_sprite);
+			_sprite.x = 200;
+			_sprite.y = 200;
 			
 			// Create a KeyMapper to control the Sprite with the keyboard 
 			var keyMapper:KeyMapper = new KeyMapper(this.stage);
@@ -49,17 +49,17 @@ package
 			keyMapper.map(KeyCode.UP + KeyMapper.SHIFT, this.moveVertical, [-20]);
 			keyMapper.map(KeyCode.DOWN + KeyMapper.SHIFT, this.moveVertical, [20]);
 			
-			this.logInfo("Use the following keys to control the object:\n" + keyMapper.getInfo());
+			logInfo("Use the following keys to control the object:\n" + keyMapper.getInfo());
 		}
 
 		private function moveHorizontal(speed:Number):void 
 		{
-			this._sprite.x += speed;
+			_sprite.x += speed;
 		}
 
 		private function moveVertical(speed:Number):void 
 		{
-			this._sprite.y += speed;
+			_sprite.y += speed;
 		}
 	}
 }

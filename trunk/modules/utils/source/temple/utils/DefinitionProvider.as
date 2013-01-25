@@ -195,25 +195,11 @@ package temple.utils
 		}
 
 		/**
-		 * Resolve a whole bunch of Class definition lookups
-		 */
-		public static function getDefinitionList(classNameArray:String):Array
-		{
-			var arr:Array = new Array();
-			var iLim:uint = classNameArray.length;
-			for (var i:uint = 0;i < iLim;i++)
-			{
-				arr.push(DefinitionProvider.getDefinition(classNameArray[i]));
-			}
-			return arr;
-		}
-		
-		/**
 		 * Register a ApplicationDomain for Class definition lookups.
 		 * 
 		 * @example
 		 * <listing version="3.0">
-		 * DefinitionProvider.registerApplicationDomain(this.loaderInfo.applicationDomain);
+		 * DefinitionProvider.registerApplicationDomain(loaderInfo.applicationDomain);
 		 * </listing>
 		 */
 		public static function registerApplicationDomain(appDomain:ApplicationDomain):void
@@ -248,7 +234,6 @@ package temple.utils
 				{
 					delete DefinitionProvider._domainRegister[appDomain];
 				}
-				
 				DefinitionProvider.clearDefinitionCache();
 			}
 		}

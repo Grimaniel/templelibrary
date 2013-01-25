@@ -48,22 +48,22 @@ package temple.utils.propertyproxy
 		
 		public function FunctionPropertyProxy(method:Function)
 		{
-			this._method = method;
+			_method = method;
 		}
 
 		public function get method():Function
 		{
-			return this._method;
+			return _method;
 		}
 
 		public function set method(value:Function):void
 		{
-			this._method = value;
+			_method = value;
 		}
 		
 		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			target[property] = this._method(value);
+			target[property] = _method(value);
 			if (onComplete != null) onComplete();
 		}
 

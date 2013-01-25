@@ -25,53 +25,53 @@ package
 		{
 			super("Temple - URLExample");
 			
-			this._output = new TextField();
-			this._output.width = this.stage.stageWidth;
-			this._output.height = this.stage.stageHeight;
-			this.addChild(this._output);
+			_output = new TextField();
+			_output.width = stage.stageWidth;
+			_output.height = stage.stageHeight;
+			addChild(_output);
 			
 			var url:URL;
 			
-			this._output.appendText(new URL("http://www.domain.com?var1=test").setVariable("var1", "live").toString() + "\n");
+			_output.appendText(new URL("http://www.domain.com?var1=test").setVariable("var1", "live").toString() + "\n");
 			
 			url = new URL();
 			url.protocol = URL.MAILTO;
 			url.domain = "mediamonks.com";
 			url.username = "thijs";
-			this._output.appendText(url + "\n");
+			_output.appendText(url + "\n");
 			
-			this._output.appendText(new URL("http://www.test.com").setVariable("var1", 1).setVariable("var2", 2) + "\n");
+			_output.appendText(new URL("http://www.test.com").setVariable("var1", 1).setVariable("var2", 2) + "\n");
 
-			this._output.appendText(new URL("http://www.test.com").setProtocol(URL.HTTPS) + "\n");
+			_output.appendText(new URL("http://www.test.com").setProtocol(URL.HTTPS) + "\n");
 
-			this._output.appendText(new URL("index.html#foo").setHash("bar") + "\n");
+			_output.appendText(new URL("index.html#foo").setHash("bar") + "\n");
 			
-			this.test("https://sub.domain.ext/dir/subdir/index.html?var1=yes&var2=no#hash");
+			test("https://sub.domain.ext/dir/subdir/index.html?var1=yes&var2=no#hash");
 			
-			this.test("ftp://domain:8080/path?name=value#hash");
+			test("ftp://domain:8080/path?name=value#hash");
 
-			this.test("ftp://asmith@ftp.example.org");
+			test("ftp://asmith@ftp.example.org");
 			
-			this.test("ftp://username:password@ftp.example.org:1234/dir");
+			test("ftp://username:password@ftp.example.org:1234/dir");
 			
-			this.test("http://www.mediamonks.com?test=true&var1=yes");
+			test("http://www.mediamonks.com?test=true&var1=yes");
 			
-			this.test("mailto:thijs@mediamonks.com");
+			test("mailto:thijs@mediamonks.com");
 
-			this.test("index.html#test");
+			test("index.html#test");
 			
-			this.test("#products/samples/123/some-description");
+			test("#products/samples/123/some-description");
 			
-			this._output.appendText(new URL("#products/samples/123/some-description").getHashPart(1) + "\n");
+			_output.appendText(new URL("#products/samples/123/some-description").getHashPart(1) + "\n");
 			
-			this._output.appendText(new URL().setHashPart(1, "part1").setHashPart(2, "part2") + "\n");
+			_output.appendText(new URL().setHashPart(1, "part1").setHashPart(2, "part2") + "\n");
 		}
 
 		private function test(href:String):void
 		{
-			this._output.appendText(href + "\n");
+			_output.appendText(href + "\n");
 			
-			this._output.appendText(dump(new URL(href)) + "\n\n");
+			_output.appendText(dump(new URL(href)) + "\n\n");
 		}
 	}
 }

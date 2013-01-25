@@ -48,8 +48,8 @@ package temple.utils.propertyproxy
 
 		public function LimitPropertyProxy(min:Number = NaN, max:Number = NaN)
 		{
-			this._min = min;
-			this._max = max;
+			_min = min;
+			_max = max;
 		}
 		
 		/**
@@ -57,7 +57,7 @@ package temple.utils.propertyproxy
 		 */
 		public function get min():Number
 		{
-			return this._min;
+			return _min;
 		}
 		
 		/**
@@ -65,7 +65,7 @@ package temple.utils.propertyproxy
 		 */
 		public function set min(value:Number):void
 		{
-			this._min = value;
+			_min = value;
 		}
 		
 		/**
@@ -73,7 +73,7 @@ package temple.utils.propertyproxy
 		 */
 		public function get max():Number
 		{
-			return this._max;
+			return _max;
 		}
 		
 		/**
@@ -81,7 +81,7 @@ package temple.utils.propertyproxy
 		 */
 		public function set max(value:Number):void
 		{
-			this._max = value;
+			_max = value;
 		}
 
 		/**
@@ -91,8 +91,8 @@ package temple.utils.propertyproxy
 		{
 			if (!isNaN(value))
 			{
-				if (!isNaN(this._min)) value = Math.max(value, this._min);
-				if (!isNaN(this._max)) value = Math.min(value, this._max);
+				if (!isNaN(_min)) value = Math.max(value, _min);
+				if (!isNaN(_max)) value = Math.min(value, _max);
 			}
 			super.setValue(target, property, value, onComplete);
 		}

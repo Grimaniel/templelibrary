@@ -57,15 +57,15 @@ package temple.utils.keys
 	 * 
 	 * @example
 	 * <listing version="3.0">
-	 * keyMapper = new KeyMapper(this.stage);
-	 * keyMapper.map(Keyboard.ENTER, this.submit);
-	 * keyMapper.map(Keyboard.ESCAPE, this.cancel);
+	 * keyMapper = new KeyMapper(stage);
+	 * keyMapper.map(Keyboard.ENTER, submit);
+	 * keyMapper.map(Keyboard.ESCAPE, cancel);
 	 * </listing>
 	 * 
 	 * <p>It is also possible to map key combinations with the Shift, Alt and/or Control key.</p>
 	 * 
 	 * <listing version="3.0">
-	 * keyMapper = new KeyMapper(this.stage);
+	 * keyMapper = new KeyMapper(stage);
 	 * keyMapper.map(KeyCode.D | KeyMapper.CONTROL, Destructor.destruct, this);
 	 * keyMapper.map(KeyCode.R | KeyMapper.CONTROL, Memory.logRegistry);
 	 * </listing>
@@ -120,9 +120,9 @@ package temple.utils.keys
 			{
 				throwError(new TempleArgumentError(this, "invalid value for keyboardEvent '" + keyboardEvent + "'"));
 			}
-			this._map = {};
-			this._keyboardEvent = keyboardEvent;
-			target.addEventListener(this._keyboardEvent, this.handleKeyEvent);
+			_map = {};
+			_keyboardEvent = keyboardEvent;
+			target.addEventListener(_keyboardEvent, handleKeyEvent);
 		}
 
 		/**
@@ -133,15 +133,15 @@ package temple.utils.keys
 		 */
 		public function map(key:uint, method:Function, arguments:Array = null):KeyMapper 
 		{
-			if (this._map[_ + key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
+			if (_map[_ + key]) throwError(new TempleError(this, "You already mapped key '" + String.fromCharCode(key) + "' (" + key + ")"));
 			
 			if (arguments && arguments.length)
 			{
-				this._map[_ + key] = new ClosureArgs(method, arguments);
+				_map[_ + key] = new ClosureArgs(method, arguments);
 			}
 			else
 			{
-				this._map[_ + key] = method;
+				_map[_ + key] = method;
 			}
 			return this;
 		}
@@ -151,7 +151,7 @@ package temple.utils.keys
 		 */
 		public function unmap(key:uint):void 
 		{
-			delete this._map[_ + key];
+			delete _map[_ + key];
 		}
 		
 		/**
@@ -159,7 +159,7 @@ package temple.utils.keys
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 		
 		/**
@@ -167,7 +167,7 @@ package temple.utils.keys
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 		}
 		
 		/**
@@ -175,7 +175,7 @@ package temple.utils.keys
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -183,7 +183,7 @@ package temple.utils.keys
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 
 		/**
@@ -194,7 +194,7 @@ package temple.utils.keys
 		{
 			var info:String = "", shift:uint, control:uint, alt:uint, keyCode:uint;
 			var keyNames:Object = ObjectUtils.invert(Enum.getHash(Keyboard));
-			for (var key:String in this._map)
+			for (var key:String in _map)
 			{
 				keyCode =  uint(key.substr(1));
 				keyCode -= shift = keyCode & KeyMapper.SHIFT;
@@ -209,11 +209,11 @@ package temple.utils.keys
 				info += alt ? "A" : "";
 				info += "\t";
 				
-				if (this._map[key] is ClosureArgs)
+				if (_map[key] is ClosureArgs)
 				{
-					info += FunctionUtils.functionToString(ClosureArgs(this._map[key]).method).substr(0, -2);
+					info += FunctionUtils.functionToString(ClosureArgs(_map[key]).method).substr(0, -2);
 					info += "(";
-					var arguments:Array = ClosureArgs(this._map[key]).arguments;
+					var arguments:Array = ClosureArgs(_map[key]).arguments;
 					var leni:int = arguments.length;
 					for (var i:int = 0; i < leni; i++)
 					{
@@ -224,7 +224,7 @@ package temple.utils.keys
 				}
 				else
 				{
-					info += FunctionUtils.functionToString(this._map[key]);
+					info += FunctionUtils.functionToString(_map[key]);
 				}
 				info += "\n";
 			}
@@ -237,7 +237,7 @@ package temple.utils.keys
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -245,14 +245,14 @@ package temple.utils.keys
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleKeyEvent(event:KeyboardEvent):void 
 		{
-			if (!this._enabled)
+			if (!_enabled)
 			{
-				if (this.debug) this.logDebug("KeyMapper disabled " + event);
+				if (debug) logDebug("KeyMapper disabled " + event);
 				return;
 			}
 			
@@ -261,22 +261,22 @@ package temple.utils.keys
 			if (event.altKey) keyCode |= KeyMapper.ALT;
 			if (event.ctrlKey) keyCode |= KeyMapper.CONTROL;
 			
-			if (this._map && (_ + keyCode) in this._map)
+			if (_map && (_ + keyCode) in _map)
 			{
-				if (this.debug) this.logDebug("handleKeyEvent: " + event);
+				if (debug) logDebug("handleKeyEvent: " + event);
 				
-				if (this._map[_ + keyCode] is ClosureArgs)
+				if (_map[_ + keyCode] is ClosureArgs)
 				{
-					ClosureArgs(this._map[_ + keyCode]).execute();
+					ClosureArgs(_map[_ + keyCode]).execute();
 				}
 				else
 				{
-					this._map[_ + keyCode]();
+					_map[_ + keyCode]();
 				}
 			}
 			else
 			{
-				if (this.debug) this.logDebug("handleKeyEvent: unhandled key " + event);
+				if (debug) logDebug("handleKeyEvent: unhandled key " + event);
 			}
 		}
 
@@ -285,13 +285,13 @@ package temple.utils.keys
 		 */
 		override public function destruct():void 
 		{
-			if (this.displayObject)
+			if (displayObject)
 			{
-				this.displayObject.removeEventListener(this._keyboardEvent, this.handleKeyEvent);
-				this._keyboardEvent = null;
+				displayObject.removeEventListener(_keyboardEvent, handleKeyEvent);
+				_keyboardEvent = null;
 			}
 			
-			this._map = Destructor.destruct(this._map);
+			_map = Destructor.destruct(_map);
 			
 			super.destruct();
 		}

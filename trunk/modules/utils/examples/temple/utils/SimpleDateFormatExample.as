@@ -23,24 +23,24 @@ package
 		{
 			super("Temple - SimpleDateFormatExample");
 			
-			this._output = new TextField();
-			this.addChild(this._output);
-			this._output.width = this.stage.stageWidth;
-			this._output.height = this.stage.stageHeight;
+			_output = new TextField();
+			addChild(_output);
+			_output.width = stage.stageWidth;
+			_output.height = stage.stageHeight;
 			
-			this.test("yyyy.MM.dd G 'at' HH:mm:ss");
-			this.test("EEE, MMM d, ''yy");
-			this.test("h:mm a");
-			this.test("hh 'o''clock' a");
-			this.test("K:mm a");
-			this.test("yyyyy.MMMMM.dd GGG hh:mm aaa");
-			this.test("EEE, d MMM yyyy HH:mm:ss");
-			this.test("yyMMddHHmmss");
+			test("yyyy.MM.dd G 'at' HH:mm:ss");
+			test("EEE, MMM d, ''yy");
+			test("h:mm a");
+			test("hh 'o''clock' a");
+			test("K:mm a");
+			test("yyyyy.MMMMM.dd GGG hh:mm aaa");
+			test("EEE, d MMM yyyy HH:mm:ss");
+			test("yyMMddHHmmss");
 		}
 
 		private function test(pattern:String):void
 		{
-			this._output.appendText(pattern + "\t\t" + SimpleDateFormat.format(new Date(), pattern) + "\n");
+			_output.appendText(pattern + "\t\t" + SimpleDateFormat.format(new Date(), pattern) + "\n");
 		}
 	}
 }

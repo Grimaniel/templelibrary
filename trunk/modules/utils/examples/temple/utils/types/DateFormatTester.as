@@ -31,13 +31,13 @@ package
 			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.month).list).scrollBar.button).outOnDragOut = false;
 			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.year).list).scrollBar.button).outOnDragOut = false;
 			
-			this.setOutput();
+			setOutput();
 		}
 		
 		public function set format(value:String):void
 		{
 			this.txtFormat.text = value;
-			this.setOutput();
+			setOutput();
 		}
 
 		override public function destruct():void
@@ -59,12 +59,12 @@ package
 
 		private function handleChange(event:Event):void
 		{
-			this.setOutput();
+			setOutput();
 		}
 
 		private function setOutput():void
 		{
-			this.txtOutput.text = this.mcDateSelector.date ? DateUtils.format(this.txtFormat.text, this.mcDateSelector.date) : 'Error, no valid date';
+			this.txtOutput.text = mcDateSelector.date ? DateUtils.format(txtFormat.text, mcDateSelector.date) : 'Error, no valid date';
 		}
 	}
 }

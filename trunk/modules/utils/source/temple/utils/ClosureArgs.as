@@ -83,8 +83,8 @@ package temple.utils
 		 */
 		public function ClosureArgs(method:Function, arguments:Array = null, destructAfterCall:Boolean = false)
 		{
-			this._method = method;
-			this._arguments = arguments;			this._destructAfterCall = destructAfterCall;
+			_method = method;
+			_arguments = arguments;			_destructAfterCall = destructAfterCall;
 		}
 
 		/**
@@ -92,24 +92,24 @@ package temple.utils
 		 */
 		public function execute():void
 		{
-			if (this._method != null)
+			if (_method != null)
 			{
-				if (this._arguments != null)
+				if (_arguments != null)
 				{
-					this._method.apply(null, this._arguments);
+					_method.apply(null, _arguments);
 				}
 				else
 				{
-					this._method();
+					_method();
 				}
-				if (this._destructAfterCall == true)
+				if (_destructAfterCall == true)
 				{
-					this.destruct();
+					destruct();
 				}
 			}
 			else
 			{
-				this.destruct();
+				destruct();
 			}	
 		}
 
@@ -118,7 +118,7 @@ package temple.utils
 		 */
 		public function get destructAfterCall():Boolean
 		{
-			return this._destructAfterCall;
+			return _destructAfterCall;
 		}
 
 		/**
@@ -126,7 +126,7 @@ package temple.utils
 		 */
 		public function set destructAfterCall(value:Boolean):void
 		{
-			this._destructAfterCall = value;
+			_destructAfterCall = value;
 		}
 		
 		/**
@@ -134,7 +134,7 @@ package temple.utils
 		 */
 		public function get method():Function
 		{
-			return this._method;
+			return _method;
 		}
 		
 		/**
@@ -142,7 +142,7 @@ package temple.utils
 		 */
 		public function get arguments():Array
 		{
-			return this._arguments;
+			return _arguments;
 		}
 
 		/**
@@ -150,8 +150,8 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			this._method = null; 
-			this._arguments = null;
+			_method = null; 
+			_arguments = null;
 			
 			super.destruct(); 	
 		}

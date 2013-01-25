@@ -61,8 +61,8 @@ package temple.utils.propertyproxy
 		 */
 		public function TweenLitePropertyProxy(duration:Number = .5, vars:Object = null)
 		{
-			this._vars = vars;
-			this._duration = duration;
+			_vars = vars;
+			_duration = duration;
 		}
 		
 		/**
@@ -70,7 +70,7 @@ package temple.utils.propertyproxy
 		 */
 		public function get duration():Number
 		{
-			return this._duration;
+			return _duration;
 		}
 		
 		/**
@@ -78,7 +78,7 @@ package temple.utils.propertyproxy
 		 */
 		public function set duration(duration:Number):void
 		{
-			this._duration = duration;
+			_duration = duration;
 		}
 		
 		/**
@@ -86,7 +86,7 @@ package temple.utils.propertyproxy
 		 */
 		public function get vars():Object
 		{
-			return this._vars;
+			return _vars;
 		}
 		
 		/**
@@ -94,7 +94,7 @@ package temple.utils.propertyproxy
 		 */
 		public function set vars(vars:Object):void
 		{
-			this._vars = vars;
+			_vars = vars;
 		}
 		
 		/**
@@ -102,15 +102,15 @@ package temple.utils.propertyproxy
 		 */
 		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			if (this._vars == null) this._vars = {};
+			if (_vars == null) _vars = {};
 			
 			// create a copy of the vars
-			var vars:Object = ObjectUtils.clone(this._vars);
+			var vars:Object = ObjectUtils.clone(_vars);
 			
 			vars[property] = value;
 			if (onComplete != null) vars.onComplete = onComplete;
 			
-			this._tween = TweenLite.to(target, this._duration, vars);
+			_tween = TweenLite.to(target, _duration, vars);
 		}
 		
 		/**
@@ -118,8 +118,8 @@ package temple.utils.propertyproxy
 		 */
 		public function cancel():Boolean
 		{
-			if (this._tween) this._tween.kill();
-			this._tween = null;
+			if (_tween) _tween.kill();
+			_tween = null;
 			return true;
 		}
 
@@ -128,8 +128,8 @@ package temple.utils.propertyproxy
 		 */
 		override public function destruct():void
 		{
-			this.cancel();
-			this._vars = null;
+			cancel();
+			_vars = null;
 			
 			super.destruct();
 		}

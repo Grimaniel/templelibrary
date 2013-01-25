@@ -63,14 +63,14 @@ package temple.utils
 	 * 
 	 * @example
 	 * <listing version="3.0">
-	 * this._imageBrowser = new ImageBrowser();
-	 * this._imageBrowser.addEventListener(Event.COMPLETE, this.handleImageComplete);
-	 * this._imageBrowser.browse();
+	 * _imageBrowser = new ImageBrowser();
+	 * _imageBrowser.addEventListener(Event.COMPLETE, handleImageComplete);
+	 * _imageBrowser.browse();
 	 * 
 	 * private function handleImageComplete(event:Event):void
 	 * {
 	 *		// BitmapData is now available via 
-	 *		this._imageBrowser.data;
+	 *		_imageBrowser.data;
 	 * }
 	 * </listing>
 	 * 
@@ -88,55 +88,55 @@ package temple.utils
 
 		public function ImageBrowser(instantLoad:Boolean = true)
 		{
-			this._instantLoad = instantLoad;
+			_instantLoad = instantLoad;
 
-			this._file = new CoreFileReference();
-			this._file.addEventListener(Event.SELECT, this.handleFileSelect);
-			this._file.addEventListener(Event.CANCEL, this.handleFileCancel);
-			this._file.addEventListener(Event.COMPLETE, this.handleFileComplete);
+			_file = new CoreFileReference();
+			_file.addEventListener(Event.SELECT, handleFileSelect);
+			_file.addEventListener(Event.CANCEL, handleFileCancel);
+			_file.addEventListener(Event.COMPLETE, handleFileComplete);
 
-			this._loader = new CoreLoader();
-			this._loader.addEventListener(Event.COMPLETE, this.handleLoaderComplete);
-			this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.dispatchEvent);
+			_loader = new CoreLoader();
+			_loader.addEventListener(Event.COMPLETE, handleLoaderComplete);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR, dispatchEvent);
 		}
 
 		public function browse():Boolean
 		{
-			if (this.debug) this.logDebug("browse");
-			return this._file.browse([_IMAGES_FILTER]);
+			if (debug) logDebug("browse");
+			return _file.browse([_IMAGES_FILTER]);
 		}
 
 		public function get file():CoreFileReference
 		{
-			return this._file;
+			return _file;
 		}
 
 		public function get data():BitmapData
 		{
-			return this._loader.content is Bitmap ? Bitmap(this._loader.content).bitmapData : null;
+			return _loader.content is Bitmap ? Bitmap(_loader.content).bitmapData : null;
 		}
 
 		public function get rawData():ByteArray
 		{
-			return this._file ? this._file.data : null;
+			return _file ? _file.data : null;
 		}
 
 		public function get maxImageSize():Number
 		{
-			return this._maxImageSize;
+			return _maxImageSize;
 		}
 
 		public function set maxImageSize(value:Number):void
 		{
-			this._maxImageSize = value;
+			_maxImageSize = value;
 		}
 
 		public function load():void
 		{
-			if (this.debug) this.logDebug("load");
-			if (this._file.data)
+			if (debug) logDebug("load");
+			if (_file.data)
 			{
-				this._loader.loadBytes(this._file.data);
+				_loader.loadBytes(_file.data);
 			}
 		}
 		
@@ -145,7 +145,7 @@ package temple.utils
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -153,41 +153,41 @@ package temple.utils
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleFileSelect(event:Event):void
 		{
-			if (this.debug) this.logDebug("handleFileSelect: '" + this._file.name + "'");
-			if (!isNaN(this._maxImageSize) && this._file.size > this._maxImageSize * 1024)
+			if (debug) logDebug("handleFileSelect: '" + _file.name + "'");
+			if (!isNaN(_maxImageSize) && _file.size > _maxImageSize * 1024)
 			{
-				this.dispatchEvent(new ErrorEvent(ErrorEvent.ERROR));
+				dispatchEvent(new ErrorEvent(ErrorEvent.ERROR));
 			}
 			else
 			{
-				this._file.load();
+				_file.load();
 			}
 		}
 		
 		private function handleFileCancel(event:Event):void
 		{
-			if (this.debug) this.logDebug("handleFileCancel");
-			this.dispatchEvent(new Event(Event.CANCEL));
+			if (debug) logDebug("handleFileCancel");
+			dispatchEvent(new Event(Event.CANCEL));
 		}
 
 		private function handleFileComplete(event:Event):void
 		{
-			if (this.debug) this.logDebug("handleFileComplete: '" + this._file.name + "'");
-			if (this._instantLoad)
+			if (debug) logDebug("handleFileComplete: '" + _file.name + "'");
+			if (_instantLoad)
 			{
-				this._loader.loadBytes(this._file.data);
+				_loader.loadBytes(_file.data);
 			}
 		}
 
 		private function handleLoaderComplete(event:Event):void
 		{
-			if (this.debug) this.logDebug("handleLoaderComplete");
-			this.dispatchEvent(new Event(Event.COMPLETE));
+			if (debug) logDebug("handleLoaderComplete");
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 
 		/**
@@ -195,15 +195,15 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			if (this._file)
+			if (_file)
 			{
-				this._file.destruct();
-				this._file = null;
+				_file.destruct();
+				_file = null;
 			}
-			if (this._loader)
+			if (_loader)
 			{
-				this._loader.destruct();
-				this._loader = null;
+				_loader.destruct();
+				_loader = null;
 			}
 
 			super.destruct();

@@ -49,18 +49,18 @@ package temple.utils.propertyproxy
 		
 		public function MultiPropertyProxy(...args)
 		{
-			this._proxies = new Vector.<IPropertyProxy>();
+			_proxies = new Vector.<IPropertyProxy>();
 			
 			var leni:int = args.length;
 			for (var i:int = 0; i < leni; i++)
 			{
-				this.addProxy(args[i]);
+				addProxy(args[i]);
 			}
 		}
 
 		public function addProxy(propertyProxy:IPropertyProxy):void
 		{
-			this._proxies.push(propertyProxy);
+			_proxies.push(propertyProxy);
 		}
 		
 		/**
@@ -68,7 +68,7 @@ package temple.utils.propertyproxy
 		 */
 		public function get value():*
 		{
-			return this._value;
+			return _value;
 		}
 
 		/**
@@ -76,12 +76,12 @@ package temple.utils.propertyproxy
 		 */
 		public function set value(value:*):void
 		{
-			this._value = value;
+			_value = value;
 		}
 
 		public function cancel():Boolean
 		{
-			for each (var proxy:IPropertyProxy in this._proxies)
+			for each (var proxy:IPropertyProxy in _proxies)
 			{
 				proxy.cancel();
 			}
@@ -90,20 +90,20 @@ package temple.utils.propertyproxy
 
 		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			this._value = value;
-			var leni:int = this._proxies.length;
+			_value = value;
+			var leni:int = _proxies.length;
 			var proxy:IPropertyProxy;
 			// TODO: chain proxies using onComplete
 			for (var i:int = 0; i < leni; i++)
 			{
-				proxy = this._proxies[i];
+				proxy = _proxies[i];
 				if (i == leni -1)
 				{
-					proxy.setValue(target, property, this._value);
+					proxy.setValue(target, property, _value);
 				}
 				else
 				{
-					proxy.setValue(this, "value", this._value);
+					proxy.setValue(this, "value", _value);
 				}
 			}
 			if (onComplete != null) onComplete();
@@ -111,14 +111,14 @@ package temple.utils.propertyproxy
 
 		override public function destruct():void
 		{
-			this.cancel();
+			cancel();
 			
-			if (this._proxies)
+			if (_proxies)
 			{
-				this._proxies.length = 0;
-				this._proxies = null;
+				_proxies.length = 0;
+				_proxies = null;
 			}
-			this._value = null;
+			_value = null;
 			
 			super.destruct();
 		}

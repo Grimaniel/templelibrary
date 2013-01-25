@@ -109,7 +109,7 @@ package temple.utils.color
 		 */
 		public function get color():uint
 		{
-			return (this.alpha << 24) | (this.red << 16) | (this.green << 8) | this.blue;
+			return (alpha << 24) | (red << 16) | (green << 8) | blue;
 		}
 
 		/**
@@ -117,10 +117,10 @@ package temple.utils.color
 		 */
 		public function set color(color:uint):void
 		{
-			this.alpha = color >> 24 & 0xFF;
-			this.red = color >> 16 & 0xFF;
-			this.green = color >> 8 & 0xFF;
-			this.blue = color & 0xFF;
+			alpha = color >> 24 & 0xFF;
+			red = color >> 16 & 0xFF;
+			green = color >> 8 & 0xFF;
+			blue = color & 0xFF;
 		}
 		
 		/**
@@ -128,10 +128,10 @@ package temple.utils.color
 		 */
 		public function getARGBHexString():String 
 		{
-			var aa:String = this.alpha.toString(16);
-			var rr:String = this.red.toString(16);
-			var gg:String = this.green.toString(16);
-			var bb:String = this.blue.toString(16);
+			var aa:String = alpha.toString(16);
+			var rr:String = red.toString(16);
+			var gg:String = green.toString(16);
+			var bb:String = blue.toString(16);
 			aa = (aa.length == 1) ? '0' + aa : aa;
 			rr = (rr.length == 1) ? '0' + rr : rr;
 			gg = (gg.length == 1) ? '0' + gg : gg;
@@ -144,9 +144,9 @@ package temple.utils.color
 		 */
 		public function getRGBHexString():String 
 		{
-			var rr:String = this.red.toString(16);
-			var gg:String = this.green.toString(16);
-			var bb:String = this.blue.toString(16);
+			var rr:String = red.toString(16);
+			var gg:String = green.toString(16);
+			var bb:String = blue.toString(16);
 			rr = (rr.length == 1) ? '0' + rr : rr;
 			gg = (gg.length == 1) ? '0' + gg : gg;
 			bb = (bb.length == 1) ? '0' + bb : bb;
@@ -158,29 +158,28 @@ package temple.utils.color
 		 */
 		public function getAverage():Number
 		{
-			return (this.red + this.green + this.blue) / (3 * 255);
+			return (red + green + blue) / (3 * 255);
 		}
 		
 		public function getBrightness():Number
 		{
-			var _max:Number = Math.max(this.red, this.green, this.blue);
-			//var _min:Number = Math.min(this.r, this.g, this.b);
+			var _max:Number = Math.max(red, green, blue);
 			return _max / 255 * 100;
 		}
 		
 		public function getSaturation():Number
 		{
-			var _max:Number = Math.max(this.red, this.green, this.blue);
-			var _min:Number = Math.min(this.red, this.green, this.blue);
+			var _max:Number = Math.max(red, green, blue);
+			var _min:Number = Math.min(red, green, blue);
 			return (_max != 0) ? (_max - _min) / _max * 100 : 0;
 		}
 
 		public function fromUINT(color:uint):ARGB
 		{
-			this.alpha = color >> 24 & 0xFF;
-			this.red = color >> 16 & 0xFF;
-			this.green = color >> 8 & 0xFF;
-			this.blue = color & 0xFF;
+			alpha = color >> 24 & 0xFF;
+			red = color >> 16 & 0xFF;
+			green = color >> 8 & 0xFF;
+			blue = color & 0xFF;
 			
 			return this;
 		}
@@ -209,10 +208,10 @@ package temple.utils.color
 			}
 			
 			var color:uint = parseInt(hex, 16); 
-			this.alpha = color >> 24 & 0xFF;
-			this.red = color >> 16 & 0xFF;
-			this.green = color >> 8 & 0xFF;
-			this.blue = color & 0xFF;
+			alpha = color >> 24 & 0xFF;
+			red = color >> 16 & 0xFF;
+			green = color >> 8 & 0xFF;
+			blue = color & 0xFF;
 			
 			return this;
 		}

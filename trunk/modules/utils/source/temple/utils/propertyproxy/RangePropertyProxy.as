@@ -48,40 +48,40 @@ package temple.utils.propertyproxy
 		
 		public function RangePropertyProxy(min:Number, max:Number)
 		{
-			this._min = min;
-			this._max = max;
+			_min = min;
+			_max = max;
 			
-			this.toStringProps.push("min", "max");
+			toStringProps.push("min", "max");
 		}
 
 		public function get min():Number
 		{
-			return this._min;
+			return _min;
 		}
 
 		public function set min(value:Number):void
 		{
-			this._min = value;
+			_min = value;
 		}
 
 		public function get max():Number
 		{
-			return this._max;
+			return _max;
 		}
 
 		public function set max(value:Number):void
 		{
-			this._max = value;
+			_max = value;
 		}
 		
 		public function getValue(target:Object, property:String):Number
 		{
-			return (target[property]- this._min) / (this._max - this._min);
+			return (target[property]- _min) / (_max - _min);
 		}
 
 		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			super.setValue(target, property, this._min + (this._max - this._min) * value, onComplete);
+			super.setValue(target, property, _min + (_max - _min) * value, onComplete);
 		}
 	}
 }

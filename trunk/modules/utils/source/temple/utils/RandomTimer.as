@@ -50,11 +50,11 @@ package temple.utils
 		
 		public function RandomTimer(minDelay:Number, maxDelay:Number, repeatCount:int = 0)
 		{
-			super(this.getDelay(minDelay, maxDelay), repeatCount);
+			super(getDelay(minDelay, maxDelay), repeatCount);
 			
 			construct::randomTimer(minDelay, maxDelay, repeatCount);
 			
-			this.addEventListener(TimerEvent.TIMER, this.handleTimerEvent);
+			addEventListener(TimerEvent.TIMER, handleTimerEvent);
 		}
 
 		/**
@@ -62,9 +62,9 @@ package temple.utils
 		 */
 		construct function randomTimer(minDelay:Number, maxDelay:Number, repeatCount:int):void
 		{
-			this._minDelay = minDelay;
-			this._maxDelay = maxDelay;
-			this.toStringProps.push('minDelay', 'maxDelay');
+			_minDelay = minDelay;
+			_maxDelay = maxDelay;
+			toStringProps.push('minDelay', 'maxDelay');
 			repeatCount;
 		}
 
@@ -81,7 +81,7 @@ package temple.utils
 		 */
 		public function set minDelay(value:Number):void
 		{
-			this._minDelay = value;
+			_minDelay = value;
 		}
 
 		/**
@@ -89,7 +89,7 @@ package temple.utils
 		 */
 		public function get maxDelay():Number
 		{
-			return this._maxDelay;
+			return _maxDelay;
 		}
 
 		/**
@@ -97,7 +97,7 @@ package temple.utils
 		 */
 		public function set maxDelay(value:Number):void
 		{
-			this._maxDelay = value;
+			_maxDelay = value;
 		}
 
 		private function getDelay(min:Number, max:Number):Number
@@ -107,7 +107,7 @@ package temple.utils
 		
 		private function handleTimerEvent(event:TimerEvent):void
 		{
-			this.delay = this.getDelay(this._minDelay, this._maxDelay);
+			delay = getDelay(_minDelay, _maxDelay);
 		}
 	}
 }

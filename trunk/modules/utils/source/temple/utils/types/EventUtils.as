@@ -59,7 +59,7 @@ package temple.utils.types
 		 * @example
 		 * There is a Form called _form. If you want to listen for all FormEvents you could do:
 		 * <listing version="3.0">
-		 * 	EventUtils.addAll(FormEvent, this._form, this.handleFormEvent);
+		 * 	EventUtils.addAll(FormEvent, _form, handleFormEvent);
 		 * </listing>
 		 * 
 		 * The handler can look like:
@@ -71,19 +71,19 @@ package temple.utils.types
 		 * 			case FormEvent.RESET:
 		 * 			{
 		 * 				// reset error text
-		 * 				this._txtError.text = "";
+		 * 				_txtError.text = "";
 		 * 				break;
 		 * 			}			
 		 * 			case FormEvent.VALIDATE_SUCCESS:
 		 * 			{
 		 * 				// reset error text
-		 * 				this._txtError.text = "";
+		 * 				_txtError.text = "";
 		 * 				break;
 		 * 			}			
 		 * 			case FormEvent.VALIDATE_ERROR:
 		 * 			{
 		 * 				// show error in TextField 'txtError'
-		 * 				this.txtError.text = event.result.message;
+		 * 				txtError.text = event.result.message;
 		 * 				break;
 		 * 			}			
 		 *			case FormEvent.SUBMIT_SUCCESS:
@@ -94,12 +94,12 @@ package temple.utils.types
 		 *			case FormEvent.SUBMIT_ERROR:
 		 *			{
 		 *				// show error in TextField 'txtError'
-		 * 				this.txtError.text = event.result.message;
+		 * 				txtError.text = event.result.message;
 		 *				break;
 		 *			}			
 		 *			default:
 		 *			{
-		 *				this.logError("handleFormEvent: unhandled event '" + event.type + "'");
+		 *				logError("handleFormEvent: unhandled event '" + event.type + "'");
 		 *				break;
 		 *			}
 		 *		}
