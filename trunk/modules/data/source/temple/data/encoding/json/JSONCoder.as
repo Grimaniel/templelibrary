@@ -89,7 +89,7 @@ package temple.data.encoding.json
 	 * @see temple.data.encoding.json.JSONEncoder
 	 * @see temple.data.encoding.json.JSONDecoder
 	 * 
-	 * @author Adobe (modifief by Thijs Broerse and Arjan van Wijk)
+	 * @author Adobe (modified by Thijs Broerse and Arjan van Wijk)
 	 */
 	public class JSONCoder
 	{

@@ -86,8 +86,8 @@ package temple.data.xml
 		{
 			super(type);
 			
-			this._name = name;
-			this._data = data;
+			_name = name;
+			_data = data;
 		}
 		
 		/**
@@ -95,7 +95,7 @@ package temple.data.xml
 		 */
 		public function get name():String
 		{
-			return this._name;
+			return _name;
 		}
 		
 		/**
@@ -103,42 +103,42 @@ package temple.data.xml
 		 */
 		public function get data():XML
 		{
-			return this._data;
+			return _data;
 		}
 		
 		public function set data(value:XML):void
 		{
-			this._data = value;
+			_data = value;
 		}
 		
 		public function get error():String
 		{
-			return this._error;
+			return _error;
 		}
 		
 		public function set error(value:String):void
 		{
-			this._error = value;
+			_error = value;
 		}
 		
 		public function get bytesLoaded():uint
 		{
-			return this._bytesLoaded;
+			return _bytesLoaded;
 		}
 		
 		public function set bytesLoaded(value:uint):void
 		{
-			this._bytesLoaded = value;
+			_bytesLoaded = value;
 		}
 		
 		public function get bytesTotal():uint
 		{
-			return this._bytesTotal;
+			return _bytesTotal;
 		}
 		
 		public function set bytesTotal(value:uint):void
 		{
-			this._bytesTotal = value;
+			_bytesTotal = value;
 		}
 		
 		/**
@@ -146,7 +146,7 @@ package temple.data.xml
 		 */
 		override public function clone():Event 
 		{
-			return new XMLLoaderEvent(this.type, this.name, this.data);
+			return new XMLLoaderEvent(type, name, data);
 		}
 
 		/**

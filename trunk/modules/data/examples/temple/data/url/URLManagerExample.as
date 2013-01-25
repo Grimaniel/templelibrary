@@ -36,34 +36,34 @@ package
 			super("Temple - URLManagerExample");
 			
 			// Create of new URLManager
-			this._urlManager = new URLManager();
+			_urlManager = new URLManager();
 			
 			// Or you you use the "Singleton" urlManager
-			//this._urlManager = urlManagerInstance;
+			//_urlManager = urlManagerInstance;
 			
 			// set debug mode to get debug log messages from the URLManager
-			this._urlManager.debug = true; 
+			_urlManager.debug = true; 
 			
 			// add EventListeners
-			this._urlManager.addEventListenerOnce(XMLServiceEvent.COMPLETE, this.handleURLManagerComplete);
-			this._urlManager.addEventListener(URLEvent.OPEN, this.handleURLOpen);
+			_urlManager.addEventListenerOnce(XMLServiceEvent.COMPLETE, handleURLManagerComplete);
+			_urlManager.addEventListener(URLEvent.OPEN, handleURLOpen);
 			
 			// load urls.xml
-			this._urlManager.load("urls.xml");
+			_urlManager.load("urls.xml");
 		}
 		
 		private function handleURLManagerComplete(event:XMLServiceEvent):void
 		{
 			// create a button, with listener
-			var button:Sprite = this.createButton("Click here: Open URL!");
+			var button:Sprite = createButton("Click here: Open URL!");
 			button.addEventListener(MouseEvent.CLICK, handleButtonClick);
-			this.addChild(button);
+			addChild(button);
 		}
 		
 		private function handleButtonClick(event:MouseEvent):void
 		{
 			// Open url
-			this._urlManager.openByName("website");
+			_urlManager.openByName("website");
 		}
 		
 		private function handleURLOpen(event:URLEvent):void
@@ -71,7 +71,7 @@ package
 			// Manual log URLManager information. See log message at: http://yalala.tyz.nl/
 			logInfo("Open URL:" + event.url + "    Target window:" + event.targetFrame);
 			
-			this.tracker.trackEvent("URLManagerExample", "Open URL", event.name);
+			tracker.trackEvent("URLManagerExample", "Open URL", event.name);
 		}
 		
 		private function createButton(label:String):Sprite

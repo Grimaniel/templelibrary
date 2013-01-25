@@ -55,8 +55,8 @@ package temple.data.cache
 		
 		public function LoaderCacheItem(url:String)
 		{
-			this._url = url;
-			this.toStringProps.push('url', 'isLoaded');
+			_url = url;
+			toStringProps.push('url', 'isLoaded');
 		}
 
 		/**
@@ -64,7 +64,7 @@ package temple.data.cache
 		 */
 		public function get url():String
 		{
-			return this._url;
+			return _url;
 		}
 		
 		/**
@@ -72,8 +72,8 @@ package temple.data.cache
 		 */
 		public function get bytes():ByteArray
 		{
-			this._time = getTimer();
-			return this._bytes;
+			_time = getTimer();
+			return _bytes;
 		}
 		
 		/**
@@ -81,9 +81,9 @@ package temple.data.cache
 		 */
 		public function set bytes(value:ByteArray):void
 		{
-			this._bytes = value;
-			this._time = getTimer();
-			this.dispatchEvent(new Event(Event.COMPLETE));
+			_bytes = value;
+			_time = getTimer();
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package temple.data.cache
 		 */
 		public function get isLoading():Boolean
 		{
-			return this._bytes == null;
+			return _bytes == null;
 		}
 		
 		/**
@@ -99,7 +99,7 @@ package temple.data.cache
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._bytes != null;
+			return _bytes != null;
 		}
 		
 		/**
@@ -107,7 +107,7 @@ package temple.data.cache
 		 */
 		public function get time():uint
 		{
-			return this._time;
+			return _time;
 		}
 		
 		/**
@@ -115,7 +115,7 @@ package temple.data.cache
 		 */
 		public function get purgeable():Boolean
 		{
-			return this._purgeable;
+			return _purgeable;
 		}
 		
 		/**
@@ -123,7 +123,7 @@ package temple.data.cache
 		 */
 		public function set purgeable(value:Boolean):void
 		{
-			this._purgeable = value;
+			_purgeable = value;
 		}
 		
 		/**
@@ -131,16 +131,16 @@ package temple.data.cache
 		 */
 		override public function destruct():void 
 		{
-			if (this.isDestructed) return;
+			if (isDestructed) return;
 			
-			this._bytes = null;
+			_bytes = null;
 			
 			super.destruct();
 			
-			if (this._url) LoaderCache.clear(this._url);
+			if (_url) LoaderCache.clear(_url);
 			
 			// clearing URL must be done after DestructEvent is dispatched, so we can check the URL in the handler.
-			this._url = null;
+			_url = null;
 		}
 	}
 }

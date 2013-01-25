@@ -49,9 +49,9 @@ package temple.data.collections
 		
 		public function PropertyValueData(property:String = null, value:* = null)
 		{
-			this.toStringProps.push('property', 'value');
-			this._property = property;
-			this._value = value;
+			toStringProps.push('property', 'value');
+			_property = property;
+			_value = value;
 		}
 
 		/**
@@ -59,7 +59,7 @@ package temple.data.collections
 		 */
 		public function get property():String
 		{
-			return this._property;
+			return _property;
 		}
 		
 		/**
@@ -68,7 +68,7 @@ package temple.data.collections
 		[Inspectable(type="String")]
 		public function set property(value:String):void
 		{
-			this._property = value;
+			_property = value;
 		}
 		
 		/**
@@ -76,7 +76,7 @@ package temple.data.collections
 		 */
 		public function get value():*
 		{
-			return this._value;
+			return _value;
 		}
 		
 		/**
@@ -85,7 +85,7 @@ package temple.data.collections
 		[Inspectable(type="String")]
 		public function set value(value:*):void
 		{
-			this._value = value;
+			_value = value;
 		}
 
 		/**
@@ -93,8 +93,8 @@ package temple.data.collections
 		 */
 		override public function destruct():void
 		{
-			this._value = null;
-			this._property = null;
+			_value = null;
+			_property = null;
 			
 			super.destruct();
 		}

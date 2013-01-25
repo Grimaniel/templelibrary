@@ -83,10 +83,10 @@ package temple.data.xml
 		{
 			super();
 			
-			this._loader = new XMLLoader();
-			this._loader.addEventListener(XMLLoaderEvent.COMPLETE, this.handleLoaderEvent);
-			this._loader.addEventListener(XMLLoaderEvent.ALL_COMPLETE, this.handleLoaderEvent);
-			this._loader.addEventListener(XMLLoaderEvent.ERROR, this.handleLoadError);
+			_loader = new XMLLoader();
+			_loader.addEventListener(XMLLoaderEvent.COMPLETE, handleLoaderEvent);
+			_loader.addEventListener(XMLLoaderEvent.ALL_COMPLETE, handleLoaderEvent);
+			_loader.addEventListener(XMLLoaderEvent.ERROR, handleLoadError);
 		}
 
 		/**
@@ -99,7 +99,7 @@ package temple.data.xml
 		{
 			if (urlData == null)
 			{
-				this.logError("load: urlData cannot be null");
+				logError("load: urlData cannot be null");
 				return;
 			}
 			
@@ -114,9 +114,9 @@ package temple.data.xml
 				}
 			}
 			
-			if (this._debug) this.logInfo("load: '" + urlData.name + "' from '" + urlData.url + "'");
+			if (_debug) logInfo("load: '" + urlData.name + "' from '" + urlData.url + "'");
 			
-			this._loader.loadXML(urlData.url, urlData.name, vars, method);
+			_loader.loadXML(urlData.url, urlData.name, vars, method);
 		}
 
 		/**
@@ -125,7 +125,7 @@ package temple.data.xml
 		 */
 		public function cancelLoad(name:String):Boolean
 		{
-			return this._loader.cancelLoad(name);
+			return _loader.cancelLoad(name);
 		}
 
 		/**
@@ -133,7 +133,7 @@ package temple.data.xml
 		 */
 		public function get loaderCount():uint 
 		{
-			return this._loader ? this._loader.loaderCount : 0;
+			return _loader ? _loader.loaderCount : 0;
 		}
 
 		/**
@@ -141,7 +141,7 @@ package temple.data.xml
 		 */
 		public function set loaderCount(value:uint):void 
 		{
-			this._loader.loaderCount  = value;
+			_loader.loaderCount  = value;
 		}
 		
 		/**
@@ -149,7 +149,7 @@ package temple.data.xml
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -157,9 +157,9 @@ package temple.data.xml
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 			
-			if (this._debug) this.logDebug("debug: " + debug);
+			if (_debug) logDebug("debug: " + debug);
 		}
 		
 		protected function handleLoaderEvent(event:XMLLoaderEvent):void 
@@ -168,12 +168,12 @@ package temple.data.xml
 			{
 				case XMLLoaderEvent.COMPLETE: 
 				{
-					this.processData(event.data, event.name); 
+					processData(event.data, event.name); 
 					break;
 				}
 				case XMLLoaderEvent.ALL_COMPLETE: 
 				{
-					this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.ALL_COMPLETE, event.name)); 
+					dispatchEvent(new XMLServiceEvent(XMLServiceEvent.ALL_COMPLETE, event.name)); 
 					break;
 				}
 				
@@ -185,7 +185,7 @@ package temple.data.xml
 		 */
 		protected function processData(data:XML, name:String):void 
 		{
-			this.logWarn("processData: override this function");
+			logWarn("processData: override this function");
 			
 			// just use them to get rid of 'never used' warning
 			data;
@@ -197,8 +197,8 @@ package temple.data.xml
 		 */
 		protected function handleLoadError(event:XMLLoaderEvent):void 
 		{
-			this.logError("handleLoadError: " + event.error);
-			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.LOAD_ERROR, event.name, null, null, event.error));
+			logError("handleLoadError: " + event.error);
+			dispatchEvent(new XMLServiceEvent(XMLServiceEvent.LOAD_ERROR, event.name, null, null, event.error));
 		}
 
 		/**
@@ -213,16 +213,16 @@ package temple.data.xml
 		 */
 		protected function parseList(list:XMLList, objectClass:Class, name:String, sendEvent:Boolean = true):Array 
 		{
-			var a:Array = XMLParser.parseList(list, objectClass, false, this.debug);
+			var a:Array = XMLParser.parseList(list, objectClass, false, debug);
 			
 			if (a == null) 
 			{
-				this.onDataParseError(name);
+				onDataParseError(name);
 				return null;
 			}
 			
 			// send event we're done
-			if (sendEvent) this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, a, null));
+			if (sendEvent) dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, a, null));
 			
 			return a;
 		}
@@ -232,11 +232,11 @@ package temple.data.xml
 		 */
 		protected function onDataParseError(name:String):void 
 		{
-			this.logError("handleDataParseError: error parsing xml with name '" + name + "'");
+			logError("handleDataParseError: error parsing xml with name '" + name + "'");
 			
 			var error:String = "The XML was well-formed but incomplete. Be so kind and check it. It goes by the name of " + name;
 			var event:XMLServiceEvent = new XMLServiceEvent(XMLServiceEvent.PARSE_ERROR, name, null, null, error);
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 		
 		/**
@@ -244,10 +244,10 @@ package temple.data.xml
 		 */
 		override public function destruct():void
 		{
-			if (this._loader)
+			if (_loader)
 			{
-				this._loader.destruct();
-				this._loader = null;
+				_loader.destruct();
+				_loader = null;
 			}
 			super.destruct();
 		}

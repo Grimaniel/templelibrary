@@ -57,71 +57,71 @@ package temple.data.xml
 
 		public function XMLObjectData(type:int, objectClass:Class, node:String, cache:Boolean, callback:Function = null) 
 		{
-			this._type = type;
-			this._objectClass = objectClass;
-			this._node = node;
-			this._cache = cache;
-			this._callback = callback;
-			this.toStringProps.push('objectClass');
+			_type = type;
+			_objectClass = objectClass;
+			_node = node;
+			_cache = cache;
+			_callback = callback;
+			toStringProps.push('objectClass');
 		}
 		
 		public function get type():int
 		{
-			return this._type;
+			return _type;
 		}
 		
 		public function get objectClass():Class
 		{
-			return this._objectClass;
+			return _objectClass;
 		}
 		
 		public function get node():String
 		{
-			return this._node;
+			return _node;
 		}
 		
 		internal function get callback():Function
 		{
-			return this._callback;
+			return _callback;
 		}
 		
 		internal function set callback(value:Function):void
 		{
-			this._callback = value;
+			_callback = value;
 		}
 
 		public function get object():Object
 		{
-			return this._object;
+			return _object;
 		}
 		
 		internal function setObject(value:Object):void
 		{
-			this._object = value;
+			_object = value;
 		}
 		
 		public function get list():Array
 		{
-			return this._list;
+			return _list;
 		}
 		
 		internal function setList(value:Array):void
 		{
-			this._list = value;
+			_list = value;
 		}
 		
 		public function get cache():Boolean
 		{
-			return this._cache;
+			return _cache;
 		}
 
 		override public function destruct():void
 		{
-			this._objectClass = null;
-			this._node = null;
-			this._callback = null;
-			this._object = null;
-			this._list = null;
+			_objectClass = null;
+			_node = null;
+			_callback = null;
+			_object = null;
+			_list = null;
 			
 			super.destruct();
 		}

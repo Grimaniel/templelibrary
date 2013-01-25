@@ -14,7 +14,6 @@ package
 {
 	import temple.data.encoding.json.JSONDecoder;
 	import temple.data.encoding.json.JSONEncoder;
-	import temple.utils.types.ObjectUtils;
 
 	import flash.net.registerClassAlias;
 	import flash.text.TextField;
@@ -48,7 +47,7 @@ package
 			// Output Erik
 			var erikOutput:TextField = new TextField();
 			erikOutput.autoSize = TextFieldAutoSize.LEFT;
-			this.addChild(erikOutput);
+			addChild(erikOutput);
 			erikOutput.width = 300;
 			erikOutput.text = dump(erik);
 			
@@ -60,7 +59,7 @@ package
 			// output JSON
 			var jsonOutput:TextField = new TextField();
 			jsonOutput.autoSize = TextFieldAutoSize.LEFT;
-			this.addChild(jsonOutput);
+			addChild(jsonOutput);
 			jsonOutput.width = 600;
 			jsonOutput.y = erikOutput.y + erikOutput.height + 4;
 			jsonOutput.text = json;
@@ -69,21 +68,21 @@ package
 			var decoder:JSONDecoder = new JSONDecoder();
 			decoder.setExplicitDecoder(Date, new DateCoder());
 			
-			var person:Person = decoder.destringify(json) as Person;
+			var person:Person = decoder.parse(json) as Person;
 			
 			var personOutput:TextField = new TextField();
 			personOutput.autoSize = TextFieldAutoSize.LEFT;
-			this.addChild(personOutput);
+			addChild(personOutput);
 			personOutput.width = 600;
 			personOutput.y = jsonOutput.y + jsonOutput.height + 4;
 			personOutput.text =  dump(person);
 		}
 	}
 }
-import temple.data.encoding.IDestringifier;
+import temple.data.encoding.IParser;
 import temple.data.encoding.IStringifier;
 
-class DateCoder implements IStringifier, IDestringifier
+class DateCoder implements IStringifier, IParser
 {
 	public function stringify(value:*):String
 	{
@@ -92,7 +91,7 @@ class DateCoder implements IStringifier, IDestringifier
 		return "\"" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "\"";
 	}
 
-	public function destringify(value:*):*
+	public function parse(value:*):Object
 	{
 		if (value && value.indexOf("-"))
 		{

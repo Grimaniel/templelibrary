@@ -36,12 +36,12 @@
 package temple.data.encoding
 {
 	/**
-	 * Can convert a string to an object
+	 * Can convert a <code>String</code> to an <code>Object</code>
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IDestringifier
+	public interface IParser
 	{
-		function destringify(value:*):* 
+		function parse(text:*):Object 
 	}
 }

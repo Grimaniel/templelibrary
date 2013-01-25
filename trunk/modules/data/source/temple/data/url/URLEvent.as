@@ -59,9 +59,9 @@ package temple.data.url
 		{
 			super(type);
 			
-			this._url = url;
-			this._targetFrame = targetFrame;
-			this._name = name;
+			_url = url;
+			_targetFrame = targetFrame;
+			_name = name;
 		}
 
 		/**
@@ -69,7 +69,7 @@ package temple.data.url
 		 */
 		public function get url():String
 		{
-			return this._url;
+			return _url;
 		}
 		
 		/**
@@ -77,7 +77,7 @@ package temple.data.url
 		 */
 		public function set url(value:String):void
 		{
-			this._url = value;
+			_url = value;
 		}
 		
 		/**
@@ -85,7 +85,7 @@ package temple.data.url
 		 */
 		public function get targetFrame():String
 		{
-			return this._targetFrame;
+			return _targetFrame;
 		}
 		
 		/**
@@ -93,7 +93,7 @@ package temple.data.url
 		 */
 		public function set targetFrame(value:String):void
 		{
-			this._targetFrame = value;
+			_targetFrame = value;
 		}
 		
 		/**
@@ -101,7 +101,7 @@ package temple.data.url
 		 */
 		public function get name():String
 		{
-			return this._name;
+			return _name;
 		}
 
 		/**
@@ -109,7 +109,7 @@ package temple.data.url
 		 */
 		override public function clone():Event 
 		{
-			return new URLEvent(this.type, this.url, this.targetFrame, this.name);
+			return new URLEvent(type, url, targetFrame, name);
 		}
 	}
 }

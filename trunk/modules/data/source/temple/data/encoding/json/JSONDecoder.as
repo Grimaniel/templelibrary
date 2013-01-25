@@ -71,7 +71,7 @@ package temple.data.encoding.json
 	import temple.common.interfaces.IObjectParsable;
 	import temple.core.CoreObject;
 	import temple.data.collections.HashMap;
-	import temple.data.encoding.IDestringifier;
+	import temple.data.encoding.IParser;
 	import temple.data.index.Indexer;
 
 	import flash.net.getClassByAlias;
@@ -93,7 +93,7 @@ package temple.data.encoding.json
 	 * 
 	 * @author Adobe (modifief by Thijs Broerse and Arjan van Wijk)
 	 */
-	public class JSONDecoder extends CoreObject implements IDestringifier
+	public class JSONDecoder extends CoreObject implements IParser
 	{
 		private static const _EXPLICIT_TYPE:String = "_explicitType";
 		
@@ -123,28 +123,28 @@ package temple.data.encoding.json
 		 */
 		public function JSONDecoder(string:String = null, strict:Boolean = true, skipNulls:Boolean = true)
 		{	
-			this._strict = strict;
-			this._skipNulls = skipNulls;
+			_strict = strict;
+			_skipNulls = skipNulls;
 			
-			if (string) this.destringify(string);
+			if (string) parse(string);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function destringify(value:*):*
+		public function parse(value:*):Object
 		{
-			this._tokenizer = new JSONTokenizer(value, this._strict);
-			this.nextToken();
-			this._value = this.parseValue();
+			_tokenizer = new JSONTokenizer(value, _strict);
+			nextToken();
+			_value = parseValue();
 			
 			// Make sure the input stream is empty
-			if (this._strict && this.nextToken() != null )
+			if (_strict && nextToken() != null )
 			{
-				this._tokenizer.parseError("Unexpected characters left in input stream");
+				_tokenizer.parseError("Unexpected characters left in input stream");
 			}
 			
-			return this._value;
+			return _value;
 		}
 
 		/**
@@ -155,7 +155,7 @@ package temple.data.encoding.json
 		 */
 		public function getValue():*
 		{
-			return this._value;
+			return _value;
 		}
 		
 		/**
@@ -165,10 +165,10 @@ package temple.data.encoding.json
 		 * 
 		 * @includeExample JSONExample.as
 		 */
-		public function setExplicitDecoder(type:Class, decoder:IDestringifier):void
+		public function setExplicitDecoder(type:Class, decoder:IParser):void
 		{
-			this._explicitDecoders ||= new HashMap("expicitDecoders");
-			this._explicitDecoders[getQualifiedClassName(type)] = decoder;
+			_explicitDecoders ||= new HashMap("expicitDecoders");
+			_explicitDecoders[getQualifiedClassName(type)] = decoder;
 		}
 
 		/**
@@ -176,7 +176,7 @@ package temple.data.encoding.json
 		 */
 		private function nextToken():JSONToken
 		{
-			return this._token = this._tokenizer.getNextToken();
+			return _token = _tokenizer.getNextToken();
 		}
 
 		/**
@@ -190,29 +190,29 @@ package temple.data.encoding.json
 			
 			// grab the next token from the tokenizer to move
 			// past the opening [
-			this.nextToken();
+			nextToken();
 			
 			// check to see if we have an empty array
-			if (this._token.type == JSONTokenType.RIGHT_BRACKET)
+			if (_token.type == JSONTokenType.RIGHT_BRACKET)
 			{
 				// we're done reading the array, so return it
 				return a;
 			}
 			// in non-strict mode an empty array is also a comma
 			// followed by a right bracket
-			else if (!this._strict && _token.type == JSONTokenType.COMMA)
+			else if (!_strict && _token.type == JSONTokenType.COMMA)
 			{
 				// move past the comma
-				this.nextToken();
+				nextToken();
 				
 				// check to see if we're reached the end of the array
-				if (this._token.type == JSONTokenType.RIGHT_BRACKET)
+				if (_token.type == JSONTokenType.RIGHT_BRACKET)
 				{
 					return a;	
 				}
 				else
 				{
-					this._tokenizer.parseError("Leading commas are not supported.  Expecting ']' but found " + _token.value);
+					_tokenizer.parseError("Leading commas are not supported.  Expecting ']' but found " + _token.value);
 				}
 			}
 			
@@ -224,24 +224,24 @@ package temple.data.encoding.json
 				a.push(parseValue());
 			
 				// after the value there should be a ] or a ,
-				this.nextToken();
+				nextToken();
 				
-				if (this._token.type == JSONTokenType.RIGHT_BRACKET)
+				if (_token.type == JSONTokenType.RIGHT_BRACKET)
 				{
 					// we're done reading the array, so return it
 					return a;
 				}
-				else if (this._token.type == JSONTokenType.COMMA)
+				else if (_token.type == JSONTokenType.COMMA)
 				{
 					// move past the comma and read another value
-					this.nextToken();
+					nextToken();
 					
 					// Allow arrays to have a comma after the last element
 					// if the decoder is not in strict mode
-					if (!this._strict )
+					if (!_strict )
 					{
 						// Reached ",]" as the end of the array, so return it
-						if (this._token.type == JSONTokenType.RIGHT_BRACKET)
+						if (_token.type == JSONTokenType.RIGHT_BRACKET)
 						{
 							return a;
 						}
@@ -249,7 +249,7 @@ package temple.data.encoding.json
 				}
 				else
 				{
-					this._tokenizer.parseError("Expecting ] or , but found " + _token.value);
+					_tokenizer.parseError("Expecting ] or , but found " + _token.value);
 				}
 			}
 			return null;
@@ -269,29 +269,29 @@ package temple.data.encoding.json
 			var key:String;
 			
 			// grab the next token from the tokenizer
-			this.nextToken();
+			nextToken();
 			
 			// check to see if we have an empty object
-			if (this._token.type == JSONTokenType.RIGHT_BRACE)
+			if (_token.type == JSONTokenType.RIGHT_BRACE)
 			{
 				// we're done reading the object, so return it
-				return this.checkExplicitType(o);
+				return checkExplicitType(o);
 			}
 			// in non-strict mode an empty object is also a comma
 			// followed by a right bracket
-			else if (!this._strict && this._token.type == JSONTokenType.COMMA)
+			else if (!_strict && _token.type == JSONTokenType.COMMA)
 			{
 				// move past the comma
 				nextToken();
 				
 				// check to see if we're reached the end of the object
-				if (this._token.type == JSONTokenType.RIGHT_BRACE)
+				if (_token.type == JSONTokenType.RIGHT_BRACE)
 				{
-					return this.checkExplicitType(o);
+					return checkExplicitType(o);
 				}
 				else
 				{
-					this._tokenizer.parseError("Leading commas are not supported.  Expecting '}' but found " + _token.value);
+					_tokenizer.parseError("Leading commas are not supported.  Expecting '}' but found " + _token.value);
 				}
 			}
 			
@@ -299,59 +299,59 @@ package temple.data.encoding.json
 			// loop because we could have any amount of members
 			while (true)
 			{
-				if (this._token.type == JSONTokenType.STRING)
+				if (_token.type == JSONTokenType.STRING)
 				{
 					// the string value we read is the key for the object
-					key = String(this._token.value);
+					key = String(_token.value);
 					
 					// move past the string to see what's next
-					this.nextToken();
+					nextToken();
 					
 					// after the string there should be a :
-					if (this._token.type == JSONTokenType.COLON)
+					if (_token.type == JSONTokenType.COLON)
 					{	
 						// move past the : and read/assign a value for the key
-						this.nextToken();
-						o[key] = this.parseValue();	
+						nextToken();
+						o[key] = parseValue();	
 						
 						// move past the value to see what's next
-						this.nextToken();
+						nextToken();
 						
 						// after the value there's either a } or a ,
-						if (this._token.type == JSONTokenType.RIGHT_BRACE)
+						if (_token.type == JSONTokenType.RIGHT_BRACE)
 						{
 							// we're done reading the object, so return it
-							return this.checkExplicitType(o);
+							return checkExplicitType(o);
 						}
-						else if (this._token.type == JSONTokenType.COMMA)
+						else if (_token.type == JSONTokenType.COMMA)
 						{
 							// skip past the comma and read another member
-							this.nextToken();
+							nextToken();
 							
 							// Allow objects to have a comma after the last member
 							// if the decoder is not in strict mode
-							if (!this._strict)
+							if (!_strict)
 							{
 								// Reached ",}" as the end of the object, so return it
-								if (this._token.type == JSONTokenType.RIGHT_BRACE)
+								if (_token.type == JSONTokenType.RIGHT_BRACE)
 								{
-									return this.checkExplicitType(o);
+									return checkExplicitType(o);
 								}
 							}
 						}
 						else
 						{
-							this._tokenizer.parseError("Expecting } or , but found " + this._token.value);
+							_tokenizer.parseError("Expecting } or , but found " + _token.value);
 						}
 					}
 					else
 					{
-						this._tokenizer.parseError("Expecting : but found " + this._token.value);
+						_tokenizer.parseError("Expecting : but found " + _token.value);
 					}
 				}
 				else
 				{	
-					this._tokenizer.parseError("Expecting string but found " + this._token.value);
+					_tokenizer.parseError("Expecting string but found " + _token.value);
 				}
 			}
 			return null;
@@ -367,7 +367,7 @@ package temple.data.encoding.json
 				}
 				catch (error:ReferenceError)
 				{
-					this.logWarn(error.message);
+					logWarn(error.message);
 				}
 				if (classRef)
 				{
@@ -386,7 +386,7 @@ package temple.data.encoding.json
 					{
 						if (!IObjectParsable(obj).parseObject(o))
 						{
-							this.logError('Error parsing object ' + o[_EXPLICIT_TYPE]);
+							logError('Error parsing object ' + o[_EXPLICIT_TYPE]);
 						}
 					}
 					else
@@ -396,7 +396,7 @@ package temple.data.encoding.json
 							if (prop == _EXPLICIT_TYPE) continue;
 							
 							// skip null values (if enabled)
-							if (this._skipNulls && o[prop] == null) continue;
+							if (_skipNulls && o[prop] == null) continue;
 							
 							if (prop in obj)
 							{
@@ -420,18 +420,18 @@ package temple.data.encoding.json
 										catch (error:Error)
 										{
 											// Can't find correct class
-											this.logError(error.message);
+											logError(error.message);
 										}
 										if (type)
 										{
-											var decoder:IDestringifier;
-											if (this._explicitDecoders)
+											var decoder:IParser;
+											if (_explicitDecoders)
 											{
-												decoder = this._explicitDecoders[getQualifiedClassName(type)];
+												decoder = _explicitDecoders[getQualifiedClassName(type)];
 											}
 											if (decoder)
 											{
-												obj[prop] = decoder.destringify(o[prop]);
+												obj[prop] = decoder.parse(o[prop]);
 											}
 											else
 											{
@@ -449,25 +449,25 @@ package temple.data.encoding.json
 													else
 													{
 														// Can't find this Enumerator, so the value might be wrong, so log a warning
-														this.logWarn("'" + o[prop] + "' is not a valid value for '" + prop + "'");
+														logWarn("'" + o[prop] + "' is not a valid value for '" + prop + "'");
 													}
 												}
 												else
 												{
-													this.logWarn("Don't know how to handle '" + o[prop] + "' as a value for '" + prop + "'");
+													logWarn("Don't know how to handle '" + o[prop] + "' as a value for '" + prop + "'");
 												}
 											}
 										}
 									}
 									else
 									{
-										this.logError(error.message);
+										logError(error.message);
 									}
 								}
 							}
 							else
 							{
-								this.logWarn('Object "' + classRef + '" missing property: "' + prop + '"');
+								logWarn('Object "' + classRef + '" missing property: "' + prop + '"');
 							}
 						}
 					}
@@ -483,12 +483,12 @@ package temple.data.encoding.json
 		private function parseValue():Object
 		{
 			// Catch errors when the input stream ends abruptly
-			if (this._token == null)
+			if (_token == null)
 			{
-				this._tokenizer.parseError("Unexpected end of input");
+				_tokenizer.parseError("Unexpected end of input");
 			}
 					
-			switch (this._token.type)
+			switch (_token.type)
 			{
 				case JSONTokenType.LEFT_BRACE:
 					return parseObject();
@@ -501,20 +501,20 @@ package temple.data.encoding.json
 				case JSONTokenType.TRUE:
 				case JSONTokenType.FALSE:
 				case JSONTokenType.NULL:
-					return this._token.value;
+					return _token.value;
 					
 				case JSONTokenType.NAN:
-					if (!this._strict)
+					if (!_strict)
 					{
-						return this._token.value;
+						return _token.value;
 					}
 					else
 					{
-						this._tokenizer.parseError("Unexpected " + this._token.value);
+						_tokenizer.parseError("Unexpected " + _token.value);
 					}
 
 				default:
-					this._tokenizer.parseError("Unexpected " + this._token.value);
+					_tokenizer.parseError("Unexpected " + _token.value);
 					break;
 			}
 			
@@ -526,10 +526,10 @@ package temple.data.encoding.json
 		 */
 		override public function destruct():void
 		{
-			this._value = null;
-			this._tokenizer = null;
-			this._token = null;
-			this._explicitDecoders = null;
+			_value = null;
+			_tokenizer = null;
+			_token = null;
+			_explicitDecoders = null;
 			
 			super.destruct();
 		}

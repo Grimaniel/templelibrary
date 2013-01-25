@@ -49,7 +49,7 @@ package temple.data.flashvars
 	 * 
 	 * @example
 	 * <listing version="3.0">
-	 * FlashVars.initialize(this.stage.loaderInfo.parameters);
+	 * FlashVars.initialize(stage.loaderInfo.parameters);
 	 * 
 	 * FlashVars.configureVar(FlashVarNames.LANGUAGE, 'nl', String);
 	 * FlashVars.configureVar(FlashVarNames.VERSION, 1, int);
@@ -74,7 +74,7 @@ package temple.data.flashvars
 		 * Use this in the Main.as to initialize the flashvars.
 		 * If you don't use an HTML file, but still want to use the FlashVars class for configuration, use {}
 		 * 
-		 * @param parameters The parameters object (this.stage.loaderInfo.parameters)
+		 * @param parameters The parameters object (stage.loaderInfo.parameters)
 		 */
 		public static function initialize(parameters:Object):void
 		{

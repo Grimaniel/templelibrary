@@ -10,13 +10,13 @@ package
 
 		public function get friends():Vector.<Person>
 		{
-			return this._friends;
+			return _friends;
 		}
 
 		// note: setter must be untyped, since the JSONDecoder can't create runtime Vectors
 		public function set friends(value:*):void
 		{
-			this._friends = Vector.<Person>(value);
+			_friends = Vector.<Person>(value);
 		}
 	}
 }

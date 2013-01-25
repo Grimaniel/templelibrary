@@ -52,8 +52,8 @@ package temple.data.result
 		public function DataResult(data:*, success:Boolean = true, message:String = null, code:String = null)
 		{
 			super(success, message, code);
-			this._data = data;
-			this.toStringProps.push('data');
+			_data = data;
+			toStringProps.push('data');
 		}
 		
 		/**
@@ -61,7 +61,7 @@ package temple.data.result
 		 */
 		public function get data():*
 		{
-			return this._data;
+			return _data;
 		}
 		
 		/**
@@ -74,7 +74,7 @@ package temple.data.result
 			this.success = object.success;
 			this.message = object.message;
 			this.code = object.code;
-			this._data = object.data;
+			_data = object.data;
 			
 			return true;
 		}
@@ -84,7 +84,7 @@ package temple.data.result
 		 */
 		override public function destruct():void
 		{
-			this._data = null;
+			_data = null;
 			
 			super.destruct();
 		}

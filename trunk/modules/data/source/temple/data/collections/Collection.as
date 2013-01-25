@@ -53,11 +53,11 @@ package temple.data.collections
 		{
 			if (items)
 			{
-				this._items = items;
+				_items = items;
 			}
 			else
 			{
-				this._items = new Array();
+				_items = new Array();
 			}
 		}
 
@@ -68,7 +68,7 @@ package temple.data.collections
 		{
 			if (item != null ) 
 			{
-				this._items.push(item);
+				_items.push(item);
 				return true;
 			} 
 			return false;
@@ -79,7 +79,7 @@ package temple.data.collections
 		 */
 		public function clear():void 
 		{
-			this._items = new Array();
+			_items = new Array();
 		}
 
 		/**
@@ -87,7 +87,7 @@ package temple.data.collections
 		 */
 		public function getItemAt(index:Number):Object 
 		{
-			return(this._items[index]);
+			return(_items[index]);
 		}
 
 		/**
@@ -95,7 +95,7 @@ package temple.data.collections
 		 */
 		public function get length():int 
 		{
-			return this._items.length;
+			return _items.length;
 		}
 
 		/**
@@ -103,13 +103,13 @@ package temple.data.collections
 		 */
 		override public function destruct():void
 		{
-			if (this._items)
+			if (_items)
 			{
-				for each (var item : Object in this._items)
+				for each (var item : Object in _items)
 				{
 					if (item is IDestructible) (item as IDestructible).destruct();
 				}
-				this._items = null;
+				_items = null;
 			}
 			
 			super.destruct();

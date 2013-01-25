@@ -64,9 +64,9 @@ package temple.data.cache
 		{
 			super(null, URLLoaderDataFormat.BINARY, destructOnError, logErrors);
 			
-			this._cache = cache;
+			_cache = cache;
 			
-			if (request) new FrameDelay(this.load, 1, [request]);
+			if (request) new FrameDelay(load, 1, [request]);
 		}
 		
 		/**
@@ -74,7 +74,7 @@ package temple.data.cache
 		 */
 		override public function get url():String
 		{
-			return this._cacheData ? this._cacheData.url : super.url;
+			return _cacheData ? _cacheData.url : super.url;
 		}
 		
 		/**
@@ -82,7 +82,7 @@ package temple.data.cache
 		 */
 		override public function get isLoading():Boolean
 		{
-			return this._cache ? this._cacheData && !this._cacheData.isLoaded : super.isLoading;
+			return _cache ? _cacheData && !_cacheData.isLoaded : super.isLoading;
 		}
 
 		/**
@@ -90,7 +90,7 @@ package temple.data.cache
 		 */
 		override public function get isLoaded():Boolean
 		{
-			return this._cache ? this._cacheData && this._cacheData.isLoaded : super.isLoaded;
+			return _cache ? _cacheData && _cacheData.isLoaded : super.isLoaded;
 		}
 
 		/**
@@ -99,10 +99,10 @@ package temple.data.cache
 		override public function load(request:URLRequest):void
 		{
 			// check if our current load is competed
-			if (this._owner && this._cacheData && this._cacheData.isLoading)
+			if (_owner && _cacheData && _cacheData.isLoading)
 			{
 				// we didn't finished the current load, delete it
-				LoaderCache.clear(this.url);
+				LoaderCache.clear(url);
 				try
 				{
 					super.close();
@@ -113,49 +113,49 @@ package temple.data.cache
 				}
 			}
 			
-			this._owner = false;
-			this.clearCacheData();
-			if (this._cache && (this._cacheData = LoaderCache.get(request.url)))
+			_owner = false;
+			clearCacheData();
+			if (_cache && (_cacheData = LoaderCache.get(request.url)))
 			{
-				if (this._cacheData.isLoaded)
+				if (_cacheData.isLoaded)
 				{
-					if (this.debug) this.logDebug("load: get data from cache, url:" + this.url);
-					this.data = LoaderCache.get(this.url).bytes;
-					this.dispatchEvent(new Event(Event.COMPLETE));
+					if (debug) logDebug("load: get data from cache, url:" + url);
+					data = LoaderCache.get(url).bytes;
+					dispatchEvent(new Event(Event.COMPLETE));
 				}
 				else
 				{
-					if (this.debug) this.logDebug("load: data is currently loading, wait... " + this._cacheData.url);
-					this._cacheData.addEventListener(Event.COMPLETE, this.handleCacheDataComplete);
-					this._cacheData.addEventListener(Event.OPEN, this.dispatchEvent);
-					this._cacheData.addEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
-					this._cacheData.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.dispatchEvent);
-					this._cacheData.addEventListener(IOErrorEvent.IO_ERROR, this.handleCacheDataError);
-					this._cacheData.addEventListener(IOErrorEvent.DISK_ERROR, this.handleCacheDataError);
-					this._cacheData.addEventListener(IOErrorEvent.NETWORK_ERROR, this.handleCacheDataError);
-					this._cacheData.addEventListener(IOErrorEvent.VERIFY_ERROR, this.handleCacheDataError);
-					this._cacheData.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleCacheDataError);
-					this._cacheData.addEventListener(DestructEvent.DESTRUCT, this.handleCacheDataDestuct);
-					this.dispatchEvent(new Event(Event.OPEN));
+					if (debug) logDebug("load: data is currently loading, wait... " + _cacheData.url);
+					_cacheData.addEventListener(Event.COMPLETE, handleCacheDataComplete);
+					_cacheData.addEventListener(Event.OPEN, dispatchEvent);
+					_cacheData.addEventListener(ProgressEvent.PROGRESS, dispatchEvent);
+					_cacheData.addEventListener(HTTPStatusEvent.HTTP_STATUS, dispatchEvent);
+					_cacheData.addEventListener(IOErrorEvent.IO_ERROR, handleCacheDataError);
+					_cacheData.addEventListener(IOErrorEvent.DISK_ERROR, handleCacheDataError);
+					_cacheData.addEventListener(IOErrorEvent.NETWORK_ERROR, handleCacheDataError);
+					_cacheData.addEventListener(IOErrorEvent.VERIFY_ERROR, handleCacheDataError);
+					_cacheData.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleCacheDataError);
+					_cacheData.addEventListener(DestructEvent.DESTRUCT, handleCacheDataDestuct);
+					dispatchEvent(new Event(Event.OPEN));
 				}
 			}
 			else
 			{
-				if (this._cache)
+				if (_cache)
 				{
-					this._cacheData = LoaderCache.create(request.url);
-					this._owner = true;
-					this.addEventListener(Event.OPEN, this._cacheData.dispatchEvent);
-					this.addEventListener(ProgressEvent.PROGRESS, this._cacheData.dispatchEvent);
-					this.addEventListener(IOErrorEvent.IO_ERROR, this._cacheData.dispatchEvent);
-					this.addEventListener(IOErrorEvent.DISK_ERROR, this._cacheData.dispatchEvent);
-					this.addEventListener(IOErrorEvent.NETWORK_ERROR, this._cacheData.dispatchEvent);
-					this.addEventListener(IOErrorEvent.VERIFY_ERROR, this._cacheData.dispatchEvent);
-					this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this._cacheData.dispatchEvent);
-					if (this.debug) this.logDebug("load: new LoaderCacheData created: " + this._cacheData);
+					_cacheData = LoaderCache.create(request.url);
+					_owner = true;
+					addEventListener(Event.OPEN, _cacheData.dispatchEvent);
+					addEventListener(ProgressEvent.PROGRESS, _cacheData.dispatchEvent);
+					addEventListener(IOErrorEvent.IO_ERROR, _cacheData.dispatchEvent);
+					addEventListener(IOErrorEvent.DISK_ERROR, _cacheData.dispatchEvent);
+					addEventListener(IOErrorEvent.NETWORK_ERROR, _cacheData.dispatchEvent);
+					addEventListener(IOErrorEvent.VERIFY_ERROR, _cacheData.dispatchEvent);
+					addEventListener(SecurityErrorEvent.SECURITY_ERROR, _cacheData.dispatchEvent);
+					if (debug) logDebug("load: new LoaderCacheData created: " + _cacheData);
 				}
-				this.addEventListenerOnce(Event.COMPLETE, this.handleComplete);
-				this.dataFormat = URLLoaderDataFormat.BINARY;
+				addEventListenerOnce(Event.COMPLETE, handleComplete);
+				dataFormat = URLLoaderDataFormat.BINARY;
 				super.load(request);
 			}
 		}
@@ -166,10 +166,10 @@ package temple.data.cache
 		override public function close():void
 		{
 			// check if our current load is competed
-			if (this._owner && this._cacheData && this._cacheData.isLoading)
+			if (_owner && _cacheData && _cacheData.isLoading)
 			{
 				// we didn't finished the current load, delete it
-				LoaderCache.clear(this._cacheData.url);
+				LoaderCache.clear(_cacheData.url);
 			}
 			super.close();
 		}
@@ -179,7 +179,7 @@ package temple.data.cache
 		 */
 		public function get cache():Boolean
 		{
-			return this._cache;
+			return _cache;
 		}
 		
 		/**
@@ -187,59 +187,59 @@ package temple.data.cache
 		 */
 		public function set cache(value:Boolean):void
 		{
-			this._cache = value;
-			if (this.debug) this.logDebug("cache: " + value);
+			_cache = value;
+			if (debug) logDebug("cache: " + value);
 		}
 
 		private function handleComplete(event:Event):void
 		{
-			if (this._cache && this._owner)
+			if (_cache && _owner)
 			{
-				if (this.debug) this.logDebug("handleComplete: store data in cache, url:" + this.url);
-				LoaderCache.set(this.url, this.data);
+				if (debug) logDebug("handleComplete: store data in cache, url:" + url);
+				LoaderCache.set(url, data);
 			}
-			this.clearCacheData();
+			clearCacheData();
 		}
 
 		private function handleCacheDataComplete(event:Event):void 
 		{
-			this.data = this._cacheData.bytes;
-			this.clearCacheData();
-			this.dispatchEvent(event);
+			data = _cacheData.bytes;
+			clearCacheData();
+			dispatchEvent(event);
 		}
 		
 		private function handleCacheDataError(event:ErrorEvent):void 
 		{
-			if (this.debug) this.logWarn(event.type + ": \"" + event.text + "\"");
-			this.clearCacheData();
-			LoaderCache.clear(this.url);
-			this.dispatchEvent(event);
+			if (debug) logWarn(event.type + ": \"" + event.text + "\"");
+			clearCacheData();
+			LoaderCache.clear(url);
+			dispatchEvent(event);
 		}
 		
 		private function clearCacheData():void 
 		{
-			if (this._cacheData)
+			if (_cacheData)
 			{
-				this._cacheData.removeEventListener(Event.COMPLETE, this.handleCacheDataComplete);
-				this._cacheData.removeEventListener(Event.OPEN, this.dispatchEvent);
-				this._cacheData.removeEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
-				this._cacheData.removeEventListener(HTTPStatusEvent.HTTP_STATUS, this.dispatchEvent);
-				this._cacheData.removeEventListener(IOErrorEvent.IO_ERROR, this.handleCacheDataError);
-				this._cacheData.removeEventListener(IOErrorEvent.DISK_ERROR, this.handleCacheDataError);
-				this._cacheData.removeEventListener(IOErrorEvent.NETWORK_ERROR, this.handleCacheDataError);
-				this._cacheData.removeEventListener(IOErrorEvent.VERIFY_ERROR, this.handleCacheDataError);
-				this._cacheData.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleCacheDataError);
-				this._cacheData.removeEventListener(DestructEvent.DESTRUCT, this.handleCacheDataDestuct);
-				this._cacheData = null;
-				this._owner = false;
+				_cacheData.removeEventListener(Event.COMPLETE, handleCacheDataComplete);
+				_cacheData.removeEventListener(Event.OPEN, dispatchEvent);
+				_cacheData.removeEventListener(ProgressEvent.PROGRESS, dispatchEvent);
+				_cacheData.removeEventListener(HTTPStatusEvent.HTTP_STATUS, dispatchEvent);
+				_cacheData.removeEventListener(IOErrorEvent.IO_ERROR, handleCacheDataError);
+				_cacheData.removeEventListener(IOErrorEvent.DISK_ERROR, handleCacheDataError);
+				_cacheData.removeEventListener(IOErrorEvent.NETWORK_ERROR, handleCacheDataError);
+				_cacheData.removeEventListener(IOErrorEvent.VERIFY_ERROR, handleCacheDataError);
+				_cacheData.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handleCacheDataError);
+				_cacheData.removeEventListener(DestructEvent.DESTRUCT, handleCacheDataDestuct);
+				_cacheData = null;
+				_owner = false;
 			}
 		}
 		
 		private function handleCacheDataDestuct(event:DestructEvent):void 
 		{
 			// reload
-			if (this.debug) this.logDebug("handleCacheDataDestuct: LoaderCacheData has been destructed, reload.");
-			if (this.isLoading) this.load(new URLRequest(this.url)); 
+			if (debug) logDebug("handleCacheDataDestuct: LoaderCacheData has been destructed, reload.");
+			if (isLoading) load(new URLRequest(url)); 
 		}
 
 		/**
@@ -247,10 +247,10 @@ package temple.data.cache
 		 */
 		override public function destruct():void 
 		{
-			if (this._cacheData)
+			if (_cacheData)
 			{
-				if (this._owner) LoaderCache.clear(this.url);
-				this.clearCacheData();
+				if (_owner) LoaderCache.clear(url);
+				clearCacheData();
 			}
 			super.destruct();
 		}

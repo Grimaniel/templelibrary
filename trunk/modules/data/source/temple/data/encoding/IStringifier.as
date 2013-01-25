@@ -36,12 +36,12 @@
 package temple.data.encoding
 {
 	/**
-	 * Can convert an object to String
+	 * Can convert an <code>Object</code> to <code>String</code>
 	 * 
 	 * @author Thijs Broerse
 	 */
 	public interface IStringifier
 	{
-		function stringify(value:*):String
+		function stringify(Object:*):String
 	}
 }

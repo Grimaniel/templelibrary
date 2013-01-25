@@ -28,13 +28,13 @@ package
 			
 			// create a new CacheLoader
 			var loader:CacheLoader = new CacheLoader();
-			this.addChild(loader);
+			addChild(loader);
 			loader.scale = .2;
 			loader.load(new URLRequest(_URL));
 			
 			// create an other CacheLoader and load the same URL. The image is only loaded once.
 			loader = new CacheLoader();
-			this.addChild(loader);
+			addChild(loader);
 			loader.scale = .2;
 			loader.x = 300;
 			loader.load(new URLRequest(_URL));
