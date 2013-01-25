@@ -73,7 +73,7 @@ package temple.utils.color
 		 * 			
 		 * box.transform.colorTransform = ColorUtil.interpolateColor(new ColorTransform(), myColor, new Percent(0.5));
 		 * 			
-		 * this.addChild(box);
+		 * addChild(box);
 		 * </listing>
 		 */
 		public static function interpolateColor(begin:ColorTransform, end:ColorTransform, factor:Number):ColorTransform

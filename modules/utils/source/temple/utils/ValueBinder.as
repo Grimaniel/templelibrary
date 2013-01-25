@@ -63,65 +63,65 @@ package temple.utils
 			if (!target) throwError(new TempleArgumentError(this, "target cannot be null"));
 			if (!property) throwError(new TempleArgumentError(this, "property cannot be null"));
 			
-			this._source = source;
-			this._target = target;
-			this._property = property;
-			this._propertyProxy = propertyProxy;
-			this._eventType = eventType;
+			_source = source;
+			_target = target;
+			_property = property;
+			_propertyProxy = propertyProxy;
+			_eventType = eventType;
 			
-			if (this._source is IEventDispatcher) IEventDispatcher(this._source).addEventListener(this._eventType, this.handleChange);
-			this.update();
+			if (_source is IEventDispatcher) IEventDispatcher(_source).addEventListener(_eventType, handleChange);
+			update();
 		}
 
 		public function get propertyProxy():IPropertyProxy
 		{
-			return this._propertyProxy;
+			return _propertyProxy;
 		}
 
 		public function set propertyProxy(value:IPropertyProxy):void
 		{
-			this._propertyProxy = value;
+			_propertyProxy = value;
 		}
 		
 		public function get source():IHasValue
 		{
-			return this._source;
+			return _source;
 		}
 		
 		public function get target():Object
 		{
-			return this._target;
+			return _target;
 		}
 		
 		public function get eventType():String
 		{
-			return this._eventType;
+			return _eventType;
 		}
 		
 		public function update():void
 		{
-			if (this._propertyProxy)
+			if (_propertyProxy)
 			{
-				this._propertyProxy.setValue(this._target, this._property, this._source.value);
+				_propertyProxy.setValue(_target, _property, _source.value);
 			}
 			else
 			{
-				this._target[this._property] = this._source.value;
+				_target[_property] = _source.value;
 			}
 		}
 
 		private function handleChange(event:Event):void
 		{
-			this.update();
+			update();
 		}
 
 		override public function destruct():void
 		{
-			if (this._source && this._source is IEventDispatcher) IEventDispatcher(this._source).removeEventListener(this._eventType, this.handleChange);
-			this._source = null;
-			this._target = null;
-			this._propertyProxy = null;
-			this._property = null;
+			if (_source && _source is IEventDispatcher) IEventDispatcher(_source).removeEventListener(_eventType, handleChange);
+			_source = null;
+			_target = null;
+			_propertyProxy = null;
+			_property = null;
 			
 			super.destruct();
 		}

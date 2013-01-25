@@ -67,7 +67,7 @@ package temple.utils
 		public function FrameRateKiller(fps:Number = 10)
 		{
 			this.fps = fps;
-			FrameRateKiller._sprite.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			FrameRateKiller._sprite.addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 
 		/**
@@ -75,7 +75,7 @@ package temple.utils
 		 */
 		public function get fps():Number 
 		{
-			return 1000 / this._frameDuration;
+			return 1000 / _frameDuration;
 		}
 
 		/**
@@ -89,19 +89,19 @@ package temple.utils
 			}
 			else
 			{
-				this._frameDuration = 1000 / value;
+				_frameDuration = 1000 / value;
 			}
 			
 		}
 
 		private function handleEnterFrame(event:Event):void
 		{
-			if (!this._time) this._time = getTimer();
-			while (getTimer() - this._time < this._frameDuration)
+			if (!_time) _time = getTimer();
+			while (getTimer() - _time < _frameDuration)
 			{
 				// do nothing
 			}
-			this._time = getTimer();
+			_time = getTimer();
 		}
 
 		/**
@@ -109,7 +109,7 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			FrameRateKiller._sprite.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			FrameRateKiller._sprite.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			super.destruct();
 		}
 	}

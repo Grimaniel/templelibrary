@@ -53,38 +53,38 @@ package temple.utils.fps
 		
 		public function FPSMeter(length:uint = 100)
 		{
-			this._length = length;
-			this._times = [];
+			_length = length;
+			_times = [];
 			
-			FramePulse.addEnterFrameListener(this.handleEnterFrame);
+			FramePulse.addEnterFrameListener(handleEnterFrame);
 		}
 
 		public function getFPS(frames:uint = 1):Number
 		{
-			frames = Math.min(frames, this._times.length - 1);
-			return 1000 / ((this._times[0] - this._times[frames]) / frames); 
+			frames = Math.min(frames, _times.length - 1);
+			return 1000 / ((_times[0] - _times[frames]) / frames); 
 		}
 
 		public function get length():uint
 		{
-			return this._length;
+			return _length;
 		}
 
 		public function set length(value:uint):void
 		{
-			this._length = value;
+			_length = value;
 		}
 
 		private function handleEnterFrame(event:Event):void
 		{
-			this._times.unshift(getTimer());
+			_times.unshift(getTimer());
 			
-			if (this._times.length > this._length) this._times.length = this._length;
+			if (_times.length > _length) _times.length = _length;
 		}
 
 		override public function destruct():void
 		{
-			FramePulse.removeEnterFrameListener(this.handleEnterFrame);
+			FramePulse.removeEnterFrameListener(handleEnterFrame);
 			
 			super.destruct();
 		}

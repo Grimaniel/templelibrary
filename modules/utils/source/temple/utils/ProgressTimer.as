@@ -56,19 +56,19 @@ package temple.utils
 		override public function start():void
 		{
 			super.start();
-			this._startTime = getTimer();
+			_startTime = getTimer();
 		}
 
 		override public function stop():void
 		{
 			super.stop();
-			this._startTime = NaN;
+			_startTime = NaN;
 		}
 
 		override public function reset():void
 		{
 			super.reset();
-			this._startTime = NaN;
+			_startTime = NaN;
 		}
 
 		/**
@@ -77,7 +77,7 @@ package temple.utils
 		 */
 		public function get progress():Number
 		{
-			return this.timeRunning / this.delay;
+			return timeRunning / delay;
 		}
 
 		/**
@@ -85,7 +85,7 @@ package temple.utils
 		 */
 		public function get timeRunning():int
 		{
-			return this.running ? (getTimer() - this._startTime) : 0;
+			return running ? (getTimer() - _startTime) : 0;
 		}
 	}
 }

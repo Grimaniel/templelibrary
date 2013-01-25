@@ -22,15 +22,15 @@ package
 			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
 			super("Temple - TimeUtilsExample");
 			
-			this.logInfo(TimeUtils.formatMinutesSeconds(10 * 1000));
-			this.logInfo(TimeUtils.formatMinutesSeconds(60 * 1000));
-			this.logInfo(TimeUtils.formatMinutesSeconds(65 * 1000));
-			this.logInfo(TimeUtils.formatMinutesSeconds(24260));
+			logInfo(TimeUtils.formatMinutesSeconds(10 * 1000));
+			logInfo(TimeUtils.formatMinutesSeconds(60 * 1000));
+			logInfo(TimeUtils.formatMinutesSeconds(65 * 1000));
+			logInfo(TimeUtils.formatMinutesSeconds(24260));
 
-			this.logInfo(TimeUtils.formatMinutesSecondsAlt(10 * 1000));
-			this.logInfo(TimeUtils.formatMinutesSecondsAlt(60 * 1000));
-			this.logInfo(TimeUtils.formatMinutesSecondsAlt(65 * 1000));
-			this.logInfo(TimeUtils.formatMinutesSecondsAlt(24260));
+			logInfo(TimeUtils.formatMinutesSecondsAlt(10 * 1000));
+			logInfo(TimeUtils.formatMinutesSecondsAlt(60 * 1000));
+			logInfo(TimeUtils.formatMinutesSecondsAlt(65 * 1000));
+			logInfo(TimeUtils.formatMinutesSecondsAlt(24260));
 		}
 	}
 }

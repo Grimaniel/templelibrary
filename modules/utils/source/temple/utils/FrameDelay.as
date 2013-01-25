@@ -100,13 +100,13 @@ package temple.utils
 		 */
 		public function FrameDelay(callback:Function, frameCount:int = 1, params:Array = null, debug:Boolean = false) 
 		{
-			this.toStringProps.push('callback');
+			toStringProps.push('callback');
 			
-			this._currentFrame = frameCount;
-			this._callback = callback;
-			this._params = params;
-			this._isDone = frameCount <= 1;
-			FramePulse.addEnterFrameListener(this.handleEnterFrame);
+			_currentFrame = frameCount;
+			_callback = callback;
+			_params = params;
+			_isDone = frameCount <= 1;
+			FramePulse.addEnterFrameListener(handleEnterFrame);
 			
 			this.debug = debug;
 		}
@@ -116,7 +116,7 @@ package temple.utils
 		 */
 		public function get callback():String
 		{
-			return this._callbackString ||= FunctionUtils.functionToString(this._callback);
+			return _callbackString ||= FunctionUtils.functionToString(_callback);
 		}
 		
 		/**
@@ -124,10 +124,10 @@ package temple.utils
 		 */
 		public function pause():void
 		{
-			if (this.debug) this.logDebug("pause: ");
+			if (debug) logDebug("pause: ");
 			
-			FramePulse.removeEnterFrameListener(this.handleEnterFrame);
-			this._paused = true;
+			FramePulse.removeEnterFrameListener(handleEnterFrame);
+			_paused = true;
 		}
 		
 		/**
@@ -135,9 +135,9 @@ package temple.utils
 		 */
 		public function resume():void
 		{
-			if (this.debug) this.logDebug("resume: ");
+			if (debug) logDebug("resume: ");
 			
-			if (!this.isDestructed && this._paused)
+			if (!isDestructed && _paused)
 			{
 				FramePulse.addEnterFrameListener(handleEnterFrame);
 			}
@@ -148,7 +148,7 @@ package temple.utils
 		 */
 		public function get paused():Boolean
 		{
-			return this._paused;
+			return _paused;
 		}
 		
 		/**
@@ -156,7 +156,7 @@ package temple.utils
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -164,7 +164,7 @@ package temple.utils
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		/**
@@ -174,23 +174,23 @@ package temple.utils
 		 */
 		private function handleEnterFrame(event:Event):void 
 		{
-			if (this._isDone) 
+			if (_isDone) 
 			{
-				FramePulse.removeEnterFrameListener(this.handleEnterFrame);
-				if (this._callback != null)
+				FramePulse.removeEnterFrameListener(handleEnterFrame);
+				if (_callback != null)
 				{
-					if (this.debug) this.logDebug("Done, execute callback: ");
+					if (debug) logDebug("Done, execute callback: ");
 					
-					this._callback.apply(null, this._params);
+					_callback.apply(null, _params);
 				}
-				this.destruct();
+				destruct();
 			}
 			else 
 			{
-				this._currentFrame--;
-				this._isDone = (this._currentFrame <= 1);
+				_currentFrame--;
+				_isDone = (_currentFrame <= 1);
 				
-				if (this.debug) this.logDebug("handleEnterFrame: wait for " + this._currentFrame + " frames...");
+				if (debug) logDebug("handleEnterFrame: wait for " + _currentFrame + " frames...");
 			}
 		}
 		
@@ -200,12 +200,12 @@ package temple.utils
 		 */
 		override public function destruct():void 
 		{
-			if (this.debug) this.logDebug("destruct: ");
+			if (debug) logDebug("destruct: ");
 			
-			FramePulse.removeEnterFrameListener(this.handleEnterFrame);
+			FramePulse.removeEnterFrameListener(handleEnterFrame);
 			
-			this._callback = null;
-			this._params = null;
+			_callback = null;
+			_params = null;
 			
 			super.destruct();
 		}

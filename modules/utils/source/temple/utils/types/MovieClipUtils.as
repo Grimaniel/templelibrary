@@ -173,11 +173,11 @@ package temple.utils.types
 				
 				if (child && child is DisplayObjectContainer)
 				{
-					MovieClipUtils.deepStop(DisplayObjectContainer(child));
 					if (child is MovieClip)
 					{
 						MovieClip(child).stop();
 					}
+					MovieClipUtils.deepStop(DisplayObjectContainer(child));
 				}
 			}
 		}
@@ -273,7 +273,6 @@ package temple.utils.types
 				
 				if (child && child is DisplayObjectContainer)
 				{
-					MovieClipUtils.deepGotoAndStop(DisplayObjectContainer(child), frame);
 					if (child is MovieClip)
 					{
 						if (frame is String)
@@ -285,6 +284,7 @@ package temple.utils.types
 							MovieClip(child).gotoAndStop(frame);
 						}
 					}
+					MovieClipUtils.deepGotoAndStop(DisplayObjectContainer(child), frame);
 				}
 			}
 		}
@@ -305,7 +305,6 @@ package temple.utils.types
 				
 				if (child && child is DisplayObjectContainer)
 				{
-					MovieClipUtils.deepGotoAndPlay(DisplayObjectContainer(child), frame);
 					if (child is MovieClip)
 					{
 						if (frame is String)
@@ -317,6 +316,7 @@ package temple.utils.types
 							MovieClip(child).gotoAndPlay(frame);
 						}
 					}
+					MovieClipUtils.deepGotoAndPlay(DisplayObjectContainer(child), frame);
 				}
 			}
 		}

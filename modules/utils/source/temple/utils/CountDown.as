@@ -61,9 +61,9 @@ package temple.utils
 
 		public function CountDown(endDate:Date = null, allowNegative:Boolean = false) 
 		{
-			this._startDate = new Date();
+			_startDate = new Date();
 			this.endDate = endDate;
-			this._allowNegative = allowNegative;
+			_allowNegative = allowNegative;
 		}
 
 		/**
@@ -71,7 +71,7 @@ package temple.utils
 		 */
 		public function get endDate():Date
 		{
-			return this._endDate;
+			return _endDate;
 		}
 
 		/**
@@ -79,7 +79,7 @@ package temple.utils
 		 */
 		public function set endDate(value:Date):void
 		{
-			this._endDate = value;
+			_endDate = value;
 		}
 		
 		/**
@@ -89,7 +89,7 @@ package temple.utils
 		 */
 		public function set timeDiff(value:Number):void
 		{
-			this._timeDiff = value;
+			_timeDiff = value;
 		}
 		
 		/**
@@ -97,7 +97,7 @@ package temple.utils
 		 */
 		public function get startDate():Date
 		{
-			return this._startDate;
+			return _startDate;
 		}
 		
 		/**
@@ -105,7 +105,7 @@ package temple.utils
 		 */
 		public function set startDate(value:Date):void
 		{
-			this._startDate = value;
+			_startDate = value;
 		}
 		
 		/**
@@ -113,7 +113,7 @@ package temple.utils
 		 */
 		public function get duration():Number
 		{
-			return this._duration;
+			return _duration;
 		}
 
 		/**
@@ -121,7 +121,7 @@ package temple.utils
 		 */
 		public function set duration(value:Number):void
 		{
-			this._duration = value;
+			_duration = value;
 		}
 
 		/**
@@ -130,14 +130,14 @@ package temple.utils
 		 */
 		public function start(duration:Number = NaN):void
 		{
-			if (!isNaN(duration)) this._duration = duration;
-			if (isNaN(this._duration)) throwError(new TempleError(this, 'duration not set'));
+			if (!isNaN(duration)) _duration = duration;
+			if (isNaN(_duration)) throwError(new TempleError(this, 'duration not set'));
 			
-			this._startDate = new Date();
-			this._endDate = new Date();
-			this._endDate.setMilliseconds(this._endDate.getMilliseconds() + this._duration);
+			_startDate = new Date();
+			_endDate = new Date();
+			_endDate.setMilliseconds(_endDate.getMilliseconds() + _duration);
 			
-			this._paused = false;
+			_paused = false;
 		}
 
 		/**
@@ -145,10 +145,10 @@ package temple.utils
 		 */
 		public function stop():void 
 		{
-			this._endDate = null;
-			this._pauseTime = NaN;
-			this._pauseEndTime = null;
-			this._paused = false;
+			_endDate = null;
+			_pauseTime = NaN;
+			_pauseEndTime = null;
+			_paused = false;
 		}
 
 		/**
@@ -156,9 +156,9 @@ package temple.utils
 		 */
 		public function pause():void
 		{
-			this._pauseTime = getTimer();
-			this._pauseEndTime = this.time;
-			this._paused = true;
+			_pauseTime = getTimer();
+			_pauseEndTime = time;
+			_paused = true;
 		}
 		
 		/**
@@ -166,10 +166,10 @@ package temple.utils
 		 */
 		public function resume():void
 		{
-			if (this._paused == true)
+			if (_paused == true)
 			{
-				this._endDate.setMilliseconds(this._endDate.getMilliseconds() - (getTimer() - this._pauseTime));
-				this._paused = false;
+				_endDate.setMilliseconds(_endDate.getMilliseconds() - (getTimer() - _pauseTime));
+				_paused = false;
 			}
 		}
 
@@ -178,7 +178,7 @@ package temple.utils
 		 */
 		public function get paused():Boolean 
 		{
-			return this._paused;
+			return _paused;
 		}
 		
 		/**
@@ -186,21 +186,21 @@ package temple.utils
 		 */
 		public function get time():Date
 		{
-			if (this._paused)
+			if (_paused)
 			{
-				return this._pauseEndTime;
+				return _pauseEndTime;
 			}
-			else if (this._endDate)
+			else if (_endDate)
 			{
-				var diff:Number = this._endDate.getTime() - new Date().getTime();
+				var diff:Number = _endDate.getTime() - new Date().getTime();
 				
-				if (diff < 0 && !this._allowNegative) diff = 0;
+				if (diff < 0 && !_allowNegative) diff = 0;
 				
 				return new Date(1970, 0, 1, 0, 0, 0, diff);
 			}
 			else
 			{
-				this.logWarn('endDate is not set');
+				logWarn('endDate is not set');
 				return null;
 			}
 		}
@@ -210,7 +210,7 @@ package temple.utils
 		 */
 		public function get years():Number
 		{
-			return this.time.getFullYear() - 1970;
+			return time.getFullYear() - 1970;
 		}
 		
 		/**
@@ -218,7 +218,7 @@ package temple.utils
 		 */
 		public function get totalMonths():Number
 		{
-			return this.time.getMonth() + 1 - 1 + (this.years * 12);
+			return time.getMonth() + 1 - 1 + (years * 12);
 		}
 
 		/**
@@ -226,7 +226,7 @@ package temple.utils
 		 */
 		public function get months():Number
 		{
-			return this.time.getMonth() + 1 - 1;
+			return time.getMonth() + 1 - 1;
 		}
 		
 		/**
@@ -234,7 +234,7 @@ package temple.utils
 		 */
 		public function get totalWeeks():Number
 		{
-			return Math.floor(this.totalTime / 1000 / 60 / 60 / 24 / 7);
+			return Math.floor(totalTime / 1000 / 60 / 60 / 24 / 7);
 		}
 
 		/**
@@ -242,13 +242,13 @@ package temple.utils
 		 */
 		public function get weeks():Number
 		{
-			if (this._endDate)
+			if (_endDate)
 			{
-				return Math.floor(this.days / 7);
+				return Math.floor(days / 7);
 			}
 			else
 			{
-				return int(this.totalWeeks);
+				return int(totalWeeks);
 			}
 		}
 		
@@ -257,7 +257,7 @@ package temple.utils
 		 */
 		public function get totalDays():Number
 		{
-			return this.totalTime / 1000 / 60 / 60 / 24;
+			return totalTime / 1000 / 60 / 60 / 24;
 		}
 
 		/**
@@ -265,87 +265,87 @@ package temple.utils
 		 */
 		public function get days():Number
 		{
-			if (this._endDate)
+			if (_endDate)
 			{
-				return this.time.getDate() - 1;
+				return time.getDate() - 1;
 			}
 			else
 			{
-				return int(this.totalDays);
+				return int(totalDays);
 			}
 		}
 		
 		public function get totalHours():Number
 		{
-			return this.totalTime / 1000 / 60 / 60;
+			return totalTime / 1000 / 60 / 60;
 		}
 
 		public function get hours():Number
 		{
-			if (this._endDate)
+			if (_endDate)
 			{
-				return this.time.getHours();
+				return time.getHours();
 			}
 			else
 			{
-				return int(this.totalHours % 24);
+				return int(totalHours % 24);
 			}
 		}
 		
 		public function get totalMinutes():Number
 		{
-			return this.totalTime / 1000 / 60;
+			return totalTime / 1000 / 60;
 		}
 
 		public function get minutes():Number
 		{
-			if (this._endDate)
+			if (_endDate)
 			{
-				return this.time.getMinutes();
+				return time.getMinutes();
 			}
 			else
 			{
-				return int(this.totalMinutes % 60);
+				return int(totalMinutes % 60);
 			}
 		}
 		
 		public function get totalSeconds():Number
 		{
-			return this.totalTime / 1000;
+			return totalTime / 1000;
 		}
 
 		public function get seconds():Number
 		{
-			if (this._endDate)
+			if (_endDate)
 			{
-				return this.time.getSeconds();
+				return time.getSeconds();
 			}
 			else
 			{
-				return int(this.totalSeconds % 60);
+				return int(totalSeconds % 60);
 			}
 		}		
 		
 		public function get totalMilliseconds():Number
 		{
-			return this.totalTime;
+			return totalTime;
 		}
 
 		public function get milliseconds():Number
 		{
-			if (this._endDate)
+			if (_endDate)
 			{
-				return this.time.getMilliseconds();
+				return time.getMilliseconds();
 			}
 			else
 			{
-				return int(this.milliseconds);
+				return int(milliseconds);
 			}
 		}
 		
 		private function get totalTime():Number
 		{
-			return this.time ? this.time.time - (this.time.getTimezoneOffset() * 60 * 1000) : (this._allowNegative ? this._timeDiff : Math.max(this._timeDiff, 0));
+			return time ? time.time - (time.getTimezoneOffset() * 60 * 1000) : (_allowNegative ? _timeDiff : Math.max(_timeDiff, 0));
 		}
 
 		/**
@@ -353,9 +353,9 @@ package temple.utils
 		 */
 		public function get ratio():Number 
 		{
-			if (!this._startDate || !this._endDate) return NaN;
+			if (!_startDate || !_endDate) return NaN;
 			
-			return this.totalTime / (this._endDate.time - this._startDate.time);
+			return totalTime / (_endDate.time - _startDate.time);
 		}
 		
 		/**
@@ -364,7 +364,7 @@ package temple.utils
 		 */
 		public function get allowNegative():Boolean
 		{
-			return this._allowNegative;
+			return _allowNegative;
 		}
 		
 		/**
@@ -372,7 +372,7 @@ package temple.utils
 		 */
 		public function set allowNegative(value:Boolean):void
 		{
-			this._allowNegative = value;
+			_allowNegative = value;
 		}
 
 		/**
@@ -380,9 +380,9 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			this._endDate = null;
-			this._startDate = null;
-			this._pauseEndTime = null;
+			_endDate = null;
+			_startDate = null;
+			_pauseEndTime = null;
 			super.destruct();
 		}
 	}

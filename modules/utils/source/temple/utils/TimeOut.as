@@ -108,15 +108,15 @@ package temple.utils
 		 */
 		public function TimeOut(callback:Function, milliseconds:Number, params:Array = null)
 		{
-			this._callback = callback;
-			this._params = params;
+			_callback = callback;
+			_params = params;
 			
-			this._intervalMilliseconds = milliseconds;			
-			this._startMilliseconds = getTimer();
+			_intervalMilliseconds = milliseconds;			
+			_startMilliseconds = getTimer();
 			
-			this._timer = new CoreTimer(this._intervalMilliseconds, 1);
-			this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
-			this._timer.start();
+			_timer = new CoreTimer(_intervalMilliseconds, 1);
+			_timer.addEventListener(TimerEvent.TIMER_COMPLETE, handleTimerComplete);
+			_timer.start();
 		}
 
 		/**
@@ -124,19 +124,19 @@ package temple.utils
 		 */
 		public function restart():void
 		{
-			if (this._timer != null && this._timer.running == true)
+			if (_timer != null && _timer.running == true)
 			{
-				this._timer.stop();
+				_timer.stop();
 			}
 			
-			this._startMilliseconds = getTimer();
+			_startMilliseconds = getTimer();
 			
-			if (this._timer == null)
+			if (_timer == null)
 			{
-				this._timer = new CoreTimer(this._intervalMilliseconds, 1);
-				this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
+				_timer = new CoreTimer(_intervalMilliseconds, 1);
+				_timer.addEventListener(TimerEvent.TIMER_COMPLETE, handleTimerComplete);
 			}
-			this._timer.start();
+			_timer.start();
 		}
 
 		/**
@@ -144,10 +144,10 @@ package temple.utils
 		 */
 		public function pause():void
 		{
-			if (this._timer != null && this._timer.running == true)
+			if (_timer != null && _timer.running == true)
 			{
-				this._remainingMilliseconds = this._timer.delay - (getTimer() - this._startMilliseconds);
-				this._timer.stop();
+				_remainingMilliseconds = _timer.delay - (getTimer() - _startMilliseconds);
+				_timer.stop();
 			}
 		}
 
@@ -156,20 +156,20 @@ package temple.utils
 		 */
 		public function resume():void
 		{
-			if (this._remainingMilliseconds > 0)
+			if (_remainingMilliseconds > 0)
 			{
-				if (this._timer != null)
+				if (_timer != null)
 				{
-					this._timer.delay = this._remainingMilliseconds;
-					this._timer.start();
+					_timer.delay = _remainingMilliseconds;
+					_timer.start();
 				}
 				else
 				{
-					this._timer = new CoreTimer(this._remainingMilliseconds, 1);
-					this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);	
+					_timer = new CoreTimer(_remainingMilliseconds, 1);
+					_timer.addEventListener(TimerEvent.TIMER_COMPLETE, handleTimerComplete);	
 				}
 				
-				this._startMilliseconds = getTimer();
+				_startMilliseconds = getTimer();
 			}
 		}
 		
@@ -178,7 +178,7 @@ package temple.utils
 		 */
 		public function get paused():Boolean
 		{
-			return this._timer ? !this._timer.running : false;
+			return _timer ? !_timer.running : false;
 		}
 
 		/**
@@ -186,11 +186,11 @@ package temple.utils
 		 */
 		public function stop():void
 		{
-			if (this._timer != null && this._timer.running == true)
+			if (_timer != null && _timer.running == true)
 			{
-				this._timer.stop();
+				_timer.stop();
 			}
-			this._remainingMilliseconds = 0;
+			_remainingMilliseconds = 0;
 		}
 
 		/**
@@ -198,7 +198,7 @@ package temple.utils
 		 */
 		public function get timeElapsed():Number
 		{
-			return this._intervalMilliseconds - this.timeLeft;
+			return _intervalMilliseconds - timeLeft;
 		}
 
 		/**
@@ -206,7 +206,7 @@ package temple.utils
 		 */
 		public function get timeLeft():Number
 		{
-			return this._timer ? (this._timer.running ? this._timer.delay - (getTimer() - this._startMilliseconds) : this._remainingMilliseconds) : 0;
+			return _timer ? (_timer.running ? _timer.delay - (getTimer() - _startMilliseconds) : _remainingMilliseconds) : 0;
 		}
 		
 		/**
@@ -214,17 +214,17 @@ package temple.utils
 		 */
 		public function complete():void
 		{
-			if (!this.isDestructed)
+			if (!isDestructed)
 			{
-				if (this._params != null)
+				if (_params != null)
 				{
-					if (this._callback != null) this._callback.apply(null, this._params);
+					if (_callback != null) _callback.apply(null, _params);
 				}
 				else
 				{
-					if (this._callback != null) this._callback();
+					if (_callback != null) _callback();
 				}
-				this.destruct();
+				destruct();
 			}
 			else
 			{
@@ -234,7 +234,7 @@ package temple.utils
 		
 		private function handleTimerComplete(event:TimerEvent):void
 		{
-			this.complete();
+			complete();
 		}
 		
 		
@@ -243,15 +243,15 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			if (this._timer != null)
+			if (_timer != null)
 			{
-				this._timer.destruct();
-				this._timer = null;
+				_timer.destruct();
+				_timer = null;
 			}
-			this._callback = null;
-			this._params = null;	
+			_callback = null;
+			_params = null;	
 			
-			this._remainingMilliseconds = 0;
+			_remainingMilliseconds = 0;
 			
 			super.destruct();	
 		}

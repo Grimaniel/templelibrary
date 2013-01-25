@@ -56,7 +56,7 @@ package temple.utils.propertyproxy
 			super();
 			
 			if (text) this.text = text;
-			this._texts = new Dictionary(true);
+			_texts = new Dictionary(true);
 		}
 		
 		/**
@@ -65,7 +65,7 @@ package temple.utils.propertyproxy
 		 */
 		public function get text():String
 		{
-			return this._text;
+			return _text;
 		}
 
 		/**
@@ -73,11 +73,11 @@ package temple.utils.propertyproxy
 		 */
 		public function set text(value:String):void
 		{
-			this._text = value;
+			_text = value;
 			
 			if (value.indexOf(_REPLACEMENT) == -1)
 			{
-				this.logWarn("No replacement tag \"" + _REPLACEMENT + "\" found in text");
+				logWarn("No replacement tag \"" + _REPLACEMENT + "\" found in text");
 			}
 		}
 
@@ -86,7 +86,7 @@ package temple.utils.propertyproxy
 		 */
 		public function setTextForValue(value:*, text:String):void
 		{
-			this._texts[value] = text;
+			_texts[value] = text;
 		}
 
 		/**
@@ -104,7 +104,7 @@ package temple.utils.propertyproxy
 		 */
 		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			target[property] = String(value in this._texts ? this._texts[value] : this._text).replace(_REPLACEMENT, value);
+			target[property] = String(value in _texts ? _texts[value] : _text).replace(_REPLACEMENT, value);
 			if (onComplete != null) onComplete();
 		}
 
@@ -113,8 +113,8 @@ package temple.utils.propertyproxy
 		 */
 		override public function destruct():void
 		{
-			this._text = null;
-			this._texts = null;
+			_text = null;
+			_texts = null;
 			
 			super.destruct();
 		}

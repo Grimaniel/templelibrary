@@ -65,20 +65,20 @@ package temple.utils
 		 */
 		public function StageSettings(displayObject:DisplayObject, stageAlign:String = "TL", stageScaleMode:String = "noScale", width:Number = NaN, height:Number = NaN)
 		{
-			this._displayObject = displayObject;
-			this._stageAlign = stageAlign;
-			this._stageScaleMode = stageScaleMode;
+			_displayObject = displayObject;
+			_stageAlign = stageAlign;
+			_stageScaleMode = stageScaleMode;
 			
 			StageSettings._width = width;
 			StageSettings._height = height;
 			
-			if (this._displayObject.stage)
+			if (_displayObject.stage)
 			{
-				this.apply();
+				apply();
 			}
 			else
 			{
-				this._displayObject.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+				_displayObject.addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 			}
 		}
 		
@@ -100,20 +100,20 @@ package temple.utils
 		
 		private function apply():void
 		{
-			StageProvider.stage = this._displayObject.stage;
+			StageProvider.stage = _displayObject.stage;
 			
-			this._displayObject.stage.align = this._stageAlign;
-			this._displayObject.stage.scaleMode = this._stageScaleMode;
+			_displayObject.stage.align = _stageAlign;
+			_displayObject.stage.scaleMode = _stageScaleMode;
 			
-			if (isNaN(StageSettings._width)) StageSettings._width = this._displayObject.stage.stageWidth;
-			if (isNaN(StageSettings._height)) StageSettings._height = this._displayObject.stage.stageHeight;
+			if (isNaN(StageSettings._width)) StageSettings._width = _displayObject.stage.stageWidth;
+			if (isNaN(StageSettings._height)) StageSettings._height = _displayObject.stage.stageHeight;
 			
-			this.destruct();
+			destruct();
 		}
 
 		private function handleAddedToStage(event:Event):void
 		{
-			this.apply();
+			apply();
 		}
 
 		/**
@@ -121,10 +121,10 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			if (this._displayObject)
+			if (_displayObject)
 			{
-				this._displayObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-				this._displayObject = null;
+				_displayObject.removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+				_displayObject = null;
 			}
 			super.destruct();
 		}

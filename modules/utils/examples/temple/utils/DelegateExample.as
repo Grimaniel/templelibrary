@@ -24,7 +24,7 @@ package
 			super("Temple- DelegateExample");
 			
 			// create a delegate, you can store the delegate in a variable so you can call is later
-			var delegate:Function = Delegate.create(this.myFunction, this, ["some data"]);
+			var delegate:Function = Delegate.create(myFunction, this, ["some data"]);
 			
 			// call delegate
 			Log.info("Call delegate:", this);

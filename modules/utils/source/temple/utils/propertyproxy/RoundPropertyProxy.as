@@ -48,7 +48,7 @@ package temple.utils.propertyproxy
 		
 		public function RoundPropertyProxy(nearest:Number = 1)
 		{
-			this._nearest = nearest;
+			_nearest = nearest;
 		}
 		
 		/**
@@ -56,7 +56,7 @@ package temple.utils.propertyproxy
 		 */
 		public function get nearest():Number
 		{
-			return this._nearest;
+			return _nearest;
 		}
 		
 		/**
@@ -64,7 +64,7 @@ package temple.utils.propertyproxy
 		 */
 		public function set nearest(value:Number):void
 		{
-			this._nearest = value;
+			_nearest = value;
 		}
 		
 		/**
@@ -74,7 +74,7 @@ package temple.utils.propertyproxy
 		{
 			if (!isNaN(value))
 			{
-				value = NumberUtils.roundToNearest(value, this._nearest);
+				value = NumberUtils.roundToNearest(value, _nearest);
 			}
 			super.setValue(target, property, value, onComplete);
 		}

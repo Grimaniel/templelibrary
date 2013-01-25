@@ -58,7 +58,7 @@ package temple.utils
 	 * <p>Self-contained, set .redraw to enable graph redraw (dont forget to addChild() somewhere).</p>
 	 * <listing version="3.0">
 	 * var stat:PerformanceStat = new PerformanceStat();
-	 * this.stage.addChild(stat);
+	 * stage.addChild(stat);
 	 * </listing> 
 	 *		
 	 *	<p>also:</p>
@@ -137,86 +137,86 @@ package temple.utils
 			this.visible = visible;
 			this.x = x; 
 			this.y = y;
-			this.buttonMode = this.useHandCursor = true;
+			buttonMode = useHandCursor = true;
 
 			// create and set fields
-			this._fpsField = new TextField();
-			this._memoryField = new TextField();
-			this._memoryField.text = this._fpsField.text = "";
+			_fpsField = new TextField();
+			_memoryField = new TextField();
+			_memoryField.text = _fpsField.text = "";
 
-			this.addChild(this._fpsField);
-			this.addChild(this._memoryField);
+			addChild(_fpsField);
+			addChild(_memoryField);
 
-			this._fpsField.x = this._memoryField.x = this._fpsField.y = 3;
-			this._memoryField.y = this._fpsField.y + this._fieldHeight;
-			this._memoryField.mouseEnabled = this._fpsField.mouseEnabled = false;
+			_fpsField.x = _memoryField.x = _fpsField.y = 3;
+			_memoryField.y = _fpsField.y + _fieldHeight;
+			_memoryField.mouseEnabled = _fpsField.mouseEnabled = false;
 
-			this._graphRect = new Rectangle(3, this._memoryField.y + this._fieldHeight + 3, 135, 40);
+			_graphRect = new Rectangle(3, _memoryField.y + _fieldHeight + 3, 135, 40);
 
-			this.setFieldFormat(this._fpsField, this._graphRect.width, this._fieldHeight, 0xae6800);
-			this.setFieldFormat(this._memoryField, this._graphRect.width, this._fieldHeight, 0x0068b0);
+			setFieldFormat(_fpsField, _graphRect.width, _fieldHeight, 0xae6800);
+			setFieldFormat(_memoryField, _graphRect.width, _fieldHeight, 0x0068b0);
 
-			this._graph = new Shape();
-			this._graphics = this._graph.graphics;
-			this.addChild(this._graph);
+			_graph = new Shape();
+			_graphics = _graph.graphics;
+			addChild(_graph);
 
 			// draw background
-			this.graphics.lineStyle(1, 0x808080, .5, true);
-			this.graphics.beginFill(0xFFFFFF, .45);
-			this.graphics.drawRoundRect(0, 0, this._graphRect.width + 6, this._graphRect.bottom + 3, 4);
+			graphics.lineStyle(1, 0x808080, .5, true);
+			graphics.beginFill(0xFFFFFF, .45);
+			graphics.drawRoundRect(0, 0, _graphRect.width + 6, _graphRect.bottom + 3, 4);
 
-			this.graphics.lineStyle(0, 0x808080, .4, true);
-			this.graphics.beginFill(0xFFFFFF, .8);
-			this.graphics.drawRoundRect(this._fpsField.x, this._fpsField.y, this._fpsField.width, this._fpsField.height + this._memoryField.height, 2);
+			graphics.lineStyle(0, 0x808080, .4, true);
+			graphics.beginFill(0xFFFFFF, .8);
+			graphics.drawRoundRect(_fpsField.x, _fpsField.y, _fpsField.width, _fpsField.height + _memoryField.height, 2);
 
-			this.graphics.drawRect(this._graphRect.x, this._graphRect.y, this._graphRect.width, this._graphRect.height);
-			this.graphics.endFill();
+			graphics.drawRect(_graphRect.x, _graphRect.y, _graphRect.width, _graphRect.height);
+			graphics.endFill();
 
 			// draw a line for the target framerate
-			this.graphics.lineStyle(0, 0x808080, .4, true, LineScaleMode.NORMAL);
-			this.graphics.moveTo(this._graphRect.left, this._graphRect.y + this._graphRect.height / 2);
-			this.graphics.lineTo(this._graphRect.right, this._graphRect.y + this._graphRect.height / 2);
+			graphics.lineStyle(0, 0x808080, .4, true, LineScaleMode.NORMAL);
+			graphics.moveTo(_graphRect.left, _graphRect.y + _graphRect.height / 2);
+			graphics.lineTo(_graphRect.right, _graphRect.y + _graphRect.height / 2);
 
 
 			var currentMemoryUse:Number = System.totalMemory / 1024;
 
-			this._frameMilliSecondsHistory = Vector.<Number>([1000]);
-			this._frameMilliSecondsExtendedHistory = Vector.<Number>([1000]);
-			this._memoryKiloByteHistory = Vector.<Number>([currentMemoryUse]);
-			this._memoryKiloByteExtendedHistory = Vector.<Number>([currentMemoryUse]);
+			_frameMilliSecondsHistory = Vector.<Number>([1000]);
+			_frameMilliSecondsExtendedHistory = Vector.<Number>([1000]);
+			_memoryKiloByteHistory = Vector.<Number>([currentMemoryUse]);
+			_memoryKiloByteExtendedHistory = Vector.<Number>([currentMemoryUse]);
 
 			// already add 3 extra lineTo commands to make a full shape
-			this._drawingFillCommands = Vector.<int>([1, 2, 2, 2]);
-			this._drawGraphLineCommands = Vector.<int>([1]);
-			this._drawingLineCoordinates = new Vector.<Number>();
-			this._drawingFillCoordinates = new Vector.<Number>();
+			_drawingFillCommands = Vector.<int>([1, 2, 2, 2]);
+			_drawGraphLineCommands = Vector.<int>([1]);
+			_drawingLineCoordinates = new Vector.<Number>();
+			_drawingFillCoordinates = new Vector.<Number>();
 
 
-			this._maxHistoryItems = this._graphRect.width / 2;
+			_maxHistoryItems = _graphRect.width / 2;
 
 			// Prefill the Command and History collections so we don't need to worry
 			// about the length being too short and the need of adding new drawing commands.
-			for (this._i = 0; this._i < this._maxHistoryItems - 1; this._i++)
+			for (_i = 0; _i < _maxHistoryItems - 1; _i++)
 			{
-				this._drawGraphLineCommands.push(2);
-				this._drawingFillCommands.push(2);
+				_drawGraphLineCommands.push(2);
+				_drawingFillCommands.push(2);
 
-				this._frameMilliSecondsHistory.push(1000);
-				this._memoryKiloByteHistory.push(currentMemoryUse);
+				_frameMilliSecondsHistory.push(1000);
+				_memoryKiloByteHistory.push(currentMemoryUse);
 
-				this._frameMilliSecondsExtendedHistory.push(1000);
-				this._memoryKiloByteExtendedHistory.push(currentMemoryUse);
+				_frameMilliSecondsExtendedHistory.push(1000);
+				_memoryKiloByteExtendedHistory.push(currentMemoryUse);
 			}
 
-			this._lastUpdateTime = getTimer();
+			_lastUpdateTime = getTimer();
 
-			if (hideable && this.stage) this.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDownEvents);
+			if (hideable && stage) stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDownEvents);
 
-			if (draggable) this.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseEvents, false, -1000);
+			if (draggable) addEventListener(MouseEvent.MOUSE_DOWN, handleMouseEvents, false, -1000);
 			
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame, false, -1000);
-			this.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage, false, -1000);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage, false, -1000);
+			addEventListener(Event.ENTER_FRAME, handleEnterFrame, false, -1000);
+			addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage, false, -1000);
+			addEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage, false, -1000);
 		}
 
 		private function handleMouseEvents(event:MouseEvent):void
@@ -224,17 +224,17 @@ package temple.utils
 			switch(event.type)
 			{
 				case MouseEvent.MOUSE_DOWN:
-					this.addEventListener(MouseEvent.MOUSE_UP, handleMouseEvents, false, -1000);
+					addEventListener(MouseEvent.MOUSE_UP, handleMouseEvents, false, -1000);
 
-					this.startDrag();
-					this._mouseDownPosition = this.position;
+					startDrag();
+					_mouseDownPosition = position;
 					break;
 				case MouseEvent.MOUSE_UP:
-					this.removeEventListener(MouseEvent.MOUSE_UP, handleMouseEvents);
+					removeEventListener(MouseEvent.MOUSE_UP, handleMouseEvents);
 
-					this.stopDrag();
+					stopDrag();
 					// toggle the short history view / extended history view on click
-					if (this._mouseDownPosition.x == this.x && this._mouseDownPosition.y == this.y) this._showExtendedHistory = !this._showExtendedHistory;
+					if (_mouseDownPosition.x == x && _mouseDownPosition.y == y) _showExtendedHistory = !_showExtendedHistory;
 					break;
 			}
 		}
@@ -246,17 +246,17 @@ package temple.utils
 		private function handleKeyDownEvents(event:KeyboardEvent):void
 		{
 			// 27 == Keyboard.ESCAPE
-			if (event.shiftKey && event.keyCode == 27) this.visible = !this.visible;
+			if (event.shiftKey && event.keyCode == 27) visible = !visible;
 		}
 
 		private function handleAddedToStage(event:Event):void
 		{
-			this.drawGraph = true;
+			drawGraph = true;
 		}
 
 		private function handleRemovedFromStage(event:Event):void
 		{
-			this.drawGraph = false;
+			drawGraph = false;
 		}
 
 		/**
@@ -265,168 +265,165 @@ package temple.utils
 		 */ 
 		private function handleEnterFrame(event:Event):void
 		{
-			this._memoryKiloByteTotal += (System.totalMemory / 1024);
-			this._frameTicks++;
+			_memoryKiloByteTotal += (System.totalMemory / 1024);
+			_frameTicks++;
 			
 			var time:int = getTimer();
 
-			if (time > this._lastUpdateTime + _UPDATE_FREQUENCY_MILLISECONDS)
+			if (time > _lastUpdateTime + _UPDATE_FREQUENCY_MILLISECONDS)
 			{
 				// UPDATE HISTORY INFORMATION
 
-				this._updateTicks++;
+				_updateTicks++;
 
 				// update fps & memory
-				this._frameMilliSecondsHistory.unshift((time - this._lastUpdateTime) / this._frameTicks);
-				this._memoryKiloByteHistory.unshift(this._memoryKiloByteTotal / this._frameTicks);
+				_frameMilliSecondsHistory.unshift((time - _lastUpdateTime) / _frameTicks);
+				_memoryKiloByteHistory.unshift(_memoryKiloByteTotal / _frameTicks);
 
-				this._lastUpdateTime = time;
+				_lastUpdateTime = time;
 
-				if (this._frameMilliSecondsHistory.length > this._maxHistoryItems) this._frameMilliSecondsHistory.length = this._memoryKiloByteHistory.length = this._maxHistoryItems;
+				if (_frameMilliSecondsHistory.length > _maxHistoryItems) _frameMilliSecondsHistory.length = _memoryKiloByteHistory.length = _maxHistoryItems;
 
 				// check if it is time to save the current state for the extended graph
-				if (this._updateTicks >= 10)
+				if (_updateTicks >= 10)
 				{
-					this._frameMilliSecondsExtendedHistory.unshift(this._frameMilliSecondsHistory[0]);
-					this._memoryKiloByteExtendedHistory.unshift(this._memoryKiloByteHistory[0]);
+					_frameMilliSecondsExtendedHistory.unshift(_frameMilliSecondsHistory[0]);
+					_memoryKiloByteExtendedHistory.unshift(_memoryKiloByteHistory[0]);
 
-					if (this._frameMilliSecondsExtendedHistory.length > this._maxHistoryItems) this._frameMilliSecondsExtendedHistory.length = this._memoryKiloByteExtendedHistory.length = this._maxHistoryItems;
+					if (_frameMilliSecondsExtendedHistory.length > _maxHistoryItems) _frameMilliSecondsExtendedHistory.length = _memoryKiloByteExtendedHistory.length = _maxHistoryItems;
 
-					this._updateTicks = 0;
+					_updateTicks = 0;
 				}
 
 				// calculate min/max
-				this._frameMilliMin = this._frameMilliMax = this._frameMilliSecondsHistory[0];
-				this._memoryKiloByteMin = this._memoryKiloByteMax = this._memoryKiloByteHistory[0];
+				_frameMilliMin = _frameMilliMax = _frameMilliSecondsHistory[0];
+				_memoryKiloByteMin = _memoryKiloByteMax = _memoryKiloByteHistory[0];
 
 				// Since both the framerate history and the memory history have
 				// the same length we can calculate the min and max in the same loop
-				for (this._i = 0;this._i < _maxHistoryItems; this._i++)
+				for (_i = 0;_i < _maxHistoryItems; _i++)
 				{
-					this._frameMilliMin = this._frameMilliSecondsHistory[this._i] < this._frameMilliMin ? this._frameMilliSecondsHistory[this._i] : this._frameMilliMin;
-					this._frameMilliMax = this._frameMilliSecondsHistory[this._i] > this._frameMilliMax ? this._frameMilliSecondsHistory[this._i] : this._frameMilliMax;
+					_frameMilliMin = _frameMilliSecondsHistory[_i] < _frameMilliMin ? _frameMilliSecondsHistory[_i] : _frameMilliMin;
+					_frameMilliMax = _frameMilliSecondsHistory[_i] > _frameMilliMax ? _frameMilliSecondsHistory[_i] : _frameMilliMax;
 
-					this._memoryKiloByteMin = this._memoryKiloByteHistory[this._i] < _memoryKiloByteMin ? this._memoryKiloByteHistory[this._i] : this._memoryKiloByteMin;
-					this._memoryKiloByteMax = this._memoryKiloByteHistory[this._i] > this._memoryKiloByteMax ? this._memoryKiloByteHistory[this._i] : _memoryKiloByteMax;
+					_memoryKiloByteMin = _memoryKiloByteHistory[_i] < _memoryKiloByteMin ? _memoryKiloByteHistory[_i] : _memoryKiloByteMin;
+					_memoryKiloByteMax = _memoryKiloByteHistory[_i] > _memoryKiloByteMax ? _memoryKiloByteHistory[_i] : _memoryKiloByteMax;
 
-					this._avarageKiloByteMemory += this._showExtendedHistory ? this._memoryKiloByteExtendedHistory[this._i] : this._memoryKiloByteHistory[this._i];
+					_avarageKiloByteMemory += _showExtendedHistory ? _memoryKiloByteExtendedHistory[_i] : _memoryKiloByteHistory[_i];
 				}
 
-				this._avarageKiloByteMemory = this._avarageKiloByteMemory / _maxHistoryItems;
+				_avarageKiloByteMemory = _avarageKiloByteMemory / _maxHistoryItems;
 
 				// reset these
-				this._memoryKiloByteTotal = 0;
-				this._frameTicks = 0;
-
-
+				_memoryKiloByteTotal = 0;
+				_frameTicks = 0;
 
 				// UPDATE GUI
 
 				// update the current info
-				this._fpsField.text = "FPS: " + String(int(1000 / this._frameMilliSecondsHistory[0] * 100) / 100) + "  ( " + String(int(1000 / this._frameMilliMax * 100) / 100) + " / " + String(int(1000 / this._frameMilliMin * 100) / 100) + " )";
-				this._memoryField.text = "MB:  " + String(int(_memoryKiloByteHistory[0] / 1024 * 100) / 100) + "  ( " + String(int(this._memoryKiloByteMin / 1024 * 100) / 100) + " / " + String(int(this._memoryKiloByteMax / 1024 * 100) / 100) + " )";
+				_fpsField.text = "FPS: " + (1000 / _frameMilliSecondsHistory[0]).toFixed(2) + "  (" + (1000 / _frameMilliMax).toFixed(1) + "/" + (1000 / _frameMilliMin).toFixed(1) + ")";
+				_memoryField.text = "MB:  " + (_memoryKiloByteHistory[0] / 1024).toFixed(2) + "  (" + (_memoryKiloByteMin / 1024).toFixed(1) + "/" + (_memoryKiloByteMax / 1024).toFixed(1) + ")";
 
-
-				if (this._drawGraph)
+				if (_drawGraph)
 				{
 					// prepare the graph
-					this._graphics.clear();
+					_graphics.clear();
 
-					this._dx = this._graphRect.width / (_maxHistoryItems - 1);
+					_dx = _graphRect.width / (_maxHistoryItems - 1);
 
 					// Memory Usage Graph
 
-					this._dy = this._graphRect.height / (this._showExtendedHistory ? _EXTENDED_GRAPH_MEMORY_HEIGHT : _GRAPH_MEMORY_HEIGHT);
+					_dy = _graphRect.height / (_showExtendedHistory ? _EXTENDED_GRAPH_MEMORY_HEIGHT : _GRAPH_MEMORY_HEIGHT);
 
 					// set the current history data according to the viewing mode
-					this._currentHistoryData = this._showExtendedHistory ? this._memoryKiloByteExtendedHistory : this._memoryKiloByteHistory;
+					_currentHistoryData = _showExtendedHistory ? _memoryKiloByteExtendedHistory : _memoryKiloByteHistory;
 
-					this._tmpY = this._graphRect.bottom - this._graphRect.height / 2 - (this._dy * (this._currentHistoryData[0] - this._avarageKiloByteMemory));
+					_tmpY = _graphRect.bottom - _graphRect.height / 2 - (_dy * (_currentHistoryData[0] - _avarageKiloByteMemory));
 
-					if (this._tmpY > this._graphRect.bottom)
+					if (_tmpY > _graphRect.bottom)
 					{
-						this._tmpY = this._graphRect.bottom;
+						_tmpY = _graphRect.bottom;
 					}
-					else if (this._tmpY < this._graphRect.top)
+					else if (_tmpY < _graphRect.top)
 					{
-						this._tmpY = this._graphRect.top;
+						_tmpY = _graphRect.top;
 					}
 
-					this._drawingLineCoordinates.length = this._drawingFillCoordinates.length = 0;
-					this._drawingLineCoordinates.push(this._graphRect.right, this._tmpY);
-					this._drawingFillCoordinates.push(this._graphRect.right, this._tmpY);
+					_drawingLineCoordinates.length = _drawingFillCoordinates.length = 0;
+					_drawingLineCoordinates.push(_graphRect.right, _tmpY);
+					_drawingFillCoordinates.push(_graphRect.right, _tmpY);
 
 					// calculate the current Memory history drawing coordinates
-					for (this._i = 1;this._i < _maxHistoryItems;this._i++)
+					for (_i = 1;_i < _maxHistoryItems;_i++)
 					{
-						this._tmpY = this._graphRect.bottom - this._graphRect.height / 2 - (this._dy * (this._currentHistoryData[this._i] - this._avarageKiloByteMemory));
+						_tmpY = _graphRect.bottom - _graphRect.height / 2 - (_dy * (_currentHistoryData[_i] - _avarageKiloByteMemory));
 
-						if (this._tmpY > this._graphRect.bottom)
+						if (_tmpY > _graphRect.bottom)
 						{
-							this._tmpY = this._graphRect.bottom;
+							_tmpY = _graphRect.bottom;
 						}
-						else if (this._tmpY < this._graphRect.top)
+						else if (_tmpY < _graphRect.top)
 						{
-							this._tmpY = this._graphRect.top;
+							_tmpY = _graphRect.top;
 						}
 
-						this._drawingLineCoordinates.push(this._graphRect.right - this._dx * this._i, this._tmpY);
-						this._drawingFillCoordinates.push(this._graphRect.right - this._dx * this._i, this._tmpY);
+						_drawingLineCoordinates.push(_graphRect.right - _dx * _i, _tmpY);
+						_drawingFillCoordinates.push(_graphRect.right - _dx * _i, _tmpY);
 					}
 
 					// complete the fill shape coordinates
-					this._tmpY = this._graphRect.bottom - this._graphRect.height / 2 - (this._dy * (this._currentHistoryData[0] - this._avarageKiloByteMemory));
-					this._drawingFillCoordinates.push(this._graphRect.left, this._graphRect.bottom, this._graphRect.right, this._graphRect.bottom, this._graphRect.right, this._tmpY);
+					_tmpY = _graphRect.bottom - _graphRect.height / 2 - (_dy * (_currentHistoryData[0] - _avarageKiloByteMemory));
+					_drawingFillCoordinates.push(_graphRect.left, _graphRect.bottom, _graphRect.right, _graphRect.bottom, _graphRect.right, _tmpY);
 
-					this._graphics.lineStyle();
-					this._graphics.beginFill(this._showExtendedHistory ? 0x5a9ac6 : 0x0090f5, .2);
-					this._graphics.drawPath(this._drawingFillCommands, this._drawingFillCoordinates);
-					this._graphics.endFill();
+					_graphics.lineStyle();
+					_graphics.beginFill(_showExtendedHistory ? 0x5a9ac6 : 0x0090f5, .2);
+					_graphics.drawPath(_drawingFillCommands, _drawingFillCoordinates);
+					_graphics.endFill();
 
-					this._graphics.lineStyle(1, this._showExtendedHistory ? 0x5a9ac6 : 0x0090f5, 1, false, LineScaleMode.NORMAL);
-					this._graphics.drawPath(this._drawGraphLineCommands, this._drawingLineCoordinates);
+					_graphics.lineStyle(1, _showExtendedHistory ? 0x5a9ac6 : 0x0090f5, 1, false, LineScaleMode.NORMAL);
+					_graphics.drawPath(_drawGraphLineCommands, _drawingLineCoordinates);
 
 
 					// FPS Stats Graph
 
 					// set the current history data according to the viewing mode
-					this._currentHistoryData = this._showExtendedHistory ? this._frameMilliSecondsExtendedHistory : this._frameMilliSecondsHistory;
+					_currentHistoryData = _showExtendedHistory ? _frameMilliSecondsExtendedHistory : _frameMilliSecondsHistory;
 
 					// Calculate the FPS history line coordinates
-					this._dy = this._graphRect.height / (this.stage.frameRate * 2);
-					this._tmpY = this._graphRect.bottom - (this._dy * (1000 / this._currentHistoryData[0]));
+					_dy = _graphRect.height / (stage.frameRate * 2);
+					_tmpY = _graphRect.bottom - (_dy * (1000 / _currentHistoryData[0]));
 
-					if (this._tmpY > this._graphRect.bottom)
+					if (_tmpY > _graphRect.bottom)
 					{
-						this._tmpY = this._graphRect.bottom;
+						_tmpY = _graphRect.bottom;
 					}
-					else if (this._tmpY < this._graphRect.top)
+					else if (_tmpY < _graphRect.top)
 					{
-						this._tmpY = this._graphRect.top;
+						_tmpY = _graphRect.top;
 					}
 
-					this._drawingLineCoordinates.length = 0;
-					this._drawingLineCoordinates.push(this._graphRect.right, this._tmpY);
+					_drawingLineCoordinates.length = 0;
+					_drawingLineCoordinates.push(_graphRect.right, _tmpY);
 
-					for (this._i = 1;this._i < _maxHistoryItems;this._i++)
+					for (_i = 1;_i < _maxHistoryItems;_i++)
 					{
-						this._tmpY = this._graphRect.bottom - (this._dy * (1000 / this._currentHistoryData[this._i]));
+						_tmpY = _graphRect.bottom - (_dy * (1000 / _currentHistoryData[_i]));
 
-						if (this._tmpY > this._graphRect.bottom)
+						if (_tmpY > _graphRect.bottom)
 						{
-							this._tmpY = this._graphRect.bottom;
+							_tmpY = _graphRect.bottom;
 						}
-						else if (this._tmpY < this._graphRect.top)
+						else if (_tmpY < _graphRect.top)
 						{
-							this._tmpY = this._graphRect.top;
+							_tmpY = _graphRect.top;
 						}
 
-						this._drawingLineCoordinates.push(this._graphRect.right - this._i * this._dx, this._tmpY);
+						_drawingLineCoordinates.push(_graphRect.right - _i * _dx, _tmpY);
 					}
 
 					// draw current fps history
-					this._graphics.lineStyle(0, this._showExtendedHistory ? 0xbe8839 : 0xF59200, 1, false, LineScaleMode.NORMAL);
-					this._graphics.drawPath(this._drawGraphLineCommands, this._drawingLineCoordinates);
+					_graphics.lineStyle(0, _showExtendedHistory ? 0xbe8839 : 0xF59200, 1, false, LineScaleMode.NORMAL);
+					_graphics.drawPath(_drawGraphLineCommands, _drawingLineCoordinates);
 				}
 			}
 		}
@@ -436,19 +433,19 @@ package temple.utils
 		 */
 		public function resetGraph(chop:int = -1):void
 		{
-			if (chop <= 0) chop = this._maxHistoryItems;
+			if (chop <= 0) chop = _maxHistoryItems;
 
-			var chopLength:int = this._maxHistoryItems - chop;
+			var chopLength:int = _maxHistoryItems - chop;
 			var currentMemory:Number = System.totalMemory / 1024;
 
 			if (chopLength < 0) chopLength = 0;
 
-			for (this._i = chopLength; this._i < this._maxHistoryItems; this._i++)
+			for (_i = chopLength; _i < _maxHistoryItems; _i++)
 			{
-				this._frameMilliSecondsHistory[this._i] = 1000;
-				this._frameMilliSecondsExtendedHistory[this._i] = 1000;
-				this._memoryKiloByteHistory[this._i] = currentMemory;
-				this._memoryKiloByteExtendedHistory[this._i] = currentMemory;
+				_frameMilliSecondsHistory[_i] = 1000;
+				_frameMilliSecondsExtendedHistory[_i] = 1000;
+				_memoryKiloByteHistory[_i] = currentMemory;
+				_memoryKiloByteExtendedHistory[_i] = currentMemory;
 			}
 		}
 
@@ -470,12 +467,12 @@ package temple.utils
 		 */
 		public function set drawGraph(value:Boolean):void
 		{
-			this._drawGraph = value;
+			_drawGraph = value;
 		}
 		
 		override public function set visible(value:Boolean):void
 		{
-			super.visible = this.drawGraph = value;
+			super.visible = drawGraph = value;
 		}
 
 		/**
@@ -483,73 +480,73 @@ package temple.utils
 		 */
 		override public function destruct():void
 		{
-			if (this.stage) this.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDownEvents);
+			if (stage) stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDownEvents);
 
-			if (this._drawGraphLineCommands)
+			if (_drawGraphLineCommands)
 			{
-				this._drawGraphLineCommands.length = 0;
-				this._drawGraphLineCommands = null;
+				_drawGraphLineCommands.length = 0;
+				_drawGraphLineCommands = null;
 			}
-			if (this._drawingFillCommands)
+			if (_drawingFillCommands)
 			{
-				this._drawingFillCommands.length = 0;
-				this._drawingFillCommands = null;
+				_drawingFillCommands.length = 0;
+				_drawingFillCommands = null;
 			}
-			if (this._drawingLineCoordinates)
+			if (_drawingLineCoordinates)
 			{
-				this._drawingLineCoordinates.length = 0;
-				this._drawingLineCoordinates = null;
+				_drawingLineCoordinates.length = 0;
+				_drawingLineCoordinates = null;
 			}
-			if (this._drawingFillCoordinates)
+			if (_drawingFillCoordinates)
 			{
-				this._drawingFillCoordinates.length = 0;
-				this._drawingFillCoordinates = null;
+				_drawingFillCoordinates.length = 0;
+				_drawingFillCoordinates = null;
 			}
-			if (this._currentHistoryData)
+			if (_currentHistoryData)
 			{
-				this._currentHistoryData.length = 0;
-				this._currentHistoryData = null;
+				_currentHistoryData.length = 0;
+				_currentHistoryData = null;
 			}
-			if (this._frameMilliSecondsHistory)
+			if (_frameMilliSecondsHistory)
 			{
-				this._frameMilliSecondsHistory.length = 0;
-				this._frameMilliSecondsHistory = null;
+				_frameMilliSecondsHistory.length = 0;
+				_frameMilliSecondsHistory = null;
 			}
-			if (this._memoryKiloByteHistory)
+			if (_memoryKiloByteHistory)
 			{
-				this._memoryKiloByteHistory.length = 0;
-				this._memoryKiloByteHistory = null;
+				_memoryKiloByteHistory.length = 0;
+				_memoryKiloByteHistory = null;
 			}
-			if (this._frameMilliSecondsExtendedHistory)
+			if (_frameMilliSecondsExtendedHistory)
 			{
-				this._frameMilliSecondsExtendedHistory.length = 0;
-				this._frameMilliSecondsExtendedHistory = null;
+				_frameMilliSecondsExtendedHistory.length = 0;
+				_frameMilliSecondsExtendedHistory = null;
 			}
-			if (this._memoryKiloByteExtendedHistory)
+			if (_memoryKiloByteExtendedHistory)
 			{
-				this._memoryKiloByteExtendedHistory.length = 0;
-				this._memoryKiloByteExtendedHistory = null;
+				_memoryKiloByteExtendedHistory.length = 0;
+				_memoryKiloByteExtendedHistory = null;
 			}
 
-			this._graph = null;
-			this._mouseDownPosition = null;
-			this._fpsField = null;
-			this._graphRect = null;
-			this._memoryField = null;
-			this._graphics = null;
+			_graph = null;
+			_mouseDownPosition = null;
+			_fpsField = null;
+			_graphRect = null;
+			_memoryField = null;
+			_graphics = null;
 
-			this._dx = NaN;
-			this._dy = NaN;
-			this._tmpY = NaN;
-			this._fieldHeight = NaN;
-			this._memoryKiloByteTotal = NaN;
-			this._memoryKiloByteMin = NaN;
-			this._frameMilliMax = NaN;
-			this._memoryKiloByteMax = NaN;
-			this._maxHistoryItems = NaN;
-			this._frameMilliTotal = NaN;
-			this._frameMilliMin = NaN;
-			this._avarageKiloByteMemory = NaN;
+			_dx = NaN;
+			_dy = NaN;
+			_tmpY = NaN;
+			_fieldHeight = NaN;
+			_memoryKiloByteTotal = NaN;
+			_memoryKiloByteMin = NaN;
+			_frameMilliMax = NaN;
+			_memoryKiloByteMax = NaN;
+			_maxHistoryItems = NaN;
+			_frameMilliTotal = NaN;
+			_frameMilliMin = NaN;
+			_avarageKiloByteMemory = NaN;
 
 			super.destruct();
 		}

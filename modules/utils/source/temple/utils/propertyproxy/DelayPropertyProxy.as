@@ -49,7 +49,7 @@ package temple.utils.propertyproxy
 		
 		public function DelayPropertyProxy(milliseconds:Number = 500)
 		{
-			this._milliseconds = milliseconds;
+			_milliseconds = milliseconds;
 		}
 		
 		/**
@@ -57,7 +57,7 @@ package temple.utils.propertyproxy
 		 */
 		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			this._timeOut = new TimeOut(super.setValue, this._milliseconds, [target, property, value, onComplete]);
+			_timeOut = new TimeOut(super.setValue, _milliseconds, [target, property, value, onComplete]);
 		}
 
 		/**
@@ -65,8 +65,8 @@ package temple.utils.propertyproxy
 		 */
 		override public function cancel():Boolean
 		{
-			if (this._timeOut) this._timeOut.destruct();
-			this._timeOut = null;
+			if (_timeOut) _timeOut.destruct();
+			_timeOut = null;
 			return true;
 		}
 		
@@ -75,7 +75,7 @@ package temple.utils.propertyproxy
 		 */
 		override public function destruct():void
 		{
-			this.cancel();
+			cancel();
 			super.destruct();
 		}
 	}

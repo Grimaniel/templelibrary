@@ -53,7 +53,7 @@ package temple.utils.propertyproxy
 		 */
 		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
-			this.logInfo(target + "." + property + ": " + value);
+			logInfo(target + "." + property + ": " + value);
 			super.setValue(target, property, value, onComplete);
 		}
 	}

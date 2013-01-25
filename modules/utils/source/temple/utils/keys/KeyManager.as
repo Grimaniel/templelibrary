@@ -63,7 +63,7 @@ package temple.utils.keys
 		{
 			if (_INSTANCE) throwError(new TempleError(this, "Singleton, don't call constructor directly"));
 			
-			this._downKeys = {};
+			_downKeys = {};
 		}
 		
 		/**
@@ -109,7 +109,7 @@ package temple.utils.keys
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -117,36 +117,36 @@ package temple.utils.keys
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
-			if (this.debug) this.logDebug("debug enabled");
+			_debug = value;
+			if (debug) logDebug("debug enabled");
 		}
 
 		private function init(stage:Stage):void
 		{
-			if (this._stage) return;
+			if (_stage) return;
 			if (stage == null)
 			{
-				this.logError("stage can not be null");
+				logError("stage can not be null");
 				return;
 			}
 			
-			this._stage = stage;
-			this._stage.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown, true, int.MAX_VALUE);
-			this._stage.addEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp, true, int.MAX_VALUE);
-			this._stage.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown, false, int.MAX_VALUE);
-			this._stage.addEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp, false, int.MAX_VALUE);
+			_stage = stage;
+			_stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown, true, int.MAX_VALUE);
+			_stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyUp, true, int.MAX_VALUE);
+			_stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown, false, int.MAX_VALUE);
+			_stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyUp, false, int.MAX_VALUE);
 		}
 		
 		private function handleKeyDown(event:KeyboardEvent):void 
 		{
-			if (this._debug) this.logDebug("KeyDown: " + event);
-			this._downKeys[event.keyCode] = true;
+			if (_debug) logDebug("KeyDown: " + event);
+			_downKeys[event.keyCode] = true;
 		}
 
 		private function handleKeyUp(event:KeyboardEvent):void 
 		{
-			if (this._debug) this.logDebug("KeyUp: " + event);
-			delete this._downKeys[event.keyCode];
+			if (_debug) logDebug("KeyUp: " + event);
+			delete _downKeys[event.keyCode];
 		}
 
 		/**
@@ -154,15 +154,15 @@ package temple.utils.keys
 		 */
 		override public function destruct():void 
 		{
-			if (this._stage)
+			if (_stage)
 			{
-				this._stage.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown, true);
-				this._stage.removeEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp, true);
-				this._stage.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown, false);
-				this._stage.removeEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp, false);
-				this._stage = null;
+				_stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown, true);
+				_stage.removeEventListener(KeyboardEvent.KEY_UP, handleKeyUp, true);
+				_stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown, false);
+				_stage.removeEventListener(KeyboardEvent.KEY_UP, handleKeyUp, false);
+				_stage = null;
 			}
-			this._downKeys = Destructor.destruct(this._downKeys);
+			_downKeys = Destructor.destruct(_downKeys);
 			super.destruct();
 		}
 

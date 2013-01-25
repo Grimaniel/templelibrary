@@ -8,9 +8,10 @@ package
 	 * @param object object to dump
 	 * @param depth indicates the recursive factor
 	 * @param duplicates indicates if duplicate objects should be dumped again
-	 * @param constants indicates if constants will be included (true) or not (false)
-	 * @param methods indicates if methods will be included (true) or not (false)
-	 * @param dates indicates if a Date will be fully dumped (including all properties) (true) or only as a simple String (false)
+	 * @param constants indicates if constants will be included (<code>true</code>) or not (<code>false</code>)
+	 * @param methods indicates if methods will be included (<code>true</code>) or not (<code>false</code>)
+	 * @param dates indicates if a <code>Date</code> will be fully dumped (including all properties) (true) or only as a simple String (false)
+	 * @param skipEmpty is set to <code>true</code> properties with a value of <code>null</code> or <code>NaN</code> will be skipped
 	 * 
 	 * @return the object tree as String
 	 * 
@@ -23,9 +24,9 @@ package
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public function dump(object:Object, depth:uint = 3, duplicates:Boolean = true, constants:Boolean = false, namespaces:Boolean = false, methods:Boolean = false, dates:Boolean = false):String
+	public function dump(object:Object, depth:uint = 3, duplicates:Boolean = true, constants:Boolean = false, namespaces:Boolean = false, methods:Boolean = false, dates:Boolean = false, skipEmpty:Boolean = false):String
 	{
-		return Functions.dump(object, depth, duplicates ? null : new Dictionary(true), constants, namespaces, methods, dates, false, "");
+		return Functions.dump(object, depth, duplicates ? null : new Dictionary(true), constants, namespaces, methods, dates, skipEmpty, false, "");
 	}
 }
 import temple.utils.types.ObjectUtils;
@@ -40,7 +41,7 @@ import flash.utils.getQualifiedClassName;
 
 class Functions
 {
-	internal static function dump(object:Object, depth:uint, objects:Dictionary, constants:Boolean, namespaces:Boolean, methods:Boolean, dates:Boolean, isInited:Boolean, tabs:String):String
+	internal static function dump(object:Object, depth:uint, objects:Dictionary, constants:Boolean, namespaces:Boolean, methods:Boolean, dates:Boolean, skipEmpty:Boolean, isInited:Boolean, tabs:String):String
 	{
 		var output:String = "";
 		var openChar:String;
@@ -141,7 +142,7 @@ class Functions
 		{
 			var vardata:ObjectVariableData = variables[i] as ObjectVariableData;
 
-			if (vardata.name == "textSnapshot" || vardata.name == null  || !namespaces && keys[vardata.name]) continue;
+			if (vardata.name == null  || !namespaces && keys[vardata.name] === true) continue;
 
 			keys[vardata.name] = true;
 
@@ -162,10 +163,14 @@ class Functions
 				variable = e.message;
 			}
 			
+			var type:String = typeof(variable);
+			
+			if (skipEmpty && (variable === null || variable != variable)) continue;
+			
 			output += "\n" + tabs + (vardata.uri ? "[" + vardata.uri + "]::" : "") + vardata.name;
 
 			// determine what's inside...
-			switch (typeof(variable))
+			switch (type)
 			{
 				case ObjectType.STRING:
 				{
@@ -183,7 +188,7 @@ class Functions
 
 							output += ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")";
 							if (variable.length) output += "\n" + tabs + "[";
-							output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, isInited, tabs);
+							output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, skipEmpty, isInited, tabs);
 							if (variable.length) output += "\n" + tabs + "]";
 						}
 						else
@@ -216,7 +221,7 @@ class Functions
 								}
 
 								output += "\n" + tabs + "\u007B";
-								output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, isInited, tabs);
+								output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, skipEmpty, isInited, tabs);
 								output += "\n" + tabs + "}";
 							}
 						}
