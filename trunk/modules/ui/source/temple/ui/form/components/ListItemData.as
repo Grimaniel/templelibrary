@@ -52,9 +52,9 @@ package temple.ui.form.components
 	
 		public function ListItemData(data:* = null, label:String = null) 
 		{
-			this._data = data;
-			this._label = label;
-			this.toStringProps.push('label', 'data');
+			_data = data;
+			_label = label;
+			toStringProps.push('label', 'data');
 		}
 		
 		/**
@@ -62,7 +62,7 @@ package temple.ui.form.components
 		 */
 		public function get data() : *
 		{
-			return this._data;
+			return _data;
 		}
 
 		/**
@@ -71,7 +71,7 @@ package temple.ui.form.components
 		[Inspectable(type="String")]
 		public function set data(value : *) : void
 		{
-			this._data = value;
+			_data = value;
 		}
 
 		/**
@@ -79,7 +79,7 @@ package temple.ui.form.components
 		 */
 		public function get label() : String
 		{
-			return this._label;
+			return _label;
 		}
 
 		/**
@@ -88,7 +88,7 @@ package temple.ui.form.components
 		[Inspectable(type="String")]
 		public function set label(value : String) : void
 		{
-			this._label = value;
+			_label = value;
 		}
 	
 		/**
@@ -96,9 +96,9 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void 
 		{
-			this._data = null;
-			this._label = null;
-			this.row = null;
+			_data = null;
+			_label = null;
+			row = null;
 			
 			super.destruct();
 		}

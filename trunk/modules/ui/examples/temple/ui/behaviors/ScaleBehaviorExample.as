@@ -32,17 +32,17 @@ package
 			super("Temple - ScaleBehaviorExample");
 			
 			// Create a new Sprite
-			this._box = this.createBox(250, 150, 0xEEEEEE, 0xCCCCCC);
-			this._box.x = 10;
-			this._box.y = 80;
-			this._box.buttonMode = true;
-			this.addChild(this._box);
+			_box = createBox(250, 150, 0xEEEEEE, 0xCCCCCC);
+			_box.x = 10;
+			_box.y = 80;
+			_box.buttonMode = true;
+			addChild(_box);
 			
 			// Create the handle, place it bottom-right, put it inside the box
-			this._handle = this.createBox(15, 15, 0xD0DEEC, 0x99A6C4);
-			this._handle.buttonMode = true;
-			this.positionHandle();
-			this.addChild(this._handle);
+			_handle = createBox(15, 15, 0xD0DEEC, 0x99A6C4);
+			_handle.buttonMode = true;
+			positionHandle();
+			addChild(_handle);
 			
 			// add ScaleBehavior to make the box scalable
 			var scaleBehavior:ScaleBehavior = new ScaleBehavior(_box, _handle, null, true);
@@ -57,18 +57,18 @@ package
 			label.x = label.y = 10;
 			label.selectable = label.mouseEnabled = false;
 			label.text = "Scale the box; drag the blue handle";
-			this.addChild(label);
+			addChild(label);
 		}
 
 		private function handleScaleBehaviorChange(event:ScaleBehaviorEvent):void
 		{
-			this.positionHandle();
+			positionHandle();
 		}
 
 		private function positionHandle():void
 		{
-			this._handle.x = this._box.x + _box.width - _handle.width;
-			this._handle.y = this._box.y + _box.height - _handle.height;
+			_handle.x = _box.x + _box.width - _handle.width;
+			_handle.y = _box.y + _box.height - _handle.height;
 		}
 		
 		private function createBox(width:uint, height:uint, backgroundColor:uint, borderColor:uint):Sprite

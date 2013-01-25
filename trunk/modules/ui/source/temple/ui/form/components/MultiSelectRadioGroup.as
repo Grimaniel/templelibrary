@@ -58,7 +58,7 @@ package temple.ui.form.components
 		{
 			if (StageProvider.stage) KeyManager.init(StageProvider.stage);
 			
-			this._selectedButtons = new Array();
+			_selectedButtons = new Array();
 		}
 		
 		/**
@@ -68,10 +68,10 @@ package temple.ui.form.components
 		{
 			var value:Array = [];
 			
-			var leni:int = this._selectedButtons.length;
+			var leni:int = _selectedButtons.length;
 			for (var i:int = 0; i < leni; i++)
 			{
-				if (this._selectedButtons[i]) value.push(IHasValue(this._selectedButtons[i]).value);
+				if (_selectedButtons[i]) value.push(IHasValue(_selectedButtons[i]).value);
 			}
 			return value;
 		}
@@ -82,27 +82,27 @@ package temple.ui.form.components
 			
 			if (ISelectable(event.target).selected)
 			{
-				if (this._selected != event.target)
+				if (_selected != event.target)
 				{
-					this._selected = ISelectable(event.target);
+					_selected = ISelectable(event.target);
 					
 					if (!(KeyManager.isDown(KeyCode.CONTROL) || KeyManager.isDown(KeyCode.SHIFT)))
 					{
-						for each (var button : ISelectable in this._selectedButtons)
+						for each (var button : ISelectable in _selectedButtons)
 						{
 							if (button) button.selected = false;
 						}
-						this._selectedButtons.length = 0;
+						_selectedButtons.length = 0;
 					}
-					this._selectedButtons.push(this._selected);
+					_selectedButtons.push(_selected);
 					
-					if (this._dispatchChangeEvent) this.dispatchEvent(new Event(Event.CHANGE));
+					if (_dispatchChangeEvent) dispatchEvent(new Event(Event.CHANGE));
 				}
 			}
-			else if (this._selected == event.target)
+			else if (_selected == event.target)
 			{
-				this._selected = null;
-				if (this._dispatchChangeEvent) this.dispatchEvent(new Event(Event.CHANGE));
+				_selected = null;
+				if (_dispatchChangeEvent) dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 
@@ -111,10 +111,10 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			if (this._selectedButtons)
+			if (_selectedButtons)
 			{
-				this._selectedButtons.length = 0;
-				this._selectedButtons = null;
+				_selectedButtons.length = 0;
+				_selectedButtons = null;
 			}
 			
 			super.destruct();

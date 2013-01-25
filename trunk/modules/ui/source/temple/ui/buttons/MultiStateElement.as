@@ -67,10 +67,10 @@ package temple.ui.buttons
 		{
 			super();
 			
-			this.stop();
+			stop();
 			
-			if (this.totalFrames > 1) this._timelineBehavior = new ButtonTimelineBehavior(this);
-			this._stateBehavior = new ButtonStateBehavior(this);
+			if (totalFrames > 1) _timelineBehavior = new ButtonTimelineBehavior(this);
+			_stateBehavior = new ButtonStateBehavior(this);
 		}
 		
 		/**
@@ -78,7 +78,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonTimelineBehavior():ButtonTimelineBehavior
 		{
-			return this._timelineBehavior;
+			return _timelineBehavior;
 		}
 
 		/**
@@ -86,7 +86,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonStateBehavior():ButtonStateBehavior
 		{
-			return this._stateBehavior;
+			return _stateBehavior;
 		}
 
 		/**
@@ -98,7 +98,7 @@ package temple.ui.buttons
 		 */
 		public function get playMode():ButtonTimelinePlayMode
 		{
-			return this._timelineBehavior ? this._timelineBehavior.playMode : null;
+			return _timelineBehavior ? _timelineBehavior.playMode : null;
 		}
 
 		/**
@@ -107,7 +107,7 @@ package temple.ui.buttons
 		[Inspectable(name="PlayMode", type="String", defaultValue="reversed", enumeration="reversed,continue,immediately")]
 		public function set playMode(value:*):void
 		{
-			if (this._timelineBehavior) this._timelineBehavior.playMode = value;
+			if (_timelineBehavior) _timelineBehavior.playMode = value;
 		}
 		
 		/**
@@ -115,8 +115,8 @@ package temple.ui.buttons
 		 */
 		override public function destruct():void
 		{
-			this._timelineBehavior = null;
-			this._stateBehavior = null;
+			_timelineBehavior = null;
+			_stateBehavior = null;
 			
 			super.destruct();
 		}

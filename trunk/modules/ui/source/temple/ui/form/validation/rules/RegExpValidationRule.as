@@ -58,9 +58,9 @@ package temple.ui.form.validation.rules
 		{
 			super(target);
 			
-			this._regExp = expression;
-			this._isValidIfMatch = validIfMatch;
-			this._optional = optional;
+			_regExp = expression;
+			_isValidIfMatch = validIfMatch;
+			_optional = optional;
 		}
 
 		/**
@@ -68,10 +68,10 @@ package temple.ui.form.validation.rules
 		 */
 		public function isValid():Boolean 
 		{
-			var value:String = this.target.value as String;
-			if (this._optional && !value) return true;
-			var testResult:Boolean = this._regExp.test(value);
-			return this._isValidIfMatch ? testResult : !testResult;
+			var value:String = target.value as String;
+			if (_optional && !value) return true;
+			var testResult:Boolean = _regExp.test(value);
+			return _isValidIfMatch ? testResult : !testResult;
 		}
 		
 		/**
@@ -79,7 +79,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function get optional():Boolean
 		{
-			return this._optional;
+			return _optional;
 		}
 		
 		/**
@@ -87,7 +87,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function set optional(value:Boolean):void
 		{
-			this._optional = value;
+			_optional = value;
 		}
 
 		/**
@@ -95,7 +95,7 @@ package temple.ui.form.validation.rules
 		 */
 		override public function destruct():void 
 		{
-			this._regExp = null;
+			_regExp = null;
 			
 			super.destruct();
 		}

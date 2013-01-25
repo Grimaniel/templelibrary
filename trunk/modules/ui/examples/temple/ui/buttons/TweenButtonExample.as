@@ -54,7 +54,7 @@ package
 			// set the time (in seconds) it should take to go to the down state
 			button.downDuration = 1;
 			
-			this.addChild(button);
+			addChild(button);
 		}
 	}
 }

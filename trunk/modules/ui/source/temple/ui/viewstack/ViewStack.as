@@ -59,22 +59,22 @@ package temple.ui.viewstack
 		public function ViewStack()
 		{
 			// hide all, except 0
-			var leni:int = this.numChildren;
+			var leni:int = numChildren;
 			for (var i:int = 0; i < leni ; i++)
 			{
-				this.getChildAt(i).visible = i == this._selectedIndex;
+				getChildAt(i).visible = i == _selectedIndex;
 			}
-			if (leni) this._selectedChild = this.getChildAt(this._selectedIndex);
+			if (leni) _selectedChild = getChildAt(_selectedIndex);
 			
-			this.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
+			addEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
 		}
 
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
-			if (this.numChildren == 0)
+			if (numChildren == 0)
 			{
 				child.visible = true;
-				this._selectedChild = child;
+				_selectedChild = child;
 			}
 			else
 			{
@@ -86,11 +86,11 @@ package temple.ui.viewstack
 
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
-			if (index == this._selectedIndex)
+			if (index == _selectedIndex)
 			{
-				this._selectedChild.visible = false;
-				this._selectedChild = child;
-				this._selectedChild.visible = true;
+				_selectedChild.visible = false;
+				_selectedChild = child;
+				_selectedChild.visible = true;
 			}
 			else
 			{
@@ -107,9 +107,9 @@ package temple.ui.viewstack
 		 */
 		override public function removeChild(child:DisplayObject):DisplayObject
 		{
-			var selectedIndex:uint = this.selectedIndex;
+			var selectedIndex:uint = selectedIndex;
 			
-			this.resetIndex(child, selectedIndex);
+			resetIndex(child, selectedIndex);
 			
 			child = super.removeChild(child);
 			
@@ -123,9 +123,9 @@ package temple.ui.viewstack
 		 */
 		override public function removeChildAt(index:int):DisplayObject
 		{
-			var selectedIndex:uint = this.selectedIndex;
+			var selectedIndex:uint = selectedIndex;
 			
-			this.resetIndex(child, selectedIndex);
+			resetIndex(child, selectedIndex);
 			
 			var child:DisplayObject = super.removeChildAt(index);
 			
@@ -136,15 +136,15 @@ package temple.ui.viewstack
 		{
 			// do this first, because when changing the selected index the 'unselect' is called in this child which is removed
 			
-			if (oldIndex == this.getChildIndex(removedChild))
+			if (oldIndex == getChildIndex(removedChild))
 			{
 				if (oldIndex > 0)
 				{
-					this.selectedIndex = oldIndex - 1;
+					selectedIndex = oldIndex - 1;
 				}
-				else if (this.numChildren > 1)
+				else if (numChildren > 1)
 				{
-					this.selectedIndex = oldIndex + 1;
+					selectedIndex = oldIndex + 1;
 				}
 			}
 		}
@@ -152,31 +152,31 @@ package temple.ui.viewstack
 
 		public function get selectedIndex():uint
 		{
-			return this._selectedIndex;
+			return _selectedIndex;
 		}
 		
 		public function set selectedIndex(value:uint):void
 		{
-			if (this.numChildren < value)
+			if (numChildren < value)
 			{
-				this.logError("selectedIndex: there is no child with index " + value);
+				logError("selectedIndex: there is no child with index " + value);
 			}
-			else if (value != this._selectedIndex)
+			else if (value != _selectedIndex)
 			{
 				// hide current
-				this._selectedChild.visible = false;
+				_selectedChild.visible = false;
 				
-				this._selectedIndex = value;
-				this._selectedChild = this.getChildAt(this._selectedIndex);
-				this._selectedChild.visible = true;
+				_selectedIndex = value;
+				_selectedChild = getChildAt(_selectedIndex);
+				_selectedChild.visible = true;
 				
-				this.dispatchEvent(new Event(Event.CHANGE));
+				dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
 		public function get selected():DisplayObject
 		{
-			return this.getChildAt(this._selectedIndex);
+			return getChildAt(_selectedIndex);
 		}
 		
 		public function set selected(value:DisplayObject):void
@@ -185,17 +185,17 @@ package temple.ui.viewstack
 			{
 				throwError(new TempleArgumentError(this, "object '" + value + "' is not a child of '" + this + "'"));
 			}
-			this.selectedIndex = this.getChildIndex(value);
+			selectedIndex = getChildIndex(value);
 		}
 		
 		public function get resizeToContent():Boolean
 		{
-			return this._resizeToContent;
+			return _resizeToContent;
 		}
 		
 		public function set resizeToContent(value:Boolean):void
 		{
-			this._resizeToContent = value;
+			_resizeToContent = value;
 		}
 		
 		/**
@@ -203,7 +203,7 @@ package temple.ui.viewstack
 		 */
 		override public function get width():Number
 		{
-			return this._resizeToContent && this._selectedChild ? this._selectedChild.width : super.width;
+			return _resizeToContent && _selectedChild ? _selectedChild.width : super.width;
 		}
 
 		/**
@@ -211,12 +211,12 @@ package temple.ui.viewstack
 		 */
 		override public function set width(value:Number):void
 		{
-			if (this._resizeToContent)
+			if (_resizeToContent)
 			{
-				var leni:int = this.numChildren;
+				var leni:int = numChildren;
 				for (var i:int = 0; i < leni ; i++)
 				{
-					this.getChildAt(i).width = value;
+					getChildAt(i).width = value;
 				}
 			}
 			else
@@ -230,7 +230,7 @@ package temple.ui.viewstack
 		 */
 		override public function get height():Number
 		{
-			return this._resizeToContent && this._selectedChild  ? this._selectedChild.height : super.height;
+			return _resizeToContent && _selectedChild  ? _selectedChild.height : super.height;
 		}
 
 		/**
@@ -238,12 +238,12 @@ package temple.ui.viewstack
 		 */
 		override public function set height(value:Number):void
 		{
-			if (this._resizeToContent)
+			if (_resizeToContent)
 			{
-				var leni:int = this.numChildren;
+				var leni:int = numChildren;
 				for (var i:int = 0; i < leni ; i++)
 				{
-					this.getChildAt(i).height = value;
+					getChildAt(i).height = value;
 				}
 			}
 			else
@@ -254,7 +254,7 @@ package temple.ui.viewstack
 		
 		private function handleFocusIn(event:FocusEvent):void 
 		{
-			var child:DisplayObject = this.selected;
+			var child:DisplayObject = selected;
 			
 			if (event.target == child || child is DisplayObjectContainer && (child as DisplayObjectContainer).contains(event.target as DisplayObject))
 			{
@@ -262,13 +262,13 @@ package temple.ui.viewstack
 			}
 			else
 			{
-				var leni:int = this.numChildren;
+				var leni:int = numChildren;
 				for (var i:int = 0; i < leni; i++)
 				{
-					child = this.getChildAt(i);
+					child = getChildAt(i);
 					if (event.target == child || child is DisplayObjectContainer && (child as DisplayObjectContainer).contains(event.target as DisplayObject))
 					{
-						this.selected = child;
+						selected = child;
 					}
 				}
 			}
@@ -279,7 +279,7 @@ package temple.ui.viewstack
 		 */
 		override public function destruct():void
 		{
-			this._selectedChild = null;
+			_selectedChild = null;
 			
 			super.destruct();
 		}

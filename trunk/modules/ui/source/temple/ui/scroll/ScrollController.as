@@ -68,11 +68,11 @@ package temple.ui.scroll
 		
 		public function ScrollController(useWeakReference:Boolean = true, ...args)
 		{
-			this._scrollables = new Dictionary(useWeakReference);
+			_scrollables = new Dictionary(useWeakReference);
 			
 			for each (var scrollable: IScrollable in args)
 			{
-				this.add(scrollable);
+				add(scrollable);
 			}
 		}
 		
@@ -82,7 +82,7 @@ package temple.ui.scroll
 		public function get scrollH():Number
 		{
 			var scrollable:IScrollable;
-			for (var key:Object in this._scrollables)
+			for (var key:Object in _scrollables)
 			{
 				scrollable = IScrollable(key);
 				return scrollable.maxScrollH ? scrollable.scrollH / scrollable.maxScrollH : 0;
@@ -96,7 +96,7 @@ package temple.ui.scroll
 		public function set scrollH(value:Number):void
 		{
 			var scrollable:IScrollable;
-			for (var key:Object in this._scrollables)
+			for (var key:Object in _scrollables)
 			{
 				scrollable = IScrollable(key);
 				scrollable.scrollH = value * scrollable.maxScrollH;
@@ -116,12 +116,12 @@ package temple.ui.scroll
 		 */
 		public function scrollHTo(value:Number):void
 		{
-			this._targetScrollH = value;
+			_targetScrollH = value;
 			var scrollable:IScrollable;
-			for (var key:Object in this._scrollables)
+			for (var key:Object in _scrollables)
 			{
 				scrollable = IScrollable(key);
-				scrollable.scrollHTo(this._targetScrollH * scrollable.maxScrollH);
+				scrollable.scrollHTo(_targetScrollH * scrollable.maxScrollH);
 			}
 		}
 		
@@ -130,7 +130,7 @@ package temple.ui.scroll
 		 */
 		public function get targetScrollH():Number
 		{
-			return this._targetScrollH;
+			return _targetScrollH;
 		}
 		
 		/**
@@ -139,7 +139,7 @@ package temple.ui.scroll
 		public function get scrollV():Number
 		{
 			var scrollable:IScrollable;
-			for (var key:Object in this._scrollables)
+			for (var key:Object in _scrollables)
 			{
 				scrollable = IScrollable(key);
 				return scrollable.maxScrollV ? scrollable.scrollV / scrollable.maxScrollV : 0;
@@ -153,7 +153,7 @@ package temple.ui.scroll
 		public function set scrollV(value:Number):void
 		{
 			var scrollable:IScrollable;
-			for (var key:Object in this._scrollables)
+			for (var key:Object in _scrollables)
 			{
 				scrollable = IScrollable(key);
 				scrollable.scrollV = value * scrollable.maxScrollV;
@@ -173,12 +173,12 @@ package temple.ui.scroll
 		 */
 		public function scrollVTo(value:Number):void
 		{
-			this._targetScrollV = value;
+			_targetScrollV = value;
 			var scrollable:IScrollable;
-			for (var key:Object in this._scrollables)
+			for (var key:Object in _scrollables)
 			{
 				scrollable = IScrollable(key);
-				scrollable.scrollVTo(this._targetScrollV * scrollable.maxScrollV);
+				scrollable.scrollVTo(_targetScrollV * scrollable.maxScrollV);
 			}
 		}
 		
@@ -187,7 +187,7 @@ package temple.ui.scroll
 		 */
 		public function get targetScrollV():Number
 		{
-			return this._targetScrollV;
+			return _targetScrollV;
 		}
 		
 		/**
@@ -200,13 +200,13 @@ package temple.ui.scroll
 			if (ScrollController._dictionary[scrollable] == null) ScrollController._dictionary[scrollable] = new Array();
 			(ScrollController._dictionary[scrollable] as Array).push(this);
 			
-			this._scrollables[scrollable] = this;
+			_scrollables[scrollable] = this;
 			
-			scrollable.scrollH = this.scrollH;
-			scrollable.scrollV = this.scrollV;
+			scrollable.scrollH = scrollH;
+			scrollable.scrollV = scrollV;
 			
-			scrollable.addEventListener(ScrollEvent.SCROLL, this.handleScroll, false, 0, useWeakReference);
-			scrollable.addEventListener(DestructEvent.DESTRUCT, this.handleScrollableDestructed, false, 0, useWeakReference);
+			scrollable.addEventListener(ScrollEvent.SCROLL, handleScroll, false, 0, useWeakReference);
+			scrollable.addEventListener(DestructEvent.DESTRUCT, handleScrollableDestructed, false, 0, useWeakReference);
 		}
 		
 		/**
@@ -216,10 +216,10 @@ package temple.ui.scroll
 		{
 			if (scrollable == null) throwError(new TempleArgumentError(this, "scrollable can not be null"));
 			
-			scrollable.removeEventListener(ScrollEvent.SCROLL, this.handleScroll);
-			scrollable.removeEventListener(DestructEvent.DESTRUCT, this.handleScrollableDestructed);
+			scrollable.removeEventListener(ScrollEvent.SCROLL, handleScroll);
+			scrollable.removeEventListener(DestructEvent.DESTRUCT, handleScrollableDestructed);
 			
-			delete this._scrollables[scrollable];
+			delete _scrollables[scrollable];
 			
 			if (ScrollController._dictionary && ScrollController._dictionary[scrollable])
 			{
@@ -229,12 +229,12 @@ package temple.ui.scroll
 		
 		private function handleScroll(event:ScrollEvent):void
 		{
-			if (this._blockRequest) return;
+			if (_blockRequest) return;
 			
-			this._blockRequest = true;
+			_blockRequest = true;
 			
 			var scrollable:IScrollable;
-			for (var key:Object in this._scrollables)
+			for (var key:Object in _scrollables)
 			{
 				scrollable = IScrollable(key);
 				
@@ -251,13 +251,13 @@ package temple.ui.scroll
 					}
 				}
 			}
-			this._blockRequest = false;
-			this.dispatchEvent(event.clone());
+			_blockRequest = false;
+			dispatchEvent(event.clone());
 		}
 		
 		private function handleScrollableDestructed(event:DestructEvent):void
 		{
-			this.remove(event.target as IScrollable);
+			remove(event.target as IScrollable);
 		}
 	}
 }

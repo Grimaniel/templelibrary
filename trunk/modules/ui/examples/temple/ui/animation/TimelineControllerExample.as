@@ -28,28 +28,28 @@ package
 		{
 			super("Temple - TimelineControllerExample");
 			
-			this._timelineController = new TimelineController(this);
+			_timelineController = new TimelineController(this);
 			
-//			this._timelineController.debug = true;
-			this._timelineController.dispatchLabelEvents = true;
+//			_timelineController.debug = true;
+			_timelineController.dispatchLabelEvents = true;
 			
-			this._timelineController.addLabelEventListener('test', handleLabelEvent);
-			this._timelineController.addLabelEventListener('test2', handleLabelEvent);
-			this._timelineController.addLabelEventListener('test', handleLabelEvent, -10);
-			this._timelineController.addLabelEventListener('test', handleLabelEvent, -1);
-			this._timelineController.addLabelEventListener('test', handleLabelEvent, 1);
-			this._timelineController.addFrameEventListener(20, handleLabelEvent);
+			_timelineController.addLabelEventListener('test', handleLabelEvent);
+			_timelineController.addLabelEventListener('test2', handleLabelEvent);
+			_timelineController.addLabelEventListener('test', handleLabelEvent, -10);
+			_timelineController.addLabelEventListener('test', handleLabelEvent, -1);
+			_timelineController.addLabelEventListener('test', handleLabelEvent, 1);
+			_timelineController.addFrameEventListener(20, handleLabelEvent);
 			
-			this._timelineController.addEventListener(TimelineControllerEvent.REACH_FRAME, handleTimeLineControllerEvent);
+			_timelineController.addEventListener(TimelineControllerEvent.REACH_FRAME, handleTimeLineControllerEvent);
 			
-			this.addEventListener(Event.ENTER_FRAME, handleEnterFrame);
+			addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			
-//			this._timelineController.removeLabelEventListener('test', handleLabelEvent);
-//			this._timelineController.removeLabelEventListener('test2', handleLabelEvent);
-//			this._timelineController.removeLabelEventListener('test', handleLabelEvent, -10);
-//			this._timelineController.removeLabelEventListener('test', handleLabelEvent, -1);
-//			this._timelineController.removeLabelEventListener('test', handleLabelEvent, 1);
-//			this._timelineController.removeFrameEventListener(20, handleLabelEvent);
+//			_timelineController.removeLabelEventListener('test', handleLabelEvent);
+//			_timelineController.removeLabelEventListener('test2', handleLabelEvent);
+//			_timelineController.removeLabelEventListener('test', handleLabelEvent, -10);
+//			_timelineController.removeLabelEventListener('test', handleLabelEvent, -1);
+//			_timelineController.removeLabelEventListener('test', handleLabelEvent, 1);
+//			_timelineController.removeFrameEventListener(20, handleLabelEvent);
 		}
 		
 		private function handleTimeLineControllerEvent(event:TimelineControllerEvent):void
@@ -64,17 +64,17 @@ package
 		
 		override public function destruct():void
 		{
-			if (this._timelineController)
+			if (_timelineController)
 			{
-				this._timelineController.destruct();
-				this._timelineController = null;
+				_timelineController.destruct();
+				_timelineController = null;
 			}
 			super.destruct();
 		}
 		
 		private function handleEnterFrame(event:Event):void
 		{
-			this.txtFrameNum.text = this.currentFrame.toString();
+			this.txtFrameNum.text = currentFrame.toString();
 		}
 	}
 }

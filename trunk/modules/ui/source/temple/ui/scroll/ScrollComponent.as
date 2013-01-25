@@ -82,11 +82,11 @@ package temple.ui.scroll
 		 */
 		override protected function init():void 
 		{
-			if (!this._content) this.content = this.getChildByName(contentInstanceName) as DisplayObjectContainer;
-			this.mask ||= this.getChildByName(maskInstanceName);
-			this.scrollBar ||= this.getChildByName(scrollBarInstanceName) as ScrollBar;
+			if (!_content) content = getChildByName(contentInstanceName) as DisplayObjectContainer;
+			mask ||= getChildByName(maskInstanceName);
+			scrollBar ||= getChildByName(scrollBarInstanceName) as ScrollBar;
 			
-			if (!this._scrollBehavior)
+			if (!_scrollBehavior)
 			{
 				super.init();
 			}
@@ -97,7 +97,7 @@ package temple.ui.scroll
 		 */
 		override public function get width():Number
 		{
-			return this.content.scrollRect ? this.content.scrollRect.width : super.width;
+			return content.scrollRect ? content.scrollRect.width : super.width;
 		}
 		
 		/**
@@ -105,13 +105,13 @@ package temple.ui.scroll
 		 */
 		override public function set width(value:Number):void
 		{
-			if (this.content.scrollRect)
+			if (content.scrollRect)
 			{
-				var scrollFactor:Number = this.maxScrollH ? this.scrollH / this.maxScrollH : 0;
-				var rect:Rectangle = this.content.scrollRect;
+				var scrollFactor:Number = maxScrollH ? scrollH / maxScrollH : 0;
+				var rect:Rectangle = content.scrollRect;
 				rect.width = value;
-				this.content.scrollRect = rect;
-				this.scrollH = scrollFactor * this.maxScrollH;
+				content.scrollRect = rect;
+				scrollH = scrollFactor * maxScrollH;
 			}
 			else
 			{
@@ -124,7 +124,7 @@ package temple.ui.scroll
 		 */
 		override public function get contentWidth():Number 
 		{
-			return this.content.transform.pixelBounds.width / this.content.transform.concatenatedMatrix.a + (!isNaN(this.marginLeft) ? this.marginLeft : 0) + (!isNaN(this.marginRight) ? this.marginRight : 0);
+			return content.transform.pixelBounds.width / content.transform.concatenatedMatrix.a + (!isNaN(marginLeft) ? marginLeft : 0) + (!isNaN(marginRight) ? marginRight : 0);
 		}
 
 		/**
@@ -134,7 +134,7 @@ package temple.ui.scroll
 		 */
 		override public function get height():Number
 		{
-			return this.content.scrollRect ? this.content.scrollRect.height : super.height;
+			return content.scrollRect ? content.scrollRect.height : super.height;
 		}
 
 		/**
@@ -142,13 +142,13 @@ package temple.ui.scroll
 		 */
 		override public function set height(value:Number):void
 		{
-			if (this.content.scrollRect && !isNaN(this.maxScrollV))
+			if (content.scrollRect && !isNaN(maxScrollV))
 			{
-				var scrollFactor:Number = this.maxScrollV ? this.scrollV / this.maxScrollV : 0;
-				var rect:Rectangle = this.content.scrollRect;
+				var scrollFactor:Number = maxScrollV ? scrollV / maxScrollV : 0;
+				var rect:Rectangle = content.scrollRect;
 				rect.height = value;
-				this.content.scrollRect = rect;
-				this.scrollV = scrollFactor * this.maxScrollV;
+				content.scrollRect = rect;
+				scrollV = scrollFactor * maxScrollV;
 			}
 			else
 			{
@@ -158,7 +158,7 @@ package temple.ui.scroll
 
 		override public function get contentHeight():Number 
 		{
-			return this.content.transform.pixelBounds.height / this.content.transform.concatenatedMatrix.d + (!isNaN(this.marginTop) ? this.marginTop : 0) + (!isNaN(this.marginBottom) ? this.marginBottom : 0);
+			return content.transform.pixelBounds.height / content.transform.concatenatedMatrix.d + (!isNaN(marginTop) ? marginTop : 0) + (!isNaN(marginBottom) ? marginBottom : 0);
 		}
 
 		/**
@@ -166,7 +166,7 @@ package temple.ui.scroll
 		 */
 		public function get content():DisplayObjectContainer
 		{
-			return this._content ? this._content : this;
+			return _content ? _content : this;
 		}
 		
 		/**
@@ -174,26 +174,26 @@ package temple.ui.scroll
 		 */
 		public function set content(value:DisplayObjectContainer):void
 		{
-			if (this._scrollBehavior) this._scrollBehavior.destruct();
-			this._content = value;
-			if (this._content)
+			if (_scrollBehavior) _scrollBehavior.destruct();
+			_content = value;
+			if (_content)
 			{
-				if (this.mask)
+				if (mask)
 				{
-					this._scrollBehavior = new ScrollBehavior(this._content, this.mask.getRect(this), this);
-					this._content.mask = this.mask;
+					_scrollBehavior = new ScrollBehavior(_content, mask.getRect(this), this);
+					_content.mask = mask;
 				}
 				else
 				{
-					this._scrollBehavior = new ScrollBehavior(this._content, this.content.scrollRect ? this.content.scrollRect : new Rectangle(0, 0, this.width, this.height), this);
+					_scrollBehavior = new ScrollBehavior(_content, content.scrollRect ? content.scrollRect : new Rectangle(0, 0, width, height), this);
 				}
 			}
 			
-			if (this._content != this)
+			if (_content != this)
 			{
-				this.scrollRect = null;
+				scrollRect = null;
 				
-				if (this._content) this._content.addEventListener(ScrollEvent.SCROLL, this.dispatchEvent);
+				if (_content) _content.addEventListener(ScrollEvent.SCROLL, dispatchEvent);
 			}
 		}
 
@@ -206,7 +206,7 @@ package temple.ui.scroll
 		{
 			if (value)
 			{
-				this.content.scrollRect = new Rectangle(value.x, value.y, value.width, value.height);
+				content.scrollRect = new Rectangle(value.x, value.y, value.width, value.height);
 				value.visible = false;
 			} 
 		}
@@ -216,7 +216,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollBar():ScrollBar
 		{
-			return this._scrollBar;
+			return _scrollBar;
 		}
 		
 		/**
@@ -224,11 +224,11 @@ package temple.ui.scroll
 		 */
 		public function set scrollBar(value:ScrollBar):void
 		{
-			this._scrollBar = value;
-			if (this._scrollBar)
+			_scrollBar = value;
+			if (_scrollBar)
 			{
-				this._scrollBar.autoHide = true;
-				this._scrollBar.scrollPane = this;
+				_scrollBar.autoHide = true;
+				_scrollBar.scrollPane = this;
 			}
 		}
 
@@ -237,8 +237,8 @@ package temple.ui.scroll
 		 */
 		override public function destruct():void 
 		{
-			this._content = null;
-			this._scrollBar = null;
+			_content = null;
+			_scrollBar = null;
 			super.destruct();
 		}
 	}

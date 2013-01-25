@@ -97,12 +97,12 @@ package temple.ui.form.components
 
 		public function CheckBox()
 		{
-			this.toStringProps.push('name', 'selected', 'selectedValue', 'unselectedValue', 'label');
-			this._label = LabelUtils.findLabel(this);
-			this.addEventListener(Event.CHANGE, this.handleChange);
+			toStringProps.push('name', 'selected', 'selectedValue', 'unselectedValue', 'label');
+			_label = LabelUtils.findLabel(this);
+			addEventListener(Event.CHANGE, handleChange);
 			
-			this.clickOnEnter = true;
-			this.clickOnSpacebar = true;
+			clickOnEnter = true;
+			clickOnSpacebar = true;
 		}
 
 		/**
@@ -119,7 +119,7 @@ package temple.ui.form.components
 		 */
 		public function get hasError():Boolean
 		{
-			return this._hasError;
+			return _hasError;
 		}
 
 		/**
@@ -129,11 +129,11 @@ package temple.ui.form.components
 		{
 			if (value)
 			{
-				this.showError();
+				showError();
 			}
 			else
 			{
-				this.hideError();
+				hideError();
 			}
 		}
 		
@@ -142,9 +142,9 @@ package temple.ui.form.components
 		 */
 		public function showError(message:String = null):void 
 		{
-			this._hasError = true;
+			_hasError = true;
 			StateHelper.showError(this, message);
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
+			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
 		}
 		
 		/**
@@ -152,9 +152,9 @@ package temple.ui.form.components
 		 */
 		public function hideError():void 
 		{
-			this._hasError = false;
+			_hasError = false;
 			StateHelper.hideError(this);
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
+			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
 		}
 
 		/**
@@ -163,9 +163,9 @@ package temple.ui.form.components
 		public function get value():* 
 		{
 			// selectedValue and unselectedValue are both empty strings (happens when no value is filled in in components), return value as Boolean
-			if (this._selectedValue == '' && this._selectedValue === this._unselectedValue) return this.selected;
+			if (_selectedValue == '' && _selectedValue === _unselectedValue) return selected;
 			
-			return this.selected ? this._selectedValue : this._unselectedValue;
+			return selected ? _selectedValue : _unselectedValue;
 		}
 		
 		/**
@@ -173,21 +173,21 @@ package temple.ui.form.components
 		 */
 		public function set value(value:*):void 
 		{
-			if (value == this._selectedValue)
+			if (value == _selectedValue)
 			{
-				this.selected = true;
+				selected = true;
 			}
-			else if (value == this._unselectedValue)
+			else if (value == _unselectedValue)
 			{
-				this.selected = false;
+				selected = false;
 			}
-			else if (value == true && this._selectedValue == '' && this._unselectedValue == this._selectedValue)
+			else if (value == true && _selectedValue == '' && _unselectedValue == _selectedValue)
 			{
-				this.selected = true;
+				selected = true;
 			}
 			else if (value != null)
 			{
-				this.logWarn("value: unknown value '" + value + "'");
+				logWarn("value: unknown value '" + value + "'");
 			}
 		}
 
@@ -196,8 +196,8 @@ package temple.ui.form.components
 		 */
 		public function reset():void 
 		{
-			this.enabled = true;
-			this.selected = false;
+			enabled = true;
+			selected = false;
 		}
 
 		/**
@@ -207,8 +207,8 @@ package temple.ui.form.components
 		 */
 		public function setValue(selectedValue:*, unselectedValue:* = false):void 
 		{
-			this._selectedValue = selectedValue;
-			this._unselectedValue = unselectedValue;
+			_selectedValue = selectedValue;
+			_unselectedValue = unselectedValue;
 		}
 		
 		/**
@@ -216,7 +216,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedValue():*
 		{
-			return this._selectedValue;
+			return _selectedValue;
 		}
 		
 		/**
@@ -225,7 +225,7 @@ package temple.ui.form.components
 		[Inspectable(name="Selected value", type="String")]
 		public function set selectedValue(value:*):void
 		{
-			this._selectedValue = value;
+			_selectedValue = value;
 		}
 		
 		/**
@@ -233,7 +233,7 @@ package temple.ui.form.components
 		 */
 		public function get unselectedValue():*
 		{
-			return this._unselectedValue;
+			return _unselectedValue;
 		}
 		
 		/**
@@ -242,13 +242,13 @@ package temple.ui.form.components
 		[Inspectable(name="Unselected value", type="String")]
 		public function set unselectedValue(value:*):void
 		{
-			if (this._validator == EmptyStringValidationRule)
+			if (_validator == EmptyStringValidationRule)
 			{
-				this.logError("unselectedValue: can not be set when CheckBox has a validator");
+				logError("unselectedValue: can not be set when CheckBox has a validator");
 			}
 			else
 			{
-				this._unselectedValue = value;
+				_unselectedValue = value;
 			}
 		}
 
@@ -257,7 +257,7 @@ package temple.ui.form.components
 		 */
 		public function get dataName():String
 		{
-			return this._dataName;
+			return _dataName;
 		}
 		
 		/**
@@ -266,7 +266,7 @@ package temple.ui.form.components
 		[Inspectable(name="Data name", type="String")]
 		public function set dataName(value:String):void
 		{
-			this._dataName = value;
+			_dataName = value;
 		}
 		
 		/**
@@ -274,7 +274,7 @@ package temple.ui.form.components
 		 */
 		public function get validationRule():Class
 		{
-			return this._validator;
+			return _validator;
 		}
 		
 		/**
@@ -286,34 +286,34 @@ package temple.ui.form.components
 			switch (value){
 				case "none":
 				{
-					this._validator = null;
+					_validator = null;
 					break;
 				}
 				case "not null":
 				{
-					this._validator = EmptyStringValidationRule;
+					_validator = EmptyStringValidationRule;
 					
 					// check if unselected value is set
-					if (this.unselectedValue != "")
+					if (unselectedValue != "")
 					{
-						this.logWarn("validationRuleName: validation rule will always be valid, unselected value is changed");
-						this._unselectedValue = '';
+						logWarn("validationRuleName: validation rule will always be valid, unselected value is changed");
+						_unselectedValue = '';
 					}
 					break;
 				}
 				case "boolean":
 				{
-					this._validator = BooleanValidationRule;
-					if (this._selectedValue !== true && !(this._selectedValue == '' && this._selectedValue == this._unselectedValue))
+					_validator = BooleanValidationRule;
+					if (_selectedValue !== true && !(_selectedValue == '' && _selectedValue == _unselectedValue))
 					{
-						this.logWarn("validationRuleName: invalid ValidationRule, CheckBox does not return a Boolean");
+						logWarn("validationRuleName: invalid ValidationRule, CheckBox does not return a Boolean");
 					}
 					break;
 				}
 				default:
 				{
-					this._validator = null;
-					this.logError("validationRule: unknown validation rule '" + value + "'");
+					_validator = null;
+					logError("validationRule: unknown validation rule '" + value + "'");
 					break;
 				}
 			}
@@ -324,7 +324,7 @@ package temple.ui.form.components
 		 */
 		public function get errorMessage():String
 		{
-			return this._errorMessage;
+			return _errorMessage;
 		}
 		
 		/**
@@ -333,7 +333,7 @@ package temple.ui.form.components
 		[Inspectable(name="Error message", type="String")]
 		public function set errorMessage(value:String):void
 		{
-			this._errorMessage = value;
+			_errorMessage = value;
 		}
 		
 		/**
@@ -341,7 +341,7 @@ package temple.ui.form.components
 		 */
 		override public function get tabIndex():int
 		{
-			return this._tabIndex;
+			return _tabIndex;
 		}
 		
 		/**
@@ -350,7 +350,7 @@ package temple.ui.form.components
 		[Inspectable(name="Tab index", type="Number", defaultValue="-1")]
 		override public function set tabIndex(value:int):void
 		{
-			this._tabIndex = value;
+			_tabIndex = value;
 		}
 		
 		/**
@@ -358,7 +358,7 @@ package temple.ui.form.components
 		 */
 		public function get label():String
 		{
-			return this._label ? this._label.label : '';
+			return _label ? _label.label : '';
 		}
 		
 		/**
@@ -367,15 +367,15 @@ package temple.ui.form.components
 		[Inspectable(name="Label", type="String")]
 		public function set label(value:String):void
 		{
-			if (this._label)
+			if (_label)
 			{
-				this._label.label = value;
+				_label.label = value;
 			}
 			else if (value != '')
 			{
-				this.logError("label: Label TextField is not specified or found on DisplayList");
+				logError("label: Label TextField is not specified or found on DisplayList");
 			}
-			this.dispatchEvent(new Event(Event.CHANGE));
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -383,7 +383,7 @@ package temple.ui.form.components
 		 */
 		public function get html():Boolean
 		{
-			return this._label is IHTMLLabel ? (this._label as IHTMLLabel).html : false;
+			return _label is IHTMLLabel ? (_label as IHTMLLabel).html : false;
 		}
 		
 		/**
@@ -391,9 +391,9 @@ package temple.ui.form.components
 		 */
 		public function set html(value:Boolean):void
 		{
-			if (this._label is IHTMLLabel)
+			if (_label is IHTMLLabel)
 			{
-				(this._label as IHTMLLabel).html = value;
+				(_label as IHTMLLabel).html = value;
 			}
 			else
 			{
@@ -406,7 +406,7 @@ package temple.ui.form.components
 		 */
 		public function get autoSize():String
 		{
-			return (this._label is IAutoSizableLabel) ? (this._label as IAutoSizableLabel).autoSize : null;
+			return (_label is IAutoSizableLabel) ? (_label as IAutoSizableLabel).autoSize : null;
 		}
 		
 		/**
@@ -415,9 +415,9 @@ package temple.ui.form.components
 		[Inspectable(name="AutoSize", type="String", defaultValue="none", enumeration="none,left, right, center")]
 		public function set autoSize(value:String):void
 		{
-			if (this._label is IAutoSizableLabel)
+			if (_label is IAutoSizableLabel)
 			{
-				(this._label as IAutoSizableLabel).autoSize = value;
+				(_label as IAutoSizableLabel).autoSize = value;
 			}
 		}
 		
@@ -426,7 +426,7 @@ package temple.ui.form.components
 		 */
 		public function get textField():TextField
 		{
-			return this._label is ITextFieldLabel ? (this._label as ITextFieldLabel).textField : null;
+			return _label is ITextFieldLabel ? (_label as ITextFieldLabel).textField : null;
 		}
 		
 		/**
@@ -434,7 +434,7 @@ package temple.ui.form.components
 		 */
 		public function get submit():Boolean
 		{
-			return this._submit;
+			return _submit;
 		}
 		
 		/**
@@ -443,7 +443,7 @@ package temple.ui.form.components
 		[Inspectable(name="Submit value", type="Boolean", defaultValue="true")]
 		public function set submit(value:Boolean):void
 		{
-			this._submit = value;
+			_submit = value;
 		}
 		
 		/**
@@ -451,7 +451,7 @@ package temple.ui.form.components
 		 */
 		public function get submitOnChange():Boolean
 		{
-			return this._submitOnChange;
+			return _submitOnChange;
 		}
 		
 		/**
@@ -460,14 +460,14 @@ package temple.ui.form.components
 		[Inspectable(name="Submit on change", type="Boolean", defaultValue="false")]
 		public function set submitOnChange(value:Boolean):void
 		{
-			this._submitOnChange = value;
+			_submitOnChange = value;
 		}
 		
 		private function handleChange(event:Event):void 
 		{
-			if (this._submitOnChange)
+			if (_submitOnChange)
 			{
-				this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
+				dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 			}
 		}
 		
@@ -476,12 +476,12 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this._selectedValue = null;
-			this._unselectedValue = null;
-			this._dataName = null;
-			this._validator = null;
-			this._errorMessage = null;
-			this._label = null;
+			_selectedValue = null;
+			_unselectedValue = null;
+			_dataName = null;
+			_validator = null;
+			_errorMessage = null;
+			_label = null;
 			
 			super.destruct();
 		}

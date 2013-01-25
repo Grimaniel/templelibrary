@@ -28,26 +28,26 @@ package
 			super("Temple - ClickRepeaterExample");
 			
 			// Create a new BaseButton, give it rectangle a so we can see something
-			this._button = new BaseButton();
-			this._button.graphics.beginFill(0x8888FF);
-			this._button.graphics.drawRect(-50, -25, 100, 50);
-			this._button.graphics.endFill();
+			_button = new BaseButton();
+			_button.graphics.beginFill(0x8888FF);
+			_button.graphics.drawRect(-50, -25, 100, 50);
+			_button.graphics.endFill();
 			
-			this._button.x = 150;
-			this._button.y = 75;
+			_button.x = 150;
+			_button.y = 75;
 			
-			this.addChild(this._button);
+			addChild(_button);
 			
 			// add click listener
-			this._button.addEventListener(MouseEvent.CLICK, this.handleClick);
+			_button.addEventListener(MouseEvent.CLICK, handleClick);
 			
 			// create a ClickRepeater for the button
-			new ClickRepeater(this._button);
+			new ClickRepeater(_button);
 		}
 
 		private function handleClick(event:MouseEvent):void 
 		{
-			this.logInfo("Click");
+			logInfo("Click");
 		}
 	}
 }

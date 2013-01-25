@@ -98,23 +98,23 @@ package temple.ui.behaviors.textfield
 			
 			AutoFontSizeBehavior._dictionary[target] = this;
 			
-			this._minimalFontSize = minimalFontSize;
+			_minimalFontSize = minimalFontSize;
 			
 			if (isNaN(maximalFontSize)) maximalFontSize = Number(textField.getTextFormat().size);
 			
-			this._currentFontSize = this._maximalFontSize = maximalFontSize;
-			this._previousText = "";
-			this._maximalHeight = textField.height;
-			this._maximalWidth = textField.width;
+			_currentFontSize = _maximalFontSize = maximalFontSize;
+			_previousText = "";
+			_maximalHeight = textField.height;
+			_maximalWidth = textField.width;
 			
-			this.update();
+			update();
 			
 			if (willUpdateOnInput)
 			{
-				textField.addEventListener(Event.CHANGE, this.handleTextFieldChange);
-				textField.addEventListener(KeyboardEvent.KEY_UP, this.handleTextFieldChange);
-				textField.addEventListener(TextEvent.TEXT_INPUT, this.handleTextFieldChange);
-				textField.addEventListener(Event.SCROLL, this.handleTextFieldScroll);
+				textField.addEventListener(Event.CHANGE, handleTextFieldChange);
+				textField.addEventListener(KeyboardEvent.KEY_UP, handleTextFieldChange);
+				textField.addEventListener(TextEvent.TEXT_INPUT, handleTextFieldChange);
+				textField.addEventListener(Event.SCROLL, handleTextFieldScroll);
 			}
 		}
 
@@ -124,38 +124,38 @@ package temple.ui.behaviors.textfield
 		 */
 		public function update():void
 		{
-			this.textField.scrollV = 0;
-			this.textField.scrollH = 0;
+			textField.scrollV = 0;
+			textField.scrollH = 0;
  
-			if (this._previousText.length > this.textField.length)
+			if (_previousText.length > textField.length)
 			{
-                this.setFontSize(this._maximalFontSize);
+                setFontSize(_maximalFontSize);
 			}
  
-			if (this.textField.multiline)
+			if (textField.multiline)
 			{
-				while (this._maximalHeight < this.textField.textHeight + (4 * this.textField.numLines)) 
+				while (_maximalHeight < textField.textHeight + (4 * textField.numLines)) 
 				{ 
-					if (this._currentFontSize <= this._minimalFontSize) break;
-					this.setFontSize(this._currentFontSize - 0.5);
+					if (_currentFontSize <= _minimalFontSize) break;
+					setFontSize(_currentFontSize - 0.5);
 				}
 			}
 			else
 			{
-				while (this._maximalWidth < this.textField.textWidth) 
+				while (_maximalWidth < textField.textWidth) 
 				{ 
-					if (this._currentFontSize <= this._minimalFontSize) break;
-					this.setFontSize(this._currentFontSize - 0.5);
+					if (_currentFontSize <= _minimalFontSize) break;
+					setFontSize(_currentFontSize - 0.5);
 				}
 			}
  
-			if (this._currentFontSize <= this._minimalFontSize) 
+			if (_currentFontSize <= _minimalFontSize) 
 			{
-				this.textField.text = this._previousText;
+				textField.text = _previousText;
 			} 
 			else 
 			{
-				this._previousText = this.textField.text;
+				_previousText = textField.text;
 			}
 		}
 
@@ -164,7 +164,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get textField():TextField
 		{
-			return this.target as TextField;
+			return target as TextField;
 		}
 		
 		/**
@@ -172,7 +172,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get maximalFontSize():Number
 		{
-			return this._maximalFontSize;
+			return _maximalFontSize;
 		}
 		
 		/**
@@ -180,7 +180,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function set maximalFontSize(value:Number):void
 		{
-			this._maximalFontSize = value;
+			_maximalFontSize = value;
 		}
 		
 		/**
@@ -188,7 +188,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get minimalFontSize():uint
 		{
-			return this._minimalFontSize;
+			return _minimalFontSize;
 		}
 		
 		/**
@@ -196,29 +196,29 @@ package temple.ui.behaviors.textfield
 		 */
 		public function set minimalFontSize(value:uint):void
 		{
-			this._minimalFontSize = value;
+			_minimalFontSize = value;
 		}
 		
 		private function setFontSize(size:Number):void 
 		{
-			this._currentFontSize = size;
+			_currentFontSize = size;
  
-			var currentTextFormat:TextFormat = this.textField.getTextFormat();
-			currentTextFormat.size = this._currentFontSize;
+			var currentTextFormat:TextFormat = textField.getTextFormat();
+			currentTextFormat.size = _currentFontSize;
  
-			this.textField.setTextFormat(currentTextFormat);
-			this.textField.defaultTextFormat = currentTextFormat;
+			textField.setTextFormat(currentTextFormat);
+			textField.defaultTextFormat = currentTextFormat;
 		}
 		
 		private function handleTextFieldChange(event:Event):void
 		{
-			this.update();
+			update();
 		}
 		
 		private function handleTextFieldScroll(event:Event):void
 		{
-			this.textField.scrollV = 0;
-			this.textField.scrollH = 0;
+			textField.scrollV = 0;
+			textField.scrollH = 0;
 		}
 
 		/**
@@ -226,14 +226,14 @@ package temple.ui.behaviors.textfield
 		 */
 		override public function destruct():void
 		{
-			if (this.target) delete AutoFontSizeBehavior._dictionary[this.target];
+			if (target) delete AutoFontSizeBehavior._dictionary[target];
 			
-			if (this.textField)
+			if (textField)
 			{
-				this.textField.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
-				this.textField.removeEventListener(KeyboardEvent.KEY_UP, this.handleTextFieldChange);
-				this.textField.removeEventListener(TextEvent.TEXT_INPUT, this.handleTextFieldChange);
-				this.textField.removeEventListener(Event.SCROLL, this.handleTextFieldScroll);
+				textField.removeEventListener(Event.CHANGE, handleTextFieldChange);
+				textField.removeEventListener(KeyboardEvent.KEY_UP, handleTextFieldChange);
+				textField.removeEventListener(TextEvent.TEXT_INPUT, handleTextFieldChange);
+				textField.removeEventListener(Event.SCROLL, handleTextFieldScroll);
 			}
 			super.destruct();
 		}

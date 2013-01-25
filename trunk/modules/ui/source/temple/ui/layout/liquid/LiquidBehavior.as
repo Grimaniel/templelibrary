@@ -173,9 +173,9 @@ package temple.ui.layout.liquid
 			if (LiquidBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has LiquidBehavior"));
 			LiquidBehavior._dictionary[target] = this;
 			
-			this._enabled = true;
+			_enabled = true;
 			
-			target.addEventListener(Event.RESIZE, this.handleTargetResize, false, -1);
+			target.addEventListener(Event.RESIZE, handleTargetResize, false, -1);
 			
 			if (relatedObject)
 			{
@@ -183,7 +183,7 @@ package temple.ui.layout.liquid
 			}
 			else
 			{
-				this.relatedObject = this.findLiquidParent(target);
+				this.relatedObject = findLiquidParent(target);
 				
 				if (this.relatedObject == null && target.stage && (!(target is ICoreDisplayObject) || ICoreDisplayObject(target).onStage))
 				{
@@ -191,14 +191,14 @@ package temple.ui.layout.liquid
 					this.relatedObject = LiquidStage.getInstance(target.stage);
 				}
 			}
-			target.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+			target.addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 			
-			this._debugColor = ColorUtils.getRandomColor();
+			_debugColor = ColorUtils.getRandomColor();
 			
 			if (initObject)
 			{
 				PropertyApplier.apply(this, initObject);
-				this.init();
+				init();
 			}
 		}
 		
@@ -207,10 +207,10 @@ package temple.ui.layout.liquid
 		 */
 		public function init():void
 		{
-			this.updateRelatedMinimalWidth();
-			this.updateRelatedMinimalHeight();
-			this.update();
-			this.dispatchEvent(new Event(Event.INIT));
+			updateRelatedMinimalWidth();
+			updateRelatedMinimalHeight();
+			update();
+			dispatchEvent(new Event(Event.INIT));
 		}
 		
 		/**
@@ -218,7 +218,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get left():Number
 		{
-			return this._left;
+			return _left;
 		}
 		
 		/**
@@ -226,10 +226,10 @@ package temple.ui.layout.liquid
 		 */
 		public function set left(value:Number):void
 		{
-			this._left = value;
-			this._horizontalCenter = NaN;
-			this._relativeX = NaN;
-			if (!isNaN(this._right)) this._relativeWidth = NaN;
+			_left = value;
+			_horizontalCenter = NaN;
+			_relativeX = NaN;
+			if (!isNaN(_right)) _relativeWidth = NaN;
 		}
 
 		/**
@@ -237,7 +237,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get right():Number
 		{
-			return this._right;
+			return _right;
 		}
 		
 		/**
@@ -245,10 +245,10 @@ package temple.ui.layout.liquid
 		 */
 		public function set right(value:Number):void
 		{
-			this._right = value;
-			this._horizontalCenter = NaN;
-			this._relativeX = NaN;
-			if (!isNaN(this._left)) this._relativeWidth = NaN;
+			_right = value;
+			_horizontalCenter = NaN;
+			_relativeX = NaN;
+			if (!isNaN(_left)) _relativeWidth = NaN;
 		}
 
 		/**
@@ -256,7 +256,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get horizontalCenter():Number
 		{
-			return this._horizontalCenter;
+			return _horizontalCenter;
 		}
 		
 		/**
@@ -264,10 +264,10 @@ package temple.ui.layout.liquid
 		 */
 		public function set horizontalCenter(value:Number):void
 		{
-			this._horizontalCenter = value;
-			this._left = NaN;
-			this._right = NaN;
-			this._relativeX = NaN;
+			_horizontalCenter = value;
+			_left = NaN;
+			_right = NaN;
+			_relativeX = NaN;
 		}
 		
 		/**
@@ -275,7 +275,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relativeX():Number
 		{
-			return this._relativeX;
+			return _relativeX;
 		}
 		
 		/**
@@ -285,10 +285,10 @@ package temple.ui.layout.liquid
 		{
 			if (value < 0 || value > 1) throwError(new TempleArgumentError(this, 'relativeX must be between 0 and 1, (' + value + ')'));
 			
-			this._relativeX = value;
-			this._left = NaN;
-			this._right = NaN;
-			this._horizontalCenter = NaN;
+			_relativeX = value;
+			_left = NaN;
+			_right = NaN;
+			_horizontalCenter = NaN;
 		}
 		
 		/**
@@ -296,7 +296,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get x():Number
 		{
-			return this.displayObject.x;
+			return displayObject.x;
 		}
 
 		/**
@@ -304,7 +304,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get width():Number
 		{
-			return isNaN(this._absoluteWidth) ? this.displayObject.width : this._absoluteWidth;
+			return isNaN(_absoluteWidth) ? displayObject.width : _absoluteWidth;
 		}
 
 		/**
@@ -312,7 +312,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relativeWidth():Number 
 		{
-			return this._relativeWidth;
+			return _relativeWidth;
 		}
 
 		/**
@@ -321,7 +321,7 @@ package temple.ui.layout.liquid
 		public function set relativeWidth(value:Number):void 
 		{
 			if (value < 0 || value > 1) throwError(new TempleArgumentError(this, 'relativeWidth must be between 0 and 1, (' + value + ')'));
-			this._relativeWidth = value;
+			_relativeWidth = value;
 		}
 
 		/**
@@ -329,7 +329,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get absoluteWidth():Number 
 		{
-			return this._absoluteWidth;
+			return _absoluteWidth;
 		}
 
 		/**
@@ -337,7 +337,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set absoluteWidth(value:Number):void 
 		{
-			this._absoluteWidth = value;
+			_absoluteWidth = value;
 		}
 		
 		/**
@@ -345,7 +345,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get minimalWidth():Number
 		{
-			return this._minimalWidth;
+			return _minimalWidth;
 		}
 		
 		/**
@@ -355,7 +355,7 @@ package temple.ui.layout.liquid
 		{
 			if (!isNaN(value) && value >= 0)
 			{
-				this._minimalWidth = value;
+				_minimalWidth = value;
 			}
 		}
 		
@@ -364,7 +364,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get scaleX():Number
 		{
-			return this.displayObject.scaleX;
+			return displayObject.scaleX;
 		}
 
 		/**
@@ -372,7 +372,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get top():Number
 		{
-			return this._top;
+			return _top;
 		}
 		
 		/**
@@ -380,10 +380,10 @@ package temple.ui.layout.liquid
 		 */
 		public function set top(value:Number):void
 		{
-			this._top = value;
-			this._verticalCenter = NaN;
-			this._relativeY = NaN;
-			if (!isNaN(this._bottom)) this._relativeHeight = NaN;
+			_top = value;
+			_verticalCenter = NaN;
+			_relativeY = NaN;
+			if (!isNaN(_bottom)) _relativeHeight = NaN;
 		}
 
 		/**
@@ -391,7 +391,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get bottom():Number
 		{
-			return this._bottom;
+			return _bottom;
 		}
 		
 		/**
@@ -399,10 +399,10 @@ package temple.ui.layout.liquid
 		 */
 		public function set bottom(value:Number):void
 		{
-			this._bottom = value;
-			this._verticalCenter = NaN;
-			this._relativeY = NaN;
-			if (!isNaN(this._top)) this._relativeHeight = NaN;
+			_bottom = value;
+			_verticalCenter = NaN;
+			_relativeY = NaN;
+			if (!isNaN(_top)) _relativeHeight = NaN;
 		}
 
 		/**
@@ -410,7 +410,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get verticalCenter():Number
 		{
-			return this._verticalCenter;
+			return _verticalCenter;
 		}
 		
 		/**
@@ -418,10 +418,10 @@ package temple.ui.layout.liquid
 		 */
 		public function set verticalCenter(value:Number):void
 		{
-			this._verticalCenter = value;
-			this._top = NaN;
-			this._bottom = NaN;
-			this._relativeY = NaN;
+			_verticalCenter = value;
+			_top = NaN;
+			_bottom = NaN;
+			_relativeY = NaN;
 		}
 		
 		/**
@@ -429,7 +429,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relativeY():Number
 		{
-			return this._relativeY;
+			return _relativeY;
 		}
 		
 		/**
@@ -439,10 +439,10 @@ package temple.ui.layout.liquid
 		{
 			if (value < 0 || value > 1) throwError(new TempleArgumentError(this, 'relativeY must be between 0 and 1, (' + value + ')'));
 			
-			this._relativeY = value;
-			this._top = NaN;
-			this._bottom = NaN;
-			this._verticalCenter = NaN;
+			_relativeY = value;
+			_top = NaN;
+			_bottom = NaN;
+			_verticalCenter = NaN;
 		}
 		
 		/**
@@ -450,7 +450,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get y():Number
 		{
-			return this.displayObject.y;
+			return displayObject.y;
 		}
 
 		/**
@@ -458,7 +458,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get height():Number
 		{
-			return isNaN(this._absoluteHeight) ? this.displayObject.height : this._absoluteHeight;
+			return isNaN(_absoluteHeight) ? displayObject.height : _absoluteHeight;
 		}
 		
 		/**
@@ -466,7 +466,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relativeHeight():Number 
 		{
-			return this._relativeHeight;
+			return _relativeHeight;
 		}
 
 		/**
@@ -475,7 +475,7 @@ package temple.ui.layout.liquid
 		public function set relativeHeight(value:Number):void 
 		{
 			if (value < 0 || value > 1) throwError(new TempleArgumentError(this, 'relativehHeigth must be between 0 and 1, (' + value + ')'));
-			this._relativeHeight = value;
+			_relativeHeight = value;
 		}
 		
 		/**
@@ -483,7 +483,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get absoluteHeight():Number 
 		{
-			return this._absoluteHeight;
+			return _absoluteHeight;
 		}
 
 		/**
@@ -491,7 +491,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set absoluteHeight(value:Number):void 
 		{
-			this._absoluteHeight = value;
+			_absoluteHeight = value;
 		}
 
 		/**
@@ -499,7 +499,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get minimalHeight():Number
 		{
-			return this._minimalHeight;
+			return _minimalHeight;
 		}
 		
 		/**
@@ -509,7 +509,7 @@ package temple.ui.layout.liquid
 		{
 			if (!isNaN(value) && value >= 0)
 			{
-				this._minimalHeight = value;
+				_minimalHeight = value;
 			}
 		}
 		
@@ -518,7 +518,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get scaleY():Number
 		{
-			return this.displayObject.scaleY;
+			return displayObject.scaleY;
 		}
 		
 		/**
@@ -526,7 +526,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relatedObject():ILiquidRelatedObject
 		{
-			return this._relatedObject;
+			return _relatedObject;
 		}
 		
 		/**
@@ -537,15 +537,15 @@ package temple.ui.layout.liquid
 			if (value == this) throwError(new TempleArgumentError(this, "relatedObject can not be set to this"));
 			
 			// if we already had a related object, remove listeners
-			if (this._relatedObject)
+			if (_relatedObject)
 			{
-				this._relatedObject.removeEventListener(Event.RESIZE, this.handleRelatedResize);
+				_relatedObject.removeEventListener(Event.RESIZE, handleRelatedResize);
 			}
-			this._relatedObject = value;
+			_relatedObject = value;
 			
-			if (this._relatedObject)
+			if (_relatedObject)
 			{
-				this._relatedObject.addEventListener(Event.RESIZE, this.handleRelatedResize, false, -1);
+				_relatedObject.addEventListener(Event.RESIZE, handleRelatedResize, false, -1);
 			}
 		}
 		
@@ -554,131 +554,133 @@ package temple.ui.layout.liquid
 		 */
 		public function update():void
 		{
+			var displayObject:DisplayObject = this.displayObject;
+			
 			// if behavior is disabled, or we do not have a relatedObject, or we do not have a parent, calculating position is useless 
-			if (!this._enabled || !this._relatedObject || !this.displayObject.parent || !this.displayObject.stage || this._blockRequest)
+			if (!_enabled || !_relatedObject || !displayObject.parent || !displayObject.stage || _blockRequest)
 			{
-				if (this._debug)
+				if (_debug)
 				{
-					if (!this._enabled) this.logDebug("update: LiquidBehavior is disabled, won't update");
-					else if (!this._relatedObject) this.logDebug("update: LiquidBehavior has no relatedObject, won't update");
-					else if (!this.displayObject.parent) this.logDebug("update: displayObject has no parent, won't update");
-					else if (!this.displayObject.stage) this.logDebug("update: displayObject has no stage, won't update");
-					else this.logDebug("update: can't update");
+					if (!_enabled) logDebug("update: LiquidBehavior is disabled, won't update");
+					else if (!_relatedObject) logDebug("update: LiquidBehavior has no relatedObject, won't update");
+					else if (!displayObject.parent) logDebug("update: displayObject has no parent, won't update");
+					else if (!displayObject.stage) logDebug("update: displayObject has no stage, won't update");
+					else logDebug("update: can't update");
 				}
 				return;
 			}
 			
-			if (this._debug) this.logDebug("update: " +
-				(!isNaN(this._left) ? "left: " + this._left + ", " : "") +
-				(!isNaN(this._right) ? "right: " + this._right + ", " : "") +
-				(!isNaN(this._horizontalCenter) ? "horizontalCenter: " + this._horizontalCenter + ", " : "") +
-				(!isNaN(this._relativeX) ? "relativeX: " + this._relativeX + ", " : "") +
-				(!isNaN(this._relativeWidth) ? "relativeWidth: " + this._relativeWidth + ", " : "") +
-				(this._minimalWidth ? "minimalWidth: " + this._minimalWidth + ", " : "") +
-				(!isNaN(this._top) ? "top: " + this._top + ", " : "") +
-				(!isNaN(this._bottom) ? "bottom: " + this._bottom + ", " : "") +
-				(!isNaN(this._verticalCenter) ? "verticalCenter: " + this._verticalCenter + ", " : "") +
-				(!isNaN(this._relativeY) ? "relativeY: " + this._relativeY + ", " : "") +
-				(!isNaN(this._relativeHeight) ? "relativeHeight: " + this._relativeHeight + ", " : "") +
-				(this._minimalHeight ? "minimalHeight: " + this._minimalHeight + ", " : "") + 
-				"relatedObject: " + this._relatedObject + ", width: " + this._relatedObject.width + ", height: " + this._relatedObject.height);
+			if (_debug) logDebug("update: " +
+				(!isNaN(_left) ? "left: " + _left + ", " : "") +
+				(!isNaN(_right) ? "right: " + _right + ", " : "") +
+				(!isNaN(_horizontalCenter) ? "horizontalCenter: " + _horizontalCenter + ", " : "") +
+				(!isNaN(_relativeX) ? "relativeX: " + _relativeX + ", " : "") +
+				(!isNaN(_relativeWidth) ? "relativeWidth: " + _relativeWidth + ", " : "") +
+				(_minimalWidth ? "minimalWidth: " + _minimalWidth + ", " : "") +
+				(!isNaN(_top) ? "top: " + _top + ", " : "") +
+				(!isNaN(_bottom) ? "bottom: " + _bottom + ", " : "") +
+				(!isNaN(_verticalCenter) ? "verticalCenter: " + _verticalCenter + ", " : "") +
+				(!isNaN(_relativeY) ? "relativeY: " + _relativeY + ", " : "") +
+				(!isNaN(_relativeHeight) ? "relativeHeight: " + _relativeHeight + ", " : "") +
+				(_minimalHeight ? "minimalHeight: " + _minimalHeight + ", " : "") + 
+				"relatedObject: " + _relatedObject + ", width: " + _relatedObject.width + ", height: " + _relatedObject.height);
 			
-			this._blockRequest = true;
+			_blockRequest = true;
 
 			var toX:Number;
 			var toY:Number;
 			var toWidth:Number;
 			var toHeight:Number;
 			
-			if (!isNaN(this._relativeWidth)) toWidth = this._relativeWidth * this._relatedObject.width;
-			if (!isNaN(this._relativeHeight)) toHeight = this._relativeHeight * this._relatedObject.height;
+			if (!isNaN(_relativeWidth)) toWidth = _relativeWidth * _relatedObject.width;
+			if (!isNaN(_relativeHeight)) toHeight = _relativeHeight * _relatedObject.height;
 			
-			var bounds:Rectangle = this.displayObject.getBounds(this.displayObject.parent);
+			var bounds:Rectangle = displayObject.getBounds(displayObject.parent);
 			
 			// horitontal
-			if (!isNaN(this._relativeX))
+			if (!isNaN(_relativeX))
 			{
-				toX = (this._relatedObject.width - (!isNaN(toWidth) ? toWidth : bounds.width)) * this._relativeX;
+				toX = (_relatedObject.width - (!isNaN(toWidth) ? toWidth : bounds.width)) * _relativeX;
 			}
 			else
 			{
-				if (!isNaN(this._left))
+				if (!isNaN(_left))
 				{
-					toX = this._left;
-					if (this._resetScale) toX /= this.getRelatedTotalScaleX();
+					toX = _left;
+					if (_resetScale) toX /= getRelatedTotalScaleX();
 				}
-				else if (!isNaN(this._horizontalCenter))
+				else if (!isNaN(_horizontalCenter))
 				{
-					toX = (this._relatedObject.width / this._relatedObject.scaleX) * .5 + (this._horizontalCenter / this.getRelatedTotalScaleX()) - (!isNaN(toWidth) ? toWidth : bounds.width) * .5;
+					toX = (_relatedObject.width / _relatedObject.scaleX) * .5 + (_horizontalCenter / getRelatedTotalScaleX()) - (!isNaN(toWidth) ? toWidth : bounds.width) * .5;
 				}
 				
-				if (!isNaN(this._right))
+				if (!isNaN(_right))
 				{
-					if (isNaN(this._left))
+					if (isNaN(_left))
 					{
-						toX = this._relatedObject.width / this._relatedObject.scaleX - (this._right / this.getRelatedTotalScaleX() + (!isNaN(toWidth) ? toWidth : bounds.width));
+						toX = _relatedObject.width / _relatedObject.scaleX - (_right / getRelatedTotalScaleX() + (!isNaN(toWidth) ? toWidth : bounds.width));
 					}
 					else
 					{
-						toWidth = (this._relatedObject.width - this._right) - this._left;
+						toWidth = (_relatedObject.width - _right) - _left;
 					}
 				}
 			}
-			if (isNaN(toWidth) && bounds.width < this._minimalWidth)
+			if (isNaN(toWidth) && bounds.width < _minimalWidth)
 			{
-				toWidth = this._minimalWidth;
+				toWidth = _minimalWidth;
 			}
-			else if (toWidth < this._minimalWidth) toWidth = this._minimalWidth;
+			else if (toWidth < _minimalWidth) toWidth = _minimalWidth;
 			
 			// vertical
-			if (!isNaN(this._relativeY))
+			if (!isNaN(_relativeY))
 			{
-				toY = (this._relatedObject.height - (!isNaN(toHeight) ? toHeight : bounds.height)) * this._relativeY;
+				toY = (_relatedObject.height - (!isNaN(toHeight) ? toHeight : bounds.height)) * _relativeY;
 			}
 			else
 			{
-				if (!isNaN(this._top))
+				if (!isNaN(_top))
 				{
-					toY = this._top;
-					if (this._resetScale) toY /= this.getRelatedTotalScaleY();
+					toY = _top;
+					if (_resetScale) toY /= getRelatedTotalScaleY();
 				}
-				else if (!isNaN(this._verticalCenter))
+				else if (!isNaN(_verticalCenter))
 				{
-					toY = (this._relatedObject.height / this._relatedObject.scaleY) * .5 + (this._verticalCenter / this.getRelatedTotalScaleY()) - (!isNaN(toHeight) ? toHeight : bounds.height) * .5;
+					toY = (_relatedObject.height / _relatedObject.scaleY) * .5 + (_verticalCenter / getRelatedTotalScaleY()) - (!isNaN(toHeight) ? toHeight : bounds.height) * .5;
 				}
-				if (!isNaN(this._bottom))
+				if (!isNaN(_bottom))
 				{
-					if (isNaN(this._top))
+					if (isNaN(_top))
 					{
-						if (this._resetScale)
+						if (_resetScale)
 						{
-							toY = this._relatedObject.height / this._relatedObject.scaleY - (this._bottom / this.getRelatedTotalScaleY() + (!isNaN(toHeight) ? toHeight : bounds.height));
+							toY = _relatedObject.height / _relatedObject.scaleY - (_bottom / getRelatedTotalScaleY() + (!isNaN(toHeight) ? toHeight : bounds.height));
 						}
 						else
 						{
-							toY = this._relatedObject.height - this._bottom - (!isNaN(toHeight) ? toHeight : bounds.height);
-							if (this._resetScale) toY /= this.getRelatedTotalScaleY();
+							toY = _relatedObject.height - _bottom - (!isNaN(toHeight) ? toHeight : bounds.height);
+							if (_resetScale) toY /= getRelatedTotalScaleY();
 						}
 					}
 					else
 					{
-						toHeight = (this._relatedObject.height - this._bottom) - this._top;
+						toHeight = (_relatedObject.height - _bottom) - _top;
 					}
 				}
 			}
-			if (isNaN(toHeight) && bounds.height < this._minimalHeight)
+			if (isNaN(toHeight) && bounds.height < _minimalHeight)
 			{
-				toHeight = this._minimalHeight;
+				toHeight = _minimalHeight;
 			}
-			else if (toHeight < this._minimalHeight) toHeight = this._minimalHeight;
+			else if (toHeight < _minimalHeight) toHeight = _minimalHeight;
 			
 			if (toWidth || toHeight || !isNaN(toX) || !isNaN(toY))
 			{
-				if (this._debug) this.logDebug("update to: width: " + toWidth + ", height: " + toHeight + ", x: " + toX + ", y: " + toY);
+				if (_debug) logDebug("update to: width: " + toWidth + ", height: " + toHeight + ", x: " + toX + ", y: " + toY);
 				
 				var resized:Boolean;
 				
-				if (!this._allowNegativePosition)
+				if (!_allowNegativePosition)
 				{
 					if (!isNaN(toX) && toX < 0)
 					{
@@ -692,76 +694,76 @@ package temple.ui.layout.liquid
 				
 				if (!isNaN(toWidth))
 				{
-					if (this.displayObject.rotation == 0)
+					if (displayObject.rotation == 0)
 					{
-						if (this._resetScale) toWidth /= this.getRelatedTotalScaleX();
-						if (this._snapToPixels) toWidth = Math.round(toWidth);
+						if (_resetScale) toWidth /= getRelatedTotalScaleX();
+						if (_snapToPixels) toWidth = Math.round(toWidth);
 						// do not set width to 0, this will cause weird behavior. So make it at least 1
 						if (toWidth < 1) toWidth = 1;
 						
 						// do not set width if displayObject does not have a width
-						if ((this.displayObject.width || this.displayObject is ILiquidObject) && this.displayObject.width != toWidth)
+						if ((displayObject.width || displayObject is ILiquidObject) && displayObject.width != toWidth)
 						{
-							if (this._useScale)
+							if (_useScale)
 							{
-								this.displayObject.scaleX *= toWidth / this.displayObject.width;
+								displayObject.scaleX *= toWidth / displayObject.width;
 							}
 							else
 							{
-								this.displayObject.width = toWidth;
+								displayObject.width = toWidth;
 							}
 							resized = true;
 						}
 					}
 					else
 					{
-						this.logWarn("You should not change dimensions on rotated objects! Width is not changed.");
+						logWarn("You should not change dimensions on rotated objects! Width is not changed.");
 					}
 				}
-				else if (this._resetScale && this.displayObject.width)
+				else if (_resetScale && displayObject.width)
 				{
-					var relatedScaleX:Number = this.getRelatedTotalScaleX();
-					if (this.displayObject.scaleX != 1 / relatedScaleX)
+					var relatedScaleX:Number = getRelatedTotalScaleX();
+					if (displayObject.scaleX != 1 / relatedScaleX)
 					{
-						this.displayObject.scaleX = 1 / relatedScaleX;
+						displayObject.scaleX = 1 / relatedScaleX;
 						resized = true;
 					}
 				}
 				
 				if (!isNaN(toHeight))
 				{
-					if (this.displayObject.rotation == 0)
+					if (displayObject.rotation == 0)
 					{
-						if (this._resetScale) toHeight /= this.getRelatedTotalScaleY();
-						if (this._snapToPixels) toHeight = Math.round(toHeight);
+						if (_resetScale) toHeight /= getRelatedTotalScaleY();
+						if (_snapToPixels) toHeight = Math.round(toHeight);
 						// do not set height to 0, this will cause weird behavior. So make it at least 1
 						if (toHeight < 1) toHeight = 1;
 						
 						// do not set height if displayObject does not have a height
-						if ((this.displayObject.height || this.displayObject is ILiquidObject) && this.displayObject.height != toHeight)
+						if ((displayObject.height || displayObject is ILiquidObject) && displayObject.height != toHeight)
 						{
-							if (this._useScale)
+							if (_useScale)
 							{
-								this.displayObject.scaleY *= toHeight / this.displayObject.height;
+								displayObject.scaleY *= toHeight / displayObject.height;
 							}
 							else
 							{
-								this.displayObject.height = toHeight;
+								displayObject.height = toHeight;
 							}
 							resized = true;
 						}
 					}
 					else
 					{
-						this.logWarn("You should not change dimensions on rotated objects! Height is not changed");
+						logWarn("You should not change dimensions on rotated objects! Height is not changed");
 					}
 				}
-				else if (this._resetScale && this.displayObject.height)
+				else if (_resetScale && displayObject.height)
 				{
-					var relatedScaleY:Number = this.getRelatedTotalScaleY();
-					if (this.displayObject.scaleY != 1 / relatedScaleY)
+					var relatedScaleY:Number = getRelatedTotalScaleY();
+					if (displayObject.scaleY != 1 / relatedScaleY)
 					{
-						this.displayObject.scaleY = 1 / relatedScaleY;
+						displayObject.scaleY = 1 / relatedScaleY;
 						resized = true;
 					}
 				}
@@ -769,88 +771,88 @@ package temple.ui.layout.liquid
 				if (!isNaN(toX) || !isNaN(toY))
 				{
 					var offset:Point;
-					var relatedOffset:Point = this.relatedObject.offset || new Point(0, 0);
+					var relatedOffset:Point = relatedObject.offset || new Point(0, 0);
 					
-					if (this.displayObject.rotation == 0)
+					if (displayObject.rotation == 0)
 					{
 						offset = new Point(0,0);
 					}
 					else
 					{
 						offset = bounds.topLeft;
-						offset.x -= this.displayObject.x;
-						offset.y -= this.displayObject.y;
+						offset.x -= displayObject.x;
+						offset.y -= displayObject.y;
 					}
 					
-					offset = this.relatedObject.displayObject.globalToLocal(this.displayObject.parent.localToGlobal(offset));
+					offset = relatedObject.displayObject.globalToLocal(displayObject.parent.localToGlobal(offset));
 					
 					if (!isNaN(toX))
 					{
-						this.displayObject.x = (this._snapToPixels ? Math.round(toX - offset.x) : toX - offset.x) + relatedOffset.x;
+						displayObject.x = (_snapToPixels ? Math.round(toX - offset.x) : toX - offset.x) + relatedOffset.x;
 					}
 					
 					if (!isNaN(toY))
 					{
-						this.displayObject.y = (this._snapToPixels ? Math.round(toY - offset.y) : toY - offset.y) + relatedOffset.x;
+						displayObject.y = (_snapToPixels ? Math.round(toY - offset.y) : toY - offset.y) + relatedOffset.x;
 					}
 				}
 				
-				if (this._keepAspectRatio && this.scaleX != this.scaleY && this._reUpdatePossible)
+				if (_keepAspectRatio && scaleX != scaleY && _reUpdatePossible)
 				{
-					this._reUpdatePossible = false;
+					_reUpdatePossible = false;
 					
-					if (!isNaN(this._top) && !isNaN(this._bottom))
+					if (!isNaN(_top) && !isNaN(_bottom))
 					{
-						this.displayObject.scaleX = this.scaleY;
-						this._reUpdatePossible = true;
+						displayObject.scaleX = scaleY;
+						_reUpdatePossible = true;
 					}
-					else if (!isNaN(this._left) && !isNaN(this._right))
+					else if (!isNaN(_left) && !isNaN(_right))
 					{
-						this.displayObject.scaleY = this.scaleX;
-						this._reUpdatePossible = true;
+						displayObject.scaleY = scaleX;
+						_reUpdatePossible = true;
 					}
 					
-					if (this._reUpdatePossible)
+					if (_reUpdatePossible)
 					{
-						this._reUpdatePossible = false;
-						this.update();
+						_reUpdatePossible = false;
+						update();
 						resized = true;
 					}
-					this._reUpdatePossible = true;
+					_reUpdatePossible = true;
 				}
 				
 				if (resized)
 				{
-					this.displayObject.dispatchEvent(new Event(Event.RESIZE));
+					displayObject.dispatchEvent(new Event(Event.RESIZE));
 				}
 				
-				if (this._scaleMode && this._scaleMode != ScaleMode.EXACT_FIT)
+				if (_scaleMode && _scaleMode != ScaleMode.EXACT_FIT)
 				{
-					switch (this._scaleMode)
+					switch (_scaleMode)
 					{
 						case ScaleMode.NO_BORDER:
 						{
-							this.displayObject.scaleX = this.displayObject.scaleY = Math.max(this.displayObject.scaleX, this.displayObject.scaleY);
+							displayObject.scaleX = displayObject.scaleY = Math.max(displayObject.scaleX, displayObject.scaleY);
 							break;
 						}
 						case ScaleMode.SHOW_ALL:
 						{
-							this.displayObject.scaleX = this.displayObject.scaleY = Math.min(this.displayObject.scaleX, this.displayObject.scaleY);
+							displayObject.scaleX = displayObject.scaleY = Math.min(displayObject.scaleX, displayObject.scaleY);
 							break;
 						}
 						case ScaleMode.NO_SCALE:
 						{
-							this.displayObject.scaleX = this.displayObject.scaleY = 1;
+							displayObject.scaleX = displayObject.scaleY = 1;
 							break;
 						}
 						default:
 						{
-							throwError(new TempleError(this, "Unhandled value for scaleMode: '" + this._scaleMode + "'"));
+							throwError(new TempleError(this, "Unhandled value for scaleMode: '" + _scaleMode + "'"));
 							break;
 						}
 					}
 					// Align horizontal
-					switch (this._align)
+					switch (_align)
 					{
 						case Align.LEFT:
 						case Align.BOTTOM_LEFT:
@@ -865,19 +867,19 @@ package temple.ui.layout.liquid
 						case Align.TOP:
 						case null:
 						{
-							this.displayObject.x += .5 * (toWidth - this.displayObject.width);
+							displayObject.x += .5 * (toWidth - displayObject.width);
 							break;
 						}
 						case Align.RIGHT:
 						case Align.BOTTOM_RIGHT:
 						case Align.TOP_RIGHT:
 						{
-							this.displayObject.x += toWidth - this.displayObject.width;
+							displayObject.x += toWidth - displayObject.width;
 							break;
 						}
 					}
 					// Align vertizal
-					switch (this._align)
+					switch (_align)
 					{
 						case Align.TOP:
 						case Align.TOP_LEFT:
@@ -892,20 +894,20 @@ package temple.ui.layout.liquid
 						case Align.RIGHT:
 						case null:
 						{
-							this.displayObject.y += .5 * (toHeight - this.displayObject.height);
+							displayObject.y += .5 * (toHeight - displayObject.height);
 							break;
 						}
 						case Align.BOTTOM:
 						case Align.BOTTOM_LEFT:
 						case Align.BOTTOM_RIGHT:
 						{
-							this.displayObject.y += toHeight - this.displayObject.height;
+							displayObject.y += toHeight - displayObject.height;
 							break;
 						}
 					}
 				}
 			}
-			this._blockRequest = false;
+			_blockRequest = false;
 		}
 		
 		/**
@@ -913,19 +915,19 @@ package temple.ui.layout.liquid
 		 */
 		public function isLiquid():Boolean
 		{
-			return 	!isNaN(this._left) || 
-					!isNaN(this._right) || 
-					!isNaN(this._horizontalCenter) ||
-					!isNaN(this._relativeX) ||
-					!isNaN(this._relativeWidth) ||
-					!isNaN(this._minimalWidth) ||
+			return 	!isNaN(_left) || 
+					!isNaN(_right) || 
+					!isNaN(_horizontalCenter) ||
+					!isNaN(_relativeX) ||
+					!isNaN(_relativeWidth) ||
+					!isNaN(_minimalWidth) ||
 					
-					!isNaN(this._top) || 
-					!isNaN(this._bottom) || 
-					!isNaN(this._verticalCenter);
-					!isNaN(this._relativeY);
-					!isNaN(this._relativeHeight);
-					!isNaN(this._minimalHeight);
+					!isNaN(_top) || 
+					!isNaN(_bottom) || 
+					!isNaN(_verticalCenter) ||
+					!isNaN(_relativeY) ||
+					!isNaN(_relativeHeight) ||
+					!isNaN(_minimalHeight);
 		}
 		
 		/**
@@ -933,7 +935,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get resetRelatedScale():Boolean
 		{
-			return this._resetScale;
+			return _resetScale;
 		}
 		
 		/**
@@ -941,7 +943,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set resetRelatedScale(value:Boolean):void
 		{
-			this._resetScale = value;
+			_resetScale = value;
 		}
 		
 		
@@ -950,7 +952,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get offset():Point
 		{
-			return this.displayObject.getBounds(this.displayObject).topLeft;
+			return displayObject.getBounds(displayObject).topLeft;
 		}
 
 		/**
@@ -958,7 +960,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 
 		/**
@@ -966,30 +968,30 @@ package temple.ui.layout.liquid
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			if (this._enabled == value) return;
+			if (_enabled == value) return;
 			
-			this._enabled = value;
+			_enabled = value;
 			
 			if (value)
 			{
-				if (this._relatedObject)
+				if (_relatedObject)
 				{
 					// Set the scale handler
-					this._relatedObject.addEventListener(Event.RESIZE, this.handleRelatedResize, false, -1);
+					_relatedObject.addEventListener(Event.RESIZE, handleRelatedResize, false, -1);
 					
 					// immediatly update the view.
-					this.update();
+					update();
 				}
 			}
 			else
 			{
 				// remove the eventlisteners.
-				if (this._relatedObject) this._relatedObject.removeEventListener(Event.RESIZE, this.handleRelatedResize);
+				if (_relatedObject) _relatedObject.removeEventListener(Event.RESIZE, handleRelatedResize);
 				
-				if (this._debugShape)
+				if (_debugShape)
 				{
-					this._debugShape.destruct();
-					this._debugShape = null;
+					_debugShape.destruct();
+					_debugShape = null;
 				}
 			}
 		}
@@ -999,7 +1001,7 @@ package temple.ui.layout.liquid
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -1007,7 +1009,7 @@ package temple.ui.layout.liquid
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 
 		/**
@@ -1015,7 +1017,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get snapToPixels():Boolean
 		{
-			return this._snapToPixels;
+			return _snapToPixels;
 		}
 
 		/**
@@ -1023,7 +1025,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set snapToPixels(value:Boolean):void
 		{
-			this._snapToPixels = value;
+			_snapToPixels = value;
 		}
 		
 		/**
@@ -1031,7 +1033,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get keepAspectRatio():Boolean
 		{
-			return this._keepAspectRatio;
+			return _keepAspectRatio;
 		}
 		
 		/**
@@ -1039,7 +1041,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set keepAspectRatio(value:Boolean):void
 		{
-			this._keepAspectRatio = value;
+			_keepAspectRatio = value;
 		}
 		
 		/**
@@ -1047,7 +1049,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get adjustRelated():Boolean
 		{
-			return this._adjustRelated;
+			return _adjustRelated;
 		}
 		
 		/**
@@ -1055,7 +1057,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set adjustRelated(value:Boolean):void
 		{
-			this._adjustRelated = value;
+			_adjustRelated = value;
 		}
 		
 		/**
@@ -1064,7 +1066,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get allowNegativePosition():Boolean
 		{
-			return this._allowNegativePosition;
+			return _allowNegativePosition;
 		}
 		
 		/**
@@ -1072,7 +1074,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set allowNegativePosition(value:Boolean):void
 		{
-			this._allowNegativePosition = value;
+			_allowNegativePosition = value;
 		}
 		
 		/**
@@ -1083,7 +1085,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get useScale():Boolean
 		{
-			return this._useScale;
+			return _useScale;
 		}
 
 		/**
@@ -1091,7 +1093,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set useScale(value:Boolean):void
 		{
-			this._useScale = value;
+			_useScale = value;
 		}
 		
 		/**
@@ -1099,7 +1101,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get scaleMode():String
 		{
-			return this._scaleMode;
+			return _scaleMode;
 		}
 
 		/**
@@ -1115,7 +1117,7 @@ package temple.ui.layout.liquid
 				case ScaleMode.EXACT_FIT:
 				case null:
 				{
-					this._scaleMode = value;
+					_scaleMode = value;
 					break;
 				}
 				default:
@@ -1131,7 +1133,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get align():String
 		{
-			return this._align;
+			return _align;
 		}
 
 		/**
@@ -1153,7 +1155,7 @@ package temple.ui.layout.liquid
 				case Align.NONE:
 				case null:
 				{
-					this._align = value;
+					_align = value;
 					break;
 				}
 				default:
@@ -1170,7 +1172,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -1178,19 +1180,19 @@ package temple.ui.layout.liquid
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 			
-			if (this._debug)
+			if (_debug)
 			{
-				this.displayObject.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame, false, int.MIN_VALUE);
+				displayObject.addEventListener(Event.ENTER_FRAME, handleEnterFrame, false, int.MIN_VALUE);
 			}
 			else
 			{
-				this.displayObject.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				if (this._debugShape)
+				displayObject.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				if (_debugShape)
 				{
-					this._debugShape.destruct();
-					this._debugShape = null;
+					_debugShape.destruct();
+					_debugShape = null;
 				}
 			}
 			
@@ -1201,7 +1203,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get debugColor():uint
 		{
-			return this._debugColor;
+			return _debugColor;
 		}
 		
 		/**
@@ -1209,37 +1211,37 @@ package temple.ui.layout.liquid
 		 */
 		public function set debugColor(value:uint):void
 		{
-			this._debugColor = value;
+			_debugColor = value;
 		}
 
 		private function handleAddedToStage(event:Event):void
 		{
-			if (!this.relatedObject)
+			if (!relatedObject)
 			{
-				this.relatedObject = this.findLiquidParent(this.displayObject);
+				relatedObject = findLiquidParent(displayObject);
 				
-				if (!this.relatedObject)
+				if (!relatedObject)
 				{
-					this.relatedObject = LiquidStage.getInstance(this.displayObject.stage);
+					relatedObject = LiquidStage.getInstance(displayObject.stage);
 				}
 			}
-			this.update();
+			update();
 		}
 
 		private function handleRelatedResize(event:Event):void
 		{
-			this.update();
+			update();
 		}
 		
 		private function handleTargetResize(event:Event):void
 		{
-			if (this._blockRequest)
+			if (_blockRequest)
 			{
-				this.dispatchEvent(event.clone());
+				dispatchEvent(event.clone());
 			}
 			else
 			{
-				this.update();
+				update();
 			}
 		}
 
@@ -1248,24 +1250,24 @@ package temple.ui.layout.liquid
 		 */
 		private function updateRelatedMinimalWidth():void
 		{
-			if (this._relatedObject && this._adjustRelated)
+			if (_relatedObject && _adjustRelated)
 			{
 				var minimalWidth:Number;
-				if (!isNaN(this._left) && !isNaN(this._right))
+				if (!isNaN(_left) && !isNaN(_right))
 				{
-					minimalWidth = this._left + this._right + this._minimalWidth;
+					minimalWidth = _left + _right + _minimalWidth;
 				}
 				else
 				{
-					minimalWidth = this.displayObject.width;
+					minimalWidth = displayObject.width;
 					
-					if (!isNaN(this._left)) minimalWidth += this._left;
-					if (!isNaN(this._right)) minimalWidth += this._right;
+					if (!isNaN(_left)) minimalWidth += _left;
+					if (!isNaN(_right)) minimalWidth += _right;
 				}
 				
-				if (!isNaN(minimalWidth) && (isNaN(this._relatedObject.minimalWidth) || this._relatedObject.minimalWidth < minimalWidth))
+				if (!isNaN(minimalWidth) && (isNaN(_relatedObject.minimalWidth) || _relatedObject.minimalWidth < minimalWidth))
 				{
-					this._relatedObject.minimalWidth = minimalWidth;
+					_relatedObject.minimalWidth = minimalWidth;
 				}
 			}
 		}
@@ -1275,23 +1277,23 @@ package temple.ui.layout.liquid
 		 */
 		private function updateRelatedMinimalHeight():void
 		{
-			if (this._relatedObject && this._adjustRelated)
+			if (_relatedObject && _adjustRelated)
 			{
 				var minimalHeight:Number;
-				if (!isNaN(this._top) && !isNaN(this._bottom))
+				if (!isNaN(_top) && !isNaN(_bottom))
 				{
-					minimalHeight = this._top + this._bottom + this._minimalHeight;
+					minimalHeight = _top + _bottom + _minimalHeight;
 				}
 				else
 				{
-					minimalHeight = this.displayObject.height;
+					minimalHeight = displayObject.height;
 					
-					if (!isNaN(this._top)) minimalHeight += this._top;
-					if (!isNaN(this._bottom)) minimalHeight += this._bottom;
+					if (!isNaN(_top)) minimalHeight += _top;
+					if (!isNaN(_bottom)) minimalHeight += _bottom;
 				}
-				if (!isNaN(minimalHeight) && (isNaN(this._relatedObject.minimalHeight) || this._relatedObject.minimalHeight < minimalHeight))
+				if (!isNaN(minimalHeight) && (isNaN(_relatedObject.minimalHeight) || _relatedObject.minimalHeight < minimalHeight))
 				{
-					this._relatedObject.minimalHeight = minimalHeight;
+					_relatedObject.minimalHeight = minimalHeight;
 				}
 			}
 		}
@@ -1302,7 +1304,7 @@ package temple.ui.layout.liquid
 		private function getRelatedTotalScaleX():Number
 		{
 			var scale:Number = 1;
-			var related:ILiquidRelatedObject = this._relatedObject;
+			var related:ILiquidRelatedObject = _relatedObject;
 			while (related != null)
 			{
 				scale *= related.scaleX;
@@ -1317,7 +1319,7 @@ package temple.ui.layout.liquid
 		private function getRelatedTotalScaleY():Number
 		{
 			var scale:Number = 1;
-			var related:ILiquidRelatedObject = this._relatedObject;
+			var related:ILiquidRelatedObject = _relatedObject;
 			while (related != null)
 			{
 				scale *= related.scaleY;
@@ -1335,12 +1337,12 @@ package temple.ui.layout.liquid
 			if (displayObject.parent is ILiquidRelatedObject) return displayObject.parent as ILiquidRelatedObject;
 			var liquid:LiquidBehavior = LiquidBehavior.getInstance(displayObject.parent);
 			if (liquid) return liquid;
-			return this.findLiquidParent(displayObject.parent);
+			return findLiquidParent(displayObject.parent);
 		}
 		
 		private function handleEnterFrame(event:Event):void
 		{
-			this.drawBounce();
+			drawBounce();
 		}
 
 		/**
@@ -1348,49 +1350,49 @@ package temple.ui.layout.liquid
 		 */
 		private function drawBounce():void
 		{
-			if (!this.displayObject.stage || !this.displayObject.parent || this.displayObject is ICoreDisplayObject && !(this.displayObject as ICoreDisplayObject).onStage || !this.isDeepVisible(this.displayObject))
+			if (!displayObject.stage || !displayObject.parent || displayObject is ICoreDisplayObject && !(displayObject as ICoreDisplayObject).onStage || !isDeepVisible(displayObject))
 			{
-				if (this._debugShape)
+				if (_debugShape)
 				{
-					this._debugShape.destruct();
-					this._debugShape = null;
+					_debugShape.destruct();
+					_debugShape = null;
 				}
 				return;
 			}
 			
-			if (!this._debugShape)
+			if (!_debugShape)
 			{
-				this._debugShape = new CoreShape("DebugShape: " + this.toString());
-				this.displayObject.stage.addChild(this._debugShape);
+				_debugShape = new CoreShape("DebugShape: " + toString());
+				displayObject.stage.addChild(_debugShape);
 			}
-			var offset:Point = this.displayObject.getRect(this.displayObject).topLeft;
-			offset.x += this.displayObject.x;
-			offset.y += this.displayObject.y;
+			var offset:Point = displayObject.getRect(displayObject).topLeft;
+			offset.x += displayObject.x;
+			offset.y += displayObject.y;
 			
-			var point:Point = this.displayObject.parent.localToGlobal(offset);
+			var point:Point = displayObject.parent.localToGlobal(offset);
 			
 			var bounds:Rectangle;
 			
-			if (this.displayObject.rotation == 0)
+			if (displayObject.rotation == 0)
 			{
-				bounds = new Rectangle(point.x, point.y, this.displayObject.width, this.displayObject.height);
+				bounds = new Rectangle(point.x, point.y, displayObject.width, displayObject.height);
 			}
 			else
 			{
-				bounds = this.displayObject.getBounds(this.displayObject.stage);
+				bounds = displayObject.getBounds(displayObject.stage);
 			}
 			
 			// draw square for boundries
-			this._debugShape.graphics.clear();
-			this._debugShape.graphics.lineStyle(_DEBUG_LINE_THICKNESS, this._debugColor, .3, true, LineScaleMode.NORMAL, CapsStyle.SQUARE, JointStyle.MITER);
-			this._debugShape.graphics.drawRect(bounds.topLeft.x + _DEBUG_LINE_THICKNESS * .5, bounds.topLeft.y + _DEBUG_LINE_THICKNESS * .5, bounds.width - _DEBUG_LINE_THICKNESS * .5, bounds.height - _DEBUG_LINE_THICKNESS * .5);
+			_debugShape.graphics.clear();
+			_debugShape.graphics.lineStyle(_DEBUG_LINE_THICKNESS, _debugColor, .3, true, LineScaleMode.NORMAL, CapsStyle.SQUARE, JointStyle.MITER);
+			_debugShape.graphics.drawRect(bounds.topLeft.x + _DEBUG_LINE_THICKNESS * .5, bounds.topLeft.y + _DEBUG_LINE_THICKNESS * .5, bounds.width - _DEBUG_LINE_THICKNESS * .5, bounds.height - _DEBUG_LINE_THICKNESS * .5);
 			
 			// Draw cross on 0,0 point
-			this._debugShape.graphics.lineStyle(1, this._debugColor, 1);
-			this._debugShape.graphics.moveTo(point.x - _DEBUG_CROSS_SIZE, point.y - _DEBUG_CROSS_SIZE);
-			this._debugShape.graphics.lineTo(point.x + _DEBUG_CROSS_SIZE, point.y + _DEBUG_CROSS_SIZE);
-			this._debugShape.graphics.moveTo(point.x + _DEBUG_CROSS_SIZE, point.y - _DEBUG_CROSS_SIZE);
-			this._debugShape.graphics.lineTo(point.x - _DEBUG_CROSS_SIZE, point.y + _DEBUG_CROSS_SIZE);
+			_debugShape.graphics.lineStyle(1, _debugColor, 1);
+			_debugShape.graphics.moveTo(point.x - _DEBUG_CROSS_SIZE, point.y - _DEBUG_CROSS_SIZE);
+			_debugShape.graphics.lineTo(point.x + _DEBUG_CROSS_SIZE, point.y + _DEBUG_CROSS_SIZE);
+			_debugShape.graphics.moveTo(point.x + _DEBUG_CROSS_SIZE, point.y - _DEBUG_CROSS_SIZE);
+			_debugShape.graphics.lineTo(point.x - _DEBUG_CROSS_SIZE, point.y + _DEBUG_CROSS_SIZE);
 		}
 
 		private function isDeepVisible(displayObject:DisplayObject):Boolean 
@@ -1405,7 +1407,7 @@ package temple.ui.layout.liquid
 			}
 			else
 			{
-				return this.isDeepVisible(displayObject.parent);
+				return isDeepVisible(displayObject.parent);
 			}
 		}
 		
@@ -1414,21 +1416,21 @@ package temple.ui.layout.liquid
 		 */
 		override public function destruct():void
 		{
-			if (this._relatedObject)
+			if (_relatedObject)
 			{
-				this._relatedObject.removeEventListener(Event.RESIZE, this.handleRelatedResize);
-				this._relatedObject = null;
+				_relatedObject.removeEventListener(Event.RESIZE, handleRelatedResize);
+				_relatedObject = null;
 			}
-			if (this.target)
+			if (target)
 			{
-				delete LiquidBehavior._dictionary[this.target];
-				this.displayObject.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.displayObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+				delete LiquidBehavior._dictionary[target];
+				displayObject.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				displayObject.removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 			}
-			if (this._debugShape)
+			if (_debugShape)
 			{
-				this._debugShape.destruct();
-				this._debugShape = null;
+				_debugShape.destruct();
+				_debugShape = null;
 			}
 			super.destruct();
 		}

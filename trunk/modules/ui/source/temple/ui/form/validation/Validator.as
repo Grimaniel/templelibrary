@@ -80,8 +80,8 @@ package temple.ui.form.validation
 
 		public function Validator(autoFocus:Boolean = true) 
 		{
-			this._rules = new Vector.<RuleData>();
-			this._autoFocus = autoFocus;
+			_rules = new Vector.<RuleData>();
+			_autoFocus = autoFocus;
 			addToDebugManager(this);
 		}
 
@@ -92,7 +92,7 @@ package temple.ui.form.validation
 		 */
 		public function addValidationRule(rule:IValidationRule, message:String = null):IValidationRule 
 		{
-			if (rule) this._rules.push(new RuleData(rule, message));
+			if (rule) _rules.push(new RuleData(rule, message));
 			return rule;
 		}
 
@@ -101,17 +101,17 @@ package temple.ui.form.validation
 		 */
 		public function removeElement(element:IHasValue):void
 		{
-			for (var i:int = this._rules.length - 1 ;i >= 0; i--) 
+			for (var i:int = _rules.length - 1 ;i >= 0; i--) 
 			{
-				if (RuleData(this._rules[i]).rule.target == element)
+				if (RuleData(_rules[i]).rule.target == element)
 				{
-					this._rules.splice(i, 1);
+					_rules.splice(i, 1);
 				}
 			}
 			if (element is IEventDispatcher)
 			{
 				// first remove, to prevent double listening
-				IEventDispatcher(element).removeEventListener(Event.CHANGE, this.handleErrorInputFieldChange);
+				IEventDispatcher(element).removeEventListener(Event.CHANGE, handleErrorInputFieldChange);
 			}
 		}
 
@@ -123,10 +123,10 @@ package temple.ui.form.validation
 		{
 			var errors:Vector.<IValidationRule> = new Vector.<IValidationRule>();
 			
-			var leni:uint = this._rules.length;
+			var leni:uint = _rules.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var rule:IValidationRule = RuleData(this._rules[i]).rule;
+				var rule:IValidationRule = RuleData(_rules[i]).rule;
 				
 				// check if target is enabled
 				if (rule.target is IEnableable && IEnableable(rule.target).enabled == false) continue;
@@ -135,9 +135,9 @@ package temple.ui.form.validation
 				{
 					errors.push(rule);
 					
-					if (this.debug) this.logDebug("Not valid: " + rule);
+					if (debug) logDebug("Not valid: " + rule);
 				}
-				else if (this.debug) this.logDebug("Valid: " + rule);
+				else if (debug) logDebug("Valid: " + rule);
 				
 			}
 			return errors;
@@ -152,38 +152,38 @@ package temple.ui.form.validation
 		public function isValid(keepValidating:Boolean = true, showErrors:Boolean = true):Boolean 
 		{
 			var valid:Boolean = true;
-			var focussed:Boolean = !this._autoFocus;
-			this._errorMessage = null;
-			this._errorMessages = new Vector.<String>();
+			var focussed:Boolean = !_autoFocus;
+			_errorMessage = null;
+			_errorMessages = new Vector.<String>();
 			
 			// Create a dictionary for object validation, necessary when there are more then one validation rules on an object
 			var dictionary:Dictionary = new Dictionary(true);
 			
-			var leni:uint = this._rules.length;
+			var leni:uint = _rules.length;
 			
-			if (this.debug) this.logDebug("isValid: validator has " + leni + " rules");
+			if (debug) logDebug("isValid: validator has " + leni + " rules");
 			
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var ruleData:RuleData = RuleData(this._rules[i]);
+				var ruleData:RuleData = RuleData(_rules[i]);
 				
 				// check if target is enabled
 				if (ruleData.rule.target is IEnableable && IEnableable(ruleData.rule.target).enabled == false)
 				{
-					if (this.debug) this.logDebug("Target is not enabled, skip: " + ruleData);
+					if (debug) logDebug("Target is not enabled, skip: " + ruleData);
 					
 					continue;
 				}
 				
 				if (!ruleData.rule.isValid())
 				{
-					if (this._errorMessage == null) this._errorMessage = ruleData.message;
-					if (ruleData.message != null) this._errorMessages.push(ruleData.message);
+					if (_errorMessage == null) _errorMessage = ruleData.message;
+					if (ruleData.message != null) _errorMessages.push(ruleData.message);
 					valid = false;
 					
-					if (this.debug) this.logDebug("Not valid: " + ruleData);
+					if (debug) logDebug("Not valid: " + ruleData);
 				}
-				else if (this.debug) this.logDebug("Valid: " + ruleData);
+				else if (debug) logDebug("Valid: " + ruleData);
 				
 				var target:IHasValue = ruleData.rule.target;
 				if (target is IHasError)
@@ -211,8 +211,8 @@ package temple.ui.form.validation
 					if (target is IEventDispatcher && keepValidating)
 					{
 						// first remove, to prevent double listening
-						IEventDispatcher(target).removeEventListener(Event.CHANGE, this.handleErrorInputFieldChange);
-						IEventDispatcher(target).addEventListener(Event.CHANGE, this.handleErrorInputFieldChange);
+						IEventDispatcher(target).removeEventListener(Event.CHANGE, handleErrorInputFieldChange);
+						IEventDispatcher(target).addEventListener(Event.CHANGE, handleErrorInputFieldChange);
 					}
 				}
 			}
@@ -228,10 +228,10 @@ package temple.ui.form.validation
 			var valid:Boolean = true;
 			var errorMessage:String;
 			
-			var leni:uint = this._rules.length;
+			var leni:uint = _rules.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var ruleData:RuleData = RuleData(this._rules[i]);
+				var ruleData:RuleData = RuleData(_rules[i]);
 				
 				if (ruleData.rule.target == element && !ruleData.rule.isValid())
 				{
@@ -255,9 +255,9 @@ package temple.ui.form.validation
 		public function getElements():Vector.<IHasValue>
 		{
 			var elements:Vector.<IHasValue> = new Vector.<IHasValue>();
-			for (var i:uint = 0, leni:uint = this._rules.length; i < leni; i++) 
+			for (var i:uint = 0, leni:uint = _rules.length; i < leni; i++) 
 			{
-				elements.push(RuleData(this._rules[i]).rule.target);
+				elements.push(RuleData(_rules[i]).rule.target);
 			}
 			return elements;
 		}
@@ -268,10 +268,10 @@ package temple.ui.form.validation
 		public function getRulesForElement(element:IHasValue):Vector.<IValidationRule>
 		{
 			var rules:Vector.<IValidationRule> = new Vector.<IValidationRule>();
-			var leni:uint = this._rules.length;
+			var leni:uint = _rules.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var ruleData:RuleData = RuleData(this._rules[i]);
+				var ruleData:RuleData = RuleData(_rules[i]);
 				if (ruleData.rule.target == element) rules.push(ruleData.rule);
 			}
 			return rules;
@@ -282,12 +282,12 @@ package temple.ui.form.validation
 		 */
 		public function stopRealtimeValidating():void
 		{
-			if (this._rules)
+			if (_rules)
 			{
-				var leni:uint = this._rules.length;
+				var leni:uint = _rules.length;
 				for (var i:uint = 0;i < leni; i++) 
 				{
-					IEventDispatcher(RuleData(_rules[i]).rule.target).removeEventListener(Event.CHANGE, this.handleErrorInputFieldChange);
+					IEventDispatcher(RuleData(_rules[i]).rule.target).removeEventListener(Event.CHANGE, handleErrorInputFieldChange);
 				}
 			}
 		}
@@ -298,7 +298,7 @@ package temple.ui.form.validation
 		 */
 		public function getErrorMessage():String
 		{
-			return this._errorMessage;
+			return _errorMessage;
 		}
 		
 		/**
@@ -307,7 +307,7 @@ package temple.ui.form.validation
 		 */
 		public function getErrorMessages():Vector.<String>
 		{
-			return this._errorMessages;
+			return _errorMessages;
 		}
 		
 		/**
@@ -332,7 +332,7 @@ package temple.ui.form.validation
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -340,7 +340,7 @@ package temple.ui.form.validation
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleErrorInputFieldChange(event:Event):void 
@@ -382,19 +382,19 @@ package temple.ui.form.validation
 		 */
 		override public function destruct():void 
 		{
-			this.stopRealtimeValidating();
+			stopRealtimeValidating();
 			
-			if (this._rules)
+			if (_rules)
 			{
-				for (var i:int = 0; i < this._rules.length; ++i)
+				for (var i:int = 0; i < _rules.length; ++i)
 				{
-					RuleData(this._rules[i]).destruct();
+					RuleData(_rules[i]).destruct();
 				}
-				this._rules = null;
+				_rules = null;
 			}
 			
-			this._errorMessages = null;
-			this._errorMessage = null;
+			_errorMessages = null;
+			_errorMessage = null;
 			
 			super.destruct();
 		}
@@ -412,7 +412,7 @@ final class RuleData extends CoreObject
 	{
 		this.rule = rule;
 		this.message = message;
-		this.toStringProps.push('rule', 'message');
+		toStringProps.push('rule', 'message');
 	}
 	
 	/**
@@ -420,12 +420,12 @@ final class RuleData extends CoreObject
 	 */
 	override public function destruct():void
 	{
-		if (this.rule)
+		if (rule)
 		{
-			this.rule.destruct();
-			this.rule = null;
+			rule.destruct();
+			rule = null;
 		}
-		this.message = null;
+		message = null;
 		
 		super.destruct();
 	}

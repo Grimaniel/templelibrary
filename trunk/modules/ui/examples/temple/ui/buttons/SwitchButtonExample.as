@@ -38,10 +38,10 @@ package
 			
 			// Add buttons in a RadioGroup, so other buttons will be deselected when you select a button.
 			var radioGroup:RadioGroup = new RadioGroup();
-			radioGroup.add(this.mcSwitchButton1);
-			radioGroup.add(this.mcSwitchButton2);
-			radioGroup.add(this.mcSwitchButton3);
-			radioGroup.add(this.mcSwitchButton4);
+			radioGroup.add(mcSwitchButton1);
+			radioGroup.add(mcSwitchButton2);
+			radioGroup.add(mcSwitchButton3);
+			radioGroup.add(mcSwitchButton4);
 		}
 	}
 }

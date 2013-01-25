@@ -64,9 +64,9 @@ package temple.ui.buttons.behaviors
 		public function AbstractButtonBehavior(target:DisplayObject)
 		{
 			super(target);
-			this._enabled = true;
+			_enabled = true;
 			
-			this.toStringProps.push('over', 'down', 'selected', 'disabled', 'focus');
+			toStringProps.push('over', 'down', 'selected', 'disabled', 'focus');
 		}
 		
 		/**
@@ -74,7 +74,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get over():Boolean
 		{
-			return this._over || this._lockOver;
+			return _over || _lockOver;
 		}
 		
 		/**
@@ -82,7 +82,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set over(value:Boolean):void
 		{
-			this._over = value;
+			_over = value;
 		}
 
 		/**
@@ -90,7 +90,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get lockOver():Boolean
 		{
-			return this._lockOver;
+			return _lockOver;
 		}
 
 		/**
@@ -98,7 +98,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set lockOver(value:Boolean):void
 		{
-			this._lockOver = value;
+			_lockOver = value;
 		}
 
 		/**
@@ -106,7 +106,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get down():Boolean
 		{
-			return this._down || this._lockDown;
+			return _down || _lockDown;
 		}
 		
 		/**
@@ -114,7 +114,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set down(value:Boolean):void
 		{
-			this._down = value;
+			_down = value;
 		}
 
 		/**
@@ -122,7 +122,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get lockDown():Boolean
 		{
-			return this._lockDown;
+			return _lockDown;
 		}
 
 		/**
@@ -130,7 +130,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set lockDown(value:Boolean):void
 		{
-			this._lockDown = value;
+			_lockDown = value;
 		}
 
 		/**
@@ -138,7 +138,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get selected():Boolean
 		{
-			return this._selected;
+			return _selected;
 		}
 		
 		/**
@@ -146,7 +146,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set selected(value:Boolean):void
 		{
-			this._selected = value;
+			_selected = value;
 		}
 		
 		/**
@@ -156,7 +156,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get disabled():Boolean
 		{
-			return this._disabled;
+			return _disabled;
 		}
 		
 		/**
@@ -164,7 +164,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set disabled(value:Boolean):void
 		{
-			this._disabled = value;
+			_disabled = value;
 		}
 		
 		/**
@@ -174,7 +174,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 		
 		/**
@@ -182,7 +182,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 		}
 		
 		/**
@@ -190,7 +190,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -198,7 +198,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 		
 		/**
@@ -206,7 +206,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get focus():Boolean
 		{
-			return this._focus;
+			return _focus;
 		}
 		
 		/**
@@ -214,7 +214,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set focus(value:Boolean):void
 		{
-			this._focus = value;
+			_focus = value;
 		}
 
 		/**
@@ -222,7 +222,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -230,7 +230,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 	}
 }

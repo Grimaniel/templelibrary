@@ -40,7 +40,7 @@ package
 			super("Temple - XMLFormServiceExample");
 			
 			// By setting the flash var "success" to true, we fake a successful submit.
-			FlashVars.initialize(this.loaderInfo.parameters);
+			FlashVars.initialize(loaderInfo.parameters);
 			FlashVars.configureVar("success",  false, Boolean);
 			
 			// Create a XMLFormService which handles our form.
@@ -65,14 +65,14 @@ package
 			label.autoSize = TextFieldAutoSize.LEFT;
 			label.text = "This is an example of a login form";
 			label.x = 20;
-			this.addChild(label);
+			addChild(label);
 			
 			// Create a field for the email
 			var emailInput:Input = new Input();
 			emailInput.hintText = "email address";
 			emailInput.x = 20;
 			emailInput.y = 30;
-			this.addChild(emailInput);
+			addChild(emailInput);
 			
 			// Add field to the form
 			form.addElement(emailInput, "email", EmailValidationRule, "This is not a valid email address");
@@ -83,7 +83,7 @@ package
 			passwordInput.hintText = "password";
 			passwordInput.x = 20;
 			passwordInput.y = 60;
-			this.addChild(passwordInput);
+			addChild(passwordInput);
 
 			// Add field to the form
 			form.addElement(passwordInput, "password", EmptyStringValidationRule, "Please fill in your password");
@@ -92,22 +92,22 @@ package
 			var button:Button = new Button();
 			button.x = 20;
 			button.y = 104;
-			this.addChild(button);
+			addChild(button);
 			
 			form.addSubmitButton(button);
 			
 			// Create a label for displaying error or success messages
-			this._label = new TextField();
-			this._label.autoSize = TextFieldAutoSize.LEFT;
-			this._label.x = 20;
-			this._label.y = 82;
-			this.addChild(this._label);
+			_label = new TextField();
+			_label.autoSize = TextFieldAutoSize.LEFT;
+			_label.x = 20;
+			_label.y = 82;
+			addChild(_label);
 			
-			form.addEventListener(FormEvent.RESET, this.handleFormEvent);
-			form.addEventListener(FormEvent.VALIDATE_SUCCESS, this.handleFormEvent);
-			form.addEventListener(FormEvent.VALIDATE_ERROR, this.handleFormEvent);
-			form.addEventListener(FormEvent.SUBMIT_SUCCESS, this.handleFormEvent);
-			form.addEventListener(FormEvent.SUBMIT_ERROR, this.handleFormEvent);
+			form.addEventListener(FormEvent.RESET, handleFormEvent);
+			form.addEventListener(FormEvent.VALIDATE_SUCCESS, handleFormEvent);
+			form.addEventListener(FormEvent.VALIDATE_ERROR, handleFormEvent);
+			form.addEventListener(FormEvent.SUBMIT_SUCCESS, handleFormEvent);
+			form.addEventListener(FormEvent.SUBMIT_ERROR, handleFormEvent);
 			
 			form.reset();
 		}
@@ -118,32 +118,32 @@ package
 			{
 				case FormEvent.RESET:
 				{
-					this._label.text = "";
-					this._label.textColor = Colors.BLACK;
+					_label.text = "";
+					_label.textColor = Colors.BLACK;
 					break;
 				}
 				case FormEvent.VALIDATE_SUCCESS:
 				{
-					this._label.text = "";
-					this._label.textColor = Colors.BLACK;
+					_label.text = "";
+					_label.textColor = Colors.BLACK;
 					break;
 				}
 				case FormEvent.VALIDATE_ERROR:
 				{
-					this._label.text = event.result.message;
-					this._label.textColor = Colors.RED;
+					_label.text = event.result.message;
+					_label.textColor = Colors.RED;
 					break;
 				}
 				case FormEvent.SUBMIT_SUCCESS:
 				{
-					this._label.text = event.result.message;
-					this._label.textColor = Colors.BLACK;
+					_label.text = event.result.message;
+					_label.textColor = Colors.BLACK;
 					break;
 				}
 				case FormEvent.SUBMIT_ERROR:
 				{
-					this._label.text = event.result.message;
-					this._label.textColor = Colors.RED;
+					_label.text = event.result.message;
+					_label.textColor = Colors.RED;
 					break;
 				}
 			}
@@ -168,7 +168,7 @@ class Input extends InputField
 {
 	public function Input()
 	{
-		super(this.addChild(new TextField()) as TextField);
+		super(addChild(new TextField()) as TextField);
 		
 		textField.border = true;
 		textField.background = true;
@@ -176,7 +176,7 @@ class Input extends InputField
 		textField.height = 20;
 		textField.type = TextFieldType.INPUT;
 		textField.filters = [new DropShadowFilter(2, 45, 0, 1, 4, 4, .5, 1, true)];
-		this.addChild(textField);
+		addChild(textField);
 
 		this.hintTextColor = Colors.GRAY;
 		this.errorTextColor = Colors.RED;
@@ -190,7 +190,7 @@ class Input extends InputField
 		errorText.textColor = Colors.RED;
 		errorText.autoSize = TextFieldAutoSize.LEFT;
 		error.addChild(errorText);
-		this.addChild(error);
+		addChild(error);
 		
 	}
 }
@@ -199,11 +199,11 @@ class Button extends MultiStateButton
 {
 	public function Button()
 	{
-		this.graphics.beginFill(Colors.LIGHT_GREY);
-		this.graphics.drawRect(0, 0, 100, 30);
-		this.graphics.endFill();
+		graphics.beginFill(Colors.LIGHT_GREY);
+		graphics.drawRect(0, 0, 100, 30);
+		graphics.endFill();
 		
-		this.filters = [new BevelFilter(2, 45, Colors.WHITE, 1, Colors.BLACK, 1, 2, 2)];
+		filters = [new BevelFilter(2, 45, Colors.WHITE, 1, Colors.BLACK, 1, 2, 2)];
 		
 		// Create an IOverState in the button to highlight the button when the mouse hovers the button.
 		// We use a 'FadeState' for this one, the the highlighting is animated.
@@ -211,7 +211,7 @@ class Button extends MultiStateButton
 		overState.graphics.beginFill(Colors.GRAY);
 		overState.graphics.drawRect(0, 0, 100, 30);
 		overState.graphics.endFill();
-		this.addChild(overState);
+		addChild(overState);
 		
 		var label:TextField = new TextField();
 		label.width = 100;
@@ -224,7 +224,7 @@ class Button extends MultiStateButton
 		
 		label.setTextFormat(format);
 		
-		this.addChild(label);
+		addChild(label);
 	}
 
 }

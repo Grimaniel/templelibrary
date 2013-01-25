@@ -56,15 +56,15 @@ package temple.ui.viewstack
 		{
 			super();
 			
-			if (autoLayout) this._layoutBehavior = new LayoutBehavior(this);
+			if (autoLayout) _layoutBehavior = new LayoutBehavior(this);
 			
-			var leni:int = this.numChildren;
+			var leni:int = numChildren;
 			var child:ICoreDisplayObject;
 			
 			for (var i : int = 0; i < leni; i++)
 			{
-				child = ICoreDisplayObject(this.getChildAt(i));
-				if (child is ISelectable) this.radioGroup.add(ISelectable(child), child, this.radioGroup.items.length == 0);
+				child = ICoreDisplayObject(getChildAt(i));
+				if (child is ISelectable) radioGroup.add(ISelectable(child), child, radioGroup.items.length == 0);
 			}
 		}
 
@@ -76,7 +76,7 @@ package temple.ui.viewstack
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
 			super.addChild(child);
-			if (child is ISelectable) this.radioGroup.add(ISelectable(child), child, this.radioGroup.items.length == 0);
+			if (child is ISelectable) radioGroup.add(ISelectable(child), child, radioGroup.items.length == 0);
 			return child;
 		}
 
@@ -88,7 +88,7 @@ package temple.ui.viewstack
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
 			super.addChildAt(child, index);
-			if (child is ISelectable) this.radioGroup.add(ISelectable(child), child, this.radioGroup.items.length == 0);
+			if (child is ISelectable) radioGroup.add(ISelectable(child), child, radioGroup.items.length == 0);
 			return child;
 		}
 
@@ -99,9 +99,9 @@ package temple.ui.viewstack
 		 */
 		override public function removeChild(child:DisplayObject):DisplayObject
 		{
-			var selectedIndex:uint = this.selectedIndex;
-			if (child is ISelectable && this.radioGroup) this.radioGroup.remove(ISelectable(child));
-			this.resetIndex(child, selectedIndex);
+			var selectedIndex:uint = selectedIndex;
+			if (child is ISelectable && radioGroup) radioGroup.remove(ISelectable(child));
+			resetIndex(child, selectedIndex);
 			child = super.removeChild(child);
 			return child;
 		}
@@ -113,23 +113,23 @@ package temple.ui.viewstack
 		 */
 		override public function removeChildAt(index:int):DisplayObject
 		{
-			var selectedIndex:uint = this.selectedIndex;
-			if (index < this.numChildren && this.getChildAt(index) is ISelectable) this.radioGroup.remove(ISelectable(this.getChildAt(index)));
-			this.resetIndex(child, selectedIndex);
+			var selectedIndex:uint = selectedIndex;
+			if (index < numChildren && getChildAt(index) is ISelectable) radioGroup.remove(ISelectable(getChildAt(index)));
+			resetIndex(child, selectedIndex);
 			var child:DisplayObject = super.removeChildAt(index);
 			return child;
 		}
 		
 		public function get selectedIndex():uint
 		{
-			return this.radioGroup && this.radioGroup.value ? uint(this.getChildIndex(this.radioGroup.value)) : 0;
+			return radioGroup && radioGroup.value ? uint(getChildIndex(radioGroup.value)) : 0;
 		}
 
 		public function set selectedIndex(value:uint):void
 		{
-			if (value >= this.numChildren) return;
+			if (value >= numChildren) return;
 			
-			this.radioGroup.setValue(this.getChildAt(value));
+			radioGroup.setValue(getChildAt(value));
 		}
 		
 		/**
@@ -137,7 +137,7 @@ package temple.ui.viewstack
 		 */
 		public function get autoLayout():Boolean
 		{
-			return this._layoutBehavior ? this._layoutBehavior.enabled : false;
+			return _layoutBehavior ? _layoutBehavior.enabled : false;
 		}
 		
 		/**
@@ -145,13 +145,13 @@ package temple.ui.viewstack
 		 */
 		public function set autoLayout(value:Boolean):void
 		{
-			if (this._layoutBehavior)
+			if (_layoutBehavior)
 			{
-				this._layoutBehavior.enabled = value;
+				_layoutBehavior.enabled = value;
 			}
 			else if (value)
 			{
-				this._layoutBehavior = new LayoutBehavior(this);
+				_layoutBehavior = new LayoutBehavior(this);
 			}
 		}
 		
@@ -160,7 +160,7 @@ package temple.ui.viewstack
 		 */
 		public function get orientation():String
 		{
-			return this._layoutBehavior ? this._layoutBehavior.orientation : null;;
+			return _layoutBehavior ? _layoutBehavior.orientation : null;;
 		}
 		
 		/**
@@ -168,8 +168,8 @@ package temple.ui.viewstack
 		 */
 		public function set orientation(value:String):void
 		{
-			this.autoLayout = true;
-			this._layoutBehavior.orientation = value;
+			autoLayout = true;
+			_layoutBehavior.orientation = value;
 		}
 
 		/**
@@ -177,7 +177,7 @@ package temple.ui.viewstack
 		 */
 		public function get direction():String
 		{
-			return this._layoutBehavior ? this._layoutBehavior.direction : null;
+			return _layoutBehavior ? _layoutBehavior.direction : null;
 		}
 		
 		/**
@@ -185,8 +185,8 @@ package temple.ui.viewstack
 		 */
 		public function set direction(value:String):void
 		{
-			this.autoLayout = true;
-			this._layoutBehavior.direction = value;
+			autoLayout = true;
+			_layoutBehavior.direction = value;
 		}
 		
 		/**
@@ -194,7 +194,7 @@ package temple.ui.viewstack
 		 */
 		public function get spacing():Number
 		{
-			return this._layoutBehavior ? this._layoutBehavior.spacing : NaN;
+			return _layoutBehavior ? _layoutBehavior.spacing : NaN;
 		}
 		
 		/**
@@ -202,8 +202,8 @@ package temple.ui.viewstack
 		 */
 		public function set spacing(value:Number):void
 		{
-			this.autoLayout = true;
-			this._layoutBehavior.spacing = value;
+			autoLayout = true;
+			_layoutBehavior.spacing = value;
 		}
 		
 		/**
@@ -211,22 +211,22 @@ package temple.ui.viewstack
 		 */
 		public function get layoutBehavior():LayoutBehavior
 		{
-			return this._layoutBehavior;
+			return _layoutBehavior;
 		}
 
 		private function resetIndex(removedChild:DisplayObject, oldIndex:int):void
 		{
 			// do this first, because when changing the selected index the 'unselect' is called in this child which is removed
 			
-			if (oldIndex == this.getChildIndex(removedChild))
+			if (oldIndex == getChildIndex(removedChild))
 			{
 				if (oldIndex > 0)
 				{
-					this.selectedIndex = oldIndex - 1;
+					selectedIndex = oldIndex - 1;
 				}
-				else if (this.numChildren > 1)
+				else if (numChildren > 1)
 				{
-					this.selectedIndex = oldIndex + 1;
+					selectedIndex = oldIndex + 1;
 				}
 			}
 		}
@@ -236,7 +236,7 @@ package temple.ui.viewstack
 		 */
 		override public function destruct():void 
 		{
-			this._layoutBehavior = null;
+			_layoutBehavior = null;
 			
 			super.destruct();
 		}

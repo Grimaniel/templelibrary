@@ -70,16 +70,16 @@ package temple.ui.behaviors.textfield
 		public function TextFieldFocusBehavior(target:TextField)
 		{
 			super(target);
-			this.toStringProps.push('name');
+			toStringProps.push('name');
 			if (TextFieldFocusBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has TextFieldFocusBehavior"));
 			TextFieldFocusBehavior._dictionary[target] = this;
 			
 			target.tabEnabled = false;
 			
-			target.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-			target.addEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
-			target.addEventListener(KeyboardEvent.KEY_DOWN, this.dispatchEvent);
-			target.addEventListener(KeyboardEvent.KEY_UP, this.dispatchEvent);
+			target.addEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+			target.addEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
+			target.addEventListener(KeyboardEvent.KEY_DOWN, dispatchEvent);
+			target.addEventListener(KeyboardEvent.KEY_UP, dispatchEvent);
 		}
 		
 		/**
@@ -104,7 +104,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get focus():Boolean
 		{
-			return this._focus;
+			return _focus;
 		}
 		
 		/**
@@ -112,25 +112,25 @@ package temple.ui.behaviors.textfield
 		 */
 		public function set focus(value:Boolean):void
 		{
-			FocusManager.focus = this.textField;
+			FocusManager.focus = textField;
 		}
 		
 		private function handleFocusIn(event:FocusEvent):void 
 		{
-			this._focus = true;
+			_focus = true;
 		}
 
 		private function handleFocusOut(event:FocusEvent):void 
 		{
-			this._focus = false;
+			_focus = false;
 		}
 
 		override public function destruct():void 
 		{
-			if (this.textField)
+			if (textField)
 			{
-				target.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-				target.addEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
+				target.addEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+				target.addEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
 			}
 			
 			super.destruct();

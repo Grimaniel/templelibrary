@@ -59,8 +59,8 @@ package temple.ui.buttons.behaviors
 	 * 
 	 * @example
 	 * <listing version="3.0">
-	 * 	this.mcButton.addEventListener(MouseEvent.CLICK, this.handleButtonClick);
-	 * 	new ClickRepeater(this.mcButton);
+	 * 	mcButton.addEventListener(MouseEvent.CLICK, handleButtonClick);
+	 * 	new ClickRepeater(mcButton);
 	 * </listing>
 	 * 
 	 * @includeExample ClickRepeaterExample.as
@@ -99,17 +99,17 @@ package temple.ui.buttons.behaviors
 		 */
 		construct function clickRepeater(target:InteractiveObject, initDelay:uint, repeatDelay:uint, highSpeedWait:Number, highSpeedDelay:uint):void
 		{
-			this._initDelay = initDelay;
-			this._repeatDelay = repeatDelay;
-			this._highSpeedWait = highSpeedWait;
-			this._highSpeedDelay = highSpeedDelay;
+			_initDelay = initDelay;
+			_repeatDelay = repeatDelay;
+			_highSpeedWait = highSpeedWait;
+			_highSpeedDelay = highSpeedDelay;
 			
-			target.addEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
-			target.addEventListener(MouseEvent.CLICK, this.dispatchEvent);
-			target.addEventListener(DestructEvent.DESTRUCT, this.handleTargetDestructed);
+			target.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
+			target.addEventListener(MouseEvent.CLICK, dispatchEvent);
+			target.addEventListener(DestructEvent.DESTRUCT, handleTargetDestructed);
 
-			this._timer = new CoreTimer(this._initDelay);
-			this._timer.addEventListener(TimerEvent.TIMER, this.handleTimerEvent);
+			_timer = new CoreTimer(_initDelay);
+			_timer.addEventListener(TimerEvent.TIMER, handleTimerEvent);
 		}
 
 		
@@ -118,7 +118,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get initDelay():uint
 		{
-			return this._initDelay;
+			return _initDelay;
 		}
 		
 		/**
@@ -126,7 +126,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set initDelay(delay:uint):void 
 		{
-			this._initDelay = delay;
+			_initDelay = delay;
 		}
 
 		/**
@@ -134,7 +134,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get repeatDelay():uint
 		{
-			return this._repeatDelay;
+			return _repeatDelay;
 		}
 		
 		/**
@@ -142,7 +142,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set repeatDelay(delay:uint):void 
 		{
-			this._repeatDelay = delay;
+			_repeatDelay = delay;
 		}
 		
 		/**
@@ -150,7 +150,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get highSpeedDelay():uint
 		{
-			return this._highSpeedDelay;
+			return _highSpeedDelay;
 		}
 		
 		/**
@@ -158,7 +158,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set highSpeedDelay(value:uint):void
 		{
-			this._highSpeedDelay = value;
+			_highSpeedDelay = value;
 		}
 		
 		/**
@@ -166,7 +166,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get highSpeedWait():uint
 		{
-			return this._highSpeedWait;
+			return _highSpeedWait;
 		}
 		
 		/**
@@ -174,76 +174,76 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set highSpeedWait(value:uint):void
 		{
-			this._highSpeedWait = value;
+			_highSpeedWait = value;
 		}
 		
 		private function handleMouseDown(event:MouseEvent):void 
 		{
-			if (this._stage == null) this._stage = this.displayObject.stage;
+			if (_stage == null) _stage = displayObject.stage;
 			
-			this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-			this._stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp, false, 0, true);
+			_stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+			_stage.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp, false, 0, true);
 			
-			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
-			this.displayObject.addEventListener(MouseEvent.ROLL_OUT, this.handleTargetRollOut);
-			this.displayObject.addEventListener(MouseEvent.ROLL_OVER, this.handleTargetRollOver);
+			displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
+			displayObject.addEventListener(MouseEvent.ROLL_OUT, handleTargetRollOut);
+			displayObject.addEventListener(MouseEvent.ROLL_OVER, handleTargetRollOver);
 
-			this._timer.delay = this._initDelay;
-			this._currentDelay = this._repeatDelay;
-			this._timer.start();
+			_timer.delay = _initDelay;
+			_currentDelay = _repeatDelay;
+			_timer.start();
 			
-			this._mouseOverTarget = true;
+			_mouseOverTarget = true;
 			
-			if (!isNaN(this._highSpeedWait))
+			if (!isNaN(_highSpeedWait))
 			{
-				this._highSpeedWaitTimeOut = new TimeOut(this.setHighSpeed, this._highSpeedWait);
+				_highSpeedWaitTimeOut = new TimeOut(setHighSpeed, _highSpeedWait);
 			}
 		}
 		
 		private function handleMouseUp(event:MouseEvent):void 
 		{
-			this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-			if (this._mouseOverTarget) this.displayObject.addEventListener(MouseEvent.CLICK, this.handleClick, false, int.MAX_VALUE);
-			this.displayObject.removeEventListener(MouseEvent.ROLL_OUT, this.handleTargetRollOut);
-			this.displayObject.removeEventListener(MouseEvent.ROLL_OVER, this.handleTargetRollOver);
-			this._timer.stop();
-			if (this._highSpeedWaitTimeOut) this._highSpeedWaitTimeOut.destruct();
+			_stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+			if (_mouseOverTarget) displayObject.addEventListener(MouseEvent.CLICK, handleClick, false, int.MAX_VALUE);
+			displayObject.removeEventListener(MouseEvent.ROLL_OUT, handleTargetRollOut);
+			displayObject.removeEventListener(MouseEvent.ROLL_OVER, handleTargetRollOver);
+			_timer.stop();
+			if (_highSpeedWaitTimeOut) _highSpeedWaitTimeOut.destruct();
 		}
 
 		private function handleClick(event:MouseEvent):void
 		{
-			this.displayObject.removeEventListener(MouseEvent.CLICK, this.handleClick, false);
+			displayObject.removeEventListener(MouseEvent.CLICK, handleClick, false);
 			event.stopImmediatePropagation();
 		}
 		
 		private function handleTargetRollOut(event:MouseEvent):void
 		{
-			this._timer.stop();
-			this._mouseOverTarget = false;
-			if (this._highSpeedWaitTimeOut) this._highSpeedWaitTimeOut.destruct();
+			_timer.stop();
+			_mouseOverTarget = false;
+			if (_highSpeedWaitTimeOut) _highSpeedWaitTimeOut.destruct();
 		}
 
 		private function handleTargetRollOver(event:MouseEvent):void
 		{
-			this._mouseOverTarget = true;
-			this._timer.start();
-			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
+			_mouseOverTarget = true;
+			_timer.start();
+			displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
 		}
 
 		private function handleTimerEvent(event:TimerEvent):void
 		{
-			this._timer.delay = this._currentDelay;
-			this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true));
+			_timer.delay = _currentDelay;
+			displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true));
 		}
 		
 		private function handleTargetDestructed(event:DestructEvent):void
 		{
-			this.destruct();
+			destruct();
 		}
 		
 		private function setHighSpeed():void
 		{
-			this._currentDelay = this._highSpeedDelay;
+			_currentDelay = _highSpeedDelay;
 		}
 
 		/**
@@ -251,25 +251,25 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.displayObject)
+			if (displayObject)
 			{
-				this.displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
-				this.displayObject.removeEventListener(DestructEvent.DESTRUCT, this.handleTargetDestructed);
+				displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
+				displayObject.removeEventListener(DestructEvent.DESTRUCT, handleTargetDestructed);
 			}
-			if (this._stage)
+			if (_stage)
 			{
-				this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-				this._stage = null;
+				_stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+				_stage = null;
 			}
-			if (this._timer)
+			if (_timer)
 			{
-				this._timer.destruct();
-				this._timer = null;
+				_timer.destruct();
+				_timer = null;
 			}
-			if (this._highSpeedWaitTimeOut)
+			if (_highSpeedWaitTimeOut)
 			{
-				this._highSpeedWaitTimeOut.destruct();
-				this._highSpeedWaitTimeOut = null;
+				_highSpeedWaitTimeOut.destruct();
+				_highSpeedWaitTimeOut = null;
 			}
 			super.destruct();
 		}

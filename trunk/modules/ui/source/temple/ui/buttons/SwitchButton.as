@@ -61,7 +61,7 @@ package temple.ui.buttons
 	{
 		public function SwitchButton()
 		{
-			this.addEventListener(MouseEvent.CLICK, this.handleClick);
+			addEventListener(MouseEvent.CLICK, handleClick);
 		}
 		
 		/**
@@ -69,7 +69,7 @@ package temple.ui.buttons
 		 */
 		protected function handleClick(event:MouseEvent):void 
 		{
-			this.selected = !this.selected;
+			selected = !selected;
 		}
 	}
 }

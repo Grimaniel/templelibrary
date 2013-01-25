@@ -62,7 +62,7 @@ package temple.ui.buttons.behaviors
 		{
 			super(type, tunnels);
 			
-			this._status = status;
+			_status = status;
 		}
 		
 		/**
@@ -70,7 +70,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get status():IButtonStatus
 		{
-			return this._status;
+			return _status;
 		}
 
 		/**
@@ -78,7 +78,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function clone():Event
 		{
-			return new ButtonEvent(this.type, this._status, this.tunnels);
+			return new ButtonEvent(type, _status, tunnels);
 		}
 	}
 }

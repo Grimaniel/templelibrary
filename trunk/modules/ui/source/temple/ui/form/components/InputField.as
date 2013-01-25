@@ -102,7 +102,6 @@ package temple.ui.form.components
 	public class InputField extends FormElementComponent implements IHasError, IResettable, ISetValue, IEnableable, IDebuggable
 	{
 		private var _textField:TextField;
-		private var _text:String;
 		private var _hintText:String;
 		private var _prefillText:String;
 		private var _showsHint:Boolean;
@@ -128,27 +127,27 @@ package temple.ui.form.components
 		 */
 		public function InputField(textField:TextField = null) 
 		{
-			if (textField && !this.contains(textField))
+			if (textField && !contains(textField))
 			{
-				textField.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-				textField.addEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
+				textField.addEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+				textField.addEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
 			}
 			
-			this._textField = textField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField || this.addChild(new TextField()) as TextField;
+			_textField = textField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField || addChild(new TextField()) as TextField;
 
-			this.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-			this._textField.defaultTextFormat = this._textField.getTextFormat();
-			this._textField.setTextFormat(this._textField.defaultTextFormat);
-			this._textField.addEventListener(Event.CHANGE, this.handleTextFieldChange, false, 0, true);
-			this._textField.addEventListener(TextEvent.TEXT_INPUT, this.handleTextInput, false, 0, true);
-			this._textField.addEventListener(Event.SCROLL, this.handleTextFieldScroll, false, 0, true);
-			this._textColor = this._hintTextColor = this._errorTextColor = this._textField.textColor;
-			this._normalFontSize = this.fontSize;
+			addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+			_textField.defaultTextFormat = _textField.getTextFormat();
+			_textField.setTextFormat(_textField.defaultTextFormat);
+			_textField.addEventListener(Event.CHANGE, handleTextFieldChange, false, 0, true);
+			_textField.addEventListener(TextEvent.TEXT_INPUT, handleTextInput, false, 0, true);
+			_textField.addEventListener(Event.SCROLL, handleTextFieldScroll, false, 0, true);
+			_textColor = _hintTextColor = _errorTextColor = _textField.textColor;
+			_normalFontSize = fontSize;
 			
-			if (this._textField.multiline) this._submitOnEnter = false;
+			if (_textField.multiline) _submitOnEnter = false;
 
 			// Register TextField for destruction testing
-			Registry.add(this._textField);
+			Registry.add(_textField);
 		}
 		
 		/**
@@ -156,7 +155,7 @@ package temple.ui.form.components
 		 */
 		public function get textField():TextField
 		{
-			return this._textField;
+			return _textField;
 		}
 
 		/**
@@ -164,13 +163,13 @@ package temple.ui.form.components
 		 */
 		override public function set focus(value:Boolean):void
 		{
-			if (value == this.focus) return;
+			if (value == focus) return;
 			
 			if (value)
 			{
-				FocusManager.focus = this._textField;
+				FocusManager.focus = _textField;
 			}
-			else if (this.focus)
+			else if (focus)
 			{
 				FocusManager.focus = null;
 			}
@@ -181,7 +180,7 @@ package temple.ui.form.components
 		 */
 		public function get text():String 
 		{
-			return this._showsHint ? "" : this._textField.text;	
+			return _showsHint ? "" : _textField.text;	
 		}
 
 		/**
@@ -191,21 +190,20 @@ package temple.ui.form.components
 		{
 			if (value == null) value = "";
 			
-			this._textField.text = this._text = value;
-			this._showsHint = false;
-			this.updateHint();
-			this._textField.dispatchEvent(new Event(Event.CHANGE));
+			_textField.text = value;
+			_showsHint = false;
+			updateHint();
+			_textField.dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		public function appendText(newText:String):void
 		{
-			if (this._textField)
+			if (_textField)
 			{
-				this._textField.appendText(newText);
-				this._text = this._textField.text;
-				this._showsHint = false;
-				this.updateHint();
-				this._textField.dispatchEvent(new Event(Event.CHANGE));
+				_textField.appendText(newText);
+				_showsHint = false;
+				updateHint();
+				_textField.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
@@ -214,7 +212,7 @@ package temple.ui.form.components
 		 */
 		public function get textColor():uint
 		{
-			return this._textColor;
+			return _textColor;
 		}
 		
 		/**
@@ -222,8 +220,8 @@ package temple.ui.form.components
 		 */
 		public function set textColor(textColor:uint):void
 		{
-			this._textColor = textColor;
-			if (!this._showsHint && !this.hasError) this._textField.textColor = this._textColor;
+			_textColor = textColor;
+			if (!_showsHint && !hasError) _textField.textColor = _textColor;
 		}
 		
 		/**
@@ -232,7 +230,7 @@ package temple.ui.form.components
 		 */
 		public function get hintText():String 
 		{
-			return this._hintText;
+			return _hintText;
 		}
 
 		/**
@@ -241,13 +239,13 @@ package temple.ui.form.components
 		[Inspectable(name="Hint text", type="String")]
 		public function set hintText(value:String):void 
 		{
-			if (this._textField.text == this._hintText)
+			if (_textField.text == _hintText)
 			{
-				this._textField.text = value;
+				_textField.text = value;
 			}
-			this._hintText = value;
+			_hintText = value;
 			
-			this.updateHint();
+			updateHint();
 		}
 		
 		/**
@@ -255,7 +253,7 @@ package temple.ui.form.components
 		 */
 		public function get prefillText():String 
 		{
-			return this._prefillText;
+			return _prefillText;
 		}
 
 		/**
@@ -264,8 +262,8 @@ package temple.ui.form.components
 		[Inspectable(name="Prefill text", type="String")]
 		public function set prefillText(value:String):void 
 		{
-			this._prefillText = value;
-			this.text = this._prefillText;
+			_prefillText = value;
+			text = _prefillText;
 		}
 
 		/**
@@ -273,7 +271,7 @@ package temple.ui.form.components
 		 */
 		public function get hintTextColor():uint
 		{
-			 return this._hintTextColor;
+			 return _hintTextColor;
 		}
 		
 		/**
@@ -282,9 +280,9 @@ package temple.ui.form.components
 		[Inspectable(name="Hint text color", type="Color", defaultValue="#888888")]
 		public function set hintTextColor(value:uint):void 
 		{
-			this._hintTextColor = value;
+			_hintTextColor = value;
 			
-			if (this._showsHint) this._textField.textColor = this._hintTextColor;
+			if (_showsHint) _textField.textColor = _hintTextColor;
 		}
 		
 		/**
@@ -292,7 +290,7 @@ package temple.ui.form.components
 		 */
 		public function get errorTextColor():uint
 		{
-			 return this._errorTextColor;
+			 return _errorTextColor;
 		}
 		
 		/**
@@ -301,9 +299,9 @@ package temple.ui.form.components
 		[Inspectable(name="Error text color", type="Color", defaultValue="#FF0000")]
 		public function set errorTextColor(value:uint):void 
 		{
-			this._errorTextColor = value;
+			_errorTextColor = value;
 			
-			if (this.hasError) this._textField.textColor = this._errorTextColor;
+			if (hasError) _textField.textColor = _errorTextColor;
 		}
 
 		/**
@@ -311,7 +309,7 @@ package temple.ui.form.components
 		 */
 		public function get enabled():Boolean 
 		{
-			return this._enabled;
+			return _enabled;
 		}
 
 		/**
@@ -320,10 +318,10 @@ package temple.ui.form.components
 		[Inspectable(name="Enabled", type="Boolean", defaultValue=true)]
 		public function set enabled(value:Boolean):void 
 		{
-			this._enabled = this.mouseChildren = this.mouseEnabled = value;
-			this._textField.mouseEnabled = value;
-			this._textField.type = value ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
-			if (value) this._textField.styleSheet = null;
+			_enabled = mouseChildren = mouseEnabled = value;
+			_textField.mouseEnabled = value;
+			_textField.type = value ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
+			if (value) _textField.styleSheet = null;
 		}
 		
 		/**
@@ -331,7 +329,7 @@ package temple.ui.form.components
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 
 		/**
@@ -339,7 +337,7 @@ package temple.ui.form.components
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 
 		/**
@@ -347,7 +345,7 @@ package temple.ui.form.components
 		 */
 		override public function get value():* 
 		{
-			return this._trimValue ? StringUtils.trim(this.text) : this.text;
+			return _trimValue ? StringUtils.trim(text) : text;
 		}
 		
 		/**
@@ -356,7 +354,7 @@ package temple.ui.form.components
 		public function set value(value:*):void
 		{
 			if (value == null) return;
-			this.text = value;
+			text = value;
 		}
 
 		/**
@@ -365,7 +363,7 @@ package temple.ui.form.components
 		override public function showError(message:String = null):void 
 		{
 			super.showError(message);
-			this._textField.textColor = this._errorTextColor;
+			_textField.textColor = _errorTextColor;
 		}
 
 		/**
@@ -374,13 +372,13 @@ package temple.ui.form.components
 		override public function hideError():void 
 		{
 			super.hideError();
-			if (this._showsHint)
+			if (_showsHint)
 			{
-				this._textField.textColor = this._hintTextColor;
+				_textField.textColor = _hintTextColor;
 			}
 			else
 			{
-				this._textField.textColor = this._textColor;
+				_textField.textColor = _textColor;
 			}
 		}
 
@@ -389,8 +387,8 @@ package temple.ui.form.components
 		 */
 		public function reset():void 
 		{
-			this.text = this._prefillText ? this._prefillText : "";
-			this.textField.scrollH = this.textField.scrollV = 0;
+			text = _prefillText ? _prefillText : "";
+			textField.scrollH = textField.scrollV = 0;
 		}
 		
 		/**
@@ -399,7 +397,7 @@ package temple.ui.form.components
 		 */
 		public function get restrict():String 
 		{
-			return this._textField.restrict;
+			return _textField.restrict;
 		}
 
 		/**
@@ -412,47 +410,47 @@ package temple.ui.form.components
 			{
 				case "none":
 				{
-					this._textField.restrict = null;
+					_textField.restrict = null;
 					break;
 				}
 				case "numeric":
 				{
-					this._textField.restrict = Restrictions.NUMERIC;
+					_textField.restrict = Restrictions.NUMERIC;
 					break;
 				}
 				case "numbers":
 				{
-					this._textField.restrict = Restrictions.NUMBERS;
+					_textField.restrict = Restrictions.NUMBERS;
 					break;
 				}
 				case "alphanumeric":
 				{
-					this._textField.restrict = Restrictions.ALPHANUMERIC;
+					_textField.restrict = Restrictions.ALPHANUMERIC;
 					break;
 				}
 				case "email":
 				{
-					this._textField.restrict = Restrictions.EMAIL;
+					_textField.restrict = Restrictions.EMAIL;
 					break;
 				}
 				case "postalcode (Dutch)":
 				{
-					this._textField.restrict = Restrictions.DUTCH_POSTALCODE;
+					_textField.restrict = Restrictions.DUTCH_POSTALCODE;
 					break;
 				}
 				case "uppercase":
 				{
-					this._textField.restrict = Restrictions.UPPERCASE;
+					_textField.restrict = Restrictions.UPPERCASE;
 					break;
 				}
 				case "lowercase":
 				{
-					this._textField.restrict = Restrictions.LOWERCASE;
+					_textField.restrict = Restrictions.LOWERCASE;
 					break;
 				}
 				default:
 				{
-					this._textField.restrict = value;
+					_textField.restrict = value;
 					break;
 				}
 			}
@@ -463,7 +461,7 @@ package temple.ui.form.components
 		 */
 		public function get displayAsPassword():Boolean
 		{
-			return this._displayAsPassword;
+			return _displayAsPassword;
 		}
 
 		/**
@@ -472,14 +470,14 @@ package temple.ui.form.components
 		[Inspectable(name="Display as password", type="Boolean", defaultValue=false)]
 		public function set displayAsPassword(value:Boolean):void
 		{
-			this._displayAsPassword = value;
-			if (this._hintText && this._hintText == this._textField.text)
+			_displayAsPassword = value;
+			if (_hintText && _hintText == _textField.text)
 			{
-				this._textField.displayAsPassword = true;
+				_textField.displayAsPassword = true;
 			}
 			else
 			{
-				this._textField.displayAsPassword = value;
+				_textField.displayAsPassword = value;
 			}
 		}
 
@@ -488,7 +486,7 @@ package temple.ui.form.components
 		 */
 		public function get trimValue():Boolean
 		{
-			return this._trimValue;
+			return _trimValue;
 		}
 
 		/**
@@ -498,7 +496,7 @@ package temple.ui.form.components
 		[Inspectable(name="Trim value (remove spaces)", type="Boolean", defaultValue=true)]
 		public function set trimValue(value:Boolean):void
 		{
-			this._trimValue = value;
+			_trimValue = value;
 		}
 		
 		/**
@@ -506,7 +504,7 @@ package temple.ui.form.components
 		 */	
 		public function get maxChars():int
 		{
-			return this._textField.maxChars;
+			return _textField.maxChars;
 		}
 
 		/**
@@ -517,12 +515,12 @@ package temple.ui.form.components
 		{
 			if (value == -1)
 			{
-				this.limitInputToDesign = true;
-				this._textField.maxChars = 0;
+				limitInputToDesign = true;
+				_textField.maxChars = 0;
 			}
 			else
 			{
-				this._textField.maxChars = value;
+				_textField.maxChars = value;
 			}
 		}
 		
@@ -536,38 +534,38 @@ package temple.ui.form.components
 			{
 				case "none":
 				{
-					this._validator = null;
+					_validator = null;
 					break;
 				}
 				case "mandatory":
 				{
-					this._validator = EmptyStringValidationRule;
+					_validator = EmptyStringValidationRule;
 					break;
 				}
 				case "email":
 				{
-					this._validator = EmailValidationRule;
+					_validator = EmailValidationRule;
 					break;
 				}
 				case "postalcode (Dutch)":
 				{
-					this._validator = DutchPostalcodeValidationRule;
+					_validator = DutchPostalcodeValidationRule;
 					break;
 				}
 				case "mobile (Dutch)":
 				{
-					this._validator = DutchMobilePhoneValidationRule;
+					_validator = DutchMobilePhoneValidationRule;
 					break;
 				}
 				case "phone (Dutch)":
 				{
-					this._validator = DutchPhoneValidationRule;
+					_validator = DutchPhoneValidationRule;
 					break;
 				}
 				default:
 				{
-					this._validator = null;
-					this.logError("validationRuleName: unknown validation rule '" + value + "'");
+					_validator = null;
+					logError("validationRuleName: unknown validation rule '" + value + "'");
 					break;
 				}
 			}
@@ -578,7 +576,7 @@ package temple.ui.form.components
 		 */
 		public function get debugValue():*
 		{
-			return this._debugValue;
+			return _debugValue;
 		}
 
 		/**
@@ -587,10 +585,10 @@ package temple.ui.form.components
 		[Inspectable(name="Debug value", type="String")]
 		public function set debugValue(value:*):void
 		{
-			this._debugValue = value;
-			if (this._debug)
+			_debugValue = value;
+			if (_debug)
 			{
-				this.value = this._debugValue;
+				value = _debugValue;
 			}
 		}
 		
@@ -599,7 +597,7 @@ package temple.ui.form.components
 		 */
 		public function get editable():Boolean
 		{
-			return this._textField.type == TextFieldType.INPUT;
+			return _textField.type == TextFieldType.INPUT;
 		}
 
 		/**
@@ -607,7 +605,7 @@ package temple.ui.form.components
 		 */
 		public function set editable(value:Boolean):void
 		{
-			this._textField.type = value ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
+			_textField.type = value ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
 		}
 		
 		/**
@@ -615,7 +613,7 @@ package temple.ui.form.components
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -623,10 +621,10 @@ package temple.ui.form.components
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
-			if (this._debug && this._debugValue)
+			_debug = value;
+			if (_debug && _debugValue)
 			{
-				this.value = this._debugValue;
+				value = _debugValue;
 			}
 		}
 		
@@ -640,7 +638,7 @@ package temple.ui.form.components
 		{
 			if (value)
 			{
-				this.resetScale();
+				resetScale();
 			}
 		}
 
@@ -650,13 +648,13 @@ package temple.ui.form.components
 		 */
 		public function resetScale():void
 		{
-			var len:int = this.numChildren;
+			var len:int = numChildren;
 			for (var i:int = 0; i < len ; i++)
 			{
-				this.getChildAt(i).width *= this.scaleX;
-				this.getChildAt(i).height *= this.scaleY;
+				getChildAt(i).width *= scaleX;
+				getChildAt(i).height *= scaleY;
 			}
-			this.scaleX = this.scaleY = 1;
+			scaleX = scaleY = 1;
 		}
 
 		/**
@@ -664,7 +662,7 @@ package temple.ui.form.components
 		 */
 		public function get multiline():Boolean
 		{
-			return this._textField.multiline;
+			return _textField.multiline;
 		}
 
 		/**
@@ -673,10 +671,10 @@ package temple.ui.form.components
 		[Inspectable(name="Multiline", type="Boolean", defaultValue=false)]
 		public function set multiline(value:Boolean):void
 		{
-			this._textField.multiline = value;
-			if (this._textField.multiline == true)
+			_textField.multiline = value;
+			if (_textField.multiline == true)
 			{
-				this._submitOnEnter = false;
+				_submitOnEnter = false;
 			}
 		}
 		
@@ -685,7 +683,7 @@ package temple.ui.form.components
 		 */
 		public function get align():String 
 		{
-			return this._textField.defaultTextFormat.align;
+			return _textField.defaultTextFormat.align;
 		}
 		
 		/**
@@ -694,10 +692,10 @@ package temple.ui.form.components
 		[Inspectable(name="Align", type="String", defaultValue="left", enumeration="center,justify,left,right")]
 		public function set align(value:String):void 
 		{
-			this._textField.styleSheet = null;
-			var textFormat:TextFormat = this._textField.defaultTextFormat;
+			_textField.styleSheet = null;
+			var textFormat:TextFormat = _textField.defaultTextFormat;
 			textFormat.align = value;
-			this._textField.defaultTextFormat = textFormat;
+			_textField.defaultTextFormat = textFormat;
 		}
 		
 		/**
@@ -707,7 +705,7 @@ package temple.ui.form.components
 		 */
 		public function get submitOnEnter():Boolean
 		{
-			return this._submitOnEnter;
+			return _submitOnEnter;
 		}
 		
 		/**
@@ -716,13 +714,13 @@ package temple.ui.form.components
 		[Inspectable(name="Submit on Enter", type="Boolean", defaultValue="true")]
 		public function set submitOnEnter(value:Boolean):void
 		{
-			if (this._textField.multiline == true && value == true)
+			if (_textField.multiline == true && value == true)
 			{
-				this._submitOnEnter = false;
+				_submitOnEnter = false;
 			}
 			else
 			{
-				this._submitOnEnter = value;
+				_submitOnEnter = value;
 			}
 		}
 
@@ -731,7 +729,7 @@ package temple.ui.form.components
 		 */
 		public function get submitOnChange():Boolean
 		{
-			return this._submitOnChange;
+			return _submitOnChange;
 		}
 		
 		/**
@@ -740,7 +738,7 @@ package temple.ui.form.components
 		[Inspectable(name="Submit on Change", type="Boolean", defaultValue="false")]
 		public function set submitOnChange(value:Boolean):void
 		{
-			this._submitOnChange = value;
+			_submitOnChange = value;
 		}
 		
 		/**
@@ -748,7 +746,7 @@ package temple.ui.form.components
 		 */
 		public function get fontSize():Number
 		{
-			return this._textField.defaultTextFormat.size as Number;
+			return _textField.defaultTextFormat.size as Number;
 		}
 
 		/**
@@ -756,11 +754,11 @@ package temple.ui.form.components
 		 */
 		public function set fontSize(value:Number):void
 		{
-			var format:TextFormat = this._textField.defaultTextFormat;
+			var format:TextFormat = _textField.defaultTextFormat;
 			format.size = value;
  
-			this._textField.setTextFormat(format);
-			this._textField.defaultTextFormat = format;
+			_textField.setTextFormat(format);
+			_textField.defaultTextFormat = format;
 		}
 		
 		/**
@@ -768,7 +766,7 @@ package temple.ui.form.components
 		 */
 		public function get limitInputToDesign():Boolean
 		{
-			return this._limitInputToDesign;
+			return _limitInputToDesign;
 		}
 		
 		/**
@@ -776,7 +774,7 @@ package temple.ui.form.components
 		 */
 		public function set limitInputToDesign(value:Boolean):void
 		{
-			this._limitInputToDesign = value;
+			_limitInputToDesign = value;
 		}
 		
 		/**
@@ -788,7 +786,7 @@ package temple.ui.form.components
 		 */
 		public function get minimalFontSize():Number
 		{
-			return this._minimalFontSize;
+			return _minimalFontSize;
 		}
 		
 		/**
@@ -797,7 +795,7 @@ package temple.ui.form.components
 		[Inspectable(name="Minimal Font Size", type="Number", defaultValue="0")]
 		public function set minimalFontSize(value:Number):void
 		{
-			this._minimalFontSize = value > 0 ? value : NaN;
+			_minimalFontSize = value > 0 ? value : NaN;
 		}
 		
 		/**
@@ -806,7 +804,7 @@ package temple.ui.form.components
 		 */
 		public function get selectTextOnFocus():Boolean
 		{
-			return this._selectTextOnFocus;
+			return _selectTextOnFocus;
 		}
 		
 		/**
@@ -815,7 +813,7 @@ package temple.ui.form.components
 		[Inspectable(name="Select Text On Focus", type="Boolean", defaultValue="true")]
 		public function set selectTextOnFocus(value:Boolean):void
 		{
-			this._selectTextOnFocus = value;
+			_selectTextOnFocus = value;
 		}
 		
 		/**
@@ -823,7 +821,7 @@ package temple.ui.form.components
 		 */
 		public function get showsHint():Boolean
 		{
-			return this._showsHint;
+			return _showsHint;
 		}
 
 		/**
@@ -834,7 +832,7 @@ package temple.ui.form.components
 		 */
 		public function get updateHintOnChange():Boolean
 		{
-			return this._updateHintOnChange;
+			return _updateHintOnChange;
 		}
 
 		/**
@@ -842,7 +840,7 @@ package temple.ui.form.components
 		 */
 		public function set updateHintOnChange(value:Boolean):void
 		{
-			this._updateHintOnChange = value;
+			_updateHintOnChange = value;
 		}
 		
 		/**
@@ -852,11 +850,11 @@ package temple.ui.form.components
 		{
 			super.handleFocusIn(event);
 			
-			if (!this._updateHintOnChange) this.updateHint();
-			if (this._selectTextOnFocus)
+			if (!_updateHintOnChange) updateHint();
+			if (_selectTextOnFocus)
 			{
-				FocusManager.focus = this.textField;
-				this._textField.setSelection(0, this._textField.text.length);
+				FocusManager.focus = textField;
+				_textField.setSelection(0, _textField.text.length);
 			}
 		}
 
@@ -866,7 +864,7 @@ package temple.ui.form.components
 		override protected function handleFocusOut(event:FocusEvent):void 
 		{
 			super.handleFocusOut(event);
-			this.updateHint();
+			updateHint();
 		}
 
 		/**
@@ -874,53 +872,53 @@ package temple.ui.form.components
 		 */
 		protected function handleTextFieldChange(event:Event):void
 		{
-			if (this._showsHint) updateHint();
+			if (_showsHint) updateHint();
 			
-			if (this._updateHintOnChange && this._textField.text == "")
+			if (_updateHintOnChange && _textField.text == "")
 			{
-				this._showsHint = true;
-				if (this._hintText)
+				_showsHint = true;
+				if (_hintText)
 				{
-					this._textField.text = this._hintText;
-					this._textField.textColor = this._hintTextColor;
-					this._textField.displayAsPassword = false;
+					_textField.text = _hintText;
+					_textField.textColor = _hintTextColor;
+					_textField.displayAsPassword = false;
 				}
 			}
 			
-			if (!isNaN(this._minimalFontSize))
+			if (!isNaN(_minimalFontSize))
 			{
-				this.fontSize = this._normalFontSize;
-				while (this._textField.textWidth > this._textField.width || this._textField.textHeight > this._textField.height)
+				fontSize = _normalFontSize;
+				while (_textField.textWidth > _textField.width || _textField.textHeight > _textField.height)
 				{
-					this.fontSize -= 1;
-					if (this.fontSize <= this._minimalFontSize)
+					fontSize -= 1;
+					if (fontSize <= _minimalFontSize)
 					{
-						this.fontSize = this._minimalFontSize;
+						fontSize = _minimalFontSize;
 						break;
 					}
 				}
 			}
 			
-			if (this._limitInputToDesign)
+			if (_limitInputToDesign)
 			{
-				if (this._textField.textWidth > this._textField.width)
+				if (_textField.textWidth > _textField.width)
 				{
-					this._textField.text = this._previousText;
+					_textField.text = _previousText;
 				}
-				this._textField.scrollH = 0;
+				_textField.scrollH = 0;
 
-				if (this._textField.textHeight > this._textField.height)
+				if (_textField.textHeight > _textField.height)
 				{
-					this._textField.text = this._previousText;
+					_textField.text = _previousText;
 				}
-				this._textField.scrollV = 0;
+				_textField.scrollV = 0;
 			}
 			event.stopPropagation();
-			this.dispatchEvent(new Event(Event.CHANGE));
+			dispatchEvent(new Event(Event.CHANGE));
 			
-			if (this._submitOnChange)
+			if (_submitOnChange)
 			{
-				this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
+				dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 			}
 		}
 
@@ -929,33 +927,33 @@ package temple.ui.form.components
 		 */
 		protected function updateHint():void 
 		{
-			if (this.focus && this._showsHint) 
+			if (focus && _showsHint) 
 			{
-				this._showsHint = false;
-				this._textField.text = "";
-				this._textField.textColor = this._textColor;
-				this._textField.displayAsPassword = this._displayAsPassword;
+				_showsHint = false;
+				_textField.text = "";
+				_textField.textColor = _textColor;
+				_textField.displayAsPassword = _displayAsPassword;
 			}
-			else if (!this.focus && !this._showsHint && (this._textField.text == "")) 
+			else if (!focus && !_showsHint && (_textField.text == "")) 
 			{
-				this.showHint();
+				showHint();
 			}
-			else if (this._textField.text != this._hintText && !this.hasError)
+			else if (_textField.text != _hintText && !hasError)
 			{
-				this._showsHint = false;
-				this._textField.textColor = this._textColor;
-				this._textField.displayAsPassword = this._displayAsPassword;
+				_showsHint = false;
+				_textField.textColor = _textColor;
+				_textField.displayAsPassword = _displayAsPassword;
 			}
 		}
 
 		protected function showHint():void
 		{
-			this._showsHint = true;
-			if (this._hintText)
+			_showsHint = true;
+			if (_hintText)
 			{
-				this._textField.text = this._hintText;
-				this._textField.textColor = this._hintTextColor;
-				this._textField.displayAsPassword = false;
+				_textField.text = _hintText;
+				_textField.textColor = _hintTextColor;
+				_textField.displayAsPassword = false;
 			}
 		}
 
@@ -965,10 +963,10 @@ package temple.ui.form.components
 		 */
 		protected function handleKeyDown(event:KeyboardEvent):void
 		{
-			if (this._submitOnEnter && event.keyCode == KeyCode.ENTER)
+			if (_submitOnEnter && event.keyCode == KeyCode.ENTER)
 			{
 				event.stopPropagation();
-				this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
+				dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 			}
 		}
 		
@@ -977,7 +975,7 @@ package temple.ui.form.components
 		 */
 		protected function handleTextFieldScroll(event:Event):void
 		{
-			if (this._limitInputToDesign) this._textField.scrollH = this._textField.scrollV = 0;
+			if (_limitInputToDesign) _textField.scrollH = _textField.scrollV = 0;
 		}
 
 		/**
@@ -985,8 +983,8 @@ package temple.ui.form.components
 		 */
 		protected function handleTextInput(event:TextEvent):void
 		{
-			this._previousText = this._textField.text;
-			if (this._showsHint) this.updateHint();
+			_previousText = _textField.text;
+			if (_showsHint) updateHint();
 		}
 		
 		/**
@@ -994,19 +992,18 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this._text = null;
-			this._hintText = null;
-			this._prefillText = null;
-			this._debugValue = null;
+			_hintText = null;
+			_prefillText = null;
+			_debugValue = null;
 			
-			if (this._textField)
+			if (_textField)
 			{
-				this._textField.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
-				this._textField.removeEventListener(TextEvent.TEXT_INPUT, this.handleTextInput);
-				this._textField.removeEventListener(Event.SCROLL, this.handleTextFieldScroll);
-				this._textField.removeEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-				this._textField.removeEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
-				this._textField = null;
+				_textField.removeEventListener(Event.CHANGE, handleTextFieldChange);
+				_textField.removeEventListener(TextEvent.TEXT_INPUT, handleTextInput);
+				_textField.removeEventListener(Event.SCROLL, handleTextFieldScroll);
+				_textField.removeEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+				_textField.removeEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
+				_textField = null;
 			}
 			
 			super.destruct();

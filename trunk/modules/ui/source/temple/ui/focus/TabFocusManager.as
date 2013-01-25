@@ -67,8 +67,8 @@ package temple.ui.focus
 	 * Suppose two objects of type InputField have been defined on the timeline, with instance names "mcName" &amp; "mcEmail". Use the following code to allow focus management on them:
 	 * <listing version="3.0">
 	 * 	focusManager = new TabFocusManager();
-	 * 	focusManager.add(this.mcName);
-	 * 	focusManager.add(this.mcEmail);
+	 * 	focusManager.add(mcName);
+	 * 	focusManager.add(mcEmail);
 	 * 	</listing>
 	 * 	
 	 * 	@author Thijs Broerse
@@ -85,8 +85,8 @@ package temple.ui.focus
 		 */
 		public function TabFocusManager(loop:Boolean = true) 
 		{
-			this._loop = loop;
-			this._items = new Array();
+			_loop = loop;
+			_items = new Array();
 			addToDebugManager(this);
 		}
 
@@ -95,7 +95,7 @@ package temple.ui.focus
 		 */
 		public function clear():void 
 		{
-			while (this._items.length) this.remove(ItemData(this._items.shift()).item);
+			while (_items.length) remove(ItemData(_items.shift()).item);
 		}
 
 		/**
@@ -122,39 +122,39 @@ package temple.ui.focus
 			}
 
 			// check if already added	
-			if (this.indexOf(item) != -1) 
+			if (indexOf(item) != -1) 
 			{
-				this.logWarn("addElement: Element already in list: " + item);
+				logWarn("addElement: Element already in list: " + item);
 				return false;
 			}
 			
 			if (item is IEventDispatcher)
 			{
-				(item as IEventDispatcher).addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-				(item as IEventDispatcher).addEventListener(FocusEvent.KEY_FOCUS_CHANGE, this.handleKeyFocusChange);
+				(item as IEventDispatcher).addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+				(item as IEventDispatcher).addEventListener(FocusEvent.KEY_FOCUS_CHANGE, handleKeyFocusChange);
 			}
 			
 			// add element depending on value of position
-			if (tabIndex == -1 || this._items.length == 0) 
+			if (tabIndex == -1 || _items.length == 0) 
 			{
-				this._items.push(new ItemData(item, tabIndex));
+				_items.push(new ItemData(item, tabIndex));
 			}
 			else 
 			{
-				var leni:int = this._items.length;
+				var leni:int = _items.length;
 				var tempItem:ItemData;
 				for (var i:int = 0;i < leni; i++)
 				{
-					tempItem = ItemData(this._items[i]);
+					tempItem = ItemData(_items[i]);
 					
 					if (tempItem.position >= tabIndex || tempItem.position == -1)
 					{
-						this._items.splice(i, 0, new ItemData(item, tabIndex));
+						_items.splice(i, 0, new ItemData(item, tabIndex));
 						break;
 					}
 					else if (i == leni - 1)
 					{
-						this._items.push(new ItemData(item, tabIndex));
+						_items.push(new ItemData(item, tabIndex));
 					}
 				}
 			}
@@ -168,14 +168,14 @@ package temple.ui.focus
 		{
 			if (item is IEventDispatcher)
 			{
-				(item as IEventDispatcher).removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-				(item as IEventDispatcher).removeEventListener(FocusEvent.KEY_FOCUS_CHANGE, this.handleKeyFocusChange);
+				(item as IEventDispatcher).removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+				(item as IEventDispatcher).removeEventListener(FocusEvent.KEY_FOCUS_CHANGE, handleKeyFocusChange);
 			}
-			for (var i:int = this._items.length - 1;i >= 0; i--) 
+			for (var i:int = _items.length - 1;i >= 0; i--) 
 			{
-				if (ItemData(this._items[i]).item == item)
+				if (ItemData(_items[i]).item == item)
 				{
-					ItemData(this._items.splice(i, 1)[0]).destruct();
+					ItemData(_items.splice(i, 1)[0]).destruct();
 					return;
 				}
 			}
@@ -186,7 +186,7 @@ package temple.ui.focus
 		 */
 		public function get focus():Boolean
 		{
-			return this.getCurrentFocusIndex() != -1;
+			return getCurrentFocusIndex() != -1;
 		}
 		
 		/**
@@ -194,20 +194,20 @@ package temple.ui.focus
 		 */
 		public function set focus(value:Boolean):void
 		{
-			var item:IFocusable = this.getCurrentFocusItem();
+			var item:IFocusable = getCurrentFocusItem();
 			
 			if (value && !item)
 			{
-				if (this._items.length)
+				if (_items.length)
 				{
 					// check if shift key is pressed
 					if (KeyManager.isDown(Keyboard.SHIFT))
 					{
-						ItemData(this._items[this._items.length - 1]).item.focus = true;
+						ItemData(_items[_items.length - 1]).item.focus = true;
 					}
 					else
 					{
-						ItemData(this._items[0]).item.focus = true;
+						ItemData(_items[0]).item.focus = true;
 					}
 				}
 			}
@@ -220,7 +220,7 @@ package temple.ui.focus
 		 */
 		public function get loop():Boolean
 		{
-			return this._loop;
+			return _loop;
 		}
 		
 		/**
@@ -228,7 +228,7 @@ package temple.ui.focus
 		 */
 		public function set loop(value:Boolean):void
 		{
-			this._loop = value;
+			_loop = value;
 		}
 		
 		/**
@@ -236,7 +236,7 @@ package temple.ui.focus
 		 */
 		public function enable():void
 		{
-			this._enabled = true;
+			_enabled = true;
 		}
 
 		/**
@@ -244,7 +244,7 @@ package temple.ui.focus
 		 */
 		public function disable():void
 		{
-			this._enabled = false;
+			_enabled = false;
 		}
 
 		/**
@@ -252,7 +252,7 @@ package temple.ui.focus
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 
 		/**
@@ -260,7 +260,7 @@ package temple.ui.focus
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 		}
 		
 		/**
@@ -268,13 +268,13 @@ package temple.ui.focus
 		 */
 		public function get items():Array
 		{
-			if (this._items)
+			if (_items)
 			{
 				var items:Array = [];
-				var leni:int = this._items.length;
+				var leni:int = _items.length;
 				for (var i:int = 0; i < leni; i++)
 				{
-					items.push(ItemData(this._items[i]).item);
+					items.push(ItemData(_items[i]).item);
 				}
 				return items;
 			}
@@ -286,7 +286,7 @@ package temple.ui.focus
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -294,35 +294,35 @@ package temple.ui.focus
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		private function handleKeyDown(event:KeyboardEvent):void
 		{
-			if (this._enabled && event.keyCode == Keyboard.TAB)
+			if (_enabled && event.keyCode == Keyboard.TAB)
 			{
-				if (this.debug) this.logDebug("handleKeyDown: tab received from: " + event.target + ", through: " + event.currentTarget);
+				if (debug) logDebug("handleKeyDown: tab received from: " + event.target + ", through: " + event.currentTarget);
 				
 				if (event.shiftKey)
 				{
-					if (this._loop || this.getCurrentFocusIndex() > 0)
+					if (_loop || getCurrentFocusIndex() > 0)
 					{
 						event.stopImmediatePropagation();
-						this.focusPreviousItem();
+						focusPreviousItem();
 					}
 					else
 					{
-						this.dispatchEvent(event.clone());
+						dispatchEvent(event.clone());
 					}
 				}
-				else if (this._loop || this.getCurrentFocusIndex() < this._items.length - 1)
+				else if (_loop || getCurrentFocusIndex() < _items.length - 1)
 				{
 					event.stopImmediatePropagation();
-					this.focusNextItem();
+					focusNextItem();
 				}
 				else
 				{
-					this.dispatchEvent(event.clone());
+					dispatchEvent(event.clone());
 				}
 			}
 		}
@@ -332,10 +332,10 @@ package temple.ui.focus
 		 */
 		public function focusNextItem():void 
 		{
-			if (this.debug) this.logDebug("focusNextItem: ");
+			if (debug) logDebug("focusNextItem: ");
 			
 			// check if focus is in current list
-			var index:Number = this.getCurrentFocusIndex();
+			var index:Number = getCurrentFocusIndex();
 			if (index == -1) return;
 	
 			// store previous focus
@@ -347,7 +347,7 @@ package temple.ui.focus
 			{
 				// increment & check limit
 				index++;
-				if (index > this._items.length - 1) index = 0;
+				if (index > _items.length - 1) index = 0;
 				
 				if (item == prev)
 				{
@@ -355,7 +355,7 @@ package temple.ui.focus
 					return;
 				}
 				
-				item = ItemData(this._items[index]).item;
+				item = ItemData(_items[index]).item;
 				
 				// check if new item is enabled, if not, set to null so we check next
 				if (item is IEnableable && IEnableable(item).enabled == false)
@@ -371,10 +371,10 @@ package temple.ui.focus
 		 */
 		public function focusPreviousItem():void 
 		{
-			if (this.debug) this.logDebug("focusPreviousItem: ");
+			if (debug) logDebug("focusPreviousItem: ");
 			
 			// check if focus is in current list
-			var index:Number = this.getCurrentFocusIndex();
+			var index:Number = getCurrentFocusIndex();
 			if (index == -1) return;
 	
 			// store previous focus
@@ -386,7 +386,7 @@ package temple.ui.focus
 			{
 				// decrement & check limit
 				index--;
-				if (index < 0) index = this._items.length - 1;
+				if (index < 0) index = _items.length - 1;
 				
 				if (item == prev)
 				{
@@ -394,7 +394,7 @@ package temple.ui.focus
 					return;
 				}
 				
-				item = ItemData(this._items[index]).item;
+				item = ItemData(_items[index]).item;
 				
 				// check if new item is enabled, if not, set to null so we check next
 				if (item is IEnableable && IEnableable(item).enabled == false)
@@ -411,32 +411,32 @@ package temple.ui.focus
 		 */
 		public function getCurrentFocusIndex():int 
 		{
-			if (!this._items) return -1;
+			if (!_items) return -1;
 			
-			var len:uint = this._items.length;
+			var len:uint = _items.length;
 			for (var i:int = 0;i < len; ++i) 
 			{
-				if (ItemData(this._items[i]).item.focus) return i;
+				if (ItemData(_items[i]).item.focus) return i;
 			}
 			return -1;
 		}
 
 		public function getCurrentFocusItem():IFocusable 
 		{
-			var len:uint = this._items.length;
+			var len:uint = _items.length;
 			for (var i:int = 0;i < len; ++i) 
 			{
-				if (ItemData(this._items[i]).item.focus) return ItemData(this._items[i]).item;
+				if (ItemData(_items[i]).item.focus) return ItemData(_items[i]).item;
 			}
 			return null;
 		}
 
 		private function indexOf(item:IFocusable):int
 		{
-			var leni:int = this._items.length;
+			var leni:int = _items.length;
 			for (var i:int = 0;i < leni; i++)
 			{
-				if (ItemData(this._items[i]).item == item) return i;
+				if (ItemData(_items[i]).item == item) return i;
 			}
 			return -1;
 		}
@@ -451,10 +451,10 @@ package temple.ui.focus
 		 */
 		override public function destruct():void
 		{
-			if (this._items)
+			if (_items)
 			{
-				this.clear();
-				this._items = null;
+				clear();
+				_items = null;
 			}
 			
 			super.destruct();
@@ -471,14 +471,14 @@ class ItemData extends CoreObject
 
 	public function ItemData(item:IFocusable, position:int) 
 	{
-		this.toStringProps.push('position', 'item');
+		toStringProps.push('position', 'item');
 		this.item = item;
 		this.position = position;
 	}
 	
 	override public function destruct():void
 	{
-		this.item = null;
+		item = null;
 		super.destruct();
 	}
 }

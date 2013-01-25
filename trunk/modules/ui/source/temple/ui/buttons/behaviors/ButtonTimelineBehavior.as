@@ -117,14 +117,14 @@ package temple.ui.buttons.behaviors
 			
 			this.debug = debug;
 			target.stop();
-			this.initLabels();
-			if (this._labels[ButtonTimelineLabels.INTRO])
+			initLabels();
+			if (_labels[ButtonTimelineLabels.INTRO])
 			{
-				this.preIntroState();
+				preIntroState();
 			}
 			else
 			{
-				this.upState();
+				upState();
 			}
 		}
 		
@@ -133,7 +133,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get movieClip():MovieClip
 		{
-			return this.target as MovieClip;
+			return target as MovieClip;
 		}
 
 		/**
@@ -147,11 +147,11 @@ package temple.ui.buttons.behaviors
 				
 				if (value)
 				{
-					this.update(this);
+					update(this);
 				}
 				else
 				{
-					this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+					movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 				}
 			}
 		}
@@ -163,51 +163,51 @@ package temple.ui.buttons.behaviors
 		{
 			super.update(status);
 			
-			if (!this.enabled) return;
+			if (!enabled) return;
 			
-			if (this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down + ", focus=" + this.focus + ", currentLabel='" + this._currentLabel + "', currentFrame='" + this.movieClip.currentFrame + "'");
+			if (debug) logDebug("update: selected=" + selected + ", disabled=" + disabled + ", over=" + over + ", down=" + down + ", focus=" + focus + ", currentLabel='" + _currentLabel + "', currentFrame='" + movieClip.currentFrame + "'");
 			
 			switch (true)
 			{
-				case (this.selected && this._labels.hasOwnProperty(ButtonTimelineLabels.SELECTED)):
+				case (selected && _labels.hasOwnProperty(ButtonTimelineLabels.SELECTED)):
 				{
-					this.selectedState();
+					selectedState();
 					break;
 				}
-				case this.disabled && this._labels.hasOwnProperty(ButtonTimelineLabels.DISABLED):
+				case disabled && _labels.hasOwnProperty(ButtonTimelineLabels.DISABLED):
 				{
-					this.disabledState();
+					disabledState();
 					break;
 				}
-				case this.down:
+				case down:
 				{
-					if (this._pressPlayMode == ButtonTimelinePlayMode.IMMEDIATELY || !this._pressPlayMode && this._defaultPlayMode == ButtonTimelinePlayMode.IMMEDIATELY)
+					if (_pressPlayMode == ButtonTimelinePlayMode.IMMEDIATELY || !_pressPlayMode && _defaultPlayMode == ButtonTimelinePlayMode.IMMEDIATELY)
 					{
-						this.downState();
+						downState();
 					}
 					else
 					{
-						switch (this._currentLabel)
+						switch (_currentLabel)
 						{
 							case ButtonTimelineLabels.UP:
 							case ButtonTimelineLabels.IN:
 							case ButtonTimelineLabels.OUT:
 							{
-								this.overState();
+								overState();
 								break;
 							}
 							default:
 							{
-								this.downState();
+								downState();
 								break;
 							}
 						}
 					}
 					break;
 				}
-				case this.over:
+				case over:
 				{
-					switch (this._currentLabel)
+					switch (_currentLabel)
 					{
 						case ButtonTimelineLabels.IN:
 						case ButtonTimelineLabels.OVER:
@@ -218,49 +218,49 @@ package temple.ui.buttons.behaviors
 						case ButtonTimelineLabels.SELECT:
 						case ButtonTimelineLabels.SELECTED:
 						{
-							this.animateTo(ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, ButtonTimelineLabels.OVER, ButtonTimelineLabels.SELECT, this._deselectPlayMode);
+							animateTo(ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, ButtonTimelineLabels.OVER, ButtonTimelineLabels.SELECT, _deselectPlayMode);
 							break;
 						}
 						case ButtonTimelineLabels.PRESS:
 						case ButtonTimelineLabels.DOWN:
 						case ButtonTimelineLabels.RELEASE:
 						{
-							if (this.debug) this.logDebug("update from a down state");
-							this.animateTo(ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, ButtonTimelineLabels.OVER, ButtonTimelineLabels.PRESS, this._releasePlayMode);
+							if (debug) logDebug("update from a down state");
+							animateTo(ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, ButtonTimelineLabels.OVER, ButtonTimelineLabels.PRESS, _releasePlayMode);
 							break;
 						}
 						default:
 						{
-							this.overState();
+							overState();
 							break;
 						}
 					}
 					break;
 				}
-				case this.focus:
+				case focus:
 				{
-					if (this._labels[ButtonTimelineLabels.FOCUSED] || this._labels[ButtonTimelineLabels.FOCUS])
+					if (_labels[ButtonTimelineLabels.FOCUSED] || _labels[ButtonTimelineLabels.FOCUS])
 					{
-						switch (this._currentLabel)
+						switch (_currentLabel)
 						{
 							case ButtonTimelineLabels.SELECT:
 							case ButtonTimelineLabels.SELECTED:
 							case ButtonTimelineLabels.DESELECT:
 							{
-								this.animateTo(ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.SELECT, this._deselectPlayMode);
+								animateTo(ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.SELECT, _deselectPlayMode);
 								break;
 							}
 							case ButtonTimelineLabels.PRESS:
 							case ButtonTimelineLabels.DOWN:
 							case ButtonTimelineLabels.RELEASE:
 							{
-								if (this.debug) this.logDebug("update from a down state");
-								this.animateTo(ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.PRESS, this._releasePlayMode);
+								if (debug) logDebug("update from a down state");
+								animateTo(ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.PRESS, _releasePlayMode);
 								break;
 							}
 							default:
 							{
-								this.focusState();
+								focusState();
 								break;
 							}
 						}
@@ -274,46 +274,46 @@ package temple.ui.buttons.behaviors
 				
 				default:
 				{
-					switch (this._currentLabel)
+					switch (_currentLabel)
 					{
 						case ButtonTimelineLabels.PRESS:
 						case ButtonTimelineLabels.DOWN:
 						case ButtonTimelineLabels.RELEASE:
 						{
-							this.animateTo(ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, ButtonTimelineLabels.OVER, ButtonTimelineLabels.PRESS, this._releasePlayMode);
+							animateTo(ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, ButtonTimelineLabels.OVER, ButtonTimelineLabels.PRESS, _releasePlayMode);
 							break;
 						}
 						case ButtonTimelineLabels.IN:
 						case ButtonTimelineLabels.OVER:
 						case ButtonTimelineLabels.OUT:
 						{
-							this.animateTo(ButtonTimelineLabels.OVER, ButtonTimelineLabels.OUT, ButtonTimelineLabels.UP, ButtonTimelineLabels.IN, this._outPlayMode);
+							animateTo(ButtonTimelineLabels.OVER, ButtonTimelineLabels.OUT, ButtonTimelineLabels.UP, ButtonTimelineLabels.IN, _outPlayMode);
 							break;
 						}
 						case ButtonTimelineLabels.SELECT:
 						case ButtonTimelineLabels.SELECTED:
 						case ButtonTimelineLabels.DESELECT:
 						{
-							this.animateTo(ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, ButtonTimelineLabels.UP, ButtonTimelineLabels.SELECT, this._deselectPlayMode);
+							animateTo(ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, ButtonTimelineLabels.UP, ButtonTimelineLabels.SELECT, _deselectPlayMode);
 							break;
 						}
 						case ButtonTimelineLabels.DISABLE:
 						case ButtonTimelineLabels.DISABLED:
 						case ButtonTimelineLabels.ENABLE:
 						{
-							this.animateTo(ButtonTimelineLabels.DISABLED, ButtonTimelineLabels.ENABLE, ButtonTimelineLabels.UP, ButtonTimelineLabels.DISABLE, this._enablePlayMode);
+							animateTo(ButtonTimelineLabels.DISABLED, ButtonTimelineLabels.ENABLE, ButtonTimelineLabels.UP, ButtonTimelineLabels.DISABLE, _enablePlayMode);
 							break;
 						}
 						case ButtonTimelineLabels.FOCUS:
 						case ButtonTimelineLabels.FOCUSED:
 						case ButtonTimelineLabels.BLUR:
 						{
-							this.animateTo(ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.BLUR, ButtonTimelineLabels.UP, ButtonTimelineLabels.FOCUS, this._blurPlayMode);
+							animateTo(ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.BLUR, ButtonTimelineLabels.UP, ButtonTimelineLabels.FOCUS, _blurPlayMode);
 							break;
 						}
 						default:
 						{
-							this.upState();
+							upState();
 							break;
 						}
 					}
@@ -329,7 +329,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get playMode():ButtonTimelinePlayMode
 		{
-			return this._defaultPlayMode;
+			return _defaultPlayMode;
 		}
 
 		/**
@@ -337,7 +337,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set playMode(value:*):void
 		{
-			this._defaultPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
+			_defaultPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
 		}
 		
 		/**
@@ -347,7 +347,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get outPlayMode():ButtonTimelinePlayMode
 		{
-			return this._outPlayMode;
+			return _outPlayMode;
 		}
 
 		/**
@@ -355,7 +355,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set outPlayMode(value:*):void
 		{
-			this._outPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
+			_outPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
 		}
 
 		/**
@@ -365,7 +365,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get pressPlayMode():ButtonTimelinePlayMode
 		{
-			return this._pressPlayMode;
+			return _pressPlayMode;
 		}
 
 		/**
@@ -373,7 +373,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set pressPlayMode(value:*):void
 		{
-			this._pressPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
+			_pressPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
 		}
 
 		/**
@@ -383,7 +383,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get releasePlayMode():ButtonTimelinePlayMode
 		{
-			return this._releasePlayMode;
+			return _releasePlayMode;
 		}
 
 		/**
@@ -391,7 +391,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set releasePlayMode(value:*):void
 		{
-			this._releasePlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
+			_releasePlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
 		}
 		
 		/**
@@ -401,7 +401,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get deselectPlayMode():ButtonTimelinePlayMode
 		{
-			return this._deselectPlayMode;
+			return _deselectPlayMode;
 		}
 
 		/**
@@ -409,7 +409,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set deselectPlayMode(value:*):void
 		{
-			this._deselectPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
+			_deselectPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
 		}
 
 		/**
@@ -419,7 +419,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get enablePlayMode():ButtonTimelinePlayMode
 		{
-			return this._enablePlayMode;
+			return _enablePlayMode;
 		}
 
 		/**
@@ -427,7 +427,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set enablePlayMode(value:*):void
 		{
-			this._enablePlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
+			_enablePlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
 		}
 
 		/**
@@ -437,7 +437,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get blurPlayMode():ButtonTimelinePlayMode
 		{
-			return this._blurPlayMode;
+			return _blurPlayMode;
 		}
 
 		/**
@@ -445,7 +445,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set blurPlayMode(value:*):void
 		{
-			this._blurPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
+			_blurPlayMode = value as ButtonTimelinePlayMode || ButtonTimelinePlayMode.get(value);
 		}
 
 
@@ -454,17 +454,17 @@ package temple.ui.buttons.behaviors
 		 */
 		public function playIntro():void 
 		{
-			if (this.debug) this.logDebug("playIntro: ");
+			if (debug) logDebug("playIntro: ");
 			
-			if (this._labels[ButtonTimelineLabels.INTRO] && this._currentLabel == null)
+			if (_labels[ButtonTimelineLabels.INTRO] && _currentLabel == null)
 			{
-				this.preIntroState();
-				this._currentLabel = ButtonTimelineLabels.INTRO;
-				this.gotoFrame(FrameLabelData(this._labels[ButtonTimelineLabels.INTRO]).endframe);
+				preIntroState();
+				_currentLabel = ButtonTimelineLabels.INTRO;
+				gotoFrame(FrameLabelData(_labels[ButtonTimelineLabels.INTRO]).endframe);
 			}
 			else
 			{
-				this.logError("playIntro: no intro found");
+				logError("playIntro: no intro found");
 			}
 		}
 
@@ -473,15 +473,15 @@ package temple.ui.buttons.behaviors
 		 */
 		public function playOutro():void 
 		{
-			if (this.debug) this.logDebug("playOutro: " + this._currentLabel);
+			if (debug) logDebug("playOutro: " + _currentLabel);
 			
 			// if we have an 'intro' frame stop at the beginning of the intro frame and disable the button
-			if (this._labels[ButtonTimelineLabels.OUTRO] && this._currentLabel != null)
+			if (_labels[ButtonTimelineLabels.OUTRO] && _currentLabel != null)
 			{
-				this.disable();
-				this._currentLabel = ButtonTimelineLabels.OUTRO;
-				this.movieClip.gotoAndStop(ButtonTimelineLabels.OUTRO);
-				this.gotoFrame(FrameLabelData(this._labels[ButtonTimelineLabels.OUTRO]).endframe);
+				disable();
+				_currentLabel = ButtonTimelineLabels.OUTRO;
+				movieClip.gotoAndStop(ButtonTimelineLabels.OUTRO);
+				gotoFrame(FrameLabelData(_labels[ButtonTimelineLabels.OUTRO]).endframe);
 			}
 		}
 
@@ -490,7 +490,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get labels():HashMap
 		{
-			return this._labels;
+			return _labels;
 		}
 		
 		/**
@@ -498,38 +498,38 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get currentLabel():String
 		{
-			return this._currentLabel;
+			return _currentLabel;
 		}
 		
 		private function animateTo(start:String, enter:String, goal:String, exit:String, playMode:ButtonTimelinePlayMode):void
 		{
-			playMode ||= this._defaultPlayMode || ButtonTimelinePlayMode.REVERSED;
+			playMode ||= _defaultPlayMode || ButtonTimelinePlayMode.REVERSED;
 			
-			if (this.debug) this.logDebug("animateTo: start='" + start + "', enter='" + enter + "', goal='" + goal + "', exit='" + exit + "', playMode=" + playMode + ", currentFrame=" + this.movieClip.currentFrame + ", currentLabel='" + this._currentLabel + "'");
+			if (debug) logDebug("animateTo: start='" + start + "', enter='" + enter + "', goal='" + goal + "', exit='" + exit + "', playMode=" + playMode + ", currentFrame=" + movieClip.currentFrame + ", currentLabel='" + _currentLabel + "'");
 			
-			if (!this._labels[goal])
+			if (!_labels[goal])
 			{
-				if (this.debug) this.logWarn("MovieClip has no label '" + goal + "'");
+				if (debug) logWarn("MovieClip has no label '" + goal + "'");
 				return;
 			}
 			// check if we are already on our goal
-			else if (FrameLabelData(this._labels[goal]).startframe == this.movieClip.currentFrame)
+			else if (FrameLabelData(_labels[goal]).startframe == movieClip.currentFrame)
 			{
-				this._currentLabel = goal;
-				if (this.debug) this.logDebug("animateTo: goal '" + goal + "' reached");
-				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				if (this._currentLabel == ButtonTimelineLabels.OVER && !this.over) this.update(this);
+				_currentLabel = goal;
+				if (debug) logDebug("animateTo: goal '" + goal + "' reached");
+				movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				if (_currentLabel == ButtonTimelineLabels.OVER && !over) update(this);
 			}
 			// check if we are currently in the exit state 
-			else if (playMode != ButtonTimelinePlayMode.IMMEDIATELY && this._labels[exit] && FrameLabelData(this._labels[exit]).isActiveAt(this.movieClip.currentFrame))
+			else if (playMode != ButtonTimelinePlayMode.IMMEDIATELY && _labels[exit] && FrameLabelData(_labels[exit]).isActiveAt(movieClip.currentFrame))
 			{
 				// backwards?
 				if (playMode == ButtonTimelinePlayMode.REVERSED)
 				{
 					// ok, play backwards
-					this._currentLabel = goal;
-					if (this.debug) this.logDebug("animateTo: play backwards");
-					this.gotoFrame(FrameLabelData(this._labels[exit]).startframe);
+					_currentLabel = goal;
+					if (debug) logDebug("animateTo: play backwards");
+					gotoFrame(FrameLabelData(_labels[exit]).startframe);
 				}
 				else
 				{
@@ -537,13 +537,13 @@ package temple.ui.buttons.behaviors
 				}
 			}
 			// check if there are no enter and exit states, but we have a start
-			else if (!this._labels[enter] && !this._labels[exit] && start && this._labels[start])
+			else if (!_labels[enter] && !_labels[exit] && start && _labels[start])
 			{
 				// check if there are labels between the start and goal
 				var found:Boolean;
 				
-				var frame:int = this.movieClip.currentFrame;
-				var end:int = FrameLabelData(this._labels[goal]).startframe;
+				var frame:int = movieClip.currentFrame;
+				var end:int = FrameLabelData(_labels[goal]).startframe;
 				
 				do
 				{
@@ -555,50 +555,50 @@ package temple.ui.buttons.behaviors
 					{
 						frame--;
 					}
-					found = this._labels.hasOwnProperty(frame) && frame != end;
+					found = _labels.hasOwnProperty(frame) && frame != end;
 				}
 				while (!found && frame != end);
 				
-				if (this.debug) this.logDebug("animateTo: there are no labels '" + enter + "' and '" + exit + "', but we have '" + start + "', so animate between them");
+				if (debug) logDebug("animateTo: there are no labels '" + enter + "' and '" + exit + "', but we have '" + start + "', so animate between them");
 				
 				// check if we are currenlty between start and goal
-				if (!found && !(this.movieClip.currentFrame < FrameLabelData(this._labels[start]).startframe && this.movieClip.currentFrame < FrameLabelData(this._labels[goal]).startframe) 
-				&& !(this.movieClip.currentFrame > FrameLabelData(this._labels[start]).startframe && this.movieClip.currentFrame > FrameLabelData(this._labels[goal]).startframe))
+				if (!found && !(movieClip.currentFrame < FrameLabelData(_labels[start]).startframe && movieClip.currentFrame < FrameLabelData(_labels[goal]).startframe) 
+				&& !(movieClip.currentFrame > FrameLabelData(_labels[start]).startframe && movieClip.currentFrame > FrameLabelData(_labels[goal]).startframe))
 				{
-					this._currentLabel = enter;
-					this.gotoFrame(FrameLabelData(this._labels[goal]).startframe);
+					_currentLabel = enter;
+					gotoFrame(FrameLabelData(_labels[goal]).startframe);
 				}
 				else
 				{
-					this._currentLabel = goal;
-					this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-					this.movieClip.gotoAndStop(FrameLabelData(this._labels[goal]).startframe);
+					_currentLabel = goal;
+					movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+					movieClip.gotoAndStop(FrameLabelData(_labels[goal]).startframe);
 				}
 			}
 			// check if we have an enter state
-			else if (this._labels[enter])
+			else if (_labels[enter])
 			{
-				this._currentLabel = enter;
+				_currentLabel = enter;
 				
-				if (this.debug) this.logDebug("animateTo: currentLabel='" + enter + "', currentFrame=" + this.movieClip.currentFrame);
+				if (debug) logDebug("animateTo: currentLabel='" + enter + "', currentFrame=" + movieClip.currentFrame);
 				
 				// check if enter is currently active
-				if (!FrameLabelData(this._labels[enter]).isActiveAt(this.movieClip.currentFrame))
+				if (!FrameLabelData(_labels[enter]).isActiveAt(movieClip.currentFrame))
 				{
-					if (this.debug) this.logDebug("animateTo: goto '" + enter + "'");
-					this.movieClip.gotoAndStop(enter);
+					if (debug) logDebug("animateTo: goto '" + enter + "'");
+					movieClip.gotoAndStop(enter);
 				}
-				this.gotoFrame(FrameLabelData(this._labels[enter]).endframe);
+				gotoFrame(FrameLabelData(_labels[enter]).endframe);
 			}
 			else
 			{
 				// just go to our goal
-				if (this.debug) this.logDebug("animateTo: just go to our goal '" + goal + "'");
-				this._currentLabel = goal;
-				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.movieClip.gotoAndStop(FrameLabelData(this._labels[goal]).startframe);
+				if (debug) logDebug("animateTo: just go to our goal '" + goal + "'");
+				_currentLabel = goal;
+				movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				movieClip.gotoAndStop(FrameLabelData(_labels[goal]).startframe);
 				
-				if (goal == ButtonTimelineLabels.OVER && !this.over) this.update(this);
+				if (goal == ButtonTimelineLabels.OVER && !over) update(this);
 			}
 			// Force the stage to render
 			new TimerEvent(TimerEvent.TIMER_COMPLETE).updateAfterEvent();
@@ -609,82 +609,82 @@ package temple.ui.buttons.behaviors
 		 */
 		private function upState():void
 		{
-			if (this.debug) this.logDebug("upState");
+			if (debug) logDebug("upState");
 			
-			if (this.movieClip)
+			if (movieClip)
 			{
-				this._currentLabel = ButtonTimelineLabels.UP;
-				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.movieClip.gotoAndStop(FrameLabelData(this._labels[ButtonTimelineLabels.UP]).startframe);
+				_currentLabel = ButtonTimelineLabels.UP;
+				movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				movieClip.gotoAndStop(FrameLabelData(_labels[ButtonTimelineLabels.UP]).startframe);
 				new TimerEvent(TimerEvent.TIMER_COMPLETE).updateAfterEvent();
 			}
 		}
 
 		private function overState():void
 		{
-			if (this.debug) this.logDebug("overState");
-			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.IN, ButtonTimelineLabels.OVER, ButtonTimelineLabels.OUT, this._outPlayMode);
+			if (debug) logDebug("overState");
+			animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.IN, ButtonTimelineLabels.OVER, ButtonTimelineLabels.OUT, _outPlayMode);
 		}
 
 		private function downState():void
 		{
-			if (this.debug) this.logDebug("downState");
-			this.animateTo(ButtonTimelineLabels.OVER, ButtonTimelineLabels.PRESS, ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, this._pressPlayMode);
+			if (debug) logDebug("downState");
+			animateTo(ButtonTimelineLabels.OVER, ButtonTimelineLabels.PRESS, ButtonTimelineLabels.DOWN, ButtonTimelineLabels.RELEASE, _pressPlayMode);
 		}
 
 		private function selectedState():void
 		{
-			if (this.debug) this.logDebug("selectedState");
-			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.SELECT, ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, this._deselectPlayMode);
+			if (debug) logDebug("selectedState");
+			animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.SELECT, ButtonTimelineLabels.SELECTED, ButtonTimelineLabels.DESELECT, _deselectPlayMode);
 		}
 		
 		private function disabledState():void
 		{
-			if (this.debug) this.logDebug("disabledState");
-			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.DISABLE, ButtonTimelineLabels.DISABLED, ButtonTimelineLabels.ENABLE, this._enablePlayMode);
+			if (debug) logDebug("disabledState");
+			animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.DISABLE, ButtonTimelineLabels.DISABLED, ButtonTimelineLabels.ENABLE, _enablePlayMode);
 		}
 		
 		private function focusState():void
 		{
-			if (this.debug) this.logDebug("focusState");
-			this.animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.FOCUS, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.BLUR, this._blurPlayMode);
+			if (debug) logDebug("focusState");
+			animateTo(ButtonTimelineLabels.UP, ButtonTimelineLabels.FOCUS, ButtonTimelineLabels.FOCUSED, ButtonTimelineLabels.BLUR, _blurPlayMode);
 		}
 
 		private function preIntroState():void 
 		{
-			if (this.debug) this.logDebug("preIntroState: ");
+			if (debug) logDebug("preIntroState: ");
 			
 			// if we have an 'intro' frame stop at the beginning of the intro frame and disable the button
-			if (this._labels[ButtonTimelineLabels.INTRO])
+			if (_labels[ButtonTimelineLabels.INTRO])
 			{
-				this.disable();
-				this._currentLabel = null;
-				this.movieClip.gotoAndStop(ButtonTimelineLabels.INTRO);
+				disable();
+				_currentLabel = null;
+				movieClip.gotoAndStop(ButtonTimelineLabels.INTRO);
 			}
 		}
 
 		private function initLabels():void
 		{
-			this._labels = new HashMap("ButtonTimelineBehavior labels");
+			_labels = new HashMap("ButtonTimelineBehavior labels");
 			
-			if (this.movieClip.totalFrames < 2)
+			if (movieClip.totalFrames < 2)
 			{
-				this.logWarn("MovieClip has no frames, ButtonTimelineBehavior is useless");
-				this._labels[1] = this._labels[ButtonTimelineLabels.UP] = new FrameLabelData(ButtonTimelineLabels.UP, 1);
+				logWarn("MovieClip has no frames, ButtonTimelineBehavior is useless");
+				_labels[1] = _labels[ButtonTimelineLabels.UP] = new FrameLabelData(ButtonTimelineLabels.UP, 1);
 				return;
 			}
 			
 			// sort labels on frame
-			this.movieClip.currentScene.labels.sortOn("frame");
+			movieClip.currentScene.labels.sortOn("frame");
 			var frameLabelData:FrameLabelData;
 			var next:FrameLabel;
 			var j:int;
-			var length:int = this.movieClip.currentScene.labels.length;
+			var length:int = movieClip.currentScene.labels.length;
 			if (length)
 			{
 				for (var i:int = 0; i < length ; i++)
 				{
-					frameLabelData = new FrameLabelData(FrameLabel(this.movieClip.currentScene.labels[i]).name, FrameLabel(this.movieClip.currentScene.labels[i]).frame);
+					frameLabelData = new FrameLabelData(FrameLabel(movieClip.currentScene.labels[i]).name, FrameLabel(movieClip.currentScene.labels[i]).frame);
 					
 					switch (frameLabelData.name)
 					{
@@ -707,7 +707,7 @@ package temple.ui.buttons.behaviors
 							{
 								if (++j < length)
 								{
-									next = FrameLabel(this.movieClip.currentScene.labels[i + j]);
+									next = FrameLabel(movieClip.currentScene.labels[i + j]);
 								}
 								else
 								{
@@ -716,9 +716,9 @@ package temple.ui.buttons.behaviors
 							}
 							while (next && next.frame == frameLabelData.startframe);
 							
-							frameLabelData.endframe = next ? next.frame - 1 : this.movieClip.totalFrames;
+							frameLabelData.endframe = next ? next.frame - 1 : movieClip.totalFrames;
 								
-							if (this.debug) this.logDebug("initLabels: found label '" + frameLabelData.name + "', frames " + frameLabelData.startframe + "-" + frameLabelData.endframe);
+							if (debug) logDebug("initLabels: found label '" + frameLabelData.name + "', frames " + frameLabelData.startframe + "-" + frameLabelData.endframe);
 							break;
 						}
 						// Non animated states
@@ -729,146 +729,146 @@ package temple.ui.buttons.behaviors
 						case ButtonTimelineLabels.DISABLED:
 						case ButtonTimelineLabels.FOCUSED:
 						{
-							if (this.debug) this.logDebug("initLabels: found label '" + frameLabelData.name + "', frame " + frameLabelData.startframe);
+							if (debug) logDebug("initLabels: found label '" + frameLabelData.name + "', frame " + frameLabelData.startframe);
 							break;
 						}	
 						default:
 						{
-							this.logWarn("initLabels: found invalid label '" + frameLabelData.name + "' at frame " + frameLabelData.startframe);
+							logWarn("initLabels: found invalid label '" + frameLabelData.name + "' at frame " + frameLabelData.startframe);
 							continue;
 							break;
 						}
 					}
-					this._labels[frameLabelData.startframe] = this._labels[frameLabelData.name] = frameLabelData;
+					_labels[frameLabelData.startframe] = _labels[frameLabelData.name] = frameLabelData;
 				}
 				// since 'up' is mandatory, check for it and use first frame if 'up' is not found
-				if (!this._labels[ButtonTimelineLabels.UP])
+				if (!_labels[ButtonTimelineLabels.UP])
 				{
-					this._labels[1] = this._labels[ButtonTimelineLabels.UP] = new FrameLabelData(ButtonTimelineLabels.UP, 1);
-					if (this.debug) this.logDebug("initLabels: 'up' not found so first frame is used as 'up' state");
+					_labels[1] = _labels[ButtonTimelineLabels.UP] = new FrameLabelData(ButtonTimelineLabels.UP, 1);
+					if (debug) logDebug("initLabels: 'up' not found so first frame is used as 'up' state");
 				}
 				// since 'over' is mandatory, check for it and use 'up' if 'over' is not found
-				if (!this._labels[ButtonTimelineLabels.OVER])
+				if (!_labels[ButtonTimelineLabels.OVER])
 				{
-					this._labels[ButtonTimelineLabels.OVER] = new FrameLabelData(ButtonTimelineLabels.OVER, FrameLabelData(this._labels[ButtonTimelineLabels.UP]).startframe);
+					_labels[ButtonTimelineLabels.OVER] = new FrameLabelData(ButtonTimelineLabels.OVER, FrameLabelData(_labels[ButtonTimelineLabels.UP]).startframe);
 				}
 			}
 			else
 			{
 				// no labels found. Use first frame as up and lastframe as 'over'
-				this._labels[1] = this._labels[ButtonTimelineLabels.UP] = new FrameLabelData(ButtonTimelineLabels.UP, 1);
-				this._labels[this.movieClip.totalFrames] = this._labels[ButtonTimelineLabels.OVER] = new FrameLabelData(ButtonTimelineLabels.OVER, this.movieClip.totalFrames);
+				_labels[1] = _labels[ButtonTimelineLabels.UP] = new FrameLabelData(ButtonTimelineLabels.UP, 1);
+				_labels[movieClip.totalFrames] = _labels[ButtonTimelineLabels.OVER] = new FrameLabelData(ButtonTimelineLabels.OVER, movieClip.totalFrames);
 			}
 			
-			if (this.debug) this.logInfo("Labels: " + dump(this._labels));
+			if (debug) logInfo("Labels: " + dump(_labels));
 		}
 		
 		private function gotoFrame(frame:int):void
 		{
-			if (this.debug) this.logDebug("gotoFrame: " + frame + ", currentFrame=" + this.movieClip.currentFrame);
-			this._targetFrame = frame;
-			if (this.movieClip.currentFrame != this._targetFrame)
+			if (debug) logDebug("gotoFrame: " + frame + ", currentFrame=" + movieClip.currentFrame);
+			_targetFrame = frame;
+			if (movieClip.currentFrame != _targetFrame)
 			{
-				this.movieClip.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				movieClip.addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			}
 			else
 			{
-				this.onAnimationDone();
+				onAnimationDone();
 			}
 		}
 		
 		private function handleEnterFrame(event:Event):void
 		{
-			if (this._targetFrame == this.movieClip.currentFrame)
+			if (_targetFrame == movieClip.currentFrame)
 			{
-				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.onAnimationDone();
+				movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				onAnimationDone();
 			}
 			else
 			{
-				this.moveToTarget();
+				moveToTarget();
 			}
 		}
 		
 		private function moveToTarget():void
 		{
-			if (this.movieClip.currentFrame < this._targetFrame)
+			if (movieClip.currentFrame < _targetFrame)
 			{
-				this.movieClip.nextFrame();
+				movieClip.nextFrame();
 			}
-			else if (this.movieClip.currentFrame > this._targetFrame)
+			else if (movieClip.currentFrame > _targetFrame)
 			{
-				this.movieClip.prevFrame();
+				movieClip.prevFrame();
 			}
 		}
 
 		private function onAnimationDone():void
 		{
-			if (this.debug) this.logDebug("animation done: currentLabel='" + this._currentLabel + "'");
+			if (debug) logDebug("animation done: currentLabel='" + _currentLabel + "'");
 			
-			switch (this._currentLabel)
+			switch (_currentLabel)
 			{
 				case ButtonTimelineLabels.IN:
 				{
-					this._currentLabel = ButtonTimelineLabels.OVER;
+					_currentLabel = ButtonTimelineLabels.OVER;
 					break;
 				}
 				case ButtonTimelineLabels.OUT:
 				{
-					this._currentLabel = ButtonTimelineLabels.UP;
+					_currentLabel = ButtonTimelineLabels.UP;
 					break;
 				}
 				case ButtonTimelineLabels.PRESS:
 				{
-					this._currentLabel = ButtonTimelineLabels.DOWN;
+					_currentLabel = ButtonTimelineLabels.DOWN;
 					break;
 				}
 				case ButtonTimelineLabels.SELECT:
 				{
-					this._currentLabel = ButtonTimelineLabels.SELECTED;
+					_currentLabel = ButtonTimelineLabels.SELECTED;
 					break;
 				}
 				case ButtonTimelineLabels.DISABLE:
 				{
-					this._currentLabel = ButtonTimelineLabels.DISABLED;
+					_currentLabel = ButtonTimelineLabels.DISABLED;
 					break;
 				}
 				case ButtonTimelineLabels.FOCUS:
 				{
-					this._currentLabel = ButtonTimelineLabels.FOCUSED;
+					_currentLabel = ButtonTimelineLabels.FOCUSED;
 					break;
 				}
 				case ButtonTimelineLabels.RELEASE:
 				{
-					this._currentLabel = ButtonTimelineLabels.OVER;
+					_currentLabel = ButtonTimelineLabels.OVER;
 					break;
 				}
 				case ButtonTimelineLabels.DESELECT:
 				case ButtonTimelineLabels.ENABLE:
 				case ButtonTimelineLabels.BLUR:
 				{
-					this._currentLabel = this.over ? ButtonTimelineLabels.OVER : ButtonTimelineLabels.UP;
+					_currentLabel = over ? ButtonTimelineLabels.OVER : ButtonTimelineLabels.UP;
 					break;
 				}
 				case ButtonTimelineLabels.INTRO:
 				{
-					this.enable();
-					this._currentLabel = ButtonTimelineLabels.UP;
+					enable();
+					_currentLabel = ButtonTimelineLabels.UP;
 					break;
 				}
 				case ButtonTimelineLabels.OUTRO:
 				{
-					this._currentLabel = null;
+					_currentLabel = null;
 					// break
 				}
 			}
-			this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			
-			if (this._currentLabel) this.movieClip.gotoAndStop(FrameLabelData(this._labels[this._currentLabel]).startframe);
+			if (_currentLabel) movieClip.gotoAndStop(FrameLabelData(_labels[_currentLabel]).startframe);
 				
-			this.update(this);
+			update(this);
 			
-			this.dispatchEvent(new Event(Event.COMPLETE));
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		/**
@@ -876,20 +876,20 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.target) delete ButtonTimelineBehavior._dictionary[this.target];
+			if (target) delete ButtonTimelineBehavior._dictionary[target];
 			
-			if (this.movieClip)
+			if (movieClip)
 			{
-				this.movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			}
-			this._labels = null;
-			this._defaultPlayMode = null;
-			this._outPlayMode = null;
-			this._pressPlayMode = null;
-			this._releasePlayMode = null;
-			this._deselectPlayMode = null;
-			this._enablePlayMode = null;
-			this._blurPlayMode = null;
+			_labels = null;
+			_defaultPlayMode = null;
+			_outPlayMode = null;
+			_pressPlayMode = null;
+			_releasePlayMode = null;
+			_deselectPlayMode = null;
+			_enablePlayMode = null;
+			_blurPlayMode = null;
 			
 			super.destruct();
 		}
@@ -916,7 +916,7 @@ final class FrameLabelData
 	 */
 	public function isActiveAt(frame:int):Boolean
 	{
-		return this.startframe <= frame && frame <= this.endframe;
+		return startframe <= frame && frame <= endframe;
 	}
 	
 	public function toString():String

@@ -52,6 +52,7 @@ package temple.ui.layout.liquid
 	 * When a LiquidContainer is resized, it will not be scaled. Therefor all liquid children woun't be scaled,
 	 * but sized and positioned based on their liquid properties.
 	 * 
+	 * @includeExample LiquidContainerExample.as
 	 * @includeExample LiquidExample.as
 	 * 
 	 * @see temple.ui.layout.liquid.LiquidBehavior
@@ -76,7 +77,7 @@ package temple.ui.layout.liquid
 		private var _backgroundAlpha:Number = 1;
 		private var _aspectRatio:Number;
 
-		public function LiquidContainer(width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = false)
+		public function LiquidContainer(width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = 'topLeft', clipping:Boolean = false)
 		{
 			construct::liquidContainer(width, height, scaleMode, align, clipping);
 		}
@@ -86,17 +87,17 @@ package temple.ui.layout.liquid
 		 */
 		construct function liquidContainer(width:Number, height:Number, scaleMode:String, align:String, clipping:Boolean):void
 		{
-			this._width = width;
-			this._height = height;
+			_width = width;
+			_height = height;
 			
-			this._contentWidth = this._width;
-			this._contentHeight	= this._height;
+			_contentWidth = _width;
+			_contentHeight	= _height;
 			
-			this.scaleMode = scaleMode;
-			this.clipping = clipping;
+			_scaleMode = scaleMode;
+			_clipping = clipping;
 			this.align = align;
 			
-			this._originalScale = new Point(this.scaleX, this.scaleY);
+			_originalScale = new Point(scaleX, scaleY);
 		}
 
 		/**
@@ -104,20 +105,20 @@ package temple.ui.layout.liquid
 		 */
 		public function resetScale():void 
 		{
-			if (this.scaleX != 1 || this.scaleY != 1)
+			if (scaleX != 1 || scaleY != 1)
 			{
-				this._width = this.width;
-				this._height = this.height;
+				_width = width;
+				_height = height;
 				
-				var leni:int = this.numChildren;
+				var leni:int = numChildren;
 				for (var i:int = 0; i < leni; i++)
 				{
-					this.getChildAt(i).width *= this.scaleX;
-					this.getChildAt(i).height *= this.scaleY;
+					getChildAt(i).width *= scaleX;
+					getChildAt(i).height *= scaleY;
 				}
 				
-				this.scale = 1;
-				this.layout();
+				scale = 1;
+				layout();
 			}
 		}
 
@@ -126,7 +127,7 @@ package temple.ui.layout.liquid
 		 */
 		override public function get width():Number
 		{
-			return !isNaN(this._width) ? this._width : super.width;
+			return !isNaN(_width) ? _width : super.width;
 		}
 
 		/**
@@ -134,11 +135,11 @@ package temple.ui.layout.liquid
 		 */
 		override public function set width(value:Number):void
 		{
-			if (this._width != value)
+			if (_width != value)
 			{
-				this._width = value;
-				this.layout();
-				this.dispatchEvent(new Event(Event.RESIZE));
+				_width = value;
+				layout();
+				dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 
@@ -147,7 +148,7 @@ package temple.ui.layout.liquid
 		 */
 		override public function get height():Number
 		{
-			return !isNaN(this._height) ? this._height : super.height;
+			return !isNaN(_height) ? _height : super.height;
 		}
 
 		/**
@@ -155,32 +156,32 @@ package temple.ui.layout.liquid
 		 */
 		override public function set height(value:Number):void
 		{
-			if (this._height != value)
+			if (_height != value)
 			{
-				this._height = value;
-				this.layout();
-				this.dispatchEvent(new Event(Event.RESIZE));
+				_height = value;
+				layout();
+				dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 		
 		public function get contentWidth():Number
 		{
-			return this._contentWidth;
+			return _contentWidth;
 		}
 		
 		public function set contentWidth(value:Number):void
 		{
-			this._contentWidth = value;
+			_contentWidth = value;
 		}
 		
 		public function get contentHeight():Number
 		{
-			return this._contentHeight;
+			return _contentHeight;
 		}
 		
 		public function set contentHeight(value:Number):void
 		{
-			this._contentHeight = value;
+			_contentHeight = value;
 		}
 		
 		/**
@@ -189,7 +190,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="ScaleMode", type="String", defaultValue="noScale", enumeration="exactFit,noBorder,noScale,showAll")]
 		public function get scaleMode():String
 		{
-			return this._scaleMode;
+			return _scaleMode;
 		}
 		
 		/**
@@ -204,8 +205,8 @@ package temple.ui.layout.liquid
 				case ScaleMode.NO_SCALE:
 				case ScaleMode.SHOW_ALL:
 				{
-					this._scaleMode = value;
-					this.layout();
+					_scaleMode = value;
+					layout();
 					break;
 				}
 				default:
@@ -216,13 +217,16 @@ package temple.ui.layout.liquid
 			}
 		}
 		
+		/**
+		 * 
+		 */
 		public function get align():String
 		{
-			switch (this._horizontalAlign)
+			switch (_horizontalAlign)
 			{
 				case 0:
 				{
-					switch (this._verticalAlign)
+					switch (_verticalAlign)
 					{
 						case 0: return Align.TOP_LEFT; 
 						case 1: return Align.BOTTOM_LEFT;
@@ -231,7 +235,7 @@ package temple.ui.layout.liquid
 				}
 				case 1:
 				{
-					switch (this._verticalAlign)
+					switch (_verticalAlign)
 					{
 						case 0: return Align.TOP_RIGHT; 
 						case 1: return Align.BOTTOM_RIGHT;
@@ -240,7 +244,7 @@ package temple.ui.layout.liquid
 				}
 				default:
 				{
-					switch (this._verticalAlign)
+					switch (_verticalAlign)
 					{
 						case 0: return Align.TOP; 
 						case 1: return Align.BOTTOM;
@@ -251,101 +255,118 @@ package temple.ui.layout.liquid
 			return null;
 		}
 		
+		/**
+		 * @private
+		 */
 		public function set align(value:String):void
 		{
 			switch (value)
 			{
 				case Align.LEFT:
 				{
-					this._horizontalAlign = 0;
+					_horizontalAlign = 0;
 					break;
 				}
 				case Align.CENTER:
 				{
-					this._horizontalAlign = .5;
+					_horizontalAlign = .5;
 					break;
 				}
 				case Align.RIGHT:
 				{
-					this._horizontalAlign = 1;
+					_horizontalAlign = 1;
 					break;
 				}
 				case Align.TOP:
 				{
-					this._verticalAlign = 0;
+					_verticalAlign = 0;
 					break;
 				}
 				case Align.MIDDLE:
 				{
-					this._verticalAlign = .5;
+					_verticalAlign = .5;
 					break;
 				}
 				case Align.BOTTOM:
 				{
-					this._verticalAlign = 1;
+					_verticalAlign = 1;
 					break;
 				}
 				case Align.TOP_LEFT:
+				case null:
 				{
-					this._horizontalAlign = 0;
-					this._verticalAlign = 0;
+					_horizontalAlign = 0;
+					_verticalAlign = 0;
 					break;
 				}
 				case Align.TOP_RIGHT:
 				{
-					this._horizontalAlign = 1;
-					this._verticalAlign = 0;
+					_horizontalAlign = 1;
+					_verticalAlign = 0;
 					break;
 				}
 				case Align.BOTTOM_LEFT:
 				{
-					this._horizontalAlign = 0;
-					this._verticalAlign = 1;
+					_horizontalAlign = 0;
+					_verticalAlign = 1;
 					break;
 				}
 				case Align.BOTTOM_RIGHT:
 				{
-					this._horizontalAlign = 1;
-					this._verticalAlign = 1;
+					_horizontalAlign = 1;
+					_verticalAlign = 1;
 					break;
 				}
 				case Align.NONE:
-				case null:
 				{
-					this._horizontalAlign = .5;
-					this._verticalAlign = .5;
+					_horizontalAlign = .5;
+					_verticalAlign = .5;
 					break;
 				}
 				default:
 				{
 					throwError(new TempleArgumentError(this, "Invalid value for align: '" + value + "'"));
+					return;
 					break;
 				}
 			}
+			layout();
 		}
 		
+		/**
+		 * 
+		 */
 		public function get horizontalAlign():Number
 		{
-			return this._horizontalAlign;
+			return _horizontalAlign;
 		}
 		
+		/**
+		 * @private
+		 */
 		public function set horizontalAlign(value:Number):void
 		{
 			if (isNaN(value)) value = .5;
-			this._horizontalAlign = value;
-			this.layout();
+			_horizontalAlign = value;
+			layout();
 		}
 		
+		/**
+		 * 
+		 */
 		public function get verticalAlign():Number
 		{
-			return this._verticalAlign;
+			return _verticalAlign;
 		}
 		
+		/**
+		 * @private
+		 */
 		public function set verticalAlign(value:Number):void
 		{
 			if (isNaN(value)) value = .5;
-			this._verticalAlign = value;
-			this.layout();
+			_verticalAlign = value;
+			layout();
 		}
 		
 		/**
@@ -354,7 +375,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Clippping", type="Boolean", defaultValue="false")]
 		public function get clipping():Boolean
 		{
-			return this._clipping;
+			return _clipping;
 		}
 		
 		/**
@@ -362,7 +383,8 @@ package temple.ui.layout.liquid
 		 */
 		public function set clipping(value:Boolean):void
 		{
-			this._clipping = value;
+			_clipping = value;
+			layout();
 		}
 		
 		/**
@@ -370,7 +392,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get background():Boolean
 		{
-			return this._background;
+			return _background;
 		}
 		
 		/**
@@ -378,8 +400,8 @@ package temple.ui.layout.liquid
 		 */
 		public function set background(value:Boolean):void
 		{
-			this._background = value;
-			this.setBackground();
+			_background = value;
+			setBackground();
 		}
 		
 		/**
@@ -387,7 +409,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get backgroundColor():uint
 		{
-			return this._backgroundColor;
+			return _backgroundColor;
 		}
 		
 		/**
@@ -395,8 +417,8 @@ package temple.ui.layout.liquid
 		 */
 		public function set backgroundColor(value:uint):void
 		{
-			this._backgroundColor = value;
-			this.setBackground();
+			_backgroundColor = value;
+			setBackground();
 		}
 		
 		/**
@@ -404,7 +426,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get backgroundAlpha():Number
 		{
-			return this._backgroundAlpha;
+			return _backgroundAlpha;
 		}
 		
 		/**
@@ -412,20 +434,26 @@ package temple.ui.layout.liquid
 		 */
 		public function set backgroundAlpha(value:Number):void
 		{
-			this._backgroundAlpha = value;
-			this.setBackground();
+			_backgroundAlpha = value;
+			setBackground();
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function get offset():Point 
 		{
 			return new Point(0,0);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function getBounds(targetCoordinateSpace:DisplayObject):Rectangle 
 		{
-			if (targetCoordinateSpace == this.parent)
+			if (targetCoordinateSpace == parent)
 			{
-				return new Rectangle(this.x, this.y, this.width, this.height);
+				return new Rectangle(x, y, width, height);
 			}
 			return super.getBounds(targetCoordinateSpace);
 		}
@@ -436,88 +464,100 @@ package temple.ui.layout.liquid
 		override public function set keepAspectRatio(value:Boolean):void
 		{
 			super.keepAspectRatio = value;
-			
-			this._aspectRatio = value ? this._width / this._height : NaN;
+			_aspectRatio = value ? _width / _height : NaN;
+			layout();
 		}
 		
+		/**
+		 * 
+		 */
 		public function get aspectRatio():Number
 		{
-			return this._aspectRatio;
+			return _aspectRatio;
 		}
 
+		/**
+		 * @private
+		 */
 		public function set aspectRatio(value:Number):void
 		{
-			this._aspectRatio = value;
+			_aspectRatio = value;
 		}
 		
+		/**
+		 * 
+		 */
 		public function layout():void 
 		{
-			switch (this._scaleMode)
+			switch (_scaleMode)
 			{
 				case ScaleMode.NO_SCALE:
 				{
-					if (this._clipping) this.scrollRect = new Rectangle(-this._horizontalAlign * (this._width - this._contentWidth), -this._verticalAlign * (this._height - this._contentHeight), this._width, this._height);
+					if (_clipping) super.scrollRect = new Rectangle(-_horizontalAlign * (_width - _contentWidth) || 0, -_verticalAlign * (_height - _contentHeight) || 0, _width || 0, _height || 0);
 					
-					if (!isNaN(this._aspectRatio))
+					if (!isNaN(_aspectRatio))
 					{
-						var ratio:Number = this.width / this.height;
+						var ratio:Number = width / height;
 						
-						if (ratio != this._aspectRatio)
+						if (ratio != _aspectRatio)
 						{
-							this.width = this.height * this._aspectRatio;
+							width = height * _aspectRatio;
 						}
 					}
 					else
 					{
-						this.scale = 1;
+						scale = 1;
 					}
 					
 					break;
 				}
 				case ScaleMode.SHOW_ALL:
 				{
-					this.scale = Math.min(this._width / this._contentWidth, this._height / this._contentHeight);
-					this.scrollRect = new Rectangle(  -this._horizontalAlign * (this._width - this._contentWidth * this.scaleX) / this.scaleX
-													, -this._verticalAlign * (this._height - this._contentHeight * this.scaleY) / this.scaleY
-													, this._width / this.scaleX, this._height / this.scaleY);
+					scale = Math.min(_width / _contentWidth, _height / _contentHeight);
+					super.scrollRect = new Rectangle(  -_horizontalAlign * (_width - _contentWidth * scaleX) / scaleX
+													, -_verticalAlign * (_height - _contentHeight * scaleY) / scaleY
+													, _width / scaleX, _height / scaleY);
 					break;
 				}
 				case ScaleMode.NO_BORDER:
 				{
-					this.scale = Math.max(this._width / this._contentWidth, this._height / this._contentHeight);
-					this.scrollRect = new Rectangle(  -this._horizontalAlign * (this._width - this._contentWidth * this.scaleX) / this.scaleX
-													, -this._verticalAlign * (this._height - this._contentHeight * this.scaleY) / this.scaleY
-													, this._width / this.scaleX, this._height / this.scaleY);
+					scale = Math.max(_width / _contentWidth, _height / _contentHeight);
+					super.scrollRect = new Rectangle(  -_horizontalAlign * (_width - _contentWidth * scaleX) / scaleX
+													, -_verticalAlign * (_height - _contentHeight * scaleY) / scaleY
+													, _width / scaleX, _height / scaleY);
 					break;
 				}
 				case ScaleMode.EXACT_FIT:
 				{
-					this.scaleX = this.width / this._contentWidth;
-					this.scaleY = this._height / this._contentHeight;
+					scaleX = width / _contentWidth;
+					scaleY = _height / _contentHeight;
 					
-					if (this._clipping)
+					if (_clipping)
 					{
-						this.scrollRect = new Rectangle(0, 0, this._contentWidth, this._contentHeight);
+						super.scrollRect = new Rectangle(0, 0, _contentWidth, _contentHeight);
 					}
 				}
 			}
-			this.setBackground();
+			setBackground();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function set scrollRect(value:Rectangle):void
 		{
 			super.scrollRect = value;
-			this.setBackground();
+			setBackground();
 		}
 		
 		private function setBackground():void 
 		{
-			this.graphics.clear();
-			if (this._background)
+			graphics.clear();
+			if (_background)
 			{
-				this.graphics.beginFill(this._backgroundColor, this._backgroundAlpha);
-				this.graphics.drawRect(this.scrollRect ? this.scrollRect.x : 0, this.scrollRect ? this.scrollRect.y : 0, this.width, this.height);
-				this.graphics.endFill();
+				graphics.beginFill(_backgroundColor, _backgroundAlpha);
+				graphics.drawRect(scrollRect ? scrollRect.x : 0, scrollRect ? scrollRect.y : 0, width, height);
+				graphics.endFill();
 			}
 		}
 	}

@@ -70,7 +70,7 @@ package temple.ui.behaviors
 		 */
 		override public function clone():Event
 		{
-			return new MoveBehaviorEvent(this.type, this.behavior as MoveBehavior, this.bubbles);
+			return new MoveBehaviorEvent(type, behavior as MoveBehavior, bubbles);
 		}
 
 	}

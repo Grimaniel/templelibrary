@@ -61,7 +61,7 @@ package temple.ui.form.components
 
 		override public function clone():Event
 		{
-			return new FormElementEvent(this.type);
+			return new FormElementEvent(type);
 		}
 	}
 }

@@ -27,7 +27,7 @@ package
 			var container:Button = new Button(325, 125);
 			container.x = 50;
 			container.y = 50;
-			this.addChild(container);
+			addChild(container);
 			
 			// create a button inside the container. This button will react on ButtonEvents of the container.
 			var nestedButton1:Button = new Button(75, 75);
@@ -68,14 +68,14 @@ class Button extends MultiStateButton
 {
 	public function Button(width:Number, height:Number) 
 	{
-		this.graphics.beginFill(0xaaaaaa);
-		this.graphics.drawRect(0, 0, width, height);
-		this.graphics.endFill();
+		graphics.beginFill(0xaaaaaa);
+		graphics.drawRect(0, 0, width, height);
+		graphics.endFill();
 		
-		this.filters = [new BevelFilter(1, 45, 0xffffff, 1, 0, 1, 3, 3)];
+		filters = [new BevelFilter(1, 45, 0xffffff, 1, 0, 1, 3, 3)];
 		
-		this.addChild(new ButtonOverState(width, height));
-		this.addChild(new ButtonDownState(width, height));
+		addChild(new ButtonOverState(width, height));
+		addChild(new ButtonDownState(width, height));
 	}
 }
 
@@ -83,9 +83,9 @@ class ButtonOverState extends OverState
 {
 	public function ButtonOverState(width:Number, height:Number) 
 	{
-		this.graphics.beginFill(0xeeeeee);
-		this.graphics.drawRect(0, 0, width, height);
-		this.graphics.endFill();
+		graphics.beginFill(0xeeeeee);
+		graphics.drawRect(0, 0, width, height);
+		graphics.endFill();
 	}
 }
 
@@ -93,8 +93,8 @@ class ButtonDownState extends DownState
 {
 	public function ButtonDownState(width:Number, height:Number) 
 	{
-		this.graphics.beginFill(0x888888);
-		this.graphics.drawRect(0, 0, width, height);
-		this.graphics.endFill();
+		graphics.beginFill(0x888888);
+		graphics.drawRect(0, 0, width, height);
+		graphics.endFill();
 	}
 }

@@ -73,10 +73,10 @@ package temple.ui.form.components
 		{
 			super.day = value;
 			
-			if (this.day is ComboBox)
+			if (day is ComboBox)
 			{
-				ComboBox(this.day).removeAll();
-				for (var i:int = 1;i <= 31; i++) ComboBox(this.day).addItem(i);
+				ComboBox(day).removeAll();
+				for (var i:int = 1;i <= 31; i++) ComboBox(day).addItem(i);
 			}
 		}
 		
@@ -87,11 +87,11 @@ package temple.ui.form.components
 		{
 			super.month = value;
 			
-			if (this.month is ComboBox)
+			if (month is ComboBox)
 			{
-				ComboBox(this.month).removeAll();
-				for (var i:int = 1;i <= 12; i++) ComboBox(this.month).addItem(i);
-				this.monthFormat = this._monthFormat;
+				ComboBox(month).removeAll();
+				for (var i:int = 1;i <= 12; i++) ComboBox(month).addItem(i);
+				monthFormat = _monthFormat;
 			}
 		}
 
@@ -102,9 +102,9 @@ package temple.ui.form.components
 		{
 			super.year = value;
 			
-			if (this.year is ComboBox)
+			if (year is ComboBox)
 			{
-				this.setDateRange(this.begin, this.end);
+				setDateRange(begin, end);
 			}
 		}
 
@@ -113,7 +113,7 @@ package temple.ui.form.components
 		 */
 		public function get monthFormat():String
 		{
-			return this._monthFormat;
+			return _monthFormat;
 		}
 
 		/**
@@ -165,13 +165,13 @@ package temple.ui.form.components
 					break;
 				}
 			}
-			this._monthFormat = value;
+			_monthFormat = value;
 			
-			if (this.month is ComboBox)
+			if (month is ComboBox)
 			{
 				for (i = labels.length-1; i >= 0 ; --i)
 				{
-					ComboBox(this.month).setLabelAt(i, labels[i]);
+					ComboBox(month).setLabelAt(i, labels[i]);
 				}
 			}
 		}
@@ -181,7 +181,7 @@ package temple.ui.form.components
 		 */
 		override public function set begin(value:Date):void
 		{
-			this.setDateRange(value, this.end);
+			setDateRange(value, end);
 		}
 		
 		/**
@@ -189,7 +189,7 @@ package temple.ui.form.components
 		 */
 		override public function set end(value:Date):void
 		{
-			this.setDateRange(this.begin, value);
+			setDateRange(begin, value);
 		}
 		
 		/**
@@ -197,24 +197,24 @@ package temple.ui.form.components
 		 */
 		override public function setDateRange(begin:Date, end:Date):void
 		{
-			var date:Date = this.date;
+			var date:Date = date;
 			super.setDateRange(begin, end);
 			
-			if (begin && end && this.year is ComboBox)
+			if (begin && end && year is ComboBox)
 			{
-				ComboBox(this.year).removeAll();
+				ComboBox(year).removeAll();
 				
 				var i:int;
 				
 				if (begin < end)
 				{
-					for (i = begin.fullYear; i <= end.fullYear; i++) ComboBox(this.year).addItem(i);
+					for (i = begin.fullYear; i <= end.fullYear; i++) ComboBox(year).addItem(i);
 				}
 				else
 				{
-					for (i = begin.fullYear; i >= end.fullYear; i--) ComboBox(this.year).addItem(i);
+					for (i = begin.fullYear; i >= end.fullYear; i--) ComboBox(year).addItem(i);
 				}
-				if (date) this.year.value = date.getFullYear();
+				if (date) year.value = date.getFullYear();
 			}
 		}
 
@@ -223,7 +223,7 @@ package temple.ui.form.components
 		 */
 		public function get rowCount():uint
 		{
-			return ComboBox(this.day).rowCount;
+			return ComboBox(day).rowCount;
 		}
 
 		/**
@@ -231,9 +231,9 @@ package temple.ui.form.components
 		 */
 		public function set rowCount(value:uint):void
 		{
-			ComboBox(this.day).rowCount = value;
-			ComboBox(this.month).rowCount = value;
-			ComboBox(this.year).rowCount = value;
+			ComboBox(day).rowCount = value;
+			ComboBox(month).rowCount = value;
+			ComboBox(year).rowCount = value;
 		}
 
 
@@ -242,7 +242,7 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this._monthFormat = null;
+			_monthFormat = null;
 			
 			super.destruct();
 		}

@@ -50,8 +50,8 @@ package temple.ui.states
 		
 		public function AbstractState()
 		{
-			this.mouseEnabled = false;
-			this.mouseChildren = false;
+			mouseEnabled = false;
+			mouseChildren = false;
 		}
 
 		/**
@@ -75,7 +75,7 @@ package temple.ui.states
 		 */
 		public function get shown():Boolean
 		{
-			return this._shown;
+			return _shown;
 		}
 		
 		/**
@@ -85,11 +85,11 @@ package temple.ui.states
 		{
 			if (value)
 			{
-				this.show();
+				show();
 			}
 			else
 			{
-				this.hide();
+				hide();
 			}
 		}
 		
@@ -98,7 +98,7 @@ package temple.ui.states
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -106,7 +106,7 @@ package temple.ui.states
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 	}
 }

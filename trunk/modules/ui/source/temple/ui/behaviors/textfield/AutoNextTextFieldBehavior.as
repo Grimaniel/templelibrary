@@ -58,45 +58,45 @@ package temple.ui.behaviors.textfield
 
 		public function AutoNextTextFieldBehavior()
 		{
-			this._textFields = new Array();
+			_textFields = new Array();
 		}
 
 		public function add(textField:TextField):void 
 		{
-			this._textFields.push(textField);
-			textField.addEventListener(Event.CHANGE, this.handleTextChange);
-			textField.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+			_textFields.push(textField);
+			textField.addEventListener(Event.CHANGE, handleTextChange);
+			textField.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 		}
 
 		public function remove(textField:TextField):void 
 		{
-			ArrayUtils.removeValueFromArray(this._textFields, textField);
-			textField.removeEventListener(Event.CHANGE, this.handleTextChange);
-			textField.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+			ArrayUtils.removeValueFromArray(_textFields, textField);
+			textField.removeEventListener(Event.CHANGE, handleTextChange);
+			textField.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 		}
 
 		private function focusNext(textField:TextField):void 
 		{
-			var leni:int = this._textFields.length - 1;
+			var leni:int = _textFields.length - 1;
 			for (var i:int = 0; i < leni; i++)
 			{
-				if (this._textFields[i] == textField)
+				if (_textFields[i] == textField)
 				{
-					TextField(this._textFields[i]).stage.focus = TextField(this._textFields[i+1]);
-					new FrameDelay(TextField(this._textFields[i+1]).setSelection, 1, [0, 0]);
+					TextField(_textFields[i]).stage.focus = TextField(_textFields[i+1]);
+					new FrameDelay(TextField(_textFields[i+1]).setSelection, 1, [0, 0]);
 				}
 			}
 		}
 
 		private function focusPrevious(textField:TextField):void 
 		{
-			var leni:int = this._textFields.length;
+			var leni:int = _textFields.length;
 			for (var i:int = 1; i < leni; i++)
 			{
-				if (this._textFields[i] == textField)
+				if (_textFields[i] == textField)
 				{
-					TextField(this._textFields[i]).stage.focus = TextField(this._textFields[i-1]);
-					new FrameDelay(TextField(this._textFields[i-1]).setSelection, 1, [TextField(this._textFields[i-1]).text.length, TextField(this._textFields[i-1]).text.length]);
+					TextField(_textFields[i]).stage.focus = TextField(_textFields[i-1]);
+					new FrameDelay(TextField(_textFields[i-1]).setSelection, 1, [TextField(_textFields[i-1]).text.length, TextField(_textFields[i-1]).text.length]);
 					return;
 				}
 			}
@@ -108,7 +108,7 @@ package temple.ui.behaviors.textfield
 			
 			if (textField.text.length >= textField.maxChars)
 			{
-				this.focusNext(textField);
+				focusNext(textField);
 			}
 		}
 		
@@ -119,11 +119,11 @@ package temple.ui.behaviors.textfield
 			{
 				case KeyCode.LEFT:
 				case KeyCode.BACKSPACE:
-					if (textField.caretIndex == 0) this.focusPrevious(textField);
+					if (textField.caretIndex == 0) focusPrevious(textField);
 					break;
 				
 				case KeyCode.RIGHT:
-					if (textField.caretIndex == textField.text.length) this.focusNext(textField);
+					if (textField.caretIndex == textField.text.length) focusNext(textField);
 					event.stopImmediatePropagation();
 					event.preventDefault();
 					break;
@@ -132,10 +132,10 @@ package temple.ui.behaviors.textfield
 
 		override public function destruct():void 
 		{
-			if (this._textFields)
+			if (_textFields)
 			{
-				while (this._textFields.length) this.remove(this._textFields[0]);
-				this._textFields = null;
+				while (_textFields.length) remove(_textFields[0]);
+				_textFields = null;
 			}
 			
 			super.destruct();

@@ -51,7 +51,7 @@ package temple.ui.form.validation.rules
 		{
 			super(target);
 			
-			this._length = length;
+			_length = length;
 		}
 
 		/**
@@ -59,7 +59,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function get length():uint
 		{
-			return this._length;
+			return _length;
 		}
 		
 		/**
@@ -67,7 +67,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function set length(value:uint):void
 		{
-			this._length = value;
+			_length = value;
 		}
 		
 		/**
@@ -75,7 +75,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function isValid():Boolean
 		{
-			return this._optional && !this.target.value || this.target.value && this.target.value.length >= this._length;
+			return _optional && !target.value || target.value && target.value.length >= _length;
 		}
 		
 		/**
@@ -83,7 +83,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function get optional():Boolean
 		{
-			return this._optional;
+			return _optional;
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function set optional(value:Boolean):void
 		{
-			this._optional = value;
+			_optional = value;
 		}
 	}
 }

@@ -65,18 +65,18 @@ package temple.ui.form.components
 		
 		public function DateInputField(begin:Date = null, end:Date = null, day:InputField = null, month:InputField = null, year:InputField = null)
 		{
-			this._begin = begin;
-			this._end = end;
+			_begin = begin;
+			_end = end;
 			
-			this.day ||= day || this.getChildByName(DateInputField.DAY_FIELD_NAME) as InputField;
-			this.month ||= month || this.getChildByName(DateInputField.MONTH_FIELD_NAME) as InputField;
-			this.year ||= year || this.getChildByName(DateInputField.YEAR_FIELD_NAME) as InputField;
+			this.day ||= day || getChildByName(DateInputField.DAY_FIELD_NAME) as InputField;
+			this.month ||= month || getChildByName(DateInputField.MONTH_FIELD_NAME) as InputField;
+			this.year ||= year || getChildByName(DateInputField.YEAR_FIELD_NAME) as InputField;
 			
-			if (!this._day) this.logWarn("DateSelector: no field found with name 'day' or '" + DateInputField.DAY_FIELD_NAME + "'.");
-			if (!this._month) this.logWarn("DateSelector: no field found with name 'month' or '" + DateInputField.MONTH_FIELD_NAME + "'.");
-			if (!this._year) this.logWarn("DateSelector: no field found with name 'year' or '" + DateInputField.YEAR_FIELD_NAME + "'.");
+			if (!_day) logWarn("DateSelector: no field found with name 'day' or '" + DateInputField.DAY_FIELD_NAME + "'.");
+			if (!_month) logWarn("DateSelector: no field found with name 'month' or '" + DateInputField.MONTH_FIELD_NAME + "'.");
+			if (!_year) logWarn("DateSelector: no field found with name 'year' or '" + DateInputField.YEAR_FIELD_NAME + "'.");
 			
-			KeyManager.init(this.stage);
+			KeyManager.init(stage);
 		}
 		
 		/**
@@ -84,7 +84,7 @@ package temple.ui.form.components
 		 */
 		public function get day():InputField
 		{
-			return this._day;
+			return _day;
 		}
 		
 		/**
@@ -92,18 +92,18 @@ package temple.ui.form.components
 		 */
 		public function set day(value:InputField):void
 		{
-			if (this._day)
+			if (_day)
 			{
-				this._day.removeEventListener(Event.CHANGE, this.handleChange);
-				this.removeElement(this._day);
+				_day.removeEventListener(Event.CHANGE, handleChange);
+				removeElement(_day);
 			}
-			this._day = value;
-			if (this._day)
+			_day = value;
+			if (_day)
 			{
-				this._day.addEventListener(Event.CHANGE, this.handleChange);
-				this.addElement(this._day);
-				this._day.maxChars = 2;
-				this._day.restrict = Restrictions.INTEGERS;
+				_day.addEventListener(Event.CHANGE, handleChange);
+				addElement(_day);
+				_day.maxChars = 2;
+				_day.restrict = Restrictions.INTEGERS;
 			}
 		}
 		
@@ -112,7 +112,7 @@ package temple.ui.form.components
 		 */
 		public function get month():InputField
 		{
-			return this._month;
+			return _month;
 		}
 		
 		/**
@@ -120,20 +120,20 @@ package temple.ui.form.components
 		 */
 		public function set month(value:InputField):void
 		{
-			if (this._month)
+			if (_month)
 			{
-				this._month.removeEventListener(Event.CHANGE, this.handleChange);
-				this._month.removeEventListener(FormElementEvent.SUBMIT, this.dispatchEvent);
-				this.removeElement(this._month);
+				_month.removeEventListener(Event.CHANGE, handleChange);
+				_month.removeEventListener(FormElementEvent.SUBMIT, dispatchEvent);
+				removeElement(_month);
 			}
-			this._month = value;
-			if (this._month)
+			_month = value;
+			if (_month)
 			{
-				this._month.addEventListener(Event.CHANGE, this.handleChange);
-				this._month.addEventListener(FormElementEvent.SUBMIT, this.dispatchEvent);
-				this.addElement(this._month);
-				this._month.maxChars = 2;
-				this._month.restrict = Restrictions.INTEGERS;
+				_month.addEventListener(Event.CHANGE, handleChange);
+				_month.addEventListener(FormElementEvent.SUBMIT, dispatchEvent);
+				addElement(_month);
+				_month.maxChars = 2;
+				_month.restrict = Restrictions.INTEGERS;
 			}
 		}
 
@@ -142,7 +142,7 @@ package temple.ui.form.components
 		 */
 		public function get year():InputField
 		{
-			return this._year;
+			return _year;
 		}
 		
 		/**
@@ -150,18 +150,18 @@ package temple.ui.form.components
 		 */
 		public function set year(value:InputField):void
 		{
-			if (this._year)
+			if (_year)
 			{
-				this._year.removeEventListener(Event.CHANGE, this.handleChange);
-				this.removeElement(this._year);
+				_year.removeEventListener(Event.CHANGE, handleChange);
+				removeElement(_year);
 			}
-			this._year = value;
-			if (this._year)
+			_year = value;
+			if (_year)
 			{
-				this._year.addEventListener(Event.CHANGE, this.handleChange);
-				this.addElement(this._year);
-				this._year.maxChars = 4;
-				this._year.restrict = Restrictions.INTEGERS;
+				_year.addEventListener(Event.CHANGE, handleChange);
+				addElement(_year);
+				_year.maxChars = 4;
+				_year.restrict = Restrictions.INTEGERS;
 			}
 		}
 
@@ -173,11 +173,11 @@ package temple.ui.form.components
 		 */
 		override public function get value():*
 		{
-			var date:Date = this.date;
+			var date:Date = date;
 			
-			if (this._format && date != null)
+			if (_format && date != null)
 			{
-				return DateUtils.format(this._format, date);
+				return DateUtils.format(_format, date);
 			}
 			return date;
 		}
@@ -196,13 +196,13 @@ package temple.ui.form.components
 			
 			if (value is Date)
 			{
-				if (this._day) this._day.value = (value as Date).getDate();
-				if (this._month) this._month.value = (value as Date).getMonth() + 1;
-				if (this._year) this._year.value = (value as Date).getFullYear();
+				if (_day) _day.value = (value as Date).getDate();
+				if (_month) _month.value = (value as Date).getMonth() + 1;
+				if (_year) _year.value = (value as Date).getFullYear();
 			}
 			else
 			{
-				this.logWarn("setValue: value '" + value + "' is not a Date");
+				logWarn("setValue: value '" + value + "' is not a Date");
 			}	
 		}
 
@@ -212,7 +212,7 @@ package temple.ui.form.components
 		[Inspectable(name="Day hint text", type="String")]
 		public function set dayHintText(value:String):void
 		{
-			this._day.hintText = value;
+			_day.hintText = value;
 		}
 
 		/**
@@ -221,7 +221,7 @@ package temple.ui.form.components
 		[Inspectable(name="Month hint text", type="String")]
 		public function set monthHintText(value:String):void
 		{
-			this._month.hintText = value;
+			_month.hintText = value;
 		}
 
 		/**
@@ -230,7 +230,7 @@ package temple.ui.form.components
 		[Inspectable(name="Year hint text", type="String")]
 		public function set yearHintText(value:String):void
 		{
-			this._year.hintText = value;
+			_year.hintText = value;
 		}
 
 		/**
@@ -239,9 +239,9 @@ package temple.ui.form.components
 		[Inspectable(name="Hint text color", type="Color", defaultValue="#888888")]
 		public function set hintTextColor(value:uint):void 
 		{
-			if (this._day) this._day.hintTextColor = value;
-			if (this._month) this._month.hintTextColor = value;
-			if (this._year) this._year.hintTextColor = value;
+			if (_day) _day.hintTextColor = value;
+			if (_month) _month.hintTextColor = value;
+			if (_year) _year.hintTextColor = value;
 		}
 
 		/**
@@ -250,9 +250,9 @@ package temple.ui.form.components
 		[Inspectable(name="Error text color", type="Color", defaultValue="#FF0000")]
 		public function set errorTextColor(value:uint):void 
 		{
-			if (this._day) this._day.errorTextColor = value;
-			if (this._month) this._month.errorTextColor = value;
-			if (this._year) this._year.errorTextColor = value;
+			if (_day) _day.errorTextColor = value;
+			if (_month) _month.errorTextColor = value;
+			if (_year) _year.errorTextColor = value;
 		}
 
 		/**
@@ -261,7 +261,7 @@ package temple.ui.form.components
 		 */
 		public function get format():String
 		{
-			return this._format;
+			return _format;
 		}
 
 		/**
@@ -270,7 +270,7 @@ package temple.ui.form.components
 		[Inspectable(name="Format", type="String")]
 		public function set format(value:String):void
 		{
-			this._format = value;
+			_format = value;
 		}
 
 		/**
@@ -278,9 +278,9 @@ package temple.ui.form.components
 		 */
 		public function get date():Date
 		{
-			var year:int = this._year ? this._year.value : new Date().getFullYear();;
-			var month:int = this._month ? this._month.value : 1;
-			var day:int =  this._day ? this._day.value : 1;
+			var year:int = _year ? _year.value : new Date().getFullYear();;
+			var month:int = _month ? _month.value : 1;
+			var day:int =  _day ? _day.value : 1;
 			
 			if (!year || !month || !day)
 			{
@@ -289,17 +289,17 @@ package temple.ui.form.components
 			var date:Date = new Date(year, month - 1, day);
 			
 			// Check if date is between range
-			if (this._begin && this._end)
+			if (_begin && _end)
 			{
-				if (date.time < Math.min(this._begin.time, this._end.time) || date.time > Math.max(this._begin.time, this._end.time)) return null;
+				if (date.time < Math.min(_begin.time, _end.time) || date.time > Math.max(_begin.time, _end.time)) return null;
 			}
-			else if (this._begin)
+			else if (_begin)
 			{
-				if (date.time < this._begin.time) return null;
+				if (date.time < _begin.time) return null;
 			}
-			else if (this._end)
+			else if (_end)
 			{
-				if (date.time > this._end.time) return null;
+				if (date.time > _end.time) return null;
 			}
 			
 			// Check if days and months still match
@@ -326,18 +326,18 @@ package temple.ui.form.components
 			{
 				case "none":
 				{
-					this._validator = null;
+					_validator = null;
 					break;
 				}
 				case "mandatory":
 				{
-					this._validator = NullValidationRule;
+					_validator = NullValidationRule;
 					break;
 				}
 				default:
 				{
-					this._validator = null;
-					this.logError("validationRule: unknown validation rule '" + value + "'");
+					_validator = null;
+					logError("validationRule: unknown validation rule '" + value + "'");
 					break;
 				}
 			}
@@ -348,8 +348,8 @@ package temple.ui.form.components
 		 */
 		public function setDateRange(begin:Date, end:Date):void
 		{
-			this._begin = begin;
-			this._end = end;
+			_begin = begin;
+			_end = end;
 		}
 		
 		/**
@@ -357,7 +357,7 @@ package temple.ui.form.components
 		 */
 		public function get begin():Date
 		{
-			return this._begin;
+			return _begin;
 		}
 		
 		/**
@@ -365,7 +365,7 @@ package temple.ui.form.components
 		 */
 		public function set begin(value:Date):void
 		{
-			this._begin = value;
+			_begin = value;
 		}
 		
 		/**
@@ -373,7 +373,7 @@ package temple.ui.form.components
 		 */
 		public function get end():Date
 		{
-			return this._end;
+			return _end;
 		}
 		
 		/**
@@ -381,7 +381,7 @@ package temple.ui.form.components
 		 */
 		public function set end(value:Date):void
 		{
-			this._end = value;
+			_end = value;
 		}
 		
 		/**
@@ -394,7 +394,7 @@ package temple.ui.form.components
 		{
 			if (value)
 			{
-				this.resetScale();
+				resetScale();
 			}
 		}
 
@@ -404,17 +404,17 @@ package temple.ui.form.components
 		 */
 		public function resetScale():void
 		{
-			var len:int = this.numChildren;
+			var len:int = numChildren;
 			for (var i:int = 0; i < len ; i++)
 			{
-				this.getChildAt(i).width *= this.scaleX;
-				this.getChildAt(i).height *= this.scaleY;
+				getChildAt(i).width *= scaleX;
+				getChildAt(i).height *= scaleY;
 			}
-			this.scaleX = this.scaleY = 1;
+			scaleX = scaleY = 1;
 			
-			if (this.day) this.day.resetScale();
-			if (this.month) this.month.resetScale();
-			if (this.year) this.year.resetScale();
+			if (day) day.resetScale();
+			if (month) month.resetScale();
+			if (year) year.resetScale();
 		}
 		
 		/**
@@ -422,7 +422,7 @@ package temple.ui.form.components
 		 */
 		public function get submitOnChange():Boolean
 		{
-			return this._submitOnChange;
+			return _submitOnChange;
 		}
 		
 		/**
@@ -431,13 +431,13 @@ package temple.ui.form.components
 		[Inspectable(name="Submit on Change", type="Boolean", defaultValue="false")]
 		public function set submitOnChange(value:Boolean):void
 		{
-			this._submitOnChange = value;
+			_submitOnChange = value;
 		}
 
 		private function handleChange(event:Event):void
 		{
-			this.dispatchEvent(new Event(Event.CHANGE));
-			if (this._submitOnChange) this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
+			dispatchEvent(new Event(Event.CHANGE));
+			if (_submitOnChange) dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 		}
 
 		/**
@@ -445,10 +445,10 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this.day = null;
-			this.month = null;
-			this.year = null;
-			this._format = null;
+			day = null;
+			month = null;
+			year = null;
+			_format = null;
 			
 			super.destruct();
 		}

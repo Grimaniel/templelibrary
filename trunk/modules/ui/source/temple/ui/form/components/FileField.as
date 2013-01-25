@@ -83,20 +83,20 @@ package temple.ui.form.components
 
 		public function FileField(inputField:InputField = null, fileFilters:Vector.<FileFilter> = null, maxFileSize:uint = 2 * 1024 * 1024, browseButton:InteractiveObject = null)
 		{
-			this._fileReference = new CoreFileReference();
-			this._fileReference.addEventListener(Event.CANCEL, this.handleFileEvent);
-			this._fileReference.addEventListener(Event.COMPLETE, this.handleFileComplete);
-			this._fileReference.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.handleFileEvent);
-			this._fileReference.addEventListener(IOErrorEvent.IO_ERROR, this.handleFileEvent);
-			this._fileReference.addEventListener(Event.OPEN, this.handleFileEvent);
-			this._fileReference.addEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
-			this._fileReference.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleFileEvent);
-			this._fileReference.addEventListener(Event.SELECT, this.handleFileSelect);
+			_fileReference = new CoreFileReference();
+			_fileReference.addEventListener(Event.CANCEL, handleFileEvent);
+			_fileReference.addEventListener(Event.COMPLETE, handleFileComplete);
+			_fileReference.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleFileEvent);
+			_fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleFileEvent);
+			_fileReference.addEventListener(Event.OPEN, handleFileEvent);
+			_fileReference.addEventListener(ProgressEvent.PROGRESS, dispatchEvent);
+			_fileReference.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleFileEvent);
+			_fileReference.addEventListener(Event.SELECT, handleFileSelect);
 
 			if (inputField) this.inputField = inputField;
-			this._fileFilters = fileFilters;
-			this._maxFileSize = maxFileSize;
-			if (browseButton) this.addBrowseButton(browseButton);
+			_fileFilters = fileFilters;
+			_maxFileSize = maxFileSize;
+			if (browseButton) addBrowseButton(browseButton);
 		}
 
 		/**
@@ -104,7 +104,7 @@ package temple.ui.form.components
 		 */
 		public function get value():*
 		{
-			return this.fileData;
+			return fileData;
 		}
 
 		/**
@@ -112,7 +112,7 @@ package temple.ui.form.components
 		 */
 		public function get fileData():FileData
 		{
-			return this._fileData;
+			return _fileData;
 		}
 
 		/**
@@ -123,25 +123,25 @@ package temple.ui.form.components
 		 */
 		public function browse(fileFilters:Vector.<FileFilter> = null):Boolean
 		{
-			if (this._isBrowsing)
+			if (_isBrowsing)
 			{
-				if (this.debug) this.logDebug("Browsing session already open.");
+				if (debug) logDebug("Browsing session already open.");
 				return false;
 			}
-			if (this._fileData)
+			if (_fileData)
 			{
-				this._fileData.destruct();
-				this._fileData = null;
+				_fileData.destruct();
+				_fileData = null;
 			}
-			if (this._inputField)
+			if (_inputField)
 			{
-				this._inputField.reset();
+				_inputField.reset();
 			}
 
 
-			if (fileFilters) this._fileFilters = fileFilters;
+			if (fileFilters) _fileFilters = fileFilters;
 
-			return this._isBrowsing = this._fileReference.browse(this._fileFilters ? VectorUtils.toArray(this._fileFilters) : null);
+			return _isBrowsing = _fileReference.browse(_fileFilters ? VectorUtils.toArray(_fileFilters) : null);
 		}
 
 		/**
@@ -149,7 +149,7 @@ package temple.ui.form.components
 		 */
 		public function get file():FileReference
 		{
-			return this._fileReference;
+			return _fileReference;
 		}
 
 		/**
@@ -158,7 +158,7 @@ package temple.ui.form.components
 		 */
 		public function get fileFilters():Vector.<FileFilter>
 		{
-			return this._fileFilters;
+			return _fileFilters;
 		}
 
 		/**
@@ -166,7 +166,7 @@ package temple.ui.form.components
 		 */
 		public function set fileFilters(value:Vector.<FileFilter>):void
 		{
-			this._fileFilters = value;
+			_fileFilters = value;
 		}
 
 		/**
@@ -174,7 +174,7 @@ package temple.ui.form.components
 		 */
 		public function get fileFilterErrorMessage():String
 		{
-			return this._fileFilterErrorMessage;
+			return _fileFilterErrorMessage;
 		}
 
 		/**
@@ -182,7 +182,7 @@ package temple.ui.form.components
 		 */
 		public function set fileFilterErrorMessage(value:String):void
 		{
-			this._fileFilterErrorMessage = value;
+			_fileFilterErrorMessage = value;
 		}
 
 		/**
@@ -190,7 +190,7 @@ package temple.ui.form.components
 		 */
 		public function get inputField():InputField
 		{
-			return this._inputField;
+			return _inputField;
 		}
 
 		/**
@@ -198,18 +198,18 @@ package temple.ui.form.components
 		 */
 		public function set inputField(value:InputField):void
 		{
-			if (this._inputField)
+			if (_inputField)
 			{
-				this._inputField.removeEventListener(MouseEvent.CLICK, this.handleClick);
-				this._inputField.removeEventListener(FocusEvent.FOCUS_IN, this.handleInputFocus);
-				this._inputField.removeEventListener(DestructEvent.DESTRUCT, this.handleInputDestruct);
+				_inputField.removeEventListener(MouseEvent.CLICK, handleClick);
+				_inputField.removeEventListener(FocusEvent.FOCUS_IN, handleInputFocus);
+				_inputField.removeEventListener(DestructEvent.DESTRUCT, handleInputDestruct);
 			}
-			this._inputField = value;
-			if (this._inputField)
+			_inputField = value;
+			if (_inputField)
 			{
-				this._inputField.addEventListener(MouseEvent.CLICK, this.handleClick);
-				this._inputField.addEventListener(FocusEvent.FOCUS_IN, this.handleInputFocus);
-				this._inputField.addEventListener(DestructEvent.DESTRUCT, this.handleInputDestruct);
+				_inputField.addEventListener(MouseEvent.CLICK, handleClick);
+				_inputField.addEventListener(FocusEvent.FOCUS_IN, handleInputFocus);
+				_inputField.addEventListener(DestructEvent.DESTRUCT, handleInputDestruct);
 			}
 		}
 
@@ -218,7 +218,7 @@ package temple.ui.form.components
 		 */
 		public function get maxFileSize():uint
 		{
-			return this._maxFileSize;
+			return _maxFileSize;
 		}
 
 		/**
@@ -226,7 +226,7 @@ package temple.ui.form.components
 		 */
 		public function set maxFileSize(value:uint):void
 		{
-			this._maxFileSize = value;
+			_maxFileSize = value;
 		}
 
 		/**
@@ -234,7 +234,7 @@ package temple.ui.form.components
 		 */
 		public function get maxFileSizeErrorMessage():String
 		{
-			return this._maxFileSizeErrorMessage;
+			return _maxFileSizeErrorMessage;
 		}
 
 		/**
@@ -242,7 +242,7 @@ package temple.ui.form.components
 		 */
 		public function set maxFileSizeErrorMessage(value:String):void
 		{
-			this._maxFileSizeErrorMessage = value;
+			_maxFileSizeErrorMessage = value;
 		}
 
 		/**
@@ -250,9 +250,9 @@ package temple.ui.form.components
 		 */
 		public function addBrowseButton(button:InteractiveObject):void
 		{
-			this._buttons = new Dictionary(true);
-			this._buttons[button];
-			button.addEventListener(MouseEvent.CLICK, this.handleClick, false, 0, true);
+			_buttons = new Dictionary(true);
+			_buttons[button];
+			button.addEventListener(MouseEvent.CLICK, handleClick, false, 0, true);
 		}
 
 		/**
@@ -260,10 +260,10 @@ package temple.ui.form.components
 		 */
 		public function removeBrowseButton(button:InteractiveObject):void
 		{
-			if (this._buttons)
+			if (_buttons)
 			{
-				delete this._buttons[button];
-				button.removeEventListener(MouseEvent.CLICK, this.handleClick);
+				delete _buttons[button];
+				button.removeEventListener(MouseEvent.CLICK, handleClick);
 			}
 		}
 
@@ -272,7 +272,7 @@ package temple.ui.form.components
 		 */
 		public function get focus():Boolean
 		{
-			return this._inputField && this._inputField.focus;
+			return _inputField && _inputField.focus;
 		}
 
 		/**
@@ -280,7 +280,7 @@ package temple.ui.form.components
 		 */
 		public function set focus(value:Boolean):void
 		{
-			if (this._inputField) this._inputField.focus = value;
+			if (_inputField) _inputField.focus = value;
 		}
 
 		/**
@@ -288,7 +288,7 @@ package temple.ui.form.components
 		 */
 		public function get hasError():Boolean
 		{
-			return this._inputField && this._inputField.hasError;
+			return _inputField && _inputField.hasError;
 		}
 
 		/**
@@ -296,7 +296,7 @@ package temple.ui.form.components
 		 */
 		public function set hasError(value:Boolean):void
 		{
-			if (this._inputField) this._inputField.hasError = value;
+			if (_inputField) _inputField.hasError = value;
 		}
 
 		/**
@@ -304,8 +304,8 @@ package temple.ui.form.components
 		 */
 		public function showError(message:String = null):void
 		{
-			if (this._inputField) this._inputField.showError(message);
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
+			if (_inputField) _inputField.showError(message);
+			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
 		}
 
 		/**
@@ -313,8 +313,8 @@ package temple.ui.form.components
 		 */
 		public function hideError():void
 		{
-			if (this._inputField) this._inputField.hideError();
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
+			if (_inputField) _inputField.hideError();
+			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
 		}
 
 		/**
@@ -322,12 +322,12 @@ package temple.ui.form.components
 		 */
 		public function reset():void
 		{
-			if (this._inputField) this._inputField.reset();
-			this._fileReference.cancel();
-			if (this._fileData)
+			if (_inputField) _inputField.reset();
+			_fileReference.cancel();
+			if (_fileData)
 			{
-				this._fileData.destruct();
-				this._fileData = null;
+				_fileData.destruct();
+				_fileData = null;
 			}
 		}
 
@@ -336,7 +336,7 @@ package temple.ui.form.components
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 
 		/**
@@ -344,7 +344,7 @@ package temple.ui.form.components
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 		}
 
 		/**
@@ -352,7 +352,7 @@ package temple.ui.form.components
 		 */
 		public function enable():void
 		{
-			this._enabled = true;
+			_enabled = true;
 		}
 
 		/**
@@ -360,7 +360,7 @@ package temple.ui.form.components
 		 */
 		public function disable():void
 		{
-			this._enabled = false;
+			_enabled = false;
 		}
 
 		/**
@@ -368,7 +368,7 @@ package temple.ui.form.components
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -376,49 +376,49 @@ package temple.ui.form.components
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleInputFocus(event:FocusEvent):void
 		{
-			if (this.debug) this.logDebug("handleInputFocus: " + event.target);
-			this.browse();
+			if (debug) logDebug("handleInputFocus: " + event.target);
+			browse();
 		}
 
 		private function handleClick(event:MouseEvent):void
 		{
-			if (this.debug) this.logDebug("handleClick: " + event.target);
-			this.browse();
+			if (debug) logDebug("handleClick: " + event.target);
+			browse();
 		}
 
 		private function handleFileEvent(event:Event):void
 		{
-			if (event.type == Event.CANCEL) this._isBrowsing = false;
+			if (event.type == Event.CANCEL) _isBrowsing = false;
 
 			if (event is ErrorEvent)
 			{
-				this.logError("Event: " + event.type + ": " + ErrorEvent(event).text);
+				logError("Event: " + event.type + ": " + ErrorEvent(event).text);
 			}
-			else if (this.debug)
+			else if (debug)
 			{
-				this.logDebug("Event: " + event.type);
+				logDebug("Event: " + event.type);
 			}
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 
 		private function handleFileSelect(event:Event):void
 		{
-			if (this.debug) this.logDebug("Event: " + event.type);
+			if (debug) logDebug("Event: " + event.type);
 
-			this._isBrowsing = false;
+			_isBrowsing = false;
 
 			var fileValid:Boolean;
 
-			if (this._fileFilters && this._fileFilters.length && this._fileReference.type)
+			if (_fileFilters && _fileFilters.length && _fileReference.type)
 			{
-				for each (var filter:FileFilter in this._fileFilters)
+				for each (var filter:FileFilter in _fileFilters)
 				{
-					if (filter.extension.toLowerCase().indexOf(this._fileReference.type.toLowerCase()) != -1)
+					if (filter.extension.toLowerCase().indexOf(_fileReference.type.toLowerCase()) != -1)
 					{
 						fileValid = true;
 						break;
@@ -432,37 +432,37 @@ package temple.ui.form.components
 
 			if (!fileValid)
 			{
-				if (this.debug) this.logDebug("handleFileSelect: file not valid");
-				this._inputField.showError(this._fileFilterErrorMessage);
+				if (debug) logDebug("handleFileSelect: file not valid");
+				_inputField.showError(_fileFilterErrorMessage);
 			}
-			else if (!isNaN(this._maxFileSize) && this._fileReference.size > this._maxFileSize)
+			else if (!isNaN(_maxFileSize) && _fileReference.size > _maxFileSize)
 			{
-				if (this.debug) this.logDebug("handleFileSelect: max filesize exceeded");
-				this._inputField.showError(this._maxFileSizeErrorMessage);
+				if (debug) logDebug("handleFileSelect: max filesize exceeded");
+				_inputField.showError(_maxFileSizeErrorMessage);
 			}
 			else
 			{
-				if (this._inputField)
+				if (_inputField)
 				{
-					this._inputField.text = this._fileReference.name;
-					this._inputField.hideError();
+					_inputField.text = _fileReference.name;
+					_inputField.hideError();
 				}
 
-				this._fileReference.load();
+				_fileReference.load();
 
 			}
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 
 		private function handleFileComplete(event:Event):void
 		{
-			this._fileData = FileData.createFromFileReference(this._fileReference);
-			this.dispatchEvent(event);
+			_fileData = FileData.createFromFileReference(_fileReference);
+			dispatchEvent(event);
 		}
 
 		private function handleInputDestruct(event:DestructEvent):void
 		{
-			this.destruct();
+			destruct();
 		}
 
 		/**
@@ -470,20 +470,20 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			if (this._buttons)
+			if (_buttons)
 			{
-				for (var button : *	in this._buttons) this.removeBrowseButton(button);
-				this._buttons = null;
+				for (var button : *	in _buttons) removeBrowseButton(button);
+				_buttons = null;
 			}
 
-			this.inputField = null;
+			inputField = null;
 
-			if (this._fileReference)
+			if (_fileReference)
 			{
-				this._fileReference.destruct();
-				this._fileReference = null;
+				_fileReference.destruct();
+				_fileReference = null;
 			}
-			this._fileFilters = null;
+			_fileFilters = null;
 
 			super.destruct();
 		}

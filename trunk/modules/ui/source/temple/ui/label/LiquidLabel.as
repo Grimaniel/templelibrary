@@ -83,8 +83,8 @@ package temple.ui.label
 		 */
 		public function LiquidLabel(textField:TextField = null)
 		{
-			this.init(textField);
-			this.toStringProps.push('label');
+			init(textField);
+			toStringProps.push('label');
 		}
 		
 		/**
@@ -92,25 +92,25 @@ package temple.ui.label
 		 */
 		protected function init(textField:TextField = null):void
 		{
-			this._label = textField ? new TextFieldLabelBehavior(textField) : LabelUtils.findLabel(this);
+			_label = textField ? new TextFieldLabelBehavior(textField) : LabelUtils.findLabel(this);
 			
-			if (this._label is IEventDispatcher)
+			if (_label is IEventDispatcher)
 			{
-				(this._label as IEventDispatcher).addEventListener(Event.CHANGE, this.handleLabelChange);
-				(this._label as IEventDispatcher).addEventListener(Event.RESIZE, this.handleLabelResize);
+				(_label as IEventDispatcher).addEventListener(Event.CHANGE, handleLabelChange);
+				(_label as IEventDispatcher).addEventListener(Event.RESIZE, handleLabelResize);
 			}
-			if (this._label == null) throwError(new TempleError(this, "No TextField or Label found"));
+			if (_label == null) throwError(new TempleError(this, "No TextField or Label found"));
 			
 			// give all other display object a liquid behavior 
-			var leni:int = this.numChildren;
+			var leni:int = numChildren;
 			var child:DisplayObject;
 			for (var i:int = 0; i < leni; i++)
 			{
-				child = this.getChildAt(i);
+				child = getChildAt(i);
 				
-				var sameSize:Boolean = (child.x == 0 && child.y == 0 && child.width == this.width && child.height == this.height);
+				var sameSize:Boolean = (child.x == 0 && child.y == 0 && child.width == width && child.height == height);
 				
-				if (sameSize && child != this.textField && !LiquidBehavior.getInstance(child) && !(child is Shape) && !(child is MorphShape))
+				if (sameSize && child != textField && !LiquidBehavior.getInstance(child) && !(child is Shape) && !(child is MorphShape))
 				{
 					new LiquidBehavior(child, {top: 0, left: 0, right:0, bottom: 0}, this);
 				}
@@ -122,7 +122,7 @@ package temple.ui.label
 		 */
 		public function get label():String
 		{
-			return this._label ? this._label.label : null;
+			return _label ? _label.label : null;
 		}
 		
 		/**
@@ -131,7 +131,7 @@ package temple.ui.label
 		[Inspectable(name="Label", type="String")]
 		public function set label(value:String):void
 		{
-			if (this._label) this._label.label = value;
+			if (_label) _label.label = value;
 		}
 		
 		/**
@@ -139,7 +139,7 @@ package temple.ui.label
 		 */
 		public function get autoSize():String
 		{
-			return this._label is IAutoSizableLabel ? (this._label as IAutoSizableLabel).autoSize : null;
+			return _label is IAutoSizableLabel ? (_label as IAutoSizableLabel).autoSize : null;
 		}
 		
 		/**
@@ -148,9 +148,9 @@ package temple.ui.label
 		[Inspectable(name="AutoSize", type="String", defaultValue="none", enumeration="none,left,right,center")]
 		public function set autoSize(value:String):void
 		{
-			if (this._label is IAutoSizableLabel)
+			if (_label is IAutoSizableLabel)
 			{
-				(this._label as IAutoSizableLabel).autoSize = value;
+				(_label as IAutoSizableLabel).autoSize = value;
 			}
 		}
 		
@@ -159,7 +159,7 @@ package temple.ui.label
 		 */
 		public function get html():Boolean
 		{
-			return this._label is IHTMLLabel ? (this._label as IHTMLLabel).html : false;
+			return _label is IHTMLLabel ? (_label as IHTMLLabel).html : false;
 		}
 		
 		/**
@@ -168,9 +168,9 @@ package temple.ui.label
 		[Inspectable(name="HTML", type="Boolean")]
 		public function set html(value:Boolean):void
 		{
-			if (this._label is IHTMLLabel)
+			if (_label is IHTMLLabel)
 			{
-				(this._label as IHTMLLabel).html = value;
+				(_label as IHTMLLabel).html = value;
 			}
 			else
 			{
@@ -183,9 +183,9 @@ package temple.ui.label
 		 */
 		public function get textField():TextField
 		{
-			if (this._label is ITextFieldLabel)
+			if (_label is ITextFieldLabel)
 			{
-				return (this._label as ITextFieldLabel).textField;
+				return (_label as ITextFieldLabel).textField;
 			}
 			return null;
 		}
@@ -195,7 +195,7 @@ package temple.ui.label
 		 */
 		public function get paddingLeft():Number
 		{
-			return this._paddingLeft;
+			return _paddingLeft;
 		}
 		
 		/**
@@ -203,10 +203,10 @@ package temple.ui.label
 		 */
 		public function set paddingLeft(value:Number):void
 		{
-			if (this._paddingLeft != value)
+			if (_paddingLeft != value)
 			{
-				this._paddingLeft = value;
-				this.resize();
+				_paddingLeft = value;
+				resize();
 			}
 		}
 
@@ -218,7 +218,7 @@ package temple.ui.label
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.paddingLeft = Number(value);
+				paddingLeft = Number(value);
 			}
 		}
 
@@ -227,7 +227,7 @@ package temple.ui.label
 		 */
 		public function get paddingRight():Number
 		{
-			return this._paddingRight;
+			return _paddingRight;
 		}
 		
 		/**
@@ -235,10 +235,10 @@ package temple.ui.label
 		 */
 		public function set paddingRight(value:Number):void
 		{
-			if (this._paddingRight != value)
+			if (_paddingRight != value)
 			{
-				this._paddingRight = value;
-				this.resize();
+				_paddingRight = value;
+				resize();
 			}
 		}
 		
@@ -250,7 +250,7 @@ package temple.ui.label
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.paddingRight = Number(value);
+				paddingRight = Number(value);
 			}
 		}
 
@@ -259,7 +259,7 @@ package temple.ui.label
 		 */
 		public function get paddingTop():Number
 		{
-			return this._paddingTop;
+			return _paddingTop;
 		}
 		
 		/**
@@ -267,10 +267,10 @@ package temple.ui.label
 		 */
 		public function set paddingTop(value:Number):void
 		{
-			if (this._paddingTop != value)
+			if (_paddingTop != value)
 			{
-				this._paddingTop = value;
-				this.resize();
+				_paddingTop = value;
+				resize();
 			}
 		}
 		
@@ -282,7 +282,7 @@ package temple.ui.label
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.paddingTop = Number(value);
+				paddingTop = Number(value);
 			}
 		}
 
@@ -291,7 +291,7 @@ package temple.ui.label
 		 */
 		public function get paddingBottom():Number
 		{
-			return this._paddingBottom;
+			return _paddingBottom;
 		}
 		
 		/**
@@ -299,10 +299,10 @@ package temple.ui.label
 		 */
 		public function set paddingBottom(value:Number):void
 		{
-			if (this._paddingBottom != value)
+			if (_paddingBottom != value)
 			{
-				this._paddingBottom = value;
-				this.resize();
+				_paddingBottom = value;
+				resize();
 			}
 		}
 		
@@ -314,7 +314,7 @@ package temple.ui.label
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.paddingBottom = Number(value);
+				paddingBottom = Number(value);
 			}
 		}
 
@@ -323,7 +323,7 @@ package temple.ui.label
 		 */
 		public function get padding():Number
 		{
-			return this._paddingLeft == this._paddingRight && this._paddingLeft == this._paddingTop && this._paddingLeft == this._paddingBottom ? this._paddingLeft : NaN;
+			return _paddingLeft == _paddingRight && _paddingLeft == _paddingTop && _paddingLeft == _paddingBottom ? _paddingLeft : NaN;
 		}
 		
 		/**
@@ -331,7 +331,7 @@ package temple.ui.label
 		 */
 		public function set padding(value:Number):void
 		{
-			this._paddingLeft = this._paddingRight = this._paddingTop = this._paddingBottom = value;
+			_paddingLeft = _paddingRight = _paddingTop = _paddingBottom = value;
 		}
 		
 		/**
@@ -340,37 +340,37 @@ package temple.ui.label
 		override public function set width(value:Number):void
 		{
 			var textFieldWidth:Number = value;
-			if (!isNaN(this._paddingLeft)) textFieldWidth -= this._paddingLeft;
-			if (!isNaN(this._paddingRight)) textFieldWidth -= this._paddingRight;
-			this.textField.width = textFieldWidth;
+			if (!isNaN(_paddingLeft)) textFieldWidth -= _paddingLeft;
+			if (!isNaN(_paddingRight)) textFieldWidth -= _paddingRight;
+			textField.width = textFieldWidth;
 			super.width = value;
 		}
 
 		override protected function initLiquid():void
 		{
 			super.initLiquid();
-			this.resize();
+			resize();
 		}
 
 		protected function handleLabelChange(event:Event):void
 		{
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 		
 		protected function handleLabelResize(event:Event):void
 		{
-			this.resize();
+			resize();
 		}
 		
 		protected function resize():void
 		{
-			if (this.autoSize == TextFieldAutoSize.NONE) return;
+			if (autoSize == TextFieldAutoSize.NONE) return;
 			
 			var displayObject:DisplayObject;
 			
-			if (this._label is DisplayObject)
+			if (_label is DisplayObject)
 			{
-				displayObject = this._label as DisplayObject;
+				displayObject = _label as DisplayObject;
 			}
 			else
 			{
@@ -379,19 +379,19 @@ package temple.ui.label
 			
 			if (displayObject)
 			{
-				if (!isNaN(this._paddingLeft) || !isNaN(this._paddingRight))
+				if (!isNaN(_paddingLeft) || !isNaN(_paddingRight))
 				{
-					if (!isNaN(this._paddingLeft)) displayObject.x = this._paddingLeft;
-					this.width = (this._paddingLeft ? this._paddingLeft : 0) + displayObject.width + (this._paddingRight ? this._paddingRight : 0);
+					if (!isNaN(_paddingLeft)) displayObject.x = _paddingLeft;
+					width = (_paddingLeft ? _paddingLeft : 0) + displayObject.width + (_paddingRight ? _paddingRight : 0);
 				}
-				if (!isNaN(this._paddingTop) || !isNaN(this._paddingBottom))
+				if (!isNaN(_paddingTop) || !isNaN(_paddingBottom))
 				{
-					if (!isNaN(this._paddingTop)) displayObject.y = this._paddingTop;
-					this.height = (this._paddingTop ? this._paddingTop : 0) + displayObject.height + (this._paddingBottom ? this._paddingBottom : 0);
+					if (!isNaN(_paddingTop)) displayObject.y = _paddingTop;
+					height = (_paddingTop ? _paddingTop : 0) + displayObject.height + (_paddingBottom ? _paddingBottom : 0);
 				}
 			}
-			if (this.liquidBehavior) this.liquidBehavior.update();
-			this.dispatchEvent(new Event(Event.RESIZE));
+			if (liquidBehavior) liquidBehavior.update();
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**
@@ -399,15 +399,15 @@ package temple.ui.label
 		 */
 		override public function destruct():void
 		{
-			if (this._label)
+			if (_label)
 			{
-				if (this._label is IEventDispatcher)
+				if (_label is IEventDispatcher)
 				{
-					(this._label as IEventDispatcher).removeEventListener(Event.CHANGE, this.handleLabelChange);
-					(this._label as IEventDispatcher).removeEventListener(Event.RESIZE, this.handleLabelResize);
+					(_label as IEventDispatcher).removeEventListener(Event.CHANGE, handleLabelChange);
+					(_label as IEventDispatcher).removeEventListener(Event.RESIZE, handleLabelResize);
 				}
-				this._label.destruct();
-				this._label = null;
+				_label.destruct();
+				_label = null;
 			}
 			super.destruct();
 		}

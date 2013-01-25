@@ -190,14 +190,14 @@ package temple.ui.form
 		{
 			super();
 			
-			this._validator = new Validator();
-			this._tabFocusManager = new TabFocusManager();
+			_validator = new Validator();
+			_tabFocusManager = new TabFocusManager();
 			
-			this._dataModel = new Object();
-			this._elements = new HashMap("Form Elements");
+			_dataModel = new Object();
+			_elements = new HashMap("Form Elements");
 			
-			this._submitButtons = new Dictionary(true);
-			this._resetButtons = new Dictionary(true);
+			_submitButtons = new Dictionary(true);
+			_resetButtons = new Dictionary(true);
 			
 			this.debug = debug;
 			
@@ -211,7 +211,7 @@ package temple.ui.form
 		 */
 		public function get service():IFormService
 		{
-			return this._service;
+			return _service;
 		}
 
 		/**
@@ -219,19 +219,19 @@ package temple.ui.form
 		 */
 		public function set service(value:IFormService):void
 		{
-			if (this._service)
+			if (_service)
 			{
-				this._service.removeEventListener(FormServiceEvent.SUCCESS, this.handleFormServiceEvent);
-				this._service.removeEventListener(FormServiceEvent.RESULT, this.handleFormServiceEvent);
-				this._service.removeEventListener(FormServiceEvent.ERROR, this.handleFormServiceEvent);
+				_service.removeEventListener(FormServiceEvent.SUCCESS, handleFormServiceEvent);
+				_service.removeEventListener(FormServiceEvent.RESULT, handleFormServiceEvent);
+				_service.removeEventListener(FormServiceEvent.ERROR, handleFormServiceEvent);
 			}
-			this._service = value;
+			_service = value;
 			
-			if (this._service)
+			if (_service)
 			{
-				if (this._service is IDebuggable) addToDebugManager(value as IDebuggable, this);
+				if (_service is IDebuggable) addToDebugManager(value as IDebuggable, this);
 			}
-			if (this._debug) this.logDebug("service: " + this._service);
+			if (_debug) logDebug("service: " + _service);
 		}
 
 		/**
@@ -246,22 +246,22 @@ package temple.ui.form
 		 */
 		public function addElement(element:IHasValue, name:String = null, validationRule:Class = null, errorMessage:String = null, tabIndex:int = -1, submit:Boolean = true):IHasValue 
 		{
-			if (this._debug)
+			if (_debug)
 			{
 				if (submit && name != null)
 				{
-					this.logDebug("addFormElement: " + element + (name ? " '" + name + "'" : ""));
+					logDebug("addFormElement: " + element + (name ? " '" + name + "'" : ""));
 				}
 				else
 				{
-					this.logWarn("addFormElement: " + element + " '" + name + "', value will not be submit to service");
+					logWarn("addFormElement: " + element + " '" + name + "', value will not be submit to service");
 				}
 			}
 			
 			if (name == null)
 			{
-				name = this._elementIndex.toString();
-				this._elementIndex++;
+				name = _elementIndex.toString();
+				_elementIndex++;
 			}
 			
 			if (element == null)
@@ -269,32 +269,32 @@ package temple.ui.form
 				throwError(new TempleArgumentError(this, "element can not be null"));
 			}
 			
-			if (this._elements[name])
+			if (_elements[name])
 			{
 				throwError(new TempleArgumentError(this, "element with name '" + name + "' already exists"));
 			}
 			
-			this._elements[name] = new FormElementData(name, element, tabIndex == -1 ? ObjectUtils.length(this._elements) : tabIndex, submit);
+			_elements[name] = new FormElementData(name, element, tabIndex == -1 ? ObjectUtils.length(_elements) : tabIndex, submit);
 			if (element is IDebuggable) addToDebugManager(element as IDebuggable, this);
 			
 			if (validationRule)
 			{
-				this._validator.addValidationRule(new validationRule(element), errorMessage);
+				_validator.addValidationRule(new validationRule(element), errorMessage);
 			}
 			
-			if (element is IFocusable) this._tabFocusManager.add(element as IFocusable);
+			if (element is IFocusable) _tabFocusManager.add(element as IFocusable);
 			
-			if (element is ISetValue && this._prefillData && this._prefillData.hasOwnProperty(name))
+			if (element is ISetValue && _prefillData && _prefillData.hasOwnProperty(name))
 			{
-				ISetValue(element).value = this._prefillData[name];
+				ISetValue(element).value = _prefillData[name];
 			}
 			
-			if (this._debug && element is IDebuggable)
+			if (_debug && element is IDebuggable)
 			{
-				IDebuggable(element).debug = this._debug;
+				IDebuggable(element).debug = _debug;
 			}
 
-			if (element is IEventDispatcher) (element as IEventDispatcher).addEventListener(FormElementEvent.SUBMIT, this.handleFormElementSubmit);
+			if (element is IEventDispatcher) (element as IEventDispatcher).addEventListener(FormElementEvent.SUBMIT, handleFormElementSubmit);
 			
 			return element;
 		}
@@ -305,25 +305,25 @@ package temple.ui.form
 		 */
 		public function removeElement(element:IHasValue):void 
 		{
-			if (this._debug) this.logDebug("removeFormElement: " + element);
+			if (_debug) logDebug("removeFormElement: " + element);
 			
 			// remove from _componentsList
-			for each (var fed:FormElementData in this._elements)
+			for each (var fed:FormElementData in _elements)
 			{
 				if (fed.element == element)
 				{
-					delete this._elements[fed.name];
+					delete _elements[fed.name];
 					break;
 				}
 			}
 			
 			// remove from validator
-			if (this._validator) this._validator.removeElement(element);
+			if (_validator) _validator.removeElement(element);
 			
 			// remove from focusManager
-			if (this._tabFocusManager && element is IFocusable) this._tabFocusManager.remove(element as IFocusable);
+			if (_tabFocusManager && element is IFocusable) _tabFocusManager.remove(element as IFocusable);
 			
-			if (element is IEventDispatcher) (element as IEventDispatcher).removeEventListener(FormElementEvent.SUBMIT, this.handleFormElementSubmit);
+			if (element is IEventDispatcher) (element as IEventDispatcher).removeEventListener(FormElementEvent.SUBMIT, handleFormElementSubmit);
 		}
 
 		/**
@@ -331,7 +331,7 @@ package temple.ui.form
 		 */
 		public function hasElement(name:String):Boolean
 		{
-			return (this._elements[name]) ? true : false;
+			return (_elements[name]) ? true : false;
 		}
 
 		/**
@@ -339,7 +339,7 @@ package temple.ui.form
 		 */
 		public function getElement(name:String):IHasValue
 		{
-			return this._elements[name] ? FormElementData(this._elements[name]).element : null;
+			return _elements[name] ? FormElementData(_elements[name]).element : null;
 		}
 		
 		/**
@@ -347,9 +347,9 @@ package temple.ui.form
 		 */
 		public function updateElement(name:String, submit:Boolean):void 
 		{
-			if (this.hasElement(name))
+			if (hasElement(name))
 			{
-				FormElementData(this._elements[name]).submit = submit;
+				FormElementData(_elements[name]).submit = submit;
 			}
 			else
 			{
@@ -362,11 +362,11 @@ package temple.ui.form
 		 */
 		public function removeAllElements():void 
 		{
-			if (this._debug) this.logDebug("removeAllFormElements: ");
+			if (_debug) logDebug("removeAllFormElements: ");
 			
 			var elements:Array = [];
-			for each (var fed:FormElementData in this._elements) elements.push(fed.element);
-			while (elements.length) this.removeElement(elements.shift());
+			for each (var fed:FormElementData in _elements) elements.push(fed.element);
+			while (elements.length) removeElement(elements.shift());
 
 		}
 
@@ -375,11 +375,11 @@ package temple.ui.form
 		 */
 		public function addSubmitButton(button:DisplayObject, tabIndex:int = -1, tabEnabled:Boolean = true):void 
 		{
-			if (this._debug) this.logDebug("addSubmitButton: " + button);
+			if (_debug) logDebug("addSubmitButton: " + button);
 			
-			this._submitButtons[button] = 'submitbutton';
+			_submitButtons[button] = 'submitbutton';
 			button.addEventListener(MouseEvent.CLICK, handleSubmitButtonClicked, false, 0, true);
-			if (tabEnabled && button is IFocusable) this._tabFocusManager.add(button as IFocusable, tabIndex);
+			if (tabEnabled && button is IFocusable) _tabFocusManager.add(button as IFocusable, tabIndex);
 		}
 
 		/**
@@ -387,11 +387,11 @@ package temple.ui.form
 		 */
 		public function removeSubmitButton(button:DisplayObject):void 
 		{
-			if (this._debug) this.logDebug("removeSubmitButton: " + button);
+			if (_debug) logDebug("removeSubmitButton: " + button);
 			
-			delete this._submitButtons[button];
+			delete _submitButtons[button];
 			button.removeEventListener(MouseEvent.CLICK, handleSubmitButtonClicked);
-			if (button is IFocusable) this._tabFocusManager.remove(button as IFocusable);
+			if (button is IFocusable) _tabFocusManager.remove(button as IFocusable);
 		}
 
 		/**
@@ -399,11 +399,11 @@ package temple.ui.form
 		 */
 		public function addResetButton(button:DisplayObject, tabIndex:int = -1, tabEnabled:Boolean = true):void 
 		{
-			if (this._debug) this.logDebug("addCancelButton: " + button);
+			if (_debug) logDebug("addCancelButton: " + button);
 			
-			this._resetButtons[button] = 'cancelbutton';
+			_resetButtons[button] = 'cancelbutton';
 			button.addEventListener(MouseEvent.CLICK, handleResetButtonClicked, false, 0, true);
-			if (tabEnabled && button is IFocusable) this._tabFocusManager.add(button as IFocusable, tabIndex);
+			if (tabEnabled && button is IFocusable) _tabFocusManager.add(button as IFocusable, tabIndex);
 		}
 		
 		/**
@@ -411,11 +411,11 @@ package temple.ui.form
 		 */
 		public function removeCancelButton(button:DisplayObject):void 
 		{
-			if (this._debug) this.logDebug("removeCancelButton: " + button);
+			if (_debug) logDebug("removeCancelButton: " + button);
 			
-			delete this._resetButtons[button];
+			delete _resetButtons[button];
 			button.removeEventListener(MouseEvent.CLICK, handleResetButtonClicked);
-			if (button is IFocusable) this._tabFocusManager.remove(button as IFocusable);
+			if (button is IFocusable) _tabFocusManager.remove(button as IFocusable);
 		}
 
 		/**
@@ -425,20 +425,20 @@ package temple.ui.form
 		 */
 		public function submit():void 
 		{
-			if (this._debug) this.logDebug("submit:");
+			if (_debug) logDebug("submit:");
 			
-			if (this.enabled)
+			if (enabled)
 			{
 				// validate
-				if (this.validate())
+				if (validate())
 				{
-					if (this._debug) this.logDebug(dump(this.getModelData()));
-					this.send();
+					if (_debug) logDebug(dump(getModelData()));
+					send();
 				}
 			}
 			else
 			{
-				if (this._debug) this.logDebug("submit: Form is disabled!");
+				if (_debug) logDebug("submit: Form is disabled!");
 			}
 		}
 
@@ -447,9 +447,9 @@ package temple.ui.form
 		 */
 		public function insertModelData(name:String, data:*):void 
 		{
-			if (this._debug) this.logDebug("insertModelData: " + name + "=" + data);
+			if (_debug) logDebug("insertModelData: " + name + "=" + data);
 			
-			this._dataModel[name] = data;
+			_dataModel[name] = data;
 		}
 
 		/**
@@ -460,16 +460,16 @@ package temple.ui.form
 		 */
 		public function reset():void 
 		{
-			if (this._debug) this.logDebug("clear: ");
+			if (_debug) logDebug("clear: ");
 			
-			this._validator.stopRealtimeValidating();
-			for each (var fed:FormElementData in this._elements)
+			_validator.stopRealtimeValidating();
+			for each (var fed:FormElementData in _elements)
 			{
 				if (fed.element is IHasError) IHasError(fed.element).hideError();
 				if (fed.element is IResettable) IResettable(fed.element).reset();
 			}
 			
-			this.dispatchEvent(new FormEvent(FormEvent.RESET));
+			dispatchEvent(new FormEvent(FormEvent.RESET));
 		}
 
 		/**
@@ -480,35 +480,35 @@ package temple.ui.form
 		 */
 		public function validate(keepValidating:Boolean = true, showErrors:Boolean = true):Boolean
 		{
-			if (this._debug) this.logDebug("validate");
+			if (_debug) logDebug("validate");
 			
-			if (!this._enabled)
+			if (!_enabled)
 			{
-				if (this._debug) this.logWarn("Form is disabled");
+				if (_debug) logWarn("Form is disabled");
 				return false;
 			}
 			
-			if (this._validator.isValid(keepValidating, showErrors))
+			if (_validator.isValid(keepValidating, showErrors))
 			{
-				if (this._debug) this.logInfo("Form is valid");
+				if (_debug) logInfo("Form is valid");
 				// reset errors states on all elements
-				for each (var fed:FormElementData in this._elements)
+				for each (var fed:FormElementData in _elements)
 				{
 					if (fed.element is IHasError && IHasError(fed.element).hasError)
 					{
 						IHasError(fed.element).hideError();
 					}
 				}
-				this.dispatchEvent(new FormEvent(FormEvent.VALIDATE_SUCCESS));
+				dispatchEvent(new FormEvent(FormEvent.VALIDATE_SUCCESS));
 				return true;
 			}
-			if (this._debug)
+			if (_debug)
 			{
-				this.logError("Form is invalid: " + this._validator.validate());
-				if (this._validator.getErrorMessages().length) this.logError("Error messages: " + this._validator.getErrorMessages());
+				logError("Form is invalid: " + _validator.validate());
+				if (_validator.getErrorMessages().length) logError("Error messages: " + _validator.getErrorMessages());
 			}
 			
-			this.dispatchEvent(new FormEvent(FormEvent.VALIDATE_ERROR, new FormResult(false, this._validator.getErrorMessage())));
+			dispatchEvent(new FormEvent(FormEvent.VALIDATE_ERROR, new FormResult(false, _validator.getErrorMessage())));
 			return false;
 		}
 
@@ -518,19 +518,19 @@ package temple.ui.form
 		 */
 		public function getModelData():Object
 		{
-			for each (var fed:FormElementData in this._elements)
+			for each (var fed:FormElementData in _elements)
 			{
-				if (fed.submit) this._dataModel[fed.name] = fed.element.value;
+				if (fed.submit) _dataModel[fed.name] = fed.element.value;
 			}
 			
-			if (this._debug)
+			if (_debug)
 			{
-				for (var key : String in this._dataModel) 
+				for (var key : String in _dataModel) 
 				{
-					this.logDebug("ModelData: [" + key + "] : " + this._dataModel[key]);
+					logDebug("ModelData: [" + key + "] : " + _dataModel[key]);
 				}
 			}
-			return this._dataModel;
+			return _dataModel;
 		}
 
 		/**
@@ -541,20 +541,20 @@ package temple.ui.form
 		 */
 		public function prefillData(data:Object):void
 		{
-			this._prefillData = data;
+			_prefillData = data;
 			
-			if (this._debug) this.logDebug("prefillData: " + dump(data, 0));
+			if (_debug) logDebug("prefillData: " + dump(data, 0));
 			
-			if (this._prefillData != null)
+			if (_prefillData != null)
 			{
-				for each (var fed:FormElementData in this._elements)
+				for each (var fed:FormElementData in _elements)
 				{
-					if (this._prefillData.hasOwnProperty(fed.name) && fed.element is ISetValue)
+					if (_prefillData.hasOwnProperty(fed.name) && fed.element is ISetValue)
 					{
 						ISetValue(fed.element).value = data[fed.name];
-						if (this._debug) this.logDebug("prefillData: " + fed.name + " is set to " + data[fed.name]);
+						if (_debug) logDebug("prefillData: " + fed.name + " is set to " + data[fed.name]);
 					}
-					else if (this._debug) this.logDebug("prefillData: " + fed.name + " not found"); 
+					else if (_debug) logDebug("prefillData: " + fed.name + " not found"); 
 				}
 			}
 		}
@@ -564,7 +564,7 @@ package temple.ui.form
 		 */
 		public function get validator():Validator
 		{
-			return this._validator;
+			return _validator;
 		}
 		
 		/**
@@ -572,7 +572,7 @@ package temple.ui.form
 		 */
 		public function get tabFocusManager():TabFocusManager
 		{
-			return this._tabFocusManager;
+			return _tabFocusManager;
 		}
 
 		/**
@@ -580,7 +580,7 @@ package temple.ui.form
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 
 		/**
@@ -589,17 +589,17 @@ package temple.ui.form
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			if (this._debug) this.logDebug("enabled: " + value);
+			if (_debug) logDebug("enabled: " + value);
 			
-			this._enabled = value;
+			_enabled = value;
 			
-			for (var submitbutton:* in this._submitButtons)
+			for (var submitbutton:* in _submitButtons)
 			{
 				if (submitbutton is MovieClip) MovieClip(submitbutton).enabled = value;
 				if (submitbutton is IEnableable) IEnableable(submitbutton).enabled = value;
 			}
 			
-			for (var cancelbutton:* in this._resetButtons)
+			for (var cancelbutton:* in _resetButtons)
 			{
 				if (cancelbutton is MovieClip) MovieClip(cancelbutton).enabled = value;
 				if (cancelbutton is IEnableable) IEnableable(cancelbutton).enabled = value;
@@ -611,7 +611,7 @@ package temple.ui.form
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -619,7 +619,7 @@ package temple.ui.form
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 
 		/**
@@ -627,7 +627,7 @@ package temple.ui.form
 		 */
 		public function get submitByElement():Boolean
 		{
-			return this._submitByElement;
+			return _submitByElement;
 		}
 		
 		/**
@@ -635,7 +635,7 @@ package temple.ui.form
 		 */
 		public function set submitByElement(value:Boolean):void
 		{
-			this._submitByElement = value;
+			_submitByElement = value;
 		}
 		
 		/**
@@ -643,7 +643,7 @@ package temple.ui.form
 		 */
 		public function get focus():Boolean
 		{
-			return this._tabFocusManager.focus;
+			return _tabFocusManager.focus;
 		}
 		
 		/**
@@ -651,7 +651,7 @@ package temple.ui.form
 		 */
 		public function set focus(value:Boolean):void
 		{
-			this._tabFocusManager.focus = value;
+			_tabFocusManager.focus = value;
 		}
 		
 		/**
@@ -661,7 +661,7 @@ package temple.ui.form
 		 */
 		public function get disableOnSubmit():Boolean
 		{
-			return this._disableOnSubmit;
+			return _disableOnSubmit;
 		}
 
 		/**
@@ -669,7 +669,7 @@ package temple.ui.form
 		 */
 		public function set disableOnSubmit(value:Boolean):void
 		{
-			this._disableOnSubmit = value;
+			_disableOnSubmit = value;
 		}
 		
 		/**
@@ -677,7 +677,7 @@ package temple.ui.form
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -685,8 +685,8 @@ package temple.ui.form
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
-			if (this._debug) this.logWarn("Form is running in debug mode!");
+			_debug = value;
+			if (_debug) logWarn("Form is running in debug mode!");
 			
 			DebugManager.setDebugForChildren(this, value);
 		}
@@ -696,35 +696,35 @@ package temple.ui.form
 		 */
 		protected function send():void
 		{
-			if (this._debug) this.logDebug("send: ");
+			if (_debug) logDebug("send: ");
 			
-			if (this._service != null)
+			if (_service != null)
 			{
-				if (this._disableOnSubmit) this.enabled = false;
+				if (_disableOnSubmit) enabled = false;
 				
 				// add listeners (remove first to prevend double listening)
-				this._service.removeEventListener(FormServiceEvent.SUCCESS, this.handleFormServiceEvent);
-				this._service.removeEventListener(FormServiceEvent.RESULT, this.handleFormServiceEvent);
-				this._service.removeEventListener(FormServiceEvent.ERROR, this.handleFormServiceEvent);
-				this._service.addEventListener(FormServiceEvent.SUCCESS, this.handleFormServiceEvent);
-				this._service.addEventListener(FormServiceEvent.RESULT, this.handleFormServiceEvent);
-				this._service.addEventListener(FormServiceEvent.ERROR, this.handleFormServiceEvent);
+				_service.removeEventListener(FormServiceEvent.SUCCESS, handleFormServiceEvent);
+				_service.removeEventListener(FormServiceEvent.RESULT, handleFormServiceEvent);
+				_service.removeEventListener(FormServiceEvent.ERROR, handleFormServiceEvent);
+				_service.addEventListener(FormServiceEvent.SUCCESS, handleFormServiceEvent);
+				_service.addEventListener(FormServiceEvent.RESULT, handleFormServiceEvent);
+				_service.addEventListener(FormServiceEvent.ERROR, handleFormServiceEvent);
 
-				var result:IFormResult = this._service.submit(this.getModelData());
+				var result:IFormResult = _service.submit(getModelData());
 				
-				if (result && !this.enabled)
+				if (result && !enabled)
 				{
-					this.onResult(result);
+					onResult(result);
 					
 					// remove listeners
-					this._service.removeEventListener(FormServiceEvent.SUCCESS, this.handleFormServiceEvent);
-					this._service.removeEventListener(FormServiceEvent.RESULT, this.handleFormServiceEvent);
-					this._service.removeEventListener(FormServiceEvent.ERROR, this.handleFormServiceEvent);
+					_service.removeEventListener(FormServiceEvent.SUCCESS, handleFormServiceEvent);
+					_service.removeEventListener(FormServiceEvent.RESULT, handleFormServiceEvent);
+					_service.removeEventListener(FormServiceEvent.ERROR, handleFormServiceEvent);
 				}
 			}
 			else
 			{
-				this.logWarn("send: service is not set, form can not be submitted!");
+				logWarn("send: service is not set, form can not be submitted!");
 			}
 		}
 
@@ -733,7 +733,7 @@ package temple.ui.form
 		 */
 		protected function handleSubmitButtonClicked(event:MouseEvent):void 
 		{
-			this.submit();
+			submit();
 		}
 
 		/**
@@ -741,7 +741,7 @@ package temple.ui.form
 		 */
 		protected function handleResetButtonClicked(event:MouseEvent):void 
 		{
-			this.reset();
+			reset();
 		}
 
 		/**
@@ -753,28 +753,28 @@ package temple.ui.form
 			{
 				case FormServiceEvent.SUCCESS:
 				{
-					this.enabled = true;
-					if (this._debug) this.logDebug("handleFormServiceEvent: " + event.type);
-					this.dispatchEvent(new FormEvent(FormEvent.SUBMIT_SUCCESS, event.result));
+					enabled = true;
+					if (_debug) logDebug("handleFormServiceEvent: " + event.type);
+					dispatchEvent(new FormEvent(FormEvent.SUBMIT_SUCCESS, event.result));
 					break;
 				}
 				case FormServiceEvent.RESULT:
 				{
-					this.onResult(event.result);
+					onResult(event.result);
 					break;
 				}
 				case FormServiceEvent.ERROR:
 				{
-					this.enabled = true;
+					enabled = true;
 					
-					if (this._debug) this.logError("handleFormServiceEvent: " + event.type);
+					if (_debug) logError("handleFormServiceEvent: " + event.type);
 					
-					this.dispatchEvent(new FormEvent(FormEvent.SUBMIT_ERROR, event.result));
+					dispatchEvent(new FormEvent(FormEvent.SUBMIT_ERROR, event.result));
 					break;
 				}
 				default:
 				{
-					if (this._debug) this.logDebug("handleFormServiceEvent: " + event.type);
+					if (_debug) logDebug("handleFormServiceEvent: " + event.type);
 					break;
 				}
 			}
@@ -784,21 +784,21 @@ package temple.ui.form
 		{
 			if (result == null) return;
 			
-			this.enabled = true; 
+			enabled = true; 
 					
 			if (result.success)
 			{
-				if (this._debug) this.logDebug("onResult: success " + (result.message ? "\"" + result.message + "\"" : ""));
+				if (_debug) logDebug("onResult: success " + (result.message ? "\"" + result.message + "\"" : ""));
 			}
 			else
 			{
-				if (this._debug) this.logError("onResult: error " + (result.message ? "\"" + result.message + "\"" : ""));
+				if (_debug) logError("onResult: error " + (result.message ? "\"" + result.message + "\"" : ""));
 				
 				var element:FormElementData;
 				var focussed:Boolean;
 				for each (var error:IFormFieldError in result.errors)
 				{
-					element = this._elements[error.field];
+					element = _elements[error.field];
 					if (element)
 					{
 						if (element.element is IHasError)
@@ -811,12 +811,12 @@ package temple.ui.form
 							}
 						}
 					}
-					else if (this._debug) this.logWarn("handleFormServiceEvent: no field with name '" + error.field + "' found");
+					else if (_debug) logWarn("handleFormServiceEvent: no field with name '" + error.field + "' found");
 					
-					if (this._debug) this.logError("handleFormServiceEvent: Error: " + error.field + " '" + error.message + "' (" + error.code + ")");
+					if (_debug) logError("handleFormServiceEvent: Error: " + error.field + " '" + error.message + "' (" + error.code + ")");
 				}
 			}
-			this.dispatchEvent(new FormEvent(result.success ? FormEvent.SUBMIT_SUCCESS : FormEvent.SUBMIT_ERROR, result));
+			dispatchEvent(new FormEvent(result.success ? FormEvent.SUBMIT_SUCCESS : FormEvent.SUBMIT_ERROR, result));
 					
 		}
 
@@ -826,7 +826,7 @@ package temple.ui.form
 		 */
 		protected function handleFormElementSubmit(event:FormElementEvent):void
 		{
-			if (this._submitByElement) this.submit();
+			if (_submitByElement) submit();
 		}
 
 		/**
@@ -836,33 +836,33 @@ package temple.ui.form
 		 */
 		override public function destruct():void
 		{
-			if (this._debug) this.logDebug("destruct: ");
+			if (_debug) logDebug("destruct: ");
 			
-			this._submitButtons = null;
-			this._resetButtons = null;
-			this._service = null;
+			_submitButtons = null;
+			_resetButtons = null;
+			_service = null;
 			
 			// Destruct validator
-			if (this._validator)
+			if (_validator)
 			{
-				this._validator.destruct();
-				this._validator = null;
+				_validator.destruct();
+				_validator = null;
 			}
 			
 			// Destruct focusmanager
-			if (this._tabFocusManager)
+			if (_tabFocusManager)
 			{
-				this._tabFocusManager.destruct();
-				this._tabFocusManager = null;
+				_tabFocusManager.destruct();
+				_tabFocusManager = null;
 			}
 			
 			// Destruct elements
-			if (this._elements)
+			if (_elements)
 			{
-				this.removeAllElements();
-				this._elements = null;
+				removeAllElements();
+				_elements = null;
 			}
-			this._prefillData = null;
+			_prefillData = null;
 			
 			super.destruct();
 		}

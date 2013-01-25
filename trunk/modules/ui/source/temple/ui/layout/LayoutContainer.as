@@ -61,16 +61,16 @@ package temple.ui.layout
 		{
 			super(width, height);
 			
-			this._layoutBehavior = new LayoutBehavior(this, orientation, direction, spacing, orientation == Orientation.HORIZONTAL ? isNaN(width) : isNaN(height), false);
+			_layoutBehavior = new LayoutBehavior(this, orientation, direction, spacing, orientation == Orientation.HORIZONTAL ? isNaN(width) : isNaN(height), false);
 			// wait a frame before enabling 
-			new FrameDelay(this.initLayout);
+			new FrameDelay(initLayout);
 		}
 
 		private function initLayout():void 
 		{
-			if (this.isDestructed) return;
-			this._layoutBehavior.enabled = true;
-			this._layoutBehavior.layoutChildren();
+			if (isDestructed) return;
+			_layoutBehavior.enabled = true;
+			_layoutBehavior.layoutChildren();
 		}
 
 		/**
@@ -78,7 +78,7 @@ package temple.ui.layout
 		 */
 		public function get orientation():String
 		{
-			return this._layoutBehavior.orientation;
+			return _layoutBehavior.orientation;
 		}
 		
 		/**
@@ -87,7 +87,7 @@ package temple.ui.layout
 		[Inspectable(name="Orientation", type="String", defaultValue="horizontal", enumeration="horizontal,vertical")]
 		public function set orientation(value:String):void
 		{
-			this._layoutBehavior.orientation = value;
+			_layoutBehavior.orientation = value;
 		}
 		
 		/**
@@ -95,7 +95,7 @@ package temple.ui.layout
 		 */
 		public function get direction():String
 		{
-			return this._layoutBehavior.direction;
+			return _layoutBehavior.direction;
 		}
 		
 		/**
@@ -104,7 +104,7 @@ package temple.ui.layout
 		[Inspectable(name="Direction", type="String", defaultValue="ascending", enumeration="ascending,descending")]
 		public function set direction(value:String):void
 		{
-			this._layoutBehavior.direction = value;
+			_layoutBehavior.direction = value;
 		}
 		
 		/**
@@ -112,7 +112,7 @@ package temple.ui.layout
 		 */
 		public function get spacing():Number
 		{
-			return this._layoutBehavior.spacing;
+			return _layoutBehavior.spacing;
 		}
 		
 		/**
@@ -121,7 +121,7 @@ package temple.ui.layout
 		[Inspectable(name="Spacing", type="Number", defaultValue="0")]
 		public function set spacing(value:Number):void
 		{
-			this._layoutBehavior.spacing = value;
+			_layoutBehavior.spacing = value;
 		}
 
 		/**
@@ -145,7 +145,7 @@ package temple.ui.layout
 					}
 					else
 					{
-						this.logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
+						logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
 					}
 				}
 			}
@@ -156,10 +156,10 @@ package temple.ui.layout
 			
 			var liquid:LiquidBehavior;
 			var child:DisplayObject;
-			leni = this.numChildren;
+			leni = numChildren;
 			for (i = 0; i < leni; i++)
 			{
-				child = this.getChildAt(i);
+				child = getChildAt(i);
 				liquid = LiquidBehavior.getInstance(child);
 				if (!liquid)
 				{
@@ -168,7 +168,7 @@ package temple.ui.layout
 				}
 				PropertyApplier.apply(liquid, properties);
 			}
-			this._layoutBehavior.layoutChildren();
+			_layoutBehavior.layoutChildren();
 		}
 		
 		/**
@@ -176,7 +176,7 @@ package temple.ui.layout
 		 */
 		public function get layoutBehavior():LayoutBehavior
 		{
-			return this._layoutBehavior;
+			return _layoutBehavior;
 		}
 		
 		/**
@@ -184,7 +184,7 @@ package temple.ui.layout
 		 */
 		public function get ignoreInvisibleChildren():Boolean
 		{
-			return this._layoutBehavior.ignoreInvisibleChildren;
+			return _layoutBehavior.ignoreInvisibleChildren;
 		}
 
 		/**
@@ -192,7 +192,7 @@ package temple.ui.layout
 		 */
 		public function set ignoreInvisibleChildren(value:Boolean):void
 		{
-			this._layoutBehavior.ignoreInvisibleChildren = value;
+			_layoutBehavior.ignoreInvisibleChildren = value;
 		}
 		
 		/**
@@ -200,7 +200,7 @@ package temple.ui.layout
 		 */
 		public function layoutChildren():void
 		{
-			this._layoutBehavior.layoutChildren();
+			_layoutBehavior.layoutChildren();
 		}
 
 		/**
@@ -208,10 +208,10 @@ package temple.ui.layout
 		 */
 		override public function destruct():void
 		{
-			if (this._layoutBehavior)
+			if (_layoutBehavior)
 			{
-				this._layoutBehavior.destruct();
-				this._layoutBehavior = null;
+				_layoutBehavior.destruct();
+				_layoutBehavior = null;
 			}
 			
 			super.destruct();

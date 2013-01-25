@@ -52,8 +52,8 @@ package temple.ui.form.validation.rules
 		 */
 		public function AbstractValidationRule(target:IHasValue):void 
 		{
-			this._target = target;
-			this.toStringProps.push('target');
+			_target = target;
+			toStringProps.push('target');
 		}
 
 		/**
@@ -61,7 +61,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function get target():IHasValue 
 		{
-			return this._target;
+			return _target;
 		}
 
 		/**
@@ -69,7 +69,7 @@ package temple.ui.form.validation.rules
 		 */
 		override public function destruct():void
 		{
-			this._target = null;
+			_target = null;
 			super.destruct();
 		}
 	}

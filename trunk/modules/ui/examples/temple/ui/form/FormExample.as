@@ -66,19 +66,19 @@ package
 			super("Temple - FormExample");
 			
 			// create a PersonData object in which we store the data after submitting.
-			this._data = new PersonData();
+			_data = new PersonData();
 			
 			// create a new Form with a FormObjectService as service. Pass the PersonData object as object.
-			this._form = new Form(new ObjectFormService(this._data));
+			_form = new Form(new ObjectFormService(_data));
 			
 			// enable debug, so debug infomation is logged
-			this._form.debug = true;
+			_form.debug = true;
 			
 			// add InputFields to the Form. Note: the 'name' property (2nd parameter) must match the corresponding property value of the PersonData object, since we want to store the data in that object.
-			this._form.addElement(this.mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
-			this._form.addElement(this.mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
-			this._form.addElement(this.mcCompanyField, "company");
-			this._form.addElement(this.mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
+			_form.addElement(this.mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
+			_form.addElement(this.mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
+			_form.addElement(this.mcCompanyField, "company");
+			_form.addElement(this.mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
 			
 			// fill country ComboBox with some countries. We use the ISO code as data. (For this case we don't add all countries of the world, since the example would be too large. But ofcourse you can add all the countries you want.)
 			this.mcCountryField.addItem("BEL","Belgium");
@@ -124,11 +124,11 @@ package
 			radiogroup.add(this.mcGenderFemaleRadioButton, "female");
 			
 			// add RadioGroup to the Form
-			this._form.addElement(radiogroup, "gender", NullValidationRule, "select your gender");
+			_form.addElement(radiogroup, "gender", NullValidationRule, "select your gender");
 			
 			// add CheckBoxes to the Form
-			this._form.addElement(this.mcNewsletterCheckBox, "newsletter");
-			this._form.addElement(this.mcTermsCheckBox, "terms", BooleanValidationRule, "You must agree to the terms", -1, false); // Must agree to terms, but we don't want to submit this value
+			_form.addElement(this.mcNewsletterCheckBox, "newsletter");
+			_form.addElement(this.mcTermsCheckBox, "terms", BooleanValidationRule, "You must agree to the terms", -1, false); // Must agree to terms, but we don't want to submit this value
 			
 			// set some restrictions
 			this.mcEmailField.restrict = Restrictions.EMAIL;
@@ -152,13 +152,13 @@ package
 			this.mcCountryField.errorTextColor = 0xFF0000;
 			
 			// add the submit button
-			this._form.addSubmitButton(this.mcSubmitButton);
+			_form.addSubmitButton(this.mcSubmitButton);
 
 			// add the reset button
-			this._form.addResetButton(this.mcResetButton);
+			_form.addResetButton(this.mcResetButton);
 			
 			// reset the form. By resetting the form all elements will be cleared.
-			this._form.reset();
+			_form.reset();
 			
 			// set labels for RadioButtons and CheckBoxes
 			this.mcGenderMaleRadioButton.html = false;
@@ -186,25 +186,25 @@ package
 			this.mcPrefillButton.label = "Prefill";
 			
 			// We add the mcPrefillButton to the tabFocusManager of the Form, so we can tab to this button
-			this._form.tabFocusManager.add(this.mcPrefillButton);
+			_form.tabFocusManager.add(this.mcPrefillButton);
 			
-			this.mcPrefillButton.addEventListener(MouseEvent.CLICK, this.handlePrefillClick);
+			this.mcPrefillButton.addEventListener(MouseEvent.CLICK, handlePrefillClick);
 			
 			// Listen to all FormEvents from the form
-			EventUtils.addAll(FormEvent, this._form, this.handleFormEvent);
+			EventUtils.addAll(FormEvent, _form, handleFormEvent);
 		}
 
 		private function handlePrefillClick(event:MouseEvent):void
 		{
 			// Prefill data
-			this._data.name = "Thijs";
-			this._data.email = "thijs@mediamonks.com";
-			this._data.company = "MediaMonks";
-			this._data.country = "NLD";
-			this._data.newsletter = true;
-			this._data.gender = "male";
+			_data.name = "Thijs";
+			_data.email = "thijs@mediamonks.com";
+			_data.company = "MediaMonks";
+			_data.country = "NLD";
+			_data.newsletter = true;
+			_data.gender = "male";
 			
-			this._form.prefillData(this._data);
+			_form.prefillData(_data);
 		}
 
 		private function handleFormEvent(event:FormEvent):void
@@ -238,7 +238,7 @@ package
 				}
 				default:
 				{
-					this.logError("handleFormEvent: unhandled event '" + event.type + "'");
+					logError("handleFormEvent: unhandled event '" + event.type + "'");
 					break;
 				}
 			}

@@ -38,6 +38,7 @@ package temple.ui.animation
 	import temple.core.debug.IDebuggable;
 	import temple.core.display.CoreMovieClip;
 
+	import flash.display.FrameLabel;
 	import flash.events.Event;
 	import flash.utils.getTimer;
 
@@ -57,17 +58,17 @@ package temple.ui.animation
 		private var _frameRate:Number;
 		private var _frameTime:Number = 1000 / _frameRate;
 		private var _useStageFrameRate:Boolean;
-		private var _startTime:uint;
+		private var _startTime:int;
 		private var _previousFrame:int;
-		private var _startFrame:uint;
+		private var _startFrame:int;
 		private var _scriptFrame:int;
+		private var _labels:Object;
 
 		public function FrameStableMovieClip(frameRate:Number = NaN)
 		{
 			super.stop();
 			this.frameRate = frameRate;
-			this.play();
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			play();
 		}
 
 		/**
@@ -75,9 +76,10 @@ package temple.ui.animation
 		 */
 		override public function play():void
 		{
-			this._startFrame = this._previousFrame = this.currentFrame;
-			this._startTime = getTimer();
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			_startFrame = _previousFrame = currentFrame;
+			_startTime = getTimer();
+			removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+			addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 
 		/**
@@ -85,12 +87,12 @@ package temple.ui.animation
 		 */
 		override public function stop():void
 		{
-			this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			super.stop();
-			this._previousFrame = this.currentFrame;
+			_previousFrame = currentFrame;
 			
-			if (this._scriptFrame > 0) this.gotoAndStop(this._scriptFrame);
-			this._scriptFrame = -1;
+			if (_scriptFrame > 0) gotoAndStop(_scriptFrame);
+			_scriptFrame = -1;
 		}
 
 		/**
@@ -98,10 +100,12 @@ package temple.ui.animation
 		 */
 		override public function gotoAndPlay(frame:Object, scene:String = null):void
 		{
+			if (debug) logDebug("gotoAndPlay: " + frame + (scene ? ", scene: " + scene : ""));
 			super.gotoAndStop(frame, scene);
-			this._startFrame = this._previousFrame = this.currentFrame;
-			this._startTime = getTimer();
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			_startFrame = _previousFrame = int(frame) || getFrame(String(frame)) || 1;
+			_startTime = getTimer();
+			removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+			addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 
 		/**
@@ -109,18 +113,19 @@ package temple.ui.animation
 		 */
 		override public function gotoAndStop(frame:Object, scene:String = null):void
 		{
-			this._previousFrame = this.currentFrame;
+			if (debug) logDebug("gotoAndStop: " + frame + (scene ? ", scene: " + scene : ""));
+			_previousFrame = currentFrame;
 			super.gotoAndStop(frame, scene);
-			this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-			this._scriptFrame = -1;
+			removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+			_scriptFrame = -1;
 		}
 
 		/**
-		 * The frame rate for playing the timeline of the MovieClip. Is NaN the frame rate of the stage is used.
+		 * The frame rate for playing the timeline of the MovieClip. If NaN the frame rate of the stage is used.
 		 */
 		public function get frameRate():Number
 		{
-			return this._frameRate;
+			return _frameRate;
 		}
 
 		/**
@@ -130,13 +135,13 @@ package temple.ui.animation
 		{
 			if (isNaN(value))
 			{
-				this.useStageFrameRate = true;
+				useStageFrameRate = true;
 			}
 			else
 			{
-				this._frameRate = value;
-				this._frameTime = 1000 / this._frameRate;
-				this._useStageFrameRate = false;
+				_frameRate = value;
+				_frameTime = 1000 / _frameRate;
+				_useStageFrameRate = false;
 			}
 		}
 
@@ -145,7 +150,7 @@ package temple.ui.animation
 		 */
 		public function get useStageFrameRate():Boolean
 		{
-			return this._useStageFrameRate;
+			return _useStageFrameRate;
 		}
 
 		/**
@@ -153,63 +158,79 @@ package temple.ui.animation
 		 */
 		public function set useStageFrameRate(value:Boolean):void
 		{
-			this._useStageFrameRate = value;
+			_useStageFrameRate = value;
 			
-			if (this._useStageFrameRate)
+			if (_useStageFrameRate)
 			{
-				if (this.stage)
+				if (stage)
 				{
-					this._frameRate = this.stage.frameRate;
-					this._frameTime = 1000 / this._frameRate;
-					this.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+					_frameRate = stage.frameRate;
+					_frameTime = 1000 / _frameRate;
+					removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 				}
 				else
 				{
-					this.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+					addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 				}
 			}
 		}
 
+		/**
+		 * Gets the frame
+		 */
+		private function getFrame(label:String):int
+		{
+			if (!_labels)
+			{
+				_labels = {};
+				for each (var frameLabel:FrameLabel in currentLabels)
+				{
+					_labels[frameLabel.name] = frameLabel;
+				}
+			}
+			return label in _labels ? FrameLabel(_labels[label]).frame : 0;
+		}
+
 		private function handleAddedToStage(event:Event):void
 		{
-			this.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-			if (this._useStageFrameRate)
+			removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+			if (_useStageFrameRate)
 			{
-				this._frameRate = this.stage.frameRate;
-				this._frameTime = 1000 / this._frameRate;
+				_frameRate = stage.frameRate;
+				_frameTime = 1000 / _frameRate;
 			}
 		}
 
 		private function handleEnterFrame(event:Event):void
 		{
-			super.gotoAndStop(int(((getTimer() - this._startTime) / this._frameTime + this._startFrame - 1) % this.totalFrames) + 1);
+			super.gotoAndStop(int(((getTimer() - _startTime) / _frameTime + _startFrame - 1) % totalFrames) + 1);
 			
-			if (this._previousFrame > this.currentFrame) this._previousFrame -= this.totalFrames;
+			if (_previousFrame > currentFrame) _previousFrame -= totalFrames;
 			
-			while (++this._previousFrame < this.currentFrame)
+			while (++_previousFrame < currentFrame)
 			{
-				if (this._previousFrame <= 0)
+				if (_previousFrame <= 0)
 				{
-					this._scriptFrame = this._previousFrame + this.totalFrames;
-					if (this.hasFrameScript(this._previousFrame + this.totalFrames))
+					_scriptFrame = _previousFrame + totalFrames;
+					if (hasFrameScript(_previousFrame + totalFrames))
 					{
-						if (this.debug) this.logDebug("handleEnterFrame: execute skipped framescript of frame " + (this._previousFrame + this.totalFrames + 1));
-						this.getFrameScript(this._previousFrame + this.totalFrames)();
+						if (debug) logDebug("handleEnterFrame: execute skipped framescript of frame " + (_previousFrame + totalFrames) + ", currentFrame=" + currentFrame);
+						getFrameScript(_previousFrame + totalFrames)();
 					}
 				}
 				else
 				{
-					this._scriptFrame = this._previousFrame;
-					if (this.hasFrameScript(this._previousFrame))
+					_scriptFrame = _previousFrame;
+					if (hasFrameScript(_previousFrame))
 					{
-						if (this.debug) this.logDebug("handleEnterFrame: execute skipped framescript of frame " + (this._previousFrame + 1));
-						this.getFrameScript(this._previousFrame)();
+						if (debug) logDebug("handleEnterFrame: execute skipped framescript of frame " + _previousFrame + ", currentFrame=" + currentFrame);
+						getFrameScript(_previousFrame)();
 					}
 				}
-				if (this._scriptFrame == -1) return;
+				if (_scriptFrame == -1) return;
 			}
-			this._scriptFrame = -1;
-			this._previousFrame = this.currentFrame;
+			_scriptFrame = -1;
+			_previousFrame = currentFrame;
 		}
 		
 		/**
@@ -217,16 +238,17 @@ package temple.ui.animation
 		 */
 		override public function destruct():void
 		{
-			this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-			this.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+			removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+			removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 
-			this._frameRate = NaN;
-			this._previousFrame = NaN;
-			this._useStageFrameRate = false;
-			this._frameTime = NaN;
-			this._startFrame = NaN;
-			this._startTime = NaN;
-			this._scriptFrame = NaN;
+			_frameRate = NaN;
+			_previousFrame = NaN;
+			_useStageFrameRate = false;
+			_frameTime = NaN;
+			_startFrame = NaN;
+			_startTime = NaN;
+			_scriptFrame = NaN;
+			_labels = null;
 		}
 	}
 }

@@ -67,9 +67,9 @@ package temple.ui.label
 		public function TextFieldLabelBehavior(target:TextField)
 		{
 			super(target);
-			this.toStringProps.push('name', 'label');
-			target.addEventListener(Event.CHANGE, this.handleTextFieldChange);
-			target.addEventListener(Event.RESIZE, this.handleTextFieldResize);
+			toStringProps.push('name', 'label');
+			target.addEventListener(Event.CHANGE, handleTextFieldChange);
+			target.addEventListener(Event.RESIZE, handleTextFieldResize);
 		}
 
 		/**
@@ -77,7 +77,7 @@ package temple.ui.label
 		 */
 		public function get name():String
 		{
-			return this.textField ? this.textField.name : null;
+			return textField ? textField.name : null;
 		}
 		
 		/**
@@ -85,7 +85,7 @@ package temple.ui.label
 		 */
 		public function get label():String
 		{
-			return this.textField ? (this._html ? this.textField.htmlText : this.textField.text) : null;
+			return textField ? (_html ? textField.htmlText : textField.text) : null;
 		}
 		
 		/**
@@ -95,17 +95,17 @@ package temple.ui.label
 		{
 			if (value == null) value = "";
 			
-			if (this._html)
+			if (_html)
 			{
 				// Add an empty StyleSheet to the TextField if there is no StyleSheet. This prevents the HTML text to get parsed by Flash
-				if (this.textField.styleSheet == null) this.textField.styleSheet = new StyleSheet();
-				this.textField.htmlText = value;
+				if (textField.styleSheet == null) textField.styleSheet = new StyleSheet();
+				textField.htmlText = value;
 			}
 			else
 			{
-				this.textField.text = value;
+				textField.text = value;
 			}
-			this.textField.dispatchEvent(new Event(Event.CHANGE));
+			textField.dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -113,7 +113,7 @@ package temple.ui.label
 		 */
 		public function get autoSize():String
 		{
-			return this.textField.autoSize;
+			return textField.autoSize;
 		}
 		
 		/**
@@ -126,12 +126,12 @@ package temple.ui.label
 				case TextFieldAutoSize.LEFT:
 				case TextFieldAutoSize.RIGHT:
 				case TextFieldAutoSize.CENTER:
-					this.textField.mouseWheelEnabled = false;
-					this.textField.autoSize = value;
-					this.textField.dispatchEvent(new Event(Event.RESIZE));
+					textField.mouseWheelEnabled = false;
+					textField.autoSize = value;
+					textField.dispatchEvent(new Event(Event.RESIZE));
 					break;
 				case TextFieldAutoSize.NONE:
-					this.textField.autoSize = value;
+					textField.autoSize = value;
 					break;
 					
 				default:
@@ -146,7 +146,7 @@ package temple.ui.label
 		 */
 		public function get html():Boolean
 		{
-			return this._html;
+			return _html;
 		}
 		
 		/**
@@ -154,18 +154,18 @@ package temple.ui.label
 		 */
 		public function set html(value:Boolean):void
 		{
-			if (this._html != value)
+			if (_html != value)
 			{
-				this._html = value;
-				if (this._html)
+				_html = value;
+				if (_html)
 				{
-					this.textField.htmlText = this.textField.text;
+					textField.htmlText = textField.text;
 				}
 				else
 				{
-					this.textField.text = this.textField.htmlText;
+					textField.text = textField.htmlText;
 				}
-				this.textField.dispatchEvent(new Event(Event.CHANGE));
+				textField.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
@@ -174,22 +174,22 @@ package temple.ui.label
 		 */
 		public function get textField():TextField
 		{
-			return this.target as TextField;
+			return target as TextField;
 		}
 		
 		private function handleTextFieldChange(event:Event):void
 		{
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 			
-			if (this.textField.autoSize != TextFieldAutoSize.NONE)
+			if (textField.autoSize != TextFieldAutoSize.NONE)
 			{
-				this.textField.dispatchEvent(new Event(Event.RESIZE));
+				textField.dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 
 		private function handleTextFieldResize(event:Event):void
 		{
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 
 		/**
@@ -197,10 +197,10 @@ package temple.ui.label
 		 */
 		override public function destruct():void
 		{
-			if (this.textField)
+			if (textField)
 			{
-				this.textField.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
-				this.textField.removeEventListener(Event.RESIZE, this.handleTextFieldResize);
+				textField.removeEventListener(Event.CHANGE, handleTextFieldChange);
+				textField.removeEventListener(Event.RESIZE, handleTextFieldResize);
 			}
 			
 			super.destruct();

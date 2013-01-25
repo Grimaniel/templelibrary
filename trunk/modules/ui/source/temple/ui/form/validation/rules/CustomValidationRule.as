@@ -61,8 +61,8 @@ package temple.ui.form.validation.rules
 		{
 			super(target);
 			
-			this._rule = rule;
-			this._params = params;
+			_rule = rule;
+			_params = params;
 		}
 
 		/**
@@ -70,11 +70,11 @@ package temple.ui.form.validation.rules
 		 */
 		public function isValid():Boolean
 		{
-			if (this._params)
+			if (_params)
 			{
-				return this._rule.apply(null, this._params);
+				return _rule.apply(null, _params);
 			}
-			return this._rule();
+			return _rule();
 		}
 
 		/**
@@ -82,8 +82,8 @@ package temple.ui.form.validation.rules
 		 */
 		override public function destruct():void 
 		{
-			this._rule = null;
-			this._params = null;
+			_rule = null;
+			_params = null;
 			
 			super.destruct();
 		}

@@ -51,8 +51,8 @@ package temple.ui.states.error
 		
 		public function ErrorTimelineState()
 		{
-			this._textField = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
-			if (this._textField) this._textField.text = "";
+			_textField = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
+			if (_textField) _textField.text = "";
 		}
 		
 		/**
@@ -60,7 +60,7 @@ package temple.ui.states.error
 		 */
 		public function set message(value:String):void
 		{
-			if (this._textField) this._textField.text = value ? value : '';
+			if (_textField) _textField.text = value ? value : '';
 		}
 		
 		/**
@@ -68,7 +68,7 @@ package temple.ui.states.error
 		 */
 		public function get textField():TextField
 		{
-			return this._textField;
+			return _textField;
 		}
 
 		/**
@@ -76,7 +76,7 @@ package temple.ui.states.error
 		 */
 		override public function destruct():void
 		{
-			this._textField = null;
+			_textField = null;
 			
 			super.destruct();
 		}

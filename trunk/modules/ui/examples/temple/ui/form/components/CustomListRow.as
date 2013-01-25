@@ -21,7 +21,7 @@ package
 		{
 			super.index = value;
 			
-			this.mcBackground.gotoAndStop(1 + value % this.mcBackground.totalFrames);
+			mcBackground.gotoAndStop(1 + value % mcBackground.totalFrames);
 		}
 	}
 }

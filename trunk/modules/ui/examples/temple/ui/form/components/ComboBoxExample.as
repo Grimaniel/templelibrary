@@ -72,7 +72,7 @@ package
 			this.mcIndexField.reset();
 			
 			this.mcComboBox.addItems(["Apple", "Banana", "Orange", "Pear", "Raspberrie", "Grape", "Lemon", "Grapefruit", "Lime", "Mango"]);
-			this.mcComboBox.addEventListener(Event.CHANGE, this.handleChange);
+			this.mcComboBox.addEventListener(Event.CHANGE, handleChange);
 			
 			this.mcAddItemButton.label = "addItem";
 			this.mcAddItemAtButton.label = "addItemAt";
@@ -93,7 +93,7 @@ package
 			this.mcCloseButton.label = "close";
 			this.mcAutoCloseButton.label = "autoClose " + (this.mcComboBox.autoClose ? "on" : "off");
 			
-			this.addEventListener(MouseEvent.CLICK, this.handleClick);
+			addEventListener(MouseEvent.CLICK, handleClick);
 		}
 
 		private function handleClick(event:MouseEvent):void
@@ -112,7 +112,7 @@ package
 				}
 				case mcGetItemAtButton:
 				{
-					this.mcDataField.text = this.mcComboBox.getItemAt(int(this.mcIndexField.text));
+					this.mcDataField.text = mcComboBox.getItemAt(int(this.mcIndexField.text));
 					break;
 				}
 				case mcSetItemAtButton:
@@ -122,7 +122,7 @@ package
 				}
 				case mcGetLabelAtButton:
 				{
-					this.mcLabelField.text = this.mcComboBox.getLabelAt(int(this.mcIndexField.text));
+					this.mcLabelField.text = mcComboBox.getLabelAt(int(this.mcIndexField.text));
 					break;
 				}
 				case mcSetLabelAtButton:
@@ -147,7 +147,7 @@ package
 				}
 				case mcGetSelectedIndexButton:
 				{
-					this.mcIndexField.text = this.mcComboBox.selectedIndex.toString();
+					this.mcIndexField.text = mcComboBox.selectedIndex.toString();
 					break;
 				}
 				case mcSetSelectedIndexButton:
@@ -157,22 +157,22 @@ package
 				}
 				case mcGetSelectedItemButton:
 				{
-					this.mcDataField.text = this.mcComboBox.selectedItem;
+					this.mcDataField.text = mcComboBox.selectedItem;
 					break;
 				}
 				case mcSetSelectedItemButton:
 				{
-					this.mcComboBox.selectedItem = this.mcDataField.text;
+					this.mcComboBox.selectedItem = mcDataField.text;
 					break;
 				}
 				case mcGetSelectedLabelButton:
 				{
-					this.mcLabelField.text = this.mcComboBox.selectedLabel;
+					this.mcLabelField.text = mcComboBox.selectedLabel;
 					break;
 				}
 				case mcSetSelectedLabelButton:
 				{
-					this.mcComboBox.selectedLabel = this.mcLabelField.text;
+					this.mcComboBox.selectedLabel = mcLabelField.text;
 					break;
 				}
 				case this.mcOpenButton:
@@ -196,9 +196,9 @@ package
 
 		private function handleChange(event:Event):void
 		{
-			this.mcDataField.text = this.mcComboBox.selectedItem;
-			this.mcLabelField.text = this.mcComboBox.selectedLabel;
-			this.mcIndexField.text = this.mcComboBox.selectedIndex.toString();
+			this.mcDataField.text = mcComboBox.selectedItem;
+			this.mcLabelField.text = mcComboBox.selectedLabel;
+			this.mcIndexField.text = mcComboBox.selectedIndex.toString();
 		}
 
 		override public function destruct():void

@@ -62,19 +62,19 @@ package temple.ui.buttons
 		public function BaseButton() 
 		{
 			// act as button
-			this.buttonMode = true;
+			buttonMode = true;
 			
 			// set and hide hit area
-			var hitArea:Sprite = this.getChildByName(BaseButton.hitAreaInstanceName) as Sprite;
+			var hitArea:Sprite = getChildByName(BaseButton.hitAreaInstanceName) as Sprite;
 			
 			if (hitArea != null) 
 			{
-				this.hitArea = hitArea;
+				hitArea = hitArea;
 				hitArea.visible = false;
 			}
 			
 			// don't handle mouse events on children
-			this.mouseChildren = false;
+			mouseChildren = false;
 		}
 		
 		/**
@@ -82,7 +82,7 @@ package temple.ui.buttons
 		 */
 		override public function set enabled(value:Boolean):void
 		{
-			this.mouseEnabled = super.enabled = value;
+			mouseEnabled = super.enabled = value;
 		}
 		
 		/**
@@ -90,7 +90,7 @@ package temple.ui.buttons
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -98,7 +98,7 @@ package temple.ui.buttons
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 
 		/**
@@ -106,7 +106,7 @@ package temple.ui.buttons
 		 */
 		override public function destruct():void
 		{
-			this.hitArea = null;
+			hitArea = null;
 			
 			super.destruct();
 		}

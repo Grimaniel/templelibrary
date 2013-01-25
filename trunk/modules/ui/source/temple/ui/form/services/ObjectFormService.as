@@ -69,7 +69,7 @@ package temple.ui.form.services
 		 */
 		public function ObjectFormService(object:Object = null)
 		{
-			this._object = object;
+			_object = object;
 		}
 		
 		/**
@@ -77,41 +77,41 @@ package temple.ui.form.services
 		 */
 		public function submit(data:Object):IFormResult
 		{
-			if (this.debug) this.logDebug("submit: " + dump(data));
+			if (debug) logDebug("submit: " + dump(data));
 
 			var success:Boolean;
 			
-			if (this._object == null)
+			if (_object == null)
 			{
-				this.logError("submit: object is not set yet");
+				logError("submit: object is not set yet");
 			}
-			else if (this._object is IObjectParsable)
+			else if (_object is IObjectParsable)
 			{
-				success = IObjectParsable(this._object).parseObject(data);
+				success = IObjectParsable(_object).parseObject(data);
 			}
 			else
 			{
 				success = true;
 				
-				var isDynamic:Boolean = ObjectUtils.isDynamic(this._object);
+				var isDynamic:Boolean = ObjectUtils.isDynamic(_object);
 
 				for (var key:String in data)
 				{
-					if (this._object.hasOwnProperty(key) || isDynamic)
+					if (_object.hasOwnProperty(key) || isDynamic)
 					{
-						this._object[key] = data[key];
+						_object[key] = data[key];
 					}
 					else
 					{
-						this.logError("submit: object has no property '" + key + "'");
+						logError("submit: object has no property '" + key + "'");
 						success = false;
 					}
 				}
 			}
-			if (this.debug) this.logDebug("object: " + dump(this._object));
+			if (debug) logDebug("object: " + dump(_object));
 			
 			var result:IFormResult = new FormResult(success);
-			this.dispatchEvent(new FormServiceEvent(FormServiceEvent.RESULT, result));
+			dispatchEvent(new FormServiceEvent(FormServiceEvent.RESULT, result));
 			
 			return result;
 		}
@@ -122,7 +122,7 @@ package temple.ui.form.services
 		 */
 		public function get object():Object
 		{
-			return this._object;
+			return _object;
 		}
 		
 		/**
@@ -130,7 +130,7 @@ package temple.ui.form.services
 		 */
 		public function set object(value:Object):void
 		{
-			this._object = value;
+			_object = value;
 		}
 		
 		/**
@@ -138,7 +138,7 @@ package temple.ui.form.services
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -146,7 +146,7 @@ package temple.ui.form.services
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		/**
@@ -154,7 +154,7 @@ package temple.ui.form.services
 		 */
 		override public function destruct():void
 		{
-			this._object = null;
+			_object = null;
 			super.destruct();
 		}
 	}

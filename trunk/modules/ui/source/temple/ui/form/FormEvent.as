@@ -79,7 +79,7 @@ package temple.ui.form
 		{
 			super(type, bubbles);
 			
-			this._result = result;
+			_result = result;
 		}
 		
 		/**
@@ -87,7 +87,7 @@ package temple.ui.form
 		 */
 		public function get result():IFormResult
 		{
-			return this._result;
+			return _result;
 		}
 
 		/**
@@ -95,7 +95,7 @@ package temple.ui.form
 		 */
 		override public function clone():Event
 		{
-			return new FormEvent(this.type, this.result, bubbles);
+			return new FormEvent(type, result, bubbles);
 		}
 	}
 }

@@ -55,40 +55,40 @@ package
 		{
 			super("Temple - FrameStableMovieClipExample");
 			
-			this.mcNormalTimelineAnimation.stop();
-			this.mcFrameStableTimelineAnimation.stop();
+			mcNormalTimelineAnimation.stop();
+			mcFrameStableTimelineAnimation.stop();
 			
-			this.mcPlayButton.addEventListener(MouseEvent.CLICK, this.handlePlayButtonClick);
+			mcPlayButton.addEventListener(MouseEvent.CLICK, handlePlayButtonClick);
 			
 			// Add fps counter so we can see the frame rate
-			this.addChild(new PerformanceStat()).x = 420;
+			addChild(new PerformanceStat()).x = 420;
 			
 			// Create a FrameRateKiller for framerate throttling
-			this._frameRateKiller = new FrameRateKiller(25);
+			_frameRateKiller = new FrameRateKiller(25);
 			
-			this.txtFPS.restrict = Restrictions.INTEGERS;
-			this.txtFPS.text = this._frameRateKiller.fps.toString();
-			this.txtFPS.addEventListener(Event.CHANGE, this.handleFPSChange);
-			this.txtFPS.borderColor = 0xDDDDDD;
+			txtFPS.restrict = Restrictions.INTEGERS;
+			txtFPS.text = _frameRateKiller.fps.toString();
+			txtFPS.addEventListener(Event.CHANGE, handleFPSChange);
+			txtFPS.borderColor = 0xDDDDDD;
 		}
 
 		private function handlePlayButtonClick(event:MouseEvent):void 
 		{
-			this.mcNormalTimelineAnimation.gotoAndPlay(1);
+			mcNormalTimelineAnimation.gotoAndPlay(1);
 			
-			this.mcFrameStableTimelineAnimation.gotoAndPlay(1);
+			mcFrameStableTimelineAnimation.gotoAndPlay(1);
 			
-			TweenLite.killTweensOf(this.mcTweenClip);
-			this.mcTweenClip.x = 10;
+			TweenLite.killTweensOf(mcTweenClip);
+			mcTweenClip.x = 10;
 			// Tween the clip over 2 seconds, since the other timelines have 62 frames (which would normally take 2 seconds at 31 fps)
-			TweenLite.to(this.mcTweenClip, 2, {x: this.mcTweenClip.x + 400, ease: Linear.easeNone});
+			TweenLite.to(mcTweenClip, 2, {x: mcTweenClip.x + 400, ease: Linear.easeNone});
 		}
 		
 		private function handleFPSChange(event:Event):void 
 		{
-			if (int(this.txtFPS.text))
+			if (int(txtFPS.text))
 			{
-				this._frameRateKiller.fps = int(this.txtFPS.text);
+				_frameRateKiller.fps = int(txtFPS.text);
 			}
 		}
 	}

@@ -57,23 +57,23 @@ package temple.ui.behaviors
 			
 			target.mouseEnabled = true;
 			
-			this._hitarea = hitarea;
-			this._threshold = threshold;
+			_hitarea = hitarea;
+			_threshold = threshold;
 			
 			if (target.stage)
 			{
-				target.stage.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
+				target.stage.addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
 			}
 			else
 			{
-				target.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+				target.addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 			}
 		}
 
 		private function handleAddedToStage(event:Event):void 
 		{
-			this.interactiveObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-			this.interactiveObject.stage.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
+			interactiveObject.removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+			interactiveObject.stage.addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
 		}
 
 		/**
@@ -81,27 +81,27 @@ package temple.ui.behaviors
 		 */
 		public function get interactiveObject():InteractiveObject 
 		{
-			return this.target as InteractiveObject;
+			return target as InteractiveObject;
 		}
 		
 		public function get hitarea():Bitmap
 		{
-			return this._hitarea;
+			return _hitarea;
 		}
 
 		public function get threshold():uint
 		{
-			return this._threshold;
+			return _threshold;
 		}
 		
 		public function set threshold(value:uint):void
 		{
-			this._threshold = value;
+			_threshold = value;
 		}
 		
 		private function handleMouseMove(event:MouseEvent):void 
 		{
-			this.interactiveObject.mouseEnabled = this.hitarea.bitmapData.hitTest(new Point(0, 0), this._threshold, new Point(this.hitarea.mouseX, this.hitarea.mouseY));
+			interactiveObject.mouseEnabled = hitarea.bitmapData.hitTest(new Point(0, 0), _threshold, new Point(hitarea.mouseX, hitarea.mouseY));
 		}
 	}
 }

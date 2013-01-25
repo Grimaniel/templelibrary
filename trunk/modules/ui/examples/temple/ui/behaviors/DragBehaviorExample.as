@@ -32,21 +32,21 @@ package
 			super("Temple - DragBehaviorExample");
 			
 			// Create a new Sprite
-			var box1:Sprite = this.createBox(0xD0DEEC, 0x99A6C4);
+			var box1:Sprite = createBox(0xD0DEEC, 0x99A6C4);
 			box1.x = 10;
 			box1.y = 80;
 			box1.buttonMode = true;
-			this.addChild(box1);
+			addChild(box1);
 			
 			// add DragBehavior to make the box draggable
 			new DragBehavior(box1);
 			
 			// Create an other Sprite
-			var box2:Sprite = this.createBox(0xE1ECD0, 0xB1C499);
+			var box2:Sprite = createBox(0xE1ECD0, 0xB1C499);
 			box2.x = 80;
 			box2.y = 80;
 			box2.buttonMode = true;
-			this.addChild(box2);
+			addChild(box2);
 			
 			// add DragBehavior to make the box draggable, using 
 			new DragBehavior(box2).positionProxy = new TweenLitePropertyProxy(2, {ease:Elastic.easeOut});
@@ -61,7 +61,7 @@ package
 			label.x = label.y = 10;
 			label.selectable = label.mouseEnabled = false;
 			label.text = "Drag a box";
-			this.addChild(label);
+			addChild(label);
 		}
 		
 		private function createBox(backgroundColor:uint, borderColor:uint):Sprite

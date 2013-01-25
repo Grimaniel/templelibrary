@@ -89,41 +89,41 @@ package temple.ui.style
 		public function StylableLabel(label:String = null, cssClass:String = null)
 		{
 			super();
-			this.toStringProps.push('label');
+			toStringProps.push('label');
 			var textField:TextField = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
 			
-			this._label = new TextFieldLabelBehavior(new TextField());
+			_label = new TextFieldLabelBehavior(new TextField());
 			
 			if (textField)
 			{
 				// if there was a TextField copy it's values
-				var index:uint = this.getChildIndex(textField);
-				this.removeChild(textField);
+				var index:uint = getChildIndex(textField);
+				removeChild(textField);
 				
-				this._label.textField.multiline = textField.multiline;
-				this._label.textField.selectable = textField.selectable;
-				this._label.textField.sharpness = textField.sharpness;
-				this._label.textField.text = textField.text;
-				this._label.textField.textColor = textField.textColor;
-				this._label.textField.thickness = textField.thickness;
-				this._label.textField.type = textField.type;
-				this._label.textField.wordWrap = textField.wordWrap;
-				this._label.textField.width = textField.width;
-				this._label.textField.height = textField.height;
-				this._label.textField.x = textField.x;
-				this._label.textField.y = textField.y;
-				this._label.textField.filters = textField.filters;
-				this._label.textField.defaultTextFormat = textField.defaultTextFormat;
+				_label.textField.multiline = textField.multiline;
+				_label.textField.selectable = textField.selectable;
+				_label.textField.sharpness = textField.sharpness;
+				_label.textField.text = textField.text;
+				_label.textField.textColor = textField.textColor;
+				_label.textField.thickness = textField.thickness;
+				_label.textField.type = textField.type;
+				_label.textField.wordWrap = textField.wordWrap;
+				_label.textField.width = textField.width;
+				_label.textField.height = textField.height;
+				_label.textField.x = textField.x;
+				_label.textField.y = textField.y;
+				_label.textField.filters = textField.filters;
+				_label.textField.defaultTextFormat = textField.defaultTextFormat;
 				
-				this.addChildAt(this._label.textField, index);
+				addChildAt(_label.textField, index);
 			}
 			else
 			{
-				this.addChild(this._label.textField);
+				addChild(_label.textField);
 			}
-			this._label.html = true;
-			this._label.addEventListener(Event.CHANGE, this.handleLabelChange);
-			this._label.addEventListener(Event.RESIZE, this.handleLabelResize);
+			_label.html = true;
+			_label.addEventListener(Event.CHANGE, handleLabelChange);
+			_label.addEventListener(Event.RESIZE, handleLabelResize);
 			
 			if (label)
 			{
@@ -137,7 +137,7 @@ package temple.ui.style
 		 */
 		public function get label():String
 		{
-			return this._label ? this._label.label : null;
+			return _label ? _label.label : null;
 		}
 		
 		/**
@@ -146,7 +146,7 @@ package temple.ui.style
 		[Inspectable(name="Label", type="String")]
 		public function set label(value:String):void
 		{
-			this._label.label = value;
+			_label.label = value;
 		}
 
 		/**
@@ -154,7 +154,7 @@ package temple.ui.style
 		 */
 		public function get autoSize():String
 		{
-			return this._label.autoSize;
+			return _label.autoSize;
 		}
 		
 		/**
@@ -163,7 +163,7 @@ package temple.ui.style
 		[Inspectable(name="AutoSize", type="String", defaultValue="none", enumeration="none,left,right,center")]
 		public function set autoSize(value:String):void
 		{
-			this._label.autoSize = value;
+			_label.autoSize = value;
 		}
 
 		/**
@@ -171,7 +171,7 @@ package temple.ui.style
 		 */
 		public function get html():Boolean
 		{
-			return this._label.html;
+			return _label.html;
 		}
 		
 		/**
@@ -180,7 +180,7 @@ package temple.ui.style
 		[Inspectable(name="HTML", type="Boolean", defaultValue="true")]
 		public function set html(value:Boolean):void
 		{
-			this._label.html = value;
+			_label.html = value;
 		}
 		
 		/**
@@ -188,7 +188,7 @@ package temple.ui.style
 		 */
 		public function get textField():TextField
 		{
-			return this._label.textField;
+			return _label.textField;
 		}
 
 		/**
@@ -196,7 +196,7 @@ package temple.ui.style
 		 */
 		public function get cssClass():String
 		{
-			return this._cssClass;
+			return _cssClass;
 		}
 		
 		/**
@@ -205,9 +205,9 @@ package temple.ui.style
 		[Inspectable(name="CSS Class", type="String")]
 		public function set cssClass(value:String):void
 		{
-			this._cssClass = value;
-			styleManagerInstance.addTextField(this._label.textField, this._cssClass, this._styleSheetName);
-			styleManagerInstance.addObject(this, this._cssClass, this._styleSheetName);
+			_cssClass = value;
+			styleManagerInstance.addTextField(_label.textField, _cssClass, _styleSheetName);
+			styleManagerInstance.addObject(this, _cssClass, _styleSheetName);
 		}
 		
 		/**
@@ -215,7 +215,7 @@ package temple.ui.style
 		 */
 		public function get styleSheetName():String
 		{
-			return this._styleSheetName;
+			return _styleSheetName;
 		}
 		
 		/**
@@ -224,9 +224,9 @@ package temple.ui.style
 		[Inspectable(name="StyleSheet name", type="String")]
 		public function set styleSheetName(value:String):void
 		{
-			this._styleSheetName = value;
-			styleManagerInstance.addTextField(this._label.textField, this._cssClass, this._styleSheetName);
-			styleManagerInstance.addObject(this, this._cssClass, this._styleSheetName);
+			_styleSheetName = value;
+			styleManagerInstance.addTextField(_label.textField, _cssClass, _styleSheetName);
+			styleManagerInstance.addObject(this, _cssClass, _styleSheetName);
 		}
 		
 		/**
@@ -234,7 +234,7 @@ package temple.ui.style
 		 */
 		public function get textTransform():String
 		{
-			return this._textTransform;
+			return _textTransform;
 		}
 		
 		/**
@@ -242,38 +242,38 @@ package temple.ui.style
 		 */
 		public function set textTransform(value:String):void
 		{
-			this._resetStyle = false;
+			_resetStyle = false;
 			switch (value)
 			{
 				case null:
 				case TextTransform.NONE:
 				{
-					this._textTransform = TextTransform.NONE;
+					_textTransform = TextTransform.NONE;
 					// do nothing
 					break;
 				}
 				case TextTransform.UCFIRST:
 				{
-					this._textTransform = value;
-					this.label = StringUtils.ucFirst(this.label);
+					_textTransform = value;
+					label = StringUtils.ucFirst(label);
 					break;
 				}
 				case TextTransform.LOWERCASE:
 				{
-					this._textTransform = value;
-					this.label = this.label.toLowerCase();
+					_textTransform = value;
+					label = label.toLowerCase();
 					break;
 				}
 				case TextTransform.UPPERCASE:
 				{
-					this._textTransform = value;
-					this.label = this.label.toUpperCase();
+					_textTransform = value;
+					label = label.toUpperCase();
 					break;
 				}
 				case TextTransform.CAPITALIZE:
 				{
-					this._textTransform = value;
-					this.label = StringUtils.capitalize(this.label);
+					_textTransform = value;
+					label = StringUtils.capitalize(label);
 					break;
 				}
 				default:
@@ -282,7 +282,7 @@ package temple.ui.style
 					break;
 				}
 			}
-			this._resetStyle = true;
+			_resetStyle = true;
 		}
 		
 		/**
@@ -290,7 +290,7 @@ package temple.ui.style
 		 */
 		public function get antiAlias():String
 		{
-			return this._antiAlias;
+			return _antiAlias;
 		}
 		
 		/**
@@ -303,33 +303,33 @@ package temple.ui.style
 			{
 				case AntiAlias.ANIMATION:
 				{
-					this._antiAlias = value;
-					this._label.textField.antiAliasType = AntiAliasType.NORMAL;
-					this._label.textField.gridFitType = GridFitType.NONE;
+					_antiAlias = value;
+					_label.textField.antiAliasType = AntiAliasType.NORMAL;
+					_label.textField.gridFitType = GridFitType.NONE;
 					break;
 				}
 				case AntiAlias.READABILITY:
 				{
-					this._antiAlias = value;
+					_antiAlias = value;
 					
-					if (this._label.textField.getTextFormat().size >= StyleManager.LARGE_FONT_SIZE)
+					if (_label.textField.getTextFormat().size >= StyleManager.LARGE_FONT_SIZE)
 					{
-						this._label.textField.antiAliasType = AntiAliasType.NORMAL;
+						_label.textField.antiAliasType = AntiAliasType.NORMAL;
 					}
 					else
 					{
-						this._label.textField.antiAliasType = AntiAliasType.ADVANCED;
+						_label.textField.antiAliasType = AntiAliasType.ADVANCED;
 					}
 					
-					switch (this._label.textField.getTextFormat().align)
+					switch (_label.textField.getTextFormat().align)
 					{
 						case TextFormatAlign.LEFT:
-							this._label.textField.gridFitType = GridFitType.PIXEL;
+							_label.textField.gridFitType = GridFitType.PIXEL;
 							break;
 						case TextFormatAlign.CENTER:
 						case TextFormatAlign.JUSTIFY:
 						case TextFormatAlign.RIGHT:
-							this._label.textField.gridFitType = GridFitType.SUBPIXEL;
+							_label.textField.gridFitType = GridFitType.SUBPIXEL;
 							break;
 					}
 					break;
@@ -347,7 +347,7 @@ package temple.ui.style
 		 */
 		public function get multiline():Boolean
 		{
-			return this._label.textField.multiline;
+			return _label.textField.multiline;
 		}
 		
 		/**
@@ -356,7 +356,7 @@ package temple.ui.style
 		[Inspectable(name="Multiline", type="Boolean")]
 		public function set multiline(value:Boolean):void
 		{
-			this._label.textField.multiline = value;
+			_label.textField.multiline = value;
 		}
 		
 		/**
@@ -364,7 +364,7 @@ package temple.ui.style
 		 */
 		public function get paddingLeft():Number
 		{
-			return this._paddingLeft;
+			return _paddingLeft;
 		}
 		
 		/**
@@ -372,7 +372,7 @@ package temple.ui.style
 		 */
 		public function set paddingLeft(value:Number):void
 		{
-			this._paddingLeft = value;
+			_paddingLeft = value;
 		}
 
 		/**
@@ -383,7 +383,7 @@ package temple.ui.style
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.paddingLeft = Number(value);
+				paddingLeft = Number(value);
 			}
 		}
 
@@ -392,7 +392,7 @@ package temple.ui.style
 		 */
 		public function get paddingRight():Number
 		{
-			return this._paddingLeft;
+			return _paddingLeft;
 		}
 		
 		/**
@@ -400,7 +400,7 @@ package temple.ui.style
 		 */
 		public function set paddingRight(value:Number):void
 		{
-			this._paddingRight = value;
+			_paddingRight = value;
 		}
 		
 		/**
@@ -411,7 +411,7 @@ package temple.ui.style
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.paddingRight = Number(value);
+				paddingRight = Number(value);
 			}
 		}
 
@@ -420,7 +420,7 @@ package temple.ui.style
 		 */
 		public function get paddingTop():Number
 		{
-			return this._paddingTop;
+			return _paddingTop;
 		}
 		
 		/**
@@ -428,7 +428,7 @@ package temple.ui.style
 		 */
 		public function set paddingTop(value:Number):void
 		{
-			this._paddingTop = value;
+			_paddingTop = value;
 		}
 		
 		/**
@@ -439,7 +439,7 @@ package temple.ui.style
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.paddingTop = Number(value);
+				paddingTop = Number(value);
 			}
 		}
 
@@ -448,7 +448,7 @@ package temple.ui.style
 		 */
 		public function get paddingBottom():Number
 		{
-			return this._paddingBottom;
+			return _paddingBottom;
 		}
 		
 		/**
@@ -456,7 +456,7 @@ package temple.ui.style
 		 */
 		public function set paddingBottom(value:Number):void
 		{
-			this._paddingBottom = value;
+			_paddingBottom = value;
 		}
 		
 		/**
@@ -467,7 +467,7 @@ package temple.ui.style
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.paddingBottom = Number(value);
+				paddingBottom = Number(value);
 			}
 		}
 
@@ -476,7 +476,7 @@ package temple.ui.style
 		 */
 		public function get padding():Number
 		{
-			return this._paddingLeft == this._paddingRight && this._paddingLeft == this._paddingTop && this._paddingLeft == this._paddingBottom ? this._paddingLeft : NaN;
+			return _paddingLeft == _paddingRight && _paddingLeft == _paddingTop && _paddingLeft == _paddingBottom ? _paddingLeft : NaN;
 		}
 		
 		/**
@@ -484,40 +484,40 @@ package temple.ui.style
 		 */
 		public function set padding(value:Number):void
 		{
-			this._paddingLeft = this._paddingRight = this._paddingTop = this._paddingBottom = value;
+			_paddingLeft = _paddingRight = _paddingTop = _paddingBottom = value;
 		}
 		
 		protected function handleLabelChange(event:Event):void
 		{
-			if (this._resetStyle) this.resetStyle();
+			if (_resetStyle) resetStyle();
 			
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 
 		protected function handleLabelResize(event:Event):void
 		{
-			this.resize();
+			resize();
 		}
 		
 		protected function resetStyle():void
 		{
-			this.textTransform = this._textTransform;
+			textTransform = _textTransform;
 		}
 		
 		protected function resize():void
 		{
-			if (!isNaN(this._paddingLeft) || !isNaN(this._paddingRight) || this.textField.width != this.width)
+			if (!isNaN(_paddingLeft) || !isNaN(_paddingRight) || textField.width != width)
 			{
-				if (!isNaN(this._paddingLeft)) this.textField.x = this._paddingLeft;
-				this.width = (this._paddingLeft ? this._paddingLeft : 0) + this.textField.width + (this._paddingRight ? this._paddingRight : 0);
+				if (!isNaN(_paddingLeft)) textField.x = _paddingLeft;
+				width = (_paddingLeft ? _paddingLeft : 0) + textField.width + (_paddingRight ? _paddingRight : 0);
 			}
-			if (!isNaN(this._paddingTop) || !isNaN(this._paddingBottom) || this.textField.height != this.height)
+			if (!isNaN(_paddingTop) || !isNaN(_paddingBottom) || textField.height != height)
 			{
-				if (!isNaN(this._paddingTop)) this.textField.y = this._paddingTop;
-				this.height = (this._paddingTop ? this._paddingTop : 0) + this.textField.height + (this._paddingBottom ? this._paddingBottom : 0);
+				if (!isNaN(_paddingTop)) textField.y = _paddingTop;
+				height = (_paddingTop ? _paddingTop : 0) + textField.height + (_paddingBottom ? _paddingBottom : 0);
 			}
-			if (this.liquidBehavior) this.liquidBehavior.update();
-			this.dispatchEvent(new Event(Event.RESIZE));
+			if (liquidBehavior) liquidBehavior.update();
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 
 		/**
@@ -525,10 +525,10 @@ package temple.ui.style
 		 */
 		override public function destruct():void
 		{
-			if (this._label)
+			if (_label)
 			{
-				this._label.destruct();
-				this._label = null;
+				_label.destruct();
+				_label = null;
 			}
 			super.destruct();
 		}

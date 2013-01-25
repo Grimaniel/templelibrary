@@ -103,7 +103,7 @@ package temple.ui.style
 			if (textField)
 			{
 				// if there was a TextField copy it's values
-				var index:uint = this.getChildIndex(textField);
+				var index:uint = getChildIndex(textField);
 				
 				newTextField.multiline = textField.multiline;
 				newTextField.selectable = textField.selectable;
@@ -123,16 +123,16 @@ package temple.ui.style
 				textField.text = '';
 				textField.width = textField.height = 1;
 
-				this.addChildAt(newTextField, index);
+				addChildAt(newTextField, index);
 			}
 			else
 			{
-				this.addChild(newTextField);
+				addChild(newTextField);
 			}
 
-			this._label = new TextFieldLabelBehavior(newTextField);
-			(this._label as IHTMLLabel).html = true;
-			(this._label as IEventDispatcher).addEventListener(Event.CHANGE, this.handleLabelChange);
+			_label = new TextFieldLabelBehavior(newTextField);
+			(_label as IHTMLLabel).html = true;
+			(_label as IEventDispatcher).addEventListener(Event.CHANGE, handleLabelChange);
 		}
 
 		/**
@@ -140,7 +140,7 @@ package temple.ui.style
 		 */
 		public function get cssClass():String
 		{
-			return this._cssClass;
+			return _cssClass;
 		}
 		
 		/**
@@ -149,9 +149,9 @@ package temple.ui.style
 		[Inspectable(name="CSS Class", type="String")]
 		public function set cssClass(value:String):void
 		{
-			this._cssClass = value;
-			styleManagerInstance.addTextField((this._label as ITextFieldLabel).textField, this._cssClass, this._styleSheetName);
-			styleManagerInstance.addObject(this, this._cssClass, this._styleSheetName);
+			_cssClass = value;
+			styleManagerInstance.addTextField((_label as ITextFieldLabel).textField, _cssClass, _styleSheetName);
+			styleManagerInstance.addObject(this, _cssClass, _styleSheetName);
 		}
 		
 		/**
@@ -159,7 +159,7 @@ package temple.ui.style
 		 */
 		public function get styleSheetName():String
 		{
-			return this._styleSheetName;
+			return _styleSheetName;
 		}
 		
 		/**
@@ -168,9 +168,9 @@ package temple.ui.style
 		[Inspectable(name="StyleSheet name", type="String")]
 		public function set styleSheetName(value:String):void
 		{
-			this._styleSheetName = value;
-			styleManagerInstance.addTextField((this._label as ITextFieldLabel).textField, this._cssClass, this._styleSheetName);
-			styleManagerInstance.addObject(this, this._cssClass, this._styleSheetName);
+			_styleSheetName = value;
+			styleManagerInstance.addTextField((_label as ITextFieldLabel).textField, _cssClass, _styleSheetName);
+			styleManagerInstance.addObject(this, _cssClass, _styleSheetName);
 		}
 		
 		/**
@@ -178,7 +178,7 @@ package temple.ui.style
 		 */
 		public function get textTransform():String
 		{
-			return this._textTransform;
+			return _textTransform;
 		}
 		
 		/**
@@ -186,37 +186,37 @@ package temple.ui.style
 		 */
 		public function set textTransform(value:String):void
 		{
-			this._resetStyle = false;
+			_resetStyle = false;
 			switch (value)
 			{
 				case null:
 				case TextTransform.NONE:
 				{
-					this._textTransform = TextTransform.NONE;
+					_textTransform = TextTransform.NONE;
 					// do nothing
 					break;
 				}
 				case TextTransform.UCFIRST:
 				{
-					this._textTransform = value;
+					_textTransform = value;
 					this.label = StringUtils.ucFirst(this.label);
 					break;
 				}
 				case TextTransform.LOWERCASE:
 				{
-					this._textTransform = value;
-					this.label = this.label.toLowerCase();
+					_textTransform = value;
+					this.label = label.toLowerCase();
 					break;
 				}
 				case TextTransform.UPPERCASE:
 				{
-					this._textTransform = value;
-					this.label = this.label.toUpperCase();
+					_textTransform = value;
+					this.label = label.toUpperCase();
 					break;
 				}	
 				case TextTransform.CAPITALIZE:
 				{
-					this._textTransform = value;
+					_textTransform = value;
 					this.label = StringUtils.capitalize(this.label);
 					break;
 				}
@@ -226,7 +226,7 @@ package temple.ui.style
 					break;
 				}
 			}
-			this._resetStyle = true;
+			_resetStyle = true;
 		}
 		
 		/**
@@ -234,7 +234,7 @@ package temple.ui.style
 		 */
 		public function get antiAlias():String
 		{
-			return this._antiAlias;
+			return _antiAlias;
 		}
 		
 		/**
@@ -247,36 +247,36 @@ package temple.ui.style
 			{
 				case AntiAlias.ANIMATION:
 				{
-					this._antiAlias = value;
-					(this._label as ITextFieldLabel).textField.antiAliasType = AntiAliasType.NORMAL;
-					(this._label as ITextFieldLabel).textField.gridFitType = GridFitType.NONE;
+					_antiAlias = value;
+					(_label as ITextFieldLabel).textField.antiAliasType = AntiAliasType.NORMAL;
+					(_label as ITextFieldLabel).textField.gridFitType = GridFitType.NONE;
 					break;
 				}
 				case AntiAlias.READABILITY:
 				{
-					this._antiAlias = value;
+					_antiAlias = value;
 					
-					if ((this._label as ITextFieldLabel).textField.getTextFormat().size >= StyleManager.LARGE_FONT_SIZE)
+					if ((_label as ITextFieldLabel).textField.getTextFormat().size >= StyleManager.LARGE_FONT_SIZE)
 					{
-						(this._label as ITextFieldLabel).textField.antiAliasType = AntiAliasType.NORMAL;
+						(_label as ITextFieldLabel).textField.antiAliasType = AntiAliasType.NORMAL;
 					}
 					else
 					{
-						(this._label as ITextFieldLabel).textField.antiAliasType = AntiAliasType.ADVANCED;
+						(_label as ITextFieldLabel).textField.antiAliasType = AntiAliasType.ADVANCED;
 					}
 					
-					switch ((this._label as ITextFieldLabel).textField.getTextFormat().align)
+					switch ((_label as ITextFieldLabel).textField.getTextFormat().align)
 					{
 						case TextFormatAlign.LEFT:
 						{
-							ITextFieldLabel(this._label).textField.gridFitType = GridFitType.PIXEL;
+							ITextFieldLabel(_label).textField.gridFitType = GridFitType.PIXEL;
 							break;
 						}
 						case TextFormatAlign.CENTER:
 						case TextFormatAlign.JUSTIFY:
 						case TextFormatAlign.RIGHT:
 						{
-							ITextFieldLabel(this._label).textField.gridFitType = GridFitType.SUBPIXEL;
+							ITextFieldLabel(_label).textField.gridFitType = GridFitType.SUBPIXEL;
 							break;
 						}
 					}
@@ -295,7 +295,7 @@ package temple.ui.style
 		 */
 		public function get multiline():Boolean
 		{
-			return (this._label as ITextFieldLabel).textField.multiline;
+			return (_label as ITextFieldLabel).textField.multiline;
 		}
 		
 		/**
@@ -304,22 +304,22 @@ package temple.ui.style
 		[Inspectable(name="Multiline", type="Boolean")]
 		public function set multiline(value:Boolean):void
 		{
-			(this._label as ITextFieldLabel).textField.multiline = value;
+			(_label as ITextFieldLabel).textField.multiline = value;
 		}
 
 		private function handleLabelChange(event:Event):void
 		{
-			if (this._resetStyle) this.resetStyle();
+			if (_resetStyle) resetStyle();
 		}
 
 		protected function resetStyle():void
 		{
-			this.textTransform = this._textTransform;
+			this.textTransform = _textTransform;
 		}
 
 		override public function destruct():void
 		{
-			if (this._label && this._label is IEventDispatcher) (this._label as IEventDispatcher).removeEventListener(Event.CHANGE, this.handleLabelChange);
+			if (_label && _label is IEventDispatcher) (_label as IEventDispatcher).removeEventListener(Event.CHANGE, handleLabelChange);
 			
 			super.destruct();
 		}

@@ -63,10 +63,10 @@ package temple.ui.form.components
 		{
 			super();
 			
-			FocusManager.init(this.stage);
+			FocusManager.init(stage);
 			
-			this.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-			this.addEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
+			addEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+			addEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
 		}
 		
 		/**
@@ -83,7 +83,7 @@ package temple.ui.form.components
 		 */
 		public function get dataName():String
 		{
-			return this._dataName;
+			return _dataName;
 		}
 		
 		/**
@@ -92,7 +92,7 @@ package temple.ui.form.components
 		[Inspectable(name="Data name", type="String")]
 		public function set dataName(value:String):void
 		{
-			this._dataName = value;
+			_dataName = value;
 		}
 		
 		/**
@@ -100,7 +100,7 @@ package temple.ui.form.components
 		 */
 		public function get validationRule():Class
 		{
-			return this._validator;
+			return _validator;
 		}
 		
 		/**
@@ -108,7 +108,7 @@ package temple.ui.form.components
 		 */
 		public function get errorMessage():String
 		{
-			return this._errorMessage;
+			return _errorMessage;
 		}
 		
 		/**
@@ -117,7 +117,7 @@ package temple.ui.form.components
 		[Inspectable(name="Error message", type="String")]
 		public function set errorMessage(value:String):void
 		{
-			this._errorMessage = value;
+			_errorMessage = value;
 		}
 		
 		/**
@@ -125,7 +125,7 @@ package temple.ui.form.components
 		 */
 		override public function get tabIndex():int
 		{
-			return this._tabIndex;
+			return _tabIndex;
 		}
 		
 		/**
@@ -134,7 +134,7 @@ package temple.ui.form.components
 		[Inspectable(name="Tab index", type="Number", defaultValue="-1")]
 		override public function set tabIndex(value:int):void
 		{
-			this._tabIndex = value;
+			_tabIndex = value;
 		}
 		
 		/**
@@ -142,7 +142,7 @@ package temple.ui.form.components
 		 */
 		public function get submit():Boolean
 		{
-			return this._submit;
+			return _submit;
 		}
 		
 		/**
@@ -151,7 +151,7 @@ package temple.ui.form.components
 		[Inspectable(name="Submit value", type="Boolean", defaultValue="true")]
 		public function set submit(value:Boolean):void
 		{
-			this._submit = value;
+			_submit = value;
 		}
 		
 		/**
@@ -159,7 +159,7 @@ package temple.ui.form.components
 		 */
 		public function get focus():Boolean
 		{
-			return this._focus;
+			return _focus;
 		}
 		
 		/**
@@ -167,13 +167,13 @@ package temple.ui.form.components
 		 */
 		public function set focus(value:Boolean):void
 		{
-			if (value == this._focus) return;
+			if (value == _focus) return;
 			
 			if (value)
 			{
 				FocusManager.focus = this;
 			}
-			else if (this._focus)
+			else if (_focus)
 			{
 				FocusManager.focus = null;
 			}
@@ -184,7 +184,7 @@ package temple.ui.form.components
 		 */
 		public function get hasError():Boolean
 		{
-			return this._hasError;
+			return _hasError;
 		}
 
 		/**
@@ -194,11 +194,11 @@ package temple.ui.form.components
 		{
 			if (value)
 			{
-				this.showError();
+				showError();
 			}
 			else
 			{
-				this.hideError();
+				hideError();
 			}
 		}
 		
@@ -207,11 +207,11 @@ package temple.ui.form.components
 		 */
 		public function showError(message:String = null):void 
 		{
-			this._hasError = true;
-			this._errorMessage = message;
+			_hasError = true;
+			_errorMessage = message;
 			StateHelper.showError(this, message);
 			
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
+			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
 		}
 		
 		/**
@@ -219,10 +219,10 @@ package temple.ui.form.components
 		 */
 		public function hideError():void 
 		{
-			this._hasError = false;
+			_hasError = false;
 			StateHelper.hideError(this);
 			
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
+			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
 		}
 		
 		/**
@@ -230,7 +230,7 @@ package temple.ui.form.components
 		 */
 		protected function handleFocusIn(event:FocusEvent):void 
 		{
-			this._focus = true;
+			_focus = true;
 			StateHelper.showFocus(this);
 		}
 
@@ -239,7 +239,7 @@ package temple.ui.form.components
 		 */
 		protected function handleFocusOut(event:FocusEvent):void 
 		{
-			this._focus = false;
+			_focus = false;
 			StateHelper.hideFocus(this);
 		}
 
@@ -248,9 +248,9 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this._dataName = null;
-			this._errorMessage = null;
-			this._validator = null;
+			_dataName = null;
+			_errorMessage = null;
+			_validator = null;
 			
 			super.destruct();
 		}

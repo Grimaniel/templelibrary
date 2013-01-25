@@ -68,14 +68,14 @@ package temple.ui.states
 		public function BaseTimelineState()
 		{
 			// init labels
-			this._labels = new HashMap("TimelineState Labels");
-			this.currentScene.labels.map(this.addLabelHashEntry);
-			this.addFrameScript(this.totalFrames - 1, this.onLastFrame);
-			if (this._labels[BaseTimelineState._LABEL_HIDE])
+			_labels = new HashMap("TimelineState Labels");
+			currentScene.labels.map(addLabelHashEntry);
+			addFrameScript(totalFrames - 1, onLastFrame);
+			if (_labels[BaseTimelineState._LABEL_HIDE])
 			{
-				this.addFrameScript((FrameLabel(this._labels[BaseTimelineState._LABEL_HIDE]).frame - 1), this.stop);
+				addFrameScript((FrameLabel(_labels[BaseTimelineState._LABEL_HIDE]).frame - 1), stop);
 			}
-			this.stop();
+			stop();
 		}
 
 		/**
@@ -85,8 +85,8 @@ package temple.ui.states
 		{
 			super.stop();
 			MovieClipUtils.stop(this, false);
-			if (this._onComplete != null) this._onComplete();
-			this._onComplete = null;
+			if (_onComplete != null) _onComplete();
+			_onComplete = null;
 		}
 
 		/**
@@ -94,28 +94,28 @@ package temple.ui.states
 		 */
 		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (this.enabled == false || this._shown && !instant) return;
-			this._shown = true;
+			if (enabled == false || _shown && !instant) return;
+			_shown = true;
 			MovieClipUtils.stop(this);
 			if (instant)
 			{
-				this._onComplete = null;
-				if (this._labels[BaseTimelineState._LABEL_HIDE])
+				_onComplete = null;
+				if (_labels[BaseTimelineState._LABEL_HIDE])
 				{
-					this.gotoAndStop(FrameLabel(this._labels[BaseTimelineState._LABEL_HIDE]).frame - 1);
+					gotoAndStop(FrameLabel(_labels[BaseTimelineState._LABEL_HIDE]).frame - 1);
 				}
 				else
 				{
-					this.gotoAndStop(this.totalFrames);
+					gotoAndStop(totalFrames);
 				}
 				if (onComplete != null) onComplete();
 			}
 			else
 			{
-				this._onComplete = onComplete;
-				if (this._labels[BaseTimelineState._LABEL_SHOW])
+				_onComplete = onComplete;
+				if (_labels[BaseTimelineState._LABEL_SHOW])
 				{
-					this.gotoAndStop(BaseTimelineState._LABEL_SHOW);
+					gotoAndStop(BaseTimelineState._LABEL_SHOW);
 				}
 				MovieClipUtils.play(this);
 			}
@@ -126,28 +126,28 @@ package temple.ui.states
 		 */
 		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (this.enabled == false || !this._shown && !instant) return;
-			this._shown = false;
+			if (enabled == false || !_shown && !instant) return;
+			_shown = false;
 			MovieClipUtils.stop(this);
 			if (instant)
 			{
-				this._onComplete = null;
-				if (this._labels[BaseTimelineState._LABEL_HIDE])
+				_onComplete = null;
+				if (_labels[BaseTimelineState._LABEL_HIDE])
 				{
-					this.gotoAndStop(this.totalFrames);
+					gotoAndStop(totalFrames);
 				}
 				else
 				{
-					this.gotoAndStop(1);
+					gotoAndStop(1);
 				}
 				if (onComplete != null) onComplete();
 			}
 			else
 			{
-				this._onComplete = onComplete;
-				if (this._labels[BaseTimelineState._LABEL_HIDE])
+				_onComplete = onComplete;
+				if (_labels[BaseTimelineState._LABEL_HIDE])
 				{
-					this.gotoAndStop(BaseTimelineState._LABEL_HIDE);
+					gotoAndStop(BaseTimelineState._LABEL_HIDE);
 					MovieClipUtils.play(this);
 				}
 				else
@@ -160,8 +160,8 @@ package temple.ui.states
 		private function addLabelHashEntry(item:FrameLabel, index:int, array:Array):void 
 		{
 			var frameLabel:FrameLabel = FrameLabel(item);
-			this._labels[frameLabel.frame] = frameLabel;
-			this._labels[frameLabel.name] = frameLabel;
+			_labels[frameLabel.frame] = frameLabel;
+			_labels[frameLabel.name] = frameLabel;
 			
 			// Just use vars here, to get rid of 'parameter never used'-warning
 			index;
@@ -171,16 +171,16 @@ package temple.ui.states
 		private function onLastFrame():void
 		{
 			MovieClipUtils.stop(this);
-			if (this._shown)
+			if (_shown)
 			{
-				this.show();
+				show();
 			}
 		}
 
 		override public function destruct():void
 		{
-			this._labels = null;
-			this._onComplete = null;
+			_labels = null;
+			_onComplete = null;
 			
 			super.destruct();
 		}

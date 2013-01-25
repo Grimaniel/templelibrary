@@ -68,10 +68,10 @@ package temple.ui.layout.liquid
 		 */
 		construct function liquidMovieClip(relatedObject:ILiquidObject):void
 		{
-			this._liquidBehavior = new LiquidBehavior(this, relatedObject);
+			_liquidBehavior = new LiquidBehavior(this, relatedObject);
 			
 			// Call init after a framedelay, so all inspetables are already set
-			new FrameDelay(this.initLiquid);
+			new FrameDelay(initLiquid);
 		}
 		
 		/**
@@ -79,7 +79,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get left():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.left : NaN;
+			return _liquidBehavior ? _liquidBehavior.left : NaN;
 		}
 
 		/**
@@ -87,7 +87,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set left(value:Number):void
 		{
-			this.liquidBehavior.left = value;
+			liquidBehavior.left = value;
 		}
 		
 		/**
@@ -98,7 +98,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.left = Number(value);
+				left = Number(value);
 			}
 		}
 
@@ -107,7 +107,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get right():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.right : NaN;
+			return _liquidBehavior ? _liquidBehavior.right : NaN;
 		}
 
 		/**
@@ -115,7 +115,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set right(value:Number):void
 		{
-			this.liquidBehavior.right = value;
+			liquidBehavior.right = value;
 		}
 
 		/**
@@ -126,7 +126,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.right = Number(value);
+				right = Number(value);
 			}
 		}
 
@@ -135,7 +135,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get horizontalCenter():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.horizontalCenter : NaN;
+			return _liquidBehavior ? _liquidBehavior.horizontalCenter : NaN;
 		}
 
 		/**
@@ -143,7 +143,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set horizontalCenter(value:Number):void
 		{
-			this.liquidBehavior.horizontalCenter = value;
+			liquidBehavior.horizontalCenter = value;
 		}
 		
 		/**
@@ -154,7 +154,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.horizontalCenter = Number(value);
+				horizontalCenter = Number(value);
 			}
 		}
 		
@@ -163,7 +163,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relativeX():Number
 		{
-			return this.liquidBehavior.relativeX;
+			return liquidBehavior.relativeX;
 		}
 		
 		/**
@@ -171,7 +171,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set relativeX(value:Number):void
 		{
-			this.liquidBehavior.relativeX = value;
+			liquidBehavior.relativeX = value;
 		}
 		
 		/**
@@ -182,7 +182,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.relativeX = Number(value);
+				relativeX = Number(value);
 			}
 		}
 		
@@ -191,7 +191,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get minimalWidth():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.minimalWidth : NaN;
+			return _liquidBehavior ? _liquidBehavior.minimalWidth : NaN;
 		}
 		
 		/**
@@ -199,7 +199,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set minimalWidth(value:Number):void
 		{
-			if (this.liquidBehavior) this.liquidBehavior.minimalWidth = value;
+			if (liquidBehavior) liquidBehavior.minimalWidth = value;
 		}
 		
 		/**
@@ -210,7 +210,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.minimalWidth = Number(value);
+				minimalWidth = Number(value);
 			}
 		}
 		
@@ -219,7 +219,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relativeWidth():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.relativeWidth : NaN;
+			return _liquidBehavior ? _liquidBehavior.relativeWidth : NaN;
 		}
 		
 		/**
@@ -227,7 +227,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set relativeWidth(value:Number):void
 		{
-			if (this.liquidBehavior) this.liquidBehavior.relativeWidth = value;
+			if (liquidBehavior) liquidBehavior.relativeWidth = value;
 		}
 		
 		/**
@@ -238,14 +238,14 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.liquidBehavior.relativeWidth = Number(value);
+				liquidBehavior.relativeWidth = Number(value);
 			}
 			else if (value.indexOf('%'))
 			{
 				value = value.replace('%', '');
 				if (value != '' && !isNaN(Number(value)))
 				{
-					this.liquidBehavior.relativeWidth = Number(value) * 0.01;
+					liquidBehavior.relativeWidth = Number(value) * 0.01;
 				}
 			}
 		}
@@ -255,7 +255,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get absoluteWidth():Number 
 		{
-			return this._liquidBehavior.absoluteWidth;
+			return _liquidBehavior.absoluteWidth;
 		}
 
 		/**
@@ -263,7 +263,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set absoluteWidth(value:Number):void 
 		{
-			this._liquidBehavior.absoluteWidth = value;
+			_liquidBehavior.absoluteWidth = value;
 		}
 
 		/**
@@ -271,7 +271,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get top():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.top : NaN;
+			return _liquidBehavior ? _liquidBehavior.top : NaN;
 		}
 
 		/**
@@ -279,7 +279,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set top(value:Number):void
 		{
-			this.liquidBehavior.top = value;
+			liquidBehavior.top = value;
 		}
 		
 		/**
@@ -290,7 +290,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.top = Number(value);
+				top = Number(value);
 			}
 		}
 
@@ -299,7 +299,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get bottom():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.bottom : NaN;
+			return _liquidBehavior ? _liquidBehavior.bottom : NaN;
 		}
 
 		/**
@@ -307,7 +307,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set bottom(value:Number):void
 		{
-			this.liquidBehavior.bottom = value;
+			liquidBehavior.bottom = value;
 		}
 		
 		/**
@@ -319,7 +319,7 @@ package temple.ui.layout.liquid
 			
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.bottom = Number(value);
+				bottom = Number(value);
 			}
 		}
 
@@ -328,7 +328,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get verticalCenter():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.verticalCenter : NaN;
+			return _liquidBehavior ? _liquidBehavior.verticalCenter : NaN;
 		}
 
 		/**
@@ -336,7 +336,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set verticalCenter(value:Number):void
 		{
-			this.liquidBehavior.verticalCenter = value;
+			liquidBehavior.verticalCenter = value;
 		}
 		
 		/**
@@ -347,7 +347,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.verticalCenter = Number(value);
+				verticalCenter = Number(value);
 			}
 		}
 		
@@ -356,7 +356,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relativeY():Number
 		{
-			return this.liquidBehavior.relativeY;
+			return liquidBehavior.relativeY;
 		}
 		
 		/**
@@ -364,7 +364,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set relativeY(value:Number):void
 		{
-			this.liquidBehavior.relativeY = value;
+			liquidBehavior.relativeY = value;
 		}
 		
 		/**
@@ -375,7 +375,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.relativeY = Number(value);
+				relativeY = Number(value);
 			}
 		}
 		
@@ -384,7 +384,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get absoluteHeight():Number 
 		{
-			return this._liquidBehavior.absoluteHeight;
+			return _liquidBehavior.absoluteHeight;
 		}
 
 		/**
@@ -392,7 +392,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set absoluteHeight(value:Number):void 
 		{
-			this._liquidBehavior.absoluteHeight = value;
+			_liquidBehavior.absoluteHeight = value;
 		}
 		
 		/**
@@ -400,7 +400,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get minimalHeight():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.minimalHeight : NaN;
+			return _liquidBehavior ? _liquidBehavior.minimalHeight : NaN;
 		}
 		
 		/**
@@ -408,7 +408,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set minimalHeight(value:Number):void
 		{
-			if (this.liquidBehavior) this.liquidBehavior.minimalHeight = value;
+			if (liquidBehavior) liquidBehavior.minimalHeight = value;
 		}
 		
 		/**
@@ -419,7 +419,7 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.minimalHeight = Number(value);
+				minimalHeight = Number(value);
 			}
 		}
 		
@@ -428,7 +428,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relativeHeight():Number
 		{
-			return this._liquidBehavior ? this._liquidBehavior.relativeHeight : NaN;
+			return _liquidBehavior ? _liquidBehavior.relativeHeight : NaN;
 		}
 		
 		/**
@@ -436,7 +436,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set relativeHeight(value:Number):void
 		{
-			if (this.liquidBehavior) this.liquidBehavior.relativeHeight = value;
+			if (liquidBehavior) liquidBehavior.relativeHeight = value;
 		}
 		
 		/**
@@ -447,14 +447,14 @@ package temple.ui.layout.liquid
 		{
 			if (value != '' && !isNaN(Number(value)))
 			{
-				this.liquidBehavior.relativeHeight = Number(value);
+				liquidBehavior.relativeHeight = Number(value);
 			}
 			else if (value.indexOf('%'))
 			{
 				value = value.replace('%', '');
 				if (value != '' && !isNaN(Number(value)))
 				{
-					this.liquidBehavior.relativeHeight = Number(value) * 0.01;
+					liquidBehavior.relativeHeight = Number(value) * 0.01;
 				}
 			}
 		}
@@ -464,7 +464,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relatedObject():ILiquidRelatedObject
 		{
-			return this._liquidBehavior ? this._liquidBehavior.relatedObject : null;
+			return _liquidBehavior ? _liquidBehavior.relatedObject : null;
 		}
 
 		/**
@@ -472,7 +472,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set relatedObject(value:ILiquidRelatedObject):void
 		{
-			this.liquidBehavior.relatedObject = value;
+			liquidBehavior.relatedObject = value;
 		}
 		
 		/**
@@ -480,7 +480,7 @@ package temple.ui.layout.liquid
 		 */
 		public function update():void
 		{
-			if (this._liquidBehavior) this._liquidBehavior.update();
+			if (_liquidBehavior) _liquidBehavior.update();
 		}
 		
 		/**
@@ -488,7 +488,7 @@ package temple.ui.layout.liquid
 		 */
 		public function isLiquid():Boolean
 		{
-			return this._liquidBehavior ? this._liquidBehavior.isLiquid() : false;
+			return _liquidBehavior ? _liquidBehavior.isLiquid() : false;
 		}
 		
 		/**
@@ -496,7 +496,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get resetRelatedScale():Boolean
 		{
-			return this._liquidBehavior ? this._liquidBehavior.resetRelatedScale : false;
+			return _liquidBehavior ? _liquidBehavior.resetRelatedScale : false;
 		}
 		
 		/**
@@ -504,7 +504,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set resetRelatedScale(value:Boolean):void
 		{
-			if (this._liquidBehavior) this._liquidBehavior.resetRelatedScale = value;
+			if (_liquidBehavior) _liquidBehavior.resetRelatedScale = value;
 		}
 		
 		/**
@@ -512,7 +512,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get offset():Point
 		{
-			return this._liquidBehavior ? this._liquidBehavior.offset : null;
+			return _liquidBehavior ? _liquidBehavior.offset : null;
 		}
 		
 		/**
@@ -520,7 +520,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get snapToPixels():Boolean
 		{
-			return this._liquidBehavior ? this._liquidBehavior.snapToPixels : false;
+			return _liquidBehavior ? _liquidBehavior.snapToPixels : false;
 		}
 
 		/**
@@ -529,7 +529,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Snap to pixels", type="Boolean", defaultValue="true")]
 		public function set snapToPixels(value:Boolean):void
 		{
-			if (this._liquidBehavior) this._liquidBehavior.snapToPixels = value;
+			if (_liquidBehavior) _liquidBehavior.snapToPixels = value;
 		}
 		
 		/**
@@ -537,7 +537,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get keepAspectRatio():Boolean
 		{
-			return this._liquidBehavior ? this._liquidBehavior.keepAspectRatio : false;
+			return _liquidBehavior ? _liquidBehavior.keepAspectRatio : false;
 		}
 		
 		/**
@@ -546,7 +546,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Keep aspect ratio", type="Boolean", defaultValue="false")]
 		public function set keepAspectRatio(value:Boolean):void
 		{
-			this.liquidBehavior.keepAspectRatio = value;
+			liquidBehavior.keepAspectRatio = value;
 		}
 		
 		/**
@@ -554,7 +554,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get adjustRelated():Boolean
 		{
-			return this._liquidBehavior ? this._liquidBehavior.adjustRelated : true;
+			return _liquidBehavior ? _liquidBehavior.adjustRelated : true;
 		}
 		
 		/**
@@ -562,7 +562,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set adjustRelated(value:Boolean):void
 		{
-			this.liquidBehavior.adjustRelated = value;
+			liquidBehavior.adjustRelated = value;
 		}
 		
 		/**
@@ -578,7 +578,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get liquidEnabled():Boolean
 		{
-			return this._liquidBehavior ? this._liquidBehavior.enabled : false;
+			return _liquidBehavior ? _liquidBehavior.enabled : false;
 		}
 		
 		/**
@@ -587,7 +587,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Liquid enabled", type="Boolean", defaultValue="true")]
 		public function set liquidEnabled(value:Boolean):void
 		{
-			this.liquidBehavior.enabled = value;
+			liquidBehavior.enabled = value;
 		}
 		
 		/**
@@ -596,7 +596,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get liquidBehavior():LiquidBehavior
 		{
-			return this._liquidBehavior;
+			return _liquidBehavior;
 		}
 		
 		/**
@@ -605,7 +605,7 @@ package temple.ui.layout.liquid
 		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
 		override public function set debug(value:Boolean):void
 		{
-			super.debug = this.liquidBehavior.debug = value;
+			super.debug = liquidBehavior.debug = value;
 		}
 		
 		/**
@@ -613,9 +613,9 @@ package temple.ui.layout.liquid
 		 */
 		protected function initLiquid():void
 		{
-			if (this.isLiquid())
+			if (isLiquid())
 			{
-				this._liquidBehavior.init();
+				_liquidBehavior.init();
 			}
 		}
 		
@@ -624,7 +624,7 @@ package temple.ui.layout.liquid
 		 */
 		override public function destruct():void
 		{
-			this._liquidBehavior = null;
+			_liquidBehavior = null;
 			
 			super.destruct();
 		}

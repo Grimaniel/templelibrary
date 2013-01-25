@@ -62,7 +62,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function get operator():String
 		{
-			return this._operator;
+			return _operator;
 		}
 		
 		/**
@@ -71,8 +71,8 @@ package temple.ui.form.validation.rules
 		public function set operator(value:String):void
 		{
 			if (!value) throwError(new TempleArgumentError(this, "value can not be null"));
-			this._operator = Enum.getValue(Comparor, value);
-			if (!this._operator) throwError(new TempleArgumentError(this, "Invalid value for operator: '" + value + "'"));
+			_operator = Enum.getValue(Comparor, value);
+			if (!_operator) throwError(new TempleArgumentError(this, "Invalid value for operator: '" + value + "'"));
 		}
 
 		/**
@@ -80,7 +80,7 @@ package temple.ui.form.validation.rules
 		 */
 		override public function destruct():void 
 		{
-			this._operator = null;
+			_operator = null;
 			super.destruct();
 		}
 	}

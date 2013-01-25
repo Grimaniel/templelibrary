@@ -69,7 +69,7 @@ package temple.ui.form.services
 		{
 			super(type);
 			
-			this._result = result;
+			_result = result;
 			
 			if (type == FormServiceEvent.RESULT && result == null)
 			{
@@ -82,12 +82,12 @@ package temple.ui.form.services
 		 */
 		public function get result():IFormResult
 		{
-			return this._result;
+			return _result;
 		}
 
 		override public function clone():Event
 		{
-			return new FormServiceEvent(this.type, this._result);
+			return new FormServiceEvent(type, _result);
 		}
 
 	}

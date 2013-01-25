@@ -70,8 +70,8 @@ package temple.ui.label
 		 */
 		public function Label(textField:TextField = null)
 		{
-			this.toStringProps.push('label');
-			this.init(textField);
+			toStringProps.push('label');
+			init(textField);
 		}
 		
 		/**
@@ -79,13 +79,13 @@ package temple.ui.label
 		 */
 		protected function init(textField:TextField = null):void
 		{
-			this._label = textField ? new TextFieldLabelBehavior(textField) : LabelUtils.findLabel(this);
+			_label = textField ? new TextFieldLabelBehavior(textField) : LabelUtils.findLabel(this);
 			
-			if (this._label is IEventDispatcher)
+			if (_label is IEventDispatcher)
 			{
-				(this._label as IEventDispatcher).addEventListener(Event.CHANGE, this.dispatchEvent);
+				(_label as IEventDispatcher).addEventListener(Event.CHANGE, dispatchEvent);
 			}
-			if (this._label == null) throwError(new TempleError(this, "No TextField or Label found"));
+			if (_label == null) throwError(new TempleError(this, "No TextField or Label found"));
 		}
 
 		/**
@@ -93,7 +93,7 @@ package temple.ui.label
 		 */
 		public function get label():String
 		{
-			return this._label ? this._label.label : null;
+			return _label ? _label.label : null;
 		}
 		
 		/**
@@ -102,7 +102,7 @@ package temple.ui.label
 		[Inspectable(name="Label", type="String")]
 		public function set label(value:String):void
 		{
-			if (this._label) this._label.label = value;
+			if (_label) _label.label = value;
 		}
 		
 		/**
@@ -110,7 +110,7 @@ package temple.ui.label
 		 */
 		public function get autoSize():String
 		{
-			return this._label is IAutoSizableLabel ? (this._label as IAutoSizableLabel).autoSize : null;
+			return _label is IAutoSizableLabel ? (_label as IAutoSizableLabel).autoSize : null;
 		}
 		
 		/**
@@ -119,9 +119,9 @@ package temple.ui.label
 		[Inspectable(name="AutoSize", type="String", defaultValue="none", enumeration="none,left,right,center")]
 		public function set autoSize(value:String):void
 		{
-			if (this._label is IAutoSizableLabel)
+			if (_label is IAutoSizableLabel)
 			{
-				(this._label as IAutoSizableLabel).autoSize = value;
+				(_label as IAutoSizableLabel).autoSize = value;
 			}
 		}
 		
@@ -130,7 +130,7 @@ package temple.ui.label
 		 */
 		public function get html():Boolean
 		{
-			return this._label is IHTMLLabel ? (this._label as IHTMLLabel).html : false;
+			return _label is IHTMLLabel ? (_label as IHTMLLabel).html : false;
 		}
 		
 		/**
@@ -139,9 +139,9 @@ package temple.ui.label
 		[Inspectable(name="HTML", type="Boolean")]
 		public function set html(value:Boolean):void
 		{
-			if (this._label is IHTMLLabel)
+			if (_label is IHTMLLabel)
 			{
-				(this._label as IHTMLLabel).html = value;
+				(_label as IHTMLLabel).html = value;
 			}
 			else
 			{
@@ -154,9 +154,9 @@ package temple.ui.label
 		 */
 		public function get textField():TextField
 		{
-			if (this._label is ITextFieldLabel)
+			if (_label is ITextFieldLabel)
 			{
-				return (this._label as ITextFieldLabel).textField;
+				return (_label as ITextFieldLabel).textField;
 			}
 			return null;
 		}
@@ -166,14 +166,14 @@ package temple.ui.label
 		 */
 		override public function destruct():void
 		{
-			if (this._label)
+			if (_label)
 			{
-				if (this._label is IEventDispatcher)
+				if (_label is IEventDispatcher)
 				{
-					(this._label as IEventDispatcher).removeEventListener(Event.CHANGE, this.dispatchEvent);
+					(_label as IEventDispatcher).removeEventListener(Event.CHANGE, dispatchEvent);
 				}
-				this._label.destruct();
-				this._label = null;
+				_label.destruct();
+				_label = null;
 			}
 			super.destruct();
 		}

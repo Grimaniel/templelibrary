@@ -75,11 +75,11 @@ package temple.ui.style
 		 */
 		public function StyleManager()
 		{
-			this._styleSheets = new HashMap("StyleManager StyleSheets");
-			this._styleSheets[StyleManager.DEFAULT_STYLESHEET] = new StyleSheet();
+			_styleSheets = new HashMap("StyleManager StyleSheets");
+			_styleSheets[StyleManager.DEFAULT_STYLESHEET] = new StyleSheet();
 			
-			this._textFields = new Dictionary(true);
-			this._objects = new Dictionary(true);
+			_textFields = new Dictionary(true);
+			_objects = new Dictionary(true);
 		}
 		
 		/**
@@ -87,13 +87,13 @@ package temple.ui.style
 		 */
 		public function getStyleSheet(name:String = StyleManager.DEFAULT_STYLESHEET, createIfNull:Boolean = true):StyleSheet
 		{
-			if (!this._styleSheets.hasOwnProperty(name))
+			if (!_styleSheets.hasOwnProperty(name))
 			{
 				if (!createIfNull) return null;
 				
-				this._styleSheets[name] = new StyleSheet();
+				_styleSheets[name] = new StyleSheet();
 			}
-			return this._styleSheets[name] as StyleSheet;
+			return _styleSheets[name] as StyleSheet;
 		}
 		
 		/**
@@ -101,7 +101,7 @@ package temple.ui.style
 		 */
 		public function getStyleNames(stylesheetName:String = StyleManager.DEFAULT_STYLESHEET):Array
 		{
-			return this.getStyleSheet(stylesheetName).styleNames;
+			return getStyleSheet(stylesheetName).styleNames;
 		}
 		
 		/**
@@ -114,13 +114,13 @@ package temple.ui.style
 		{
 			if (stylesheetName == null || stylesheetName == '') stylesheetName = StyleManager.DEFAULT_STYLESHEET;
 			
-			this._hasStyles = true;
+			_hasStyles = true;
 			
-			this.getStyleSheet(stylesheetName).parseCSS(cssText);
+			getStyleSheet(stylesheetName).parseCSS(cssText);
 			
-			if (this._debug) this.logDebug("Stylesheet '" + stylesheetName + "' has styleNames: " + this.getStyleSheet(stylesheetName).styleNames);
+			if (_debug) logDebug("Stylesheet '" + stylesheetName + "' has styleNames: " + getStyleSheet(stylesheetName).styleNames);
 			
-			if (apply) this.applyStyles();
+			if (apply) applyStyles();
 		}
 		
 		/**
@@ -130,15 +130,15 @@ package temple.ui.style
 		{
 			var styleInfo:StyleInfo;
 			
-			for (var textField:Object in this._textFields)
+			for (var textField:Object in _textFields)
 			{
-				styleInfo = this._textFields[textField] as StyleInfo;
-				this.updateTextField(textField as TextField, styleInfo.cssClass, styleInfo.stylesheetName, styleInfo.setStyleSheet);
+				styleInfo = _textFields[textField] as StyleInfo;
+				updateTextField(textField as TextField, styleInfo.cssClass, styleInfo.stylesheetName, styleInfo.setStyleSheet);
 			}
-			for (var object:Object in this._objects)
+			for (var object:Object in _objects)
 			{
-				styleInfo = this._objects[object] as StyleInfo;
-				this.updateObject(object, styleInfo.cssClass, styleInfo.stylesheetName);
+				styleInfo = _objects[object] as StyleInfo;
+				updateObject(object, styleInfo.cssClass, styleInfo.stylesheetName);
 			}
 		}
 		
@@ -158,13 +158,13 @@ package temple.ui.style
 			if (textField == null) throwError(new TempleArgumentError(this, "TextField can not be null"));
 			if (stylesheetName == null || stylesheetName == '') stylesheetName = StyleManager.DEFAULT_STYLESHEET;
 			
-			if (this._debug) this.logDebug("addTextField: '" + textField.name + "' " + (cssClass ? "cssClass: '" + cssClass + "'" : "") + (stylesheetName != StyleManager.DEFAULT_STYLESHEET ? ", stylesheet: " + stylesheetName : ""));
+			if (_debug) logDebug("addTextField: '" + textField.name + "' " + (cssClass ? "cssClass: '" + cssClass + "'" : "") + (stylesheetName != StyleManager.DEFAULT_STYLESHEET ? ", stylesheet: " + stylesheetName : ""));
 			
-			var styleInfo:StyleInfo = (this._textFields[textField] as StyleInfo);
+			var styleInfo:StyleInfo = (_textFields[textField] as StyleInfo);
 			
 			if (!styleInfo)
 			{
-				this._textFields[textField] = new StyleInfo(stylesheetName, cssClass, setStyleSheet);
+				_textFields[textField] = new StyleInfo(stylesheetName, cssClass, setStyleSheet);
 			}
 			else if (styleInfo.equals(stylesheetName, cssClass, setStyleSheet))
 			{
@@ -175,7 +175,7 @@ package temple.ui.style
 			{
 				styleInfo.update(stylesheetName, cssClass);
 			}
-			this.updateTextField(textField, cssClass, stylesheetName, setStyleSheet);
+			updateTextField(textField, cssClass, stylesheetName, setStyleSheet);
 		}
 		
 		/**
@@ -189,18 +189,18 @@ package temple.ui.style
 			if (object == null) throwError(new TempleArgumentError(this, "Object can not be null"));
 			if (stylesheetName == null || stylesheetName == '') stylesheetName = StyleManager.DEFAULT_STYLESHEET;
 			
-			if (this._debug) this.logDebug("addObject: '" + object + "' " + (cssClass ? "cssClass: '" + cssClass + "'" : "") + (stylesheetName != StyleManager.DEFAULT_STYLESHEET ? ", stylesheet: " + stylesheetName : ""));
+			if (_debug) logDebug("addObject: '" + object + "' " + (cssClass ? "cssClass: '" + cssClass + "'" : "") + (stylesheetName != StyleManager.DEFAULT_STYLESHEET ? ", stylesheet: " + stylesheetName : ""));
 			
-			if (!this._objects[object])
+			if (!_objects[object])
 			{
-				this._objects[object] = new StyleInfo(stylesheetName, cssClass);
+				_objects[object] = new StyleInfo(stylesheetName, cssClass);
 			}
 			else
 			{
-				(this._objects[object] as StyleInfo).update(stylesheetName, cssClass);
+				(_objects[object] as StyleInfo).update(stylesheetName, cssClass);
 			}
 			
-			this.updateObject(object, cssClass, stylesheetName);
+			updateObject(object, cssClass, stylesheetName);
 		}
 		
 		/**
@@ -208,7 +208,7 @@ package temple.ui.style
 		 */
 		public function get defaultStyle():String
 		{
-			return this._defaultStyle;
+			return _defaultStyle;
 		}
 		
 		/**
@@ -216,7 +216,7 @@ package temple.ui.style
 		 */
 		public function set defaultStyle(value:String):void
 		{
-			this._defaultStyle = value;
+			_defaultStyle = value;
 		}
 		
 		/**
@@ -224,7 +224,7 @@ package temple.ui.style
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -232,23 +232,23 @@ package temple.ui.style
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		private function updateTextField(textField:TextField, cssClass:String, stylesheetName:String, setStyleSheet:Boolean):void
 		{
-			if (this._debug) this.logDebug("updateTextField: '" + textField.name + "' " + (cssClass ? "cssClass: '" + cssClass + "'" : "") + (stylesheetName != StyleManager.DEFAULT_STYLESHEET ? ", stylesheet: " + stylesheetName : ""));
+			if (_debug) logDebug("updateTextField: '" + textField.name + "' " + (cssClass ? "cssClass: '" + cssClass + "'" : "") + (stylesheetName != StyleManager.DEFAULT_STYLESHEET ? ", stylesheet: " + stylesheetName : ""));
 	
 			if (cssClass == null || cssClass == "")
 			{
-				cssClass = this._defaultStyle;
+				cssClass = _defaultStyle;
 			}
 			else if (cssClass.charAt(0) != ".")
 			{
 				cssClass = "." + cssClass;
 			}
 			
-			var styleSheet:StyleSheet = this.getStyleSheet(stylesheetName);
+			var styleSheet:StyleSheet = getStyleSheet(stylesheetName);
 			
 			var style:Object = styleSheet.getStyle(cssClass);
 			
@@ -259,9 +259,9 @@ package temple.ui.style
 				textField.defaultTextFormat = textFormat;
 				textField.setTextFormat(textFormat);
 			}
-			else if (this._hasStyles)
+			else if (_hasStyles)
 			{
-				this.logWarn("updateTextField: class '" + cssClass + "' not found in StyleSheet '" + stylesheetName + "', needed for " + ObjectUtils.convertToString(textField));
+				logWarn("updateTextField: class '" + cssClass + "' not found in StyleSheet '" + stylesheetName + "', needed for " + ObjectUtils.convertToString(textField));
 			}
 			// do not set stylesheet if textField is input, since you can't edit TextFields with a StyleSheet
 			if (textField.type != TextFieldType.INPUT && setStyleSheet)
@@ -274,25 +274,25 @@ package temple.ui.style
 		
 		private function updateObject(object:Object, cssClass:String, stylesheetName:String):void
 		{
-			if (this._debug) this.logDebug("updateObject: '" + object + "' " + (cssClass ? "cssClass: '" + cssClass + "'" : "") + (stylesheetName != StyleManager.DEFAULT_STYLESHEET ? ", stylesheet: " + stylesheetName : ""));
+			if (_debug) logDebug("updateObject: '" + object + "' " + (cssClass ? "cssClass: '" + cssClass + "'" : "") + (stylesheetName != StyleManager.DEFAULT_STYLESHEET ? ", stylesheet: " + stylesheetName : ""));
 			
 			if (cssClass == null || cssClass == "")
 			{
-				cssClass = this._defaultStyle;
+				cssClass = _defaultStyle;
 			}
 			else if (cssClass.charAt(0) != ".")
 			{
 				cssClass = "." + cssClass;
 			}
-			var style:Object = this.getStyleSheet(stylesheetName).getStyle(cssClass);
+			var style:Object = getStyleSheet(stylesheetName).getStyle(cssClass);
 			
 			if (ObjectUtils.hasValues(style))
 			{
-				PropertyApplier.apply(object, style, this._debug);
+				PropertyApplier.apply(object, style, _debug);
 			}
-			else if (this._hasStyles)
+			else if (_hasStyles)
 			{
-				this.logWarn("updateTextField: class '" + cssClass + "' not found in StyleSheet '" + stylesheetName + "', needed for " + ObjectUtils.convertToString(object));
+				logWarn("updateTextField: class '" + cssClass + "' not found in StyleSheet '" + stylesheetName + "', needed for " + ObjectUtils.convertToString(object));
 			}
 		}
 	}

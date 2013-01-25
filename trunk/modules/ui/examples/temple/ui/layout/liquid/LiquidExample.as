@@ -32,7 +32,7 @@ package
 			LiquidStage.getInstance(stage).minimalWidth = 200;
 			
 			// header
-			with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
+			with (addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
 			{
 				left = 4;
 				top = 4;
@@ -42,7 +42,7 @@ package
 			}
 
 			// left column
-			with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
+			with (addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
 			{
 				left = 4;
 				top = 108;
@@ -52,7 +52,7 @@ package
 			}
 
 			// footer
-			with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
+			with (addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
 			{
 				left = 108;
 				right = 4;
@@ -62,7 +62,7 @@ package
 			}
 			
 			// center
-			with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
+			with (addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
 			{
 				left = 108;
 				top = 108;
@@ -161,7 +161,7 @@ package
 			}
 			
 			// To check how Liquid performs we add a PerformanceStat
-			new LiquidBehavior(this.addChild(new PerformanceStat()), {right: 10, top: 10});
+			new LiquidBehavior(addChild(new PerformanceStat()), {right: 10, top: 10});
 		}
 	}
 }
@@ -171,15 +171,15 @@ class FullSizeBackground extends LiquidSprite
 {
 	public function FullSizeBackground() 
 	{
-		this.graphics.beginFill(0xffffff, .5);
-		this.graphics.drawRect(0, 0, 100, 100);
-		this.graphics.endFill();
+		graphics.beginFill(0xffffff, .5);
+		graphics.drawRect(0, 0, 100, 100);
+		graphics.endFill();
 		
 		this.left = 0;
 		this.top = 0;
 		this.bottom = 0;
 		this.right = 0;
 		
-		this.update();
+		update();
 	}
 }

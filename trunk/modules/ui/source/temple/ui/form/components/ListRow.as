@@ -56,8 +56,8 @@ package temple.ui.form.components
 
 		public function ListRow()
 		{
-			this.buttonBehavior.clickOnEnter = true;
-			this.buttonBehavior.clickOnSpacebar = true;
+			buttonBehavior.clickOnEnter = true;
+			buttonBehavior.clickOnSpacebar = true;
 		}
 
 		/**
@@ -65,7 +65,7 @@ package temple.ui.form.components
 		 */
 		public function get data():*
 		{
-			return this._data ? this._data : this.label;
+			return _data ? _data : label;
 		}
 
 		/**
@@ -73,7 +73,7 @@ package temple.ui.form.components
 		 */
 		public function set data(value:*):void
 		{
-			this._data = value;
+			_data = value;
 		}
 		
 		/**
@@ -81,7 +81,7 @@ package temple.ui.form.components
 		 */
 		public function get index():uint
 		{
-			return this._index;
+			return _index;
 		}
 		
 		/**
@@ -89,7 +89,7 @@ package temple.ui.form.components
 		 */
 		public function set index(value:uint):void
 		{
-			this._index = value;
+			_index = value;
 		}
 
 		/**
@@ -97,7 +97,7 @@ package temple.ui.form.components
 		 */
 		public function get value():*
 		{
-			return this.data;
+			return data;
 		}
 
 		/**
@@ -105,7 +105,7 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this._data = null;
+			_data = null;
 			super.destruct();
 		}
 	}

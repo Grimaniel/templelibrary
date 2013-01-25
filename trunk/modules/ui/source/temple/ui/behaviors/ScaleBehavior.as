@@ -71,19 +71,19 @@ package temple.ui.behaviors
 		{
 			super(target);
 			
-			this._scaleButton = scaleButton;
-			this._registrationPoint = registrationPoint ||  new Point(0, 0);
+			_scaleButton = scaleButton;
+			_registrationPoint = registrationPoint ||  new Point(0, 0);
 			
-			this._keepAspectRatio = keepAspectRatio;
-			this._scaleButton.addEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown, false, 0, true);
-			this._scaleHorizontal = scaleHorizontal;
-			this._scaleVertical = scaleVertical;
-			this._useScale = useScale;
+			_keepAspectRatio = keepAspectRatio;
+			_scaleButton.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown, false, 0, true);
+			_scaleHorizontal = scaleHorizontal;
+			_scaleVertical = scaleVertical;
+			_useScale = useScale;
 			
 			// dispath ScaleBehaviorEvent on target
-			this.addEventListener(ScaleBehaviorEvent.SCALE_START, target.dispatchEvent);
-			this.addEventListener(ScaleBehaviorEvent.SCALE_STOP, target.dispatchEvent);
-			this.addEventListener(ScaleBehaviorEvent.SCALING, target.dispatchEvent);
+			addEventListener(ScaleBehaviorEvent.SCALE_START, target.dispatchEvent);
+			addEventListener(ScaleBehaviorEvent.SCALE_STOP, target.dispatchEvent);
+			addEventListener(ScaleBehaviorEvent.SCALING, target.dispatchEvent);
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package temple.ui.behaviors
 		 */
 		public function get useScale():Boolean
 		{
-			return this._useScale;
+			return _useScale;
 		}
 
 		/**
@@ -99,7 +99,7 @@ package temple.ui.behaviors
 		 */
 		public function set useScale(value:Boolean):void
 		{
-			this._useScale = value;
+			_useScale = value;
 		}
 		
 		/**
@@ -107,7 +107,7 @@ package temple.ui.behaviors
 		 */
 		public function get scaleHorizontal():Boolean
 		{
-			return this._scaleHorizontal;
+			return _scaleHorizontal;
 		}
 		
 		/**
@@ -115,7 +115,7 @@ package temple.ui.behaviors
 		 */
 		public function set scaleHorizontal(value:Boolean):void
 		{
-			this._scaleHorizontal = value;
+			_scaleHorizontal = value;
 		}
 
 		/**
@@ -123,7 +123,7 @@ package temple.ui.behaviors
 		 */
 		public function get scaleVertical():Boolean
 		{
-			return this._scaleVertical;
+			return _scaleVertical;
 		}
 		
 		/**
@@ -131,33 +131,33 @@ package temple.ui.behaviors
 		 */
 		public function set scaleVertical(value:Boolean):void
 		{
-			this._scaleVertical = value;
+			_scaleVertical = value;
 		}
 		
 		private function handleMouseDown(event:MouseEvent):void 
 		{
-			this._startScaleMousePoint = new Point(this.displayObject.stage.mouseX, this.displayObject.stage.mouseY);
-			this._startScaleRegistrationPoint = this.displayObject.localToGlobal(this._registrationPoint);
-			this._startScaleObjectPoint = new Point(this.displayObject.x, this.displayObject.y);
+			_startScaleMousePoint = new Point(displayObject.stage.mouseX, displayObject.stage.mouseY);
+			_startScaleRegistrationPoint = displayObject.localToGlobal(_registrationPoint);
+			_startScaleObjectPoint = new Point(displayObject.x, displayObject.y);
 			
-			this.displayObject.stage.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove, false, 0, true);
-			this.displayObject.stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp, false, 0, true);
-			this.displayObject.stage.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown, false, 0, true);
-			this.displayObject.stage.addEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp, false, 0, true);
-			this._scaleButton.addEventListener(MouseEvent.MOUSE_OUT, this.handleMouseOut, false, 0, true);
+			displayObject.stage.addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove, false, 0, true);
+			displayObject.stage.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp, false, 0, true);
+			displayObject.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown, false, 0, true);
+			displayObject.stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyUp, false, 0, true);
+			_scaleButton.addEventListener(MouseEvent.MOUSE_OUT, handleMouseOut, false, 0, true);
 			
-			this._startScaleX = this.displayObject.scaleX;
-			this._startScaleY = this.displayObject.scaleY;
+			_startScaleX = displayObject.scaleX;
+			_startScaleY = displayObject.scaleY;
 			
 			event.stopPropagation();
 			
-			this.dispatchEvent(new ScaleBehaviorEvent(ScaleBehaviorEvent.SCALE_START, this));
+			dispatchEvent(new ScaleBehaviorEvent(ScaleBehaviorEvent.SCALE_START, this));
 		}
 
 		private function handleMouseMove(event:MouseEvent):void 
 		{
 			// When shiftkey is pressed, keep aspect ratio
-			this.scale(this._keepAspectRatio || event.shiftKey);
+			scale(_keepAspectRatio || event.shiftKey);
 		}
 
 		private function handleKeyDown(e:KeyboardEvent):void 
@@ -165,7 +165,7 @@ package temple.ui.behaviors
 			switch (e.keyCode)
 			{
 				case Keyboard.SHIFT:
-					this.scale(true);
+					scale(true);
 					break;
 			}
 		}
@@ -175,50 +175,50 @@ package temple.ui.behaviors
 			switch (event.keyCode)
 			{
 				case Keyboard.SHIFT:
-					scale(this._keepAspectRatio);
+					scale(_keepAspectRatio);
 					break;
 			}
 		}
 
 		private function scale(keepAspectRatio:Boolean):void 
 		{
-			if (this._useScale)
+			if (_useScale)
 			{
-				var scaleX:Number = (this._startScaleRegistrationPoint.x - this.displayObject.stage.mouseX) / (this._startScaleRegistrationPoint.x - this._startScaleMousePoint.x);
-				var scaleY:Number = (this._startScaleRegistrationPoint.y - this.displayObject.stage.mouseY) / (this._startScaleRegistrationPoint.y - this._startScaleMousePoint.y);
+				var scaleX:Number = (_startScaleRegistrationPoint.x - displayObject.stage.mouseX) / (_startScaleRegistrationPoint.x - _startScaleMousePoint.x);
+				var scaleY:Number = (_startScaleRegistrationPoint.y - displayObject.stage.mouseY) / (_startScaleRegistrationPoint.y - _startScaleMousePoint.y);
 				
-				scaleX *= this._startScaleX;
-				scaleY *= this._startScaleY;
+				scaleX *= _startScaleX;
+				scaleY *= _startScaleY;
 				
 				if (keepAspectRatio)
 				{
 					scaleX = scaleY = Math.min(scaleX, scaleY);
 				}
-				if (this._scaleHorizontal) this.displayObject.scaleX = scaleX;
-				if (this._scaleVertical) this.displayObject.scaleY = scaleY;
+				if (_scaleHorizontal) displayObject.scaleX = scaleX;
+				if (_scaleVertical) displayObject.scaleY = scaleY;
 			}
 			else
 			{
-				if (this._scaleHorizontal) this.displayObject.width += this.displayObject.stage.mouseX - this._startScaleMousePoint.x;
-				if (this._scaleVertical) this.displayObject.height += this.displayObject.stage.mouseY - this._startScaleMousePoint.y;
-				this._startScaleMousePoint = new Point(this.displayObject.stage.mouseX, this.displayObject.stage.mouseY);
+				if (_scaleHorizontal) displayObject.width += displayObject.stage.mouseX - _startScaleMousePoint.x;
+				if (_scaleVertical) displayObject.height += displayObject.stage.mouseY - _startScaleMousePoint.y;
+				_startScaleMousePoint = new Point(displayObject.stage.mouseX, displayObject.stage.mouseY);
 			}
 			
 			// move scale object to keep registration point in place
-			this.displayObject.x -= (this.displayObject.localToGlobal(this._registrationPoint).x - this._startScaleRegistrationPoint.x);
-			this.displayObject.y -= (this.displayObject.localToGlobal(this._registrationPoint).y - this._startScaleRegistrationPoint.y);
+			displayObject.x -= (displayObject.localToGlobal(_registrationPoint).x - _startScaleRegistrationPoint.x);
+			displayObject.y -= (displayObject.localToGlobal(_registrationPoint).y - _startScaleRegistrationPoint.y);
 			
-			this.dispatchEvent(new ScaleBehaviorEvent(ScaleBehaviorEvent.SCALING, this));
+			dispatchEvent(new ScaleBehaviorEvent(ScaleBehaviorEvent.SCALING, this));
 		}
 
 		private function handleMouseUp(event:MouseEvent):void 
 		{
-			this.displayObject.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
-			this.displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-			this.displayObject.stage.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-			this.displayObject.stage.removeEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp);
-			this._scaleButton.removeEventListener(MouseEvent.MOUSE_OUT, this.handleMouseOut);
-			this.dispatchEvent(new ScaleBehaviorEvent(ScaleBehaviorEvent.SCALE_STOP, this));
+			displayObject.stage.removeEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
+			displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+			displayObject.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+			displayObject.stage.removeEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
+			_scaleButton.removeEventListener(MouseEvent.MOUSE_OUT, handleMouseOut);
+			dispatchEvent(new ScaleBehaviorEvent(ScaleBehaviorEvent.SCALE_STOP, this));
 		}
 
 		/**
@@ -234,25 +234,25 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this._scaleButton)
+			if (_scaleButton)
 			{
-				this._scaleButton.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
-				this._scaleButton.removeEventListener(MouseEvent.MOUSE_OUT, this.handleMouseOut);
-				this._scaleButton = null;
+				_scaleButton.removeEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
+				_scaleButton.removeEventListener(MouseEvent.MOUSE_OUT, handleMouseOut);
+				_scaleButton = null;
 			}
 			
-			if (this.displayObject && this.displayObject.stage)
+			if (displayObject && displayObject.stage)
 			{
-				this.displayObject.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
-				this.displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-				this.displayObject.stage.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-				this.displayObject.stage.removeEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp);
+				displayObject.stage.removeEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
+				displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+				displayObject.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+				displayObject.stage.removeEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
 			}
 			
-			this._startScaleMousePoint = null;
-			this._startScaleRegistrationPoint = null;
-			this._registrationPoint = null;
-			this._startScaleObjectPoint = null;
+			_startScaleMousePoint = null;
+			_startScaleRegistrationPoint = null;
+			_registrationPoint = null;
+			_startScaleObjectPoint = null;
 			
 			super.destruct();
 		}

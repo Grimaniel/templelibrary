@@ -51,7 +51,7 @@ package temple.ui.form.components
 		
 		public function MultiElementComponent()
 		{
-			this._focusManager = new TabFocusManager(false);
+			_focusManager = new TabFocusManager(false);
 			super();
 		}
 		
@@ -60,7 +60,7 @@ package temple.ui.form.components
 		 */
 		public function get elements():Array
 		{
-			return this._focusManager.items;
+			return _focusManager.items;
 		}
 
 		/**
@@ -68,7 +68,7 @@ package temple.ui.form.components
 		 */
 		override public function set focus(value:Boolean):void 
 		{
-			this._focusManager.focus = super.focus = value;
+			_focusManager.focus = super.focus = value;
 		}
 		
 		/**
@@ -78,7 +78,7 @@ package temple.ui.form.components
 		{
 			super.showError(message);
 			
-			var elements:Array = this.elements;
+			var elements:Array = elements;
 			var leni:int = elements.length;
 			for (var i:int = 0; i < leni; i++)
 			{
@@ -95,7 +95,7 @@ package temple.ui.form.components
 		override public function hideError():void
 		{
 			super.hideError();
-			var elements:Array = this.elements;
+			var elements:Array = elements;
 			var leni:int = elements.length;
 			for (var i:int = 0; i < leni; i++)
 			{
@@ -111,7 +111,7 @@ package temple.ui.form.components
 		 */
 		public function reset():void
 		{
-			var elements:Array = this.elements;
+			var elements:Array = elements;
 			var leni:int = elements.length;
 			for (var i:int = 0; i < leni; i++)
 			{
@@ -127,17 +127,17 @@ package temple.ui.form.components
 		 */
 		public function get focusManager():TabFocusManager
 		{
-			return this._focusManager;
+			return _focusManager;
 		}
 
 		protected function addElement(element:IFocusable):void 
 		{
-			this._focusManager.add(element);
+			_focusManager.add(element);
 		}
 
 		protected function removeElement(element:IFocusable):void 
 		{
-			this._focusManager.remove(element);
+			_focusManager.remove(element);
 		}
 	}
 }

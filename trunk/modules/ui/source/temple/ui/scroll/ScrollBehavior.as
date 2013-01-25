@@ -125,15 +125,15 @@ package temple.ui.scroll
 			
 			ScrollBehavior._dictionary[target] = this;
 			
-			this._scrollPane = scrollPane || target as IScrollPane; 
-			this._snapToPixel = snapToPixel;
+			_scrollPane = scrollPane || target as IScrollPane; 
+			_snapToPixel = snapToPixel;
 			
 			target.scrollRect = scrollRect;
-			target.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
-			target.addEventListener(ScrollEvent.SCROLL, this.handleScrollEvent);
-			target.addEventListener(Event.RESIZE, this.handleTargetResize);
-			target.addEventListener(Event.ADDED, this.handleTargetResize);
-			target.addEventListener(Event.REMOVED, this.handleTargetResize);
+			target.addEventListener(MouseEvent.MOUSE_WHEEL, handleMouseWheel);
+			target.addEventListener(ScrollEvent.SCROLL, handleScrollEvent);
+			target.addEventListener(Event.RESIZE, handleTargetResize);
+			target.addEventListener(Event.ADDED, handleTargetResize);
+			target.addEventListener(Event.REMOVED, handleTargetResize);
 		}
 		
 		/**
@@ -141,7 +141,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollPane():IScrollPane
 		{
-			return this._scrollPane;
+			return _scrollPane;
 		}
 		
 		/**
@@ -149,7 +149,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollH():Number
 		{
-			return this.displayObject && this.displayObject.scrollRect ? this.displayObject.scrollRect.x + this._marginLeft : NaN;
+			return displayObject && displayObject.scrollRect ? displayObject.scrollRect.x + _marginLeft : NaN;
 		}
 
 		/**
@@ -157,20 +157,20 @@ package temple.ui.scroll
 		 */
 		public function set scrollH(value:Number):void
 		{
-			if (!this._enabled) return;
+			if (!_enabled) return;
 			if (isNaN(value)) throwError(new TempleArgumentError(this, "scrollH can not be set to NaN"));
 			
 			// limit value
-			if (this._limit) value = Math.max(Math.min(value, this.maxScrollH), 0);
+			if (_limit) value = Math.max(Math.min(value, maxScrollH), 0);
 			
 			// margin
-			value -= this._marginLeft;
+			value -= _marginLeft;
 			
-			var rect:Rectangle = this.displayObject.scrollRect;
-			rect.x = this._snapToPixel ? Math.round(value) : value;;
-			this.displayObject.scrollRect = rect;
+			var rect:Rectangle = displayObject.scrollRect;
+			rect.x = _snapToPixel ? Math.round(value) : value;;
+			displayObject.scrollRect = rect;
 			
-			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, value, NaN, this.maxScrollH, this.maxScrollV));
+			displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, value, NaN, maxScrollH, maxScrollV));
 		}
 		
 		/**
@@ -178,27 +178,27 @@ package temple.ui.scroll
 		 */
 		public function scrollHTo(value:Number):void
 		{
-			if (!this._enabled) return;
-			this._targetScrollH = value;
+			if (!_enabled) return;
+			_targetScrollH = value;
 			
-			if (this._snapToStep) this._targetScrollH = NumberUtils.roundToNearest(this._targetScrollH, this._stepSizeH);
+			if (_snapToStep) _targetScrollH = NumberUtils.roundToNearest(_targetScrollH, _stepSizeH);
 			
 			// limit value
-			if (this._limit) this._targetScrollH = Math.max(Math.min(this._targetScrollH, this.maxScrollH), 0);
+			if (_limit) _targetScrollH = Math.max(Math.min(_targetScrollH, maxScrollH), 0);
 			
-			if (this._scrollProxy)
+			if (_scrollProxy)
 			{
-				this._scrollProxy.setValue(this, "scrollH", this._targetScrollH);
+				_scrollProxy.setValue(this, "scrollH", _targetScrollH);
 			}
 			else if (ScrollBehavior._scrollProxy)
 			{
-				ScrollBehavior._scrollProxy.setValue(this, "scrollH", this._targetScrollH);
+				ScrollBehavior._scrollProxy.setValue(this, "scrollH", _targetScrollH);
 			}
 			else
 			{
-				this.scrollH = this._targetScrollH;
+				scrollH = _targetScrollH;
 			}
-			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, this._targetScrollH, NaN, this.maxScrollH, this.maxScrollV));
+			displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, _targetScrollH, NaN, maxScrollH, maxScrollV));
 		}
 		
 		/**
@@ -206,7 +206,7 @@ package temple.ui.scroll
 		 */
 		public function get targetScrollH():Number
 		{
-			return this._targetScrollH;
+			return _targetScrollH;
 		}
 
 		/**
@@ -214,7 +214,7 @@ package temple.ui.scroll
 		 */
 		public function get maxScrollH():Number
 		{
-			return this.contentWidth - this.width;
+			return contentWidth - width;
 		}
 
 		/**
@@ -222,7 +222,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollV():Number
 		{
-			return this.displayObject && this.displayObject.scrollRect ? this.displayObject.scrollRect.y + this._marginTop : NaN;
+			return displayObject && displayObject.scrollRect ? displayObject.scrollRect.y + _marginTop : NaN;
 		}
 
 		/**
@@ -230,20 +230,20 @@ package temple.ui.scroll
 		 */
 		public function set scrollV(value:Number):void
 		{
-			if (!this._enabled) return;
+			if (!_enabled) return;
 			if (isNaN(value)) throwError(new TempleArgumentError(this, "scrollV can not be set to NaN"));
 			
 			// limit value
-			if (this._limit) value = Math.max(Math.min(value, this.maxScrollV), 0);
+			if (_limit) value = Math.max(Math.min(value, maxScrollV), 0);
 			
 			// margin
-			value -= this._marginTop;
+			value -= _marginTop;
 			
-			var rect:Rectangle = this.displayObject.scrollRect;
-			rect.y = this._snapToPixel ? Math.round(value) : value;
-			this.displayObject.scrollRect = rect;
+			var rect:Rectangle = displayObject.scrollRect;
+			rect.y = _snapToPixel ? Math.round(value) : value;
+			displayObject.scrollRect = rect;
 			
-			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, value, this.maxScrollH, this.maxScrollV));
+			displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, value, maxScrollH, maxScrollV));
 		}
 		
 		/**
@@ -251,27 +251,27 @@ package temple.ui.scroll
 		 */
 		public function scrollVTo(value:Number):void
 		{
-			if (!this._enabled) return;
-			this._targetScrollV = value;
+			if (!_enabled) return;
+			_targetScrollV = value;
 			
-			if (this._snapToStep) this._targetScrollV = NumberUtils.roundToNearest(this._targetScrollV, this._stepSizeV);
+			if (_snapToStep) _targetScrollV = NumberUtils.roundToNearest(_targetScrollV, _stepSizeV);
 			
 			// limit value
-			if (this._limit) this._targetScrollV = Math.max(Math.min(this._targetScrollV, this.maxScrollV), 0);
+			if (_limit) _targetScrollV = Math.max(Math.min(_targetScrollV, maxScrollV), 0);
 			
-			if (this._scrollProxy)
+			if (_scrollProxy)
 			{
-				this._scrollProxy.setValue(this, "scrollV", this._targetScrollV);
+				_scrollProxy.setValue(this, "scrollV", _targetScrollV);
 			}
 			else if (ScrollBehavior._scrollProxy)
 			{
-				ScrollBehavior._scrollProxy.setValue(this, "scrollV", this._targetScrollV);
+				ScrollBehavior._scrollProxy.setValue(this, "scrollV", _targetScrollV);
 			}
 			else
 			{
-				this.scrollV = this._targetScrollV;
+				scrollV = _targetScrollV;
 			}
-			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, this._targetScrollV, this.maxScrollH, this.maxScrollV));
+			displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, _targetScrollV, maxScrollH, maxScrollV));
 		}
 		
 		/**
@@ -279,7 +279,7 @@ package temple.ui.scroll
 		 */
 		public function get targetScrollV():Number
 		{
-			return this._targetScrollV;
+			return _targetScrollV;
 		}
 		
 		/**
@@ -287,7 +287,7 @@ package temple.ui.scroll
 		 */
 		public function get maxScrollV():Number
 		{
-			return this.contentHeight - this.height;
+			return contentHeight - height;
 		}
 
 		/**
@@ -295,7 +295,7 @@ package temple.ui.scroll
 		 */
 		public function get width():Number
 		{
-			return this.displayObject.scrollRect ? this.displayObject.scrollRect.width : this.displayObject.width;
+			return displayObject.scrollRect ? displayObject.scrollRect.width : displayObject.width;
 		}
 
 		/**
@@ -303,11 +303,11 @@ package temple.ui.scroll
 		 */
 		public function set width(value:Number):void
 		{
-			var scroll:Number = this.scrollH;
-			var rect:Rectangle = this.displayObject.scrollRect;
+			var scroll:Number = scrollH;
+			var rect:Rectangle = displayObject.scrollRect;
 			rect.width = value;
-			this.displayObject.scrollRect = rect;
-			this.scrollH = scroll;
+			displayObject.scrollRect = rect;
+			scrollH = scroll;
 		}
 		
 		/**
@@ -315,11 +315,11 @@ package temple.ui.scroll
 		 */
 		public function get contentWidth():Number
 		{
-			if (this._scrollPane)
+			if (_scrollPane)
 			{
-				return this._scrollPane.contentWidth + this._marginLeft + this._marginRight;
+				return _scrollPane.contentWidth + _marginLeft + _marginRight;
 			}
-			return this.displayObject.transform.pixelBounds.width / this.displayObject.transform.concatenatedMatrix.a + this._marginLeft + this._marginRight;
+			return displayObject.transform.pixelBounds.width / displayObject.transform.concatenatedMatrix.a + _marginLeft + _marginRight;
 		}
 
 		/**
@@ -327,7 +327,7 @@ package temple.ui.scroll
 		 */
 		public function get height():Number
 		{
-			return this.displayObject.scrollRect ? this.displayObject.scrollRect.height : this.displayObject.height;
+			return displayObject.scrollRect ? displayObject.scrollRect.height : displayObject.height;
 		}
 		
 		/**
@@ -335,11 +335,11 @@ package temple.ui.scroll
 		 */
 		public function set height(value:Number):void
 		{
-			var scroll:Number = this.scrollV;
-			var rect:Rectangle = this.displayObject.scrollRect;
+			var scroll:Number = scrollV;
+			var rect:Rectangle = displayObject.scrollRect;
 			rect.height = value;
-			this.displayObject.scrollRect = rect;
-			this.scrollV = scroll;
+			displayObject.scrollRect = rect;
+			scrollV = scroll;
 		}
 		
 		/**
@@ -347,11 +347,11 @@ package temple.ui.scroll
 		 */
 		public function get contentHeight():Number
 		{
-			if (this._scrollPane && !isNaN(this._scrollPane.contentHeight))
+			if (_scrollPane && !isNaN(_scrollPane.contentHeight))
 			{
-				return this._scrollPane.contentHeight + this._marginTop + this._marginBottom;
+				return _scrollPane.contentHeight + _marginTop + _marginBottom;
 			}
-			return this.displayObject.transform.pixelBounds.height / this.displayObject.transform.concatenatedMatrix.d + this._marginTop + this._marginBottom;
+			return displayObject.transform.pixelBounds.height / displayObject.transform.concatenatedMatrix.d + _marginTop + _marginBottom;
 		}
 
 		/**
@@ -359,7 +359,7 @@ package temple.ui.scroll
 		 */
 		public function scrollUp():void
 		{
-			this.scrollVTo(this.scrollV - this._stepSizeV);
+			scrollVTo(scrollV - _stepSizeV);
 		}
 		
 		/**
@@ -367,7 +367,7 @@ package temple.ui.scroll
 		 */
 		public function scrollDown():void
 		{
-			this.scrollVTo(this.scrollV + this._stepSizeV);
+			scrollVTo(scrollV + _stepSizeV);
 		}
 		
 		/**
@@ -375,7 +375,7 @@ package temple.ui.scroll
 		 */
 		public function scrollLeft():void
 		{
-			this.scrollHTo(this.scrollH - this._stepSizeH);
+			scrollHTo(scrollH - _stepSizeH);
 		}
 		
 		/**
@@ -383,7 +383,7 @@ package temple.ui.scroll
 		 */
 		public function scrollRight():void
 		{
-			this.scrollHTo(this.scrollH + this._stepSizeH);
+			scrollHTo(scrollH + _stepSizeH);
 		}
 		
 		/**
@@ -391,7 +391,7 @@ package temple.ui.scroll
 		 */
 		public function get canScrollUp():Boolean
 		{
-			return (isNaN(this._targetScrollV) ? this.scrollV : this._targetScrollV) > 0;
+			return (isNaN(_targetScrollV) ? scrollV : _targetScrollV) > 0;
 		}
 
 		/**
@@ -399,7 +399,7 @@ package temple.ui.scroll
 		 */
 		public function get canScrollDown():Boolean
 		{
-			return (isNaN(this._targetScrollV) ? this.scrollV : this._targetScrollV) < this.maxScrollV;
+			return (isNaN(_targetScrollV) ? scrollV : _targetScrollV) < maxScrollV;
 		}
 
 		/**
@@ -407,7 +407,7 @@ package temple.ui.scroll
 		 */
 		public function get canScrollLeft():Boolean
 		{
-			return (isNaN(this._targetScrollH) ? this.scrollH : this._targetScrollH) > 0;
+			return (isNaN(_targetScrollH) ? scrollH : _targetScrollH) > 0;
 		}
 
 		/**
@@ -415,7 +415,7 @@ package temple.ui.scroll
 		 */
 		public function get canScrollRight():Boolean
 		{
-			return (isNaN(this._targetScrollH) ? this.scrollH : this._targetScrollH) < this.maxScrollH;
+			return (isNaN(_targetScrollH) ? scrollH : _targetScrollH) < maxScrollH;
 		}
 		
 		/**
@@ -423,7 +423,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollProxy():IPropertyProxy
 		{
-			return this._scrollProxy;
+			return _scrollProxy;
 		}
 		
 		/**
@@ -431,7 +431,7 @@ package temple.ui.scroll
 		 */
 		public function set scrollProxy(value:IPropertyProxy):void
 		{
-			this._scrollProxy = value;
+			_scrollProxy = value;
 		}
 
 		/**
@@ -439,7 +439,7 @@ package temple.ui.scroll
 		 */
 		public function get snapToPixel():Boolean
 		{
-			return this._snapToPixel;
+			return _snapToPixel;
 		}
 		
 		/**
@@ -447,7 +447,7 @@ package temple.ui.scroll
 		 */
 		public function set snapToPixel(value:Boolean):void
 		{
-			this._snapToPixel = value;
+			_snapToPixel = value;
 		}
 		
 		/**
@@ -455,7 +455,7 @@ package temple.ui.scroll
 		 */
 		public function get mouseWheelScrollSpeed():Number
 		{
-			return this._mouseWheelScrollSpeed;
+			return _mouseWheelScrollSpeed;
 		}
 		
 		/**
@@ -463,7 +463,7 @@ package temple.ui.scroll
 		 */
 		public function set mouseWheelScrollSpeed(value:Number):void
 		{
-			this._mouseWheelScrollSpeed = value;
+			_mouseWheelScrollSpeed = value;
 		}
 		
 		/**
@@ -472,7 +472,7 @@ package temple.ui.scroll
 		 */
 		public function get mouseWheelEnabled():Boolean
 		{
-			return this._mouseWheelEnabled;
+			return _mouseWheelEnabled;
 		}
 		
 		/**
@@ -480,7 +480,7 @@ package temple.ui.scroll
 		 */
 		public function set mouseWheelEnabled(value:Boolean):void
 		{
-			this._mouseWheelEnabled = value;
+			_mouseWheelEnabled = value;
 		}
 		
 		/**
@@ -488,7 +488,7 @@ package temple.ui.scroll
 		 */
 		public function get margin():Number
 		{
-			return this._marginTop == this._marginBottom && this._marginTop == this._marginLeft && this._marginTop == this._marginRight ? this._marginTop : NaN;
+			return _marginTop == _marginBottom && _marginTop == _marginLeft && _marginTop == _marginRight ? _marginTop : NaN;
 		}
 		
 		/**
@@ -496,7 +496,7 @@ package temple.ui.scroll
 		 */
 		public function set margin(value:Number):void
 		{
-			this.marginTop = this.marginBottom = this.marginLeft = this.marginRight = value;
+			marginTop = marginBottom = marginLeft = marginRight = value;
 		}
 
 		/**
@@ -504,7 +504,7 @@ package temple.ui.scroll
 		 */
 		public function get marginTop():Number
 		{
-			return this._marginTop;
+			return _marginTop;
 		}
 		
 		/**
@@ -513,10 +513,10 @@ package temple.ui.scroll
 		public function set marginTop(value:Number):void
 		{
 			if (isNaN(value)) value = 0;
-			var scrollV:Number = this.scrollV;
-			this._marginTop = value;
+			var scrollV:Number = scrollV;
+			_marginTop = value;
 			if (!isNaN(scrollV)) this.scrollV = scrollV;
-			this.displayObject.dispatchEvent(new Event(Event.RESIZE));
+			displayObject.dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**
@@ -524,7 +524,7 @@ package temple.ui.scroll
 		 */
 		public function get marginBottom():Number
 		{
-			return this._marginBottom;
+			return _marginBottom;
 		}
 		
 		/**
@@ -533,10 +533,10 @@ package temple.ui.scroll
 		public function set marginBottom(value:Number):void
 		{
 			if (isNaN(value)) value = 0;
-			var scrollV:Number = this.scrollV;
-			this._marginBottom = value;
+			var scrollV:Number = scrollV;
+			_marginBottom = value;
 			if (!isNaN(scrollV)) this.scrollV = scrollV;
-			this.displayObject.dispatchEvent(new Event(Event.RESIZE));
+			displayObject.dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**
@@ -544,7 +544,7 @@ package temple.ui.scroll
 		 */
 		public function get marginLeft():Number
 		{
-			return this._marginLeft;
+			return _marginLeft;
 		}
 		
 		/**
@@ -553,10 +553,10 @@ package temple.ui.scroll
 		public function set marginLeft(value:Number):void
 		{
 			if (isNaN(value)) value = 0;
-			var scrollH:Number = this.scrollH;
-			this._marginLeft = value;
+			var scrollH:Number = scrollH;
+			_marginLeft = value;
 			if (!isNaN(scrollH)) this.scrollH = scrollH;
-			this.displayObject.dispatchEvent(new Event(Event.RESIZE));
+			displayObject.dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**
@@ -564,7 +564,7 @@ package temple.ui.scroll
 		 */
 		public function get marginRight():Number
 		{
-			return this._marginRight;
+			return _marginRight;
 		}
 		
 		/**
@@ -573,10 +573,10 @@ package temple.ui.scroll
 		public function set marginRight(value:Number):void
 		{
 			if (isNaN(value)) value = 0;
-			var scrollH:Number = this.scrollH;
-			this._marginRight = value;
+			var scrollH:Number = scrollH;
+			_marginRight = value;
 			if (!isNaN(scrollH)) this.scrollH = scrollH;
-			this.displayObject.dispatchEvent(new Event(Event.RESIZE));
+			displayObject.dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**
@@ -584,7 +584,7 @@ package temple.ui.scroll
 		 */
 		public function get stepSizeH():Number
 		{
-			return this._stepSizeH;
+			return _stepSizeH;
 		}
 		
 		/**
@@ -592,7 +592,7 @@ package temple.ui.scroll
 		 */
 		public function set stepSizeH(value:Number):void
 		{
-			this._stepSizeH = value;
+			_stepSizeH = value;
 		}
 		
 		/**
@@ -600,7 +600,7 @@ package temple.ui.scroll
 		 */
 		public function get stepSizeV():Number
 		{
-			return this._stepSizeV;
+			return _stepSizeV;
 		}
 		
 		/**
@@ -608,7 +608,7 @@ package temple.ui.scroll
 		 */
 		public function set stepSizeV(value:Number):void
 		{
-			this._stepSizeV = value;
+			_stepSizeV = value;
 		}
 		
 		/**
@@ -616,7 +616,7 @@ package temple.ui.scroll
 		 */
 		public function get snapToStep():Boolean
 		{
-			return this._snapToStep;
+			return _snapToStep;
 		}
 		
 		/**
@@ -624,7 +624,7 @@ package temple.ui.scroll
 		 */
 		public function set snapToStep(value:Boolean):void
 		{
-			this._snapToStep = value;
+			_snapToStep = value;
 		}
 		
 		/**
@@ -633,7 +633,7 @@ package temple.ui.scroll
 		 */
 		public function get limit():Boolean
 		{
-			return this._limit;
+			return _limit;
 		}
 
 		/**
@@ -641,7 +641,7 @@ package temple.ui.scroll
 		 */
 		public function set limit(value:Boolean):void
 		{
-			this._limit = value;
+			_limit = value;
 		}
 		
 		/**
@@ -649,7 +649,7 @@ package temple.ui.scroll
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 
 		/**
@@ -657,7 +657,7 @@ package temple.ui.scroll
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 		}
 
 		/**
@@ -665,7 +665,7 @@ package temple.ui.scroll
 		 */
 		public function enable():void
 		{
-			this._enabled = true;
+			_enabled = true;
 		}
 
 		/**
@@ -673,26 +673,26 @@ package temple.ui.scroll
 		 */
 		public function disable():void
 		{
-			this._enabled = false;
+			_enabled = false;
 		}
 		
 		private function handleMouseWheel(event:MouseEvent):void
 		{
-			if (this._mouseWheelEnabled && this._enabled)
+			if (_mouseWheelEnabled && _enabled)
 			{
-				var scrollV:Number = this.scrollV - event.delta * (!isNaN(this._mouseWheelScrollSpeed) ? this._mouseWheelScrollSpeed : this._stepSizeV);
-				this.scrollVTo(scrollV);
+				var scrollV:Number = scrollV - event.delta * (!isNaN(_mouseWheelScrollSpeed) ? _mouseWheelScrollSpeed : _stepSizeV);
+				scrollVTo(scrollV);
 			}
 		}
 		
 		private function handleScrollEvent(event:ScrollEvent):void
 		{
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 		
 		private function handleTargetResize(event:Event):void
 		{
-			this.dispatchEvent(new Event(Event.RESIZE));
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 
 		/**
@@ -700,17 +700,17 @@ package temple.ui.scroll
 		 */
 		override public function destruct():void
 		{
-			delete ScrollBehavior._dictionary[this.target];
+			delete ScrollBehavior._dictionary[target];
 			
-			this._scrollProxy = null;
+			_scrollProxy = null;
 			
-			if (this.displayObject)
+			if (displayObject)
 			{
-				this.displayObject.removeEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
-				this.displayObject.removeEventListener(ScrollEvent.SCROLL, this.handleScrollEvent);
-				this.displayObject.removeEventListener(Event.RESIZE, this.handleTargetResize);
+				displayObject.removeEventListener(MouseEvent.MOUSE_WHEEL, handleMouseWheel);
+				displayObject.removeEventListener(ScrollEvent.SCROLL, handleScrollEvent);
+				displayObject.removeEventListener(Event.RESIZE, handleTargetResize);
 			}
-			this._scrollPane = null;
+			_scrollPane = null;
 			
 			super.destruct();
 		}

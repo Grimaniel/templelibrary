@@ -59,9 +59,9 @@ package temple.ui.pagination
 		
 		public function ArrayPaginator(array:Array = null, resultsPerPage:uint = 10)
 		{
-			this._array = array;
-			this._resultsPerPage = resultsPerPage;
-			this.toStringProps.push("currentPage", "resultsPerPage", "totalPages");
+			_array = array;
+			_resultsPerPage = resultsPerPage;
+			toStringProps.push("currentPage", "resultsPerPage", "totalPages");
 		}
 		
 		/**
@@ -69,7 +69,7 @@ package temple.ui.pagination
 		 */
 		public function get array():Array
 		{
-			return this._array;
+			return _array;
 		}
 
 		/**
@@ -77,8 +77,8 @@ package temple.ui.pagination
 		 */
 		public function set array(value:Array):void
 		{
-			this._array = value;
-			this.dispatchEvent(new Event(Event.CHANGE));
+			_array = value;
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -86,7 +86,7 @@ package temple.ui.pagination
 		 */
 		public function get totalResults():uint
 		{
-			return this._array ? this._array.length : 0;
+			return _array ? _array.length : 0;
 		}
 
 		/**
@@ -94,7 +94,7 @@ package temple.ui.pagination
 		 */
 		public function get totalPages():int
 		{
-			return Math.ceil(this.totalResults / this._resultsPerPage);
+			return Math.ceil(totalResults / _resultsPerPage);
 		}
 
 		/**
@@ -102,7 +102,7 @@ package temple.ui.pagination
 		 */
 		public function get resultsPerPage():uint
 		{
-			return this._resultsPerPage;
+			return _resultsPerPage;
 		}
 		
 		/**
@@ -110,9 +110,9 @@ package temple.ui.pagination
 		 */
 		public function set resultsPerPage(value:uint):void
 		{
-			this._resultsPerPage = value;
-			if (this.debug) this.logDebug("resultsPerPage: " + value);
-			this.dispatchEvent(new Event(Event.CHANGE));
+			_resultsPerPage = value;
+			if (debug) logDebug("resultsPerPage: " + value);
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -120,7 +120,7 @@ package temple.ui.pagination
 		 */
 		public function get currentPage():uint
 		{
-			return this._currentPage;
+			return _currentPage;
 		}
 
 		/**
@@ -128,9 +128,9 @@ package temple.ui.pagination
 		 */
 		public function set currentPage(value:uint):void
 		{
-			this._currentPage = value;
-			if (this.debug) this.logDebug("currentPage: " + this._currentPage);
-			this.dispatchEvent(new Event(Event.CHANGE));
+			_currentPage = value;
+			if (debug) logDebug("currentPage: " + _currentPage);
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -138,7 +138,7 @@ package temple.ui.pagination
 		 */
 		public function get hasNextPage():Boolean
 		{
-			return this._currentPage < this.totalPages - 1;
+			return _currentPage < totalPages - 1;
 		}
 
 		/**
@@ -146,7 +146,7 @@ package temple.ui.pagination
 		 */
 		public function get hasPreviousPage():Boolean
 		{
-			return this._currentPage > 0;
+			return _currentPage > 0;
 		}
 
 		/**
@@ -154,8 +154,8 @@ package temple.ui.pagination
 		 */
 		public function nextPage():void
 		{
-			if (this.hasNextPage) this._currentPage++;
-			this.dispatchEvent(new Event(Event.CHANGE));
+			if (hasNextPage) _currentPage++;
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -163,8 +163,8 @@ package temple.ui.pagination
 		 */
 		public function previousPage():void
 		{
-			if (this.hasPreviousPage) this._currentPage--;
-			this.dispatchEvent(new Event(Event.CHANGE));
+			if (hasPreviousPage) _currentPage--;
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -172,9 +172,9 @@ package temple.ui.pagination
 		 */
 		public function firstPage():void
 		{
-			this._currentPage = 0;
-			if (this.debug) this.logDebug("firstPage");
-			this.dispatchEvent(new Event(Event.CHANGE));
+			_currentPage = 0;
+			if (debug) logDebug("firstPage");
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -182,9 +182,9 @@ package temple.ui.pagination
 		 */
 		public function lastPage():void
 		{
-			this._currentPage = this.totalPages - 1;
-			if (this.debug) this.logDebug("lastPage");
-			this.dispatchEvent(new Event(Event.CHANGE));
+			_currentPage = totalPages - 1;
+			if (debug) logDebug("lastPage");
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -192,9 +192,9 @@ package temple.ui.pagination
 		 */
 		public function gotoPage(page:uint):void
 		{
-			this._currentPage = page;
-			if (this.debug) this.logDebug("gotoPage: " + page);
-			this.dispatchEvent(new Event(Event.CHANGE));
+			_currentPage = page;
+			if (debug) logDebug("gotoPage: " + page);
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -210,7 +210,7 @@ package temple.ui.pagination
 		 */
 		public function get data():Array
 		{
-			return this._array ? this._array.slice(this._currentPage * this._resultsPerPage, (this._currentPage + 1) * this._resultsPerPage) : null;
+			return _array ? _array.slice(_currentPage * _resultsPerPage, (_currentPage + 1) * _resultsPerPage) : null;
 		}
 
 		/**
@@ -218,7 +218,7 @@ package temple.ui.pagination
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -226,7 +226,7 @@ package temple.ui.pagination
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		/**
@@ -234,7 +234,7 @@ package temple.ui.pagination
 		 */
 		override public function destruct():void
 		{
-			this._array = null;
+			_array = null;
 			super.destruct();
 		}
 	}

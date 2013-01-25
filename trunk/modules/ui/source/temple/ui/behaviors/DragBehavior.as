@@ -127,15 +127,15 @@ package temple.ui.behaviors
 
 		construct function dragBehavior(target:InteractiveObject, bounds:Rectangle, dragButton:InteractiveObject, dragHorizontal:Boolean, dragVertical:Boolean, useCursorKeys:Boolean):void
 		{
-			this._dragButton = dragButton || target;
-			this.enabled = true;
-			this._dragHorizontal = dragHorizontal;
-			this._dragVertical = dragVertical;
+			_dragButton = dragButton || target;
+			enabled = true;
+			_dragHorizontal = dragHorizontal;
+			_dragVertical = dragVertical;
 			
 			// dispath DragBehaviorEvent on target
-			this.addEventListener(DragBehaviorEvent.DRAG_START, target.dispatchEvent);
-			this.addEventListener(DragBehaviorEvent.DRAG_STOP, target.dispatchEvent);
-			this.addEventListener(DragBehaviorEvent.DRAGGING, target.dispatchEvent);
+			addEventListener(DragBehaviorEvent.DRAG_START, target.dispatchEvent);
+			addEventListener(DragBehaviorEvent.DRAG_STOP, target.dispatchEvent);
+			addEventListener(DragBehaviorEvent.DRAGGING, target.dispatchEvent);
 			
 			this.useCursorKeys = useCursorKeys;
 			
@@ -147,7 +147,7 @@ package temple.ui.behaviors
 		 */
 		public function get dragButton():InteractiveObject
 		{
-			return this._dragButton;
+			return _dragButton;
 		}
 		
 		/**
@@ -156,17 +156,17 @@ package temple.ui.behaviors
 		public function startDrag():void
 		{
 			// Can't drag objects with no parent
-			if (!this.displayObject.parent) return;
+			if (!displayObject.parent) return;
 			
-			this._isDragging = true;
+			_isDragging = true;
 			
-			this._startDragOffset = new Point(this.displayObject.x - this.displayObject.parent.mouseX, this.displayObject.y - this.displayObject.parent.mouseY);
+			_startDragOffset = new Point(displayObject.x - displayObject.parent.mouseX, displayObject.y - displayObject.parent.mouseY);
 			
-			this.displayObject.stage.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove, false, 0, true);
-			this.displayObject.stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp, false, 0, true);
-			this.displayObject.stage.addEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave, false, 0, true);
+			displayObject.stage.addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove, false, 0, true);
+			displayObject.stage.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp, false, 0, true);
+			displayObject.stage.addEventListener(Event.MOUSE_LEAVE, handleMouseLeave, false, 0, true);
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this, true));
+			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this, true));
 		}
 		
 		/**
@@ -174,13 +174,13 @@ package temple.ui.behaviors
 		 */
 		public function stopDrag():void
 		{
-			this._isDragging = false;
+			_isDragging = false;
 			
-			this.displayObject.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
-			this.displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-			this.displayObject.stage.removeEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave);
+			displayObject.stage.removeEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
+			displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+			displayObject.stage.removeEventListener(Event.MOUSE_LEAVE, handleMouseLeave);
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this, true));
+			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this, true));
 		}
 
 		/**
@@ -188,7 +188,7 @@ package temple.ui.behaviors
 		 */
 		public function get isDragging():Boolean
 		{
-			return this._isDragging;
+			return _isDragging;
 		}
 		
 		/**
@@ -196,7 +196,7 @@ package temple.ui.behaviors
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 		
 		/**
@@ -204,16 +204,16 @@ package temple.ui.behaviors
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 			if (value)
 			{
-				if (this._dragButton) this._dragButton.addEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
+				if (_dragButton) _dragButton.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
 			}
 			else
 			{
-				if (this.isDragging) this.stopDrag();
+				if (isDragging) stopDrag();
 				
-				if (this._dragButton) this._dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
+				if (_dragButton) _dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
 			}
 		}
 		
@@ -222,7 +222,7 @@ package temple.ui.behaviors
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -230,7 +230,7 @@ package temple.ui.behaviors
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 
 		/**
@@ -238,7 +238,7 @@ package temple.ui.behaviors
 		 */
 		public function get dragHorizontal():Boolean
 		{
-			return this._dragHorizontal;
+			return _dragHorizontal;
 		}
 		
 		/**
@@ -246,7 +246,7 @@ package temple.ui.behaviors
 		 */
 		public function set dragHorizontal(value:Boolean):void
 		{
-			this._dragHorizontal = value;
+			_dragHorizontal = value;
 		}
 
 		/**
@@ -254,7 +254,7 @@ package temple.ui.behaviors
 		 */
 		public function get dragVertical():Boolean
 		{
-			return this._dragVertical;
+			return _dragVertical;
 		}
 		
 		/**
@@ -262,7 +262,7 @@ package temple.ui.behaviors
 		 */
 		public function set dragVertical(value:Boolean):void
 		{
-			this._dragVertical = value;
+			_dragVertical = value;
 		}
 		
 		/**
@@ -270,7 +270,7 @@ package temple.ui.behaviors
 		 */
 		public function get positionProxy():IPropertyProxy
 		{
-			return this._positionProxy;
+			return _positionProxy;
 		}
 		
 		/**
@@ -278,7 +278,7 @@ package temple.ui.behaviors
 		 */
 		public function set positionProxy(value:IPropertyProxy):void
 		{
-			this._positionProxy = value;
+			_positionProxy = value;
 		}
 		
 		/**
@@ -286,32 +286,32 @@ package temple.ui.behaviors
 		 */
 		public function update():void
 		{
-			if (this._dragHorizontal)
+			if (_dragHorizontal)
 			{
-				var newX:Number = this._startDragOffset.x + this.displayObject.parent.mouseX;;
-				if (this._positionProxy)
+				var newX:Number = _startDragOffset.x + displayObject.parent.mouseX;;
+				if (_positionProxy)
 				{
-					this._positionProxy.setValue(this.displayObject, "x", newX);
+					_positionProxy.setValue(displayObject, "x", newX);
 				}
 				else
 				{
-					this.displayObject.x = newX;
+					displayObject.x = newX;
 				}
 				
 			}
-			if (this.dragVertical)
+			if (dragVertical)
 			{
-				var newY:Number = this._startDragOffset.y + this.displayObject.parent.mouseY;
-				if (this._positionProxy)
+				var newY:Number = _startDragOffset.y + displayObject.parent.mouseY;
+				if (_positionProxy)
 				{
-					this._positionProxy.setValue(this.displayObject, "y", newY);
+					_positionProxy.setValue(displayObject, "y", newY);
 				}
 				else
 				{
-					this.displayObject.y = newY;
+					displayObject.y = newY;
 				}
 			}
-			this.keepInBounds();
+			keepInBounds();
 		}
 		
 		/**
@@ -319,7 +319,7 @@ package temple.ui.behaviors
 		 */
 		public function get useCursorKeys():Boolean 
 		{
-			return this._useCursorKeys; 
+			return _useCursorKeys; 
 		}
 		
 		/**
@@ -327,15 +327,15 @@ package temple.ui.behaviors
 		 */
 		public function set useCursorKeys(value:Boolean):void 
 		{ 
-			this._useCursorKeys = value;
+			_useCursorKeys = value;
 			
-			if (this._useCursorKeys)
+			if (_useCursorKeys)
 			{
-				this._dragButton.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+				_dragButton.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			}
 			else
 			{
-				this._dragButton.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+				_dragButton.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			}
 		}
 		
@@ -344,7 +344,7 @@ package temple.ui.behaviors
 		 */
 		public function get cursorStepSize():Number
 		{
-			return this._cursorStepSize;
+			return _cursorStepSize;
 		}
 
 		/**
@@ -352,7 +352,7 @@ package temple.ui.behaviors
 		 */
 		public function set cursorStepSize(value:Number):void
 		{
-			this._cursorStepSize = value;
+			_cursorStepSize = value;
 		}
 
 		/**
@@ -360,7 +360,7 @@ package temple.ui.behaviors
 		 */
 		public function get cursorBigStepSize():Number
 		{
-			return this._cursorBigStepSize;
+			return _cursorBigStepSize;
 		}
 
 		/**
@@ -368,88 +368,88 @@ package temple.ui.behaviors
 		 */
 		public function set cursorBigStepSize(value:Number):void
 		{
-			this._cursorBigStepSize = value;
+			_cursorBigStepSize = value;
 		}
 
 		private function handleKeyDown(event:KeyboardEvent):void
 		{
-			var step:Number = event.shiftKey ? this._cursorBigStepSize : this._cursorStepSize;
+			var step:Number = event.shiftKey ? _cursorBigStepSize : _cursorStepSize;
 			
 			switch (event.keyCode)
 			{
 				case KeyCode.LEFT:
 				{
-					if (this._dragHorizontal)
+					if (_dragHorizontal)
 					{
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
-						if (this._positionProxy)
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+						if (_positionProxy)
 						{
-							this._positionProxy.setValue(this.displayObject, "x", this.displayObject.x - step);
+							_positionProxy.setValue(displayObject, "x", displayObject.x - step);
 						}
 						else
 						{
-							this.displayObject.x -= step;
+							displayObject.x -= step;
 						}
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
-						this.keepInBounds();
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+						keepInBounds();
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
 					}
 					break;
 				}
 				case KeyCode.RIGHT:
 				{
-					if (this._dragHorizontal)
+					if (_dragHorizontal)
 					{
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
-						if (this._positionProxy)
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+						if (_positionProxy)
 						{
-							this._positionProxy.setValue(this.displayObject, "x", this.displayObject.x + step);
+							_positionProxy.setValue(displayObject, "x", displayObject.x + step);
 						}
 						else
 						{
-							this.displayObject.x += step;
+							displayObject.x += step;
 						}
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
-						this.keepInBounds();
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+						keepInBounds();
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
 					}
 					break;
 				}
 				case KeyCode.UP:
 				{
-					if (this._dragVertical)
+					if (_dragVertical)
 					{
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
-						if (this._positionProxy)
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+						if (_positionProxy)
 						{
-							this._positionProxy.setValue(this.displayObject, "y", this.displayObject.x - step);
+							_positionProxy.setValue(displayObject, "y", displayObject.x - step);
 						}
 						else
 						{
-							this.displayObject.y -= step;
+							displayObject.y -= step;
 						}
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
-						this.keepInBounds();
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+						keepInBounds();
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
 					}
 					break;
 				}
 				case KeyCode.DOWN:
 				{
-					if (this._dragVertical)
+					if (_dragVertical)
 					{
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
-						if (this._positionProxy)
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
+						if (_positionProxy)
 						{
-							this._positionProxy.setValue(this.displayObject, "y", this.displayObject.x + step);
+							_positionProxy.setValue(displayObject, "y", displayObject.x + step);
 						}
 						else
 						{
-							this.displayObject.y += step;
+							displayObject.y += step;
 						}
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
-						this.keepInBounds();
-						this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+						keepInBounds();
+						dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
 					}
 					break;
 				}
@@ -461,7 +461,7 @@ package temple.ui.behaviors
 		 */
 		protected function handleMouseDown(event:MouseEvent):void 
 		{
-			this.startDrag();
+			startDrag();
 		}
 
 		/**
@@ -469,9 +469,9 @@ package temple.ui.behaviors
 		 */
 		protected function handleMouseMove(event:MouseEvent):void 
 		{
-			this.update();
+			update();
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
 		}
 
 		/**
@@ -479,13 +479,13 @@ package temple.ui.behaviors
 		 */
 		private function handleMouseUp(event:MouseEvent):void 
 		{
-			this.stopDrag();
+			stopDrag();
 		}
 
 		private function handleMouseLeave(event:Event):void
 		{
 			// doesn't work in wmode opaque or transparent ?
-			this.stopDrag();
+			stopDrag();
 		}
 
 		/**
@@ -493,15 +493,15 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.isDragging) this.stopDrag();
-			if (this._dragButton)
+			if (isDragging) stopDrag();
+			if (_dragButton)
 			{
-				this._dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
-				this._dragButton.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-				this._dragButton = null;
+				_dragButton.removeEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
+				_dragButton.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+				_dragButton = null;
 			}
-			this._startDragOffset = null;
-			this._positionProxy = null;
+			_startDragOffset = null;
+			_positionProxy = null;
 			super.destruct();
 		}
 	}
