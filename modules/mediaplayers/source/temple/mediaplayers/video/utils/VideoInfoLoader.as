@@ -52,7 +52,7 @@ package temple.mediaplayers.video.utils
 	/**
 	 * @example
 	 * <listing version="3.0">
-	 * new VideoInfoLoader().getMetaData(url).addEventListener(MetaDataEvent.METADATA, this.handleMetaData);
+	 * new VideoInfoLoader().getMetaData(url).addEventListener(MetaDataEvent.METADATA, handleMetaData);
 	 * </listing>
 	 * 
 	 * @author Arjan van Wijk (arjan at mediamonks dot com)
@@ -75,26 +75,26 @@ package temple.mediaplayers.video.utils
 
 		public function VideoInfoLoader(metadata:Object = null, cuepoints:Object = null)
 		{
-			this._metadata = metadata;
-			this._cuepoints = cuepoints;
+			_metadata = metadata;
+			_cuepoints = cuepoints;
 			
-			this._maxRetryCount = 3;
+			_maxRetryCount = 3;
 		}
 
 		public function getMetaData(url:String):VideoInfoLoader
 		{
-			this._metaDataTimeout = new TimeOut(this.retryMetaData, 1000);
+			_metaDataTimeout = new TimeOut(retryMetaData, 1000);
 			
-			this._urlMetaData = url;
+			_urlMetaData = url;
 			
-			this._ncMetaData = new NetConnection();
-			this._ncMetaData.addEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
-			this._ncMetaData.connect(null);
+			_ncMetaData = new NetConnection();
+			_ncMetaData.addEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
+			_ncMetaData.connect(null);
 			
-			this._netstreamMetaData = new VideoNetStream(this._ncMetaData);
-			this._netstreamMetaData.addEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
-			this._netstreamMetaData.play(url);
-			this._netstreamMetaData.addEventListener(VideoMetaDataEvent.METADATA, this.onMetaData);
+			_netstreamMetaData = new VideoNetStream(_ncMetaData);
+			_netstreamMetaData.addEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
+			_netstreamMetaData.play(url);
+			_netstreamMetaData.addEventListener(VideoMetaDataEvent.METADATA, onMetaData);
 			
 			return this;
 		}
@@ -103,84 +103,84 @@ package temple.mediaplayers.video.utils
 		{
 			if (event.info.code == NetStatusEventInfoCodes.NETSTREAM_PLAY_STREAM_NOT_FOUND)
 			{
-				this.dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.NOT_FOUND));
+				dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.NOT_FOUND));
 				
-				this._metaDataTimeout.stop();
+				_metaDataTimeout.stop();
 			}
 		}
 
 		private function onMetaData(event:VideoMetaDataEvent):void
 		{
-			event.metadata.parseObject(this._metadata);
-			this.dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.METADATA, event.metadata));
-			this._ncMetaData.close();
-			this._netstreamMetaData.close();
+			event.metadata.parseObject(_metadata);
+			dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.METADATA, event.metadata));
+			_ncMetaData.close();
+			_netstreamMetaData.close();
 			
-			this._metaDataTimeout.stop();
+			_metaDataTimeout.stop();
 		}
 
 		public function retryMetaData():void
 		{
-			this._netstreamMetaData.close();
-			this._ncMetaData.close();
+			_netstreamMetaData.close();
+			_ncMetaData.close();
 			
-			if (--this._maxRetryCount >= 0)
+			if (--_maxRetryCount >= 0)
 			{
-				this.getMetaData(this._urlMetaData);
+				getMetaData(_urlMetaData);
 			}
 			else
 			{
-				this.dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.NOT_FOUND));
+				dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.NOT_FOUND));
 			}
 		}
 
 		public function getCuePoints(url:String):VideoInfoLoader
 		{
-			this._ncCuePoint = new NetConnection();
-			this._ncCuePoint.connect(null);
+			_ncCuePoint = new NetConnection();
+			_ncCuePoint.connect(null);
 			
-			this._netstreamCuePoint = new VideoNetStream(this._ncCuePoint);
-			this._netstreamCuePoint.play(url);
-			this._netstreamCuePoint.addEventListener(CuePointEvent.CUEPOINT, this.onCuePoints);
+			_netstreamCuePoint = new VideoNetStream(_ncCuePoint);
+			_netstreamCuePoint.play(url);
+			_netstreamCuePoint.addEventListener(CuePointEvent.CUEPOINT, onCuePoints);
 			
 			return this;
 		}
 
 		private function onCuePoints(event:CuePointEvent):void
 		{
-			event.cuepoint.parseObject(this._cuepoints);
-			this.dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, event.cuepoint));
-			this._netstreamCuePoint.close();
+			event.cuepoint.parseObject(_cuepoints);
+			dispatchEvent(new CuePointEvent(CuePointEvent.CUEPOINT, event.cuepoint));
+			_netstreamCuePoint.close();
 		}
 
 		override public function destruct():void
 		{
-			if (this._netstreamMetaData)
+			if (_netstreamMetaData)
 			{
-				this._netstreamMetaData.destruct();
-				this._netstreamMetaData = null;
+				_netstreamMetaData.destruct();
+				_netstreamMetaData = null;
 			}
 			
-			if (this._netstreamCuePoint)
+			if (_netstreamCuePoint)
 			{
-				this._netstreamCuePoint.destruct();
-				this._netstreamCuePoint = null;
+				_netstreamCuePoint.destruct();
+				_netstreamCuePoint = null;
 			}
 			
-			if (this._ncMetaData)
+			if (_ncMetaData)
 			{
-				this._ncMetaData.removeEventListener(NetStatusEvent.NET_STATUS, this.handleNetStatusEvent);
-				this._ncMetaData = null;
+				_ncMetaData.removeEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
+				_ncMetaData = null;
 			}
 			
-			if (this._metaDataTimeout)
+			if (_metaDataTimeout)
 			{
-				this._metaDataTimeout.destruct();
-				this._metaDataTimeout = null;
+				_metaDataTimeout.destruct();
+				_metaDataTimeout = null;
 			}
 			
-			this._ncCuePoint = null;
-			this._urlMetaData = null;
+			_ncCuePoint = null;
+			_urlMetaData = null;
 			
 			super.destruct();
 		}

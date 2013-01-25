@@ -47,7 +47,7 @@ package temple.codecomponents.buttons
 		public function CodePlayBackwardButton(width:Number = 20, height:Number = 16, x:Number = 0, y:Number = 0)
 		{
 			super(new CodePlayIcon(), width, height, x, y);
-			this.icon.scaleX = -1;
+			icon.scaleX = -1;
 		}
 	}
 }

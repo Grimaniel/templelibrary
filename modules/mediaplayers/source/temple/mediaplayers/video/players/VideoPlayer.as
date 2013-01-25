@@ -209,55 +209,55 @@ package temple.mediaplayers.video.players
 		 */
 		public function VideoPlayer(width:Number = NaN, height:Number = NaN, smoothing:Boolean = false, scaleMode:String = ScaleMode.EXACT_FIT, debug:Boolean = false) 
 		{
-			this.toStringProps.push('videoPath', 'status');
+			toStringProps.push('videoPath', 'status');
 			if (isNaN(width) && super.width > 0)
 			{
-				this._width = super.width;
+				_width = super.width;
 			}
 			else
 			{
-				this._width = width;
+				_width = width;
 			}
 			if (isNaN(height) && super.height > 0)
 			{
-				this._height = super.height;
+				_height = super.height;
 			}
 			else
 			{
-				this._height = height;
+				_height = height;
 			}
 			
-			if (isNaN(this._width) || isNaN(this._height)) throwError(new TempleError(this, "Video dimensions are not set, please fill in width and height"));
+			if (isNaN(_width) || isNaN(_height)) throwError(new TempleError(this, "Video dimensions are not set, please fill in width and height"));
 			
-			this._isLoaded = false;
-			this._isClosed = true;
+			_isLoaded = false;
+			_isClosed = true;
 			
-			this._netConnection = new VideoNetConnection();
-			this._netConnection.addEventListener(NetStatusEvent.NET_STATUS, this.handleNetStatusEvent);
-			this._netConnection.objectEncoding = ObjectEncoding.AMF0;
+			_netConnection = new VideoNetConnection();
+			_netConnection.addEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
+			_netConnection.objectEncoding = ObjectEncoding.AMF0;
 			
-			this._netConnection.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
-			this._netConnection.addEventListener(IOErrorEvent.IO_ERROR, this.handleIOError);
-			this._netConnection.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.handleNetConnectionAsyncError);
+			_netConnection.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
+			_netConnection.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+			_netConnection.addEventListener(AsyncErrorEvent.ASYNC_ERROR, handleNetConnectionAsyncError);
 			
 			// create a bitmap for screenshot
 			// in this way you can always make a screenshot of the video, even when the NetStream is closed. More about this bug on: http://bugs.adobe.com/jira/browse/FP-1048
-			this._screenShot = new BitmapData(this._width, this._height, true, 0x00000000);
-			this.addChild(new Bitmap(this._screenShot));
+			_screenShot = new BitmapData(_width, _height, true, 0x00000000);
+			addChild(new Bitmap(_screenShot));
 			
 			// create actual video
-			this._video = new CoreVideo(this._width, this._height);
-			this._video.smoothing = smoothing;
-			this.addChild(this._video);
+			_video = new CoreVideo(_width, _height);
+			_video.smoothing = smoothing;
+			addChild(_video);
 			
-			this.scrollRect = new Rectangle(0, 0, this._width, this._height);
+			scrollRect = new Rectangle(0, 0, _width, _height);
 			this.debug = debug;
 			
 			addToDebugManager(this);
 			
 			this.scaleMode = scaleMode;
 			
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			
 			// We create the netStream later, depending on the NetConnection.connect (Streaming or not)
 		}
@@ -273,86 +273,86 @@ package temple.mediaplayers.video.players
 		{
 			if (url == null)
 			{
-				this.logError("playUrl: url can not be null");
+				logError("playUrl: url can not be null");
 				return;
 			}
 			
-			if (this._debug) this.logDebug("playUrl: " + url);
+			if (_debug) logDebug("playUrl: " + url);
 			
-			this._video.visible = true;
+			_video.visible = true;
 			
-			if (this._scaleMode != ScaleMode.EXACT_FIT)
+			if (_scaleMode != ScaleMode.EXACT_FIT)
 			{
-				if (this._status != PlayerStatus.LOADING)
+				if (_status != PlayerStatus.LOADING)
 				{
-					this._status = PlayerStatus.LOADING;
-					this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+					_status = PlayerStatus.LOADING;
+					dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 				
 					// first hide player, so we can't see him playing, show it after playing and seek to 0 and start play again
-					this._video.visible = false;
-					this._playAfterLoaded = true;
+					_video.visible = false;
+					_playAfterLoaded = true;
 				}
 			}
 			else
 			{
-				this.setVideoSize();
+				setVideoSize();
 			}
 			
-			this._isLoaded = false;
-			this._delayedPause = false;
+			_isLoaded = false;
+			_delayedPause = false;
 			
-			this._videoPath = url;
+			_videoPath = url;
 			
 			// Check if this is RTMP streaming
-			if (this.isRTMPStream(this._videoPath))
+			if (isRTMPStream(_videoPath))
 			{
 				// If netStream is allready created and the net connection command is the same, we can directly play the video. Otherwise connect first
-				if (this._netStream && this._netConnectionCommand == this.rtmpConnection)
+				if (_netStream && _netConnectionCommand == rtmpConnection)
 				{
-					if (this._netConnection.connected)
+					if (_netConnection.connected)
 					{
-						this.addChild(this._video);
+						addChild(_video);
 						
-						if (this.debug) this.addChild(this._txtDebug);
+						if (debug) addChild(_txtDebug);
 						
-						if (this._status == PlayerStatus.PAUSED)
+						if (_status == PlayerStatus.PAUSED)
 						{
-							this._isClosed = false;
-							this._netStream.resume();
+							_isClosed = false;
+							_netStream.resume();
 						}
 						else
 						{
-							this._isClosed = false;
-							if (this._debug) this.logDebug("playUrl: play '" + this._videoPath + "'");
-							this._netStream.play(this.rtmpVideoFile);
+							_isClosed = false;
+							if (_debug) logDebug("playUrl: play '" + _videoPath + "'");
+							_netStream.play(rtmpVideoFile);
 						}
 					}
 				}
 				else
 				{
-					this._netConnectionCommand = this.rtmpConnection;
-					if (this._debug) this.logDebug("playUrl: Connect to '" + this._netConnectionCommand + "'");
-					this._netConnection.connect(this._netConnectionCommand);
+					_netConnectionCommand = rtmpConnection;
+					if (_debug) logDebug("playUrl: Connect to '" + _netConnectionCommand + "'");
+					_netConnection.connect(_netConnectionCommand);
 				}
 			}
 			else
 			{
 				// Check if we have a netstream with no netconnection command
-				if (this._netStream == null || this._netConnectionCommand != null)
+				if (_netStream == null || _netConnectionCommand != null)
 				{
-					this._netConnectionCommand = null;
-					if (this._debug) this.logDebug("playUrl: Connect to '" + this._netConnectionCommand + "'");
-					this._netConnection.connect(this._netConnectionCommand);
-					this.createNetStream();
+					_netConnectionCommand = null;
+					if (_debug) logDebug("playUrl: Connect to '" + _netConnectionCommand + "'");
+					_netConnection.connect(_netConnectionCommand);
+					createNetStream();
 				}
-				this.addChild(this._video);
-				if (this._debug) 
+				addChild(_video);
+				if (_debug) 
 				{
-					this.logDebug("playUrl: play '" + this._videoPath + "'");
-					this.addChild(this._txtDebug);
+					logDebug("playUrl: play '" + _videoPath + "'");
+					addChild(_txtDebug);
 				}
-				this._netStream.play(this._videoPath);
-				this._isClosed = false;
+				_netStream.play(_videoPath);
+				_isClosed = false;
 			}
 		}
 
@@ -363,29 +363,29 @@ package temple.mediaplayers.video.players
 		 */
 		public function loadUrl(url:String):void
 		{
-			if (this._debug) this.logDebug("loadUrl: " + url);
+			if (_debug) logDebug("loadUrl: " + url);
 			
-			if (this._videoPath) this.clear();
+			if (_videoPath) clear();
 			
-			this._status = PlayerStatus.LOADING;
-			this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
-			this._playAfterLoaded = false;
+			_status = PlayerStatus.LOADING;
+			dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
+			_playAfterLoaded = false;
 			
 			// first hide player, so we can't see him playing, show it after playing and seek to 0.
-			this._video.visible = false;
-			if (this._netStream)
+			_video.visible = false;
+			if (_netStream)
 			{
 				try
 				{
-					this._netStream.soundTransform = new SoundTransform(0);
+					_netStream.soundTransform = new SoundTransform(0);
 				}
 				catch (error:Error)
 				{
-					this.logError(error.message);
+					logError(error.message);
 				}
 			}
-			this.playUrl(url);
-			this._video.visible = false;
+			playUrl(url);
+			_video.visible = false;
 		}
 
 		/**
@@ -393,31 +393,31 @@ package temple.mediaplayers.video.players
 		 */
 		public function play():void 
 		{
-			if (this._debug) this.logDebug("play: ");
+			if (_debug) logDebug("play: ");
 			
-			this._delayedPause = false;
+			_delayedPause = false;
 			
-			if (!this._netStream)
+			if (!_netStream)
 			{
-				this.logError("play: NetStream is not set yet");
+				logError("play: NetStream is not set yet");
 			}
 			else
 			{
-				this.addChild(this._video);
-				if (this.debug) this.addChild(this._txtDebug);
+				addChild(_video);
+				if (debug) addChild(_txtDebug);
 				
-				if (this.isRTMPStream(this._videoPath))
+				if (isRTMPStream(_videoPath))
 				{
-					if (this._debug) this.logDebug("play: '" + this.rtmpVideoFile + "'");
-					this._netStream.play(this.rtmpVideoFile);
+					if (_debug) logDebug("play: '" + rtmpVideoFile + "'");
+					_netStream.play(rtmpVideoFile);
 				}
 				else
 				{
-					if (this._debug) this.logDebug("play: '" + this._videoPath + "'");
-					this._netStream.play(this._videoPath);
+					if (_debug) logDebug("play: '" + _videoPath + "'");
+					_netStream.play(_videoPath);
 				}
 				
-				this._isClosed = false;
+				_isClosed = false;
 			}
 		}
 
@@ -426,19 +426,19 @@ package temple.mediaplayers.video.players
 		 */
 		public function pause():void 
 		{
-			if (this._debug) this.logDebug("pause: ");
+			if (_debug) logDebug("pause: ");
 			
-			this._delayedPause = true;
+			_delayedPause = true;
 			
-			if (!this._netStream)
+			if (!_netStream)
 			{
-				this.logError("pause: NetStream is not set yet");
+				logError("pause: NetStream is not set yet");
 			}
 			else
 			{
-				this._netStream.pause();
-				this._status = PlayerStatus.PAUSED;
-				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+				_netStream.pause();
+				_status = PlayerStatus.PAUSED;
+				dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 			}
 		}
 
@@ -447,23 +447,23 @@ package temple.mediaplayers.video.players
 		 */
 		public function resume():void 
 		{
-			if (this._debug) this.logDebug("resume: current status is " + this._status);
+			if (_debug) logDebug("resume: current status is " + _status);
 			
-			this._delayedPause = false;
+			_delayedPause = false;
 			
-			if (!this._netStream)
+			if (!_netStream)
 			{
-				this.logError("resume: NetStream is not set yet");
+				logError("resume: NetStream is not set yet");
 			}
-			else if (this._status == PlayerStatus.LOADING)
+			else if (_status == PlayerStatus.LOADING)
 			{
-				this._playAfterLoaded = true;
+				_playAfterLoaded = true;
 			}
 			else
 			{
-				this._netStream.resume();
-				this._status = PlayerStatus.PLAYING;
-				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+				_netStream.resume();
+				_status = PlayerStatus.PLAYING;
+				dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 			}
 		}
 		
@@ -472,7 +472,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get paused():Boolean
 		{
-			return this._status == PlayerStatus.PAUSED;
+			return _status == PlayerStatus.PAUSED;
 		}
 
 		/**
@@ -480,37 +480,37 @@ package temple.mediaplayers.video.players
 		 */
 		public function stop():void 
 		{
-			if (this._debug) this.logDebug("stop: ");
+			if (_debug) logDebug("stop: ");
 			
-			this._bytesLoaded = this.bytesLoaded;
-			this._bytesTotal = this.bytesTotal;
+			_bytesLoaded = bytesLoaded;
+			_bytesTotal = bytesTotal;
 			
-			this._isClosed = true;
+			_isClosed = true;
 			
-			if (this._netStream)
+			if (_netStream)
 			{
 				// try catch draw to prevent Security Error
 				try
 				{
-					this._screenShot.draw(this);
+					_screenShot.draw(this);
 				}
 				catch (error:Error)
 				{
-					if (this.debug) this.logError(error.message);
+					if (debug) logError(error.message);
 				}
 				
-				this._netStream.close();
+				_netStream.close();
 			}
 			
-			if (this._video.parent == this)
+			if (_video.parent == this)
 			{
-				this.removeChild(this._video);
+				removeChild(_video);
 			}
 			
-			if (this._status != PlayerStatus.STOPPED)
+			if (_status != PlayerStatus.STOPPED)
 			{
-				this._status = PlayerStatus.STOPPED;
-				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+				_status = PlayerStatus.STOPPED;
+				dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 			}
 		}
 
@@ -519,22 +519,22 @@ package temple.mediaplayers.video.players
 		 */
 		public function seek(seconds:Number = 0):void 
 		{
-			if (this._debug) this.logDebug("seek: " + seconds);
+			if (_debug) logDebug("seek: " + seconds);
 			
-			if (this._netStream && (this._metaData || seconds == 0))
+			if (_netStream && (_metaData || seconds == 0))
 			{
-				if (seconds == 0 || seconds >= 0 && seconds < this.duration)
+				if (seconds == 0 || seconds >= 0 && seconds < duration)
 				{
-					this._netStream.seek(seconds);
+					_netStream.seek(seconds);
 				}
 				else
 				{
-					this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.SEEK_INVALID)); 
+					dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.SEEK_INVALID)); 
 				}
 			}
 			else
 			{
-				this.logError("seek: MetaData is not available");
+				logError("seek: MetaData is not available");
 			}
 		}
 
@@ -543,7 +543,7 @@ package temple.mediaplayers.video.players
 		 */
 		override public function get width():Number
 		{
-			return this._width;
+			return _width;
 		}
 
 		/**
@@ -551,14 +551,14 @@ package temple.mediaplayers.video.players
 		 */
 		override public function set width(value:Number):void 
 		{
-			if (this._width != value)
+			if (_width != value)
 			{
-				this._width = value;
-				this.setVideoSize();
+				_width = value;
+				setVideoSize();
 				
-				var rect:Rectangle = this.scrollRect;
-				rect.width = this._width;
-				this.scrollRect = rect;
+				var rect:Rectangle = scrollRect;
+				rect.width = _width;
+				scrollRect = rect;
 			}
 		}
 
@@ -567,7 +567,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get videoWidth():Number
 		{
-			return this._metaData ? this._metaData.width : this._video.videoWidth;
+			return _metaData ? _metaData.width : _video.videoWidth;
 		}
 
 		/**
@@ -575,7 +575,7 @@ package temple.mediaplayers.video.players
 		 */
 		override public function get height():Number
 		{
-			return this._height;
+			return _height;
 		}
 
 		
@@ -584,14 +584,14 @@ package temple.mediaplayers.video.players
 		 */
 		override public function set height(value:Number):void 
 		{
-			if (this._height != value)
+			if (_height != value)
 			{
-				this._height = value;
-				this.setVideoSize();
+				_height = value;
+				setVideoSize();
 				
-				var rect:Rectangle = this.scrollRect;
-				rect.height = this._height;
-				this.scrollRect = rect;
+				var rect:Rectangle = scrollRect;
+				rect.height = _height;
+				scrollRect = rect;
 			}
 		}
 		
@@ -600,7 +600,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get videoHeight():Number
 		{
-			return this._metaData ? this._metaData.height : this._video.videoHeight;
+			return _metaData ? _metaData.height : _video.videoHeight;
 		}
 
 		/**
@@ -608,8 +608,8 @@ package temple.mediaplayers.video.players
 		 */
 		public function get bytesLoaded():uint 
 		{
-			if (this._isClosed == true) return this._bytesLoaded;
-			return this._netStream.bytesLoaded;
+			if (_isClosed == true) return _bytesLoaded;
+			return _netStream.bytesLoaded;
 		}
 
 		/**
@@ -617,8 +617,8 @@ package temple.mediaplayers.video.players
 		 */
 		public function get bytesTotal():uint 
 		{
-			if (this._isClosed == true) return this._bytesTotal;
-			return this._netStream.bytesTotal;
+			if (_isClosed == true) return _bytesTotal;
+			return _netStream.bytesTotal;
 		}
 
 		/**
@@ -626,7 +626,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get metaData():VideoMetaData 
 		{
-			return this._metaData;
+			return _metaData;
 		}
 
 		/**
@@ -634,7 +634,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get currentCuePoint():VideoCuePoint 
 		{
-			return this._cuePoint;
+			return _cuePoint;
 		}
 
 		/**
@@ -642,7 +642,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get volume():Number 
 		{
-			return this._volume;
+			return _volume;
 		}
 		
 		/**
@@ -651,23 +651,23 @@ package temple.mediaplayers.video.players
 		[Inspectable(name="Volume", type="Number", defaultValue="1")]
 		public function set volume(value:Number):void 
 		{
-			if (this._debug) this.logDebug("volume: " + value);
+			if (_debug) logDebug("volume: " + value);
 			
-			if (this._volume != value)
+			if (_volume != value)
 			{
-				this._volume = value;
-				if (this._netStream)
+				_volume = value;
+				if (_netStream)
 				{
 					try
 					{
-						this._netStream.soundTransform = new SoundTransform(this._volume);
+						_netStream.soundTransform = new SoundTransform(_volume);
 					}
 					catch (error:Error)
 					{
-						this.logError(error.message);
+						logError(error.message);
 					}
 				}
-				this.dispatchEvent(new SoundEvent(SoundEvent.VOLUME_CHANGE));
+				dispatchEvent(new SoundEvent(SoundEvent.VOLUME_CHANGE));
 			}
 		}
 
@@ -676,7 +676,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get status():String 
 		{
-			return this._status;
+			return _status;
 		}
 
 		/**
@@ -684,8 +684,8 @@ package temple.mediaplayers.video.players
 		 */
 		public function get currentPlayTime():Number 
 		{
-			if (this._netStream == null || this._status == PlayerStatus.LOADING) return 0;
-			return this._netStream.time;
+			if (_netStream == null || _status == PlayerStatus.LOADING) return 0;
+			return _netStream.time;
 		}
 		
 		/**
@@ -693,7 +693,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get duration():Number
 		{
-			return this._metaData ? this.metaData.duration : 0;
+			return _metaData ? metaData.duration : 0;
 		}
 
 		/**
@@ -701,9 +701,9 @@ package temple.mediaplayers.video.players
 		 */
 		public function get currentPlayFactor():Number 
 		{
-			if (!this.metaData || isNaN(this.duration)) return 0;
+			if (!metaData || isNaN(duration)) return 0;
 			
-			return this.currentPlayTime / this.duration;
+			return currentPlayTime / duration;
 		}
 
 		/**
@@ -711,7 +711,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get url():String
 		{
-			return this.videoPath;
+			return videoPath;
 		}
 
 		/**
@@ -719,7 +719,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get videoPath():String
 		{
-			return this._videoPath;
+			return _videoPath;
 		}
 		
 		/**
@@ -728,7 +728,7 @@ package temple.mediaplayers.video.players
 		[Inspectable(name="VideoPath", type="String")]
 		public function set videoPath(value:String):void
 		{
-			if (value != null && value != '') this.playUrl(value);
+			if (value != null && value != '') playUrl(value);
 		}
 
 		/**
@@ -736,13 +736,13 @@ package temple.mediaplayers.video.players
 		 */
 		public function isBufferFull():Boolean
 		{
-			if (this._metaData)
+			if (_metaData)
 			{
-				return Math.round(this._netStream.bufferLength) == Math.round(this.duration) || Math.round(this._netStream.bufferLength) == Math.round(this._netStream.bufferTime);
+				return Math.round(_netStream.bufferLength) == Math.round(duration) || Math.round(_netStream.bufferLength) == Math.round(_netStream.bufferTime);
 			}
 			else
 			{
-				return Math.round(this._netStream.bufferLength) == Math.round(this._netStream.bufferTime);
+				return Math.round(_netStream.bufferLength) == Math.round(_netStream.bufferTime);
 			}
 		}
 
@@ -751,7 +751,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._isLoaded;
+			return _isLoaded;
 		}
 
 		/**
@@ -759,7 +759,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get isClosed():Boolean
 		{
-			return this._isClosed;
+			return _isClosed;
 		}
 		
 		/**
@@ -773,7 +773,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get scaleMode():String
 		{
-			return this._scaleMode;
+			return _scaleMode;
 		}
 		
 		/**
@@ -782,7 +782,7 @@ package temple.mediaplayers.video.players
 		[Inspectable(name="scaleMode", type="List", defaultValue="exactFit", enumeration="exactFit,noBorder,noScale,showAll")]
 		public function set scaleMode(value:String):void
 		{
-			if (this._debug) this.logDebug("scaleMode: " + value);
+			if (_debug) logDebug("scaleMode: " + value);
 			
 			switch (value)
 			{
@@ -790,8 +790,8 @@ package temple.mediaplayers.video.players
 				case ScaleMode.NO_BORDER:
 				case ScaleMode.NO_SCALE:
 				case ScaleMode.SHOW_ALL:
-					this._scaleMode = value;
-					this.setVideoSize();
+					_scaleMode = value;
+					setVideoSize();
 					break;
 				default:
 					throwError(new TempleError(this, "Invalid value for scaleMode: '" + value + "'"));
@@ -806,7 +806,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get upscaleEnabled():Boolean
 		{
-			return this._upscaleEnabled;
+			return _upscaleEnabled;
 		}
 
 		/**
@@ -814,8 +814,8 @@ package temple.mediaplayers.video.players
 		 */
 		public function set upscaleEnabled(value:Boolean):void
 		{
-			this._upscaleEnabled = value;
-			this.setVideoSize();
+			_upscaleEnabled = value;
+			setVideoSize();
 		}
 		
 		/**
@@ -823,7 +823,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get align():String
 		{
-			return this._align;
+			return _align;
 		}
 
 		/**
@@ -845,8 +845,8 @@ package temple.mediaplayers.video.players
 				case Align.BOTTOM_RIGHT:
 				case Align.NONE:
 				case null:
-					this._align = value;
-					this.setVideoSize();
+					_align = value;
+					setVideoSize();
 					break;
 				
 				default:
@@ -861,33 +861,33 @@ package temple.mediaplayers.video.players
 		 */
 		public function clear():void
 		{
-			if (this._debug) this.logDebug("clear: ");
+			if (_debug) logDebug("clear: ");
 			
-			if (this._video)
+			if (_video)
 			{
 				// due to a known bug, clear doens't work. So we just make a copy of the video
-				this._video.destruct();
+				_video.destruct();
 				var video:CoreVideo = new CoreVideo();
-				video.x = this._video.x;
-				video.y = this._video.y;
-				video.width = this._video.width;
-				video.height = this._video.height;
-				video.visible = this._video.visible;
-				video.smoothing = this._video.smoothing;
-				this._video.attachNetStream(null);
+				video.x = _video.x;
+				video.y = _video.y;
+				video.width = _video.width;
+				video.height = _video.height;
+				video.visible = _video.visible;
+				video.smoothing = _video.smoothing;
+				_video.attachNetStream(null);
 				
-				video.attachNetStream(this._netStream);
+				video.attachNetStream(_netStream);
 				
-				this._video.clear();
-				if (this._video.parent == this)
+				_video.clear();
+				if (_video.parent == this)
 				{
-					this.removeChild(this._video);
+					removeChild(_video);
 				}
-				this._video = video;
-				this.addChild(this._video);
-				if (this.debug) this.addChild(this._txtDebug);
+				_video = video;
+				addChild(_video);
+				if (debug) addChild(_txtDebug);
 			}
-			if (this._screenShot) this._screenShot.dispose();
+			if (_screenShot) _screenShot.dispose();
 		}
 
 		/**
@@ -895,7 +895,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get smoothing():Boolean
 		{
-			return this._video.smoothing;
+			return _video.smoothing;
 		}
 		
 		/**
@@ -904,7 +904,7 @@ package temple.mediaplayers.video.players
 		[Inspectable(name="Smoothing", type="Boolean", defaultValue="false")]
 		public function set smoothing(value:Boolean):void
 		{
-			this._video.smoothing = value;
+			_video.smoothing = value;
 		}
 
 		/**
@@ -912,7 +912,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get autoRewind():Boolean
 		{
-			return this._autoRewind; 
+			return _autoRewind; 
 		}
 		
 		/**
@@ -920,7 +920,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function set autoRewind(value:Boolean):void
 		{
-			this._autoRewind = value;
+			_autoRewind = value;
 		}
 		
 		/**
@@ -928,7 +928,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get bufferLength():Number
 		{
-			return this._netStream ? this._netStream.bufferLength : 0;
+			return _netStream ? _netStream.bufferLength : 0;
 		}
 
 		/**
@@ -936,7 +936,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get bufferTime():Number
 		{
-			return this._bufferTime;
+			return _bufferTime;
 		}
 		
 		/**
@@ -944,8 +944,8 @@ package temple.mediaplayers.video.players
 		 */
 		public function set bufferTime(value:Number):void
 		{
-			this._bufferTime = value;
-			if (this._netStream) this._netStream.bufferTime = value;
+			_bufferTime = value;
+			if (_netStream) _netStream.bufferTime = value;
 		}
 		
 		/**
@@ -954,13 +954,13 @@ package temple.mediaplayers.video.players
 		 */
 		public function get rtmpConnection():String
 		{
-			if (this._rtmpConnection)
+			if (_rtmpConnection)
 			{
-				return this._rtmpConnection;
+				return _rtmpConnection;
 			}
-			if (this._videoPath)
+			if (_videoPath)
 			{
-				return this._videoPath.substring(0, this._videoPath.lastIndexOf("/"));
+				return _videoPath.substring(0, _videoPath.lastIndexOf("/"));
 			}
 			return null;
 		}
@@ -970,7 +970,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function set rtmpConnection(value:String):void
 		{
-			this._rtmpConnection = value;
+			_rtmpConnection = value;
 		}
 
 		/**
@@ -979,26 +979,26 @@ package temple.mediaplayers.video.players
 		 */
 		public function get rtmpVideoFile():String
 		{
-			if (this._rtmpConnection)
+			if (_rtmpConnection)
 			{
-				return this._videoPath.indexOf(this._rtmpConnection) == 0 ? this._videoPath.substr(this._rtmpConnection.length) : this._videoPath;
+				return _videoPath.indexOf(_rtmpConnection) == 0 ? _videoPath.substr(_rtmpConnection.length) : _videoPath;
 			}
-			if (this._videoPath)
+			if (_videoPath)
 			{
-				this._videoPath = this._videoPath.substring(this._videoPath.lastIndexOf("/") + 1);
-				if (this._videoPath.substr(-4) == '.mp3')
+				_videoPath = _videoPath.substring(_videoPath.lastIndexOf("/") + 1);
+				if (_videoPath.substr(-4) == '.mp3')
 				{
-					this._videoPath = 'mp3:' + this._videoPath.substr(0,this._videoPath.length-4);
+					_videoPath = 'mp3:' + _videoPath.substr(0,_videoPath.length-4);
 				}
-				else if (this._videoPath.substr(-4) == '.mp4' || this._videoPath.substr(-4) == '.mov' || this._videoPath.substr(-4) == '.aac' || this._videoPath.substr(-4) == '.m4a')
+				else if (_videoPath.substr(-4) == '.mp4' || _videoPath.substr(-4) == '.mov' || _videoPath.substr(-4) == '.aac' || _videoPath.substr(-4) == '.m4a')
 				{
-					this._videoPath = 'mp4:' + this._videoPath.substr(0, this._videoPath.length-4);
+					_videoPath = 'mp4:' + _videoPath.substr(0, _videoPath.length-4);
 				}
-				else if (this._videoPath.substr(-4) == '.flv')
+				else if (_videoPath.substr(-4) == '.flv')
 				{
-					this._videoPath = this._videoPath.substr(0, this._videoPath.length-4);
+					_videoPath = _videoPath.substr(0, _videoPath.length-4);
 				}
-				return this._videoPath;
+				return _videoPath;
 			}
 			return null;
 		}
@@ -1008,7 +1008,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get video():Video
 		{
-			return this._video;
+			return _video;
 		}
 		
 		/**
@@ -1017,7 +1017,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get background():Boolean
 		{
-			return this._background;
+			return _background;
 		}
 		
 		/**
@@ -1026,8 +1026,8 @@ package temple.mediaplayers.video.players
 		[Inspectable(name="Background", type="Boolean", defaultValue="false")]
 		public function set background(value:Boolean):void
 		{
-			this._background = value;
-			this.setBackground();
+			_background = value;
+			setBackground();
 		}
 		
 		/**
@@ -1035,7 +1035,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get backgroundColor():uint
 		{
-			return this._backgroundColor;
+			return _backgroundColor;
 		}
 		
 		/**
@@ -1044,8 +1044,8 @@ package temple.mediaplayers.video.players
 		[Inspectable(name="Background Color", type="Color", defaultValue="#000000")]
 		public function set backgroundColor(value:uint):void
 		{
-			this._backgroundColor = value;
-			this.setBackground();
+			_backgroundColor = value;
+			setBackground();
 		}
 		
 		/**
@@ -1053,7 +1053,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get backgroundAlpha():Number
 		{
-			return this._backgroundAlpha;
+			return _backgroundAlpha;
 		}
 		
 		/**
@@ -1062,8 +1062,8 @@ package temple.mediaplayers.video.players
 		[Inspectable(name="Background Alpha", type="Number", defaultValue="1")]
 		public function set backgroundAlpha(value:Number):void
 		{
-			this._backgroundAlpha = Math.min(Math.max(value, 0), 1);
-			this.setBackground();
+			_backgroundAlpha = Math.min(Math.max(value, 0), 1);
+			setBackground();
 		}
 		
 		/**
@@ -1071,7 +1071,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -1080,14 +1080,14 @@ package temple.mediaplayers.video.players
 		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 			
-			if (this._debug)
+			if (_debug)
 			{
-				this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 				
-				this.createDebugInfo();
+				createDebugInfo();
 			}
 		}
 
@@ -1098,15 +1098,15 @@ package temple.mediaplayers.video.players
 		 */
 		protected function handleNetStatusEvent(event:NetStatusEvent):void 
 		{
-			if (this._debug)
+			if (_debug)
 			{
 				if (event.info.level == "error")
 				{
-					this.logError("handleNetStatusEvent: '" + event.info.code + "' " + event.info.description + ", status=" + this._status);
+					logError("handleNetStatusEvent: '" + event.info.code + "' " + event.info.description + ", status=" + _status);
 				}
 				else
 				{
-					this.logDebug("handleNetStatusEvent: '" + event.info.code + "' " + event.info.description + ", status=" + this._status);
+					logDebug("handleNetStatusEvent: '" + event.info.code + "' " + event.info.description + ", status=" + _status);
 				}
 			}
 			
@@ -1115,79 +1115,79 @@ package temple.mediaplayers.video.players
 				//NetStream events
 				case NetStatusEventInfoCodes.NETSTREAM_BUFFER_EMPTY:
 				{
-					this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.BUFFER_EMPTY)); 
+					dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.BUFFER_EMPTY)); 
 					break;
 				}
 				case NetStatusEventInfoCodes.NETSTREAM_BUFFER_FULL:
 				{
-					if (this._status == PlayerStatus.LOADING)
+					if (_status == PlayerStatus.LOADING)
 					{
-						this.onLoadReady();
+						onLoadReady();
 					}
 					else
 					{
-						this.dispatchEvent(new VideoPlayerEvent(PlayerEvent.PLAY_STARTED));
+						dispatchEvent(new VideoPlayerEvent(PlayerEvent.PLAY_STARTED));
 					}
 					break;
 				}
 				case NetStatusEventInfoCodes.NETSTREAM_PLAY_START:
 				{
-					if (this._status != PlayerStatus.LOADING)
+					if (_status != PlayerStatus.LOADING)
 					{
-						if (!this._delayedPause)
+						if (!_delayedPause)
 						{
-							this._status = PlayerStatus.PLAYING;
-							this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+							_status = PlayerStatus.PLAYING;
+							dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 						}
 					}					
 					else
 					{
-						new FrameDelay(this.onLoadReady, 30);
+						new FrameDelay(onLoadReady, 30);
 					}
 					break;
 				}
 				case NetStatusEventInfoCodes.NETSTREAM_PLAY_STOP:
 				{
-					if (this._status == PlayerStatus.PLAYING)
+					if (_status == PlayerStatus.PLAYING)
 					{
-						this._status = PlayerStatus.STOPPED;
-						this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+						_status = PlayerStatus.STOPPED;
+						dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 						
-						if (this.currentPlayFactor > 0.99)
+						if (currentPlayFactor > 0.99)
 						{
-							if (this._autoRewind)
+							if (_autoRewind)
 							{
-								this.seek(0);
-								this.pause();
+								seek(0);
+								pause();
 							}
-							this.dispatchEvent(new PlayerEvent(PlayerEvent.COMPLETE));
+							dispatchEvent(new PlayerEvent(PlayerEvent.COMPLETE));
 						}
 					}
 					break;
 				}
 				case NetStatusEventInfoCodes.NETSTREAM_PLAY_STREAM_NOT_FOUND:
 				{
-					this.logError("handleNetStatusEvent: '" + event.info.code + "' - '" + this._videoPath + "'");
-					this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.MOVIE_NOTFOUND)); 
+					logError("handleNetStatusEvent: '" + event.info.code + "' - '" + _videoPath + "'");
+					dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.MOVIE_NOTFOUND)); 
 					break;
 				}
 				
 				case NetStatusEventInfoCodes.NETSTREAM_SEEK_INVALID_TIME:
 				{
-					this.logError("handleNetStatusEvent: try to seek to invalid time '" + event.info.code + "'");
+					logError("handleNetStatusEvent: try to seek to invalid time '" + event.info.code + "'");
 					break;
 				}
 
 				case NetStatusEventInfoCodes.NETSTREAM_BUFFER_FLUSH:
 				{
-					this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.BUFFER_FLUSH)); 
+					dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.BUFFER_FLUSH)); 
 					break;
 				}
 				
 				case NetStatusEventInfoCodes.NETSTREAM_SEEK_NOTIFY:
 				{
-					this.dispatchEvent(new PlayerEvent(PlayerEvent.SEEK_NOTIFY)); 
-					this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.SEEK_NOTIFY)); 
+					dispatchEvent(new PlayerEvent(PlayerEvent.SEEK_NOTIFY)); 
+					dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.SEEK_NOTIFY)); 
 					break;
 				}
 				
@@ -1203,11 +1203,11 @@ package temple.mediaplayers.video.players
 				//NetConnection events
 				case NetStatusEventInfoCodes.NETCONNECTION_CONNECT_SUCCESS:
 				{
-					if (this._netConnectionCommand != null)
+					if (_netConnectionCommand != null)
 					{
-						this.createNetStream();
-						if (this.debug) this.logDebug("handleNetStatusEvent: play \"" + this.rtmpVideoFile + "\"");
-						this._netStream.play(this.rtmpVideoFile);
+						createNetStream();
+						if (debug) logDebug("handleNetStatusEvent: play \"" + rtmpVideoFile + "\"");
+						_netStream.play(rtmpVideoFile);
 					}
 					break;
 				}
@@ -1220,17 +1220,17 @@ package temple.mediaplayers.video.players
 				
 				case NetStatusEventInfoCodes.NETCONNECTION_CONNECT_REJECTED:
 				{
-					this.logError("handleNetStatusEvent: Error can't connect '" + event.info.code + "'");
+					logError("handleNetStatusEvent: Error can't connect '" + event.info.code + "'");
 					break;
 				}
 				
 				default:
 				{
-					this.logError("handleNetStatusEvent: unhandled NetStatusEvent '" + event.info.code + "'");
+					logError("handleNetStatusEvent: unhandled NetStatusEvent '" + event.info.code + "'");
 					break;
 				}
 			}
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 
 		/**
@@ -1238,7 +1238,7 @@ package temple.mediaplayers.video.players
 		 */
 		private function handleAsyncError(event:AsyncErrorEvent):void 
 		{
-			this.logError("handleAsyncError: " + event.text);
+			logError("handleAsyncError: " + event.text);
 		}
 
 		/**
@@ -1246,8 +1246,8 @@ package temple.mediaplayers.video.players
 		 */
 		private function handleSecurityError(event:SecurityErrorEvent):void 
 		{
-			this.logError("handleSecurityError: " + event.text);
-			this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.SECURITY_ERROR));
+			logError("handleSecurityError: " + event.text);
+			dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.SECURITY_ERROR));
 		}
 
 		/**
@@ -1255,63 +1255,63 @@ package temple.mediaplayers.video.players
 		 */
 		private function handleMetaDataEvent(event:VideoMetaDataEvent):void 
 		{
-			if (this._debug) this.logDebug("handleMetaDataEvent: " + event.metadata);
+			if (_debug) logDebug("handleMetaDataEvent: " + event.metadata);
 			
-			this._metaData = event.metadata;
-			new FrameDelay(this.setVideoSize);
+			_metaData = event.metadata;
+			new FrameDelay(setVideoSize);
 			
 			// max buffertime to duration
-			if (this._netStream.bufferTime > this.duration) this._netStream.bufferTime = this.duration;
+			if (_netStream.bufferTime > duration) _netStream.bufferTime = duration;
 			
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 		/**
 		 *	Handler for metadata & cuepoints events from the NetStream object.
 		 */
 		private function handleCuePointEvent(event:CuePointEvent):void 
 		{
-			if (this._debug) this.logDebug("handleCuePointEvent: " + event.cuepoint);
+			if (_debug) logDebug("handleCuePointEvent: " + event.cuepoint);
 			
 			// store cuepoint
-			this._cuePoint = event.cuepoint;
+			_cuePoint = event.cuepoint;
 			
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 
 		private function handleNetConnectionAsyncError(event:AsyncErrorEvent):void
 		{
-			this.logError("handleNetConnectionAsyncError: '" + event.text + "'");
+			logError("handleNetConnectionAsyncError: '" + event.text + "'");
 		}
 
 		private function handleIOError(event:IOErrorEvent):void
 		{
-			this.logError("handleIOError: '" + event.text + "'");
+			logError("handleIOError: '" + event.text + "'");
 		}
 
 		private function onLoadReady():void
 		{
-			if (this._status == PlayerStatus.LOADING)
+			if (_status == PlayerStatus.LOADING)
 			{
-				if (this._debug) this.logDebug("onLoadReady: Load Ready!");
+				if (_debug) logDebug("onLoadReady: Load Ready!");
 				
-				this.setVideoSize();
-				this._video.visible = true;
-				var volume:Number = this._volume;
-				this._volume = 0;
+				setVideoSize();
+				_video.visible = true;
+				var volume:Number = _volume;
+				_volume = 0;
 				this.volume = volume;
 
-				if (this._playAfterLoaded)
+				if (_playAfterLoaded)
 				{
-					this._status = PlayerStatus.PLAYING;
-					this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+					_status = PlayerStatus.PLAYING;
+					dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 				}
 				else
 				{
-					this.pause();
-					this.seek(0);
+					pause();
+					seek(0);
 				}
 				
-				this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.LOAD_READY));
+				dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.LOAD_READY));
 			}
 		}
 
@@ -1326,180 +1326,180 @@ package temple.mediaplayers.video.players
 
 		private function createNetStream():void
 		{
-			if (this._netStream != null)
+			if (_netStream != null)
 			{
-				this._netStream.destruct();
+				_netStream.destruct();
 			}
-			this._netStream = new VideoNetStream(this._netConnection);
-			this._netStream.checkPolicyFile = true;
-			this._netStream.soundTransform = new SoundTransform(this._status == PlayerStatus.LOADING ? 0 : this._volume);
-			this._netStream.addEventListener(VideoMetaDataEvent.METADATA, this.handleMetaDataEvent);
-			this._netStream.addEventListener(CuePointEvent.CUEPOINT, this.handleCuePointEvent);
-			this._netStream.addEventListener(NetStatusEvent.NET_STATUS, this.handleNetStatusEvent);
-			this._netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.handleAsyncError);
-			this._netStream.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.handleSecurityError);
-			this._netStream.bufferTime = this._bufferTime;
+			_netStream = new VideoNetStream(_netConnection);
+			_netStream.checkPolicyFile = true;
+			_netStream.soundTransform = new SoundTransform(_status == PlayerStatus.LOADING ? 0 : _volume);
+			_netStream.addEventListener(VideoMetaDataEvent.METADATA, handleMetaDataEvent);
+			_netStream.addEventListener(CuePointEvent.CUEPOINT, handleCuePointEvent);
+			_netStream.addEventListener(NetStatusEvent.NET_STATUS, handleNetStatusEvent);
+			_netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, handleAsyncError);
+			_netStream.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
+			_netStream.bufferTime = _bufferTime;
 			
-			this._video.attachNetStream(this._netStream);
+			_video.attachNetStream(_netStream);
 			
-			if (this.debug) this.logDebug("createNetStream: ");
+			if (debug) logDebug("createNetStream: ");
 			
-			this.addChild(this._video);
-			if (this.debug) this.addChild(this._txtDebug);
+			addChild(_video);
+			if (debug) addChild(_txtDebug);
 		}
 		
 		private function createDebugInfo():void
 		{
-			this._txtDebug = this.addChild(this._txtDebug || new TextField()) as TextField;
-			this._txtDebug.background = true;
-			this._txtDebug.alpha = .75;
-			this._txtDebug.border = true;
-			this._txtDebug.multiline = true;
-			this._txtDebug.width = this._video.width;
-			this._txtDebug.autoSize = TextFieldAutoSize.LEFT;
+			_txtDebug = addChild(_txtDebug || new TextField()) as TextField;
+			_txtDebug.background = true;
+			_txtDebug.alpha = .75;
+			_txtDebug.border = true;
+			_txtDebug.multiline = true;
+			_txtDebug.width = _video.width;
+			_txtDebug.autoSize = TextFieldAutoSize.LEFT;
 		}
 		
 		private function handleEnterFrame(event:Event):void
 		{
 			// if loaded, dispatch event
-			if (this.bytesLoaded > 10 && this.bytesLoaded == this.bytesTotal && this._isLoaded == false)
+			if (bytesLoaded > 10 && bytesLoaded == bytesTotal && _isLoaded == false)
 			{
-				this._isLoaded = true;
+				_isLoaded = true;
 				
-				this.dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.MOVIE_LOADED));
+				dispatchEvent(new VideoPlayerEvent(VideoPlayerEvent.MOVIE_LOADED));
 				
-				if (!this._debug) this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+				if (!_debug) removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			}
 			
-			if (this._debug)
+			if (_debug)
 			{
-				this._txtDebug.text = "";
-				this._txtDebug.appendText("url: " + this.videoPath + "\n");
-				if (this.videoPath && !this.isRTMPStream(this.videoPath)) this._txtDebug.appendText((this.isLoaded ? "loaded" : "loading") + ': ' + int(this.bytesLoaded / 1024) + ' / ' + int(this.bytesTotal / 1024) + " KB - " + uint(100 * this.bytesLoaded / this.bytesTotal) + "%\n");
-				this._txtDebug.appendText(this.status + ": " + TimeUtils.secondsToString(this.currentPlayTime) + " / " + TimeUtils.formatTime(this.duration * 1000) + "\n");
-				this._txtDebug.appendText(this.scaleMode + ": " + this.videoWidth + "x" + this.videoHeight);
-				if (!this._video.visible) this._txtDebug.appendText(" (hidden)");
+				_txtDebug.text = "";
+				_txtDebug.appendText("url: " + videoPath + "\n");
+				if (videoPath && !isRTMPStream(videoPath)) _txtDebug.appendText((isLoaded ? "loaded" : "loading") + ': ' + int(bytesLoaded / 1024) + ' / ' + int(bytesTotal / 1024) + " KB - " + uint(100 * bytesLoaded / bytesTotal) + "%\n");
+				_txtDebug.appendText(status + ": " + TimeUtils.secondsToString(currentPlayTime) + " / " + TimeUtils.formatTime(duration * 1000) + "\n");
+				_txtDebug.appendText(scaleMode + ": " + videoWidth + "x" + videoHeight);
+				if (!_video.visible) _txtDebug.appendText(" (hidden)");
 			}
 		}
 		
 		private function setVideoSize():void
 		{
-			var videoWidth:Number = this.videoWidth;
-			var videoHeight:Number = this.videoHeight;
+			var videoWidth:Number = videoWidth;
+			var videoHeight:Number = videoHeight;
 			
-			if (this.debug) this.logDebug("setVideoSize: " + this._scaleMode + " " + videoWidth + "*" + videoHeight);
+			if (debug) logDebug("setVideoSize: " + _scaleMode + " " + videoWidth + "*" + videoHeight);
 			
-			switch (this._scaleMode)
+			switch (_scaleMode)
 			{
 				case ScaleMode.EXACT_FIT:
 				{
 					// do nothing
-					this._video.width = this._width;
-					this._video.height = this._height;
+					_video.width = _width;
+					_video.height = _height;
 					break;
 				}	
 				case ScaleMode.NO_BORDER:
 				{
-					if (this._width / videoWidth > this._height / videoHeight)
+					if (_width / videoWidth > _height / videoHeight)
 					{
-						this._video.height = (this._width / videoWidth) * videoHeight;
-						this._video.width = this._width;
+						_video.height = (_width / videoWidth) * videoHeight;
+						_video.width = _width;
 					}
 					else
 					{
-						this._video.width = (this._height / videoHeight) * videoWidth;
-						this._video.height = this._height;
+						_video.width = (_height / videoHeight) * videoWidth;
+						_video.height = _height;
 					}
 					break;
 				}
 				case ScaleMode.NO_SCALE:
 				{
-					this._video.width = videoWidth;
-					this._video.height = videoHeight;
+					_video.width = videoWidth;
+					_video.height = videoHeight;
 					break;
 				}	
 				case ScaleMode.SHOW_ALL:
 				{
-					if (this._width / videoWidth < this._height / videoHeight)
+					if (_width / videoWidth < _height / videoHeight)
 					{
-						this._video.height = (this._width / videoWidth) * videoHeight;
-						this._video.width = this._width;
+						_video.height = (_width / videoWidth) * videoHeight;
+						_video.width = _width;
 					}
 					else
 					{
-						this._video.width = (this._height / videoHeight) * videoWidth;
-						this._video.height = this._height;
+						_video.width = (_height / videoHeight) * videoWidth;
+						_video.height = _height;
 					}
 					break;
 				}
 			}
-			if (!this._upscaleEnabled)
+			if (!_upscaleEnabled)
 			{
-				if (this._video.width > videoWidth)
+				if (_video.width > videoWidth)
 				{
-					this._video.width = videoWidth;
+					_video.width = videoWidth;
 				}
-				if (this._video.height > videoHeight)
+				if (_video.height > videoHeight)
 				{
-					this._video.height = videoHeight;
+					_video.height = videoHeight;
 				}
 			}
-			this.setAlign();
+			setAlign();
 			
-			this.setBackground();
+			setBackground();
 		}
 		
 		private function setAlign():void
 		{
 			// Horizontal
-			switch (this._align)
+			switch (_align)
 			{
 				case Align.LEFT:
 				case Align.TOP_LEFT:
 				case Align.BOTTOM_LEFT:
-					this._video.x = 0;
+					_video.x = 0;
 					break;
 
 				case Align.RIGHT:
 				case Align.TOP_RIGHT:
 				case Align.BOTTOM_RIGHT:
-					this._video.x = -1 * (this._video.width - this._width);
+					_video.x = -1 * (_video.width - _width);
 					break;
 				
 				default:
-					this._video.x = - 0.5 * (this._video.width - this._width);
+					_video.x = - 0.5 * (_video.width - _width);
 					break;
 			}
 			
 			// Vertical
-			switch (this._align)
+			switch (_align)
 			{
 				case Align.TOP:
 				case Align.TOP_LEFT:
 				case Align.TOP_RIGHT:
-					this._video.y = 0;
+					_video.y = 0;
 					break;
 
 				case Align.BOTTOM:
 				case Align.BOTTOM_LEFT:
 				case Align.BOTTOM_RIGHT:
-					this._video.y = -1 * (this._video.height - this._height);
+					_video.y = -1 * (_video.height - _height);
 					break;
 				
 				default:
-					this._video.y = - 0.5 * (this._video.height - this._height);
+					_video.y = - 0.5 * (_video.height - _height);
 					break;
 			}
 		}
 
 		private function setBackground():void 
 		{
-			this.graphics.clear();
-			if (this._background)
+			graphics.clear();
+			if (_background)
 			{
-				this.graphics.beginFill(this._backgroundColor, this._backgroundAlpha);
-				this.graphics.drawRect(0, 0, this._width, this._height);
-				this.graphics.endFill();
+				graphics.beginFill(_backgroundColor, _backgroundAlpha);
+				graphics.drawRect(0, 0, _width, _height);
+				graphics.endFill();
 			}
 		}
 
@@ -1508,36 +1508,36 @@ package temple.mediaplayers.video.players
 		 */
 		override public function destruct():void
 		{
-			this.removeAllStrongEventListenersForType(StatusEvent.STATUS_CHANGE);
-			this.stop();
-			this.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			removeAllStrongEventListenersForType(StatusEvent.STATUS_CHANGE);
+			stop();
+			removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 
-			if (this._netStream)
+			if (_netStream)
 			{
-				this._netStream.destruct();
-				this._netStream = null;
+				_netStream.destruct();
+				_netStream = null;
 			}
-			if (this._netConnection)
+			if (_netConnection)
 			{
-				this._netConnection.destruct();
-				this._netConnection = null;
+				_netConnection.destruct();
+				_netConnection = null;
 			}
-			this._metaData = null;
+			_metaData = null;
 			
-			if (this._video)
+			if (_video)
 			{
-				this._video.destruct();
-				this._video = null;
-			}
-			
-			if (this._screenShot)
-			{
-				this._screenShot.dispose();
-				this._screenShot = null;
+				_video.destruct();
+				_video = null;
 			}
 			
-			this._txtDebug = null;
-			this._cuePoint = null;
+			if (_screenShot)
+			{
+				_screenShot.dispose();
+				_screenShot = null;
+			}
+			
+			_txtDebug = null;
+			_cuePoint = null;
 			
 			super.destruct();
 		}

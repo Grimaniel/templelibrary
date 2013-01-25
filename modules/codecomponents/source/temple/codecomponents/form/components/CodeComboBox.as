@@ -57,33 +57,33 @@ package temple.codecomponents.form.components
 	{
 		public function CodeComboBox(width:Number = 160, height:Number = 18, items:Array = null)
 		{
-			super(this.addChild(new TextField()) as TextField, this.addChild(new CodeList(width)) as IList);
+			super(addChild(new TextField()) as TextField, addChild(new CodeList(width)) as IList);
 			
-			this.textField.type = TextFieldType.DYNAMIC;
-			this.textField.width = width;
-			this.textField.height = height;
-			this.textField.defaultTextFormat = CodeStyle.textFormat;
+			textField.type = TextFieldType.DYNAMIC;
+			textField.width = width;
+			textField.height = height;
+			textField.defaultTextFormat = CodeStyle.textFormat;
 			this.multiline = multiline;
 			
-			this.hintTextColor = 0x888888;
-			this.errorTextColor = 0xff0000;
+			hintTextColor = 0x888888;
+			errorTextColor = 0xff0000;
 			
-			this.addChildAt(new CodeBackground(width, height), 0);
+			addChildAt(new CodeBackground(width, height), 0);
 			
 			// focus state
 			var focus:FocusFadeState = new FocusFadeState(.2, .2);
 			focus.graphics.beginFill(0xff0000, 1);
 			focus.graphics.drawRect(-1, -1, width+2, height+2);
 			focus.graphics.endFill();
-			this.addChildAt(focus, 0);
+			addChildAt(focus, 0);
 			focus.filters = CodeStyle.focusFilters;
 			
-			this.list.y = height;
-			this.list.filters = CodeStyle.comboBoxListFilter;
+			list.y = height;
+			list.filters = CodeStyle.comboBoxListFilter;
 			
 			// icon
 			var icon:CoreShape = new CoreShape();
-			this.addChild(icon);
+			addChild(icon);
 			
 			icon.graphics.beginFill(CodeStyle.iconColor, CodeStyle.iconAlpha);
 			icon.graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
@@ -101,10 +101,10 @@ package temple.codecomponents.form.components
 			error.graphics.beginFill(0xff0000, 1);
 			error.graphics.drawRect(-1, -1, width+2, height+2);
 			error.graphics.endFill();
-			this.addChild(error);
+			addChild(error);
 			error.filters = CodeStyle.errorFilters;
 			
-			if (items) this.addItems(items);
+			if (items) addItems(items);
 		}
 	}
 }

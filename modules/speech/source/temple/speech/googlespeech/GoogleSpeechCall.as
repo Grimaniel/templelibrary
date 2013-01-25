@@ -68,37 +68,37 @@ package temple.speech.googlespeech
 
 		public function GoogleSpeechCall(callback:Function, audio:ByteArray, bitrate:uint = 44000, language:String = 'en-US', maxResults:uint = 1, profanityFilter:uint = 0) 
 		{
-			this._callback = callback;
-			this._audio = audio;
-			this._bitrate = bitrate;
-			this._language = language;
-			this._maxResults = maxResults;
-			this._profanityFilter = profanityFilter;
+			_callback = callback;
+			_audio = audio;
+			_bitrate = bitrate;
+			_language = language;
+			_maxResults = maxResults;
+			_profanityFilter = profanityFilter;
 		}
 
 		public function get audio():ByteArray
 		{
-			return this._audio;
+			return _audio;
 		}
 
 		public function get bitrate():uint
 		{
-			return this._bitrate;
+			return _bitrate;
 		}
 
 		public function get language():String
 		{
-			return this._language;
+			return _language;
 		}
 
 		public function get maxResults():uint
 		{
-			return this._maxResults;
+			return _maxResults;
 		}
 
 		public function get profanityFilter():uint
 		{
-			return this._profanityFilter;
+			return _profanityFilter;
 		}
 		
 		public function onResult(result:Object):void
@@ -110,55 +110,55 @@ package temple.speech.googlespeech
 			if ('message' in result) message = result['message'];
 			if (data.status == 5) message = 'Audio not recognized';
 			
-			this._result = new GoogleSpeechResult(data, data.hypothese != null, message, data.status.toString());
+			_result = new GoogleSpeechResult(data, data.hypothese != null, message, data.status.toString());
 			
-			if (this._callback != null)
+			if (_callback != null)
 			{
-				var callback:Function = this._callback;
-				this._callback = null;
-				callback(this._result);
+				var callback:Function = _callback;
+				_callback = null;
+				callback(_result);
 			}
 			
-			if (this.result.success)
+			if (result.success)
 			{
-				this.dispatchEvent(new Event(Event.COMPLETE));
+				dispatchEvent(new Event(Event.COMPLETE));
 			}
 			else
 			{
-				this.dispatchEvent(new ErrorEvent(ErrorEvent.ERROR));
+				dispatchEvent(new ErrorEvent(ErrorEvent.ERROR));
 			}
 			
-			this.destruct();
+			destruct();
 		}
 
 		public function onIOError(event:IOErrorEvent):void
 		{
-			this.onResult({status: 6, id: null});
+			onResult({status: 6, id: null});
 		}
 
 		public function onSecurityError(event:SecurityErrorEvent):void 
 		{
-			this.onResult({status: 7, id: null});
+			onResult({status: 7, id: null});
 		}
 		
 		public function cancel():Boolean
 		{
-			if (this._isLoaded) return false;
+			if (_isLoaded) return false;
 			
-			this._isLoading = false;
-			this._isLoaded = true;
+			_isLoading = false;
+			_isLoaded = true;
 			
-			this._result = new GoogleSpeechResult(null, false);
-			this._callback = null;
+			_result = new GoogleSpeechResult(null, false);
+			_callback = null;
 			
-			this.dispatchEvent(new Event(Event.CANCEL));
+			dispatchEvent(new Event(Event.CANCEL));
 			
 			return true;
 		}
 
 		public function get result():IDataResult
 		{
-			return this._result;
+			return _result;
 		}
 		
 		/**
@@ -166,7 +166,7 @@ package temple.speech.googlespeech
 		 */
 		public function get isLoading():Boolean
 		{
-			return this._isLoading;
+			return _isLoading;
 		}
 		
 		/**
@@ -174,7 +174,7 @@ package temple.speech.googlespeech
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._isLoaded;
+			return _isLoaded;
 		}
 
 		/**
@@ -182,10 +182,10 @@ package temple.speech.googlespeech
 		 */
 		override public function destruct():void 
 		{
-			this._callback = null;
-			this._audio = null;
-			this._language = null;
-			this._result = null;
+			_callback = null;
+			_audio = null;
+			_language = null;
+			_result = null;
 			
 			super.destruct();
 		}

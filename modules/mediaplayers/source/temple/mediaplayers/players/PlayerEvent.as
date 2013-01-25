@@ -67,7 +67,7 @@ package temple.mediaplayers.players
 		 */
 		override public function clone():Event 
 		{
-			return new PlayerEvent(this.type, this.bubbles);
+			return new PlayerEvent(type, bubbles);
 		}
 	}
 }

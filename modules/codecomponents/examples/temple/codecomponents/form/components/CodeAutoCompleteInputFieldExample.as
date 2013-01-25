@@ -21,7 +21,7 @@ package
 			super("Temple - CodeAutoCompleteInputFieldExample");
 			
 			var autoCompleteInputField:CodeAutoCompleteInputField = new CodeAutoCompleteInputField();
-			this.addChild(autoCompleteInputField);
+			addChild(autoCompleteInputField);
 			autoCompleteInputField.x = 20;
 			autoCompleteInputField.y = 20;
 			
@@ -30,7 +30,7 @@ package
 			autoCompleteInputField.addItems(["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada", "venenatis", "Aliquam", "tincidunt", "tellus nec", "blandit porttitor", "neque"]);
 
 			autoCompleteInputField = new CodeAutoCompleteInputField(100);
-			this.addChild(autoCompleteInputField);
+			addChild(autoCompleteInputField);
 			autoCompleteInputField.x = 220;
 			autoCompleteInputField.y = 20;
 			

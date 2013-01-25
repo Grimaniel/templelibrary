@@ -111,129 +111,129 @@ package temple.codecomponents.windows
 			
 			super(width, height, ScaleMode.NO_SCALE, Align.TOP_LEFT, true);
 			
-			this._content = this.addChild(new LiquidContainer(10, 10, ScaleMode.NO_SCALE, Align.TOP_LEFT, true)) as LiquidContainer;
-			this._content.background = true;
-			this._content.backgroundColor = CodeStyle.windowBackgroundColor;
-			this._content.backgroundAlpha = CodeStyle.windowBackgroundAlpha;
-			this._content.top = HEADER_SIZE;
-			this._content.left = BORDER_SIZE;
-			this._content.right = BORDER_SIZE;
-			this._content.bottom = BORDER_SIZE;
+			_content = addChild(new LiquidContainer(10, 10, ScaleMode.NO_SCALE, Align.TOP_LEFT, true)) as LiquidContainer;
+			_content.background = true;
+			_content.backgroundColor = CodeStyle.windowBackgroundColor;
+			_content.backgroundAlpha = CodeStyle.windowBackgroundAlpha;
+			_content.top = HEADER_SIZE;
+			_content.left = BORDER_SIZE;
+			_content.right = BORDER_SIZE;
+			_content.bottom = BORDER_SIZE;
 			
-			this._border = this.addChild(new CoreSprite()) as CoreSprite;
-			this._border.filters = CodeStyle.windowBorderFilters;
+			_border = addChild(new CoreSprite()) as CoreSprite;
+			_border.filters = CodeStyle.windowBorderFilters;
 			
-			this._header = this._border.addChild(new BaseButton()) as BaseButton;
-			this._header.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
-			this._header.graphics.drawRect(0, 0, 1, HEADER_SIZE);
-			this._header.graphics.endFill();
-			this._header.addEventListener(MouseEvent.DOUBLE_CLICK, this.handleClick);
-			this._header.doubleClickEnabled = true;
-			new LiquidBehavior(this._header, {left:0, top:0, right: 0}, this);
+			_header = _border.addChild(new BaseButton()) as BaseButton;
+			_header.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
+			_header.graphics.drawRect(0, 0, 1, HEADER_SIZE);
+			_header.graphics.endFill();
+			_header.addEventListener(MouseEvent.DOUBLE_CLICK, handleClick);
+			_header.doubleClickEnabled = true;
+			new LiquidBehavior(_header, {left:0, top:0, right: 0}, this);
 			
 			/**
 			 * Sides
 			 */
-			this._topSide = this._border.addChild(new BaseButton()) as BaseButton;
-			this._topSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
-			this._topSide.graphics.drawRect(0, 0, 1, BORDER_SIZE);
-			this._topSide.graphics.endFill();
-			new LiquidBehavior(this._topSide, {left:0, top:0, right: 0}, this);
+			_topSide = _border.addChild(new BaseButton()) as BaseButton;
+			_topSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
+			_topSide.graphics.drawRect(0, 0, 1, BORDER_SIZE);
+			_topSide.graphics.endFill();
+			new LiquidBehavior(_topSide, {left:0, top:0, right: 0}, this);
 			
-			this._leftSide = this._border.addChild(new BaseButton()) as BaseButton;
-			this._leftSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
-			this._leftSide.graphics.drawRect(0, 0, BORDER_SIZE, 1);
-			this._leftSide.graphics.endFill();
-			new LiquidBehavior(this._leftSide, {left:0, top:HEADER_SIZE, bottom: 0}, this);
+			_leftSide = _border.addChild(new BaseButton()) as BaseButton;
+			_leftSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
+			_leftSide.graphics.drawRect(0, 0, BORDER_SIZE, 1);
+			_leftSide.graphics.endFill();
+			new LiquidBehavior(_leftSide, {left:0, top:HEADER_SIZE, bottom: 0}, this);
 
-			this._rightSide = this._border.addChild(new BaseButton()) as BaseButton;
-			this._rightSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
-			this._rightSide.graphics.drawRect(0, 0, BORDER_SIZE, 1);
-			this._rightSide.graphics.endFill();
-			new LiquidBehavior(this._rightSide, {right:0, top:HEADER_SIZE, bottom: 0}, this);
+			_rightSide = _border.addChild(new BaseButton()) as BaseButton;
+			_rightSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
+			_rightSide.graphics.drawRect(0, 0, BORDER_SIZE, 1);
+			_rightSide.graphics.endFill();
+			new LiquidBehavior(_rightSide, {right:0, top:HEADER_SIZE, bottom: 0}, this);
 
-			this._bottomSide = this._border.addChild(new BaseButton()) as BaseButton;
-			this._bottomSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
-			this._bottomSide.graphics.drawRect(0, 0, BORDER_SIZE, BORDER_SIZE);
-			this._bottomSide.graphics.endFill();
-			new LiquidBehavior(this._bottomSide, {left:0, right:0, bottom: 0}, this);
+			_bottomSide = _border.addChild(new BaseButton()) as BaseButton;
+			_bottomSide.graphics.beginFill(CodeStyle.windowBorderBackgroundColor);
+			_bottomSide.graphics.drawRect(0, 0, BORDER_SIZE, BORDER_SIZE);
+			_bottomSide.graphics.endFill();
+			new LiquidBehavior(_bottomSide, {left:0, right:0, bottom: 0}, this);
 
-			this._resizeButton = this._border.addChild(new BaseButton()) as BaseButton;
-			this._resizeButton.graphics.beginFill(CodeStyle.windowBorderBackgroundColor, 1);
+			_resizeButton = _border.addChild(new BaseButton()) as BaseButton;
+			_resizeButton.graphics.beginFill(CodeStyle.windowBorderBackgroundColor, 1);
 			const size:uint = 15;
-			this._resizeButton.graphics.moveTo(size, 0);
-			this._resizeButton.graphics.lineTo(size, size);
-			this._resizeButton.graphics.lineTo(0, size);
-			this._resizeButton.graphics.lineTo(size, 0);
-			this._resizeButton.graphics.endFill();
-			new LiquidBehavior(this._resizeButton, {right:0, bottom:0}, this);
+			_resizeButton.graphics.moveTo(size, 0);
+			_resizeButton.graphics.lineTo(size, size);
+			_resizeButton.graphics.lineTo(0, size);
+			_resizeButton.graphics.lineTo(size, 0);
+			_resizeButton.graphics.endFill();
+			new LiquidBehavior(_resizeButton, {right:0, bottom:0}, this);
 			
-			new ScaleBehavior(this, this._topSide, new Point(0, this.height), false, false, true, false);
-			new ScaleBehavior(this, this._leftSide, new Point(this.width, 0), false, true, false, false);
-			new ScaleBehavior(this, this._rightSide, new Point(0, 0), false, true, false, false);
-			new ScaleBehavior(this, this._bottomSide, new Point(0, 0), false, false, true, false);
-			new ScaleBehavior(this, this._resizeButton, new Point(0, 0), true, true, true, false).addEventListener(ScaleBehaviorEvent.SCALING, this.handleScaling);
+			new ScaleBehavior(this, _topSide, new Point(0, height), false, false, true, false);
+			new ScaleBehavior(this, _leftSide, new Point(width, 0), false, true, false, false);
+			new ScaleBehavior(this, _rightSide, new Point(0, 0), false, true, false, false);
+			new ScaleBehavior(this, _bottomSide, new Point(0, 0), false, false, true, false);
+			new ScaleBehavior(this, _resizeButton, new Point(0, 0), true, true, true, false).addEventListener(ScaleBehaviorEvent.SCALING, handleScaling);
 			
-			this._label = this.addChild(new CodeLabel(label)) as CodeLabel;
-			this._label.mouseEnabled = this._label.mouseChildren = false;
-			this._label.addEventListener(Event.CHANGE, this.dispatchEvent);
+			_label = addChild(new CodeLabel(label)) as CodeLabel;
+			_label.mouseEnabled = _label.mouseChildren = false;
+			_label.addEventListener(Event.CHANGE, dispatchEvent);
 
-			this._dragBehavior = new DragBehavior(this, null, this._header);
-			this._dragBehavior.addEventListener(DragBehaviorEvent.DRAG_START, this.handleDragStart);
-			this._moveBehavior = new MoveBehavior(this, null, this._header);
-			this._moveBehavior.addEventListener(MoveBehaviorEvent.MOVE, this.handleMove);
+			_dragBehavior = new DragBehavior(this, null, _header);
+			_dragBehavior.addEventListener(DragBehaviorEvent.DRAG_START, handleDragStart);
+			_moveBehavior = new MoveBehavior(this, null, _header);
+			_moveBehavior.addEventListener(MoveBehaviorEvent.MOVE, handleMove);
 			
 			/**
 			 * Buttons
 			 */
-			this._buttonContainer = new LayoutContainer(NaN, NaN, Orientation.HORIZONTAL, Direction.DESCENDING, 3);
-			this._buttonContainer.top = 3;
-			this._buttonContainer.right = 4;
-			this._buttonContainer.ignoreInvisibleChildren = true;
-			this.addChild(this._buttonContainer);
+			_buttonContainer = new LayoutContainer(NaN, NaN, Orientation.HORIZONTAL, Direction.DESCENDING, 3);
+			_buttonContainer.top = 3;
+			_buttonContainer.right = 4;
+			_buttonContainer.ignoreInvisibleChildren = true;
+			addChild(_buttonContainer);
 			
-			this._closeButton = this._buttonContainer.addChild(new CodeCloseButton()) as CodeButton;
-			this._closeButton.addEventListener(MouseEvent.CLICK, this.handleClick);
+			_closeButton = _buttonContainer.addChild(new CodeCloseButton()) as CodeButton;
+			_closeButton.addEventListener(MouseEvent.CLICK, handleClick);
 
-			this._collapseButton = this._buttonContainer.addChild(new CodeCollapseButton()) as CodeButton;
-			this._collapseButton.addEventListener(MouseEvent.CLICK, this.handleClick);
+			_collapseButton = _buttonContainer.addChild(new CodeCollapseButton()) as CodeButton;
+			_collapseButton.addEventListener(MouseEvent.CLICK, handleClick);
 
-			this._expandButton = this._buttonContainer.addChild(new CodeExpandButton()) as CodeButton;
-			this._expandButton.addEventListener(MouseEvent.CLICK, this.handleClick);
+			_expandButton = _buttonContainer.addChild(new CodeExpandButton()) as CodeButton;
+			_expandButton.addEventListener(MouseEvent.CLICK, handleClick);
 
 			/**
 			 * Scrolling
 			 */
-			this._scrollBehavior = new ScrollBehavior(this._content, this._content.scrollRect);
+			_scrollBehavior = new ScrollBehavior(_content, _content.scrollRect);
 			
-			this._verticalScrollBar = this.addChild(new CodeScrollBar(Orientation.VERTICAL, 160, true, this._scrollBehavior)) as CodeScrollBar;
-			this._verticalScrollBar.top = HEADER_SIZE;
-			this._verticalScrollBar.right = BORDER_SIZE;
-			this._verticalScrollBar.bottom = BORDER_SIZE + this._verticalScrollBar.width;
+			_verticalScrollBar = addChild(new CodeScrollBar(Orientation.VERTICAL, 160, true, _scrollBehavior)) as CodeScrollBar;
+			_verticalScrollBar.top = HEADER_SIZE;
+			_verticalScrollBar.right = BORDER_SIZE;
+			_verticalScrollBar.bottom = BORDER_SIZE + _verticalScrollBar.width;
 
-			this._horizontalScrollBar = this.addChild(new CodeScrollBar(Orientation.HORIZONTAL, 160, true, this._scrollBehavior)) as CodeScrollBar;
-			this._horizontalScrollBar.left = BORDER_SIZE;
-			this._horizontalScrollBar.right = BORDER_SIZE + this._verticalScrollBar.width;
-			this._horizontalScrollBar.bottom = BORDER_SIZE;
+			_horizontalScrollBar = addChild(new CodeScrollBar(Orientation.HORIZONTAL, 160, true, _scrollBehavior)) as CodeScrollBar;
+			_horizontalScrollBar.left = BORDER_SIZE;
+			_horizontalScrollBar.right = BORDER_SIZE + _verticalScrollBar.width;
+			_horizontalScrollBar.bottom = BORDER_SIZE;
 			
-			this.minimalWidth = 40;
-			this.minimalHeight = 28;
+			minimalWidth = 40;
+			minimalHeight = 28;
 			
-			this.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-			this.addEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
+			addEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+			addEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
 			
-			this.filters = CodeStyle.windowFilters;
-			this.expand();
+			filters = CodeStyle.windowFilters;
+			expand();
 			
 			/**
 			 * ToolTip info
 			 */
 			if (ToolTip.clip)
 			{
-				ToolTip.add(this._closeButton, "Close window");
-				ToolTip.add(this._expandButton, "Open window");
-				ToolTip.add(this._collapseButton, "Minimize window");
-				ToolTip.add(this._resizeButton, "Resize window");
+				ToolTip.add(_closeButton, "Close window");
+				ToolTip.add(_expandButton, "Open window");
+				ToolTip.add(_collapseButton, "Minimize window");
+				ToolTip.add(_resizeButton, "Resize window");
 			}
 			
 			this.closable = closable;
@@ -241,66 +241,66 @@ package temple.codecomponents.windows
 
 		public function get label():String
 		{
-			return this._label ? this._label.label : null;
+			return _label ? _label.label : null;
 		}
 
 		public function set label(value:String):void
 		{
-			this._label.label = value;
+			_label.label = value;
 		}
 
 		public function get draggable():Boolean
 		{
-			return this._dragBehavior.enabled;
+			return _dragBehavior.enabled;
 		}
 
 		public function set draggable(value:Boolean):void
 		{
-			this._dragBehavior.enabled = value;
+			_dragBehavior.enabled = value;
 		}
 
 		public function expand():void
 		{
-			this.expanded = true;
+			expanded = true;
 		}
 
 		public function collapse():void
 		{
-			this.expanded = false;
+			expanded = false;
 		}
 
 		public function get expanded():Boolean
 		{
-			return this._content.visible;
+			return _content.visible;
 		}
 
 		public function set expanded(value:Boolean):void
 		{
-			this._resizeButton.visible = 
-			this._content.visible = 
-			this._leftSide.visible = 
-			this._rightSide.visible = 
-			this._bottomSide.visible = 
-			this._collapseButton.visible = 
+			_resizeButton.visible = 
+			_content.visible = 
+			_leftSide.visible = 
+			_rightSide.visible = 
+			_bottomSide.visible = 
+			_collapseButton.visible = 
 			value;
-			this._expandButton.visible = !value;
-			this._buttonContainer.layoutChildren();
-			this.overflow = this.overflow; 
+			_expandButton.visible = !value;
+			_buttonContainer.layoutChildren();
+			this.overflow = overflow; 
 		}
 
 		public function close():void
 		{
-			this.destruct();
+			destruct();
 		}
 		
 		public function get content():LiquidContainer
 		{
-			return this._content;
+			return _content;
 		}
 		
 		public function add(child:DisplayObject, x:Number = 0, y:Number = 0):DisplayObject
 		{
-			this._content.addChild(child);
+			_content.addChild(child);
 			child.x = x;
 			child.y = y;
 			return child;
@@ -308,56 +308,56 @@ package temple.codecomponents.windows
 
 		public function get scaleHorizontal():Boolean
 		{
-			return this._rightSide.enabled;
+			return _rightSide.enabled;
 		}
 
 		public function set scaleHorizontal(value:Boolean):void
 		{
-			this._leftSide.enabled = this._rightSide.enabled = this._resizeButton.enabled = this._resizeButton.visible = value;
+			_leftSide.enabled = _rightSide.enabled = _resizeButton.enabled = _resizeButton.visible = value;
 		}
 
 		public function get scaleVertical():Boolean
 		{
-			return this._bottomSide.enabled;
+			return _bottomSide.enabled;
 		}
 
 		public function set scaleVertical(value:Boolean):void
 		{
-			this._topSide.enabled = this._bottomSide.enabled = this._resizeButton.enabled = this._resizeButton.visible = value;
+			_topSide.enabled = _bottomSide.enabled = _resizeButton.enabled = _resizeButton.visible = value;
 		}
 
 		public function get scalable():Boolean
 		{
-			return this.scaleHorizontal || this.scaleVertical;
+			return scaleHorizontal || scaleVertical;
 		}
 
 		public function set scalable(value:Boolean):void
 		{
-			this.scaleHorizontal = this.scaleVertical = value;
+			scaleHorizontal = scaleVertical = value;
 		}
 
 		public function get closable():Boolean
 		{
-			return this._closeButton.visible;
+			return _closeButton.visible;
 		}
 
 		public function set closable(value:Boolean):void
 		{
-			this._closeButton.visible = value;
+			_closeButton.visible = value;
 		}
 		
 		public function get focus():Boolean
 		{
-			return this._focus;
+			return _focus;
 		}
 
 		public function set focus(value:Boolean):void
 		{
 			if (value)
 			{
-				FocusManager.focus = this._header;
+				FocusManager.focus = _header;
 			}
-			else if (this._focus)
+			else if (_focus)
 			{
 				FocusManager.focus = null;
 			}
@@ -365,15 +365,15 @@ package temple.codecomponents.windows
 		
 		public function get overflow():String
 		{
-			if (!this.clipping)
+			if (!clipping)
 			{
 				return Overflow.VISIBLE;
 			}
-			else if (this._verticalScrollBar.autoHide)
+			else if (_verticalScrollBar.autoHide)
 			{
 				return Overflow.AUTO;
 			}
-			else if (this._verticalScrollBar.visible)
+			else if (_verticalScrollBar.visible)
 			{
 				return Overflow.SCROLL;
 			}
@@ -382,48 +382,48 @@ package temple.codecomponents.windows
 
 		public function set overflow(value:String):void
 		{
-			if (this.expanded)
+			if (expanded)
 			{
 				switch(value)
 				{
 					case Overflow.VISIBLE:
 					{
-						this.clipping = false;
-						this._verticalScrollBar.autoHide = false;
-						this._horizontalScrollBar.autoHide = false;
-						this._verticalScrollBar.visible = false;
-						this._horizontalScrollBar.visible = false;
-						this._scrollBehavior.disable();
+						clipping = false;
+						_verticalScrollBar.autoHide = false;
+						_horizontalScrollBar.autoHide = false;
+						_verticalScrollBar.visible = false;
+						_horizontalScrollBar.visible = false;
+						_scrollBehavior.disable();
 						break;
 					}
 					case Overflow.HIDDEN:
 					{
-						this.clipping = true;
-						this._verticalScrollBar.autoHide = false;
-						this._horizontalScrollBar.autoHide = false;
-						this._verticalScrollBar.visible = false;
-						this._horizontalScrollBar.visible = false;
-						this._scrollBehavior.disable();
+						clipping = true;
+						_verticalScrollBar.autoHide = false;
+						_horizontalScrollBar.autoHide = false;
+						_verticalScrollBar.visible = false;
+						_horizontalScrollBar.visible = false;
+						_scrollBehavior.disable();
 						break;
 					}
 					case Overflow.AUTO:
 					{
-						this.clipping = true;
-						this._verticalScrollBar.autoHide = true;
-						this._horizontalScrollBar.autoHide = true;
-						this._verticalScrollBar.visible = this.contentHeight > this.height;
-						this._horizontalScrollBar.visible = this.contentWidth > this.width;
-						this._scrollBehavior.enable();
+						clipping = true;
+						_verticalScrollBar.autoHide = true;
+						_horizontalScrollBar.autoHide = true;
+						_verticalScrollBar.visible = contentHeight > height;
+						_horizontalScrollBar.visible = contentWidth > width;
+						_scrollBehavior.enable();
 						break;
 					}
 					case Overflow.SCROLL:
 					{
-						this.clipping = true;
-						this._verticalScrollBar.autoHide = false;
-						this._horizontalScrollBar.autoHide = false;
-						this._verticalScrollBar.visible = true;
-						this._horizontalScrollBar.visible = true;
-						this._scrollBehavior.enable();
+						clipping = true;
+						_verticalScrollBar.autoHide = false;
+						_horizontalScrollBar.autoHide = false;
+						_verticalScrollBar.visible = true;
+						_horizontalScrollBar.visible = true;
+						_scrollBehavior.enable();
 						break;
 					}
 					default:
@@ -435,8 +435,8 @@ package temple.codecomponents.windows
 			}
 			else
 			{
-				this._verticalScrollBar.visible = false;
-				this._horizontalScrollBar.visible = false;
+				_verticalScrollBar.visible = false;
+				_horizontalScrollBar.visible = false;
 			}
 		}
 		
@@ -444,67 +444,67 @@ package temple.codecomponents.windows
 		{
 			switch (event.target)
 			{
-				case this._closeButton:
-					this.close();
+				case _closeButton:
+					close();
 					break;
-				case this._expandButton:
-					this.expand();
+				case _expandButton:
+					expand();
 					break;
-				case this._collapseButton:
-					this.collapse();
+				case _collapseButton:
+					collapse();
 					break;
-				case this._header:
-					this.expanded = !this.expanded;
+				case _header:
+					expanded = !expanded;
 					break;
 			}
 		}
 		
 		private function handleFocusIn(event:FocusEvent):void
 		{
-			this._focus = true;
-			if (this.parent) this.parent.addChild(this);
+			_focus = true;
+			if (parent) parent.addChild(this);
 		}
 
 		private function handleFocusOut(event:FocusEvent):void
 		{
-			this._focus = false;
+			_focus = false;
 		}
 		
 		private function handleDragStart(event:DragBehaviorEvent):void
 		{
-			this.liquidBehavior.enabled = false;
+			liquidBehavior.enabled = false;
 		}
 
 		private function handleMove(event:MoveBehaviorEvent):void
 		{
-			this.liquidBehavior.enabled = false;
+			liquidBehavior.enabled = false;
 		}
 		
 		private function handleScaling(event:ScaleBehaviorEvent):void
 		{
-			if (ToolTip.clip) ToolTip.add(this._resizeButton, "Resize window (" + this.width + ", " + this.height + ")");
+			if (ToolTip.clip) ToolTip.add(_resizeButton, "Resize window (" + width + ", " + height + ")");
 		}
 		
 		override public function destruct():void
 		{
-			this._label = null;
-			this._dragBehavior = null;
-			this._moveBehavior = null;
-			this._content = null;
-			this._border = null;
-			this._header = null;
-			this._topSide = null;
-			this._leftSide = null;
-			this._rightSide = null;
-			this._bottomSide = null;
-			this._resizeButton = null;
-			this._closeButton = null;
-			this._collapseButton = null;
-			this._expandButton = null;
-			this._buttonContainer = null;
-			this._scrollBehavior = null;
-			this._verticalScrollBar = null;
-			this._horizontalScrollBar = null;
+			_label = null;
+			_dragBehavior = null;
+			_moveBehavior = null;
+			_content = null;
+			_border = null;
+			_header = null;
+			_topSide = null;
+			_leftSide = null;
+			_rightSide = null;
+			_bottomSide = null;
+			_resizeButton = null;
+			_closeButton = null;
+			_collapseButton = null;
+			_expandButton = null;
+			_buttonContainer = null;
+			_scrollBehavior = null;
+			_verticalScrollBar = null;
+			_horizontalScrollBar = null;
 			
 			super.destruct();
 		}

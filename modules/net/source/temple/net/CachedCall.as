@@ -55,17 +55,17 @@ package temple.net
 
 		public function CachedCall()
 		{
-			this.toStringProps.push("result");
+			toStringProps.push("result");
 		}
 
 		public function execute(result:IDataResult, callback:Function, frameDelay:int = 1):CachedCall 
 		{
-			this._result = result;
+			_result = result;
 			
 			// do framedelay for async
 			if (frameDelay > 0)
 			{
-				this._frameDelay = new FrameDelay(function ():void
+				_frameDelay = new FrameDelay(function ():void
 				{
 					_isLoading = false;
 					_isLoaded = true;
@@ -73,12 +73,12 @@ package temple.net
 					dispatchEvent(new Event(Event.COMPLETE));
 				}, frameDelay);
 				
-				this._isLoading = true;
+				_isLoading = true;
 			}
 			else
 			{
-				this._isLoading = false;
-				this._isLoaded = true;
+				_isLoading = false;
+				_isLoaded = true;
 				
 				callback(result);
 				dispatchEvent(new Event(Event.COMPLETE));
@@ -92,9 +92,9 @@ package temple.net
 		 */
 		public function cancel():Boolean
 		{
-			if (this._isLoaded || !this._frameDelay) return false;
+			if (_isLoaded || !_frameDelay) return false;
 			
-			this._frameDelay.destruct();
+			_frameDelay.destruct();
 			dispatchEvent(new Event(Event.CANCEL));
 			return true;
 		}
@@ -104,7 +104,7 @@ package temple.net
 		 */
 		public function get result():IDataResult
 		{
-			return this._result;
+			return _result;
 		}
 		
 		/**
@@ -112,7 +112,7 @@ package temple.net
 		 */
 		public function get isLoading():Boolean
 		{
-			return this._isLoading;
+			return _isLoading;
 		}
 		
 		/**
@@ -120,7 +120,7 @@ package temple.net
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._isLoaded;
+			return _isLoaded;
 		}
 		
 		/**
@@ -128,10 +128,10 @@ package temple.net
 		 */
 		override public function destruct():void 
 		{
-			if (this._frameDelay)
+			if (_frameDelay)
 			{
-				this._frameDelay.destruct();
-				this._frameDelay = null;
+				_frameDelay.destruct();
+				_frameDelay = null;
 			}
 			super.destruct();
 		}

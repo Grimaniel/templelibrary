@@ -105,18 +105,18 @@ package temple.mediaplayers.players.controls
 			this.mouseChildren = true;
 			this.mouseEnabled = true;
 			
-			this.playButton ||= this.getChildByName(playButtonInstanceName) as InteractiveObject;
-			this.pauseButton ||= this.getChildByName(pauseButtonInstanceName) as InteractiveObject;
-			this.resumeButton ||= this.getChildByName(resumeButtonInstanceName) as InteractiveObject;
-			this.muteButton ||= this.getChildByName(PlayerControls.muteButtonInstanceName) as InteractiveObject;
-			this.fullScreenButton ||= this.getChildByName(PlayerControls.fullScreenButtonInstanceName) as InteractiveObject;
-			this.progressBar ||= this.getChildByName(PlayerControls.progressBarInstanceName) as PlayerProgressBar;
+			this.playButton ||= getChildByName(playButtonInstanceName) as InteractiveObject;
+			this.pauseButton ||= getChildByName(pauseButtonInstanceName) as InteractiveObject;
+			this.resumeButton ||= getChildByName(resumeButtonInstanceName) as InteractiveObject;
+			this.muteButton ||= getChildByName(PlayerControls.muteButtonInstanceName) as InteractiveObject;
+			this.fullScreenButton ||= getChildByName(PlayerControls.fullScreenButtonInstanceName) as InteractiveObject;
+			this.progressBar ||= getChildByName(PlayerControls.progressBarInstanceName) as PlayerProgressBar;
 			
-			this._autoHideTimer = new CoreTimer(1000);
-			this._autoHideTimer.addEventListener(TimerEvent.TIMER, this.handleAutoHideTimerEvent);
-			this.show(true);
+			_autoHideTimer = new CoreTimer(1000);
+			_autoHideTimer.addEventListener(TimerEvent.TIMER, handleAutoHideTimerEvent);
+			show(true);
 			
-			this.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
+			addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
 		}
 
 		/**
@@ -124,8 +124,8 @@ package temple.mediaplayers.players.controls
 		 */
 		override public function play():void
 		{
-			if (this.debug) this.logDebug("play: ");
-			if (this._player) this._player.play();
+			if (debug) logDebug("play: ");
+			if (_player) _player.play();
 		}
 
 		/**
@@ -133,8 +133,8 @@ package temple.mediaplayers.players.controls
 		 */
 		override public function stop():void
 		{
-			if (this.debug) this.logDebug("stop: ");
-			if (this._player) this._player.stop();
+			if (debug) logDebug("stop: ");
+			if (_player) _player.stop();
 		}
 
 		/**
@@ -142,8 +142,8 @@ package temple.mediaplayers.players.controls
 		 */
 		public function seek(seconds:Number = 0):void
 		{
-			if (this.debug) this.logDebug("seek: " + seconds);
-			if (this._player) this._player.seek(seconds);
+			if (debug) logDebug("seek: " + seconds);
+			if (_player) _player.seek(seconds);
 		}
 
 		/**
@@ -151,7 +151,7 @@ package temple.mediaplayers.players.controls
 		 */
 		public function get currentPlayTime():Number
 		{
-			return this._player ? this._player.currentPlayTime : NaN;
+			return _player ? _player.currentPlayTime : NaN;
 		}
 
 		/**
@@ -159,7 +159,7 @@ package temple.mediaplayers.players.controls
 		 */
 		public function get duration():Number
 		{
-			return this._player ? this._player.duration : 0;
+			return _player ? _player.duration : 0;
 		}
 
 		/**
@@ -167,7 +167,7 @@ package temple.mediaplayers.players.controls
 		 */
 		public function get currentPlayFactor():Number
 		{
-			return this._player ? this._player.currentPlayFactor : 0;
+			return _player ? _player.currentPlayFactor : 0;
 		}
 
 		/**
@@ -175,7 +175,7 @@ package temple.mediaplayers.players.controls
 		 */
 		public function get autoRewind():Boolean
 		{
-			return this._player ? this._player.autoRewind : false;
+			return _player ? _player.autoRewind : false;
 		}
 
 		/**
@@ -183,8 +183,8 @@ package temple.mediaplayers.players.controls
 		 */
 		public function set autoRewind(value:Boolean):void
 		{
-			if (this.debug) this.logDebug("autoRewind: " + value);
-			if (this._player) this._player.autoRewind = value;
+			if (debug) logDebug("autoRewind: " + value);
+			if (_player) _player.autoRewind = value;
 		}
 
 		/**
@@ -192,8 +192,8 @@ package temple.mediaplayers.players.controls
 		 */
 		public function pause():void
 		{
-			if (this.debug) this.logDebug("pause: ");
-			if (this._player) this._player.pause();
+			if (debug) logDebug("pause: ");
+			if (_player) _player.pause();
 		}
 
 		/**
@@ -201,8 +201,8 @@ package temple.mediaplayers.players.controls
 		 */
 		public function resume():void
 		{
-			if (this.debug) this.logDebug("resume: ");
-			if (this._player) this._player.resume();
+			if (debug) logDebug("resume: ");
+			if (_player) _player.resume();
 		}
 
 		/**
@@ -210,7 +210,7 @@ package temple.mediaplayers.players.controls
 		 */
 		public function get paused():Boolean
 		{
-			return this._player ? this._player.paused : false;
+			return _player ? _player.paused : false;
 		}
 
 		/**
@@ -218,159 +218,159 @@ package temple.mediaplayers.players.controls
 		 */
 		public function get status():String
 		{
-			return this._player ? this._player.status : null;
+			return _player ? _player.status : null;
 		}
 		
 		public function get player():IPlayer
 		{
-			return this._player;
+			return _player;
 		}
 
 		public function set player(value:IPlayer):void
 		{
-			if (this.debug) this.logDebug("player: " + value);
-			if (this._player)
+			if (debug) logDebug("player: " + value);
+			if (_player)
 			{
-				this._player.removeEventListener(StatusEvent.STATUS_CHANGE, this.handlePlayerStatusChange);
-				this._player.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
-				this._player.removeEventListener(MouseEvent.ROLL_OUT, this.handlePlayerRollOut);
-				this._player.removeEventListener(SoundEvent.VOLUME_CHANGE, this.handlePlayerVolumeChanged);
+				_player.removeEventListener(StatusEvent.STATUS_CHANGE, handlePlayerStatusChange);
+				_player.removeEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
+				_player.removeEventListener(MouseEvent.ROLL_OUT, handlePlayerRollOut);
+				_player.removeEventListener(SoundEvent.VOLUME_CHANGE, handlePlayerVolumeChanged);
 			}
-			this._player = value;
-			if (this._progressBar) this._progressBar.player = this._player;
-			if (this._player)
+			_player = value;
+			if (_progressBar) _progressBar.player = _player;
+			if (_player)
 			{
-				this._player.addEventListener(StatusEvent.STATUS_CHANGE, this.handlePlayerStatusChange);
-				this._player.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
-				this._player.addEventListener(MouseEvent.ROLL_OUT, this.handlePlayerRollOut);
-				this._player.addEventListener(SoundEvent.VOLUME_CHANGE, this.handlePlayerVolumeChanged);
-				this.updateToStatus(this._player.status);
+				_player.addEventListener(StatusEvent.STATUS_CHANGE, handlePlayerStatusChange);
+				_player.addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
+				_player.addEventListener(MouseEvent.ROLL_OUT, handlePlayerRollOut);
+				_player.addEventListener(SoundEvent.VOLUME_CHANGE, handlePlayerVolumeChanged);
+				updateToStatus(_player.status);
 			}
 		}
 
 		public function get playButton():InteractiveObject
 		{
-			return this._playButton;
+			return _playButton;
 		}
 
 		public function set playButton(value:InteractiveObject):void
 		{
-			if (this._playButton) this._playButton.removeEventListener(MouseEvent.CLICK, this.handleClick);
-			this._playButton = value;
-			if (this._playButton) this._playButton.addEventListener(MouseEvent.CLICK, this.handleClick);
+			if (_playButton) _playButton.removeEventListener(MouseEvent.CLICK, handleClick);
+			_playButton = value;
+			if (_playButton) _playButton.addEventListener(MouseEvent.CLICK, handleClick);
 		}
 
 		public function get pauseButton():InteractiveObject
 		{
-			return this._pauseButton;
+			return _pauseButton;
 		}
 
 		public function set pauseButton(value:InteractiveObject):void
 		{
-			if (this._pauseButton) this._pauseButton.removeEventListener(MouseEvent.CLICK, this.handleClick);
-			this._pauseButton = value;
-			if (this._pauseButton) this._pauseButton.addEventListener(MouseEvent.CLICK, this.handleClick);
-			if (this._player) this.updateToStatus(this._player.status);
+			if (_pauseButton) _pauseButton.removeEventListener(MouseEvent.CLICK, handleClick);
+			_pauseButton = value;
+			if (_pauseButton) _pauseButton.addEventListener(MouseEvent.CLICK, handleClick);
+			if (_player) updateToStatus(_player.status);
 		}
 
 		public function get resumeButton():InteractiveObject
 		{
-			return this._resumeButton;
+			return _resumeButton;
 		}
 
 		public function set resumeButton(value:InteractiveObject):void
 		{
-			if (this._resumeButton) this._resumeButton.removeEventListener(MouseEvent.CLICK, this.handleClick);
-			this._resumeButton = value;
-			if (this._resumeButton) this._resumeButton.addEventListener(MouseEvent.CLICK, this.handleClick);
-			if (this._player) this.updateToStatus(this._player.status);
+			if (_resumeButton) _resumeButton.removeEventListener(MouseEvent.CLICK, handleClick);
+			_resumeButton = value;
+			if (_resumeButton) _resumeButton.addEventListener(MouseEvent.CLICK, handleClick);
+			if (_player) updateToStatus(_player.status);
 		}
 		
 		public function get muteButton():InteractiveObject
 		{
-			return this._muteButton;
+			return _muteButton;
 		}
 
 		public function set muteButton(value:InteractiveObject):void
 		{
-			if (this._muteButton) this._muteButton.removeEventListener(MouseEvent.CLICK, this.handleClick);
-			this._muteButton = value;
-			if (this._muteButton)
+			if (_muteButton) _muteButton.removeEventListener(MouseEvent.CLICK, handleClick);
+			_muteButton = value;
+			if (_muteButton)
 			{
-				this._muteButton.addEventListener(MouseEvent.CLICK, this.handleClick);
-				if (this._muteButton is ISelectable && this._player is IAudible)
+				_muteButton.addEventListener(MouseEvent.CLICK, handleClick);
+				if (_muteButton is ISelectable && _player is IAudible)
 				{
-					ISelectable(this._muteButton).selected = !IAudible(this._player).volume;
+					ISelectable(_muteButton).selected = !IAudible(_player).volume;
 				}
 			}
 		}
 
 		public function get fullScreenButton():InteractiveObject
 		{
-			return this._fullScreenButton;
+			return _fullScreenButton;
 		}
 
 		public function set fullScreenButton(value:InteractiveObject):void
 		{
-			if (this._fullScreenButton) this._fullScreenButton.removeEventListener(MouseEvent.CLICK, this.handleClick);
-			this._fullScreenButton = value;
-			if (this._fullScreenButton) this._fullScreenButton.addEventListener(MouseEvent.CLICK, this.handleClick);
+			if (_fullScreenButton) _fullScreenButton.removeEventListener(MouseEvent.CLICK, handleClick);
+			_fullScreenButton = value;
+			if (_fullScreenButton) _fullScreenButton.addEventListener(MouseEvent.CLICK, handleClick);
 		}
 		
 		public function get progressBar() : PlayerProgressBar
 		{
-			return this._progressBar;
+			return _progressBar;
 		}
 		
 		public function set progressBar(value:PlayerProgressBar):void
 		{
-			this._progressBar = value;
-			if (this._progressBar) this._progressBar.player = this._player;
+			_progressBar = value;
+			if (_progressBar) _progressBar.player = _player;
 		}
 		
 		public function get toggleResumePauseButtonsVisibility():Boolean
 		{
-			return this._toggleResumePauseButtonsVisibility;
+			return _toggleResumePauseButtonsVisibility;
 		}
 
 		public function set toggleResumePauseButtonsVisibility(value:Boolean):void
 		{
-			this._toggleResumePauseButtonsVisibility = value;
-			if (this._player) this.updateToStatus(this._player.status);
+			_toggleResumePauseButtonsVisibility = value;
+			if (_player) updateToStatus(_player.status);
 		}
 		
 		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
 			super.show(instant, onComplete);
-			this._autoHideTimer.reset();
-			if (this._autoHide && this.enabled) this._autoHideTimer.start();
+			_autoHideTimer.reset();
+			if (_autoHide && this.enabled) _autoHideTimer.start();
 		}
 		
 		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
 			super.hide(instant, onComplete);
-			if (this._autoHideTimer) this._autoHideTimer.reset();
+			if (_autoHideTimer) _autoHideTimer.reset();
 		}
 		
 		public function get autoHide():Boolean
 		{
-			return this._autoHide;
+			return _autoHide;
 		}
 
 		public function set autoHide(value:Boolean):void
 		{
-			this._autoHide = value;
-			if (this._autoHide) this.hide(true);
+			_autoHide = value;
+			if (_autoHide) hide(true);
 		}
 		
 		public function get autoHideDelay():Number
 		{
-			return this._autoHideTimer.delay;
+			return _autoHideTimer.delay;
 		}
 
 		public function set autoHideDelay(value:Number):void
 		{
-			this._autoHideTimer.delay = value;
+			_autoHideTimer.delay = value;
 		}
 		
 		/**
@@ -378,7 +378,7 @@ package temple.mediaplayers.players.controls
 		 */
 		public function get volume():Number
 		{
-			return this._player is IAudible ? IAudible(this._player).volume : NaN;
+			return _player is IAudible ? IAudible(_player).volume : NaN;
 		}
 
 		/**
@@ -386,52 +386,52 @@ package temple.mediaplayers.players.controls
 		 */
 		public function set volume(value:Number):void
 		{
-			if (this._player is IAudible)
+			if (_player is IAudible)
 			{
-				var audible:IAudible = this._player as IAudible;
+				var audible:IAudible = _player as IAudible;
 				audible.volume = value;
-				if (this._muteButton is ISelectable)
+				if (_muteButton is ISelectable)
 				{
-					ISelectable(this._muteButton).selected = !audible.volume;
+					ISelectable(_muteButton).selected = !audible.volume;
 				}
 			}
 		}
 		
 		override public function set enabled(value:Boolean):void
 		{
-			this.mouseEnabled = this.mouseChildren = super.enabled = value;
-			if (this._progressBar) this._progressBar.enabled = value;
+			this.mouseEnabled = mouseChildren = super.enabled = value;
+			if (_progressBar) _progressBar.enabled = value;
 		}
 		
 		private function handleClick(event:MouseEvent):void
 		{
-			if (this.debug) this.logDebug("handleClick: " + event.target);
+			if (debug) logDebug("handleClick: " + event.target);
 			
 			switch (event.target)
 			{
-				case this._playButton:
-					this.play();
+				case _playButton:
+					play();
 					break;
-				case this._pauseButton:
-					this.pause();
+				case _pauseButton:
+					pause();
 					break;
-				case this._resumeButton:
+				case _resumeButton:
 					if (this.status == PlayerStatus.STOPPED)
 					{
-						this.play();
+						play();
 					}
 					else
 					{
-						this.resume();
+						resume();
 					}
 					break;
-				case this._muteButton:
-					this.volume = this.volume ? 0 : 1;
+				case _muteButton:
+					this.volume = volume ? 0 : 1;
 					break;
-				case this._fullScreenButton:
+				case _fullScreenButton:
 					if (this.stage)
 					{
-						this.stage.displayState = this.stage.displayState == StageDisplayState.NORMAL ? StageDisplayState.FULL_SCREEN : StageDisplayState.NORMAL;
+						stage.displayState = stage.displayState == StageDisplayState.NORMAL ? StageDisplayState.FULL_SCREEN : StageDisplayState.NORMAL;
 					}
 					break;
 			}
@@ -439,37 +439,37 @@ package temple.mediaplayers.players.controls
 		
 		private function handlePlayerStatusChange(event:StatusEvent):void
 		{
-			this.updateToStatus(this.status);
-			this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
+			updateToStatus(this.status);
+			dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
 		}
 
 		private function updateToStatus(status:String):void
 		{
-			if (this._toggleResumePauseButtonsVisibility)
+			if (_toggleResumePauseButtonsVisibility)
 			{
-				if (this._pauseButton) this._pauseButton.visible = status == PlayerStatus.PLAYING;
-				if (this._resumeButton) this._resumeButton.visible = status != PlayerStatus.PLAYING;
+				if (_pauseButton) _pauseButton.visible = status == PlayerStatus.PLAYING;
+				if (_resumeButton) _resumeButton.visible = status != PlayerStatus.PLAYING;
 			}
 		}
 		
 		private function handleAutoHideTimerEvent(event:TimerEvent):void
 		{
-			if (this._autoHide && this.enabled) this.hide();
+			if (_autoHide && this.enabled) hide();
 		}
 		
 		private function handleMouseMove(event:MouseEvent):void
 		{
-			if (this._autoHide && this.enabled && !this.shown) this.show();
+			if (_autoHide && this.enabled && !this.shown) show();
 		}
 		
 		private function handlePlayerRollOut(event:MouseEvent):void
 		{
-			if (this._autoHide && this.shown) this.hide();
+			if (_autoHide && this.shown) hide();
 		}
 		
 		private function handlePlayerVolumeChanged(event:SoundEvent):void
 		{
-			if (this._muteButton is ISelectable && this._player is IAudible) (this._muteButton as ISelectable).selected = !(this._player as IAudible).volume;
+			if (_muteButton is ISelectable && _player is IAudible) (_muteButton as ISelectable).selected = !(_player as IAudible).volume;
 		}
 
 		/**
@@ -484,10 +484,10 @@ package temple.mediaplayers.players.controls
 			this.muteButton = null;
 			this.progressBar = null;
 			
-			if (this._autoHideTimer)
+			if (_autoHideTimer)
 			{
-				this._autoHideTimer.destruct();
-				this._autoHideTimer = null;
+				_autoHideTimer.destruct();
+				_autoHideTimer = null;
 			}
 			
 			super.destruct();

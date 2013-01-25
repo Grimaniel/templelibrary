@@ -50,14 +50,14 @@ package temple.codecomponents.icons
 		{
 			super("CodeNextIcon");
 			
-			this.graphics.beginFill(color, alpha);
-			this.graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
-			this.graphics.moveTo(-size * .75, -size * .5);
-			this.graphics.lineTo(size * .25, 0);
-			this.graphics.lineTo(-size * .75, size * .5);
-			this.graphics.moveTo(-size * .75, -size * .5);
-			this.graphics.drawRect(size / 3, -size * .5, size / 3, size);
-			this.graphics.endFill();
+			graphics.beginFill(color, alpha);
+			graphics.lineStyle(0, 0x000000, 0, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER, 3);
+			graphics.moveTo(-size * .75, -size * .5);
+			graphics.lineTo(size * .25, 0);
+			graphics.lineTo(-size * .75, size * .5);
+			graphics.moveTo(-size * .75, -size * .5);
+			graphics.drawRect(size / 3, -size * .5, size / 3, size);
+			graphics.endFill();
 		}
 	}
 }

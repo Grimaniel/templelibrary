@@ -51,12 +51,12 @@ package temple.mediaplayers.video.metadata
 		{
 			super(type, bubbles);
 			
-			this._metadata = metadata;
+			_metadata = metadata;
 		}
 		
 		public function get metadata():VideoMetaData
 		{
-			return this._metadata;
+			return _metadata;
 		}
 
 		/**
@@ -64,7 +64,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		override public function clone():Event 
 		{
-			return new VideoMetaDataEvent(this.type, this.metadata, this.bubbles);
+			return new VideoMetaDataEvent(type, metadata, bubbles);
 		}
 	}
 }

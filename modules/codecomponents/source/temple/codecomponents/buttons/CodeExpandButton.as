@@ -49,8 +49,8 @@ package temple.codecomponents.buttons
 			super(width, height, x, y);
 			
 			var cross:CodeCross = new CodeCross(0, 7, 1);
-			this.addChild(cross).x = width * .5;
-			this.addChild(cross).y = height * .5;
+			addChild(cross).x = width * .5;
+			addChild(cross).y = height * .5;
 		}
 	}
 }

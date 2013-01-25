@@ -52,14 +52,14 @@ package temple.codecomponents.form.components
 	{
 		public function CodeRadioButton(label:String = null, value:* = null, selected:Boolean = false) 
 		{
-			this.addChild(new TextField());
+			addChild(new TextField());
 			
 			super();
 			
-			this.createUI();
+			createUI();
 			
 			if (label) this.label = label;
-			this.selectedValue = value == null ? (label ? label : true) : value;
+			selectedValue = value == null ? (label ? label : true) : value;
 			this.selected = selected;
 		}
 
@@ -70,7 +70,7 @@ package temple.codecomponents.form.components
 			background.graphics.beginFill(CodeStyle.backgroundColor, CodeStyle.backgroundAlpha);
 			background.graphics.drawCircle(7, 7, 7);
 			background.graphics.endFill();
-			this.addChildAt(background, 0);
+			addChildAt(background, 0);
 			background.filters = CodeStyle.backgroundFilters;
 			background.y = 1;
 			
@@ -80,22 +80,22 @@ package temple.codecomponents.form.components
 			selectState.graphics.drawCircle(7, 8.5, 4);
 			selectState.graphics.endFill();
 			selectState.filters = CodeStyle.iconFilters;
-			this.addChild(selectState);
+			addChild(selectState);
 			
 			// focus state
 			var focus:FocusFadeState = new FocusFadeState(.2, .2);
 			focus.graphics.beginFill(0xff0000, 1);
 			focus.graphics.drawCircle(7, 6.5, 8);
 			focus.graphics.endFill();
-			this.addChildAt(focus, 0);
+			addChildAt(focus, 0);
 			focus.filters = CodeStyle.focusFilters;
 			focus.y = 2;
 			
 			// Label
-			this.textField.autoSize = TextFieldAutoSize.LEFT;
-			this.textField.x = 12;
-			this.textField.defaultTextFormat = CodeStyle.textFormat;
-			this.textField.textColor = CodeStyle.textColor;
+			textField.autoSize = TextFieldAutoSize.LEFT;
+			textField.x = 12;
+			textField.defaultTextFormat = CodeStyle.textFormat;
+			textField.textColor = CodeStyle.textColor;
 		}
 	}
 }

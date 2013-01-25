@@ -58,34 +58,34 @@ package temple.codecomponents.players.controls
 			
 			super(width, 20);
 			
-			this.background = true;
-			this.backgroundAlpha = .5;
+			background = true;
+			backgroundAlpha = .5;
 			
-			this._controls = new PlayerControls();
-			this._controls.player = player;
+			_controls = new PlayerControls();
+			_controls.player = player;
 			
-			this._controls.resumeButton = this.addChild(new CodePlayButton(14, 12)) as InteractiveObject;
-			this._controls.pauseButton = this.addChild(new CodePauseButton(14, 12)) as InteractiveObject;
+			_controls.resumeButton = addChild(new CodePlayButton(14, 12)) as InteractiveObject;
+			_controls.pauseButton = addChild(new CodePauseButton(14, 12)) as InteractiveObject;
 			
-			this._controls.resumeButton.x = this._controls.resumeButton.y = 3;
-			this._controls.pauseButton.x = this._controls.pauseButton.y = 3;
+			_controls.resumeButton.x = _controls.resumeButton.y = 3;
+			_controls.pauseButton.x = _controls.pauseButton.y = 3;
 			
-			this._controls.toggleResumePauseButtonsVisibility = true;
-			this._controls.progressBar = this.addChild(new CodePlayerProgressBar(player, width - 40)) as PlayerProgressBar;
+			_controls.toggleResumePauseButtonsVisibility = true;
+			_controls.progressBar = addChild(new CodePlayerProgressBar(player, width - 40)) as PlayerProgressBar;
 			
-			this._controls.progressBar.y = 3;
-			this._controls.progressBar.left = 20;
-			this._controls.progressBar.right = 20;
+			_controls.progressBar.y = 3;
+			_controls.progressBar.left = 20;
+			_controls.progressBar.right = 20;
 		}
 
 		public function get player():IPlayer
 		{
-			return this._controls.player;
+			return _controls.player;
 		}
 		
 		public function set player(value:IPlayer):void
 		{
-			this._controls.player = value;
+			_controls.player = value;
 		}
 	}
 }

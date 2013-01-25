@@ -45,16 +45,16 @@ package temple.codecomponents.form.components
 	{
 		public function CodeDateSelector(begin:Date = null, end:Date = null, rowCount:uint = 10)
 		{
-			super(begin, end, this.addChild(new CodeComboBox(40)) as InputField, this.addChild(new CodeComboBox(40)) as InputField, this.addChild(new CodeComboBox(60)) as InputField);
+			super(begin, end, addChild(new CodeComboBox(40)) as InputField, addChild(new CodeComboBox(40)) as InputField, addChild(new CodeComboBox(60)) as InputField);
 			
-			this.month.x = this.day.x + this.day.width + 8;
-			this.year.x = this.month.x + this.month.width + 8;
+			month.x = day.x + day.width + 8;
+			year.x = month.x + month.width + 8;
 			
-			this.day.hintText = "dd";
-			this.month.hintText = "mm";
-			this.year.hintText = "yyyy";
+			day.hintText = "dd";
+			month.hintText = "mm";
+			year.hintText = "yyyy";
 			
-			this.reset();
+			reset();
 			
 			this.rowCount = rowCount;
 		}

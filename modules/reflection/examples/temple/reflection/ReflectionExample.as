@@ -1,21 +1,10 @@
 package
 {
-	import temple.facebook.data.vo.FacebookUserFields;
-	import temple.facebook.data.vo.FacebookUserData;
-	import flash.utils.getQualifiedClassName;
-	import flash.utils.getDefinitionByName;
-	import temple.core.display.StageProvider;
-	import flash.display.Sprite;
-	import flash.utils.Dictionary;
-	import flash.system.ApplicationDomain;
-	import temple.reflection.Reflection;
-	import temple.core.display.CoreMovieClip;
-	import temple.utils.types.VectorUtils;
-	import temple.facebook.data.vo.IFacebookUserData;
-	import flash.utils.describeType;
-	import temple.core.templelibrary;
 	import temple.reflection.ReflectionUtils;
-	import temple.reflection.reflect;
+	import temple.reflection.description.DescriptionUtils;
+	import temple.reflection.description.Descriptor;
+	import temple.reflection.description.IDescription;
+	import temple.utils.types.ObjectUtils;
 	/**
 	 * @author Thijs Broerse
 	 */
@@ -26,35 +15,56 @@ package
 			super("Temple - ReflectionExample");
 			
 			
-//			var data:Data = new Data();
+			var data:Data = new Data();
 //
 //			trace(reflect(data));
 //			trace("-----");
-			//trace(reflect(Data));
-			
-//			trace("1a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "left", "test2"));
-//			trace("1b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "left", "test2"));
-//			trace("2a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "left", "test"));
-//			trace("2b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "left", "test"));
-//			trace("3a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "left"));
-//			trace("3b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "left"));
-//			trace("4a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "top", "test"));
-//			trace("4b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "top", "test"));
-//			trace("5a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "middle", "test"));
-//			trace("5b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "middle", "test"));
-//			trace("6a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias2", "left"));
-//			trace("6b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias2", "left"));
-//			trace("7a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias"));
-//			trace("7b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias"));
-//			trace("8a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", null, "test"));
-//			trace("8b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", null, "test"));
-//			trace("9a. " + ReflectionUtils.findVariablesWithMetaData(data, "Key"));
-//			trace("9b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Key"));
+//			trace(reflect(Data));
 //			
-//			trace("10. " + ReflectionUtils.getMetaDataOfVariable(data, "x"));
-//			trace("11. " + ReflectionUtils.getMetaDataOfVariable(data, "x", "Alias"));
-//			trace("12. " + ObjectUtils.traceObject(ReflectionUtils.argsToObject(ReflectionUtils.getMetaDataOfVariable(data, "x", "Alias")), 3, false));
-//			trace("13. " + ObjectUtils.traceObject(ReflectionUtils.argsToObject(ReflectionUtils.getMetaDataOfVariable(data, "z", "Alias")), 3, false));
+			var description:IDescription = Descriptor.get(data);
+			trace(dump(description, 6));
+			
+			
+			trace("1a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "left", "test2"));
+			trace("1b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "left", "test2"));
+			trace("1c. " + DescriptionUtils.findVariablesWithMetadata(description, "Alias", "left", "test2"));
+			trace("--------");
+			trace("2a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "left", "test"));
+			trace("2b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "left", "test"));
+			trace("2c. " +  DescriptionUtils.findVariablesWithMetadata(description, "Alias", "left", "test"));
+			trace("--------");
+			trace("3a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "left"));
+			trace("3b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "left"));
+			trace("3c. " +  DescriptionUtils.findVariablesWithMetadata(description, "Alias", "left"));
+			trace("--------");
+			trace("4a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "top", "test"));
+			trace("4b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "top", "test"));
+			trace("4c. " +  DescriptionUtils.findVariablesWithMetadata(description, "Alias", "top", "test"));
+			trace("--------");
+			trace("5a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", "middle", "test"));
+			trace("5b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", "middle", "test"));
+			trace("5c. " +  DescriptionUtils.findVariablesWithMetadata(description, "Alias", "middle", "test"));
+			trace("--------");
+			trace("6a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias2", "left"));
+			trace("6b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias2", "left"));
+			trace("6c. " +  DescriptionUtils.findVariablesWithMetadata(description, "Alias2", "left"));
+			trace("--------");
+			trace("7a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias"));
+			trace("7b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias"));
+			trace("7c. " + DescriptionUtils.findVariablesWithMetadata(description, "Alias"));
+			trace("--------");
+			trace("8a. " + ReflectionUtils.findVariablesWithMetaData(data, "Alias", null, "test"));
+			trace("8b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Alias", null, "test"));
+			trace("8c. " + DescriptionUtils.findVariablesWithMetadata(description, "Alias", null, "test"));
+			trace("--------");
+			trace("9a. " + ReflectionUtils.findVariablesWithMetaData(data, "Key"));
+			trace("9b. " + ReflectionUtils.findVariablesWithMetaData(Data, "Key"));
+			trace("9c. " + DescriptionUtils.findVariablesWithMetadata(description, "Key"));
+			trace("--------");
+			trace("10. " + ReflectionUtils.getMetaDataOfVariable(data, "x"));
+			trace("11. " + ReflectionUtils.getMetaDataOfVariable(data, "x", "Alias"));
+			trace("12. " + dump(ReflectionUtils.argsToObject(ReflectionUtils.getMetaDataOfVariable(data, "x", "Alias")), 3, false));
+			trace("13. " + dump(ReflectionUtils.argsToObject(ReflectionUtils.getMetaDataOfVariable(data, "z", "Alias")), 3, false));
 			
 //			var type:Class = ReflectionUtils.getTypeOfVariable(data, "list");
 //			
@@ -82,23 +92,23 @@ package
 //
 //			trace(VectorUtils.getBaseType(Vector.<IFacebookUserData> as Class));
 
-			Reflection.debug = true;
-			
-			
-			var o:*;
-			
-			trace(reflect(o));
-			trace(reflect(NaN));
-			trace(reflect(FacebookUserFields));
-			
-			return;
-			
-			reflect(new BaseData());
-			reflect(BaseData);
-			//trace(dump(Reflection.templelibrary::cache, 1));
-			
-			trace("-----");
-			reflect(new CoreMovieClip());
+//			Reflection.debug = true;
+//			
+//			
+//			var o:*;
+//			
+//			trace(reflect(o));
+//			trace(reflect(NaN));
+//			trace(reflect(FacebookUserFields));
+//			
+//			return;
+//			
+//			reflect(new BaseData());
+//			reflect(BaseData);
+//			//trace(dump(Reflection.templelibrary::cache, 1));
+//			
+//			trace("-----");
+//			reflect(new CoreMovieClip());
 
 			//trace(dump(Reflection.templelibrary::cache, 1));
 			
@@ -115,13 +125,13 @@ class BaseData
 
 class Data extends BaseData
 {
-	[Alias(test="left")]
+	[Alias(test="left",test2="left2")]
 	public var x:Number;
 	
 	[Alias(test="top")]
 	public var y:Number;
 
-	[Alias("depth")]
+	[Alias("depth","depth2")]
 	public var z:Number;
 	
 	[Key]

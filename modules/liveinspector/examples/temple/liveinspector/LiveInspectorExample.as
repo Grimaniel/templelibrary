@@ -40,50 +40,50 @@ package
 			super("Temple - LiveInspectorExample");
 			
 			// creates a button, a moving panel and a label at the bottom of the screen
-			this.createUI();
+			createUI();
 
 			// inspects the label of the button.
-			liveInspectorInstance.add(this._button, ["label", "enabled"]);
+			liveInspectorInstance.add(_button, ["label", "enabled"]);
 
 			// inspect the position of the panel. Try to scroll on the live inspector editor or use the up/down keys on your keyboard.
-			liveInspectorInstance.add(this._panel, ["x", "y"]);
+			liveInspectorInstance.add(_panel, ["x", "y"]);
 			
 			// just inspects a object. This results in a non-editable toString representation of the panel
-			liveInspectorInstance.add(this._panel);
+			liveInspectorInstance.add(_panel);
 			
 			// you can even scroll on special properties like blendmodes or booleans.
-			liveInspectorInstance.add(this._panel, ["visible","blendMode"]);
+			liveInspectorInstance.add(_panel, ["visible","blendMode"]);
 		}
 
 		private function createUI():void
 		{
-			this._button = new CodeLabelButton("Edit this label!");
-			this._button.name = "button";
-			this._button.x = (stage.stageWidth - this._button.width) / 2;
-			this._button.y = (stage.stageHeight - this._button.height) / 2;
-			this._button.addEventListener(MouseEvent.CLICK, handleButtonClick);
-			this._button.enabled = false;
-			this.addChild(this._button);
+			_button = new CodeLabelButton("Edit this label!");
+			_button.name = "button";
+			_button.x = (stage.stageWidth - _button.width) / 2;
+			_button.y = (stage.stageHeight - _button.height) / 2;
+			_button.addEventListener(MouseEvent.CLICK, handleButtonClick);
+			_button.enabled = false;
+			addChild(_button);
 			
-			this._panel = new CodeBackground(300, 300);
-			this._panel.name = "panel";
-			this._panel.x = 200;
-			this._panel.y = (stage.stageHeight - this._panel.height) / 2;
-			TweenMax.to(this._panel, 3, new TweenMaxVars().x(50).yoyo(true).repeat(-1).ease(Sine.easeInOut));
-			this.addChild(this._panel);
+			_panel = new CodeBackground(300, 300);
+			_panel.name = "panel";
+			_panel.x = 200;
+			_panel.y = (stage.stageHeight - _panel.height) / 2;
+			TweenMax.to(_panel, 3, new TweenMaxVars().x(50).yoyo(true).repeat(-1).ease(Sine.easeInOut));
+			addChild(_panel);
 			
-			this._label = new CodeLabel("Your goal: hide or move the panel using the Live Inspector\nChange the label of the button to 'done' and click the button!");
-			this._label.x = (stage.stageWidth - this._label.width) / 2;
-			this._label.y = stage.stageHeight - this._label.height - 10;
-			this._label.autoSize = TextFieldAutoSize.CENTER;
-			this.addChild(this._label);
+			_label = new CodeLabel("Your goal: hide or move the panel using the Live Inspector\nChange the label of the button to 'done' and click the button!");
+			_label.x = (stage.stageWidth - _label.width) / 2;
+			_label.y = stage.stageHeight - _label.height - 10;
+			_label.autoSize = TextFieldAutoSize.CENTER;
+			addChild(_label);
 		}
 
 		private function handleButtonClick(event:MouseEvent):void
 		{
-			if (this._button.label.toLowerCase() === "done")
+			if (_button.label.toLowerCase() === "done")
 			{
-				this._label.label = "Congrats! Enjoy live debugging using the Temple Library!";
+				_label.label = "Congrats! Enjoy live debugging using the Temple Library!";
 			}
 		}
 	}

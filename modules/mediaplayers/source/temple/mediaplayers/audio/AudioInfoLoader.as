@@ -55,15 +55,15 @@ package temple.mediaplayers.audio
 
 		public function AudioInfoLoader(metadata:Object = null)
 		{
-			this._metadata = metadata;
+			_metadata = metadata;
 		}
 
 		public function getMetaData(url:String):void
 		{
-			this._sound = new Sound();
-			this._sound.addEventListener(Event.ID3, this.handleID3Loaded);
-			this._sound.addEventListener(Event.COMPLETE, this.handleComplete);
-			this._sound.load(new URLRequest(url));
+			_sound = new Sound();
+			_sound.addEventListener(Event.ID3, handleID3Loaded);
+			_sound.addEventListener(Event.COMPLETE, handleComplete);
+			_sound.load(new URLRequest(url));
 		}
 		
 		private function handleID3Loaded(event:Event):void
@@ -72,21 +72,21 @@ package temple.mediaplayers.audio
 		
 		private function handleComplete(event:Event):void
 		{
-			var id3:ID3Info = this._sound.id3;
+			var id3:ID3Info = _sound.id3;
 			
-			if (id3['TLEN'] == undefined) id3['TLEN'] = this._sound.length;
+			if (id3['TLEN'] == undefined) id3['TLEN'] = _sound.length;
 			
 			var audioMetaData:AudioMetaData = new AudioMetaData(id3);
-			audioMetaData.parseObject(this._metadata);
-			this.dispatchEvent(new AudioMetaDataEvent(AudioMetaDataEvent.METADATA, audioMetaData));
+			audioMetaData.parseObject(_metadata);
+			dispatchEvent(new AudioMetaDataEvent(AudioMetaDataEvent.METADATA, audioMetaData));
 		}
 		
 		override public function destruct():void
 		{
-			if (this._sound)
+			if (_sound)
 			{
-				this._sound.removeEventListener(Event.ID3, this.handleID3Loaded);
-				this._sound = null;
+				_sound.removeEventListener(Event.ID3, handleID3Loaded);
+				_sound = null;
 			}
 			
 			super.destruct();

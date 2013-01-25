@@ -47,18 +47,18 @@ package temple.net
 
 		public function Responder(result:Function, fault:Function)
 		{
-			this._result = result;
-			this._fault = fault;
+			_result = result;
+			_fault = fault;
 		}
 
 		public function result(info:Object):void
 		{
-			this._result(info);
+			_result(info);
 		}
 		
 		public function fault(info:Object):void
 		{
-			this._fault(info);
+			_fault(info);
 		}
 	}
 }

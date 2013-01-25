@@ -52,28 +52,28 @@ package temple.codecomponents.form.components
 			super(CodeListRow, rowCount);
 			
 			this.width = width;
-			this.height = 60;
+			height = 60;
 			
-			this.scrollBar = new CodeScrollBar();
-			this.addChild(this.scrollBar);
-			this.scrollBar.top = 0;
-			this.scrollBar.bottom = 0;
-			this.scrollBar.right = 0;
+			scrollBar = new CodeScrollBar();
+			addChild(scrollBar);
+			scrollBar.top = 0;
+			scrollBar.bottom = 0;
+			scrollBar.right = 0;
 
-			new LiquidBehavior(this.addChildAt(new CodeBackground(100, 100), 0), {top: 0, left: 0, right: 0, bottom: 0}, this);
+			new LiquidBehavior(addChildAt(new CodeBackground(100, 100), 0), {top: 0, left: 0, right: 0, bottom: 0}, this);
 			
-			if (items) this.addItems(items);
+			if (items) addItems(items);
 		}
 
 		override public function set width(value:Number) : void
 		{
 			super.width = value;
 
-			for (var i:int = 0, len:uint = this.rows.length; i < len; i++)
+			for (var i:int = 0, len:uint = rows.length; i < len; i++)
 			{
-				if (this.rows[i] is CodeListRow)
+				if (rows[i] is CodeListRow)
 				{
-					(this.rows[i] as CodeListRow).width = value;
+					(rows[i] as CodeListRow).width = value;
 				}
 			}
 		}
@@ -81,7 +81,7 @@ package temple.codecomponents.form.components
 		override protected function createRow() : void
 		{
 			super.createRow();
-			this.width = this.width;
+			width = width;
 		}
 
 	}

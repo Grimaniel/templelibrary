@@ -24,18 +24,18 @@ package
 		{
 			super("Temple - CodeCheckBoxExample");
 			
-			this.add(new CodeCheckBox("This is an example of a CodeCheckBox"), 10, 10);
-			this.add(new CodeCheckBox("An other CodeCheckBox", null, true), 10, 30);
+			add(new CodeCheckBox("This is an example of a CodeCheckBox"), 10, 10);
+			add(new CodeCheckBox("An other CodeCheckBox", null, true), 10, 30);
 			
 			// Easy way to handle the value of a CheckBox is using a ValueBinder
 			new ValueBinder(
-				this.add(new CodeCheckBox("Click here", "Selected", false, "Unselected"), 10, 50) as CodeCheckBox,
-				this.add(new CodeLabel(), 10, 70), "label");
+				add(new CodeCheckBox("Click here", "Selected", false, "Unselected"), 10, 50) as CodeCheckBox,
+				add(new CodeLabel(), 10, 70), "label");
 		}
 		
 		private function add(child:DisplayObject, x:Number, y:Number):DisplayObject
 		{
-			this.addChild(child);
+			addChild(child);
 			child.x = x;
 			child.y = y;
 			

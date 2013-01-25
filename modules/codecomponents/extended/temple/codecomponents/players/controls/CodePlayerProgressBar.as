@@ -56,14 +56,14 @@ package temple.codecomponents.players.controls
 		 */
 		construct function codePlayerProgressBar(player:IPlayer, width:Number, height:Number):void
 		{
-			this.background = true;
-			this.backgroundAlpha = .3;
-			this.backgroundColor = 0xFFFFFF;
+			background = true;
+			backgroundAlpha = .3;
+			backgroundColor = 0xFFFFFF;
 			
-			this.loadBar = this.addChild(new CodeGraphicsRectangle(width, height, CodeStyle.backgroundColor, .5));
-			this.progressBar = this.addChild(new CodeGraphicsRectangle(width, height - 4, CodeStyle.backgroundColor, .8));
-			this.progressBar.y = 2;
-			this.filters = CodeStyle.backgroundFilters;
+			loadBar = addChild(new CodeGraphicsRectangle(width, height, CodeStyle.backgroundColor, .5));
+			progressBar = addChild(new CodeGraphicsRectangle(width, height - 4, CodeStyle.backgroundColor, .8));
+			progressBar.y = 2;
+			filters = CodeStyle.backgroundFilters;
 			this.player = player;
 		}
 	}

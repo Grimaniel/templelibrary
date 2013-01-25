@@ -46,9 +46,9 @@ package temple.codecomponents.icons
 		{
 			super("CodeDash");
 			
-			this.graphics.beginFill(color);
-			this.graphics.drawRect(-.5 * size, -.5 * thickness, size, thickness);
-			this.graphics.endFill();
+			graphics.beginFill(color);
+			graphics.drawRect(-.5 * size, -.5 * thickness, size, thickness);
+			graphics.endFill();
 		}
 	}
 }

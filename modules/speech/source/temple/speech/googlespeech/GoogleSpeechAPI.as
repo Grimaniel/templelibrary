@@ -60,36 +60,36 @@ package temple.speech.googlespeech
 
 		public function GoogleSpeechAPI(proxyUrl:String)
 		{
-			this._proxyUrl = proxyUrl;
-			this._calls = new Dictionary();
+			_proxyUrl = proxyUrl;
+			_calls = new Dictionary();
 		}
 		
 		public function request(callback:Function, audio:ByteArray, bitrate:uint = 44000, language:String = 'en-US', maxResults:uint = 1, profanityFilter:uint = 0):IPendingCall
 		{
 			var call:GoogleSpeechCall = new GoogleSpeechCall(callback, audio, bitrate, language, maxResults, profanityFilter);
-			call.addEventListener(Event.COMPLETE, this.handleCallComplete);
-			call.addEventListener(ErrorEvent.ERROR, this.handleCallError);
-			call.addEventListener(Event.CANCEL, this.handleCallCancel);
+			call.addEventListener(Event.COMPLETE, handleCallComplete);
+			call.addEventListener(ErrorEvent.ERROR, handleCallError);
+			call.addEventListener(Event.CANCEL, handleCallCancel);
 			
 			var loader:MultipartURLLoader = new MultipartURLLoader();
-			loader.addEventListener(Event.COMPLETE, this.handleLoadComplete);
+			loader.addEventListener(Event.COMPLETE, handleLoadComplete);
 			loader.addEventListener(IOErrorEvent.IO_ERROR, call.onIOError);
 			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, call.onSecurityError);
 			loader.addFile(audio, 'recording.wav', 'recording');
-			loader.load(this._proxyUrl + '?xjerr=1&fileKey=recording&rate=' + bitrate + '&locale=' + language + '&maxresults=' + maxResults + '&pfilter=' + profanityFilter);
+			loader.load(_proxyUrl + '?xjerr=1&fileKey=recording&rate=' + bitrate + '&locale=' + language + '&maxresults=' + maxResults + '&pfilter=' + profanityFilter);
 			
-			this._calls[loader] = call;
+			_calls[loader] = call;
 			// TODO: wordt de loader of the call ooit destructed?
 			call.loader = loader;
 			
-			this.dispatchEvent(new PendingCallEvent(PendingCallEvent.CALL, IPendingCall(call)));
+			dispatchEvent(new PendingCallEvent(PendingCallEvent.CALL, IPendingCall(call)));
 			
 			return call;
 		}
 
 		private function handleCallComplete(event:Event):void
 		{
-			this.dispatchEvent(new PendingCallEvent(PendingCallEvent.RESULT, IPendingCall(event.target)));
+			dispatchEvent(new PendingCallEvent(PendingCallEvent.RESULT, IPendingCall(event.target)));
 		}
 
 		private function handleCallError(event:ErrorEvent):void
@@ -103,7 +103,7 @@ package temple.speech.googlespeech
 		private function handleLoadComplete(event:Event):void
 		{
 			var target:MultipartURLLoader = MultipartURLLoader(event.target);
-			var call:GoogleSpeechCall = this._calls[target];
+			var call:GoogleSpeechCall = _calls[target];
 			var data:String = target.loader.data;
 			
 			var result:Object;

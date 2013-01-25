@@ -31,13 +31,13 @@ package
 			
 			var group:RadioGroup = new RadioGroup();
 			
-			group.add(CodeRadioButton(this.add(new CodeRadioButton("This is option 1", 1), 10, 10)));
-			group.add(CodeRadioButton(this.add(new CodeRadioButton("This is option 2", 2), 10, 30)));
-			group.add(CodeRadioButton(this.add(new CodeRadioButton("This is option 3", 3), 10, 50)));
-			group.add(CodeRadioButton(this.add(new CodeRadioButton("This is option 4", 4), 10, 70)));
+			group.add(CodeRadioButton(add(new CodeRadioButton("This is option 1", 1), 10, 10)));
+			group.add(CodeRadioButton(add(new CodeRadioButton("This is option 2", 2), 10, 30)));
+			group.add(CodeRadioButton(add(new CodeRadioButton("This is option 3", 3), 10, 50)));
+			group.add(CodeRadioButton(add(new CodeRadioButton("This is option 4", 4), 10, 70)));
 			
 			var output:CodeLabel = new CodeLabel();
-			this.add(output, 10, 100);
+			add(output, 10, 100);
 			
 			// Use a ValueBinder to set the selected value in a label
 			var replacer:ReplaceTextPropertyProxy = new ReplaceTextPropertyProxy("You selected value {value}");
@@ -47,7 +47,7 @@ package
 
 		private function add(child:DisplayObject, x:Number, y:Number):DisplayObject
 		{
-			this.addChild(child);
+			addChild(child);
 			child.x = x;
 			child.y = y;
 			

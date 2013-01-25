@@ -48,10 +48,10 @@ package temple.speech.googlespeech.data
 
 		public function parseObject(object:Object):Boolean
 		{
-			this._status = object['status'];
-			this._id = object['id'];
+			_status = object['status'];
+			_id = object['id'];
 			
-			this._hypotheses = Vector.<GoogleSpeechHypothese>(ObjectParser.parseList(object['hypotheses'] as Array, GoogleSpeechHypothese));
+			_hypotheses = Vector.<GoogleSpeechHypothese>(ObjectParser.parseList(object['hypotheses'] as Array, GoogleSpeechHypothese));
 			
 			
 			return true;
@@ -64,22 +64,22 @@ package temple.speech.googlespeech.data
 		
 		public function set status(value:uint):void
 		{
-			this._status = value;
+			_status = value;
 		}
 		
 		public function get status():uint
 		{
-			return this._status;
+			return _status;
 		}
 		
 		public function get hypotheses():Vector.<GoogleSpeechHypothese>
 		{
-			return this._hypotheses;
+			return _hypotheses;
 		}
 		
 		public function get hypothese():GoogleSpeechHypothese
 		{
-			if (0 in this._hypotheses) return this._hypotheses[0];
+			if (0 in _hypotheses) return _hypotheses[0];
 			
 			return null;
 		}

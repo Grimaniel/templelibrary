@@ -35,171 +35,171 @@ package temple.liveinspector
 
 		public function LiveInspectorItem(scope:Object, propertyName:*, depth:uint = 0, color:int = 0x000000)
 		{
-			this._depth = depth;
-			this._propertyName = propertyName;
-			this._scope = scope;
-			this._color = color;
+			_depth = depth;
+			_propertyName = propertyName;
+			_scope = scope;
+			_color = color;
 			
 			
 			if ("name" in scope && scope.name)
 			{
-				this._propertyNameHTML = "<font color='#" + this._color.toString(16) + "'>" + this._scope.name + _splitter;
+				_propertyNameHTML = "<font color='#" + _color.toString(16) + "'>" + _scope.name + _splitter;
 			}
 			else
 			{
-				this._propertyNameHTML = "<font color='#" + this._color.toString(16) + "'>" + getQualifiedClassName(this._scope) + _splitter;
+				_propertyNameHTML = "<font color='#" + _color.toString(16) + "'>" + getQualifiedClassName(_scope) + _splitter;
 			}
 			
-			if (this._propertyName) 
+			if (_propertyName) 
 			{
-				this._propertyNameHTML += "<b>" + this._propertyName + "</b></font>" + _separator;
+				_propertyNameHTML += "<b>" + _propertyName + "</b></font>" + _separator;
 				
-				this._typeOfProperty = ReflectionUtils.getNameOfTypeOfProperty(this._scope, this._propertyName);
+				_typeOfProperty = ReflectionUtils.getNameOfTypeOfProperty(_scope, _propertyName);
 			}
 
-			this.createField();
-			this.createEditor();
-			this.createButtons();
+			createField();
+			createEditor();
+			createButtons();
 			
-			this.addEventListener(MouseEvent.ROLL_OUT, handleMouseEvent);
-			this.addEventListener(MouseEvent.ROLL_OVER, handleMouseEvent);
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			addEventListener(MouseEvent.ROLL_OUT, handleMouseEvent);
+			addEventListener(MouseEvent.ROLL_OVER, handleMouseEvent);
+			addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 
 		private function createField():void
 		{
-			this._field = new TextField();
-			this._field.alpha = LiveInspector.THEME_ALPHA;
-			this._field.defaultTextFormat = LiveInspector.THEME_TEXTFORMAT;
-			this._field.selectable = false;
-			this._field.mouseEnabled = false;
-			this._field.tabEnabled = false;
-			this._field.mouseWheelEnabled = false;
-			this._field.doubleClickEnabled = false;
+			_field = new TextField();
+			_field.alpha = LiveInspector.THEME_ALPHA;
+			_field.defaultTextFormat = LiveInspector.THEME_TEXTFORMAT;
+			_field.selectable = false;
+			_field.mouseEnabled = false;
+			_field.tabEnabled = false;
+			_field.mouseWheelEnabled = false;
+			_field.doubleClickEnabled = false;
 			
-			this._field.background = true;
-			this._field.backgroundColor = LiveInspector.THEME_BACKGROUND_COLOR;
+			_field.background = true;
+			_field.backgroundColor = LiveInspector.THEME_BACKGROUND_COLOR;
 			
-			this._field.border = true;
-			this._field.borderColor = LiveInspector.THEME_BORDER_COLOR;
-			this._field.htmlText = this._propertyNameHTML;
-			this._editor_x = this._field.textWidth;
-			this.addChild(this._field);
+			_field.border = true;
+			_field.borderColor = LiveInspector.THEME_BORDER_COLOR;
+			_field.htmlText = _propertyNameHTML;
+			_editor_x = _field.textWidth;
+			addChild(_field);
 		}
 
 		private function createButtons(innerSpace:int = 5, buttonWidth:int = 14):void
 		{
-			this._removeButton = new CoreSprite();
-			this._removeButton.graphics.lineStyle(4, LiveInspector.THEME_BACKGROUND_COLOR, 0);
-			this._removeButton.graphics.drawRoundRect(0, 0, buttonWidth, buttonWidth, innerSpace);
-			this._removeButton.graphics.beginFill(_color);
-			this._removeButton.graphics.drawRoundRect(1, 1, buttonWidth - 2, buttonWidth - 2, innerSpace - 1);
-			this._removeButton.graphics.lineStyle(2, LiveInspector.THEME_BACKGROUND_COLOR, 1);
-			this._removeButton.graphics.moveTo(innerSpace, innerSpace);
-			this._removeButton.graphics.lineTo(buttonWidth - innerSpace, buttonWidth - innerSpace);
-			this._removeButton.graphics.moveTo(buttonWidth - innerSpace, innerSpace);
-			this._removeButton.graphics.lineTo(innerSpace, buttonWidth - innerSpace);
-			this._removeButton.graphics.endFill();
-			this.addChild(this._removeButton);
+			_removeButton = new CoreSprite();
+			_removeButton.graphics.lineStyle(4, LiveInspector.THEME_BACKGROUND_COLOR, 0);
+			_removeButton.graphics.drawRoundRect(0, 0, buttonWidth, buttonWidth, innerSpace);
+			_removeButton.graphics.beginFill(_color);
+			_removeButton.graphics.drawRoundRect(1, 1, buttonWidth - 2, buttonWidth - 2, innerSpace - 1);
+			_removeButton.graphics.lineStyle(2, LiveInspector.THEME_BACKGROUND_COLOR, 1);
+			_removeButton.graphics.moveTo(innerSpace, innerSpace);
+			_removeButton.graphics.lineTo(buttonWidth - innerSpace, buttonWidth - innerSpace);
+			_removeButton.graphics.moveTo(buttonWidth - innerSpace, innerSpace);
+			_removeButton.graphics.lineTo(innerSpace, buttonWidth - innerSpace);
+			_removeButton.graphics.endFill();
+			addChild(_removeButton);
 
-			this._minimizeButton = new CoreSprite();
-			this._minimizeButton.graphics.lineStyle(4, LiveInspector.THEME_BACKGROUND_COLOR, 0);
-			this._minimizeButton.graphics.drawRoundRect(0, 0, buttonWidth, buttonWidth, innerSpace);
-			this._minimizeButton.graphics.beginFill(_color);
-			this._minimizeButton.graphics.drawRoundRect(1, 1, buttonWidth - 2, buttonWidth - 2, innerSpace - 1);
-			this._minimizeButton.graphics.lineStyle(2, LiveInspector.THEME_BACKGROUND_COLOR, 1);
-			this._minimizeButton.graphics.moveTo(innerSpace, buttonWidth - innerSpace);
-			this._minimizeButton.graphics.lineTo(buttonWidth - innerSpace, buttonWidth - innerSpace);
-			this._minimizeButton.graphics.endFill();
-			this.addChild(this._minimizeButton);
+			_minimizeButton = new CoreSprite();
+			_minimizeButton.graphics.lineStyle(4, LiveInspector.THEME_BACKGROUND_COLOR, 0);
+			_minimizeButton.graphics.drawRoundRect(0, 0, buttonWidth, buttonWidth, innerSpace);
+			_minimizeButton.graphics.beginFill(_color);
+			_minimizeButton.graphics.drawRoundRect(1, 1, buttonWidth - 2, buttonWidth - 2, innerSpace - 1);
+			_minimizeButton.graphics.lineStyle(2, LiveInspector.THEME_BACKGROUND_COLOR, 1);
+			_minimizeButton.graphics.moveTo(innerSpace, buttonWidth - innerSpace);
+			_minimizeButton.graphics.lineTo(buttonWidth - innerSpace, buttonWidth - innerSpace);
+			_minimizeButton.graphics.endFill();
+			addChild(_minimizeButton);
 			
-			this._removeButton.filters = this._minimizeButton.filters = [new GlowFilter(LiveInspector.THEME_BORDER_COLOR, 1, 2, 2, 4, 1)];
-			this._removeButton.y = this._minimizeButton.y = 2;
-			this._removeButton.autoAlpha = this._minimizeButton.autoAlpha = 0;
-			this._removeButton.buttonMode = this._minimizeButton.buttonMode = true;
+			_removeButton.filters = _minimizeButton.filters = [new GlowFilter(LiveInspector.THEME_BORDER_COLOR, 1, 2, 2, 4, 1)];
+			_removeButton.y = _minimizeButton.y = 2;
+			_removeButton.autoAlpha = _minimizeButton.autoAlpha = 0;
+			_removeButton.buttonMode = _minimizeButton.buttonMode = true;
 			
-			this._removeButton.addEventListener(MouseEvent.CLICK, handleRemoveButtonClick);
-			this._minimizeButton.addEventListener(MouseEvent.CLICK, handleMinimizeClick);
+			_removeButton.addEventListener(MouseEvent.CLICK, handleRemoveButtonClick);
+			_minimizeButton.addEventListener(MouseEvent.CLICK, handleMinimizeClick);
 		}
 
 		private function createEditor():void
 		{
-			if (this._scope && this._propertyName && this._propertyName in this._scope) 
+			if (_scope && _propertyName && _propertyName in _scope) 
 			{
-				var value:* = this._scope[this._propertyName];
+				var value:* = _scope[_propertyName];
 				
-				if (ObjectUtils.isPrimitive(value) && ReflectionUtils.isWritable(this._scope, this._propertyName))
+				if (ObjectUtils.isPrimitive(value) && ReflectionUtils.isWritable(_scope, _propertyName))
 				{
-					this._readwrite = true;
+					_readwrite = true;
 					
-					this._editor = new LiveInspectorEditor(this._scope, this._propertyName, this._typeOfProperty, this._color);
-					this.addChild(this._editor);
-					this._editor.x = this._editor_x;
-					this._editor.visible = false;
+					_editor = new LiveInspectorEditor(_scope, _propertyName, _typeOfProperty, _color);
+					addChild(_editor);
+					_editor.x = _editor_x;
+					_editor.visible = false;
 				}
 			}
 		}
 		
 		private function handleMinimizeClick(event:MouseEvent):void
 		{
-			this._field.visible = this._removeButton.visible = !this._field.visible;
-			this._field.alpha = this._field.visible ? LiveInspector.THEME_ALPHA : 0;
-			if (this._readwrite) this._editor.visible = this._field.visible;
+			_field.visible = _removeButton.visible = !_field.visible;
+			_field.alpha = _field.visible ? LiveInspector.THEME_ALPHA : 0;
+			if (_readwrite) _editor.visible = _field.visible;
 			
-			if (this._field.visible) 
+			if (_field.visible) 
 			{
-				this.addChildAt(this._field, 0);
+				addChildAt(_field, 0);
 			}
 			else 
 			{
-				this.removeChild(this._field);
+				removeChild(_field);
 			}
 			
-			this.repositionButtons();
+			repositionButtons();
 			
-			this.layoutContainer();
+			layoutContainer();
 		}
 
 		private function handleRemoveButtonClick(event:MouseEvent):void
 		{
-			this.destruct();
+			destruct();
 		}
 		
 		private function repositionButtons():void
 		{
-			this._removeButton.x = this._field.width - this._removeButton.width + 3;
-			this._minimizeButton.x = (this._field.visible) ? this._removeButton.x - this._minimizeButton.width + 3: 2;
+			_removeButton.x = _field.width - _removeButton.width + 3;
+			_minimizeButton.x = (_field.visible) ? _removeButton.x - _minimizeButton.width + 3: 2;
 		}
 
 		private function handleMouseEvent(event:MouseEvent):void
 		{
-			this.repositionButtons();
+			repositionButtons();
 			
 			switch (event.type)
 			{
 				case MouseEvent.ROLL_OUT:
 				{
-					if (this._field.visible) 
+					if (_field.visible) 
 					{
-						this._removeButton.autoAlpha = 0;
-						this._minimizeButton.autoAlpha = 0;
+						_removeButton.autoAlpha = 0;
+						_minimizeButton.autoAlpha = 0;
 					}
 					else
 					{
-						this._minimizeButton.autoAlpha = 1;
+						_minimizeButton.autoAlpha = 1;
 					}
-					if (this._readwrite) this._editor.visible = false;
+					if (_readwrite) _editor.visible = false;
 					break;
 				}
 				case MouseEvent.ROLL_OVER:
 				{
-					if (this._field.visible) 
+					if (_field.visible) 
 					{
-						if (this._readwrite) this._editor.visible = true;
-						this._removeButton.autoAlpha = 1;
+						if (_readwrite) _editor.visible = true;
+						_removeButton.autoAlpha = 1;
 					}
 					
-					this._minimizeButton.autoAlpha = 1;
+					_minimizeButton.autoAlpha = 1;
 					break;
 				}
 				default:
@@ -212,12 +212,12 @@ package temple.liveinspector
 	
 		private function handleEnterFrame(event:Event):void
 		{
-			this.update();
+			update();
 		}
 		
 		protected function update():void
 		{
-			var scope:* = this._scope;
+			var scope:* = _scope;
 			
 			if (scope && "isDestructed" in scope && scope.isDestructed)
 			{
@@ -228,9 +228,9 @@ package temple.liveinspector
 			var oldWidth:Number;
 			var output:String;
 			
-			if (scope && this._propertyName != null && this._propertyName in scope) 
+			if (scope && _propertyName != null && _propertyName in scope) 
 			{
-				var value:* = scope[this._propertyName];
+				var value:* = scope[_propertyName];
 				
 				var doUpdate:Boolean;
 				if (!ObjectUtils.isPrimitive(value)) 
@@ -239,69 +239,69 @@ package temple.liveinspector
 				}
 				else
 				{
-					doUpdate = value !== this._oldValue;
+					doUpdate = value !== _oldValue;
 				}
 				
 				if (doUpdate)
 				{
 					if (!ObjectUtils.isPrimitive(value)) 
 					{
-						output = this._propertyNameHTML + dump(value, this._depth);
+						output = _propertyNameHTML + dump(value, _depth);
 					}
 					else
 					{
-						output = this._propertyNameHTML + value + " <font color='#" + LiveInspector.THEME_PROPERTY_TYPE_COLOR.toString(16) + "'>(" + this._typeOfProperty + ")</font>";
+						output = _propertyNameHTML + value + " <font color='#" + LiveInspector.THEME_PROPERTY_TYPE_COLOR.toString(16) + "'>(" + _typeOfProperty + ")</font>";
 					}
 					
-					oldHeight = this._field.height;
-					oldWidth = this._field.width;
+					oldHeight = _field.height;
+					oldWidth = _field.width;
 					
-					this._field.htmlText = output;
-					this._field.height = this._field.textHeight + 3;
-					this._field.width = Math.max(LiveInspector.THEME_MIN_WIDTH, this._field.textWidth + 3);
+					_field.htmlText = output;
+					_field.height = _field.textHeight + 3;
+					_field.width = Math.max(LiveInspector.THEME_MIN_WIDTH, _field.textWidth + 3);
 					
-					if (oldHeight !== this._field.height) 
+					if (oldHeight !== _field.height) 
 					{
-						this.layoutContainer();
+						layoutContainer();
 					}
 					
-					if (this._readwrite)
+					if (_readwrite)
 					{
-						this._editor.text = value || "null";
-						this._editor.width = this._field.width - this._editor_x;
-						this._editor.height = this._editor.textHeight + 3;
+						_editor.text = value || "null";
+						_editor.width = _field.width - _editor_x;
+						_editor.height = _editor.textHeight + 3;
 					}
 					
-					this.repositionButtons();
+					repositionButtons();
 					
-					this._oldValue = value;
+					_oldValue = value;
 				}
 			}
-			else if (scope && !this._propertyName)
+			else if (scope && !_propertyName)
 			{
-				oldHeight = this._field.height;
+				oldHeight = _field.height;
 				
-				output = this._propertyNameHTML + scope;
+				output = _propertyNameHTML + scope;
 				
-				oldHeight = this._field.height;
+				oldHeight = _field.height;
 				
-				this._field.htmlText = output;
-				this._field.height = this._field.textHeight + 3;
-				this._field.width = Math.max(250, this._field.textWidth + 3);
+				_field.htmlText = output;
+				_field.height = _field.textHeight + 3;
+				_field.width = Math.max(250, _field.textWidth + 3);
 				
-				if (oldHeight !== this._field.height) 
+				if (oldHeight !== _field.height) 
 				{
-					this.layoutContainer();
+					layoutContainer();
 				}
 				
-				this.repositionButtons();
+				repositionButtons();
 			}
 			else
 			{
 				// inspector gadget : self destruct
-				logStatus("Live Inspector closed inspection for " + this._propertyName);
+				logStatus("Live Inspector closed inspection for " + _propertyName);
 				
-				this.destruct();
+				destruct();
 			}
 		}
 	
@@ -315,13 +315,13 @@ package temple.liveinspector
 		
 		override public function destruct():void
 		{
-			this._oldValue = null;
-			this._scope = null;
-			this._editor = null;
+			_oldValue = null;
+			_scope = null;
+			_editor = null;
 			
 			super.destruct();
 			
-			this.layoutContainer();
+			layoutContainer();
 		}
 	}
 }

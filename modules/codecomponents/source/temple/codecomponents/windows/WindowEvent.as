@@ -53,17 +53,17 @@ package temple.codecomponents.windows
 		public function WindowEvent(type:String, window:IWindow):void 
 		{
 			super(type, true);
-			this._window = window;
+			_window = window;
 		}
 
 		public function get window():IWindow
 		{
-			return this._window;
+			return _window;
 		}
 
 		override public function clone():Event 
 		{
-			return new WindowEvent(this.type, this._window);
+			return new WindowEvent(type, _window);
 		} 
 	}
 }

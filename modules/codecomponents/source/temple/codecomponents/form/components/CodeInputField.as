@@ -55,59 +55,54 @@ package temple.codecomponents.form.components
 		
 		public function CodeInputField(width:Number = 160, height:Number = 18, multiline:Boolean = false)
 		{
-			super(this.addChild(new TextField()) as TextField);
+			super(addChild(new TextField()) as TextField);
 			
-			this.textField.type = TextFieldType.INPUT;
-			this.textField.width = width;
-			this.textField.height = height;
-			this.textField.defaultTextFormat = CodeStyle.textFormat;
+			textField.type = TextFieldType.INPUT;
+			textField.width = width;
+			textField.height = height;
+			textField.defaultTextFormat = CodeStyle.textFormat;
 			this.multiline = multiline;
 			
-			this.hintTextColor = 0x888888;
-			this.errorTextColor = 0xff0000;
+			hintTextColor = 0x888888;
+			errorTextColor = 0xff0000;
 			
-			this._background = this.addChildAt(new CodeBackground(width, height), 0) as CodeBackground;
+			_background = addChildAt(new CodeBackground(width, height), 0) as CodeBackground;
 			
 			// focus state
-			this._focus = new FocusFadeState(.2, .2);
-			this._focus.graphics.beginFill(0xff0000, 1);
-			this._focus.graphics.drawRect(-1, -1, width+2, height+2);
-			this._focus.graphics.endFill();
-			this.addChildAt(this._focus, 0);
-			this._focus.filters = CodeStyle.focusFilters;
+			_focus = new FocusFadeState(.2, .2);
+			_focus.graphics.beginFill(0xff0000, 1);
+			_focus.graphics.drawRect(0, 0, width+2, height+2);
+			_focus.x = -1;
+			_focus.y = -1;
+			_focus.graphics.endFill();
+			addChildAt(_focus, 0);
+			_focus.filters = CodeStyle.focusFilters;
 			
 			// error state
-			this._error = new ErrorFadeState(.2, .2);
-			this._error.graphics.beginFill(0xff0000, 1);
-			this._error.graphics.drawRect(-1, -1, width+2, height+2);
-			this._error.graphics.endFill();
-			this.addChildAt(this._error, 1);
-			this._error.filters = CodeStyle.errorFilters;
+			_error = new ErrorFadeState(.2, .2);
+			_error.graphics.beginFill(0xff0000, 1);
+			_error.graphics.drawRect(0, 0, width+2, height+2);
+			_error.x = -1;
+			_error.y = -1;
+			_error.graphics.endFill();
+			addChildAt(_error, 1);
+			_error.filters = CodeStyle.errorFilters;
 		}
 		
 		override public function set width(value:Number):void
 		{
-			this.textField.width = value;
-			this._focus.width = value;
-			this._background.width = value;
-			this._error.width = value + 2;
-			
-			this._focus.graphics.clear();
-			this._focus.graphics.beginFill(0xff0000, 1);
-			this._focus.graphics.drawRect(-1, -1, width+2, height+2);
-			this._focus.graphics.endFill();
+			textField.width = value;
+			_background.width = value;
+			_focus.width = value + 2;
+			_error.width = value + 2;
 		}
 		
 		override public function set height(value:Number):void
 		{
-			this.textField.height = value;
-			this._focus.height = value;
-			this._background.height = value;
-			
-			this._focus.graphics.clear();
-			this._focus.graphics.beginFill(0xff0000, 1);
-			this._focus.graphics.drawRect(-1, -1, width+2, height+2);
-			this._focus.graphics.endFill();
+			textField.height = value;
+			_background.height = value;
+			_focus.height = value + 2;
+			_error.height = value + 2;
 		}
 	}
 }

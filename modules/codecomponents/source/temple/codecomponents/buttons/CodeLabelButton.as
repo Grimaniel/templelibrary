@@ -54,20 +54,20 @@ package temple.codecomponents.buttons
 		{
 			super(new TextField());
 			
-			this.padding = 2;
+			padding = 2;
 			
 			this.label = label;
-			this.textField.multiline = multiline;
+			textField.multiline = multiline;
 			this.autoSize = autoSize;
 		}
 
 		override protected function init(textField:TextField = null):void 
 		{
-			this.addChild(textField);
+			addChild(textField);
 			textField.defaultTextFormat = CodeStyle.textFormat;
 			textField.width = textField.height = 1;
 			
-			new LiquidBehavior(this.addChildAt(new CodeButton(width, height), 0), {left:0, right:0, top:0, bottom:0}, this);
+			new LiquidBehavior(addChildAt(new CodeButton(width, height), 0), {left:0, right:0, top:0, bottom:0}, this);
 			var tweenBehavior:ButtonTweenBehavior = new ButtonTweenBehavior(this, .5, {alpha: 1});
 			tweenBehavior.disabledDuration = .5;
 			tweenBehavior.disabledVars = {alpha: .5};

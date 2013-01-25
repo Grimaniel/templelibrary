@@ -65,12 +65,12 @@ package temple.mediaplayers.swf
 		{
 			super(logErrors, cache);
 			
-			this._movieClipPlayer = new MovieClipPlayer();
-			this._movieClipPlayer.addEventListener(StatusEvent.STATUS_CHANGE, this.handleMovieClipPlayerStatusChange);
-			this._movieClipPlayer.addEventListener(PlayerEvent.PLAY_STARTED, this.dispatchEvent);
-			this._movieClipPlayer.addEventListener(SoundEvent.VOLUME_CHANGE, this.dispatchEvent);
-			this.addEventListener(Event.INIT, this.handleInit);
-			this.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			_movieClipPlayer = new MovieClipPlayer();
+			_movieClipPlayer.addEventListener(StatusEvent.STATUS_CHANGE, handleMovieClipPlayerStatusChange);
+			_movieClipPlayer.addEventListener(PlayerEvent.PLAY_STARTED, dispatchEvent);
+			_movieClipPlayer.addEventListener(SoundEvent.VOLUME_CHANGE, dispatchEvent);
+			addEventListener(Event.INIT, handleInit);
+			addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 
 		/**
@@ -86,8 +86,8 @@ package temple.mediaplayers.swf
 		 */
 		public function pause():void
 		{
-			this._movieClipPlayer.pause();
-			this._playWhenReady = false;
+			_movieClipPlayer.pause();
+			_playWhenReady = false;
 		}
 
 		/**
@@ -95,8 +95,8 @@ package temple.mediaplayers.swf
 		 */
 		public function resume():void
 		{
-			if (!this._isBuffering) this._movieClipPlayer.resume();
-			this._playWhenReady = true;
+			if (!_isBuffering) _movieClipPlayer.resume();
+			_playWhenReady = true;
 		}
 
 		/**
@@ -104,7 +104,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get paused():Boolean
 		{
-			return this._movieClipPlayer.paused;
+			return _movieClipPlayer.paused;
 		}
 
 		/**
@@ -112,7 +112,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get status():String
 		{
-			return this._isBuffering ? PlayerStatus.LOADING : this._movieClipPlayer.status;
+			return _isBuffering ? PlayerStatus.LOADING : _movieClipPlayer.status;
 		}
 
 		/**
@@ -120,8 +120,8 @@ package temple.mediaplayers.swf
 		 */
 		public function loadUrl(url:String):void
 		{
-			this._playWhenReady = false;
-			this.load(new URLRequest(url));
+			_playWhenReady = false;
+			load(new URLRequest(url));
 		}
 
 		/**
@@ -129,8 +129,8 @@ package temple.mediaplayers.swf
 		 */
 		public function playUrl(url:String):void
 		{
-			this._playWhenReady = true;
-			this.load(new URLRequest(url));
+			_playWhenReady = true;
+			load(new URLRequest(url));
 		}
 
 		/**
@@ -138,8 +138,8 @@ package temple.mediaplayers.swf
 		 */
 		public function play():void
 		{
-			if (!this._isBuffering) this._movieClipPlayer.play();
-			this._playWhenReady = true;
+			if (!_isBuffering) _movieClipPlayer.play();
+			_playWhenReady = true;
 		}
 
 		/**
@@ -147,8 +147,8 @@ package temple.mediaplayers.swf
 		 */
 		public function stop():void
 		{
-			this._movieClipPlayer.stop();
-			this._playWhenReady = false;
+			_movieClipPlayer.stop();
+			_playWhenReady = false;
 		}
 
 		/**
@@ -156,7 +156,7 @@ package temple.mediaplayers.swf
 		 */
 		public function seek(seconds:Number = 0):void
 		{
-			this._movieClipPlayer.seek(seconds);
+			_movieClipPlayer.seek(seconds);
 		}
 
 		/**
@@ -164,7 +164,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get currentPlayTime():Number
 		{
-			return this._movieClipPlayer.currentPlayTime;
+			return _movieClipPlayer.currentPlayTime;
 		}
 
 		/**
@@ -172,7 +172,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get duration():Number
 		{
-			return this._movieClipPlayer.duration;
+			return _movieClipPlayer.duration;
 		}
 
 		/**
@@ -180,7 +180,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get currentPlayFactor():Number
 		{
-			return this._movieClipPlayer.currentPlayFactor;
+			return _movieClipPlayer.currentPlayFactor;
 		}
 
 		/**
@@ -188,7 +188,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get autoRewind():Boolean
 		{
-			return this._movieClipPlayer.autoRewind;
+			return _movieClipPlayer.autoRewind;
 		}
 
 		/**
@@ -196,7 +196,7 @@ package temple.mediaplayers.swf
 		 */
 		public function set autoRewind(value:Boolean):void
 		{
-			this._movieClipPlayer.autoRewind = value;
+			_movieClipPlayer.autoRewind = value;
 		}
 		
 		/**
@@ -212,7 +212,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get bufferTime():Number
 		{
-			return this._bufferTime;
+			return _bufferTime;
 		}
 
 		/**
@@ -220,7 +220,7 @@ package temple.mediaplayers.swf
 		 */
 		public function set bufferTime(value:Number):void
 		{
-			this._bufferTime = value;
+			_bufferTime = value;
 		}
 		
 		/**
@@ -228,7 +228,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get isBuffering():Boolean
 		{
-			return this._isBuffering;
+			return _isBuffering;
 		}
 		
 		/**
@@ -236,7 +236,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get volume():Number
 		{
-			return this._movieClipPlayer.volume;
+			return _movieClipPlayer.volume;
 		}
 
 		/**
@@ -244,7 +244,7 @@ package temple.mediaplayers.swf
 		 */
 		public function set volume(value:Number):void
 		{
-			this._movieClipPlayer.volume = value;
+			_movieClipPlayer.volume = value;
 		}
 		
 		/**
@@ -252,7 +252,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get frameRate():Number
 		{
-			return this._movieClipPlayer.frameRate;
+			return _movieClipPlayer.frameRate;
 		}
 
 		/**
@@ -260,7 +260,7 @@ package temple.mediaplayers.swf
 		 */
 		public function set frameRate(value:Number):void
 		{
-			this._movieClipPlayer.frameRate = value;
+			_movieClipPlayer.frameRate = value;
 		}
 
 		/**
@@ -268,7 +268,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get useStageFrameRate():Boolean
 		{
-			return this._movieClipPlayer.useStageFrameRate;
+			return _movieClipPlayer.useStageFrameRate;
 		}
 		
 		/**
@@ -276,7 +276,7 @@ package temple.mediaplayers.swf
 		 */
 		public function set useStageFrameRate(value:Boolean):void
 		{
-			this._movieClipPlayer.useStageFrameRate = value;
+			_movieClipPlayer.useStageFrameRate = value;
 		}
 		
 		/**
@@ -284,7 +284,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get movieClip():MovieClip
 		{
-			return this._movieClipPlayer.movieClip;
+			return _movieClipPlayer.movieClip;
 		}
 
 		/**
@@ -292,7 +292,7 @@ package temple.mediaplayers.swf
 		 */
 		public function set movieClip(value:MovieClip):void
 		{
-			this._movieClipPlayer.movieClip = value;
+			_movieClipPlayer.movieClip = value;
 		}
 
 		/**
@@ -300,7 +300,7 @@ package temple.mediaplayers.swf
 		 */
 		public function goto(frame:Object, scene:String = null):void
 		{
-			this._movieClipPlayer.goto(frame, scene);
+			_movieClipPlayer.goto(frame, scene);
 		}
 		
 		/**
@@ -308,41 +308,41 @@ package temple.mediaplayers.swf
 		 */
 		override public function set debug(value:Boolean):void
 		{
-			this._movieClipPlayer.debug = super.debug = value;
+			_movieClipPlayer.debug = super.debug = value;
 		}
 		
 		private function handleInit(event:Event):void
 		{
-			this._movieClipPlayer.movieClip = this.content as MovieClip;
-			if (this._playWhenReady) this._movieClipPlayer.play();
+			_movieClipPlayer.movieClip = content as MovieClip;
+			if (_playWhenReady) _movieClipPlayer.play();
 		}
 		
 		private function handleEnterFrame(event:Event):void
 		{
-			if (this.isLoaded && this._isBuffering)
+			if (this.isLoaded && _isBuffering)
 			{
-				this._isBuffering = false;
-				if (this._playWhenReady) this.resume();
+				_isBuffering = false;
+				if (_playWhenReady) resume();
 			}
 			else if (this.isLoading)
 			{
-				var buffering:Boolean = this._isBuffering;
+				var buffering:Boolean = _isBuffering;
 				
-				this._isBuffering = this.bufferLength && this.bufferLength < this.bufferTime;
+				_isBuffering = bufferLength && this.bufferLength < this.bufferTime;
 				
-				if (buffering != this._isBuffering)
+				if (buffering != _isBuffering)
 				{
-					if (this._isBuffering)
+					if (_isBuffering)
 					{
-						this._movieClipPlayer.pause();
+						_movieClipPlayer.pause();
 					}
-					else if (this._playWhenReady)
+					else if (_playWhenReady)
 					{
-						this._movieClipPlayer.resume();
+						_movieClipPlayer.resume();
 					}
 					else
 					{
-						this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
+						dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
 					}
 				}
 			}
@@ -350,7 +350,7 @@ package temple.mediaplayers.swf
 		
 		private function handleMovieClipPlayerStatusChange(event:StatusEvent):void
 		{
-			this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
+			dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
 		}
 
 		/**
@@ -358,10 +358,10 @@ package temple.mediaplayers.swf
 		 */
 		override public function destruct():void
 		{
-			if (this._movieClipPlayer)
+			if (_movieClipPlayer)
 			{
-				this._movieClipPlayer.destruct();
-				this._movieClipPlayer = null;
+				_movieClipPlayer.destruct();
+				_movieClipPlayer = null;
 			}
 			
 			super.destruct();

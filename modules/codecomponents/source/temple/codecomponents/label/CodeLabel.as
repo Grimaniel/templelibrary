@@ -47,12 +47,12 @@ package temple.codecomponents.label
 	{
 		public function CodeLabel(label:String = "", multiline:Boolean = false, autoSize:String = TextFieldAutoSize.LEFT, html:Boolean = false, wordWrap:Boolean = false)
 		{
-			super(this.addChild(new TextField()) as TextField);
+			super(addChild(new TextField()) as TextField);
 			
 			this.html = html;
 			this.label = label;
-			this.textField.multiline = multiline;
-			this.textField.wordWrap = wordWrap;
+			textField.multiline = multiline;
+			textField.wordWrap = wordWrap;
 			this.autoSize = autoSize;
 		}
 

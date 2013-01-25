@@ -50,8 +50,8 @@ package temple.net.sharedobject
 	 * 
 	 * // also:
 	 * 
-	 * this._sharedObjectSite = new SharedObjectService('projectName', '');
-	 * this._sharedObjectGame = new SharedObjectService('projectName', '/game');
+	 * _sharedObjectSite = new SharedObjectService('projectName', '');
+	 * _sharedObjectGame = new SharedObjectService('projectName', '/game');
 	 * 
 	 * // tip: extend and provide typed accessors with prefilled default-values
 	 *

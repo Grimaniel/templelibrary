@@ -25,13 +25,13 @@ package
 			var list:CodeList;
 			
 			list = new CodeList();
-			this.addChild(list);
+			addChild(list);
 			list.x = 20;
 			list.y = 20;
 			list.addItems(["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada", "venenatis", "Aliquam", "tincidunt", "tellus nec", "blandit porttitor", "neque"]);
 
 			list = new CodeList(100);
-			this.addChild(list);
+			addChild(list);
 			list.x = 200;
 			list.y = 20;
 			list.addItems(["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada", "venenatis", "Aliquam", "tincidunt", "tellus nec", "blandit porttitor", "neque"]);
@@ -40,14 +40,14 @@ package
 			var output:CodeLabel = new CodeLabel();
 			output.x = 200;
 			output.y = 220;
-			this.addChild(output);
+			addChild(output);
 			
 			// When the list is changed, the value will be set in the "label" property of output
 			new ValueBinder(list, output, "label");
 			
 			// Create a 'liquid' List by setting some liquid properties. Resize the SWF to see the list resize.
 			list = new CodeList();
-			this.addChild(list);
+			addChild(list);
 			list.x = 20;
 			list.top = 220;
 			list.bottom = 20;

@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple MediaPlayers Module API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/mediaplayers/video/cuepoints/RuntimeCuePointsBehavior.html&amp;temple/mediaplayers/video/cuepoints/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">RuntimeCuePointsBehavior</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple MediaPlayers Module API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/mediaplayers/video/cuepoints/RuntimeCuePointsBehavior.html&amp;temple/mediaplayers/video/cuepoints/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">RuntimeCuePointsBehavior</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("RuntimeCuePointsBehavior"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -116,17 +116,17 @@ package
             // The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
             super("Temple - RuntimeCuePointsBehaviorExample");
             
-            this.stage.scaleMode = StageScaleMode.NO_SCALE;
+            stage.scaleMode = StageScaleMode.NO_SCALE;
             
-            this._videoPlayer = new VideoPlayer(800, 450);
-            this.addChild(this._videoPlayer);
+            _videoPlayer = new VideoPlayer(800, 450);
+            addChild(_videoPlayer);
             
             // add listener to receive cue point messages
-            this._videoPlayer.addEventListener(CuePointEvent.CUEPOINT, this.handleCuePoint);
-            this._videoPlayer.playUrl('http://www.mediamonks.com/video/reel_en.flv');
+            _videoPlayer.addEventListener(CuePointEvent.CUEPOINT, handleCuePoint);
+            _videoPlayer.playUrl('http://www.mediamonks.com/video/reel_en.flv');
             
             // create RuntimeCuePointsBehavior, assign the _videoPlayer as target
-            var runtimeCuepoints:RuntimeCuePointsBehavior = new RuntimeCuePointsBehavior(this._videoPlayer);
+            var runtimeCuepoints:RuntimeCuePointsBehavior = new RuntimeCuePointsBehavior(_videoPlayer);
             runtimeCuepoints.addCuePoint(new VideoCuePoint("Hello world!", 0));
             runtimeCuepoints.addCuePoint(new VideoCuePoint("This is the RuntimeCuePointBehavior Example", 3));
             runtimeCuepoints.addCuePoint(new VideoCuePoint("Happy coding", 5));
@@ -134,20 +134,20 @@ package
 
         private function handleCuePoint(event:CuePointEvent):void 
         {
-            this.logInfo("Cuepoint: " + event.cuepoint);
+            logInfo("Cuepoint: " + event.cuepoint);
             
             // display the cuepoint name as message on screen
             
-            if (this._message)
+            if (_message)
             {
-                this.removeChild(this._message);
-                this._message = null;
+                removeChild(_message);
+                _message = null;
             }
             
-            this._message = this.createMessage(event.cuepoint.name, 0xE5ECF9, 0x6B90DA);
-            this._message.x = (this._videoPlayer.width - this._message.width) / 2;
-            this._message.y = this._videoPlayer.height - 40;
-            this.addChild(this._message);
+            _message = createMessage(event.cuepoint.name, 0xE5ECF9, 0x6B90DA);
+            _message.x = (_videoPlayer.width - _message.width) / 2;
+            _message.y = _videoPlayer.height - 40;
+            addChild(_message);
         }
         
         

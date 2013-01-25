@@ -47,14 +47,14 @@ package temple.mediaplayers.video.cuepoints
 		{
 			super(target);
 			
-			target.addEventListener(VideoMetaDataEvent.METADATA, this.handleMetaData);
+			target.addEventListener(VideoMetaDataEvent.METADATA, handleMetaData);
 		}
 
 		private function handleMetaData(event : VideoMetaDataEvent) : void
 		{
 			for each (var cuepoint : VideoCuePoint in event.metadata.cuePoints)
 			{
-				this.addCuePoint(cuepoint);
+				addCuePoint(cuepoint);
 			}
 		}
 	}

@@ -48,7 +48,7 @@ package temple.codecomponents.buttons
 		{
 			super(new CodeCross(0, 9, 1), width, height, x, y);
 			
-			this.icon.rotation = 45;
+			icon.rotation = 45;
 		}
 	}
 }

@@ -100,7 +100,7 @@ package temple.reflection
 		/**
 		 * Checks if an object has a property with a specific namespace
 		 */
-		public static function hasNamespacedProperty(object:*, scope:Namespace, variable:String):*
+		public static function hasNamespacedProperty(object:*, scope:Namespace, variable:String):Boolean
 		{
 			return Reflection.get(object)..variable.(hasOwnProperty("@uri") && @uri == scope && @name == variable).length();
 		}

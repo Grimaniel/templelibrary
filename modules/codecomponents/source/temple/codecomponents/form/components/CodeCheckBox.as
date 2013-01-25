@@ -54,11 +54,11 @@ package temple.codecomponents.form.components
 	{
 		public function CodeCheckBox(label:String = null, selectedValue:* = null, selected:Boolean = false, unselectedValue:* = false) 
 		{
-			this.addChild(new TextField());
+			addChild(new TextField());
 			
 			super();
 			
-			this.createUI();
+			createUI();
 			
 			if (label) this.label = label;
 			this.selectedValue = selectedValue == null ? (label ? label : true) : selectedValue;
@@ -68,29 +68,29 @@ package temple.codecomponents.form.components
 
 		private function createUI():void 
 		{
-			this.addChildAt(new CodeBackground(), 0).y = 1;
+			addChildAt(new CodeBackground(), 0).y = 1;
 			
 			// select state
 			var selectState:SelectFadeState = new SelectFadeState(.3, .3);
 			selectState.addChild(new CodeCheck(CodeStyle.iconColor, CodeStyle.iconAlpha));
 			selectState.y = 1;
 			selectState.filters = CodeStyle.iconFilters;
-			this.addChild(selectState);
+			addChild(selectState);
 			
 			// focus state
 			var focus:FocusFadeState = new FocusFadeState(.2, .2);
 			focus.graphics.beginFill(0xff0000, 1);
 			focus.graphics.drawRect(0, 0, 15, 15);
 			focus.graphics.endFill();
-			this.addChildAt(focus, 0);
+			addChildAt(focus, 0);
 			focus.filters = CodeStyle.focusFilters;
 			focus.y = 1;
 			
 			// Label
-			this.textField.autoSize = TextFieldAutoSize.LEFT;
-			this.textField.x = 12;
-			this.textField.defaultTextFormat = CodeStyle.textFormat;
-			this.textField.textColor = CodeStyle.textColor;
+			textField.autoSize = TextFieldAutoSize.LEFT;
+			textField.x = 12;
+			textField.defaultTextFormat = CodeStyle.textFormat;
+			textField.textColor = CodeStyle.textColor;
 		}
 	}
 }

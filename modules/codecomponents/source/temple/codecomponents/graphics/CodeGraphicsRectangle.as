@@ -44,9 +44,9 @@ package temple.codecomponents.graphics
 	{
 		public function CodeGraphicsRectangle(width:Number, height:Number, color:uint, alpha:Number = 1)
 		{
-			this.graphics.beginFill(color, alpha);
-			this.graphics.drawRect(0, 0, width, height);
-			this.graphics.endFill();
+			graphics.beginFill(color, alpha);
+			graphics.drawRect(0, 0, width, height);
+			graphics.endFill();
 		}
 	}
 }

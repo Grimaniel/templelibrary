@@ -61,7 +61,7 @@ package temple.mediaplayers.movieclip
 		public function MovieClipPlayer(movieClip:MovieClip = null, status:String = null)
 		{
 			this.movieClip = movieClip;
-			this._status = status;
+			_status = status;
 		}
 		
 		/**
@@ -69,7 +69,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get movieClip():MovieClip
 		{
-			return this._movieClip;
+			return _movieClip;
 		}
 		
 		/**
@@ -77,15 +77,15 @@ package temple.mediaplayers.movieclip
 		 */
 		public function set movieClip(value:MovieClip):void
 		{
-			if (this._movieClip) this._movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			if (_movieClip) _movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			
-			this._movieClip = value;
-			if (this._movieClip)
+			_movieClip = value;
+			if (_movieClip)
 			{
-				this._movieClip.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.volume = this._volume;
+				_movieClip.addEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				this.volume = _volume;
 			}
-			this._status = PlayerStatus.PAUSED;
+			_status = PlayerStatus.PAUSED;
 		}
 		
 		/**
@@ -93,15 +93,15 @@ package temple.mediaplayers.movieclip
 		 */
 		public function goto(frame:Object, scene:String = null):void
 		{
-			if (this._movieClip)
+			if (_movieClip)
 			{
-				if (this.status == PlayerStatus.PLAYING && this._movieClip)
+				if (status == PlayerStatus.PLAYING && _movieClip)
 				{
-					this._movieClip.gotoAndPlay(frame, scene);
+					_movieClip.gotoAndPlay(frame, scene);
 				}
-				else if (this._movieClip) 
+				else if (_movieClip) 
 				{
-					this._movieClip.gotoAndStop(frame, scene);
+					_movieClip.gotoAndStop(frame, scene);
 				}
 			}
 		}
@@ -111,13 +111,13 @@ package temple.mediaplayers.movieclip
 		 */
 		public function play():void
 		{
-			if (this.debug) this.logDebug("play: ");
-			if (this._movieClip) this._movieClip.gotoAndPlay(1);
-			if (this._status != PlayerStatus.PLAYING)
+			if (debug) logDebug("play: ");
+			if (_movieClip) _movieClip.gotoAndPlay(1);
+			if (_status != PlayerStatus.PLAYING)
 			{
-				this._status = PlayerStatus.PLAYING;
-				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
-				this.dispatchEvent(new PlayerEvent(PlayerEvent.PLAY_STARTED));
+				_status = PlayerStatus.PLAYING;
+				dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
+				dispatchEvent(new PlayerEvent(PlayerEvent.PLAY_STARTED));
 			}
 		}
 
@@ -126,12 +126,12 @@ package temple.mediaplayers.movieclip
 		 */
 		public function stop():void
 		{
-			if (this.debug) this.logDebug("stop: ");
-			if (this._movieClip) this._movieClip.stop();
-			if (this._status != PlayerStatus.STOPPED)
+			if (debug) logDebug("stop: ");
+			if (_movieClip) _movieClip.stop();
+			if (_status != PlayerStatus.STOPPED)
 			{
-				this._status = PlayerStatus.STOPPED;
-				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+				_status = PlayerStatus.STOPPED;
+				dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 			}
 		}
 
@@ -140,15 +140,15 @@ package temple.mediaplayers.movieclip
 		 */
 		public function seek(seconds:Number = 0):void
 		{
-			if (this.debug) this.logDebug("seek: " + seconds);
+			if (debug) logDebug("seek: " + seconds);
 			
-			if (this.status == PlayerStatus.PLAYING && this._movieClip)
+			if (status == PlayerStatus.PLAYING && _movieClip)
 			{
-				this._movieClip.gotoAndPlay(this.secondsToFrame(seconds));
+				_movieClip.gotoAndPlay(secondsToFrame(seconds));
 			}
-			else if (this._movieClip) 
+			else if (_movieClip) 
 			{
-				this._movieClip.gotoAndStop(this.secondsToFrame(seconds));
+				_movieClip.gotoAndStop(secondsToFrame(seconds));
 			}
 		}
 
@@ -157,7 +157,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get currentPlayTime():Number
 		{
-			return this._movieClip ? this.frameToSeconds(this._movieClip.currentFrame) : 0;
+			return _movieClip ? frameToSeconds(_movieClip.currentFrame) : 0;
 		}
 
 		/**
@@ -165,7 +165,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get duration():Number
 		{
-			return this._movieClip ? this.frameToSeconds(this._movieClip.totalFrames) : NaN;
+			return _movieClip ? frameToSeconds(_movieClip.totalFrames) : NaN;
 		}
 
 		/**
@@ -173,7 +173,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get currentPlayFactor():Number
 		{
-			return this._movieClip ? this._movieClip.currentFrame / this._movieClip.totalFrames : 0;
+			return _movieClip ? _movieClip.currentFrame / _movieClip.totalFrames : 0;
 		}
 
 		/**
@@ -181,7 +181,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get autoRewind():Boolean
 		{
-			return this._autoRewind;
+			return _autoRewind;
 		}
 
 		/**
@@ -189,7 +189,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function set autoRewind(value:Boolean):void
 		{
-			this._autoRewind = value;
+			_autoRewind = value;
 		}
 
 		/**
@@ -197,12 +197,12 @@ package temple.mediaplayers.movieclip
 		 */
 		public function pause():void
 		{
-			if (this.debug) this.logDebug("pause: ");
-			if (this._movieClip) this._movieClip.stop();
-			if (this._status != PlayerStatus.PAUSED)
+			if (debug) logDebug("pause: ");
+			if (_movieClip) _movieClip.stop();
+			if (_status != PlayerStatus.PAUSED)
 			{
-				this._status = PlayerStatus.PAUSED;
-				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+				_status = PlayerStatus.PAUSED;
+				dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 			}
 				
 		}
@@ -212,12 +212,12 @@ package temple.mediaplayers.movieclip
 		 */
 		public function resume():void
 		{
-			if (this.debug) this.logDebug("resume: ");
-			if (this._movieClip) this._movieClip.play();
-			if (this._status != PlayerStatus.PLAYING)
+			if (debug) logDebug("resume: ");
+			if (_movieClip) _movieClip.play();
+			if (_status != PlayerStatus.PLAYING)
 			{
-				this._status = PlayerStatus.PLAYING;
-				this.dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this._status));
+				_status = PlayerStatus.PLAYING;
+				dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, _status));
 			}
 		}
 
@@ -226,7 +226,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get paused():Boolean
 		{
-			return this._status == PlayerStatus.PAUSED;
+			return _status == PlayerStatus.PAUSED;
 		}
 
 		/**
@@ -234,7 +234,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get status():String
 		{
-			return this._status;
+			return _status;
 		}
 		
 		/**
@@ -242,7 +242,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get volume():Number
 		{
-			return this._volume;
+			return _volume;
 		}
 
 		/**
@@ -250,25 +250,25 @@ package temple.mediaplayers.movieclip
 		 */
 		public function set volume(value:Number):void
 		{
-			this._volume = value;
+			_volume = value;
 			
-			if (this._movieClip)
+			if (_movieClip)
 			{
-				var soundTransform:SoundTransform = this._movieClip.soundTransform;
-				soundTransform.volume = this._volume;
-				this._movieClip.soundTransform = soundTransform;
-				this.dispatchEvent(new SoundEvent(SoundEvent.VOLUME_CHANGE));
+				var soundTransform:SoundTransform = _movieClip.soundTransform;
+				soundTransform.volume = _volume;
+				_movieClip.soundTransform = soundTransform;
+				dispatchEvent(new SoundEvent(SoundEvent.VOLUME_CHANGE));
 			}
 		}
 		
 		public function get frameRate():Number
 		{
-			return !isNaN(this._frameRate) ? this._frameRate : (this._movieClip && this._movieClip.stage ? this._movieClip.stage.frameRate : 31);
+			return !isNaN(_frameRate) ? _frameRate : (_movieClip && _movieClip.stage ? _movieClip.stage.frameRate : 31);
 		}
 		
 		public function set frameRate(value:Number):void
 		{
-			this._frameRate = value;
+			_frameRate = value;
 		}
 		
 		/**
@@ -276,7 +276,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get useStageFrameRate():Boolean
 		{
-			return isNaN(this._frameRate);
+			return isNaN(_frameRate);
 		}
 
 		/**
@@ -284,7 +284,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function set useStageFrameRate(value:Boolean):void
 		{
-			this._frameRate = value ? NaN : 31;
+			_frameRate = value ? NaN : 31;
 		}
 		
 		/**
@@ -292,7 +292,7 @@ package temple.mediaplayers.movieclip
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -300,27 +300,27 @@ package temple.mediaplayers.movieclip
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		private function handleEnterFrame(event:Event):void
 		{
-			if (this._movieClip && this._movieClip.currentFrame == this._movieClip.totalFrames && this.status == PlayerStatus.PLAYING)
+			if (_movieClip && _movieClip.currentFrame == _movieClip.totalFrames && status == PlayerStatus.PLAYING)
 			{
-				this.stop();
-				this.dispatchEvent(new PlayerEvent(PlayerEvent.COMPLETE));
-				if (this._autoRewind) this._movieClip.gotoAndStop(1);
+				stop();
+				dispatchEvent(new PlayerEvent(PlayerEvent.COMPLETE));
+				if (_autoRewind) _movieClip.gotoAndStop(1);
 			}
 		}
 
 		private function frameToSeconds(frame:uint):Number
 		{
-			return (frame - 1) / this.frameRate;
+			return (frame - 1) / frameRate;
 		}
 
 		private function secondsToFrame(seconds:Number):uint
 		{
-			return Math.round(1 + seconds * this.frameRate);
+			return Math.round(1 + seconds * frameRate);
 		}
 
 		/**
@@ -328,12 +328,12 @@ package temple.mediaplayers.movieclip
 		 */
 		override public function destruct():void
 		{
-			if (this._movieClip)
+			if (_movieClip)
 			{
-				this._movieClip.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this._movieClip = null;
+				_movieClip.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				_movieClip = null;
 			}
-			this._status = null;
+			_status = null;
 			
 			super.destruct();
 		}

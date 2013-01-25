@@ -61,11 +61,11 @@ package temple.codecomponents.scroll
 		 */
 		override construct function scrollBar():void
 		{
-			this.liquidBehavior.adjustRelated = true;
-			this.addEventListener(ScrollEvent.SCROLL, this.handleScroll);
-			this.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
+			liquidBehavior.adjustRelated = true;
+			addEventListener(ScrollEvent.SCROLL, handleScroll);
+			addEventListener(MouseEvent.MOUSE_WHEEL, handleMouseWheel);
 
-			this.toStringProps.push("orientation");
+			toStringProps.push("orientation");
 		}
 
 		/**
@@ -75,23 +75,23 @@ package temple.codecomponents.scroll
 		{
 			this.orientation = orientation;
 			
-			switch (this.orientation)
+			switch (orientation)
 			{
 				case Orientation.HORIZONTAL:
 				{
-					this.width = size;
+					width = size;
 					break;
 				}
 				case Orientation.VERTICAL:
 				{
-					this.height = size;
+					height = size;
 					break;
 				}
 			}
 			
 			this.autoHide = autoHide;
 			
-			this.createUI(thickness);
+			createUI(thickness);
 			
 			this.scrollPane = scrollPane;
 		}
@@ -99,22 +99,22 @@ package temple.codecomponents.scroll
 
 		private function createUI(thickness:Number):void 
 		{
-			this.track = this.addChild(new CodeBackground(thickness, thickness)) as InteractiveObject;
-			if (this.orientation == Orientation.VERTICAL)
+			track = addChild(new CodeBackground(thickness, thickness)) as InteractiveObject;
+			if (orientation == Orientation.VERTICAL)
 			{
-				this.button = this.addChild(new CodeButton(thickness, thickness)) as InteractiveObject;
-				this.upButton = this.addChild(new CodeScrollButton(Orientation.VERTICAL, Direction.DESCENDING, thickness, thickness)) as InteractiveObject;
-				this.downButton = this.addChild(new CodeScrollButton(Orientation.VERTICAL, Direction.ASCENDING, thickness, thickness)) as InteractiveObject;
+				button = addChild(new CodeButton(thickness, thickness)) as InteractiveObject;
+				upButton = addChild(new CodeScrollButton(Orientation.VERTICAL, Direction.DESCENDING, thickness, thickness)) as InteractiveObject;
+				downButton = addChild(new CodeScrollButton(Orientation.VERTICAL, Direction.ASCENDING, thickness, thickness)) as InteractiveObject;
 			}
 			else
 			{
-				this.button = this.addChild(new CodeButton(thickness, thickness)) as InteractiveObject;
-				this.leftButton = this.addChild(new CodeScrollButton(Orientation.HORIZONTAL, Direction.DESCENDING, thickness, thickness)) as InteractiveObject;
-				this.rightButton = this.addChild(new CodeScrollButton(Orientation.HORIZONTAL, Direction.ASCENDING, thickness, thickness)) as InteractiveObject;
+				button = addChild(new CodeButton(thickness, thickness)) as InteractiveObject;
+				leftButton = addChild(new CodeScrollButton(Orientation.HORIZONTAL, Direction.DESCENDING, thickness, thickness)) as InteractiveObject;
+				rightButton = addChild(new CodeScrollButton(Orientation.HORIZONTAL, Direction.ASCENDING, thickness, thickness)) as InteractiveObject;
 			}
-			CodeButton(this.button).outOnDragOut = false;
-			this.autoSizeButton = true;
-			this.minimalButtonSize = 20;
+			CodeButton(button).outOnDragOut = false;
+			autoSizeButton = true;
+			minimalButtonSize = 20;
 		}
 	}
 }

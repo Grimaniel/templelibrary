@@ -45,7 +45,7 @@ package temple.codecomponents.graphics
 		public function CodeBackground(width:Number = 14, height:Number = 14)
 		{
 			super(width, height, CodeStyle.backgroundColor, CodeStyle.backgroundAlpha);
-			this.filters = CodeStyle.backgroundFilters;
+			filters = CodeStyle.backgroundFilters;
 		}
 	}
 }

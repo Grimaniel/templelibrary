@@ -50,12 +50,12 @@ package temple.mediaplayers.video.cuepoints
 		{
 			super(type, bubbles);
 			
-			this._cuepoint = cuepoint;
+			_cuepoint = cuepoint;
 		}
 		
 		public function get cuepoint():VideoCuePoint
 		{
-			return this._cuepoint;
+			return _cuepoint;
 		}
 
 		/**
@@ -63,12 +63,12 @@ package temple.mediaplayers.video.cuepoints
 		 */
 		override public function clone():Event 
 		{
-			return new CuePointEvent(this.type, this.cuepoint, this.bubbles);
+			return new CuePointEvent(type, cuepoint, bubbles);
 		}
 
 		override public function toString():String 
 		{
-			return super.toString() + " " + this.cuepoint;
+			return super.toString() + " " + cuepoint;
 		}
 	}
 }

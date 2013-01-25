@@ -93,45 +93,45 @@ package temple.microphone.recorder
 		 */
 		public function MicrophoneRecorder(gain:uint = 100, rate:uint = 44, silenceLevel:uint = 0, silenceTimeOut:uint = 4000)
 		{
-			this._gain = gain;
-			this._rate = rate;
-			this._silenceLevel = silenceLevel;
-			this._silenceTimeOut = silenceTimeOut;
-			this._buffer = new ByteArray();
+			_gain = gain;
+			_rate = rate;
+			_silenceLevel = silenceLevel;
+			_silenceTimeOut = silenceTimeOut;
+			_buffer = new ByteArray();
 			
-			this.toStringProps.push("gain", "rate", "silenceLevel", "silenceTimeOut");
+			toStringProps.push("gain", "rate", "silenceLevel", "silenceTimeOut");
 		}
 
 		public function setup():void
 		{
-			if (this._microphone == null)
+			if (_microphone == null)
 			{
 				// force mic access settings dialog
-				if (this._resetted)
+				if (_resetted)
 				{
 					Security.showSettings(SecurityPanel.PRIVACY);
 				}
 				else
 				{
-					this.createMicrophone();
+					createMicrophone();
 					
 					var nc:NetConnection = new NetConnection();
 					nc.connect(null);
 					var ns:NetStream = new NetStream(nc);
-					ns.attachAudio(this._microphone);
+					ns.attachAudio(_microphone);
 				}
 			}
 			
-			if (this._microphone)
+			if (_microphone)
 			{
-				this._buffer.length = 0;
+				_buffer.length = 0;
 			}
 		}
 
 		public function record():void
 		{
-			this._difference = getTimer();
-			this._microphone.addEventListener(SampleDataEvent.SAMPLE_DATA, this.handleSampleData);
+			_difference = getTimer();
+			_microphone.addEventListener(SampleDataEvent.SAMPLE_DATA, handleSampleData);
 		}
 
 		/**
@@ -141,124 +141,124 @@ package temple.microphone.recorder
 		{
 			var recordedBuffer:ByteArray = new ByteArray();
 			
-			this._buffer.position = 0;
-			this._buffer.readBytes(recordedBuffer);
+			_buffer.position = 0;
+			_buffer.readBytes(recordedBuffer);
 			
 			if (useSample)
 			{
-				this._buffer.clear();
+				_buffer.clear();
 				
 				recordedBuffer.position = 0;
-				this._output = recordedBuffer;
+				_output = recordedBuffer;
 	
-				this.dispatchEvent(new Event(Event.COMPLETE));
+				dispatchEvent(new Event(Event.COMPLETE));
 			}
 			
-			this._microphone.removeEventListener(SampleDataEvent.SAMPLE_DATA, this.handleSampleData);
+			_microphone.removeEventListener(SampleDataEvent.SAMPLE_DATA, handleSampleData);
 		}
 
 		public function get sampleRate():uint
 		{
 			var rate:uint = 22050;
-			if (this._rate == 44) rate = 44100;
-			if (this._rate == 22) rate = 22050;
-			if (this._rate == 11) rate = 11025;
-			if (this._rate == 8) rate = 8000;
-			if (this._rate == 5) rate = 5512;
+			if (_rate == 44) rate = 44100;
+			if (_rate == 22) rate = 22050;
+			if (_rate == 11) rate = 11025;
+			if (_rate == 8) rate = 8000;
+			if (_rate == 5) rate = 5512;
 
 			return rate;
 		}
 
 		public function get rate():uint
 		{
-			return this._rate;
+			return _rate;
 		}
 
 		public function set rate(value:uint):void
 		{
-			this._rate = value;
+			_rate = value;
 		}
 
 		public function get gain():uint
 		{
-			return this._gain;
+			return _gain;
 		}
 
 		public function set gain(value:uint):void
 		{
-			this._gain = value;
+			_gain = value;
 		}
 
 		public function get silenceLevel():uint
 		{
-			return this._silenceLevel;
+			return _silenceLevel;
 		}
 
 		public function set silenceLevel(value:uint):void
 		{
-			this._silenceLevel = value;
+			_silenceLevel = value;
 		}
 
 		public function get output():ByteArray
 		{
-			return this._output;
+			return _output;
 		}
 
 		public function get recordingTime():uint
 		{
-			return getTimer() - this._difference;
+			return getTimer() - _difference;
 		}
 
 		public function get silenceTimeOut():uint
 		{
-			return this._silenceTimeOut;
+			return _silenceTimeOut;
 		}
 
 		public function set silenceTimeOut(value:uint):void
 		{
-			this._silenceTimeOut = value;
+			_silenceTimeOut = value;
 		}
 		
 		private function createMicrophone():void
 		{
-			this._microphone = Microphone.getMicrophone();
+			_microphone = Microphone.getMicrophone();
 			
-			if (this._microphone)
+			if (_microphone)
 			{
-				this._microphone.addEventListener(StatusEvent.STATUS, this.handleStatusEvent);
+				_microphone.addEventListener(StatusEvent.STATUS, handleStatusEvent);
 				
-				this._microphone.setSilenceLevel(this._silenceLevel, this._silenceTimeOut);
-				this._microphone.rate = this._rate;
-				this._microphone.gain = this._gain;
+				_microphone.setSilenceLevel(_silenceLevel, _silenceTimeOut);
+				_microphone.rate = _rate;
+				_microphone.gain = _gain;
 				
-				this.setup();
+				setup();
 			}
 			else
 			{
-				this.dispatchEvent(new Event(Event.CANCEL));
+				dispatchEvent(new Event(Event.CANCEL));
 			}
 		}
 
 		private function handleStatusEvent(event:StatusEvent):void
 		{
-			if (this._inited) return;
+			if (_inited) return;
 			
 			if (event.code == 'Microphone.Muted')
 			{
-				this._resetted = true;
-				this._microphone = null;
-				this.dispatchEvent(new Event(Event.CANCEL));
+				_resetted = true;
+				_microphone = null;
+				dispatchEvent(new Event(Event.CANCEL));
 			}
 			else if (event.code == 'Microphone.Unmuted')
 			{
-				this.createMicrophone();
+				createMicrophone();
 				
-				this.dispatchEvent(new Event(Event.INIT));
-				this._inited = true;
+				dispatchEvent(new Event(Event.INIT));
+				_inited = true;
 			}
 			else
 			{
-				this._difference = getTimer();
+				_difference = getTimer();
 			}
 		}
 		
@@ -269,7 +269,7 @@ package temple.microphone.recorder
 		{
 			while (event.data.bytesAvailable > 0)
 			{
-				this._buffer.writeFloat(event.data.readFloat());
+				_buffer.writeFloat(event.data.readFloat());
 			}
 		}
 
@@ -278,14 +278,14 @@ package temple.microphone.recorder
 		 */
 		override public function destruct():void
 		{
-			if (this._microphone)
+			if (_microphone)
 			{
-				this._microphone.removeEventListener(StatusEvent.STATUS, this.handleStatusEvent);
-				this._microphone.addEventListener(SampleDataEvent.SAMPLE_DATA, this.handleSampleData);
-				this._microphone = null;
+				_microphone.removeEventListener(StatusEvent.STATUS, handleStatusEvent);
+				_microphone.addEventListener(SampleDataEvent.SAMPLE_DATA, handleSampleData);
+				_microphone = null;
 			}
-			this._buffer = null;
-			this._output = null;
+			_buffer = null;
+			_output = null;
 			
 			super.destruct();
 		}
