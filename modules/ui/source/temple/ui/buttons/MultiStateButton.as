@@ -120,11 +120,11 @@ package temple.ui.buttons
 		{
 			super();
 			
-			this.stop();
+			stop();
 			
-			this._buttonBehavior = new ButtonBehavior(this);
-			if (this.totalFrames > 1) this._timelineBehavior = new ButtonTimelineBehavior(this);
-			this._stateBehavior = new ButtonStateBehavior(this);
+			_buttonBehavior = new ButtonBehavior(this);
+			if (totalFrames > 1) _timelineBehavior = new ButtonTimelineBehavior(this);
+			_stateBehavior = new ButtonStateBehavior(this);
 		}
 
 		/**
@@ -132,7 +132,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonBehavior():ButtonBehavior
 		{
-			return this._buttonBehavior;
+			return _buttonBehavior;
 		}
 
 		/**
@@ -140,7 +140,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonTimelineBehavior():ButtonTimelineBehavior
 		{
-			return this._timelineBehavior;
+			return _timelineBehavior;
 		}
 
 		/**
@@ -148,7 +148,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonStateBehavior():ButtonStateBehavior
 		{
-			return this._stateBehavior;
+			return _stateBehavior;
 		}
 
 		/**
@@ -157,8 +157,8 @@ package temple.ui.buttons
 		[Inspectable(name="Enabled", type="Boolean", defaultValue="true")]
 		override public function set enabled(value:Boolean):void
 		{
-			this.mouseEnabled = super.enabled = value;
-			if (this._buttonBehavior) this._buttonBehavior.disabled = !value;
+			mouseEnabled = super.enabled = value;
+			if (_buttonBehavior) _buttonBehavior.disabled = !value;
 		}
 		
 		/**
@@ -166,7 +166,7 @@ package temple.ui.buttons
 		 */
 		public function get inDelay():Number
 		{
-			return this._buttonBehavior ? this._buttonBehavior.inDelay : NaN;
+			return _buttonBehavior ? _buttonBehavior.inDelay : NaN;
 		}
 		
 		/**
@@ -175,7 +175,7 @@ package temple.ui.buttons
 		[Inspectable(name="In delay", type="Number", defaultValue="0")]
 		public function set inDelay(value:Number):void
 		{
-			if (this._buttonBehavior) this._buttonBehavior.inDelay = value;
+			if (_buttonBehavior) _buttonBehavior.inDelay = value;
 		}
 		
 		/**
@@ -183,7 +183,7 @@ package temple.ui.buttons
 		 */
 		public function get outDelay():Number
 		{
-			return this._buttonBehavior ? this._buttonBehavior.outDelay : NaN;
+			return _buttonBehavior ? _buttonBehavior.outDelay : NaN;
 		}
 		
 		/**
@@ -192,7 +192,7 @@ package temple.ui.buttons
 		[Inspectable(name="Out delay", type="Number", defaultValue="0")]
 		public function set outDelay(value:Number):void
 		{
-			if (this._buttonBehavior) this._buttonBehavior.outDelay = value;
+			if (_buttonBehavior) _buttonBehavior.outDelay = value;
 		}
 
 		/**
@@ -201,7 +201,7 @@ package temple.ui.buttons
 		 */
 		public function get outOnDragOut():Boolean
 		{
-			return this._buttonBehavior ? this._buttonBehavior.outOnDragOut : false;
+			return _buttonBehavior ? _buttonBehavior.outOnDragOut : false;
 		}
 		
 		/**
@@ -210,7 +210,7 @@ package temple.ui.buttons
 		[Inspectable(name="Out On DragOut", type="Boolean", defaultValue="true")]
 		public function set outOnDragOut(value:Boolean):void
 		{
-			if (this._buttonBehavior) this._buttonBehavior.outOnDragOut = value;
+			if (_buttonBehavior) _buttonBehavior.outOnDragOut = value;
 		}
 		
 		/**
@@ -218,7 +218,7 @@ package temple.ui.buttons
 		 */
 		public function get downOnDragIn():Boolean
 		{
-			return this._buttonBehavior ? this._buttonBehavior.downOnDragIn : false;
+			return _buttonBehavior ? _buttonBehavior.downOnDragIn : false;
 		}
 
 		/**
@@ -227,7 +227,7 @@ package temple.ui.buttons
 		[Inspectable(name="Down On DragIn", type="Boolean", defaultValue="false")]
 		public function set downOnDragIn(value:Boolean):void
 		{
-			if (this._buttonBehavior) this._buttonBehavior.downOnDragIn = value;
+			if (_buttonBehavior) _buttonBehavior.downOnDragIn = value;
 		}
 		
 		/**
@@ -239,7 +239,7 @@ package temple.ui.buttons
 		 */
 		public function get playMode():ButtonTimelinePlayMode
 		{
-			return this._timelineBehavior ? this._timelineBehavior.playMode : null;
+			return _timelineBehavior ? _timelineBehavior.playMode : null;
 		}
 
 		/**
@@ -248,7 +248,7 @@ package temple.ui.buttons
 		[Inspectable(name="PlayMode", type="String", defaultValue="reversed", enumeration="reversed,continue,immediately")]
 		public function set playMode(value:*):void
 		{
-			if (this._timelineBehavior) this._timelineBehavior.playMode = value;
+			if (_timelineBehavior) _timelineBehavior.playMode = value;
 		}
 
 		/**
@@ -256,7 +256,7 @@ package temple.ui.buttons
 		 */
 		public function playIntro():void 
 		{
-			if (this._timelineBehavior) this._timelineBehavior.playIntro();
+			if (_timelineBehavior) _timelineBehavior.playIntro();
 		}
 
 		/**
@@ -264,7 +264,7 @@ package temple.ui.buttons
 		 */
 		public function playOutro():void 
 		{
-			if (this._timelineBehavior) this._timelineBehavior.playOutro();
+			if (_timelineBehavior) _timelineBehavior.playOutro();
 		}
 
 		/**
@@ -272,7 +272,7 @@ package temple.ui.buttons
 		 */
 		public function get focus():Boolean
 		{
-			return this._buttonBehavior ? this._buttonBehavior.focus : false;
+			return _buttonBehavior ? _buttonBehavior.focus : false;
 		}
 		
 		/**
@@ -280,13 +280,13 @@ package temple.ui.buttons
 		 */
 		public function set focus(value:Boolean):void
 		{
-			if (value == this.focus) return;
+			if (value == focus) return;
 			
 			if (value)
 			{
 				FocusManager.focus = this;
 			}
-			else if (this.focus)
+			else if (focus)
 			{
 				FocusManager.focus = null;
 			}
@@ -297,7 +297,7 @@ package temple.ui.buttons
 		 */
 		public function get updateByParent():Boolean
 		{
-			return this._stateBehavior && this._stateBehavior.updateByParent && this._timelineBehavior && this._timelineBehavior.updateByParent;
+			return _stateBehavior && _stateBehavior.updateByParent && _timelineBehavior && _timelineBehavior.updateByParent;
 		}
 		
 		/**
@@ -306,8 +306,8 @@ package temple.ui.buttons
 		[Inspectable(name="Update By Parent", type="Boolean", defaultValue="true")]
 		public function set updateByParent(value:Boolean):void
 		{
-			if (this._stateBehavior) this._stateBehavior.updateByParent = value; 
-			if (this._timelineBehavior) this._timelineBehavior.updateByParent = value;
+			if (_stateBehavior) _stateBehavior.updateByParent = value; 
+			if (_timelineBehavior) _timelineBehavior.updateByParent = value;
 		}
 		
 		/**
@@ -315,7 +315,7 @@ package temple.ui.buttons
 		 */
 		public function get selected():Boolean
 		{
-			return this._buttonBehavior ? this._buttonBehavior.selected : false;
+			return _buttonBehavior ? _buttonBehavior.selected : false;
 		}
 
 		/**
@@ -323,10 +323,10 @@ package temple.ui.buttons
 		 */
 		public function set selected(value:Boolean):void
 		{
-			if (this._buttonBehavior && this._buttonBehavior.selected != value)
+			if (_buttonBehavior && _buttonBehavior.selected != value)
 			{
-				this._buttonBehavior.selected = value;
-				this.dispatchEvent(new Event(Event.CHANGE));
+				_buttonBehavior.selected = value;
+				dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
@@ -335,7 +335,7 @@ package temple.ui.buttons
 		 */
 		public function get clickOnSpacebar():Boolean
 		{
-			return this._buttonBehavior.clickOnSpacebar;
+			return _buttonBehavior.clickOnSpacebar;
 		}
 		
 		/**
@@ -344,7 +344,7 @@ package temple.ui.buttons
 		[Inspectable(name="Click on Spacebar", type="Boolean", defaultValue="false")]
 		public function set clickOnSpacebar(value:Boolean):void
 		{
-			if (this._buttonBehavior) this._buttonBehavior.clickOnSpacebar = value;
+			if (_buttonBehavior) _buttonBehavior.clickOnSpacebar = value;
 		}
 		
 		/**
@@ -352,7 +352,7 @@ package temple.ui.buttons
 		 */
 		public function get clickOnEnter():Boolean
 		{
-			return this._buttonBehavior ? this._buttonBehavior.clickOnEnter : false;
+			return _buttonBehavior ? _buttonBehavior.clickOnEnter : false;
 		}
 		
 		/**
@@ -361,7 +361,7 @@ package temple.ui.buttons
 		[Inspectable(name="Click on Enter", type="Boolean", defaultValue="false")]
 		public function set clickOnEnter(value:Boolean):void
 		{
-			if (this._buttonBehavior) this._buttonBehavior.clickOnEnter = value;
+			if (_buttonBehavior) _buttonBehavior.clickOnEnter = value;
 		}
 
 		/**
@@ -369,9 +369,9 @@ package temple.ui.buttons
 		 */
 		override public function destruct():void
 		{
-			this._buttonBehavior = null;
-			this._timelineBehavior = null;
-			this._stateBehavior = null;
+			_buttonBehavior = null;
+			_timelineBehavior = null;
+			_stateBehavior = null;
 			
 			super.destruct();
 		}

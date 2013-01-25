@@ -93,7 +93,7 @@ package temple.ui.animation
 		 */
 		override public function clone():Event 
 		{
-			return new AnimationEvent(this.type, this.bubbles);
+			return new AnimationEvent(type, bubbles);
 		}
 	}
 }

@@ -62,7 +62,7 @@ package temple.ui.buttons
 		{
 			super();
 			
-			this.addEventListener(MouseEvent.CLICK, this.handleClick);
+			addEventListener(MouseEvent.CLICK, handleClick);
 		}
 		
 		/**
@@ -70,7 +70,7 @@ package temple.ui.buttons
 		 */
 		public function get urlName():String
 		{
-			return this._urlName;
+			return _urlName;
 		}
 		
 		/**
@@ -79,7 +79,7 @@ package temple.ui.buttons
 		[Inspectable(name="URLName", type="String")]
 		public function set urlName(urlName:String):void
 		{
-			this._urlName = urlName;
+			_urlName = urlName;
 		}
 		
 		/**
@@ -88,7 +88,7 @@ package temple.ui.buttons
 		[Inspectable(name="URL", type="String")]
 		public function get url():String
 		{
-			return this._url;
+			return _url;
 		}
 		
 		/**
@@ -97,9 +97,9 @@ package temple.ui.buttons
 		[Inspectable(name="URL", type="String")]
 		public function set url(value:String):void
 		{
-			this._url = value;
+			_url = value;
 			
-			if (this._urlName) this.logWarn("URLName already set, it's overriding URL!");
+			if (_urlName) logWarn("URLName already set, it's overriding URL!");
 		}
 		
 		/**
@@ -107,7 +107,7 @@ package temple.ui.buttons
 		 */
 		public function get urlTarget():String
 		{
-			return this._urlTarget;
+			return _urlTarget;
 		}
 		
 		/**
@@ -116,24 +116,24 @@ package temple.ui.buttons
 		[Inspectable(name="target window", type="String", defaultValue="_blank", enumeration="_self,_blank,_top")]
 		public function set urlTarget(value:String):void
 		{
-			this._urlTarget = value;
+			_urlTarget = value;
 		}
 		
 		private function handleClick(event:MouseEvent):void
 		{
-			if (this._urlName)
+			if (_urlName)
 			{
-				urlManagerInstance.openByName(this._urlName);
+				urlManagerInstance.openByName(_urlName);
 			}
 			else
 			{
-				if (this._url)
+				if (_url)
 				{
-					urlManagerInstance.open(this._url, this._urlTarget);
+					urlManagerInstance.open(_url, _urlTarget);
 				}
 				else
 				{
-					this.logError("URLName and URL not set, can't open URL");
+					logError("URLName and URL not set, can't open URL");
 				}
 			}
 		}

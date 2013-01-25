@@ -59,7 +59,7 @@ package temple.ui.behaviors
 		{
 			super(target);
 			
-			target.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			target.addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 		}
 		
 		/**
@@ -67,7 +67,7 @@ package temple.ui.behaviors
 		 */
 		public function enable():void
 		{
-			this._enabled = true;
+			_enabled = true;
 		}
 		
 		/**
@@ -75,7 +75,7 @@ package temple.ui.behaviors
 		 */
 		public function disable():void
 		{
-			this._enabled = false;
+			_enabled = false;
 		}
 		
 		/**
@@ -83,7 +83,7 @@ package temple.ui.behaviors
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package temple.ui.behaviors
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 		}
 		
 		/**
@@ -99,7 +99,7 @@ package temple.ui.behaviors
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -107,24 +107,24 @@ package temple.ui.behaviors
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleEnterFrame(event:Event):void 
 		{
-			if (this._enabled && this.displayObject)
+			if (_enabled && displayObject)
 			{
-				if (this.displayObject.alpha > 0 && !this.displayObject.visible)
+				if (displayObject.alpha > 0 && !displayObject.visible)
 				{
-					this.displayObject.visible = true;
+					displayObject.visible = true;
 					
-					if (this.debug) this.logDebug("visible set to false because alpha is 0");
+					if (debug) logDebug("visible set to false because alpha is 0");
 				}
-				else if (this.displayObject.alpha == 0 && this.displayObject.visible)
+				else if (displayObject.alpha == 0 && displayObject.visible)
 				{
-					this.displayObject.visible = false;
+					displayObject.visible = false;
 					
-					if (this.debug) this.logDebug("visible set to true because alpha is not 0");
+					if (debug) logDebug("visible set to true because alpha is not 0");
 				}
 			}
 		}
@@ -134,7 +134,7 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.displayObject) this.displayObject.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
+			if (displayObject) displayObject.addEventListener(Event.ENTER_FRAME, handleEnterFrame);
 			
 			super.destruct();
 		}

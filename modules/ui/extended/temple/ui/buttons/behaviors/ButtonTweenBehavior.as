@@ -71,7 +71,7 @@ package temple.ui.buttons.behaviors
 			
 			OverwriteManager.init();
 			
-			this._states = new HashMap("ButtonTweenBehaviorStates");
+			_states = new HashMap("ButtonTweenBehaviorStates");
 			
 			this.upDuration = upDuration;
 			this.upVars = upVars;
@@ -85,12 +85,12 @@ package temple.ui.buttons.behaviors
 
 		public function get upVars():Object
 		{
-			return this.getVars(_UP);
+			return getVars(_UP);
 		}
 		
 		public function set upVars(value:Object):void
 		{
-			this.setVars(_UP, value);
+			setVars(_UP, value);
 		}
 		
 		/**
@@ -98,7 +98,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get upDuration():Number
 		{
-			return this.getDuration(_UP);
+			return getDuration(_UP);
 		}
 		
 		/**
@@ -106,18 +106,18 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set upDuration(value:Number):void
 		{
-			this.setDuration(_UP, value);
+			setDuration(_UP, value);
 		}
 		
 		public function setUpTween(duration:Number, vars:Object):void
 		{
-			this.upDuration = duration;
-			this.upVars = vars;
+			upDuration = duration;
+			upVars = vars;
 		}
 
 		public function get overVars():Object
 		{
-			return this.getVars(_OVER);
+			return getVars(_OVER);
 		}
 		
 		/**
@@ -125,7 +125,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set overVars(value:Object):void
 		{
-			this.setVars(_OVER, value);
+			setVars(_OVER, value);
 		}
 		
 		/**
@@ -133,7 +133,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get overDuration():Number
 		{
-			return this.getDuration(_OVER);
+			return getDuration(_OVER);
 		}
 		
 		/**
@@ -141,18 +141,18 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set overDuration(value:Number):void
 		{
-			this.setDuration(_OVER, value);
+			setDuration(_OVER, value);
 		}
 		
 		public function setOverTween(duration:Number, vars:Object):void
 		{
-			this.overDuration = duration;
-			this.overVars = vars;
+			overDuration = duration;
+			overVars = vars;
 		}
 		
 		public function get downVars():Object
 		{
-			return this.getVars(_DOWN);
+			return getVars(_DOWN);
 		}
 		
 		/**
@@ -160,7 +160,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set downVars(value:Object):void
 		{
-			this.setVars(_DOWN, value);
+			setVars(_DOWN, value);
 		}
 		
 		/**
@@ -168,7 +168,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get downDuration():Number
 		{
-			return this.getDuration(_DOWN);
+			return getDuration(_DOWN);
 		}
 		
 		/**
@@ -176,18 +176,18 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set downDuration(value:Number):void
 		{
-			this.setDuration(_DOWN, value);
+			setDuration(_DOWN, value);
 		}
 		
 		public function setDownTween(duration:Number, vars:Object):void
 		{
-			this.downDuration = duration;
-			this.downVars = vars;
+			downDuration = duration;
+			downVars = vars;
 		}
 		
 		public function get selectedVars():Object
 		{
-			return this.getVars(_SELECTED);
+			return getVars(_SELECTED);
 		}
 		
 		/**
@@ -195,7 +195,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set selectedVars(value:Object):void
 		{
-			this.setVars(_SELECTED, value);
+			setVars(_SELECTED, value);
 		}
 		
 		/**
@@ -203,7 +203,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get selectedDuration():Number
 		{
-			return this.getDuration(_SELECTED);
+			return getDuration(_SELECTED);
 		}
 		
 		/**
@@ -211,18 +211,18 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set selectedDuration(value:Number):void
 		{
-			this.setDuration(_SELECTED, value);
+			setDuration(_SELECTED, value);
 		}
 		
 		public function setSelectedTween(duration:Number, vars:Object):void
 		{
-			this.selectedDuration = duration;
-			this.selectedVars = vars;
+			selectedDuration = duration;
+			selectedVars = vars;
 		}
 		
 		public function get disabledVars():Object
 		{
-			return this.getVars(_DISABLED);
+			return getVars(_DISABLED);
 		}
 		
 		/**
@@ -230,7 +230,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set disabledVars(value:Object):void
 		{
-			this.setVars(_DISABLED, value);
+			setVars(_DISABLED, value);
 		}
 		
 		/**
@@ -238,7 +238,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get disabledDuration():Number
 		{
-			return this.getDuration(_DISABLED);
+			return getDuration(_DISABLED);
 		}
 		
 		/**
@@ -246,18 +246,18 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set disabledDuration(value:Number):void
 		{
-			this.setDuration(_DISABLED, value);
+			setDuration(_DISABLED, value);
 		}
 		
 		public function setDisabledTween(duration:Number, vars:Object):void
 		{
-			this.disabledDuration = duration;
-			this.disabledVars = vars;
+			disabledDuration = duration;
+			disabledVars = vars;
 		}
 		
 		public function get focusVars():Object
 		{
-			return this.getVars(_FOCUS);
+			return getVars(_FOCUS);
 		}
 		
 		/**
@@ -265,7 +265,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set focusVars(value:Object):void
 		{
-			this.setVars(_FOCUS, value);
+			setVars(_FOCUS, value);
 		}
 		
 		/**
@@ -273,7 +273,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get focusDuration():Number
 		{
-			return this.getDuration(_FOCUS);
+			return getDuration(_FOCUS);
 		}
 		
 		/**
@@ -281,13 +281,13 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set focusDuration(value:Number):void
 		{
-			this.setDuration(_FOCUS, value);
+			setDuration(_FOCUS, value);
 		}
 		
 		public function setFocusTween(duration:Number, vars:Object):void
 		{
-			this.focusDuration = duration;
-			this.focusVars = vars;
+			focusDuration = duration;
+			focusVars = vars;
 		}
 		
 		/**
@@ -307,9 +307,9 @@ package temple.ui.buttons.behaviors
 		{
 			super.update(status);
 			
-			if (!this.enabled) return;
+			if (!enabled) return;
 			
-			if (this.debug) this.logDebug("update: selected=" + this.selected + ", disabled=" + this.disabled + ", over=" + this.over + ", down=" + this.down);
+			if (debug) logDebug("update: selected=" + selected + ", disabled=" + disabled + ", over=" + over + ", down=" + down);
 			
 			var vars:Object = {};
 			var duration:Number;
@@ -324,12 +324,12 @@ package temple.ui.buttons.behaviors
 				
 				if (state == _UP || status[state])
 				{
-					data = this._states[state];
+					data = _states[state];
 					
 					if (data && data.vars)
 					{
 						// Check for TweenLiteVars
-						this.overwriteVars(data.vars.isGSVars ? data.vars.vars : data.vars, vars);
+						overwriteVars(data.vars.isGSVars ? data.vars.vars : data.vars, vars);
 						duration = data.duration;
 						isChanged = true;
 					}
@@ -337,41 +337,41 @@ package temple.ui.buttons.behaviors
 			}
 			if (isChanged)
 			{
-				if (this.debug) this.logDebug("update: duration: " + duration + ", vars: " + dump(vars));
+				if (debug) logDebug("update: duration: " + duration + ", vars: " + dump(vars));
 				
 				if (isNaN(duration)) duration = 0;
 				if (vars['ease'] is String) vars['ease'] = EaseLookup.find(vars['ease']);
 				vars.immediateRender = duration == 0;
-				this._tween = TweenMax.to(this.target, duration, vars);
+				_tween = TweenMax.to(target, duration, vars);
 			}
 		}
 
 		private function getVars(state:String):Object
 		{
-			return state in this._states ? StateData(this._states[state]).vars : null;
+			return state in _states ? StateData(_states[state]).vars : null;
 		}
 
 		private function setVars(state:String, vars:Object):void
 		{
-			var data:StateData = this._states[state] || new StateData();
+			var data:StateData = _states[state] || new StateData();
 			data.vars = vars;
-			this._states[state] = data;
+			_states[state] = data;
 			
-			if (this.debug) this.logDebug(state + ": " + dump(vars));
-			this.update(this);
+			if (debug) logDebug(state + ": " + dump(vars));
+			update(this);
 		}
 
 		private function getDuration(state:String):Number
 		{
-			return state in this._states ? StateData(this._states[state]).duration : NaN;
+			return state in _states ? StateData(_states[state]).duration : NaN;
 		}
 
 
 		private function setDuration(state:String, duration:Number):void
 		{
-			var data:StateData = this._states[state] || new StateData();
+			var data:StateData = _states[state] || new StateData();
 			data.duration = duration;
-			this._states[state] = data;
+			_states[state] = data;
 		}
 
 
@@ -388,20 +388,20 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this._tween)
+			if (_tween)
 			{
-				this._tween.kill();
-				this._tween = null;
+				_tween.kill();
+				_tween = null;
 			}
 			
-			if (this._states)
+			if (_states)
 			{
-				for (var state : String in this._states)
+				for (var state : String in _states)
 				{
-					StateData(this._states[state]).vars = null;
-					delete this._states[state];
+					StateData(_states[state]).vars = null;
+					delete _states[state];
 				}
-				this._states = null;
+				_states = null;
 			}
 			super.destruct();
 		}

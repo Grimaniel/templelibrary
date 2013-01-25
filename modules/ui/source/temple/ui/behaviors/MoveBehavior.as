@@ -100,14 +100,14 @@ package temple.ui.behaviors
 		{
 			super(target, bounds);
 			
-			this._moveButton = moveButton || target;
+			_moveButton = moveButton || target;
 			
-			this.enabled = true;
-			this._moveHorizontal = moveHorizontal;
-			this._moveVertical = moveVertical;
+			enabled = true;
+			_moveHorizontal = moveHorizontal;
+			_moveVertical = moveVertical;
 			
 			// dispath MoveBehaviorEvent on target
-			this.addEventListener(MoveBehaviorEvent.MOVE, target.dispatchEvent);
+			addEventListener(MoveBehaviorEvent.MOVE, target.dispatchEvent);
 		}
 		
 		/**
@@ -115,7 +115,7 @@ package temple.ui.behaviors
 		 */
 		public function get moveButton():InteractiveObject
 		{
-			return this._moveButton;
+			return _moveButton;
 		}
 		
 		/**
@@ -123,7 +123,7 @@ package temple.ui.behaviors
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 		
 		/**
@@ -131,14 +131,14 @@ package temple.ui.behaviors
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 			if (value)
 			{
-				if (this._moveButton) this._moveButton.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+				if (_moveButton) _moveButton.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			}
 			else
 			{
-				if (this._moveButton) this._moveButton.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
+				if (_moveButton) _moveButton.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			}
 		}
 
@@ -147,7 +147,7 @@ package temple.ui.behaviors
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -155,7 +155,7 @@ package temple.ui.behaviors
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 
 		/**
@@ -163,7 +163,7 @@ package temple.ui.behaviors
 		 */
 		public function get moveHorizontal():Boolean
 		{
-			return this._moveHorizontal;
+			return _moveHorizontal;
 		}
 		
 		/**
@@ -171,7 +171,7 @@ package temple.ui.behaviors
 		 */
 		public function set moveHorizontal(value:Boolean):void
 		{
-			this._moveHorizontal = value;
+			_moveHorizontal = value;
 		}
 
 		/**
@@ -179,7 +179,7 @@ package temple.ui.behaviors
 		 */
 		public function get moveVertical():Boolean
 		{
-			return this._moveVertical;
+			return _moveVertical;
 		}
 		
 		/**
@@ -187,7 +187,7 @@ package temple.ui.behaviors
 		 */
 		public function set moveVertical(value:Boolean):void
 		{
-			this._moveVertical = value;
+			_moveVertical = value;
 		}
 		
 		/**
@@ -195,7 +195,7 @@ package temple.ui.behaviors
 		 */
 		public function get positionProxy():IPropertyProxy
 		{
-			return this._positionProxy;
+			return _positionProxy;
 		}
 		
 		/**
@@ -203,7 +203,7 @@ package temple.ui.behaviors
 		 */
 		public function set positionProxy(value:IPropertyProxy):void
 		{
-			this._positionProxy = value;
+			_positionProxy = value;
 		}
 		
 		private function handleKeyDown(event:KeyboardEvent):void
@@ -213,53 +213,53 @@ package temple.ui.behaviors
 			switch (event.keyCode)
 			{
 				case KeyCode.LEFT:
-					if (this._moveHorizontal)
+					if (_moveHorizontal)
 					{
-						x = this.displayObject.x -(event.shiftKey ? 10 : 1);
+						x = displayObject.x -(event.shiftKey ? 10 : 1);
 					}
 					break;
 				case KeyCode.RIGHT:
-					if (this._moveHorizontal)
+					if (_moveHorizontal)
 					{
-						x = this.displayObject.x +(event.shiftKey ? 10 : 1);
+						x = displayObject.x +(event.shiftKey ? 10 : 1);
 					}
 					break;
 				case KeyCode.UP:
-					if (this._moveHorizontal)
+					if (_moveHorizontal)
 					{
-						y = this.displayObject.y -(event.shiftKey ? 10 : 1);
+						y = displayObject.y -(event.shiftKey ? 10 : 1);
 					}
 					break;
 				case KeyCode.DOWN:
-					if (this._moveHorizontal)
+					if (_moveHorizontal)
 					{
-						y = this.displayObject.y +(event.shiftKey ? 10 : 1);
+						y = displayObject.y +(event.shiftKey ? 10 : 1);
 					}
 					break;
 			}
 			if (!isNaN(x))
 			{
-				if (this._positionProxy)
+				if (_positionProxy)
 				{
-					this._positionProxy.setValue(this.displayObject, "x", x);
+					_positionProxy.setValue(displayObject, "x", x);
 				}
 				else
 				{
-					this.displayObject.x = x;
+					displayObject.x = x;
 				}
 			}
 			if (!isNaN(y))
 			{
-				if (this._positionProxy)
+				if (_positionProxy)
 				{
-					this._positionProxy.setValue(this.displayObject, "y", y);
+					_positionProxy.setValue(displayObject, "y", y);
 				}
 				else
 				{
-					this.displayObject.y = y;
+					displayObject.y = y;
 				}
 			}
-			if (!isNaN(x) || !isNaN(y)) this.keepInBounds();
+			if (!isNaN(x) || !isNaN(y)) keepInBounds();
 		}
 		
 		/**
@@ -267,12 +267,12 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this._moveButton)
+			if (_moveButton)
 			{
-				this._moveButton.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-				this._moveButton = null;
+				_moveButton.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+				_moveButton = null;
 			}
-			this._positionProxy = null;
+			_positionProxy = null;
 			super.destruct();
 		}
 	}

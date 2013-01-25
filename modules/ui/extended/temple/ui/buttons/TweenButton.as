@@ -62,9 +62,9 @@ package temple.ui.buttons
 		
 		public function TweenButton()
 		{
-			this._tweenBehavior = new ButtonTweenBehavior(this);
+			_tweenBehavior = new ButtonTweenBehavior(this);
 			
-			this.addEventListener(Event.ACTIVATE, this.handleActivate);
+			addEventListener(Event.ACTIVATE, handleActivate);
 		}
 		
 		/**
@@ -72,7 +72,7 @@ package temple.ui.buttons
 		 */
 		public function get tweenBehavior():ButtonTweenBehavior
 		{
-			return this._tweenBehavior;
+			return _tweenBehavior;
 		}
 		
 		/**
@@ -80,7 +80,7 @@ package temple.ui.buttons
 		 */
 		public function get upDuration():Number
 		{
-			return this._tweenBehavior.upDuration;
+			return _tweenBehavior.upDuration;
 		}
 		
 		/**
@@ -89,7 +89,7 @@ package temple.ui.buttons
 		[Inspectable(name="Up duration", type="Number")]
 		public function set upDuration(value:Number):void
 		{
-			this._tweenBehavior.upDuration = value;
+			_tweenBehavior.upDuration = value;
 		}
 		
 		/**
@@ -97,7 +97,7 @@ package temple.ui.buttons
 		 */
 		public function get upVars():Object 
 		{
-			return this._tweenBehavior.upVars;
+			return _tweenBehavior.upVars;
 		}
 
 		/**
@@ -120,14 +120,14 @@ package temple.ui.buttons
 					}
 					else
 					{
-						this.logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
+						logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
 					}
 				}
-				this._tweenBehavior.upVars = vars;
+				_tweenBehavior.upVars = vars;
 			}
 			else
 			{
-				this._tweenBehavior.upVars = value;
+				_tweenBehavior.upVars = value;
 			}
 		}
 
@@ -136,7 +136,7 @@ package temple.ui.buttons
 		 */
 		public function get overDuration():Number
 		{
-			return this._tweenBehavior.overDuration;
+			return _tweenBehavior.overDuration;
 		}
 		
 		/**
@@ -145,7 +145,7 @@ package temple.ui.buttons
 		[Inspectable(name="Over duration", type="Number")]
 		public function set overDuration(value:Number):void
 		{
-			this._tweenBehavior.overDuration = value;
+			_tweenBehavior.overDuration = value;
 		}
 		
 		/**
@@ -168,14 +168,14 @@ package temple.ui.buttons
 					}
 					else
 					{
-						this.logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
+						logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
 					}
 				}
-				this._tweenBehavior.overVars = vars;
+				_tweenBehavior.overVars = vars;
 			}
 			else
 			{
-				this._tweenBehavior.overVars = value;
+				_tweenBehavior.overVars = value;
 			}
 		}
 		
@@ -184,7 +184,7 @@ package temple.ui.buttons
 		 */
 		public function get downDuration():Number
 		{
-			return this._tweenBehavior.downDuration;
+			return _tweenBehavior.downDuration;
 		}
 		
 		/**
@@ -193,7 +193,7 @@ package temple.ui.buttons
 		[Inspectable(name="Down duration", type="Number")]
 		public function set downDuration(value:Number):void
 		{
-			this._tweenBehavior.downDuration = value;
+			_tweenBehavior.downDuration = value;
 		}
 		
 		/**
@@ -216,14 +216,14 @@ package temple.ui.buttons
 					}
 					else
 					{
-						this.logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
+						logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
 					}
 				}
-				this._tweenBehavior.downVars = vars;
+				_tweenBehavior.downVars = vars;
 			}
 			else
 			{
-				this._tweenBehavior.downVars = value;
+				_tweenBehavior.downVars = value;
 			}
 		}
 		
@@ -232,7 +232,7 @@ package temple.ui.buttons
 		 */
 		public function get selectedDuration():Number
 		{
-			return this._tweenBehavior.selectedDuration;
+			return _tweenBehavior.selectedDuration;
 		}
 		
 		/**
@@ -241,7 +241,7 @@ package temple.ui.buttons
 		[Inspectable(name="Selected duration", type="Number")]
 		public function set selectedDuration(value:Number):void
 		{
-			this._tweenBehavior.selectedDuration = value;
+			_tweenBehavior.selectedDuration = value;
 		}
 		
 		/**
@@ -264,14 +264,14 @@ package temple.ui.buttons
 					}
 					else
 					{
-						this.logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
+						logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
 					}
 				}
-				this._tweenBehavior.selectedVars = vars;
+				_tweenBehavior.selectedVars = vars;
 			}
 			else
 			{
-				this._tweenBehavior.selectedVars = value;
+				_tweenBehavior.selectedVars = value;
 			}
 		}
 		
@@ -280,7 +280,7 @@ package temple.ui.buttons
 		 */
 		public function get disabledDuration():Number
 		{
-			return this._tweenBehavior.disabledDuration;
+			return _tweenBehavior.disabledDuration;
 		}
 		
 		/**
@@ -289,7 +289,7 @@ package temple.ui.buttons
 		[Inspectable(name="Disabled duration", type="Number")]
 		public function set disabledDuration(value:Number):void
 		{
-			this._tweenBehavior.disabledDuration = value;
+			_tweenBehavior.disabledDuration = value;
 		}
 		
 		/**
@@ -312,14 +312,14 @@ package temple.ui.buttons
 					}
 					else
 					{
-						this.logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
+						logError("childrenLiquidProperties: '" + (value as ICollection).getItemAt(i) + "' is not of type PropertyValueData");
 					}
 				}
-				this._tweenBehavior.disabledVars = vars;
+				_tweenBehavior.disabledVars = vars;
 			}
 			else
 			{
-				this._tweenBehavior.disabledVars = value;
+				_tweenBehavior.disabledVars = value;
 			}
 		}
 
@@ -330,7 +330,7 @@ package temple.ui.buttons
 		{
 			super.debug = value;
 			
-			if (this._tweenBehavior) this._tweenBehavior.debug = value;
+			if (_tweenBehavior) _tweenBehavior.debug = value;
 		}
 		
 		/**
@@ -338,7 +338,7 @@ package temple.ui.buttons
 		 */
 		override public function get updateByParent():Boolean
 		{
-			return super.updateByParent && this._tweenBehavior.updateByParent;
+			return super.updateByParent && _tweenBehavior.updateByParent;
 		}
 		
 		/**
@@ -347,12 +347,12 @@ package temple.ui.buttons
 		[Inspectable(name="Update By Parent", type="Boolean", defaultValue="true")]
 		override public function set updateByParent(value:Boolean):void
 		{
-			this._tweenBehavior.updateByParent = super.updateByParent = value;
+			_tweenBehavior.updateByParent = super.updateByParent = value;
 		}
 		
 		private function handleActivate(event:Event):void
 		{
-			this._tweenBehavior.update(this._tweenBehavior);
+			_tweenBehavior.update(_tweenBehavior);
 		}
 
 		/**
@@ -360,7 +360,7 @@ package temple.ui.buttons
 		 */
 		override public function destruct():void
 		{
-			this._tweenBehavior = null;
+			_tweenBehavior = null;
 			
 			super.destruct();
 		}

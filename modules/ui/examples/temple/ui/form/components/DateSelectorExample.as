@@ -31,9 +31,9 @@ package
 			// put elements in form to test tabbing
 			
 			var form:Form = new Form();
-			form.addElement(this.mcInputField1);
-			form.addElement(this.mcDateSelector);
-			form.addElement(this.mcInputField2);
+			form.addElement(mcInputField1);
+			form.addElement(mcDateSelector);
+			form.addElement(mcInputField2);
 			form.reset();
 		}
 	}

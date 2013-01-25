@@ -63,7 +63,7 @@ package temple.ui.animation
 
 		public function get targetClip():MovieClip 
 		{
-			return this.behaviorTarget as MovieClip;
+			return behaviorTarget as MovieClip;
 		}
 	}
 }

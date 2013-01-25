@@ -38,7 +38,7 @@ package
 			sprite.graphics.endFill();
 			sprite.buttonMode = true;
 			
-			this.addChild(sprite);
+			addChild(sprite);
 			
 			// create the bounds
 			var bounds:Rectangle = new Rectangle(10, 45, 200, 200);
@@ -48,9 +48,9 @@ package
 			
 			
 			// draw the bounds so we can see where they are
-			this.graphics.lineStyle(1, 0xDEDEDA);
-			this.graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
-			this.graphics.endFill();
+			graphics.lineStyle(1, 0xDEDEDA);
+			graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+			graphics.endFill();
 			
 			// create label
 			var label:TextField = new TextField();
@@ -59,7 +59,7 @@ package
 			label.x = label.y = 10;
 			label.selectable = label.mouseEnabled = false;
 			label.text = "Drag the box";
-			this.addChild(label);
+			addChild(label);
 		}
 	}
 }

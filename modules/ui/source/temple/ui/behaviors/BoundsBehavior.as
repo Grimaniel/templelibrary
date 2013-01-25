@@ -71,7 +71,7 @@ package temple.ui.behaviors
 			if (bounds) this.bounds = bounds;
 			
 			// dispath BoundsBehaviorEvent on target
-			this.addEventListener(BoundsBehaviorEvent.BOUNCED, target.dispatchEvent);
+			addEventListener(BoundsBehaviorEvent.BOUNCED, target.dispatchEvent);
 		}
 
 		
@@ -80,7 +80,7 @@ package temple.ui.behaviors
 		 */
 		public function get bounds():Rectangle
 		{
-			return this._bounds;
+			return _bounds;
 		}
 
 		/**
@@ -88,9 +88,9 @@ package temple.ui.behaviors
 		 */
 		public function set bounds(value:Rectangle):void
 		{
-			this._bounds = value;
+			_bounds = value;
 			
-			this.keepInBounds();
+			keepInBounds();
 		}
 
 		/**
@@ -99,70 +99,70 @@ package temple.ui.behaviors
 		public function keepInBounds():void
 		{
 			// Keep in bounds, checking for parent is allowed, since this is in a mouse event
-			if (this._bounds)
+			if (_bounds)
 			{
-				var target:DisplayObject = this.displayObject;
+				var target:DisplayObject = displayObject;
 				
 				var objectbounds:Rectangle = target.getBounds(target.parent);
 				
 				// check x
 				// check smaller
-				if (this._bounds.width >= objectbounds.width)
+				if (_bounds.width >= objectbounds.width)
 				{
-					if (objectbounds.left < this._bounds.left)
+					if (objectbounds.left < _bounds.left)
 					{
-						target.x += this._bounds.left - objectbounds.left;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.LEFT));
+						target.x += _bounds.left - objectbounds.left;
+						dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.LEFT));
 					}
 				
-					else if (objectbounds.right > this._bounds.right)
+					else if (objectbounds.right > _bounds.right)
 					{
-						target.x -= objectbounds.right - this._bounds.right;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.RIGHT));
+						target.x -= objectbounds.right - _bounds.right;
+						dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.RIGHT));
 					}
 				}
 				// check larger
 				else
 				{
-					if (objectbounds.left > this._bounds.left)
+					if (objectbounds.left > _bounds.left)
 					{
-						target.x += this._bounds.left - objectbounds.left;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.LEFT));
+						target.x += _bounds.left - objectbounds.left;
+						dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.LEFT));
 					}
-					else if (objectbounds.right < this._bounds.right)
+					else if (objectbounds.right < _bounds.right)
 					{
-						target.x -= objectbounds.right - this._bounds.right;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.RIGHT));
+						target.x -= objectbounds.right - _bounds.right;
+						dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.RIGHT));
 					}
 				}
 				
 				// check y
 				// check smaller
-				if (this._bounds.height >= objectbounds.height)
+				if (_bounds.height >= objectbounds.height)
 				{
-					if (objectbounds.top < this._bounds.top)
+					if (objectbounds.top < _bounds.top)
 					{
-						target.y += this._bounds.top - objectbounds.top;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.TOP));
+						target.y += _bounds.top - objectbounds.top;
+						dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.TOP));
 					}
-					else if (objectbounds.bottom > this._bounds.bottom)
+					else if (objectbounds.bottom > _bounds.bottom)
 					{
-						target.y -= objectbounds.bottom - this._bounds.bottom;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.BOTTOM));
+						target.y -= objectbounds.bottom - _bounds.bottom;
+						dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.BOTTOM));
 					}
 				}
 				// check larger
 				else
 				{
-					if (objectbounds.top > this._bounds.top)
+					if (objectbounds.top > _bounds.top)
 					{
-						target.y += this._bounds.top - objectbounds.top;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.TOP));
+						target.y += _bounds.top - objectbounds.top;
+						dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.TOP));
 					}
-					else if (objectbounds.bottom < this._bounds.bottom)
+					else if (objectbounds.bottom < _bounds.bottom)
 					{
-						target.y -= objectbounds.bottom - this._bounds.bottom;
-						this.dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.BOTTOM));
+						target.y -= objectbounds.bottom - _bounds.bottom;
+						dispatchEvent(new BoundsBehaviorEvent(BoundsBehaviorEvent.BOUNCED, this, BoundsBehavior.BOTTOM));
 					}
 				}
 			}
@@ -173,7 +173,7 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			this._bounds = null;
+			_bounds = null;
 			super.destruct();
 		}
 	}

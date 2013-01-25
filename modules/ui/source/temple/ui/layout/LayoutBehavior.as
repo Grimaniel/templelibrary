@@ -83,34 +83,34 @@ package temple.ui.layout
 
 		public function LayoutBehavior(target:DisplayObjectContainer, orientation:String = "horizontal", direction:String = "ascending", spacing:Number = 0, overwriteDimensions:Boolean = true, enabled:Boolean = true)
 		{
-			this._block = true;
+			_block = true;
 			
 			super(target);
 			
 			if (LayoutBehavior._dictionary[target]) throwError(new TempleError(this, target + " already has LayoutBehavior"));
 			LayoutBehavior._dictionary[target] = this;
 
-			this._liquidBehavior = LiquidBehavior.getInstance(target) || new LiquidBehavior(target);
+			_liquidBehavior = LiquidBehavior.getInstance(target) || new LiquidBehavior(target);
 			
 			this.orientation = orientation;
 			this.direction = direction;
 			this.spacing = spacing;
-			this._overwriteDimensions = overwriteDimensions;
-			this._enabled = enabled;
+			_overwriteDimensions = overwriteDimensions;
+			_enabled = enabled;
 			
 			var leni:int = target.numChildren;
 			for (var i:int = 0; i < leni; i++)
 			{
-				target.getChildAt(i).addEventListener(Event.RESIZE, this.handleChildResize, false, 0, true);
+				target.getChildAt(i).addEventListener(Event.RESIZE, handleChildResize, false, 0, true);
 			}
 			
-			target.addEventListener(Event.ADDED, this.handleAdded);
-			target.addEventListener(Event.REMOVED, this.handleRemoved);
+			target.addEventListener(Event.ADDED, handleAdded);
+			target.addEventListener(Event.REMOVED, handleRemoved);
 			
 			addToDebugManager(this);
 			
-			this._block = false;
-			this.layoutChildren();
+			_block = false;
+			layoutChildren();
 		}
 
 		/**
@@ -118,7 +118,7 @@ package temple.ui.layout
 		 */
 		public function get displayObjectContainer():DisplayObjectContainer 
 		{
-			return this.target as DisplayObjectContainer;
+			return target as DisplayObjectContainer;
 		}
 		
 		/**
@@ -126,7 +126,7 @@ package temple.ui.layout
 		 */
 		public function get orientation():String
 		{
-			return this._orientation;
+			return _orientation;
 		}
 		
 		/**
@@ -139,10 +139,10 @@ package temple.ui.layout
 				case Orientation.HORIZONTAL:
 				case Orientation.VERTICAL:
 				{
-					if (this._orientation != value)
+					if (_orientation != value)
 					{
-						this._orientation = value;
-						this.layoutChildren();
+						_orientation = value;
+						layoutChildren();
 					}
 					break;
 				}
@@ -160,7 +160,7 @@ package temple.ui.layout
 		 */
 		public function get direction():String
 		{
-			return this._direction;
+			return _direction;
 		}
 		
 		/**
@@ -173,10 +173,10 @@ package temple.ui.layout
 				case Direction.ASCENDING:
 				case Direction.DESCENDING:
 				{
-					if (this._direction != value)
+					if (_direction != value)
 					{
-						this._direction = value;
-						this.layoutChildren();
+						_direction = value;
+						layoutChildren();
 					}
 					break;
 				}
@@ -194,7 +194,7 @@ package temple.ui.layout
 		 */
 		public function get spacing():Number
 		{
-			return this._spacing;
+			return _spacing;
 		}
 		
 		/**
@@ -203,8 +203,8 @@ package temple.ui.layout
 		public function set spacing(value:Number):void
 		{
 			if (isNaN(value)) throwError(new TempleArgumentError(this, "spacing can not be set to NaN"));
-			this._spacing = value;
-			this.layoutChildren();
+			_spacing = value;
+			layoutChildren();
 		}
 		
 		/**
@@ -212,7 +212,7 @@ package temple.ui.layout
 		 */
 		public function get overwriteDimensions():Boolean
 		{
-			return this._overwriteDimensions;
+			return _overwriteDimensions;
 		}
 		
 		/**
@@ -220,7 +220,7 @@ package temple.ui.layout
 		 */
 		public function set overwriteDimensions(value:Boolean):void
 		{
-			this._overwriteDimensions = value;
+			_overwriteDimensions = value;
 		}
 		
 		/**
@@ -228,35 +228,35 @@ package temple.ui.layout
 		 */
 		public function layoutChildren():void
 		{
-			if (this._block || !this._enabled || this.isDestructed) return;
+			if (_block || !_enabled || isDestructed) return;
 			
-			if (this.debug) this.logDebug("layoutChildren: orientation=" + this.orientation + ", direction=" + this.direction + ", numChildren=" + this.displayObjectContainer.numChildren);
+			if (debug) logDebug("layoutChildren: orientation=" + orientation + ", direction=" + direction + ", numChildren=" + displayObjectContainer.numChildren);
 			
 			var liquid:LiquidBehavior;
 			var child:DisplayObject;
 			var offset:Number = 0;
-			var leni:int = this.displayObjectContainer.numChildren;
+			var leni:int = displayObjectContainer.numChildren;
 			for (var i:int = 0; i < leni; i++)
 			{
-				child = this.displayObjectContainer.getChildAt(i);
+				child = displayObjectContainer.getChildAt(i);
 				
-				if (this._ignoreInvisibleChildren && !child.visible) continue;
+				if (_ignoreInvisibleChildren && !child.visible) continue;
 				
-				liquid = LiquidBehavior.getInstance(child) || new LiquidBehavior(child, this._liquidBehavior);
+				liquid = LiquidBehavior.getInstance(child) || new LiquidBehavior(child, _liquidBehavior);
 				
-				liquid.relatedObject = this._liquidBehavior;
+				liquid.relatedObject = _liquidBehavior;
 				
-				if (i) offset += this._spacing;
+				if (i) offset += _spacing;
 				
-				if (this._snapToPixels) offset = Math.round(offset);
+				if (_snapToPixels) offset = Math.round(offset);
 				
-				if (this.debug) this.logDebug("layout: offset=" + offset + ", Child=" + child);
+				if (debug) logDebug("layout: offset=" + offset + ", Child=" + child);
 				
-				switch (this._orientation)
+				switch (_orientation)
 				{
 					case Orientation.HORIZONTAL:
 					{
-						switch (this._direction)
+						switch (_direction)
 						{
 							case Direction.ASCENDING:
 							{
@@ -276,7 +276,7 @@ package temple.ui.layout
 					}
 					case Orientation.VERTICAL:
 					{
-						switch (this._direction)
+						switch (_direction)
 						{
 							case Direction.ASCENDING:
 							{
@@ -297,26 +297,26 @@ package temple.ui.layout
 				}
 				liquid.update();
 			}
-			if (this._overwriteDimensions)// && this._direction == Direction.DESCENDING)
+			if (_overwriteDimensions)// && _direction == Direction.DESCENDING)
 			{
-				if (this._snapToPixels) offset = Math.round(offset);
-				switch (this._orientation)
+				if (_snapToPixels) offset = Math.round(offset);
+				switch (_orientation)
 				{
 					case Orientation.HORIZONTAL:
 					{
-						this._liquidBehavior.absoluteWidth = offset;
-						if (this.displayObject.width != offset && this.target is ILayoutContainer) this.displayObject.width = offset;
+						_liquidBehavior.absoluteWidth = offset;
+						if (displayObject.width != offset && target is ILayoutContainer) displayObject.width = offset;
 						break;
 					}
 					case Orientation.VERTICAL:
 					{
-						this._liquidBehavior.absoluteHeight = offset;
-						if (this.displayObject.height != offset && this.target is ILayoutContainer) this.displayObject.height = offset;
+						_liquidBehavior.absoluteHeight = offset;
+						if (displayObject.height != offset && target is ILayoutContainer) displayObject.height = offset;
 						break;
 					}
 				}
 			}
-			this._liquidBehavior.dispatchEvent(new Event(Event.RESIZE));
+			_liquidBehavior.dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**
@@ -324,7 +324,7 @@ package temple.ui.layout
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 		
 		/**
@@ -332,8 +332,8 @@ package temple.ui.layout
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
-			if (this._enabled) this.layoutChildren();
+			_enabled = value;
+			if (_enabled) layoutChildren();
 		}
 		
 		/**
@@ -341,7 +341,7 @@ package temple.ui.layout
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -349,7 +349,7 @@ package temple.ui.layout
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 		
 		/**
@@ -357,7 +357,7 @@ package temple.ui.layout
 		 */
 		public function get snapToPixels():Boolean
 		{
-			return this._snapToPixels;
+			return _snapToPixels;
 		}
 
 		/**
@@ -365,7 +365,7 @@ package temple.ui.layout
 		 */
 		public function set snapToPixels(value:Boolean):void
 		{
-			this._snapToPixels = value;
+			_snapToPixels = value;
 		}
 		
 		/**
@@ -373,7 +373,7 @@ package temple.ui.layout
 		 */
 		public function get ignoreInvisibleChildren():Boolean
 		{
-			return this._ignoreInvisibleChildren;
+			return _ignoreInvisibleChildren;
 		}
 
 		/**
@@ -381,7 +381,7 @@ package temple.ui.layout
 		 */
 		public function set ignoreInvisibleChildren(value:Boolean):void
 		{
-			this._ignoreInvisibleChildren = value;
+			_ignoreInvisibleChildren = value;
 		}
 		
 		/**
@@ -389,7 +389,7 @@ package temple.ui.layout
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -397,31 +397,31 @@ package temple.ui.layout
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleChildResize(event:Event):void
 		{
-			if (this.debug) this.logDebug("handleChildResize: " + event.target);
-			this._liquidBehavior.update();
-			this.layoutChildren();
+			if (debug) logDebug("handleChildResize: " + event.target);
+			_liquidBehavior.update();
+			layoutChildren();
 		}
 		
 		private function handleAdded(event:Event):void 
 		{
-			if (DisplayObject(event.target).parent == this.target)
+			if (DisplayObject(event.target).parent == target)
 			{
-				DisplayObject(event.target).addEventListener(Event.RESIZE, this.handleChildResize, false, 0, true);
-				this.layoutChildren();
+				DisplayObject(event.target).addEventListener(Event.RESIZE, handleChildResize, false, 0, true);
+				layoutChildren();
 			}
 		}
 
 		private function handleRemoved(event:Event):void 
 		{
-			if (DisplayObject(event.target).parent == this.target)
+			if (DisplayObject(event.target).parent == target)
 			{
-				DisplayObject(event.target).removeEventListener(Event.RESIZE, this.handleChildResize);
-				new FrameDelay(this.layoutChildren);
+				DisplayObject(event.target).removeEventListener(Event.RESIZE, handleChildResize);
+				new FrameDelay(layoutChildren);
 			}
 		}
 
@@ -430,12 +430,12 @@ package temple.ui.layout
 		 */
 		override public function destruct():void 
 		{
-			if (this.displayObject)
+			if (displayObject)
 			{
-				this.displayObject.addEventListener(Event.REMOVED, this.handleRemoved);
-				this.displayObject.addEventListener(Event.ADDED, this.handleAdded);
+				displayObject.addEventListener(Event.REMOVED, handleRemoved);
+				displayObject.addEventListener(Event.ADDED, handleAdded);
 			}
-			this._liquidBehavior = null;
+			_liquidBehavior = null;
 			
 			super.destruct();
 		}

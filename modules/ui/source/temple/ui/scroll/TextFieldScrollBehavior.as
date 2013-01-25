@@ -59,11 +59,11 @@ package temple.ui.scroll
 		{
 			super(target);
 			
-			this._stepSize = stepSize;
+			_stepSize = stepSize;
 			
-			target.addEventListener(Event.SCROLL, this.handleTextFieldScroll);
-			target.addEventListener(Event.CHANGE, this.handleTextChange);
-			target.addEventListener(Event.RESIZE, this.handleResize);
+			target.addEventListener(Event.SCROLL, handleTextFieldScroll);
+			target.addEventListener(Event.CHANGE, handleTextChange);
+			target.addEventListener(Event.RESIZE, handleResize);
 		}
 
 		/**
@@ -71,17 +71,17 @@ package temple.ui.scroll
 		 */
 		public function get textField():TextField
 		{
-			return this.target as TextField;
+			return target as TextField;
 		}
 		
 		public function get stepSize():Number
 		{
-			return this._stepSize;
+			return _stepSize;
 		}
 
 		public function set stepSize(value:Number):void
 		{
-			this._stepSize = value;
+			_stepSize = value;
 		}
 		
 		/**
@@ -89,7 +89,7 @@ package temple.ui.scroll
 		 */
 		public function get width():Number
 		{
-			return this.textField.width;
+			return textField.width;
 		}
 
 		/**
@@ -97,7 +97,7 @@ package temple.ui.scroll
 		 */
 		public function get height():Number
 		{
-			return this.textField.height;
+			return textField.height;
 		}
 		
 		/**
@@ -105,7 +105,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollH():Number
 		{
-			return this.textField.scrollH;
+			return textField.scrollH;
 		}
 
 		/**
@@ -113,7 +113,7 @@ package temple.ui.scroll
 		 */
 		public function set scrollH(value:Number):void
 		{
-			this.textField.scrollH = value;
+			textField.scrollH = value;
 		}
 
 		/**
@@ -121,7 +121,7 @@ package temple.ui.scroll
 		 */
 		public function get maxScrollH():Number
 		{
-			return this.textField.maxScrollH;
+			return textField.maxScrollH;
 		}
 
 		/**
@@ -129,7 +129,7 @@ package temple.ui.scroll
 		 */
 		public function scrollHTo(value:Number):void
 		{
-			this.scrollH = value;
+			scrollH = value;
 		}
 
 		/**
@@ -137,7 +137,7 @@ package temple.ui.scroll
 		 */
 		public function get targetScrollH():Number
 		{
-			return this.scrollH;
+			return scrollH;
 		}
 
 		/**
@@ -145,7 +145,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollV():Number
 		{
-			return this.textField.scrollV;
+			return textField.scrollV;
 		}
 
 		/**
@@ -153,7 +153,7 @@ package temple.ui.scroll
 		 */
 		public function set scrollV(value:Number):void
 		{
-			this.textField.scrollV = Math.round(value);
+			textField.scrollV = Math.round(value);
 		}
 
 		/**
@@ -161,7 +161,7 @@ package temple.ui.scroll
 		 */
 		public function get maxScrollV():Number
 		{
-			return this.textField.maxScrollV;
+			return textField.maxScrollV;
 		}
 
 		/**
@@ -169,7 +169,7 @@ package temple.ui.scroll
 		 */
 		public function scrollVTo(value:Number):void
 		{
-			this.scrollV = value;
+			scrollV = value;
 		}
 
 		/**
@@ -177,7 +177,7 @@ package temple.ui.scroll
 		 */
 		public function get targetScrollV():Number
 		{
-			return this.scrollV;
+			return scrollV;
 		}
 
 		/**
@@ -185,7 +185,7 @@ package temple.ui.scroll
 		 */
 		public function get contentWidth():Number
 		{
-			return this.textField.textWidth;
+			return textField.textWidth;
 		}
 
 		/**
@@ -193,7 +193,7 @@ package temple.ui.scroll
 		 */
 		public function get contentHeight():Number
 		{
-			return this.textField.textHeight;
+			return textField.textHeight;
 		}
 
 		/**
@@ -201,7 +201,7 @@ package temple.ui.scroll
 		 */
 		public function scrollUp():void
 		{
-			this.scrollVTo(this.scrollV - this._stepSize);
+			scrollVTo(scrollV - _stepSize);
 		}
 
 		/**
@@ -209,7 +209,7 @@ package temple.ui.scroll
 		 */
 		public function scrollDown():void
 		{
-			this.scrollVTo(this.scrollV + this._stepSize);
+			scrollVTo(scrollV + _stepSize);
 		}
 
 		/**
@@ -217,7 +217,7 @@ package temple.ui.scroll
 		 */
 		public function scrollLeft():void
 		{
-			this.scrollHTo(this.scrollV - this._stepSize);
+			scrollHTo(scrollV - _stepSize);
 		}
 
 		/**
@@ -225,7 +225,7 @@ package temple.ui.scroll
 		 */
 		public function scrollRight():void
 		{
-			this.scrollHTo(this.scrollV + this._stepSize);
+			scrollHTo(scrollV + _stepSize);
 		}
 
 		/**
@@ -233,7 +233,7 @@ package temple.ui.scroll
 		 */
 		public function get canScrollUp():Boolean
 		{
-			return this.scrollV > 0;
+			return scrollV > 0;
 		}
 
 		/**
@@ -241,7 +241,7 @@ package temple.ui.scroll
 		 */
 		public function get canScrollDown():Boolean
 		{
-			return this.scrollV < this.maxScrollV;
+			return scrollV < maxScrollV;
 		}
 
 		/**
@@ -262,17 +262,17 @@ package temple.ui.scroll
 		
 		private function handleTextFieldScroll(event:Event):void
 		{
-			this.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, this.scrollH, this.scrollV, this.maxScrollH, this.maxScrollV));
+			dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, scrollH, scrollV, maxScrollH, maxScrollV));
 		}
 
 		private function handleTextChange(event:Event):void
 		{
-			this.dispatchEvent(new Event(Event.RESIZE));
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		private function handleResize(event:Event):void
 		{
-			this.dispatchEvent(new Event(Event.RESIZE));
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 
 		/**
@@ -280,11 +280,11 @@ package temple.ui.scroll
 		 */
 		override public function destruct():void
 		{
-			if (this.textField)
+			if (textField)
 			{
-				this.textField.removeEventListener(Event.SCROLL, this.handleTextFieldScroll);
-				this.textField.removeEventListener(Event.CHANGE, this.handleTextChange);
-				this.textField.removeEventListener(Event.RESIZE, this.handleResize);
+				textField.removeEventListener(Event.SCROLL, handleTextFieldScroll);
+				textField.removeEventListener(Event.CHANGE, handleTextChange);
+				textField.removeEventListener(Event.RESIZE, handleResize);
 			}
 			
 			super.destruct();

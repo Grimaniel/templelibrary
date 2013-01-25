@@ -121,31 +121,31 @@ package temple.ui.form.components
 			
 			if (list)
 			{
-				this._list = list;
+				_list = list;
 			}
 			else
 			{
-				this._list = DisplayObjectContainerUtils.findChildOfType(this, IList) as IList;
+				_list = DisplayObjectContainerUtils.findChildOfType(this, IList) as IList;
 			}
 			
-			if (this._list == null) throwError(new TempleError(this, "No List found"));
+			if (_list == null) throwError(new TempleError(this, "No List found"));
 			
-			this.addEventListener(MouseEvent.CLICK, this.handleClick);
-			this.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
-			this.addEventListener(FocusEvent.MOUSE_FOCUS_CHANGE, this.handleMouseFocusChange);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			addEventListener(MouseEvent.CLICK, handleClick);
+			addEventListener(MouseEvent.MOUSE_WHEEL, handleMouseWheel);
+			addEventListener(FocusEvent.MOUSE_FOCUS_CHANGE, handleMouseFocusChange);
+			addEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 
-			this._list.addEventListener(Event.CHANGE, this.handleListChanged);
-			this._list.addEventListener(MouseEvent.CLICK, this.handleClick);
-			this._list.addEventListener(FocusEvent.FOCUS_IN, this.handleListEvent);
-			this._list.addEventListener(FocusEvent.FOCUS_OUT, this.handleListEvent, false, -1);
-			this._list.addEventListener(KeyboardEvent.KEY_DOWN, this.handleListEvent);
-			this._list.addEventListener(Event.REMOVED_FROM_STAGE, this.handleListRemovedFromStage, false, int.MAX_VALUE);
-			this._list.addEventListener(Event.REMOVED_FROM_STAGE, this.handleListRemovedFromStage, true, int.MAX_VALUE);
+			_list.addEventListener(Event.CHANGE, handleListChanged);
+			_list.addEventListener(MouseEvent.CLICK, handleClick);
+			_list.addEventListener(FocusEvent.FOCUS_IN, handleListEvent);
+			_list.addEventListener(FocusEvent.FOCUS_OUT, handleListEvent, false, -1);
+			_list.addEventListener(KeyboardEvent.KEY_DOWN, handleListEvent);
+			_list.addEventListener(Event.REMOVED_FROM_STAGE, handleListRemovedFromStage, false, int.MAX_VALUE);
+			_list.addEventListener(Event.REMOVED_FROM_STAGE, handleListRemovedFromStage, true, int.MAX_VALUE);
 			
-			this.close();
-			this.submitOnEnter = false;
-			this.selectTextOnFocus = false;
+			close();
+			submitOnEnter = false;
+			selectTextOnFocus = false;
 		}
 
 		/**
@@ -153,28 +153,28 @@ package temple.ui.form.components
 		 */
 		public function open():void
 		{
-			if (!this._list.length) return; 
+			if (!_list.length) return; 
 			
-			if (this._closeDelay) this._closeDelay.destruct();
+			if (_closeDelay) _closeDelay.destruct();
 			
-			if (!this._isOpen)
+			if (!_isOpen)
 			{
-				this._list.visible = true;
-				this._isOpen = true;
+				_list.visible = true;
+				_isOpen = true;
 				
-				if (this._openOnTop && this.stage)
+				if (_openOnTop && stage)
 				{
-					var position:Point = this.localToGlobal(new Point(this._list.x, this._list.y));
-					this.stage.addChild(DisplayObject(this._list));
-					this._list.position = position;
+					var position:Point = localToGlobal(new Point(_list.x, _list.y));
+					stage.addChild(DisplayObject(_list));
+					_list.position = position;
 				}
 				else
 				{
-					this.addChild(DisplayObject(this._list));
+					addChild(DisplayObject(_list));
 				}
 				StateHelper.showState(this, IOpenState);
 				
-				this.dispatchEvent(new Event(Event.OPEN));
+				dispatchEvent(new Event(Event.OPEN));
 			}
 		}
 
@@ -183,22 +183,22 @@ package temple.ui.form.components
 		 */
 		public function close():void
 		{
-			if (this._list.focus) this.focus = true;
-			this._isOpen = false;
+			if (_list.focus) focus = true;
+			_isOpen = false;
 			
-			if (this.stage && this._list.parent == this.stage)
+			if (stage && _list.parent == stage)
 			{
-				this._list.position = this.globalToLocal(new Point(this._list.x, this._list.y));
+				_list.position = globalToLocal(new Point(_list.x, _list.y));
 			}
 			// remove list from display list to prevent its height being added to the height of the ComboBox.
-			if (this._list.parent)
+			if (_list.parent)
 			{
-				this._list.parent.removeChild(this._list as DisplayObject);
+				_list.parent.removeChild(_list as DisplayObject);
 			}
 			
 			StateHelper.hideState(this, IOpenState);
 			
-			this.dispatchEvent(new Event(Event.CLOSE));
+			dispatchEvent(new Event(Event.CLOSE));
 		}
 
 		/**
@@ -206,7 +206,7 @@ package temple.ui.form.components
 		 */
 		public function get list():IList
 		{
-			return this._list;
+			return _list;
 		}
 		
 		/**
@@ -214,7 +214,7 @@ package temple.ui.form.components
 		 */
 		public function addItem(data:*, label:String = null):void
 		{
-			this._list.addItem(data, label);
+			_list.addItem(data, label);
 		}
 		
 		/**
@@ -222,7 +222,7 @@ package temple.ui.form.components
 		 */
 		public function addItemAt(data:*, index:uint, label:String = null):void
 		{
-			this._list.addItemAt(data, index, label);
+			_list.addItemAt(data, index, label);
 		}
 		
 		/**
@@ -230,7 +230,7 @@ package temple.ui.form.components
 		 */
 		public function addItems(items:Array, labels:* = null):void
 		{
-			this._list.addItems(items, labels);
+			_list.addItems(items, labels);
 		}
 		
 		/**
@@ -238,7 +238,7 @@ package temple.ui.form.components
 		 */
 		public function hasItem(value:*):Boolean
 		{
-			return this._list.hasItem(value);
+			return _list.hasItem(value);
 		}
 
 		/**
@@ -246,7 +246,7 @@ package temple.ui.form.components
 		 */
 		public function getItem(value:*, fromIndex:int = 0):*
 		{
-			return this._list.getItem(value, fromIndex);
+			return _list.getItem(value, fromIndex);
 		}
 		
 		/**
@@ -254,7 +254,7 @@ package temple.ui.form.components
 		 */
 		public function getItemAt(index:uint):*
 		{
-			return this._list.getItemAt(index);
+			return _list.getItemAt(index);
 		}
 		
 		/**
@@ -262,7 +262,7 @@ package temple.ui.form.components
 		 */
 		public function setItemAt(data:*, index:uint, label:String = null):void
 		{
-			this._list.setItemAt(data, index, label);
+			_list.setItemAt(data, index, label);
 		}
 		
 		/**
@@ -270,7 +270,7 @@ package temple.ui.form.components
 		 */
 		public function getLabel(value:*, fromIndex:int = 0):String
 		{
-			return this._list.getLabel(value, fromIndex);
+			return _list.getLabel(value, fromIndex);
 		}
 		
 		/**
@@ -278,7 +278,7 @@ package temple.ui.form.components
 		 */
 		public function getLabelAt(index:uint):String
 		{
-			return this._list.getLabelAt(index);
+			return _list.getLabelAt(index);
 		}
 		
 		/**
@@ -286,17 +286,17 @@ package temple.ui.form.components
 		 */
 		public function setLabelAt(index:uint, label:String):void
 		{
-			this._list.setLabelAt(index, label);
+			_list.setLabelAt(index, label);
 			
-			if (this._list.selectedIndex == index)
+			if (_list.selectedIndex == index)
 			{
-				if (this._labelProxy)
+				if (_labelProxy)
 				{
-					this._labelProxy.setValue(this, "text", IHasValue(this._list).value);
+					_labelProxy.setValue(this, "text", IHasValue(_list).value);
 				}
 				else
 				{
-					this.text = this._list.selectedLabel;
+					text = _list.selectedLabel;
 				}
 			}
 		}
@@ -306,7 +306,7 @@ package temple.ui.form.components
 		 */
 		public function isItemSelected(data:*, label:String = null):Boolean
 		{
-			return this._list.isItemSelected(data, label);
+			return _list.isItemSelected(data, label);
 		}
 		
 		/**
@@ -314,7 +314,7 @@ package temple.ui.form.components
 		 */
 		public function isIndexSelected(index:uint):Boolean
 		{
-			return this._list.isIndexSelected(index);
+			return _list.isIndexSelected(index);
 		}
 		
 		/**
@@ -322,8 +322,8 @@ package temple.ui.form.components
 		 */
 		public function removeItem(data:*, label:String = null):Boolean
 		{
-			var success:Boolean = this._list.removeItem(data, label);
-			if (!this.length) this.close();
+			var success:Boolean = _list.removeItem(data, label);
+			if (!length) close();
 			return success;
 		}
 
@@ -332,8 +332,8 @@ package temple.ui.form.components
 		 */
 		public function removeItemAt(index:uint):Boolean
 		{
-			var success:Boolean = this._list.removeItemAt(index);
-			if (!this.length) this.close();
+			var success:Boolean = _list.removeItemAt(index);
+			if (!length) close();
 			return success;
 		}
 		
@@ -342,8 +342,8 @@ package temple.ui.form.components
 		 */
 		public function removeAll():void
 		{
-			this._list.removeAll();
-			this.reset();
+			_list.removeAll();
+			reset();
 		}
 		
 		/**
@@ -351,7 +351,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedIndex():int
 		{
-			return this._list.selectedIndex;
+			return _list.selectedIndex;
 		}
 
 		/**
@@ -359,7 +359,7 @@ package temple.ui.form.components
 		 */
 		public function set selectedIndex(value:int):void
 		{
-			this._list.selectedIndex = value;
+			_list.selectedIndex = value;
 		}
 
 		/**
@@ -367,7 +367,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedItem():*
 		{
-			return this._list.selectedItem;
+			return _list.selectedItem;
 		}
 		
 		/**
@@ -375,7 +375,7 @@ package temple.ui.form.components
 		 */
 		public function set selectedItem(value:*):void
 		{
-			this._list.selectedItem = value;
+			_list.selectedItem = value;
 		}
 		
 		/**
@@ -383,7 +383,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedLabel():String
 		{
-			return this._list.selectedLabel;
+			return _list.selectedLabel;
 		}
 		
 		/**
@@ -391,7 +391,7 @@ package temple.ui.form.components
 		 */
 		public function set selectedLabel(value:String):void
 		{
-			this._list.selectedLabel = value;
+			_list.selectedLabel = value;
 		}
 		
 		/**
@@ -399,7 +399,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedItems():Array
 		{
-			return this._list.selectedItems;
+			return _list.selectedItems;
 		}
 		
 		/**
@@ -407,7 +407,7 @@ package temple.ui.form.components
 		 */
 		public function set selectedItems(value:Array):void
 		{
-			this._list.selectedItems = value;
+			_list.selectedItems = value;
 		}
 
 		/**
@@ -415,7 +415,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedLabels():Vector.<String>
 		{
-			return this._list.selectedLabels;
+			return _list.selectedLabels;
 		}
 		
 		/**
@@ -423,7 +423,7 @@ package temple.ui.form.components
 		 */
 		public function set selectedLabels(value:Vector.<String>):void
 		{
-			this._list.selectedLabels = value;
+			_list.selectedLabels = value;
 		}
 		
 		/**
@@ -431,7 +431,7 @@ package temple.ui.form.components
 		 */
 		public function get length():uint
 		{
-			return this._list.length;
+			return _list.length;
 		}
 		
 		/**
@@ -439,7 +439,7 @@ package temple.ui.form.components
 		 */
 		public function get allowMultipleSelection():Boolean
 		{
-			return this._list.allowMultipleSelection;
+			return _list.allowMultipleSelection;
 		}
 
 		/**
@@ -448,7 +448,7 @@ package temple.ui.form.components
 		[Inspectable(name="Allow multiple selection", type="Boolean", defaultValue=false)]
 		public function set allowMultipleSelection(value:Boolean):void
 		{
-			this._list.allowMultipleSelection = value;
+			_list.allowMultipleSelection = value;
 		}
 		
 		/**
@@ -456,7 +456,7 @@ package temple.ui.form.components
 		 */
 		public function get autoDeselect():Boolean
 		{
-			return this._list.autoDeselect;
+			return _list.autoDeselect;
 		}
 
 		/**
@@ -464,7 +464,7 @@ package temple.ui.form.components
 		 */
 		public function set autoDeselect(value:Boolean):void
 		{
-			this._list.autoDeselect = value;
+			_list.autoDeselect = value;
 		}
 
 		/**
@@ -472,7 +472,7 @@ package temple.ui.form.components
 		 */
 		public function get rowHeight():Number
 		{
-			return this._list.rowHeight;
+			return _list.rowHeight;
 		}
 
 		/**
@@ -480,7 +480,7 @@ package temple.ui.form.components
 		 */
 		public function set rowHeight(value:Number):void
 		{
-			this._list.rowHeight = value;
+			_list.rowHeight = value;
 		}
 		
 		/**
@@ -488,7 +488,7 @@ package temple.ui.form.components
 		 */
 		public function get rowCount():uint
 		{
-			return this._list.rowCount;
+			return _list.rowCount;
 		}
 
 		/**
@@ -497,7 +497,7 @@ package temple.ui.form.components
 		[Inspectable(name="Visible rows", type="Number", defaultValue=10)]
 		public function set rowCount(value:uint):void
 		{
-			this._list.rowCount = value;
+			_list.rowCount = value;
 		}
 
 		/**
@@ -505,7 +505,7 @@ package temple.ui.form.components
 		 */
 		public function sort(compareFunction:Function):void
 		{
-			this._list.sort(compareFunction);
+			_list.sort(compareFunction);
 		}
 
 		/**
@@ -513,7 +513,7 @@ package temple.ui.form.components
 		 */
 		public function sortOn(names:*, options:* = 0, ...args:*):void
 		{
-			this._list.sortOn.apply(null, [names, options].concat(args));
+			_list.sortOn.apply(null, [names, options].concat(args));
 		}
 
 		/**
@@ -521,7 +521,7 @@ package temple.ui.form.components
 		 */
 		public function get wrapSearch():Boolean
 		{
-			return this._list.wrapSearch;
+			return _list.wrapSearch;
 		}
 
 		/**
@@ -530,7 +530,7 @@ package temple.ui.form.components
 		[Inspectable(name="Wrap search", type="Boolean", defaultValue=true)]
 		public function set wrapSearch(value:Boolean):void
 		{
-			this._list.wrapSearch = value;
+			_list.wrapSearch = value;
 		}
 
 		/**
@@ -538,7 +538,7 @@ package temple.ui.form.components
 		 */
 		public function searchOnString(string:String, caseSensitive:Boolean = false):void
 		{
-			this._list.searchOnString(string, caseSensitive);
+			_list.searchOnString(string, caseSensitive);
 		}
 
 		/**
@@ -546,7 +546,7 @@ package temple.ui.form.components
 		 */
 		public function get keySearch():Boolean
 		{
-			return this._list.keySearch;
+			return _list.keySearch;
 		}
 
 		/**
@@ -554,7 +554,7 @@ package temple.ui.form.components
 		 */
 		public function set keySearch(value:Boolean):void
 		{
-			this._list.keySearch = value;
+			_list.keySearch = value;
 		}
 
 		/**
@@ -562,7 +562,7 @@ package temple.ui.form.components
 		 */
 		public function get scrollBehavior():ScrollBehavior
 		{
-			return this._list.scrollBehavior;
+			return _list.scrollBehavior;
 		}
 		
 		/**
@@ -571,7 +571,7 @@ package temple.ui.form.components
 		[Inspectable(name="Enabled", type="Boolean", defaultValue=true)]
 		override public function set enabled(value:Boolean):void 
 		{
-			this.mouseEnabled = this.mouseChildren = this.textField.mouseEnabled = value;
+			mouseEnabled = mouseChildren = textField.mouseEnabled = value;
 		}
 
 		/**
@@ -591,7 +591,7 @@ package temple.ui.form.components
 		 */
 		override public function get value():* 
 		{
-			return this._list.selectedIndex != -1 ? (this._list as IHasValue).value : (this.editable ? super.value : null);
+			return _list.selectedIndex != -1 ? (_list as IHasValue).value : (editable ? super.value : null);
 		}
 
 		/**
@@ -599,7 +599,7 @@ package temple.ui.form.components
 		 */
 		override public function set value(value:*):void
 		{
-			(this._list as ISetValue).value = value;
+			(_list as ISetValue).value = value;
 			
 			if (this.value != value)
 			{
@@ -612,9 +612,9 @@ package temple.ui.form.components
 		 */
 		override public function reset():void
 		{
-			this._list.reset();
+			_list.reset();
 			super.reset();
-			this.close();
+			close();
 		}
 		
 		/**
@@ -622,7 +622,7 @@ package temple.ui.form.components
 		 */
 		public function get dataSource():ICollection 
 		{
-			return this._dataSource;
+			return _dataSource;
 		}
 
 		/**
@@ -631,12 +631,12 @@ package temple.ui.form.components
 		[Collection(name="Data source", collectionClass="temple.data.collections.Collection", collectionItem="temple.ui.form.components.ListItemData",identifier="label")]
 		public function set dataSource(value:ICollection):void 
 		{
-			this._dataSource = value;
+			_dataSource = value;
 			
-			var leni:int = this._dataSource.length;
+			var leni:int = _dataSource.length;
 			for (var i:int = 0; i < leni ; i++)
 			{
-				this.addItem(this._dataSource.getItemAt(i));
+				addItem(_dataSource.getItemAt(i));
 			}
 		}
 
@@ -666,7 +666,7 @@ package temple.ui.form.components
 		 */
 		public function get openOnTop():Boolean
 		{
-			return this._openOnTop;
+			return _openOnTop;
 		}
 		
 		/**
@@ -674,7 +674,7 @@ package temple.ui.form.components
 		 */
 		public function set openOnTop(value:Boolean):void
 		{
-			this._openOnTop = value;
+			_openOnTop = value;
 		}
 		
 		/**
@@ -682,7 +682,7 @@ package temple.ui.form.components
 		 */
 		public function get autoClose():Boolean
 		{
-			return this._autoClose;
+			return _autoClose;
 		}
 		
 		/**
@@ -690,7 +690,7 @@ package temple.ui.form.components
 		 */
 		public function set autoClose(value:Boolean):void
 		{
-			this._autoClose = value;
+			_autoClose = value;
 		}
 		
 		/**
@@ -698,7 +698,7 @@ package temple.ui.form.components
 		 */
 		public function get labelProxy():IPropertyProxy
 		{
-			return this._labelProxy;
+			return _labelProxy;
 		}
 		
 		/**
@@ -706,7 +706,7 @@ package temple.ui.form.components
 		 */
 		public function set labelProxy(value:IPropertyProxy):void
 		{
-			this._labelProxy = value;
+			_labelProxy = value;
 		}
 		
 		/**
@@ -714,7 +714,7 @@ package temple.ui.form.components
 		 */
 		public function get label():String
 		{
-			return this.text;
+			return text;
 		}
 
 		/**
@@ -722,7 +722,7 @@ package temple.ui.form.components
 		 */
 		public function set label(value:String):void
 		{
-			this.text = value;
+			text = value;
 		}
 		
 		/**
@@ -730,7 +730,7 @@ package temple.ui.form.components
 		 */
 		public function get isOpen():Boolean
 		{
-			return this._isOpen;
+			return _isOpen;
 		}
 		
 		/**
@@ -738,7 +738,7 @@ package temple.ui.form.components
 		 */
 		public function selectItem(data:*):Boolean
 		{
-			return this._list.selectItem(data);
+			return _list.selectItem(data);
 		}
 
 		/**
@@ -746,12 +746,12 @@ package temple.ui.form.components
 		 */
 		public function deselectItem(data:*):Boolean
 		{
-			return this._list.deselectItem(data);
+			return _list.deselectItem(data);
 		}
 		
 		override protected function updateHint():void 
 		{
-			if (!this.focus || !this.showsHint || this.textField.type == TextFieldType.INPUT) 
+			if (!focus || !showsHint || textField.type == TextFieldType.INPUT) 
 			{
 				super.updateHint();
 			}
@@ -759,26 +759,26 @@ package temple.ui.form.components
 		
 		protected function handleListChanged(event:Event):void
 		{
-			if (this.isDestructed) return;
+			if (isDestructed) return;
 			
-			if (this._list.selectedIndex != -1)
+			if (_list.selectedIndex != -1)
 			{
-				if (this._labelProxy)
+				if (_labelProxy)
 				{
-					this._labelProxy.setValue(this, "text", IHasValue(this._list).value);
+					_labelProxy.setValue(this, "text", IHasValue(_list).value);
 				}
 				else
 				{
-					this.text = this._list.selectedLabel;
+					text = _list.selectedLabel;
 				}
 			}
 			else
 			{
-				this.dispatchEvent(new Event(Event.CHANGE));
+				dispatchEvent(new Event(Event.CHANGE));
 				
-				if (this.submitOnChange)
+				if (submitOnChange)
 				{
-					this.dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
+					dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 				}
 			}
 		}
@@ -793,33 +793,33 @@ package temple.ui.form.components
 				case Keyboard.ENTER:
 				{
 					event.stopPropagation();
-					this.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, NaN, NaN, null, event.ctrlKey, event.altKey, event.shiftKey));
+					dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, NaN, NaN, null, event.ctrlKey, event.altKey, event.shiftKey));
 					break;
 				}
 				case Keyboard.UP:
 				case Keyboard.DOWN:
 				{
-					if (!this._list.focus)
+					if (!_list.focus)
 					{
 						event.stopPropagation();
-						this.open();
-						this._list.focus = true;
+						open();
+						_list.focus = true;
 					}
 					break;
 				}
 				case Keyboard.ESCAPE:
 				{
 					event.stopPropagation();
-					this.close();
+					close();
 					break;
 				}
 				default:
 				{
-					if (!this._list.focus && this.keySearch)
+					if (!_list.focus && keySearch)
 					{
 						event.preventDefault();
 						// search for an item starting with this character
-						this.searchOnString(String.fromCharCode(event.charCode).toUpperCase());
+						searchOnString(String.fromCharCode(event.charCode).toUpperCase());
 						break;
 					}
 				}
@@ -828,38 +828,38 @@ package temple.ui.form.components
 		
 		private function handleListEvent(event:Event):void 
 		{
-			if (!this.contains(this._list as DisplayObject))
+			if (!contains(_list as DisplayObject))
 			{
-				this.dispatchEvent(event.clone());
+				dispatchEvent(event.clone());
 			}
 		}
 
 		protected function handleClick(event:MouseEvent):void
 		{
-			if (!this.isDestructed && (this._autoClose && event.currentTarget == this._list && event.target is IListRow || !this._list.contains(event.target as DisplayObject)))
+			if (!isDestructed && (_autoClose && event.currentTarget == _list && event.target is IListRow || !_list.contains(event.target as DisplayObject)))
 			{
-				if (this._isOpen && !this.allowMultipleSelection)
+				if (_isOpen && !allowMultipleSelection)
 				{
-					this.close();
+					close();
 				}
 				else
 				{
-					this.open();
+					open();
 				}
 			}
 		}
 		
 		protected function handleMouseWheel(event:MouseEvent):void
 		{
-			if (event.target is DisplayObject && (event.target == this._list || this._list.contains(event.target as DisplayObject))) return;
+			if (event.target is DisplayObject && (event.target == _list || _list.contains(event.target as DisplayObject))) return;
 			
 			if (event.delta > 0)
 			{
-				this._list.selectedIndex--;
+				_list.selectedIndex--;
 			}
 			else
 			{
-				this._list.selectedIndex++;
+				_list.selectedIndex++;
 			}
 			event.stopPropagation();
 		}
@@ -867,24 +867,24 @@ package temple.ui.form.components
 		protected function handleListFocusChange(event:FocusEvent):void
 		{
 			event.stopImmediatePropagation();
-			this.open();
+			open();
 		}
 
 		override protected function handleFocusIn(event:FocusEvent):void 
 		{
 			super.handleFocusIn(event);
-			if (this._closeDelay) this._closeDelay.destruct();
+			if (_closeDelay) _closeDelay.destruct();
 		}
 
 		override protected function handleFocusOut(event:FocusEvent):void 
 		{
-			if (event.relatedObject == null || !this.contains(event.relatedObject) && !this._list.contains(event.relatedObject))
+			if (event.relatedObject == null || !contains(event.relatedObject) && !_list.contains(event.relatedObject))
 			{
 				super.handleFocusOut(event);
-				if (this._autoClose)
+				if (_autoClose)
 				{
-					if (this._closeDelay) this._closeDelay.destruct();
-					this._closeDelay = new FrameDelay(this.close);
+					if (_closeDelay) _closeDelay.destruct();
+					_closeDelay = new FrameDelay(close);
 				}
 			}
 			else
@@ -900,9 +900,9 @@ package temple.ui.form.components
 		
 		private function handleRemovedFromStage(event:Event):void
 		{
-			if (this._isOpen)
+			if (_isOpen)
 			{
-				this.close();
+				close();
 			}
 		}
 		
@@ -917,23 +917,23 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this.removeAllStrongEventListenersForType(Event.CHANGE);
+			removeAllStrongEventListenersForType(Event.CHANGE);
 			
-			if (this._list && !this._list.isDestructed)
+			if (_list && !_list.isDestructed)
 			{
-				this._list.removeEventListener(Event.CHANGE, this.handleListChanged);
-				this._list.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleListRemovedFromStage);
-				this._list.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleListRemovedFromStage, true);
-				this._list.destruct();
-				this._list = null;
+				_list.removeEventListener(Event.CHANGE, handleListChanged);
+				_list.removeEventListener(Event.REMOVED_FROM_STAGE, handleListRemovedFromStage);
+				_list.removeEventListener(Event.REMOVED_FROM_STAGE, handleListRemovedFromStage, true);
+				_list.destruct();
+				_list = null;
 			}
-			if (this._closeDelay)
+			if (_closeDelay)
 			{
-				this._closeDelay.destruct();
-				this._closeDelay = null;
+				_closeDelay.destruct();
+				_closeDelay = null;
 			}
-			this._dataSource = null;
-			this._labelProxy = null;
+			_dataSource = null;
+			_labelProxy = null;
 			
 			super.destruct();
 		}

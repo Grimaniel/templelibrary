@@ -113,30 +113,30 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function ImageLoader(url:* = null, width:Number = NaN, height:Number = NaN, scaleMode:String = 'noScale', align:String = null, clipping:Boolean = true, smoothing:Boolean = false, loaderContext:LoaderContext = null, cache:Boolean = false)
 		{
-			this.toStringProps.push('url');
-			this._width = !isNaN(width) ? width : (super.width ? super.width : NaN);
-			this._height = !isNaN(height) ? height : (super.height ? super.height : NaN);
+			toStringProps.push('url');
+			_width = !isNaN(width) ? width : (super.width ? super.width : NaN);
+			_height = !isNaN(height) ? height : (super.height ? super.height : NaN);
 			 
-			this._scaleMode = scaleMode;
-			this._align = align;
-			this._smoothing = smoothing;
+			_scaleMode = scaleMode;
+			_align = align;
+			_smoothing = smoothing;
 			
-			this._loaderContext = loaderContext;
+			_loaderContext = loaderContext;
 			
 			// loader
-			this._loader = new CacheLoader(true, cache);
-			this._loader.addEventListener(Event.COMPLETE, this.handleLoadComplete);
-			this._loader.addEventListener(Event.OPEN, this.handleLoadStart);
-			this._loader.addEventListener(Event.INIT, this.dispatchEvent);
-			this._loader.addEventListener(Event.UNLOAD, this.dispatchEvent);
-			this._loader.addEventListener(ProgressEvent.PROGRESS, this.dispatchEvent);
-			this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.dispatchEvent);
-			this._loader.addEventListener(IOErrorEvent.DISK_ERROR, this.dispatchEvent);
-			this._loader.addEventListener(IOErrorEvent.NETWORK_ERROR, this.dispatchEvent);
-			this._loader.addEventListener(IOErrorEvent.VERIFY_ERROR, this.dispatchEvent);
-			this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.dispatchEvent);
-			this._loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.dispatchEvent);
-			this.addChild(this._loader);
+			_loader = new CacheLoader(true, cache);
+			_loader.addEventListener(Event.COMPLETE, handleLoadComplete);
+			_loader.addEventListener(Event.OPEN, handleLoadStart);
+			_loader.addEventListener(Event.INIT, dispatchEvent);
+			_loader.addEventListener(Event.UNLOAD, dispatchEvent);
+			_loader.addEventListener(ProgressEvent.PROGRESS, dispatchEvent);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR, dispatchEvent);
+			_loader.addEventListener(IOErrorEvent.DISK_ERROR, dispatchEvent);
+			_loader.addEventListener(IOErrorEvent.NETWORK_ERROR, dispatchEvent);
+			_loader.addEventListener(IOErrorEvent.VERIFY_ERROR, dispatchEvent);
+			_loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, dispatchEvent);
+			_loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, dispatchEvent);
+			addChild(_loader);
 			
 			// init
 			this.clipping = clipping;
@@ -145,15 +145,15 @@ imageLoaderExample.load("image.jpg");</listing>
 			{
 				if (url is ByteArray)
 				{
-					this.loadBytes(url);
+					loadBytes(url);
 				}
 				else if (url is String)
 				{
-					this.load(url, loaderContext);
+					load(url, loaderContext);
 				}
 				else
 				{
-					this.logError("Unknown url type. url: " + url + " type: " + typeof(url));
+					logError("Unknown url type. url: " + url + " type: " + typeof(url));
 				}
 			}
 		}
@@ -164,8 +164,8 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function load(url:String, context:LoaderContext = null):void
 		{
-			if (this._debug) this.logDebug("load: " + url + ' context: ' + context);
-			this._loader.load(new URLRequest(url), !context && this._loaderContext ? this._loaderContext : context);
+			if (_debug) logDebug("load: " + url + ' context: ' + context);
+			_loader.load(new URLRequest(url), !context && _loaderContext ? _loaderContext : context);
 		}
 		
 		/**
@@ -174,8 +174,8 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function loadBytes(bytes:ByteArray, context:LoaderContext = null):void
 		{
-			if (this._loaderContext) this._loaderContext.checkPolicyFile = false;
-			this._loader.loadBytes(bytes, !context && this._loaderContext ? this._loaderContext : context);
+			if (_loaderContext) _loaderContext.checkPolicyFile = false;
+			_loader.loadBytes(bytes, !context && _loaderContext ? _loaderContext : context);
 		}
 		
 		/**
@@ -183,7 +183,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function close():void 
 		{
-			this._loader.close();
+			_loader.close();
 		}
 
 		/**
@@ -191,7 +191,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function unload():void 
 		{
-			this._loader.unload();
+			_loader.unload();
 		}
 		
 		/**
@@ -203,9 +203,9 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function resize(width:Number, height:Number):void 
 		{
-			this._width = width;
-			this._height = height;
-			this.layoutImage();
+			_width = width;
+			_height = height;
+			layoutImage();
 		}
 		
 		/**
@@ -213,7 +213,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		override public function get width():Number
 		{
-			return this._clipping && !isNaN(this._width) ? this._width : super.width;
+			return _clipping && !isNaN(_width) ? _width : super.width;
 		}
 
 		/**
@@ -221,8 +221,8 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		override public function set width(value:Number):void
 		{
-			this._width = value;
-			this.layoutImage();
+			_width = value;
+			layoutImage();
 		}
 		
 		/**
@@ -230,7 +230,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		override public function get height():Number
 		{
-			return this._clipping && !isNaN(this._height) ? this._height : super.height;
+			return _clipping && !isNaN(_height) ? _height : super.height;
 		}
 
 		/**
@@ -238,8 +238,8 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		override public function set height(value:Number):void
 		{
-			this._height = value;
-			this.layoutImage();
+			_height = value;
+			layoutImage();
 		}
 		
 		/**
@@ -247,7 +247,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get scaleMode():String
 		{
-			return this._scaleMode;
+			return _scaleMode;
 		}
 
 		/**
@@ -256,9 +256,9 @@ imageLoaderExample.load("image.jpg");</listing>
 		[Inspectable(name="ScaleMode", type="String", defaultValue="noScale", enumeration="exactFit,noBorder,noScale,showAll")]
 		public function set scaleMode(value:String):void
 		{
-			this._scaleMode = value;
+			_scaleMode = value;
 			
-			this.layoutImage();
+			layoutImage();
 		}
 		
 		/**
@@ -266,7 +266,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get align():String
 		{
-			return this._align;
+			return _align;
 		}
 
 		/**
@@ -275,9 +275,9 @@ imageLoaderExample.load("image.jpg");</listing>
 		[Inspectable(name="Align", type="String", defaultValue="none", enumeration="none,left,center,right,top,middle,bottom,topLeft,topRight,bottomLeft,bottomRight")]
 		public function set align(value:String):void
 		{
-			this._align = value;
+			_align = value;
 			
-			this.layoutImage();
+			layoutImage();
 		}
 		
 		/**
@@ -287,7 +287,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get upscaleEnabled():Boolean
 		{
-			return this._upscaleEnabled;
+			return _upscaleEnabled;
 		}
 
 		/**
@@ -295,7 +295,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function set upscaleEnabled(value:Boolean):void
 		{
-			this._upscaleEnabled = value;
+			_upscaleEnabled = value;
 		}
 		
 		/**
@@ -303,7 +303,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get clipping():Boolean
 		{
-			return this._clipping;
+			return _clipping;
 		}
 
 		/**
@@ -312,9 +312,9 @@ imageLoaderExample.load("image.jpg");</listing>
 		[Inspectable(name="Clipping", type="Boolean", defaultValue="true")]
 		public function set clipping(value:Boolean):void
 		{
-			this._clipping = value;
+			_clipping = value;
 			
-			this.layoutImage();
+			layoutImage();
 		}
 		
 		/**
@@ -322,7 +322,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get smoothing():Boolean
 		{
-			return this._smoothing;
+			return _smoothing;
 		}
 
 		/**
@@ -331,8 +331,8 @@ imageLoaderExample.load("image.jpg");</listing>
 		[Inspectable(name="Smooting", type="Boolean", defaultValue="false")]
 		public function set smoothing(value:Boolean):void
 		{
-			this._smoothing = value;
-			if (this.content is Bitmap) Bitmap(this.content).smoothing = this._smoothing;
+			_smoothing = value;
+			if (content is Bitmap) Bitmap(content).smoothing = _smoothing;
 		}
 		
 		/**
@@ -340,7 +340,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get url():String
 		{
-			return this._loader ? this._loader.url : 'error getting url';
+			return _loader ? _loader.url : 'error getting url';
 		}
 		
 		/**
@@ -352,7 +352,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get bitmap():Bitmap 
 		{
-			return this.content as Bitmap;
+			return content as Bitmap;
 		}
 		
 		/**
@@ -364,7 +364,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get bitmapData():BitmapData 
 		{
-			return this.content && this.content is Bitmap ? Bitmap(this.content).bitmapData : null;
+			return content && content is Bitmap ? Bitmap(content).bitmapData : null;
 		}
 		
 		/**
@@ -372,17 +372,17 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get content():DisplayObject
 		{
-			if (!this.isLoaded) return null;
+			if (!isLoaded) return null;
 			
 			var content:DisplayObject;
 			
 			try
 			{
-				 content = this._loader.content;
+				 content = _loader.content;
 			}
 			catch (error:SecurityError)
 			{
-				this.logError("No crossdomain! : " + error.getStackTrace());
+				logError("No crossdomain! : " + error.getStackTrace());
 			}
 			return content;
 		}
@@ -392,7 +392,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get isLoading():Boolean
 		{
-			return this._loader.isLoading;
+			return _loader.isLoading;
 		}
 		
 		/**
@@ -400,7 +400,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._loader.isLoaded;
+			return _loader.isLoaded;
 		}
 		
 		/**
@@ -408,7 +408,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get loader():CacheLoader
 		{
-			return this._loader;
+			return _loader;
 		}
 		
 		/**
@@ -416,7 +416,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get cache():Boolean
 		{
-			return this._loader.cache;
+			return _loader.cache;
 		}
 		
 		/**
@@ -424,7 +424,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function set cache(value:Boolean):void
 		{
-			this._loader.cache = value;
+			_loader.cache = value;
 		}
 		
 		/**
@@ -432,7 +432,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get background():Boolean
 		{
-			return this._background;
+			return _background;
 		}
 		
 		/**
@@ -440,8 +440,8 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function set background(value:Boolean):void
 		{
-			this._background = value;
-			this.setBackground();
+			_background = value;
+			setBackground();
 		}
 		
 		/**
@@ -449,7 +449,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get backgroundColor():uint
 		{
-			return this._backgroundColor;
+			return _backgroundColor;
 		}
 		
 		/**
@@ -457,8 +457,8 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function set backgroundColor(value:uint):void
 		{
-			this._backgroundColor = value;
-			this.setBackground();
+			_backgroundColor = value;
+			setBackground();
 		}
 		
 		/**
@@ -466,7 +466,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get backgroundAlpha():Number
 		{
-			return this._backgroundAlpha;
+			return _backgroundAlpha;
 		}
 		
 		/**
@@ -474,8 +474,8 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function set backgroundAlpha(value:Number):void
 		{
-			this._backgroundAlpha = value;
-			this.setBackground();
+			_backgroundAlpha = value;
+			setBackground();
 		}
 		
 		/**
@@ -483,7 +483,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get loaderContext():LoaderContext
 		{
-			return this._loaderContext;
+			return _loaderContext;
 		}
 
 		/**
@@ -491,7 +491,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function set loaderContext(value:LoaderContext):void
 		{
-			this._loaderContext = value;
+			_loaderContext = value;
 		}
 		
 		/**
@@ -499,7 +499,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -507,23 +507,23 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleLoadStart(event:Event):void
 		{
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 
 		protected function handleLoadComplete(event:Event):void
 		{
-			if (this._debug) this.logDebug("handleLoadComplete");
+			if (_debug) logDebug("handleLoadComplete");
 			
-			if (this._smoothing && this.content is Bitmap) Bitmap(this.content).smoothing = true;
+			if (_smoothing && content is Bitmap) Bitmap(content).smoothing = true;
 			
-			this.layoutImage();
+			layoutImage();
 			
-			this.dispatchEvent(event);
+			dispatchEvent(event);
 		}
 
 		/**
@@ -532,48 +532,48 @@ imageLoaderExample.load("image.jpg");</listing>
 
 		private function layoutImage():void
 		{
-			if (!this._loader || !this._loader.isLoaded) return;
+			if (!_loader || !_loader.isLoaded) return;
 			
-			if (this.debug) this.logDebug("layoutImage: clipping=" + this._clipping + ", scaleMode='" + this._scaleMode + "', align='" + this._align + "', upscaleEnabled:" + this._upscaleEnabled);
+			if (debug) logDebug("layoutImage: clipping=" + _clipping + ", scaleMode='" + _scaleMode + "', align='" + _align + "', upscaleEnabled:" + _upscaleEnabled);
 			
-			if (this._clipping)
+			if (_clipping)
 			{
-				this.scrollRect = new Rectangle(0, 0, this.width, this.height);
+				scrollRect = new Rectangle(0, 0, width, height);
 			}
 			else
 			{
-				this.scrollRect = null;
+				scrollRect = null;
 			}
 			
-			if (isNaN(this._width)) this._width = this._loader.width;
-			if (isNaN(this._height)) this._height = this._loader.height;
+			if (isNaN(_width)) _width = _loader.width;
+			if (isNaN(_height)) _height = _loader.height;
 			
 			// calculate scale ratios
-			var ratioX:Number = this._width / (this._loader.width * (1 / this._loader.scaleX));
-			var ratioY:Number = this._height / (this._loader.height * (1 / this._loader.scaleY));
+			var ratioX:Number = _width / (_loader.width * (1 / _loader.scaleX));
+			var ratioY:Number = _height / (_loader.height * (1 / _loader.scaleY));
 			var scale:Number;
 			
 			// scale
-			switch (this._scaleMode)
+			switch (_scaleMode)
 			{
 				case ScaleMode.EXACT_FIT:
 				{
-					this._loader.width = this._width;
-					this._loader.height = this._height;
+					_loader.width = _width;
+					_loader.height = _height;
 					
 					break;
 				}
 				case ScaleMode.SHOW_ALL:
 				{
 					scale = ratioX < ratioY ? ratioX : ratioY;
-					this._loader.scaleX = this._loader.scaleY = this._upscaleEnabled ? scale : Math.min(1, scale);
+					_loader.scaleX = _loader.scaleY = _upscaleEnabled ? scale : Math.min(1, scale);
 					
 					break;
 				}
 				case ScaleMode.NO_BORDER:
 				{
 					scale = ratioX > ratioY ? ratioX : ratioY;
-					this._loader.scaleX = this._loader.scaleY = this._upscaleEnabled ? scale : Math.min(1, scale);
+					_loader.scaleX = _loader.scaleY = _upscaleEnabled ? scale : Math.min(1, scale);
 					
 					break;
 				}
@@ -585,10 +585,10 @@ imageLoaderExample.load("image.jpg");</listing>
 			}
 			
 			// align
-			if (this._scaleMode != ScaleMode.EXACT_FIT)
+			if (_scaleMode != ScaleMode.EXACT_FIT)
 			{
 				// align horizontal
-				switch (this._align)
+				switch (_align)
 				{
 					case Align.TOP_LEFT:
 					case Align.LEFT:
@@ -603,7 +603,7 @@ imageLoaderExample.load("image.jpg");</listing>
 					case Align.RIGHT:
 					case Align.BOTTOM_RIGHT:
 					{
-						this._loader.x = (this._width - this._loader.width);
+						_loader.x = (_width - _loader.width);
 						
 						break;
 					}
@@ -612,14 +612,14 @@ imageLoaderExample.load("image.jpg");</listing>
 					case Align.BOTTOM:
 					default:
 					{
-						this._loader.x = (this._width - this._loader.width) * .5;
+						_loader.x = (_width - _loader.width) * .5;
 						
 						break;
 					}
 				}
 				
 				// align vertical
-				switch (this._align)
+				switch (_align)
 				{
 					case Align.TOP_LEFT:
 					case Align.TOP:
@@ -634,7 +634,7 @@ imageLoaderExample.load("image.jpg");</listing>
 					case Align.BOTTOM:
 					case Align.BOTTOM_RIGHT:
 					{
-						this._loader.y = (this._height - this._loader.height);
+						_loader.y = (_height - _loader.height);
 						
 						break;
 					}
@@ -643,25 +643,25 @@ imageLoaderExample.load("image.jpg");</listing>
 					case Align.RIGHT:
 					default:
 					{
-						this._loader.y = (this._height - this._loader.height) * .5;
+						_loader.y = (_height - _loader.height) * .5;
 						
 						break;
 					}
 				}
 			}
-			this.setBackground();
+			setBackground();
 			
-			this.dispatchEvent(new Event(Event.RESIZE));
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		private function setBackground():void 
 		{
-			this.graphics.clear();
-			if (this._background)
+			graphics.clear();
+			if (_background)
 			{
-				this.graphics.beginFill(this._backgroundColor, this._backgroundAlpha);
-				this.graphics.drawRect(0, 0, this.width, this.height);
-				this.graphics.endFill();
+				graphics.beginFill(_backgroundColor, _backgroundAlpha);
+				graphics.drawRect(0, 0, width, height);
+				graphics.endFill();
 			}
 		}
 
@@ -670,14 +670,14 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		override public function destruct():void
 		{
-			if (this._loader)
+			if (_loader)
 			{
-				this._loader.destruct();
-				this._loader = null;
+				_loader.destruct();
+				_loader = null;
 			}
-			this._scaleMode = null;
-			this._align = null;
-			this._loaderContext = null;
+			_scaleMode = null;
+			_align = null;
+			_loaderContext = null;
 			
 			super.destruct();
 		}

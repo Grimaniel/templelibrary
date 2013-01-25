@@ -62,11 +62,11 @@ package temple.ui.buttons
 		{
 			super();
 			
-			this.stop();
+			stop();
 			
-			this._buttonBehavior = new ButtonBehavior(this);
-			if (this.totalFrames > 1) this._timelineBehavior = new ButtonTimelineBehavior(this);
-			this._stateBehavior = new ButtonStateBehavior(this);
+			_buttonBehavior = new ButtonBehavior(this);
+			if (totalFrames > 1) _timelineBehavior = new ButtonTimelineBehavior(this);
+			_stateBehavior = new ButtonStateBehavior(this);
 		}
 		
 		/**
@@ -74,7 +74,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonBehavior():ButtonBehavior
 		{
-			return this._buttonBehavior;
+			return _buttonBehavior;
 		}
 
 		/**
@@ -82,7 +82,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonTimelineBehavior():ButtonTimelineBehavior
 		{
-			return this._timelineBehavior;
+			return _timelineBehavior;
 		}
 
 		/**
@@ -90,7 +90,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonStateBehavior():ButtonStateBehavior
 		{
-			return this._stateBehavior;
+			return _stateBehavior;
 		}
 	}
 }

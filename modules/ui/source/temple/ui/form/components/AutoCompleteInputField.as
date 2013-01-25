@@ -63,12 +63,12 @@ package temple.ui.form.components
 		{
 			super(textField, list);
 			
-			this._filter = "";
-			this._items = new Vector.<IListItemData>();
-			this.textField.addEventListener(Event.CHANGE, this.handleInputChange);
+			_filter = "";
+			_items = new Vector.<IListItemData>();
+			textField.addEventListener(Event.CHANGE, handleInputChange);
 			
-			this.editable = true;
-			this.keySearch = false;
+			editable = true;
+			keySearch = false;
 		}
 
 		/**
@@ -76,13 +76,13 @@ package temple.ui.form.components
 		 */
 		override public function get value():* 
 		{
-			if (this._onlyAllowMatch)
+			if (_onlyAllowMatch)
 			{
-				return IHasValue(this.list).value;
+				return IHasValue(list).value;
 			}
 			else
 			{
-				return this.trimValue ? StringUtils.trim(this.text) : this.text;
+				return trimValue ? StringUtils.trim(text) : text;
 			}
 		}
 		
@@ -91,7 +91,7 @@ package temple.ui.form.components
 		 */
 		override public function set value(value:*):void 
 		{
-			for each (var itemData : IListItemData in this._items) 
+			for each (var itemData : IListItemData in _items) 
 			{
 				if (itemData.data == value)
 				{
@@ -100,8 +100,8 @@ package temple.ui.form.components
 				}
 			}
 			
-			this._filter = value;
-			if (!this.filterItems())
+			_filter = value;
+			if (!filterItems())
 			{
 				super.value = value;
 			}
@@ -112,8 +112,8 @@ package temple.ui.form.components
 		 */
 		override public function addItem(data:*, label:String = null):void
 		{
-			this._items.push(new ListItemData(data, label || this.generateLabel(data))) - 1;
-			this.filterItem(this._items[this._items.length - 1]);
+			_items.push(new ListItemData(data, label || generateLabel(data))) - 1;
+			filterItem(_items[_items.length - 1]);
 		}
 		
 		/**
@@ -121,8 +121,8 @@ package temple.ui.form.components
 		 */
 		override public function addItemAt(data:*, index:uint, label:String = null):void
 		{
-			this._items.splice(index, 0, new ListItemData(data, label || this.generateLabel(data)));
-			this.filterItem(this._items[index]);
+			_items.splice(index, 0, new ListItemData(data, label || generateLabel(data)));
+			filterItem(_items[index]);
 		}
 
 		/**
@@ -137,24 +137,24 @@ package temple.ui.form.components
 				{
 					if (labels in items[i])
 					{
-						this.addItem(items[i], items[i][labels]);
+						addItem(items[i], items[i][labels]);
 					}
 					else
 					{
-						this.logWarn("addItems: item " + items[i] + " doesn't have a property '" + labels + "'");
+						logWarn("addItems: item " + items[i] + " doesn't have a property '" + labels + "'");
 					}
 				}
 				else if (labels is Array)
 				{
-					this.addItem(items[i], labels[i]);
+					addItem(items[i], labels[i]);
 				}
 				else if (labels == null)
 				{
-					this.addItem(items[i]);
+					addItem(items[i]);
 				}
 				else
 				{
-					this.logError("addItems: invalid value for items: '" + items + "'");
+					logError("addItems: invalid value for items: '" + items + "'");
 				}
 			}
 		}
@@ -164,14 +164,14 @@ package temple.ui.form.components
 		 */
 		override public function removeItem(data:*, label:String = null):Boolean
 		{
-			if (label == null) label = this.generateLabel(data);
+			if (label == null) label = generateLabel(data);
 			var item:IListItemData;
-			for (var i:int = this._items.length - 1;i >= 0; --i) 
+			for (var i:int = _items.length - 1;i >= 0; --i) 
 			{
-				item = this._items[i];
+				item = _items[i];
 				if (item.data === data && item.label === label)
 				{
-					this._items.splice(i, 1);
+					_items.splice(i, 1);
 					item.destruct();
 					return true;
 				}
@@ -184,10 +184,10 @@ package temple.ui.form.components
 		 */
 		override public function removeItemAt(index:uint):Boolean
 		{
-			if (this._items[index])
+			if (_items[index])
 			{
-				var item:IListItemData = this._items[index];
-				this._items.splice(index, 1);
+				var item:IListItemData = _items[index];
+				_items.splice(index, 1);
 				item.destruct();
 				
 				return true;
@@ -203,7 +203,7 @@ package temple.ui.form.components
 		 */
 		public function get inSearch():Boolean
 		{
-			return this._inSearch;
+			return _inSearch;
 		}
 		
 		/**
@@ -211,8 +211,8 @@ package temple.ui.form.components
 		 */
 		public function set inSearch(value:Boolean):void
 		{
-			this._inSearch = value;
-			this.filterItems();
+			_inSearch = value;
+			filterItems();
 		}
 		
 		/**
@@ -220,7 +220,7 @@ package temple.ui.form.components
 		 */
 		public function get caseSensitive():Boolean
 		{
-			return this._caseSensitive;
+			return _caseSensitive;
 		}
 		
 		/**
@@ -228,8 +228,8 @@ package temple.ui.form.components
 		 */
 		public function set caseSensitive(value:Boolean):void
 		{
-			this._caseSensitive = value;
-			this.filterItems();
+			_caseSensitive = value;
+			filterItems();
 		}
 		
 		/**
@@ -237,7 +237,7 @@ package temple.ui.form.components
 		 */
 		public function get maxResults():uint
 		{
-			return this._maxResults;
+			return _maxResults;
 		}
 		
 		/**
@@ -245,7 +245,7 @@ package temple.ui.form.components
 		 */
 		public function set maxResults(value:uint):void
 		{
-			this._maxResults = value;
+			_maxResults = value;
 		}
 		
 		/**
@@ -253,7 +253,7 @@ package temple.ui.form.components
 		 */
 		public function get minSearchLength():uint
 		{
-			return this._minSearchLength;
+			return _minSearchLength;
 		}
 		
 		/**
@@ -261,7 +261,7 @@ package temple.ui.form.components
 		 */
 		public function set minSearchLength(value:uint):void
 		{
-			this._minSearchLength = value;
+			_minSearchLength = value;
 		}
 		
 		/**
@@ -269,7 +269,7 @@ package temple.ui.form.components
 		 */
 		public function get onlyAllowMatch():Boolean
 		{
-			return this._onlyAllowMatch;
+			return _onlyAllowMatch;
 		}
 		
 		/**
@@ -277,7 +277,7 @@ package temple.ui.form.components
 		 */
 		public function set onlyAllowMatch(value:Boolean):void
 		{
-			this._onlyAllowMatch = value;
+			_onlyAllowMatch = value;
 		}
 
 		/**
@@ -286,13 +286,13 @@ package temple.ui.form.components
 		 */
 		public function filterItems():Boolean
 		{
-			if (!this._items) return false;
+			if (!_items) return false;
 			
-			this.list.removeAll();
+			list.removeAll();
 			var match:Boolean;
-			for (var i:int = 0,leni:int = this._items.length;i < leni; i++)
+			for (var i:int = 0,leni:int = _items.length;i < leni; i++)
 			{
-				match = this.filterItem(this._items[i]) || match;
+				match = filterItem(_items[i]) || match;
 			}
 			return match;
 		}
@@ -302,7 +302,7 @@ package temple.ui.form.components
 		 */
 		override public function sort(compareFunction:Function):void
 		{
-			this._items.sort(compareFunction);
+			_items.sort(compareFunction);
 			
 			super.sort(compareFunction);
 		}
@@ -312,7 +312,7 @@ package temple.ui.form.components
 		 */
 		override public function sortOn(names:*, options:* = 0, ...args):void
 		{
-			VectorUtils.sortOn.apply(null, [this._items, names, options].concat(args));
+			VectorUtils.sortOn.apply(null, [_items, names, options].concat(args));
 			
 			super.sortOn.apply(null, [names, options].concat(args));
 		}
@@ -323,21 +323,21 @@ package temple.ui.form.components
 		 */
 		protected function filterItem(item:IListItemData):Boolean
 		{
-			if (this._maxResults && this.list.length >= this._maxResults) return false;
-			if (this._minSearchLength && (!this._filter || this._filter.length < this._minSearchLength)) return false;
+			if (_maxResults && list.length >= _maxResults) return false;
+			if (_minSearchLength && (!_filter || _filter.length < _minSearchLength)) return false;
 			
-			if (this._caseSensitive && !this._inSearch && item.label.substr(0, this._filter.length) == this._filter
-			|| !this._caseSensitive && !this._inSearch && item.label.substr(0, this._filter.length).toLowerCase() == this._filter.toLowerCase()
-			||  this._caseSensitive &&  this._inSearch && item.label.indexOf(this._filter) != -1
-			|| !this._caseSensitive &&  this._inSearch && item.label.toLowerCase().indexOf(this._filter.toLowerCase()) != -1)
+			if (_caseSensitive && !_inSearch && item.label.substr(0, _filter.length) == _filter
+			|| !_caseSensitive && !_inSearch && item.label.substr(0, _filter.length).toLowerCase() == _filter.toLowerCase()
+			||  _caseSensitive &&  _inSearch && item.label.indexOf(_filter) != -1
+			|| !_caseSensitive &&  _inSearch && item.label.toLowerCase().indexOf(_filter.toLowerCase()) != -1)
 			{
-				this.list.addItem(item.data, item.label);
-				if (item.label == this._filter || !this._caseSensitive && item.label.toLowerCase() == this._filter.toLowerCase())
+				list.addItem(item.data, item.label);
+				if (item.label == _filter || !_caseSensitive && item.label.toLowerCase() == _filter.toLowerCase())
 				{
 					// temperary remove listener for CHANGE events to prevent recursive loops
-					this.textField.removeEventListener(Event.CHANGE, this.handleInputChange);
-					this.list.selectedItem = item.data;
-					this.textField.addEventListener(Event.CHANGE, this.handleInputChange);
+					textField.removeEventListener(Event.CHANGE, handleInputChange);
+					list.selectedItem = item.data;
+					textField.addEventListener(Event.CHANGE, handleInputChange);
 					return true;
 				}
 			}
@@ -346,21 +346,21 @@ package temple.ui.form.components
 
 		protected function handleInputChange(event:Event):void
 		{
-			this._filter = this.text;
+			_filter = text;
 			
-			if (FocusManager.focus == this.textField)
+			if (FocusManager.focus == textField)
 			{
-				if (this.filterItems())
+				if (filterItems())
 				{
-					this.close();
+					close();
 				}
-				else if (this.list.length > 0)
+				else if (list.length > 0)
 				{
-					this.open();
+					open();
 				}
 				else
 				{
-					this.close();
+					close();
 				}
 			}
 		}
@@ -375,10 +375,10 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			if (this._items) while(this._items.length) this._items.shift().destruct();
+			if (_items) while(_items.length) _items.shift().destruct();
 			
-			this._items = null;
-			this._filter = null;
+			_items = null;
+			_filter = null;
 			
 			super.destruct();
 		}

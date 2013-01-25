@@ -77,7 +77,7 @@ package temple.ui.pagination
 		{
 			super(type, bubbles);
 			
-			this._page = page;
+			_page = page;
 		}
 
 		/**
@@ -85,12 +85,12 @@ package temple.ui.pagination
 		 */
 		public function get page():uint
 		{
-			return this._page;
+			return _page;
 		}
 		
 		override public function clone():Event
 		{
-			return new PaginatorEvent(this.type, this._page);
+			return new PaginatorEvent(type, _page);
 		}
 	}
 }

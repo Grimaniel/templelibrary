@@ -59,7 +59,7 @@ package temple.ui.eventtunneling
 		{
 			super(type, false);
 			
-			this._tunnels = tunnels;
+			_tunnels = tunnels;
 		}
 
 		/**
@@ -67,7 +67,7 @@ package temple.ui.eventtunneling
 		 */
 		public function get tunnels():Boolean
 		{
-			return this._tunnels;
+			return _tunnels;
 		}
 
 		/**
@@ -77,7 +77,7 @@ package temple.ui.eventtunneling
 		 */
 		override public function stopPropagation():void
 		{
-			this.stopTunneling();
+			stopTunneling();
 		}
 
 		/**
@@ -87,7 +87,7 @@ package temple.ui.eventtunneling
 		 */
 		override public function stopImmediatePropagation():void
 		{
-			this.stopTunneling();
+			stopTunneling();
 		}
 
 		/**
@@ -95,7 +95,7 @@ package temple.ui.eventtunneling
 		 */
 		public function stopTunneling():void
 		{
-			this._tunnels = false;
+			_tunnels = false;
 		}
 		
 		/**
@@ -103,7 +103,7 @@ package temple.ui.eventtunneling
 		 */
 		public function get tunnelTarget():Object
 		{
-			return this._tunnelTarget != null ? this._tunnelTarget : this.target;
+			return _tunnelTarget != null ? _tunnelTarget : target;
 		}
 		
 		/**
@@ -111,7 +111,7 @@ package temple.ui.eventtunneling
 		 */
 		override public function clone():Event
 		{
-			return new TunnelingEvent(this.type, this.tunnels);
+			return new TunnelingEvent(type, tunnels);
 		}
 	}
 }

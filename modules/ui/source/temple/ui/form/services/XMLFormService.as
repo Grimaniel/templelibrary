@@ -81,15 +81,15 @@ package temple.ui.form.services
 		 */
 		public function XMLFormService(url:String = null, resultClass:Class = null, debug:Boolean = false) 
 		{
-			this._url = url;
+			_url = url;
 			
 			this.resultClass = resultClass ? resultClass : FormResult;
 			
 			this.debug = debug;
 			
-			this.addEventListener(XMLServiceEvent.COMPLETE, this.handleXMLServiceEvent);
-			this.addEventListener(XMLServiceEvent.LOAD_ERROR, this.handleXMLServiceEvent);
-			this.addEventListener(XMLServiceEvent.PARSE_ERROR, this.handleXMLServiceEvent);
+			addEventListener(XMLServiceEvent.COMPLETE, handleXMLServiceEvent);
+			addEventListener(XMLServiceEvent.LOAD_ERROR, handleXMLServiceEvent);
+			addEventListener(XMLServiceEvent.PARSE_ERROR, handleXMLServiceEvent);
 		}
 		
 		/**
@@ -99,7 +99,7 @@ package temple.ui.form.services
 		 */
 		public function submit(data:Object):IFormResult
 		{
-			this.load(new URLData(this._url, this._url), data, this._method);
+			load(new URLData(_url, _url), data, _method);
 			
 			return null;
 		}
@@ -109,7 +109,7 @@ package temple.ui.form.services
 		 */
 		public function get url():String
 		{
-			return this._url;
+			return _url;
 		}
 		
 		/**
@@ -117,7 +117,7 @@ package temple.ui.form.services
 		 */
 		public function set url(value:String):void
 		{
-			this._url = value;
+			_url = value;
 		}
 
 		/**
@@ -126,7 +126,7 @@ package temple.ui.form.services
 		 */
 		public function get resultClass():Class 
 		{
-			return this._resultClass;
+			return _resultClass;
 		}
 
 		/**
@@ -134,7 +134,7 @@ package temple.ui.form.services
 		 */
 		public function set resultClass(value:Class):void 
 		{
-			this._resultClass = value;
+			_resultClass = value;
 		}
 		
 		/**
@@ -142,7 +142,7 @@ package temple.ui.form.services
 		 */
 		public function get method():String
 		{
-			return this._method;
+			return _method;
 		}
 		
 		/**
@@ -150,7 +150,7 @@ package temple.ui.form.services
 		 */
 		public function set method(value:String):void
 		{
-			this._method = value;
+			_method = value;
 		}
 		
 		/**
@@ -162,10 +162,10 @@ package temple.ui.form.services
 		 */
 		override protected function processData(data:XML, name:String):void 
 		{
-			var result:IFormResult = XMLParser.parseXML(data, _resultClass, false, this.debug) as IFormResult;
+			var result:IFormResult = XMLParser.parseXML(data, _resultClass, false, debug) as IFormResult;
 
 			// send event we're done
-			this.dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, null, result)); 
+			dispatchEvent(new XMLServiceEvent(XMLServiceEvent.COMPLETE, name, null, result)); 
 		}
 		
 		private function handleXMLServiceEvent(event:XMLServiceEvent):void
@@ -174,13 +174,13 @@ package temple.ui.form.services
 			{
 				case XMLServiceEvent.COMPLETE:
 				{
-					this.dispatchEvent(new FormServiceEvent(FormServiceEvent.RESULT, event.object as IFormResult));
+					dispatchEvent(new FormServiceEvent(FormServiceEvent.RESULT, event.object as IFormResult));
 					break;
 				}	
 				case XMLServiceEvent.LOAD_ERROR:
 				case XMLServiceEvent.PARSE_ERROR:
 				{
-					this.dispatchEvent(new FormServiceEvent(FormServiceEvent.ERROR, event.object as IFormResult));
+					dispatchEvent(new FormServiceEvent(FormServiceEvent.ERROR, event.object as IFormResult));
 					break;
 				}
 			}
@@ -191,9 +191,9 @@ package temple.ui.form.services
 		 */
 		override public function destruct():void
 		{
-			this._resultClass = null;
-			this._url = null;
-			this._method = null;
+			_resultClass = null;
+			_url = null;
+			_method = null;
 			
 			super.destruct();
 		}

@@ -95,10 +95,10 @@ package temple.ui.buttons.behaviors
 			if (button1 == null) throwError(new TempleArgumentError(this, "button1 can not be null"));
 			if (button2 == null) throwError(new TempleArgumentError(this, "button2 can not be null"));
 			
-			this._buttons = new Dictionary(useWeakReference);
+			_buttons = new Dictionary(useWeakReference);
 			
-			this.add(button1);
-			this.add(button2);
+			add(button1);
+			add(button2);
 			
 			this.ignoreMouseEnabled = ignoreMouseEnabled;
 		}
@@ -115,13 +115,13 @@ package temple.ui.buttons.behaviors
 			if (ButtonBinder._dictionary[button] == null) ButtonBinder._dictionary[button] = new Array();
 			(ButtonBinder._dictionary[button] as Array).push(this);
 			
-			this._buttons[button] = this;
+			_buttons[button] = this;
 			
 			for each (var type : String in ButtonBinder._EVENT_TYPES) 
 			{
-				button.addEventListener(type, this.handleEvent, false, 0, useWeakReference);
+				button.addEventListener(type, handleEvent, false, 0, useWeakReference);
 			}
-			button.addEventListener(DestructEvent.DESTRUCT, this.handleButtonDestructed, false, 0, useWeakReference);
+			button.addEventListener(DestructEvent.DESTRUCT, handleButtonDestructed, false, 0, useWeakReference);
 		}
 		
 		/**
@@ -132,24 +132,24 @@ package temple.ui.buttons.behaviors
 		{
 			if (button == null) throwError(new TempleArgumentError(this, "Button can not be null"));
 			
-			button.removeEventListener(DestructEvent.DESTRUCT, this.handleButtonDestructed);
+			button.removeEventListener(DestructEvent.DESTRUCT, handleButtonDestructed);
 			
 			if (ButtonBinder._dictionary && ButtonBinder._dictionary[button])
 			{
 				ArrayUtils.removeValueFromArray(ButtonBinder._dictionary[button], this);
 			}
 			
-			if (this._buttons && this._buttons[button])
+			if (_buttons && _buttons[button])
 			{
 				for each (var type : String in ButtonBinder._EVENT_TYPES) 
 				{
-					button.removeEventListener(type, this.handleEvent);
+					button.removeEventListener(type, handleEvent);
 				}
-				delete this._buttons[button];
+				delete _buttons[button];
 			}
 			else
 			{
-				this.logWarn("remove: ButtonBinder has no button '" + button + "'");
+				logWarn("remove: ButtonBinder has no button '" + button + "'");
 			}
 		}
 		
@@ -158,7 +158,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get ignoreMouseEnabled():Boolean
 		{
-			return this._ignoreMouseEnabled;
+			return _ignoreMouseEnabled;
 		}
 		
 		/**
@@ -166,15 +166,15 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set ignoreMouseEnabled(value:Boolean):void
 		{
-			this._ignoreMouseEnabled = value;
+			_ignoreMouseEnabled = value;
 		}
 
 		private function handleEvent(event:Event):void
 		{
-			if (this._blockRequest) return;
-			this._blockRequest = true;
+			if (_blockRequest) return;
+			_blockRequest = true;
 			
-			for (var button:Object in this._buttons)
+			for (var button:Object in _buttons)
 			{
 				if (button != event.currentTarget)
 				{
@@ -182,18 +182,18 @@ package temple.ui.buttons.behaviors
 					var isChild:Boolean = false;
 					if (target is DisplayObjectContainer && DisplayObjectContainer(target).contains(button as DisplayObject)) isChild = true;
 					
-					if ((this._ignoreMouseEnabled || (button is InteractiveObject && InteractiveObject(button).mouseEnabled)) && !isChild)
+					if ((_ignoreMouseEnabled || (button is InteractiveObject && InteractiveObject(button).mouseEnabled)) && !isChild)
 					{
 						(button as DisplayObject).dispatchEvent(event.clone());
 					}
 				}
 			}
-			this._blockRequest = false;
+			_blockRequest = false;
 		}
 		
 		private function handleButtonDestructed(event:DestructEvent):void
 		{
-			this.remove(event.target as DisplayObject);
+			remove(event.target as DisplayObject);
 		}
 
 		/**
@@ -201,13 +201,13 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this._buttons)
+			if (_buttons)
 			{
-				for (var button:Object in this._buttons)
+				for (var button:Object in _buttons)
 				{
-					this.remove(button as DisplayObject);
+					remove(button as DisplayObject);
 				}
-				this._buttons = null;
+				_buttons = null;
 			}
 			super.destruct();
 		}

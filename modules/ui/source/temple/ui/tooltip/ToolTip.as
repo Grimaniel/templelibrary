@@ -370,8 +370,8 @@ package temple.ui.tooltip
 		 */
 		public function ToolTip()
 		{
-			this.mouseChildren = this.mouseEnabled = false;
-			this.visible = false;
+			mouseChildren = mouseEnabled = false;
+			visible = false;
 		}
 		
 		/**
@@ -379,7 +379,7 @@ package temple.ui.tooltip
 		 */
 		public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			this.visible = true;
+			visible = true;
 			if (onComplete != null) onComplete();
 		}
 		
@@ -388,7 +388,7 @@ package temple.ui.tooltip
 		 */
 		public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			this.visible = false;
+			visible = false;
 			if (onComplete != null) onComplete();
 		}
 
@@ -397,7 +397,7 @@ package temple.ui.tooltip
 		 */
 		public function get shown():Boolean
 		{
-			return this.visible;
+			return visible;
 		}
 
 		/**
@@ -405,7 +405,7 @@ package temple.ui.tooltip
 		 */
 		public function set shown(value:Boolean):void
 		{
-			this.visible = value;
+			visible = value;
 		}
 
 		/**
@@ -413,10 +413,10 @@ package temple.ui.tooltip
 		 */
 		public function setStageMarginOffset(offset:Point):void
 		{
-			if (this._arrow && this._originalArrowPosition)
+			if (_arrow && _originalArrowPosition)
 			{
-				this._arrow.x = this._originalArrowPosition.x + offset.x;
-				this._arrow.y = this._originalArrowPosition.y + offset.y;
+				_arrow.x = _originalArrowPosition.x + offset.x;
+				_arrow.y = _originalArrowPosition.y + offset.y;
 			}
 		}
 
@@ -425,7 +425,7 @@ package temple.ui.tooltip
 		 */
 		public function get arrow():DisplayObject
 		{
-			return this._arrow;
+			return _arrow;
 		}
 
 		/**
@@ -433,8 +433,8 @@ package temple.ui.tooltip
 		 */
 		public function set arrow(value:DisplayObject):void
 		{
-			this._arrow = value;
-			this._originalArrowPosition = new Point(this._arrow.x, this._arrow.y);
+			_arrow = value;
+			_originalArrowPosition = new Point(_arrow.x, _arrow.y);
 		}
 	}
 }
@@ -452,13 +452,13 @@ final class ToolTipData extends CoreObject
 		this.message = message;
 		this.offset = offset;
 		
-		this.toStringProps.push('message', 'offset');
+		toStringProps.push('message', 'offset');
 	}
 
 	override public function destruct():void
 	{
-		this.message = null;
-		this.offset = null;
+		message = null;
+		offset = null;
 		
 		super.destruct();
 	}

@@ -63,12 +63,12 @@ package temple.ui.slider
 		{
 			super(type);
 			
-			this._value = value;
+			_value = value;
 		}
 		
 		public function get value():Number
 		{
-			return this._value;
+			return _value;
 		}
 
 		/**
@@ -76,7 +76,7 @@ package temple.ui.slider
 		 */
 		override public function clone():Event
 		{
-			return new SliderEvent(this.type, this.value);
+			return new SliderEvent(type, value);
 		}
 	}
 }

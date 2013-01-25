@@ -64,7 +64,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function get compareTarget():IHasValue
 		{
-			return this._compareTarget;
+			return _compareTarget;
 		}
 		
 		/**
@@ -73,11 +73,11 @@ package temple.ui.form.validation.rules
 		public function set compareTarget(value:IHasValue):void
 		{
 			if (!value) throwError(new TempleArgumentError(this, "value can not be null"));
-			this._compareTarget = value;
+			_compareTarget = value;
 			
-			if (this._compareTarget == this.target)
+			if (_compareTarget == target)
 			{
-				this.logWarn("compareTarget is the same object as the target");
+				logWarn("compareTarget is the same object as the target");
 			}
 		}
 		
@@ -86,7 +86,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function isValid():Boolean
 		{
-			return Comparor.compare(this.target.value, this._compareTarget.value, this.operator);
+			return Comparor.compare(target.value, _compareTarget.value, operator);
 		}
 
 		/**
@@ -94,7 +94,7 @@ package temple.ui.form.validation.rules
 		 */
 		override public function destruct():void 
 		{
-			this._compareTarget = null;
+			_compareTarget = null;
 			super.destruct();
 		}
 	}

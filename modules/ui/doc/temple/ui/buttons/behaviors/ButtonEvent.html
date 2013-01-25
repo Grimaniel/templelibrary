@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple UI Module API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/buttons/behaviors/ButtonEvent.html&amp;temple/ui/buttons/behaviors/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ButtonEvent</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple UI Module API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/buttons/behaviors/ButtonEvent.html&amp;temple/ui/buttons/behaviors/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ButtonEvent</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("ButtonEvent"); titleBar_setSubNav(true,true,false,false,false,false,false,false,true,true,false	,false,false,false,false,false);}	
@@ -58,7 +58,7 @@ package
             var container:Button = new Button(325, 125);
             container.x = 50;
             container.y = 50;
-            this.addChild(container);
+            addChild(container);
             
             // create a button inside the container. This button will react on ButtonEvents of the container.
             var nestedButton1:Button = new Button(75, 75);
@@ -99,14 +99,14 @@ class Button extends MultiStateButton
 {
     public function Button(width:Number, height:Number) 
     {
-        this.graphics.beginFill(0xaaaaaa);
-        this.graphics.drawRect(0, 0, width, height);
-        this.graphics.endFill();
+        graphics.beginFill(0xaaaaaa);
+        graphics.drawRect(0, 0, width, height);
+        graphics.endFill();
         
-        this.filters = [new BevelFilter(1, 45, 0xffffff, 1, 0, 1, 3, 3)];
+        filters = [new BevelFilter(1, 45, 0xffffff, 1, 0, 1, 3, 3)];
         
-        this.addChild(new ButtonOverState(width, height));
-        this.addChild(new ButtonDownState(width, height));
+        addChild(new ButtonOverState(width, height));
+        addChild(new ButtonDownState(width, height));
     }
 }
 
@@ -114,9 +114,9 @@ class ButtonOverState extends OverState
 {
     public function ButtonOverState(width:Number, height:Number) 
     {
-        this.graphics.beginFill(0xeeeeee);
-        this.graphics.drawRect(0, 0, width, height);
-        this.graphics.endFill();
+        graphics.beginFill(0xeeeeee);
+        graphics.drawRect(0, 0, width, height);
+        graphics.endFill();
     }
 }
 
@@ -124,9 +124,9 @@ class ButtonDownState extends DownState
 {
     public function ButtonDownState(width:Number, height:Number) 
     {
-        this.graphics.beginFill(0x888888);
-        this.graphics.drawRect(0, 0, width, height);
-        this.graphics.endFill();
+        graphics.beginFill(0x888888);
+        graphics.drawRect(0, 0, width, height);
+        graphics.endFill();
     }
 }
 </pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "NestedMultiStateButtonsExample", "width", "100%",

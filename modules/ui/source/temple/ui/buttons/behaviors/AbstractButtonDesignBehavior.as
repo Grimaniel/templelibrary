@@ -56,7 +56,7 @@ package temple.ui.buttons.behaviors
 		{
 			super(target);
 			
-			target.addEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			target.addEventListener(ButtonEvent.UPDATE, handleButtonEvent);
 		}
 		
 		/**
@@ -64,7 +64,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get updateByParent():Boolean
 		{
-			return this._updateByParent;
+			return _updateByParent;
 		}
 		
 		/**
@@ -72,7 +72,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set updateByParent(value:Boolean):void
 		{
-			this._updateByParent = value;
+			_updateByParent = value;
 		}
 		
 		/**
@@ -80,18 +80,18 @@ package temple.ui.buttons.behaviors
 		 */
 		public function update(status:IButtonStatus):void
 		{
-			this.disabled = status.disabled;
-			this.selected = status.selected;
-			this.focus = status.focus;
-			this.over = status.over;
-			this.down = status.down;
+			disabled = status.disabled;
+			selected = status.selected;
+			focus = status.focus;
+			over = status.over;
+			down = status.down;
 		}
 		
 		private function handleButtonEvent(event:ButtonEvent):void
 		{
-			if (this._updateByParent || event.tunnelTarget == this.target)
+			if (_updateByParent || event.tunnelTarget == target)
 			{
-				this.update(event.status);
+				update(event.status);
 			}
 			else
 			{
@@ -104,7 +104,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.displayObject) this.displayObject.removeEventListener(ButtonEvent.UPDATE, this.handleButtonEvent);
+			if (displayObject) displayObject.removeEventListener(ButtonEvent.UPDATE, handleButtonEvent);
 			super.destruct();
 		}
 	}

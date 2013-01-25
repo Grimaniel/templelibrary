@@ -59,7 +59,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function isValid():Boolean 
 		{
-			return this.target.value as Boolean;
+			return target.value as Boolean;
 		}
 	}
 }

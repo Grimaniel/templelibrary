@@ -46,7 +46,7 @@ package temple.ui.behaviors
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractDisplayObjectBehavior extends AbstractBehavior 
+	public class AbstractDisplayObjectBehavior extends AbstractBehavior implements IDisplayObjectBehavior
 	{
 		private var _destructOnRemove:Boolean;
 		
@@ -64,11 +64,11 @@ package temple.ui.behaviors
 		}
 		
 		/**
-		 * Returns a reference to the DisplayObject. Same value as target, but typed as DisplayObject.
+		 * @inheritDoc
 		 */
 		public function get displayObject():DisplayObject
 		{
-			return this.target as DisplayObject;
+			return target as DisplayObject;
 		}
 
 		/**
@@ -76,7 +76,7 @@ package temple.ui.behaviors
 		 */
 		public function get destructOnRemove():Boolean
 		{
-			return this._destructOnRemove;
+			return _destructOnRemove;
 		}
 
 		/**
@@ -84,21 +84,21 @@ package temple.ui.behaviors
 		 */
 		public function set destructOnRemove(value:Boolean):void
 		{
-			this._destructOnRemove = value;
+			_destructOnRemove = value;
 			
-			if (this._destructOnRemove)
+			if (_destructOnRemove)
 			{
-				this.displayObject.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage, false, int.MIN_VALUE);
+				displayObject.addEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage, false, int.MIN_VALUE);
 			}
 			else
 			{
-				this.displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+				displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 			}
 		}
 
 		private function handleRemovedFromStage(event:Event):void
 		{
-			this.destruct();
+			destruct();
 		}
 		
 		/**
@@ -106,7 +106,7 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.displayObject) this.displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, this.handleRemovedFromStage);
+			if (displayObject) displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 			
 			super.destruct();
 		}

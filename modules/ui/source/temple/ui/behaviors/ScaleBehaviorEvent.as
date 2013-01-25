@@ -80,7 +80,7 @@ package temple.ui.behaviors
 		 */
 		override public function clone():Event
 		{
-			return new ScaleBehaviorEvent(this.type, this.behavior as ScaleBehavior, this.bubbles);
+			return new ScaleBehaviorEvent(type, behavior as ScaleBehavior, bubbles);
 		}
 
 	}

@@ -153,69 +153,69 @@ package temple.ui.form.components
 		 */
 		public function List(listRowClass:Class = null, rowCount:uint = 10)
 		{
-			this._listRowClass = listRowClass;
-			this._items = new Vector.<ListItemData>();
-			this._rows = new Vector.<IListRow>();
-			this._rowItemDictionary = new Dictionary(true);
-			this._rowCount = rowCount;
-			this._selectedItems = new Vector.<ListItemData>();
+			_listRowClass = listRowClass;
+			_items = new Vector.<ListItemData>();
+			_rows = new Vector.<IListRow>();
+			_rowItemDictionary = new Dictionary(true);
+			_rowCount = rowCount;
+			_selectedItems = new Vector.<ListItemData>();
 			
 			var row:IListRow;
 			var rowIndex:Number;
 			
 			// Loop children to see if there is any IListRow of so, save Class and remove from timeline
-			for (var i:int = this.content.numChildren - 1; i >= 0; --i) 
+			for (var i:int = content.numChildren - 1; i >= 0; --i) 
 			{
-				row = this.content.getChildAt(i) as IListRow;
+				row = content.getChildAt(i) as IListRow;
 				if (row)
 				{
 					rowIndex = i;
-					if (!this._rowHeight) this._rowHeight = row.height;
-					if (!this._rowWidth) this._rowWidth = row.width + 1;
+					if (!_rowHeight) _rowHeight = row.height;
+					if (!_rowWidth) _rowWidth = row.width + 1;
 					
-					if (this._listRowClass == null)
+					if (_listRowClass == null)
 					{
 						if (DefinitionProvider.hasDefinition(getQualifiedClassName(row)))
 						{
-							this._listRowClass = DefinitionProvider.getDefinition(getQualifiedClassName(row));
+							_listRowClass = DefinitionProvider.getDefinition(getQualifiedClassName(row));
 						}
 						else
 						{
 							try
 							{
-								this._listRowClass = this.loaderInfo.applicationDomain.getDefinition(getQualifiedClassName(row)) as Class;
+								_listRowClass = loaderInfo.applicationDomain.getDefinition(getQualifiedClassName(row)) as Class;
 							}
 							catch(error:Error)
 							{
-								throwError(new TempleError(this, "Class for ListRow \"" + row + "\" not found, try to register the applicationdomain in the DefinitionProvider with DefinitionProvider.registerApplicationDomain(this.stage.loaderInfo.applicationDomain)"));
+								throwError(new TempleError(this, "Class for ListRow \"" + row + "\" not found, try to register the applicationdomain in the DefinitionProvider with DefinitionProvider.registerApplicationDomain(stage.loaderInfo.applicationDomain)"));
 							}
 						}
 					}
-					row.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRowRemovedFromStage, false, int.MAX_VALUE);
-					this._rows.push(row);
+					row.addEventListener(Event.REMOVED_FROM_STAGE, handleRowRemovedFromStage, false, int.MAX_VALUE);
+					_rows.push(row);
 
 					this.content.removeChildAt(i);
 				}
 			}
-			if (this._listRowClass == null) throwError(new TempleError(this, "No class found for rows"));
+			if (_listRowClass == null) throwError(new TempleError(this, "No class found for rows"));
 			
 			this.snapToItem = true;
 			
-			this.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-			this.addEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
-			this.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-			this.addEventListener(MouseEvent.CLICK, this.handleClick);
+			addEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+			addEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
+			addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+			addEventListener(MouseEvent.CLICK, handleClick);
 			
 			if (this.content == this)
 			{
-				this.content = this.addChildAt(new CoreSprite(), rowIndex) as DisplayObjectContainer;
+				this.content = addChildAt(new CoreSprite(), rowIndex) as DisplayObjectContainer;
 			}
 			
-			this.content.addEventListener(ScrollEvent.SCROLL, this.handleScroll);
-			this.addEventListener(Event.RESIZE, this.content.dispatchEvent);
+			this.content.addEventListener(ScrollEvent.SCROLL, handleScroll);
+			addEventListener(Event.RESIZE, this.content.dispatchEvent);
 			
 			super.height = 0;
-			this.dispatchEvent(new Event(Event.RESIZE));
+			dispatchEvent(new Event(Event.RESIZE));
 			
 			FocusManager.init(this.stage);
 		}
@@ -225,77 +225,77 @@ package temple.ui.form.components
 		 */
 		public function addItem(data:*, label:String = null):void
 		{
-			var index:uint = this._items.push(data is ListItemData ? data : new ListItemData(data, label)) - 1;
-			if (index <= this._rowCount && index >= this._rows.length)
+			var index:uint = _items.push(data is ListItemData ? data : new ListItemData(data, label)) - 1;
+			if (index <= _rowCount && index >= _rows.length)
 			{
-				this.createRow();
+				createRow();
 			}
-			else if (this._items.length <= this._rowCount + 1)
+			else if (_items.length <= _rowCount + 1)
 			{
-				this.setRow(this._rows[index], this._items[index]);
-				if (this._itemPositionProxy)
+				setRow(_rows[index], _items[index]);
+				if (_itemPositionProxy)
 				{
-					this._itemPositionProxy.setValue(this._rows[index], "y", this._rowHeight * index);
+					_itemPositionProxy.setValue(_rows[index], "y", _rowHeight * index);
 				}
 				else
 				{
-					this._rows[index].y = this._rowHeight * index;
+					_rows[index].y = _rowHeight * index;
 				}
 			}
 			
-			if (!this._blockResize)
+			if (!_blockResize)
 			{
-				super.height = this._rowHeight * (this._items.length < this._rowCount ? this._items.length : this._rowCount) + this._heightOffset;
-				this.dispatchEvent(new Event(Event.RESIZE));
+				super.height = _rowHeight * (_items.length < _rowCount ? _items.length : _rowCount) + _heightOffset;
+				dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 
 		protected function createRow():void 
 		{
-			var row:IListRow = new this._listRowClass() as IListRow;
+			var row:IListRow = new _listRowClass() as IListRow;
 			if (!row)
 			{
 				throwError(new TempleError(this, "listRowClass does not implement IListRow"));
 			}
 			else
 			{
-				var index:uint = this._rowDataOffset + this._rows.length;
-				var item:ListItemData = this._items[index];
+				var index:uint = _rowDataOffset + _rows.length;
+				var item:ListItemData = _items[index];
 				
-				this.setRow(row, item);
+				setRow(row, item);
 				
-				if (isNaN(this._rowHeight)) this._rowHeight = row.height;
+				if (isNaN(_rowHeight)) _rowHeight = row.height;
 				
-				if (this._itemPositionProxy)
+				if (_itemPositionProxy)
 				{
-					this._itemPositionProxy.setValue(row, "y", this._rowHeight * index);
+					_itemPositionProxy.setValue(row, "y", _rowHeight * index);
 				}
 				else
 				{
-					row.y = this._rowHeight * index;
+					row.y = _rowHeight * index;
 				}
 				
 				this.content.addChild(DisplayObject(row));
-				this._rows.push(row);
-				row.addEventListener(Event.REMOVED_FROM_STAGE, this.handleRowRemovedFromStage, false, int.MAX_VALUE);
-				row.addEventListener(Event.CHANGE, this.handleItemChange);
+				_rows.push(row);
+				row.addEventListener(Event.REMOVED_FROM_STAGE, handleRowRemovedFromStage, false, int.MAX_VALUE);
+				row.addEventListener(Event.CHANGE, handleItemChange);
 			}
 		}
 		
 		public function addItemAt(data:*, index:uint, label:String = null):void
 		{
-			this._items.splice(index, 0, new ListItemData(data, label));
+			_items.splice(index, 0, new ListItemData(data, label));
 			
-			if (index <= this._rowCount + this._rowDataOffset)
+			if (index <= _rowCount + _rowDataOffset)
 			{
-				var leni:int = this._rows.length;
-				for (var i:int =  Math.max(index - this._rowDataOffset, 0); i < leni; i++)
+				var leni:int = _rows.length;
+				for (var i:int =  Math.max(index - _rowDataOffset, 0); i < leni; i++)
 				{
-					this.setRow(this._rows[i], this._items[i + this._rowDataOffset]);
+					setRow(_rows[i], _items[i + _rowDataOffset]);
 				}
 			}
-			super.height = this._rowHeight * (this._items.length < this._rowCount ? this._items.length : this._rowCount) + this._heightOffset;
-			this.dispatchEvent(new Event(Event.RESIZE));
+			super.height = _rowHeight * (_items.length < _rowCount ? _items.length : _rowCount) + _heightOffset;
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 
 		/**
@@ -305,7 +305,7 @@ package temple.ui.form.components
 		{
 			if (items == null) return;
 			
-			this._blockResize = true;
+			_blockResize = true;
 			
 			var leni:int = items.length;
 			for (var i:int = 0;i < leni; i++) 
@@ -314,29 +314,29 @@ package temple.ui.form.components
 				{
 					if (labels in items[i])
 					{
-						this.addItem(items[i], items[i][labels]);
+						addItem(items[i], items[i][labels]);
 					}
 					else
 					{
-						this.logWarn("addItems: item " + items[i] + " doesn't have a property '" + labels + "'");
+						logWarn("addItems: item " + items[i] + " doesn't have a property '" + labels + "'");
 					}
 				}
 				else if (labels is Array)
 				{
-					this.addItem(items[i], labels[i]);
+					addItem(items[i], labels[i]);
 				}
 				else if (labels == null)
 				{
-					this.addItem(items[i]);
+					addItem(items[i]);
 				}
 				else
 				{
-					this.logError("addItems: invalid value for items: '" + items + "'");
+					logError("addItems: invalid value for items: '" + items + "'");
 				}
 			}
-			this._blockResize = false;
-			super.height = this._rowHeight * Math.min(this._items.length, this._rowCount) + this._heightOffset;
-			this.dispatchEvent(new Event(Event.RESIZE));
+			_blockResize = false;
+			super.height = _rowHeight * Math.min(_items.length, _rowCount) + _heightOffset;
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**
@@ -344,9 +344,9 @@ package temple.ui.form.components
 		 */
 		public function hasItem(value:*):Boolean
 		{
-			for (var i:int = 0, leni:int = this._items.length; i < leni; i++)
+			for (var i:int = 0, leni:int = _items.length; i < leni; i++)
 			{
-				if (this._items[i].data == value) return true;
+				if (_items[i].data == value) return true;
 			}
 			return false;
 		}
@@ -356,11 +356,11 @@ package temple.ui.form.components
 		 */
 		public function getItem(value:*, fromIndex:int = 0):*
 		{
-			if (fromIndex < this._items.length)
+			if (fromIndex < _items.length)
 			{
-				for (var i:int = 0, leni:int = this._items.length; i < leni; i++)
+				for (var i:int = 0, leni:int = _items.length; i < leni; i++)
 				{
-					if (this._items[i].data == value) return value;
+					if (_items[i].data == value) return value;
 				}
 			}
 			return null;
@@ -371,7 +371,7 @@ package temple.ui.form.components
 		 */
 		public function getItemAt(index:uint):*
 		{
-			return index < this._items.length ? this._items[index].data : null;
+			return index < _items.length ? _items[index].data : null;
 		}
 		
 		/**
@@ -379,22 +379,22 @@ package temple.ui.form.components
 		 */
 		public function setItemAt(data:*, index:uint, label:String = null):void
 		{
-			if (index < this._items.length)
+			if (index < _items.length)
 			{
-				var item:ListItemData = this._items[index];
+				var item:ListItemData = _items[index];
 				item.data = data;
 				item.label = label;
 				
-				if (item.row && this._rowItemDictionary[item.row] == item) this.setRow(item.row, item);
+				if (item.row && _rowItemDictionary[item.row] == item) setRow(item.row, item);
 				
-				if (this._selectedItems.indexOf(item) != -1)
+				if (_selectedItems.indexOf(item) != -1)
 				{
-					this.dispatchEvent(new Event(Event.CHANGE));
+					dispatchEvent(new Event(Event.CHANGE));
 				}
 			}
 			else
 			{
-				throwError(new TempleRangeError(index, this._items.length, this, "There is no item at index " + index));
+				throwError(new TempleRangeError(index, _items.length, this, "There is no item at index " + index));
 			}
 		}
 		
@@ -403,11 +403,11 @@ package temple.ui.form.components
 		 */
 		public function getLabel(value:*, fromIndex:int = 0):String
 		{
-			if (fromIndex < this._items.length)
+			if (fromIndex < _items.length)
 			{
-				for (var i:int = 0, leni:int = this._items.length; i < leni; i++)
+				for (var i:int = 0, leni:int = _items.length; i < leni; i++)
 				{
-					if (this._items[i].data == value) return this.getListItemLabel(this._items[i]);
+					if (_items[i].data == value) return getListItemLabel(_items[i]);
 				}
 			}
 			return null;
@@ -418,9 +418,9 @@ package temple.ui.form.components
 		 */
 		public function getLabelAt(index:uint):String
 		{
-			if (index < this._items.length)
+			if (index < _items.length)
 			{
-				return this.getListItemLabel(this._items[index]);
+				return getListItemLabel(_items[index]);
 			}
 			return null;
 		}
@@ -432,17 +432,17 @@ package temple.ui.form.components
 		{
 			var listItemData:ListItemData;
 			
-			if (index < this._items.length && (listItemData = this._items[index]))
+			if (index < _items.length && (listItemData = _items[index]))
 			{
 				listItemData.label = label;
-				if (listItemData.row && this._rowItemDictionary[listItemData.row] == listItemData)
+				if (listItemData.row && _rowItemDictionary[listItemData.row] == listItemData)
 				{
 					listItemData.row.label = label;
 				}
 			}
 			else
 			{
-				throwError(new TempleRangeError(index, this._items.length, this, "No item found at index " + index));
+				throwError(new TempleRangeError(index, _items.length, this, "No item found at index " + index));
 			}
 		}
 		
@@ -452,30 +452,30 @@ package temple.ui.form.components
 		public function removeItem(data:*, label:String = null):Boolean
 		{
 			var item:ListItemData;
-			for (var i:int = this._items.length - 1;i >= 0; --i) 
+			for (var i:int = _items.length - 1;i >= 0; --i) 
 			{
-				item = this._items[i];
+				item = _items[i];
 				
 				if (item.data === data && (item.label === label || label == null))
 				{
-					this._items.splice(i, 1);
+					_items.splice(i, 1);
 					
-					if (i <= this._rowCount + this._rowDataOffset)
+					if (i <= _rowCount + _rowDataOffset)
 					{
-						var leni:int = this._rows.length;
-						for (i =  Math.max(i - this._rowDataOffset, 0); i < leni; i++)
+						var leni:int = _rows.length;
+						for (i =  Math.max(i - _rowDataOffset, 0); i < leni; i++)
 						{
-							this.setRow(this._rows[i], this._items[i + this._rowDataOffset]);
+							setRow(_rows[i], _items[i + _rowDataOffset]);
 						}
 					}
 					
-					if (this._focusItem == item) this._focusItem = null;
-					if (this._lastSelectedItem == item) this._lastSelectedItem = null;
+					if (_focusItem == item) _focusItem = null;
+					if (_lastSelectedItem == item) _lastSelectedItem = null;
 					
 					item.destruct();
 					
-					super.height = this._rowHeight * (this._items.length < this._rowCount ? this._items.length : this._rowCount) + this._heightOffset;
-					this.dispatchEvent(new Event(Event.RESIZE));
+					super.height = _rowHeight * (_items.length < _rowCount ? _items.length : _rowCount) + _heightOffset;
+					dispatchEvent(new Event(Event.RESIZE));
 					
 					return true;
 				}
@@ -488,28 +488,28 @@ package temple.ui.form.components
 		 */
 		public function removeItemAt(index:uint):Boolean
 		{
-			if (this._items[index])
+			if (_items[index])
 			{
-				var item:ListItemData = this._items[index];
+				var item:ListItemData = _items[index];
 				
-				this._items.splice(index, 1);
+				_items.splice(index, 1);
 					
-				if (index <= this._rowCount + this._rowDataOffset)
+				if (index <= _rowCount + _rowDataOffset)
 				{
-					var leni:int = this._rows.length;
-					for (index =  Math.max(index - this._rowDataOffset, 0); index < leni; index++)
+					var leni:int = _rows.length;
+					for (index =  Math.max(index - _rowDataOffset, 0); index < leni; index++)
 					{
-						this.setRow(this._rows[index], this._items[index + this._rowDataOffset]);
+						setRow(_rows[index], _items[index + _rowDataOffset]);
 					}
 				}
 				
-				if (this._focusItem == item) this._focusItem = null;
-				if (this._lastSelectedItem == item) this._lastSelectedItem = null;
+				if (_focusItem == item) _focusItem = null;
+				if (_lastSelectedItem == item) _lastSelectedItem = null;
 				
 				item.destruct();
 				
-				super.height = this._rowHeight * (this._items.length < this._rowCount ? this._items.length : this._rowCount) + this._heightOffset;
-				this.dispatchEvent(new Event(Event.RESIZE));
+				super.height = _rowHeight * (_items.length < _rowCount ? _items.length : _rowCount) + _heightOffset;
+				dispatchEvent(new Event(Event.RESIZE));
 				
 				return true;
 			}
@@ -521,22 +521,22 @@ package temple.ui.form.components
 		 */
 		public function removeAll():void
 		{
-			if (this._items)
+			if (_items)
 			{
-				while (this._items.length) this._items.shift().destruct();
-				this._focusItem = null;
-				this._lastSelectedItem = null;
-				this._rowDataOffset = 0;
+				while (_items.length) _items.shift().destruct();
+				_focusItem = null;
+				_lastSelectedItem = null;
+				_rowDataOffset = 0;
 				
-				var leni:int = this._rows.length;
+				var leni:int = _rows.length;
 				for (var i:int = 0; i < leni; i++)
 				{
-					this.setRow(this._rows[i], null);
+					setRow(_rows[i], null);
 				}
 				this.scrollBehavior.scrollV = 0;
 				
-				super.height = this._heightOffset;
-				this.dispatchEvent(new Event(Event.RESIZE));
+				super.height = _heightOffset;
+				dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 
@@ -545,7 +545,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedIndex():int
 		{
-			return this._lastSelectedItem && this._items ? this._items.indexOf(this._lastSelectedItem) : -1;
+			return _lastSelectedItem && _items ? _items.indexOf(_lastSelectedItem) : -1;
 		}
 
 		/**
@@ -555,11 +555,11 @@ package temple.ui.form.components
 		{
 			if (value == -1)
 			{
-				this.reset();
+				reset();
 			}
-			else if (value in this._items)
+			else if (value in _items)
 			{
-				this.selectListItemData(this._items[value]);
+				selectListItemData(_items[value]);
 			}
 		}
 
@@ -568,7 +568,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedItem():*
 		{
-			return this._lastSelectedItem ? this._lastSelectedItem.data : null;
+			return _lastSelectedItem ? _lastSelectedItem.data : null;
 		}
 		
 		/**
@@ -576,15 +576,15 @@ package temple.ui.form.components
 		 */
 		public function set selectedItem(value:*):void
 		{
-			for each (var item:ListItemData in this._items)
+			for each (var item:ListItemData in _items)
 			{
 				if (item.data == value)
 				{
-					this.selectListItemData(item);
+					selectListItemData(item);
 					return;
 				}
 			}
-			this.logWarn("selectedItem: not found '" + value + "'");
+			logWarn("selectedItem: not found '" + value + "'");
 		}
 		
 		/**
@@ -592,7 +592,7 @@ package temple.ui.form.components
 		 */
 		public function get selectedLabel():String
 		{
-			return this.getListItemLabel(this._lastSelectedItem);
+			return getListItemLabel(_lastSelectedItem);
 		}
 		
 		/**
@@ -600,12 +600,12 @@ package temple.ui.form.components
 		 */
 		public function set selectedLabel(value:String):void
 		{
-			for each (var item:ListItemData in this._items)
+			for each (var item:ListItemData in _items)
 			{
 				if (item.label == value)
 				{
-					this.selectListItemData(item);
-					this.setFocusItem(item);
+					selectListItemData(item);
+					setFocusItem(item);
 					break;
 				}
 			}
@@ -618,11 +618,11 @@ package temple.ui.form.components
 		{
 			var items:Array = new Array();
 			
-			var leni:int = this._items.length;
+			var leni:int = _items.length;
 			var item:ListItemData;
 			for (var i:int = 0; i < leni; i++)
 			{
-				item = this._items[i];
+				item = _items[i];
 				if (item.selected) items.push(item.data);
 			}
 			return items;
@@ -633,12 +633,12 @@ package temple.ui.form.components
 		 */
 		public function set selectedItems(value:Array):void
 		{
-			var leni:int = this._items.length;
+			var leni:int = _items.length;
 			var item:ListItemData;
 			for (var i:int = 0; i < leni; i++)
 			{
-				item = this._items[i];
-				if (value.indexOf(item.data) != -1) this.selectListItemData(item);
+				item = _items[i];
+				if (value.indexOf(item.data) != -1) selectListItemData(item);
 			}
 		}
 
@@ -649,12 +649,12 @@ package temple.ui.form.components
 		{
 			var items:Vector.<String> = new Vector.<String>();
 			
-			var leni:int = this._items.length;
+			var leni:int = _items.length;
 			var item:ListItemData;
 			for (var i:int = 0; i < leni; i++)
 			{
-				item = this._items[i];
-				if (item.selected) items.push(this.getListItemLabel(item));
+				item = _items[i];
+				if (item.selected) items.push(getListItemLabel(item));
 			}
 			return items;
 		}
@@ -664,12 +664,12 @@ package temple.ui.form.components
 		 */
 		public function set selectedLabels(value:Vector.<String>):void
 		{
-			var leni:int = this._items.length;
+			var leni:int = _items.length;
 			var item:ListItemData;
 			for (var i:int = 0; i < leni; i++)
 			{
-				item = this._items[i];
-				if (value.indexOf(item.label) != -1) this.selectListItemData(item);
+				item = _items[i];
+				if (value.indexOf(item.label) != -1) selectListItemData(item);
 			}
 		}
 		
@@ -678,7 +678,7 @@ package temple.ui.form.components
 		 */
 		public function isItemSelected(data:*, label:String = null):Boolean
 		{
-			for each (var item:ListItemData in this._items) 
+			for each (var item:ListItemData in _items) 
 			{
 				if (item.data === data && item.label === label) return item.selected;
 			}
@@ -691,7 +691,7 @@ package temple.ui.form.components
 		 */
 		public function isIndexSelected(index:uint):Boolean
 		{
-			return index < this._items.length ? this._items[index].selected : false;
+			return index < _items.length ? _items[index].selected : false;
 		}
 		
 		/**
@@ -699,7 +699,7 @@ package temple.ui.form.components
 		 */
 		public function get length():uint
 		{
-			return this._items ? this._items.length : 0;
+			return _items ? _items.length : 0;
 		}
 
 		/**
@@ -707,7 +707,7 @@ package temple.ui.form.components
 		 */
 		public function get allowMultipleSelection():Boolean
 		{
-			return this._allowMultipleSelection;
+			return _allowMultipleSelection;
 		}
 
 		/**
@@ -716,7 +716,7 @@ package temple.ui.form.components
 		[Inspectable(name="Allow multiple selection", type="Boolean", defaultValue=false)]
 		public function set allowMultipleSelection(value:Boolean):void
 		{
-			this._allowMultipleSelection = value;
+			_allowMultipleSelection = value;
 		}
 		
 		/**
@@ -724,7 +724,7 @@ package temple.ui.form.components
 		 */
 		public function get autoDeselect():Boolean
 		{
-			return this._autoDeselect;
+			return _autoDeselect;
 		}
 		
 		/**
@@ -733,7 +733,7 @@ package temple.ui.form.components
 		[Inspectable(name="Auto deselect", type="Boolean", defaultValue=true)]
 		public function set autoDeselect(value:Boolean):void
 		{
-			this._autoDeselect = value;
+			_autoDeselect = value;
 		}
 
 		/**
@@ -741,7 +741,7 @@ package temple.ui.form.components
 		 */
 		public function get rowHeight():Number
 		{
-			return this._rowHeight;
+			return _rowHeight;
 		}
 
 		/**
@@ -751,18 +751,18 @@ package temple.ui.form.components
 		{
 			if (isNaN(value)) throwError(new TempleArgumentError(this, "RowHeight cannot be NaN"));
 			
-			if (this._rowHeight != value)
+			if (_rowHeight != value)
 			{
-				this._rowHeight = value;
+				_rowHeight = value;
 				
-				var leni:int = this._rows.length;
+				var leni:int = _rows.length;
 				for (var i:int = 0;i < leni; i++) 
 				{
-					IListRow(this._rows[i]).y = (i + this._rowDataOffset) * this._rowHeight;
+					IListRow(_rows[i]).y = (i + _rowDataOffset) * _rowHeight;
 				}
 				
-				super.height = this._rowCount * this._rowHeight + this._heightOffset;
-				this.dispatchEvent(new Event(Event.RESIZE));
+				super.height = _rowCount * _rowHeight + _heightOffset;
+				dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 		
@@ -783,7 +783,7 @@ package temple.ui.form.components
 		 */
 		public function get rowCount():uint
 		{
-			return this._rowCount;
+			return _rowCount;
 		}
 
 		/**
@@ -792,12 +792,12 @@ package temple.ui.form.components
 		[Inspectable(name="Visible rows", type="Number", defaultValue=10)]
 		public function set rowCount(value:uint):void
 		{
-			if (this._rowCount != value)
+			if (_rowCount != value)
 			{
-				this._rowCount = value;
-				super.height = this._rowCount * this._rowHeight + this.marginTop + this.marginBottom + this._heightOffset;
-				this.updateRows();
-				this.dispatchEvent(new Event(Event.RESIZE));
+				_rowCount = value;
+				super.height = _rowCount * _rowHeight + this.marginTop + this.marginBottom + _heightOffset;
+				updateRows();
+				dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 		
@@ -806,7 +806,7 @@ package temple.ui.form.components
 		 */
 		override public function get contentHeight():Number 
 		{
-			return this._items ? this._items.length * this._rowHeight : 1;
+			return _items ? _items.length * _rowHeight : 1;
 		}
 
 		override public function set height(value:Number):void 
@@ -814,11 +814,11 @@ package temple.ui.form.components
 			if (this.height != value)
 			{
 				super.height = value;
-				var rowCount:uint = Math.ceil((this.height - (this.marginTop + this.marginBottom + this._heightOffset)) / this._rowHeight);
+				var rowCount:uint = Math.ceil((this.height - (this.marginTop + this.marginBottom + _heightOffset)) / _rowHeight);
 				
-				if (rowCount > this._rowCount) this._rowCount = rowCount;
+				if (rowCount > _rowCount) _rowCount = rowCount;
 				
-				this.dispatchEvent(new Event(Event.RESIZE));
+				dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 
@@ -827,10 +827,10 @@ package temple.ui.form.components
 		 */
 		public function sort(compareFunction:Function):void
 		{
-			this._items.sort(compareFunction);
+			_items.sort(compareFunction);
 			
-			this.setRows();
-			this.updateRows();
+			setRows();
+			updateRows();
 		}
 
 		/**
@@ -838,10 +838,10 @@ package temple.ui.form.components
 		 */
 		public function sortOn(names:*, options:* = 0, ...args:*):void
 		{
-			VectorUtils.sortOn.apply(null, [this._items, names, options].concat(args));
+			VectorUtils.sortOn.apply(null, [_items, names, options].concat(args));
 			
-			this.setRows();
-			this.updateRows();
+			setRows();
+			updateRows();
 		}
 		
 		/**
@@ -849,7 +849,7 @@ package temple.ui.form.components
 		 */
 		public function get wrapSearch():Boolean
 		{
-			return this._wrapSearch;
+			return _wrapSearch;
 		}
 
 		/**
@@ -858,7 +858,7 @@ package temple.ui.form.components
 		[Inspectable(name="Wrap search", type="Boolean", defaultValue=true)]
 		public function set wrapSearch(value:Boolean):void
 		{
-			this._wrapSearch = value;
+			_wrapSearch = value;
 		}
 
 		/**
@@ -866,29 +866,29 @@ package temple.ui.form.components
 		 */
 		public function searchOnString(string:String, caseSensitive:Boolean = false):void
 		{
-			if (this._items == null) return;
+			if (_items == null) return;
 			
-			if (this._clearSearchStringTimeOut) this._clearSearchStringTimeOut.destruct();
-			this._clearSearchStringTimeOut = new TimeOut(this.clearSearchString, List._CLEAR_STRING_SEARCH_DELAY);
+			if (_clearSearchStringTimeOut) _clearSearchStringTimeOut.destruct();
+			_clearSearchStringTimeOut = new TimeOut(this.clearSearchString, List._CLEAR_STRING_SEARCH_DELAY);
 
-			this._searchString += string;
+			_searchString += string;
 			
-			var searchIndex:int = this._lastSelectedItem ? this.selectedIndex : -1;
+			var searchIndex:int = _lastSelectedItem ? this.selectedIndex : -1;
 			
-			if (this._searchString.length == 1) searchIndex++;
+			if (_searchString.length == 1) searchIndex++;
 			
-			var match:Boolean = this.findFirstMatchingItem(this._searchString, caseSensitive, searchIndex,  this._items.length);
+			var match:Boolean = findFirstMatchingItem(_searchString, caseSensitive, searchIndex,  _items.length);
 			
-			if (!match && this._wrapSearch)
+			if (!match && _wrapSearch)
 			{
-				match = this.findFirstMatchingItem(this._searchString, caseSensitive, 0, searchIndex);
+				match = findFirstMatchingItem(_searchString, caseSensitive, 0, searchIndex);
 			}
 			if (!match)
 			{
-				match = this.findFirstMatchingItem(string, caseSensitive, searchIndex+1,  this._items.length);
-				if (!match && this._wrapSearch)
+				match = findFirstMatchingItem(string, caseSensitive, searchIndex+1,  _items.length);
+				if (!match && _wrapSearch)
 				{
-					match = this.findFirstMatchingItem(string, caseSensitive, 0, searchIndex);
+					match = findFirstMatchingItem(string, caseSensitive, 0, searchIndex);
 				}
 			}
 		}
@@ -898,7 +898,7 @@ package temple.ui.form.components
 		 */
 		public function get dataSource():ICollection 
 		{
-			return this._dataSource;
+			return _dataSource;
 		}
 
 		/**
@@ -907,12 +907,12 @@ package temple.ui.form.components
 		[Collection(name="Data source", collectionClass="temple.data.collections.Collection", collectionItem="temple.ui.form.components.ListItemData",identifier="label")]
 		public function set dataSource(value:ICollection):void 
 		{
-			this._dataSource = value;
+			_dataSource = value;
 			
-			var leni:int = this._dataSource.length;
+			var leni:int = _dataSource.length;
 			for (var i:int = 0; i < leni ; i++)
 			{
-				this.addItem(this._dataSource.getItemAt(i));
+				addItem(_dataSource.getItemAt(i));
 			}
 		}
 		
@@ -923,12 +923,12 @@ package temple.ui.form.components
 			var label:String;
 			for (var i:int = startIndex;i < endIndex; i++)
 			{
-				label = this.getListItemLabel(this._items[i]);
+				label = getListItemLabel(_items[i]);
 				if (label && (label.substr(0, string.length) == string || !caseSensitive && label.substr(0, string.length).toLowerCase() == string.toLowerCase()))
 				{
 					this.selectedIndex = i;
-					this.setFocusItem(this._items[i]);
-					this.dispatchEvent(new Event(Event.CHANGE));
+					setFocusItem(_items[i]);
+					dispatchEvent(new Event(Event.CHANGE));
 					return true;
 				}
 			}
@@ -937,7 +937,7 @@ package temple.ui.form.components
 		
 		private function clearSearchString():void
 		{
-			this._searchString = '';
+			_searchString = '';
 		}
 		
 		/**
@@ -945,7 +945,7 @@ package temple.ui.form.components
 		 */
 		public function get keySearch():Boolean
 		{
-			return this._searchOnKey;
+			return _searchOnKey;
 		}
 		
 		/**
@@ -953,7 +953,7 @@ package temple.ui.form.components
 		 */
 		public function set keySearch(value:Boolean):void
 		{
-			this._searchOnKey = value;
+			_searchOnKey = value;
 		}
 		
 		/**
@@ -961,7 +961,7 @@ package temple.ui.form.components
 		 */
 		public function get focus():Boolean
 		{
-			return this._focus;
+			return _focus;
 		}
 		
 		/**
@@ -969,25 +969,25 @@ package temple.ui.form.components
 		 */
 		public function set focus(value:Boolean):void
 		{
-			if (value == this._focus) return;
+			if (value == _focus) return;
 			
 			if (value)
 			{
-				if (!this._focusItem && this._lastSelectedItem)
+				if (!_focusItem && _lastSelectedItem)
 				{
-					this._focusItem = this._lastSelectedItem;
+					_focusItem = _lastSelectedItem;
 				}
-				else if (!this._focusItem && this._items.length)
+				else if (!_focusItem && _items.length)
 				{
-					this._focusItem = this._items[0];
+					_focusItem = _items[0];
 				}
-				if (this._focusItem && this._focusItem.row && this._rowItemDictionary[this._focusItem.row] == this._focusItem)
+				if (_focusItem && _focusItem.row && _rowItemDictionary[_focusItem.row] == _focusItem)
 				{
-					this._focusItem.row.focus = value;
-					if (!this._allowMultipleSelection) this.selectListItemData(this._focusItem);
+					_focusItem.row.focus = value;
+					if (!_allowMultipleSelection) selectListItemData(_focusItem);
 				}
 			}
-			else if (this._focus)
+			else if (_focus)
 			{
 				FocusManager.focus = null;
 			}
@@ -998,22 +998,22 @@ package temple.ui.form.components
 		 */
 		public function get value():*
 		{
-			if (this._selectedItems.length == 0)
+			if (_selectedItems.length == 0)
 			{
 				return null;
 			}
-			else if (this._selectedItems.length == 1 && !this._allowMultipleSelection)
+			else if (_selectedItems.length == 1 && !_allowMultipleSelection)
 			{
-				return this._selectedItems[0].data;
+				return _selectedItems[0].data;
 			}
 			else
 			{
 				var values:Array = new Array();
 				
-				var leni:int = this._selectedItems.length;
+				var leni:int = _selectedItems.length;
 				for (var i:int = 0;i < leni; i++) 
 				{
-					values.push(this._selectedItems[i].data);
+					values.push(_selectedItems[i].data);
 				}
 				return values;
 			}
@@ -1024,21 +1024,21 @@ package temple.ui.form.components
 		 */
 		public function set value(value:*):void
 		{
-			for each (var item:ListItemData in this._items)
+			for each (var item:ListItemData in _items)
 			{
 				if (item.data == value)
 				{
-					this.selectListItemData(item);
+					selectListItemData(item);
 					return;
 				}
 			}
 			if (value == null)
 			{
-				this.selectListItemData(null);
+				selectListItemData(null);
 			}
 			else
 			{
-				this.logError("value '" + value + "' not found in List");
+				logError("value '" + value + "' not found in List");
 			}
 		}
 
@@ -1047,7 +1047,7 @@ package temple.ui.form.components
 		 */
 		public function get hasError():Boolean
 		{
-			return this._hasError;
+			return _hasError;
 		}
 
 		/**
@@ -1057,11 +1057,11 @@ package temple.ui.form.components
 		{
 			if (value)
 			{
-				this.showError();
+				showError();
 			}
 			else
 			{
-				this.hideError();
+				hideError();
 			}
 		}
 		
@@ -1070,9 +1070,9 @@ package temple.ui.form.components
 		 */
 		public function showError(message:String = null):void 
 		{
-			this._hasError = true;
+			_hasError = true;
 			StateHelper.showError(this, message);
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
+			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.SHOW_ERROR, message));
 		}
 		
 		/**
@@ -1080,9 +1080,9 @@ package temple.ui.form.components
 		 */
 		public function hideError():void 
 		{
-			this._hasError = false;
+			_hasError = false;
 			StateHelper.hideError(this);
-			this.dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
+			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
 		}
 
 		/**
@@ -1090,13 +1090,13 @@ package temple.ui.form.components
 		 */
 		public function reset():void
 		{
-			while (this._selectedItems && this._selectedItems.length)
+			while (_selectedItems && _selectedItems.length)
 			{
-				var listitem:ListItemData = this._selectedItems.shift();
+				var listitem:ListItemData = _selectedItems.shift();
 				listitem.selected = false;
-				if (this._rowItemDictionary[listitem.row] == listitem && listitem.row is ISelectable) ISelectable(listitem.row).selected = false;
+				if (_rowItemDictionary[listitem.row] == listitem && listitem.row is ISelectable) ISelectable(listitem.row).selected = false;
 			}
-			this._lastSelectedItem = null;
+			_lastSelectedItem = null;
 		}
 		
 		/**
@@ -1121,7 +1121,7 @@ package temple.ui.form.components
 		 */
 		public function get toggle():Boolean
 		{
-			return this._toggle;
+			return _toggle;
 		}
 		
 		/**
@@ -1130,7 +1130,7 @@ package temple.ui.form.components
 		[Inspectable(name="Toggle", type="Boolean", defaultValue=false)]
 		public function set toggle(value:Boolean):void
 		{
-			this._toggle = value;
+			_toggle = value;
 		}
 		
 		/**
@@ -1139,7 +1139,7 @@ package temple.ui.form.components
 		 */
 		public function get heightOffset():Number
 		{
-			return this._heightOffset;
+			return _heightOffset;
 		}
 		
 		/**
@@ -1148,8 +1148,8 @@ package temple.ui.form.components
 		public function set heightOffset(value:Number):void
 		{
 			if (isNaN(value)) value = 0;
-			this._heightOffset = value;
-			super.height = this._rowCount * this._rowHeight + this._heightOffset;
+			_heightOffset = value;
+			super.height = _rowCount * _rowHeight + _heightOffset;
 		}
 		
 		/**
@@ -1157,7 +1157,7 @@ package temple.ui.form.components
 		 */
 		public function get itemPositionProxy():IPropertyProxy
 		{
-			return this._itemPositionProxy;
+			return _itemPositionProxy;
 		}
 		
 		/**
@@ -1165,51 +1165,51 @@ package temple.ui.form.components
 		 */
 		public function set itemPositionProxy(value:IPropertyProxy):void
 		{
-			this._itemPositionProxy = value;
+			_itemPositionProxy = value;
 		}
 
 		public function updateRows():void 
 		{
-			if (!this._rows || !this._rows.length || !this.content || !this.content.scrollRect) return;
+			if (!_rows || !_rows.length || !this.content || !this.content.scrollRect) return;
 			
 			// check if we have enough rows
-			while (this._items.length > this._rows.length && this._rows.length < this._rowCount + 1)
+			while (_items.length > _rows.length && _rows.length < _rowCount + 1)
 			{
-				this.createRow();
+				createRow();
 			}
 			
 			// remove rows we don't use
-			while (this._rows.length > this._rowCount + 1) this._rows.pop().destruct();
+			while (_rows.length > _rowCount + 1) _rows.pop().destruct();
 			
 			// scroll down, move all rows above the top to the buttom of the list
-			var row:IListRow = this._rows[0];
-			while (row.y < (this.content.scrollRect.y - this._rowHeight) && this._rowDataOffset + this._rows.length < this._items.length)
+			var row:IListRow = _rows[0];
+			while (row.y < (this.content.scrollRect.y - _rowHeight) && _rowDataOffset + _rows.length < _items.length)
 			{
-				row.y += this._rows.length * this._rowHeight;
-				this.setRow(row, this._items[this._rowDataOffset + this._rows.length]);
-				this._rows.push(this._rows.shift());
-				row = this._rows[0];
-				this._rowDataOffset++;
+				row.y += _rows.length * _rowHeight;
+				setRow(row, _items[_rowDataOffset + _rows.length]);
+				_rows.push(_rows.shift());
+				row = _rows[0];
+				_rowDataOffset++;
 			}
 			
 			// scroll up, move rows at the bottom to the top (if needed)
-			while (row.y > this.content.scrollRect.y + (this._rowDataOffset ? 0 : this.marginTop))
+			while (row.y > this.content.scrollRect.y + (_rowDataOffset ? 0 : this.marginTop))
 			{
-				row = this._rows.pop();
-				this._rows.unshift(row);
-				row.y -= this._rows.length * this._rowHeight;
-				if (this._rowDataOffset) this.setRow(row, this._items[--this._rowDataOffset]);
+				row = _rows.pop();
+				_rows.unshift(row);
+				row.y -= _rows.length * _rowHeight;
+				if (_rowDataOffset) setRow(row, _items[--_rowDataOffset]);
 			}
 		}
 		
 		public function get listRowClass():Class
 		{
-			return this._listRowClass;
+			return _listRowClass;
 		}
 
 		public function set listRowClass(value:Class):void
 		{
-			this._listRowClass = value;
+			_listRowClass = value;
 		}
 		
 		/**
@@ -1217,11 +1217,11 @@ package temple.ui.form.components
 		 */
 		public function selectItem(data:*):Boolean
 		{
-			for each (var item:ListItemData in this._items)
+			for each (var item:ListItemData in _items)
 			{
 				if (item.data == data)
 				{
-					this.selectListItemData(item);
+					selectListItemData(item);
 					return true;
 				}
 			}
@@ -1233,11 +1233,11 @@ package temple.ui.form.components
 		 */
 		public function deselectItem(data:*):Boolean
 		{
-			for each (var item:ListItemData in this._items)
+			for each (var item:ListItemData in _items)
 			{
 				if (item.data == data)
 				{
-					this.deselectListItemData(item);
+					deselectListItemData(item);
 					return true;
 				}
 			}
@@ -1246,12 +1246,12 @@ package temple.ui.form.components
 		
 		protected function get rows():Vector.<IListRow>
 		{
-			return this._rows;
+			return _rows;
 		}
 		
 		protected function get items():Vector.<ListItemData>
 		{
-			return this._items;
+			return _items;
 		}
 
 		/**
@@ -1259,30 +1259,30 @@ package temple.ui.form.components
 		 */
 		templelibrary function get items():Vector.<ListItemData>
 		{
-			return this._items;
+			return _items;
 		}
 		
 		private function setRows():void
 		{
-			var leni:int = this._rows.length;
-			var totalItems:int = this._items.length;
+			var leni:int = _rows.length;
+			var totalItems:int = _items.length;
 			for (var i:int = 0; i < leni; i++)
 			{
-				this.setRow(this._rows[i], i + this._rowDataOffset < totalItems ? this._items[i + this._rowDataOffset] : null);
+				setRow(_rows[i], i + _rowDataOffset < totalItems ? _items[i + _rowDataOffset] : null);
 			}
 		}
 
 		protected function setRow(row:IListRow, item:ListItemData):void 
 		{
-			this._rowItemDictionary[row] = item;
+			_rowItemDictionary[row] = item;
 			if (item)
 			{
 				row.visible = true;
 				row.data = item.data;
-				row.label = this.getListItemLabel(item);
+				row.label = getListItemLabel(item);
 				if (row is ISelectable) ISelectable(row).selected = item.selected;
-				row.focus = item == this._focusItem;
-				row.index = this._items.indexOf(item);
+				row.focus = item == _focusItem;
+				row.index = _items.indexOf(item);
 				item.row = row;
 				this.content.addChild(DisplayObject(row));
 			}
@@ -1294,137 +1294,137 @@ package temple.ui.form.components
 				if (row is ISelectable) ISelectable(row).selected = false;
 				row.focus = false;
 				
-				if (row.parent == this.content) this.content.removeChild(DisplayObject(row));
+				if (row.parent == content) this.content.removeChild(DisplayObject(row));
 			}
 		}
 		
 		protected function get rowDataOffset():uint
 		{
-			return this._rowDataOffset;
+			return _rowDataOffset;
 		}
 
 		protected function set rowDataOffset(value:uint):void
 		{
-			this._rowDataOffset = value;
+			_rowDataOffset = value;
 		}
 
 		private function toggleSelectItem(row:IListRow, ctrlKey:Boolean = false, shiftKey:Boolean = false):void
 		{
 			if (row == null) return;
 			
-			var item:ListItemData = this._rowItemDictionary[row];
+			var item:ListItemData = _rowItemDictionary[row];
 			
-			this._blockChangeEvent = true;
+			_blockChangeEvent = true;
 			
-			if (this._allowMultipleSelection && shiftKey && this.selectedIndex != -1)
+			if (_allowMultipleSelection && shiftKey && this.selectedIndex != -1)
 			{
-				this._blockAutoScroll = true;
-				var lastSelectedIndex:uint = this.selectedIndex;
-				var itemIndex:int = this._items.indexOf(item);
+				_blockAutoScroll = true;
+				var lastSelectedIndex:uint = selectedIndex;
+				var itemIndex:int = _items.indexOf(item);
 				var i:int;
 				
 				if (lastSelectedIndex < itemIndex)
 				{
 					for (i = lastSelectedIndex;i < itemIndex; i++) 
 					{
-						this.selectListItemData(this._items[i]);
+						selectListItemData(_items[i]);
 					}
 				}
 				else if (lastSelectedIndex > itemIndex)
 				{
 					for (i = lastSelectedIndex;i > itemIndex; i--)
 					{
-						this.selectListItemData(this._items[i]);
+						selectListItemData(_items[i]);
 					}
 				}
-				this._blockAutoScroll = false;
+				_blockAutoScroll = false;
 			}
-			else if (!(this._allowMultipleSelection && (ctrlKey || this._autoDeselect == false)) && this._selectedItems.length)
+			else if (!(_allowMultipleSelection && (ctrlKey || _autoDeselect == false)) && _selectedItems.length)
 			{
-				while (this._selectedItems.length)
+				while (_selectedItems.length)
 				{
-					var listitem:ListItemData = this._selectedItems.shift();
+					var listitem:ListItemData = _selectedItems.shift();
 					if (listitem != item)
 					{
 						listitem.selected = false;
-						if (this._rowItemDictionary[listitem.row] == listitem && listitem.row is ISelectable) ISelectable(listitem.row).selected = false;
+						if (_rowItemDictionary[listitem.row] == listitem && listitem.row is ISelectable) ISelectable(listitem.row).selected = false;
 					}
 				}
 			}
-			if (item.selected && this._toggle)
+			if (item.selected && _toggle)
 			{
-				this.deselectListItemData(item);
+				deselectListItemData(item);
 			}
 			else
 			{
-				this.selectListItemData(item);
+				selectListItemData(item);
 			}
-			this._blockChangeEvent = false;
+			_blockChangeEvent = false;
 		}
 
 		private function selectListItemData(item:ListItemData):void
 		{
-			this._blockChangeEvent = true;
-			if (!this._allowMultipleSelection && this._selectedItems.length)
+			_blockChangeEvent = true;
+			if (!_allowMultipleSelection && _selectedItems.length)
 			{
 				// remove old selection
-				while (this._selectedItems.length)
+				while (_selectedItems.length)
 				{
-					var listitem:ListItemData = this._selectedItems.shift();
+					var listitem:ListItemData = _selectedItems.shift();
 					if (listitem != item)
 					{
 						listitem.selected = false;
-						if (this._rowItemDictionary[listitem.row] == listitem && listitem.row is ISelectable) ISelectable(listitem.row).selected = false;
+						if (_rowItemDictionary[listitem.row] == listitem && listitem.row is ISelectable) ISelectable(listitem.row).selected = false;
 					}
 				}
 			}
 			if (item)
 			{
 				item.selected = true;
-				if (this._rowItemDictionary[item.row] == item && item.row is ISelectable) ISelectable(item.row).selected = true;
+				if (_rowItemDictionary[item.row] == item && item.row is ISelectable) ISelectable(item.row).selected = true;
 			}
 			
-			if (item && this._selectedItems.indexOf(item) == -1) this._selectedItems.push(item);
+			if (item && _selectedItems.indexOf(item) == -1) _selectedItems.push(item);
 			
-			this._lastSelectedItem = item;
-			if (!this._blockAutoScroll) this.scrollToItem(item);
-			this.dispatchEvent(new Event(Event.CHANGE));
-			this._blockChangeEvent = false;
+			_lastSelectedItem = item;
+			if (!_blockAutoScroll) scrollToItem(item);
+			dispatchEvent(new Event(Event.CHANGE));
+			_blockChangeEvent = false;
 		}
 
 		private function deselectListItemData(item:ListItemData):void
 		{
-			this._blockChangeEvent = true;
+			_blockChangeEvent = true;
 			item.selected = false;
-			if (this._rowItemDictionary[item.row] == item && item.row is ISelectable) ISelectable(item.row).selected = false;
+			if (_rowItemDictionary[item.row] == item && item.row is ISelectable) ISelectable(item.row).selected = false;
 			
 			var index:int;
-			while ((index = this._selectedItems.indexOf(item)) != -1)
+			while ((index = _selectedItems.indexOf(item)) != -1)
 			{
-				this._selectedItems.splice(index, 1);
+				_selectedItems.splice(index, 1);
 			}
 			
-			if (this._lastSelectedItem == item)
+			if (_lastSelectedItem == item)
 			{
-				this._lastSelectedItem = this._selectedItems.length ? this._selectedItems[this._selectedItems.length - 1] : null; 
+				_lastSelectedItem = _selectedItems.length ? _selectedItems[_selectedItems.length - 1] : null; 
 			}
 			
-			this.dispatchEvent(new Event(Event.CHANGE));
-			this.dispatchEvent(new SelectEvent(SelectEvent.DESELECT, item.data));
-			this._blockChangeEvent = false;
+			dispatchEvent(new Event(Event.CHANGE));
+			dispatchEvent(new SelectEvent(SelectEvent.DESELECT, item.data));
+			_blockChangeEvent = false;
 		}
 
 		private function handleClick(event:MouseEvent):void
 		{
-			if (event.target is IListRow) this.toggleSelectItem(IListRow(event.target), event.ctrlKey, event.shiftKey);
+			if (event.target is IListRow) toggleSelectItem(IListRow(event.target), event.ctrlKey, event.shiftKey);
 		}
 		
 		private function handleItemChange(event:Event):void
 		{
-			if (this._blockChangeEvent) return;
+			if (_blockChangeEvent) return;
 			
 			// reselect item if selected item is changed to update the value
-			if (this.selectedItem && this._rowItemDictionary[event.target] == this.selectedItem) this.selectListItemData(this.selectedItem);
+			if (this.selectedItem && _rowItemDictionary[event.target] == selectedItem) selectListItemData(this.selectedItem);
 		}
 
 		private function handleKeyDown(event:KeyboardEvent):void
@@ -1437,14 +1437,14 @@ package temple.ui.form.components
 				case Keyboard.UP:
 				{
 					event.stopPropagation();
-					focusIndex = this._items.indexOf(this._focusItem);
+					focusIndex = _items.indexOf(_focusItem);
 					if (focusIndex > 0)
 					{
-						item = this._items[focusIndex - 1];
-						this.scrollToItem(item);
+						item = _items[focusIndex - 1];
+						scrollToItem(item);
 						FocusManager.focus = InteractiveObject(item.row);
-						this._focusItem = item;
-						if (!this._allowMultipleSelection) this.selectListItemData(item);
+						_focusItem = item;
+						if (!_allowMultipleSelection) selectListItemData(item);
 					}
 					break;
 				}
@@ -1452,24 +1452,24 @@ package temple.ui.form.components
 				case Keyboard.DOWN:
 				{
 					event.stopPropagation();
-					focusIndex = this._items.indexOf(this._focusItem);
-					if (focusIndex < this._items.length - 1)
+					focusIndex = _items.indexOf(_focusItem);
+					if (focusIndex < _items.length - 1)
 					{
-						item = this._items[focusIndex + 1];
-						this.scrollToItem(item);
+						item = _items[focusIndex + 1];
+						scrollToItem(item);
 						FocusManager.focus = InteractiveObject(item.row);
-						this._focusItem = item;
-						if (!this._allowMultipleSelection) this.selectListItemData(item);
+						_focusItem = item;
+						if (!_allowMultipleSelection) selectListItemData(item);
 					}
 					break;
 				}
 				default:
 				{
-					if (this._searchOnKey)
+					if (_searchOnKey)
 					{
 						event.stopPropagation();
 						// search for an item starting with this character
-						this.searchOnString(String.fromCharCode(event.charCode).toUpperCase());
+						searchOnString(String.fromCharCode(event.charCode).toUpperCase());
 					}
 					break;
 				} 
@@ -1478,31 +1478,31 @@ package temple.ui.form.components
 		
 		protected function scrollToItem(item:ListItemData):void
 		{
-			var index:int = this._items.indexOf(item);
+			var index:int = _items.indexOf(item);
 			if (item == null || index == -1) return;
 			
-			if (index * this._rowHeight + this._rowHeight > this.scrollV + this.height)
+			if (index * _rowHeight + _rowHeight > this.scrollV + this.height)
 			{
-				this.scrollVTo(index * this._rowHeight - this.height + this._rowHeight);
+				scrollVTo(index * _rowHeight - this.height + _rowHeight);
 			}
-			else if (index * this._rowHeight < this.scrollV)
+			else if (index * _rowHeight < this.scrollV)
 			{
-				this.scrollVTo(index * this._rowHeight);
+				scrollVTo(index * _rowHeight);
 			}
 		}
 		
 		private function handleFocusIn(event:FocusEvent):void 
 		{
-			if (event.target is IListRow) this.setFocusItem(this._rowItemDictionary[IListRow(event.target)]);
-			this._focus = true;
+			if (event.target is IListRow) setFocusItem(_rowItemDictionary[IListRow(event.target)]);
+			_focus = true;
 		}
 
 		private function handleFocusOut(event:FocusEvent):void 
 		{
-			if (this._rowItemDictionary[event.target] == this._focusItem || event.target == this)
+			if (_rowItemDictionary[event.target] == _focusItem || event.target == this)
 			{
-				this._focusItem = null;
-				this._focus = false;
+				_focusItem = null;
+				_focus = false;
 			}
 			else
 			{
@@ -1512,18 +1512,18 @@ package temple.ui.form.components
 		
 		private function handleScroll(event:ScrollEvent):void 
 		{
-			this.updateRows();
+			updateRows();
 		}
 
 		private function setFocusItem(item:ListItemData):void
 		{
-			if (this._focusItem != item)
+			if (_focusItem != item)
 			{
-				this._focusItem = item;
+				_focusItem = item;
 				if (item)
 				{
-					if (item.row && this._rowItemDictionary[item.row] == item) this._focusItem.row.focus = true;
-					this.scrollToItem(item);
+					if (item.row && _rowItemDictionary[item.row] == item) _focusItem.row.focus = true;
+					scrollToItem(item);
 				}
 			}
 		}
@@ -1556,40 +1556,40 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this.removeAllStrongEventListenersForType(Event.CHANGE);
-			this.removeAllStrongEventListenersForType(Event.RESIZE);
-			this.removeAllStrongEventListenersForType(ScrollEvent.SCROLL);
+			removeAllStrongEventListenersForType(Event.CHANGE);
+			removeAllStrongEventListenersForType(Event.RESIZE);
+			removeAllStrongEventListenersForType(ScrollEvent.SCROLL);
 			
-			if (this._items)
+			if (_items)
 			{
-				this.removeAll();
-				this._items = null;
+				removeAll();
+				_items = null;
 			}
-			if (this._rows)
+			if (_rows)
 			{
-				Destructor.destruct(this._rows);
-				this._rows = null;
-			}
-			
-			this._rowItemDictionary = null;
-			this._selectedItems = null;
-			
-			if (this._clearSearchStringTimeOut)
-			{
-				this._clearSearchStringTimeOut.destruct();
-				this._clearSearchStringTimeOut = null;
-			}
-			if (this._dataSource)
-			{
-				if (this._dataSource is IDestructible) IDestructible(this._dataSource).destruct();
-				this._dataSource = null;
+				Destructor.destruct(_rows);
+				_rows = null;
 			}
 			
-			this._listRowClass = null;
-			this._searchString = null;
-			this._focusItem = null;
-			this._lastSelectedItem = null;
-			this._itemPositionProxy = null;
+			_rowItemDictionary = null;
+			_selectedItems = null;
+			
+			if (_clearSearchStringTimeOut)
+			{
+				_clearSearchStringTimeOut.destruct();
+				_clearSearchStringTimeOut = null;
+			}
+			if (_dataSource)
+			{
+				if (_dataSource is IDestructible) IDestructible(_dataSource).destruct();
+				_dataSource = null;
+			}
+			
+			_listRowClass = null;
+			_searchString = null;
+			_focusItem = null;
+			_lastSelectedItem = null;
+			_itemPositionProxy = null;
 			
 			super.destruct();
 		}

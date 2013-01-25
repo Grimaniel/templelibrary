@@ -105,23 +105,23 @@ package temple.ui.behaviors
 		{
 			super(target, bounds);
 			
-			this._minZoom = minZoom;
-			this._maxZoom = maxZoom;
+			_minZoom = minZoom;
+			_maxZoom = maxZoom;
 			
-			this._zoom = 0;
+			_zoom = 0;
 			
-			this._newScale = target.scaleX;
-			this._newX = target.x;
-			this._newY = target.y;
+			_newScale = target.scaleX;
+			_newX = target.x;
+			_newY = target.y;
 			
-			target.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
+			target.addEventListener(MouseEvent.MOUSE_WHEEL, handleMouseWheel);
 			
-			this._running = false;
+			_running = false;
 			
 			// dispath ZoomBehaviorEvent on target
-			this.addEventListener(ZoomBehaviorEvent.ZOOM_START, target.dispatchEvent);
-			this.addEventListener(ZoomBehaviorEvent.ZOOM_STOP, target.dispatchEvent);
-			this.addEventListener(ZoomBehaviorEvent.ZOOMING, target.dispatchEvent);
+			addEventListener(ZoomBehaviorEvent.ZOOM_START, target.dispatchEvent);
+			addEventListener(ZoomBehaviorEvent.ZOOM_STOP, target.dispatchEvent);
+			addEventListener(ZoomBehaviorEvent.ZOOMING, target.dispatchEvent);
 		}
 
 		/**
@@ -131,8 +131,8 @@ package temple.ui.behaviors
 		 */
 		public function zoomTo(zoom:Number, point:Point = null):void
 		{
-			this._zoom = Math.log(zoom) / Math.log(2);
-			this.updateZoom(point || this.getCenter());
+			_zoom = Math.log(zoom) / Math.log(2);
+			updateZoom(point || getCenter());
 		}
 
 		/**
@@ -140,11 +140,11 @@ package temple.ui.behaviors
 		 */
 		public function stopZoom():void
 		{
-			if (this._running == true)
+			if (_running == true)
 			{
-				this._running = false;
-				this.displayObject.removeEventListener(Event.ENTER_FRAME, this.handleEnterFrame);
-				this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_STOP, this));
+				_running = false;
+				displayObject.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
+				dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_STOP, this));
 			}
 		}
 
@@ -153,7 +153,7 @@ package temple.ui.behaviors
 		 */
 		public function get minZoom():Number
 		{
-			return this._minZoom;
+			return _minZoom;
 		}
 
 		/**
@@ -161,7 +161,7 @@ package temple.ui.behaviors
 		 */
 		public function set minZoom(minZoom:Number):void
 		{
-			this._minZoom = minZoom;
+			_minZoom = minZoom;
 		}
 
 		/**
@@ -169,7 +169,7 @@ package temple.ui.behaviors
 		 */
 		public function get maxZoom():Number
 		{
-			return this._maxZoom;
+			return _maxZoom;
 		}
 
 		/**
@@ -177,7 +177,7 @@ package temple.ui.behaviors
 		 */
 		public function set maxZoom(maxZoom:Number):void
 		{
-			this._maxZoom = maxZoom;
+			_maxZoom = maxZoom;
 		}
 
 		/**
@@ -185,7 +185,7 @@ package temple.ui.behaviors
 		 */
 		public function get zoom():Number
 		{
-			return Math.pow(2, this._zoom);
+			return Math.pow(2, _zoom);
 		}
 
 		/**
@@ -193,8 +193,8 @@ package temple.ui.behaviors
 		 */
 		public function set zoom(value:Number):void
 		{
-			this._zoom = Math.log(value) / Math.log(2);
-			this.updateZoom(this.getCenter());
+			_zoom = Math.log(value) / Math.log(2);
+			updateZoom(getCenter());
 		}
 
 		/**
@@ -202,7 +202,7 @@ package temple.ui.behaviors
 		 */
 		public function get zoomLevel():Number
 		{
-			return this._zoom;
+			return _zoom;
 		}
 
 		/**
@@ -210,7 +210,7 @@ package temple.ui.behaviors
 		 */
 		public function recalculateZoom():void
 		{
-			this._zoom = Math.log(this.displayObject.scaleX) / Math.log(2);
+			_zoom = Math.log(displayObject.scaleX) / Math.log(2);
 		}
 		
 		/**
@@ -218,7 +218,7 @@ package temple.ui.behaviors
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -226,7 +226,7 @@ package temple.ui.behaviors
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		/**
@@ -234,20 +234,20 @@ package temple.ui.behaviors
 		 */
 		protected function handleEnterFrame(event:Event):void
 		{
-			this.displayObject.scaleX = this.displayObject.scaleY += (this._newScale - this.displayObject.scaleY) / 5;
-			this.displayObject.x += (this._newX - this.displayObject.x) / 5;
-			this.displayObject.y += (this._newY - this.displayObject.y) / 5;
+			displayObject.scaleX = displayObject.scaleY += (_newScale - displayObject.scaleY) / 5;
+			displayObject.x += (_newX - displayObject.x) / 5;
+			displayObject.y += (_newY - displayObject.y) / 5;
 			
-			this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOMING, this));
+			dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOMING, this));
 			
-			if (Math.abs(this.displayObject.scaleX - this._newScale) < .01)
+			if (Math.abs(displayObject.scaleX - _newScale) < .01)
 			{
-				this.displayObject.scaleX = this.displayObject.scaleY = this._newScale;
-				this.displayObject.x = this._newX;
-				this.displayObject.y = this._newY;
-				this.stopZoom();
+				displayObject.scaleX = displayObject.scaleY = _newScale;
+				displayObject.x = _newX;
+				displayObject.y = _newY;
+				stopZoom();
 			}
-			this.keepInBounds();
+			keepInBounds();
 		}
 
 		/**
@@ -255,8 +255,8 @@ package temple.ui.behaviors
 		 */
 		protected function handleMouseWheel(event:MouseEvent):void
 		{
-			this._zoom += (event.delta / 3) / 4;
-			this.updateZoom(new Point((this.displayObject.mouseX * this.displayObject.scaleX) / this.displayObject.width, (this.displayObject.mouseY * this.displayObject.scaleY) / this.displayObject.height));
+			_zoom += (event.delta / 3) / 4;
+			updateZoom(new Point((displayObject.mouseX * displayObject.scaleX) / displayObject.width, (displayObject.mouseY * displayObject.scaleY) / displayObject.height));
 		}
 
 		/**
@@ -264,45 +264,45 @@ package temple.ui.behaviors
 		 */
 		protected function updateZoom(point:Point):void
 		{
-			var prevW:Number = this.displayObject.width;
-			var prevH:Number = this.displayObject.height;
+			var prevW:Number = displayObject.width;
+			var prevH:Number = displayObject.height;
 			
-			this._newScale = Math.max(this._minZoom, Math.min(this._maxZoom, Math.pow(2, this._zoom)));
+			_newScale = Math.max(_minZoom, Math.min(_maxZoom, Math.pow(2, _zoom)));
 			
-			this._zoom = Math.log(this._newScale) / Math.log(2);
+			_zoom = Math.log(_newScale) / Math.log(2);
 			
-			this._newX = this.displayObject.x + point.x * (prevW - (this.displayObject.width / this.displayObject.scaleX * this._newScale));
-			this._newY = this.displayObject.y + point.y * (prevH - (this.displayObject.height / this.displayObject.scaleY * this._newScale));
+			_newX = displayObject.x + point.x * (prevW - (displayObject.width / displayObject.scaleX * _newScale));
+			_newY = displayObject.y + point.y * (prevH - (displayObject.height / displayObject.scaleY * _newScale));
 			
-			if (this._running == false)
+			if (_running == false)
 			{
-				this._running = true;
-				this.displayObject.addEventListener(Event.ENTER_FRAME, this.handleEnterFrame, false, 0, true);
-				this.dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_START, this));
+				_running = true;
+				displayObject.addEventListener(Event.ENTER_FRAME, handleEnterFrame, false, 0, true);
+				dispatchEvent(new ZoomBehaviorEvent(ZoomBehaviorEvent.ZOOM_START, this));
 			}
-			this.dispatchEvent(new Event(Event.CHANGE));
+			dispatchEvent(new Event(Event.CHANGE));
 			
-			if (this._debug)
+			if (_debug)
 			{
-				this._dot ||= new Dot();
+				_dot ||= new Dot();
 				
-				DisplayObjectContainer(this.displayObject).addChild(this._dot);
-				this._dot.x = point.x * (this.displayObject.width / this.displayObject.scaleX);
-				this._dot.y = point.y * (this.displayObject.height / this.displayObject.scaleY);
-				this._dot.scaleX = 1 / this.displayObject.scaleX;
-				this._dot.scaleY = 1 / this.displayObject.scaleY;
+				DisplayObjectContainer(displayObject).addChild(_dot);
+				_dot.x = point.x * (displayObject.width / displayObject.scaleX);
+				_dot.y = point.y * (displayObject.height / displayObject.scaleY);
+				_dot.scaleX = 1 / displayObject.scaleX;
+				_dot.scaleY = 1 / displayObject.scaleY;
 				
-				this.logDebug("Zoom: " + point.x + ", " + point.y);
+				logDebug("Zoom: " + point.x + ", " + point.y);
 			}
-			else if (this._dot && this._dot.parent)
+			else if (_dot && _dot.parent)
 			{
-				 this._dot.parent.removeChild(this._dot);
+				 _dot.parent.removeChild(_dot);
 			}
 		}
 
 		private function getCenter():Point
 		{
-			var rect:Rectangle = this.displayObject.getRect(this.displayObject);
+			var rect:Rectangle = displayObject.getRect(displayObject);
 			return new Point(rect.x/rect.width + .5, rect.y/rect.height + .5);
 		}
 
@@ -312,8 +312,8 @@ package temple.ui.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.target) this.displayObject.removeEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
-			if (this._running) this.stopZoom();
+			if (target) displayObject.removeEventListener(MouseEvent.MOUSE_WHEEL, handleMouseWheel);
+			if (_running) stopZoom();
 			super.destruct();
 		}
 	}

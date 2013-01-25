@@ -64,10 +64,10 @@ package temple.ui.form.components
 		{
 			super();
 			
-			this._radioGroup = new RadioGroup();
-			this._radioGroup.addEventListener(Event.CHANGE, this.handleChange);
+			_radioGroup = new RadioGroup();
+			_radioGroup.addEventListener(Event.CHANGE, handleChange);
 			
-			new FrameDelay(this.findRadioButtons);
+			new FrameDelay(findRadioButtons);
 		}
 		
 		/**
@@ -75,7 +75,7 @@ package temple.ui.form.components
 		 */
 		override public function get value():*
 		{
-			return this._radioGroup.value;
+			return _radioGroup.value;
 		}
 		
 		/**
@@ -83,7 +83,7 @@ package temple.ui.form.components
 		 */
 		public function set value(value:*):void
 		{
-			this._radioGroup.value = value;
+			_radioGroup.value = value;
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package temple.ui.form.components
 		 */
 		public function get selected():ISelectable 
 		{
-			return this._radioGroup.selected;
+			return _radioGroup.selected;
 		}
 		
 		/**
@@ -99,7 +99,7 @@ package temple.ui.form.components
 		 */
 		public function set selected(value:ISelectable):void 
 		{
-			this._radioGroup.selected = value;
+			_radioGroup.selected = value;
 		}
 		
 		/**
@@ -110,16 +110,16 @@ package temple.ui.form.components
 		{
 			switch (value){
 				case "none":
-					this._validator = null;
+					_validator = null;
 					break;
 				
 				case "not null":
-					this._validator = NullValidationRule;
+					_validator = NullValidationRule;
 					break;
 				
 				default:
-					this._validator = null;
-					this.logError("validationRule: unknown validation rule '" + value + "'");
+					_validator = null;
+					logError("validationRule: unknown validation rule '" + value + "'");
 					break;
 			}
 		}
@@ -130,7 +130,7 @@ package temple.ui.form.components
 		override public function showError(message:String = null):void 
 		{
 			super.showError(message);
-			this._radioGroup.showError(message);
+			_radioGroup.showError(message);
 		}
 		
 		/**
@@ -139,7 +139,7 @@ package temple.ui.form.components
 		override public function hideError():void 
 		{
 			super.hideError();
-			this._radioGroup.hideError();
+			_radioGroup.hideError();
 		}
 
 		/**
@@ -147,7 +147,7 @@ package temple.ui.form.components
 		 */
 		public function reset():void
 		{
-			this._radioGroup.reset();
+			_radioGroup.reset();
 		}
 
 		/**
@@ -155,7 +155,7 @@ package temple.ui.form.components
 		 */
 		override public function set focus(value:Boolean):void
 		{
-			this._radioGroup.focus = super.focus = value;
+			_radioGroup.focus = super.focus = value;
 		}
 
 		/**
@@ -163,7 +163,7 @@ package temple.ui.form.components
 		 */
 		public function get radioGroup():RadioGroup
 		{
-			return this._radioGroup;
+			return _radioGroup;
 		}
 		
 		/**
@@ -171,7 +171,7 @@ package temple.ui.form.components
 		 */
 		public function add(item:ISelectable, value:* = null, selected:Boolean = false, tabIndex:int = -1):ISelectable
 		{
-			return this._radioGroup.add(item, value, selected, tabIndex);
+			return _radioGroup.add(item, value, selected, tabIndex);
 		}
 
 		/**
@@ -179,7 +179,7 @@ package temple.ui.form.components
 		 */
 		public function remove(item:ISelectable):void
 		{
-			this._radioGroup.remove(item);
+			_radioGroup.remove(item);
 		}
 
 		/**
@@ -187,7 +187,7 @@ package temple.ui.form.components
 		 */
 		public function get items():Array
 		{
-			return this._radioGroup.items;
+			return _radioGroup.items;
 		}
 		
 		/**
@@ -195,28 +195,28 @@ package temple.ui.form.components
 		 */
 		public function get length():uint
 		{
-			return this._radioGroup.items.length;
+			return _radioGroup.items.length;
 		}
 
 		protected function findRadioButtons():void
 		{
 			// find form elements components
 			var item:IRadioButton;
-			var leni:int = this.numChildren;
+			var leni:int = numChildren;
 			for (var i:int = 0; i < leni ; i++)
 			{
-				item = this.getChildAt(i) as IRadioButton;
+				item = getChildAt(i) as IRadioButton;
 				if (item)
 				{
-					this._radioGroup.add(item, null, item.selected, item.tabIndex);
-					if (item.selected) this.dispatchEvent(new Event(Event.CHANGE));
+					_radioGroup.add(item, null, item.selected, item.tabIndex);
+					if (item.selected) dispatchEvent(new Event(Event.CHANGE));
 				}
 			}
 		}
 		
 		protected function handleChange(event:Event):void
 		{
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 		
 		/**
@@ -224,10 +224,10 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			if (this._radioGroup)
+			if (_radioGroup)
 			{
-				this._radioGroup.destruct();
-				this._radioGroup = null;
+				_radioGroup.destruct();
+				_radioGroup = null;
 			}
 			super.destruct();
 		}

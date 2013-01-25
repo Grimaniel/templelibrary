@@ -67,15 +67,15 @@ package temple.ui.form.components
 
 		public function FormComponent()
 		{
-			this._form = new Form();
-			this._form.addEventListener(FormEvent.VALIDATE_ERROR, this.handleFormEvent);
-			this._form.addEventListener(FormEvent.VALIDATE_SUCCESS, this.handleFormEvent);
-			this._form.addEventListener(FormEvent.SUBMIT_ERROR, this.handleFormEvent);
-			this._form.addEventListener(FormEvent.SUBMIT_SUCCESS, this.handleFormEvent);
-			this._form.addEventListener(FormEvent.RESET, this.handleFormEvent);
+			_form = new Form();
+			_form.addEventListener(FormEvent.VALIDATE_ERROR, handleFormEvent);
+			_form.addEventListener(FormEvent.VALIDATE_SUCCESS, handleFormEvent);
+			_form.addEventListener(FormEvent.SUBMIT_ERROR, handleFormEvent);
+			_form.addEventListener(FormEvent.SUBMIT_SUCCESS, handleFormEvent);
+			_form.addEventListener(FormEvent.RESET, handleFormEvent);
 			
 			// Wait a frame so all children are initialized
-			new FrameDelay(this.findComponents);
+			new FrameDelay(findComponents);
 		}
 		
 		/**
@@ -83,7 +83,7 @@ package temple.ui.form.components
 		 */
 		public function get form():Form
 		{
-			return this._form;
+			return _form;
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package temple.ui.form.components
 		 */
 		public function addComponent(component:IFormElementComponent):void
 		{
-			this._form.addElement(component, component.dataName, component.validationRule, component.errorMessage, component.tabIndex, component.submit);
+			_form.addElement(component, component.dataName, component.validationRule, component.errorMessage, component.tabIndex, component.submit);
 		}
 		
 		/**
@@ -101,7 +101,7 @@ package temple.ui.form.components
 		 */
 		public function submit():void
 		{
-			this._form.submit();
+			_form.submit();
 		}
 
 		/**
@@ -110,27 +110,27 @@ package temple.ui.form.components
 		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
 		override public function set debug(value:Boolean):void
 		{
-			super.debug = this._form.debug = value;
+			super.debug = _form.debug = value;
 		}
 		
 		protected function findComponents():void
 		{
 			// find form elements components
 			var item:DisplayObject;
-			var leni:int = this.numChildren;
+			var leni:int = numChildren;
 			for (var i:int = 0; i < leni ; i++)
 			{
-				item = this.getChildAt(i);
-				if (item is IFormElementComponent) this.addComponent(IFormElementComponent(item));
-				if (item is ISubmitButton) this._form.addSubmitButton(item);
-				if (item is IResetButton) this._form.addResetButton(item);
+				item = getChildAt(i);
+				if (item is IFormElementComponent) addComponent(IFormElementComponent(item));
+				if (item is ISubmitButton) _form.addSubmitButton(item);
+				if (item is IResetButton) _form.addResetButton(item);
 			}
-			this._form.reset();
+			_form.reset();
 		}
 
 		protected function handleFormEvent(event:FormEvent):void
 		{
-			if (this._form.debug) this.logDebug("handleFormEvent: " + event.type);
+			if (_form.debug) logDebug("handleFormEvent: " + event.type);
 			
 			switch (event.type)
 			{
@@ -144,12 +144,12 @@ package temple.ui.form.components
 				case FormEvent.SUBMIT_SUCCESS:
 				case FormEvent.RESET:
 				{
-					this._form.validator.stopRealtimeValidating();
+					_form.validator.stopRealtimeValidating();
 					StateHelper.hideError(this);
 					break;
 				}
 			}
-			this.dispatchEvent(event.clone());
+			dispatchEvent(event.clone());
 		}
 		
 		/**
@@ -157,12 +157,12 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			this._urlName = null;
+			_urlName = null;
 			
-			if (this._form)
+			if (_form)
 			{
-				this._form.destruct();
-				this._form = null;
+				_form.destruct();
+				_form = null;
 			}
 			super.destruct();
 		}

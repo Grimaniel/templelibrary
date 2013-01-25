@@ -83,7 +83,7 @@ package temple.ui.form.services
 		 */
 		public function get urlName():String
 		{
-			return this._urlName;
+			return _urlName;
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package temple.ui.form.services
 		 */
 		public function set urlName(value:String):void
 		{
-			this._urlName = value;
+			_urlName = value;
 		}
 
 		/**
@@ -99,7 +99,7 @@ package temple.ui.form.services
 		 */
 		override public function submit(data:Object):IFormResult 
 		{
-			this.load(urlManagerInstance.getData(this._urlName), data, this.method);
+			load(urlManagerInstance.getData(_urlName), data, method);
 			
 			return null;
 		}
@@ -109,7 +109,7 @@ package temple.ui.form.services
 		 */
 		override public function destruct():void
 		{
-			this._urlName = null;
+			_urlName = null;
 			super.destruct();
 		}
 

@@ -114,7 +114,7 @@ package temple.ui.focus
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -122,42 +122,42 @@ package temple.ui.focus
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function init(stage:Stage):void
 		{
-			if (this._stage || stage == null) return;
+			if (_stage || stage == null) return;
 			
-			this._stage = stage;
+			_stage = stage;
 			try
 			{
-				this._stage.stageFocusRect = false;
+				_stage.stageFocusRect = false;
 			}
 			catch (error:Error) {}
 			
-			this._stage.addEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
+			_stage.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
 		}
 
 		private function get focus():InteractiveObject
 		{
-			return this._stage ? this._stage.focus : null;
+			return _stage ? _stage.focus : null;
 		}
 		
 		private function set focus(value:InteractiveObject):void
 		{
-			if (!this._stage && value.stage) this.init(value.stage);
-			if (value != this.focus && this._stage)
+			if (!_stage && value.stage) init(value.stage);
+			if (value != focus && _stage)
 			{
-				if (this._debug) this.logDebug("focus: " + value + (value ? ", parent:" + value.parent : "") + ", old:" + this._stage.focus);
-				this._stage.focus = value;
+				if (_debug) logDebug("focus: " + value + (value ? ", parent:" + value.parent : "") + ", old:" + _stage.focus);
+				_stage.focus = value;
 			}
 		}
 		
 		private function handleMouseDown(event:MouseEvent):void
 		{
-			if (this._debug) this.logDebug("handleMouseDown: " + event.target);
-			this.focus = event.target as InteractiveObject;
+			if (_debug) logDebug("handleMouseDown: " + event.target);
+			focus = event.target as InteractiveObject;
 		}
 	}
 }

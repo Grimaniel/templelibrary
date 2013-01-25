@@ -50,26 +50,26 @@ package temple.ui
 
 		public function Dot(radius:Number = 5, color:uint = 0xFF0000, alpha:Number = 1)
 		{
-			this.draw(radius, color, alpha);
+			draw(radius, color, alpha);
 		}
 
 		public function draw(radius:Number = 5, color:uint = 0xFF0000, alpha:Number = 1):Dot
 		{
-			this._alpha = alpha;
-			this._color = color;
-			this._radius = radius;
+			_alpha = alpha;
+			_color = color;
+			_radius = radius;
 			
-			this.redraw();
+			redraw();
 			
 			return this;
 		}
 		
 		public function redraw():Dot
 		{
-			this.graphics.clear();
-			this.graphics.beginFill(this._color, this._alpha);
-			this.graphics.drawCircle(0, 0, this._radius);
-			this.graphics.endFill();
+			graphics.clear();
+			graphics.beginFill(_color, _alpha);
+			graphics.drawCircle(0, 0, _radius);
+			graphics.endFill();
 			return this;
 		}
 		
@@ -77,12 +77,12 @@ package temple.ui
 		{
 			this.x = x;
 			this.y = y;
-			return this.draw(radius, color, alpha);
+			return draw(radius, color, alpha);
 		}
 		
 		public function get radius():Number
 		{
-			return this._radius;
+			return _radius;
 		}
 	}
 }

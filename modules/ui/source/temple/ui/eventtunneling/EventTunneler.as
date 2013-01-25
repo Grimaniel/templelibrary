@@ -63,9 +63,9 @@ package temple.ui.eventtunneling
 		{
 			super(target);
 			
-			this._eventType = eventType;
+			_eventType = eventType;
 			
-			target.addEventListener(this._eventType, this.handleTunnelEvent);
+			target.addEventListener(_eventType, handleTunnelEvent);
 		}
 		
 		/**
@@ -73,7 +73,7 @@ package temple.ui.eventtunneling
 		 */
 		public function get sprite():Sprite
 		{
-			return this.target as Sprite;
+			return target as Sprite;
 		}
 		
 		/**
@@ -81,7 +81,7 @@ package temple.ui.eventtunneling
 		 */
 		public function get eventType():String
 		{
-			return this._eventType;
+			return _eventType;
 		}
 		
 		/**
@@ -89,7 +89,7 @@ package temple.ui.eventtunneling
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -97,17 +97,17 @@ package temple.ui.eventtunneling
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleTunnelEvent(event:Event):void
 		{
 			if (event is TunnelingEvent)
 			{
-				if ((event as TunnelingEvent).tunnels && (event as TunnelingEvent).tunnelTarget == this.target)
+				if ((event as TunnelingEvent).tunnels && (event as TunnelingEvent).tunnelTarget == target)
 				{
-					if (this._debug) this.logDebug("Tunnel Event '" + event.type + "'");
-					this.dispatchOnChildren(this.sprite, TunnelingEvent(event));
+					if (_debug) logDebug("Tunnel Event '" + event.type + "'");
+					dispatchOnChildren(sprite, TunnelingEvent(event));
 				}
 			}
 			else
@@ -131,7 +131,7 @@ package temple.ui.eventtunneling
 					child.dispatchEvent(e);
 					if (e.tunnels && child is Sprite)
 					{
-						this.dispatchOnChildren(child as Sprite, event);
+						dispatchOnChildren(child as Sprite, event);
 					}
 				}
 			}

@@ -75,17 +75,17 @@ package temple.ui.layout.liquid
 			if (!targetProperty in target) throwError(new TempleArgumentError(this, "target object does not has a property '" + targetProperty + "'"));
 			if (!relatedProperty in related) throwError(new TempleArgumentError(this, "related object does not has a property '" + targetProperty + "'"));
 			
-			this._targetProperty = targetProperty;
-			this._related = related;
-			this._relatedProperty = relatedProperty;
-			this._offset = offset;
+			_targetProperty = targetProperty;
+			_related = related;
+			_relatedProperty = relatedProperty;
+			_offset = offset;
 			
-			this._related.addEventListener(Event.RESIZE, this.handleRelatedResize);
-			this._related.addEventListener(DestructEvent.DESTRUCT, this.handleRelatedDestructed);
+			_related.addEventListener(Event.RESIZE, handleRelatedResize);
+			_related.addEventListener(DestructEvent.DESTRUCT, handleRelatedDestructed);
 			
-			this.toStringProps.push("targetProperty", "related", "relatedProperty", "offset");
+			toStringProps.push("targetProperty", "related", "relatedProperty", "offset");
 			
-			this.update();
+			update();
 		}
 		
 		/**
@@ -95,7 +95,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get targetProperty():String
 		{
-			return this._targetProperty;
+			return _targetProperty;
 		}
 		
 		/**
@@ -105,7 +105,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get relatedProperty():String
 		{
-			return this._relatedProperty;
+			return _relatedProperty;
 		}
 
 		/**
@@ -113,7 +113,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get related():ILiquidRelatedObject
 		{
-			return this._related;
+			return _related;
 		}
 
 		/**
@@ -121,7 +121,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get offset():Number
 		{
-			return this._offset;
+			return _offset;
 		}
 
 		/**
@@ -129,7 +129,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set offset(value:Number):void
 		{
-			this._offset = value;
+			_offset = value;
 		}
 		
 		/**
@@ -137,17 +137,17 @@ package temple.ui.layout.liquid
 		 */
 		public function update():void
 		{
-			if (isNaN(this._related[this._relatedProperty]))
+			if (isNaN(_related[_relatedProperty]))
 			{
-				this.target[this._targetProperty] = LiquidUtils.calculateProperty(this._related, this._relatedProperty) + this._offset;
+				target[_targetProperty] = LiquidUtils.calculateProperty(_related, _relatedProperty) + _offset;
 			}
 			else
 			{
-				this.target[this._targetProperty] = this._related[this._relatedProperty] + this._offset;
+				target[_targetProperty] = _related[_relatedProperty] + _offset;
 			}
-			if (this.target is ILiquidObject) ILiquidObject(this.target).update();
+			if (target is ILiquidObject) ILiquidObject(target).update();
 			
-			if (this.debug) this.logDebug("update: target[" + this._targetProperty + "] = " + this.target[this._targetProperty]);
+			if (debug) logDebug("update: target[" + _targetProperty + "] = " + target[_targetProperty]);
 		}
 		
 		/**
@@ -155,7 +155,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -163,17 +163,17 @@ package temple.ui.layout.liquid
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		private function handleRelatedResize(event:Event):void
 		{
-			this.update();
+			update();
 		}
 
 		private function handleRelatedDestructed(event:DestructEvent):void
 		{
-			this.destruct();
+			destruct();
 		}
 		
 		/**
@@ -181,11 +181,11 @@ package temple.ui.layout.liquid
 		 */
 		override public function destruct():void
 		{
-			if (this._related)
+			if (_related)
 			{
-				this._related.removeEventListener(Event.RESIZE, this.handleRelatedResize);
-				this._related.removeEventListener(DestructEvent.DESTRUCT, this.handleRelatedDestructed);
-				this._related = null;
+				_related.removeEventListener(Event.RESIZE, handleRelatedResize);
+				_related.removeEventListener(DestructEvent.DESTRUCT, handleRelatedDestructed);
+				_related = null;
 			}
 			
 			super.destruct();

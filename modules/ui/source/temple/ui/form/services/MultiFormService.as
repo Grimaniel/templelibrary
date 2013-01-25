@@ -59,7 +59,7 @@ package temple.ui.form.services
 		
 		public function MultiFormService(services:Vector.<IFormService> = null)
 		{
-			this._services = services ? services.concat() : new Vector.<IFormService>();
+			_services = services ? services.concat() : new Vector.<IFormService>();
 			
 		}
 		
@@ -68,7 +68,7 @@ package temple.ui.form.services
 		 */
 		public function addFormService(service:IFormService):void
 		{
-			this._services.push(service);
+			_services.push(service);
 		}
 
 		/**
@@ -76,19 +76,19 @@ package temple.ui.form.services
 		 */
 		public function submit(data:Object):IFormResult
 		{
-			if (!this._services.length)
+			if (!_services.length)
 			{
 				throwError(new TempleError(this, "MultiFormService doesn't contain any services"));
 			}
-			this._currentServiceId = -1;
-			this._submitData = data;
+			_currentServiceId = -1;
+			_submitData = data;
 			
-			return this.next(this._submitData);
+			return next(_submitData);
 		}
 
 		private function next(data:Object):IFormResult
 		{
-			var service:IFormService = IFormService(this._services[++this._currentServiceId]);
+			var service:IFormService = IFormService(_services[++_currentServiceId]);
 			
 			var result:IFormResult = service.submit(data);
 			
@@ -104,9 +104,9 @@ package temple.ui.form.services
 					// TODO: what to do with data?
 				}
 				// more services left?
-				if (this._currentServiceId < this._services.length - 1)
+				if (_currentServiceId < _services.length - 1)
 				{
-					return this.next(data);
+					return next(data);
 				}
 				else
 				{
@@ -115,39 +115,39 @@ package temple.ui.form.services
 			}
 			else
 			{
-				EventUtils.addAll(FormServiceEvent, service, this.handleFormServiceEvent);
+				EventUtils.addAll(FormServiceEvent, service, handleFormServiceEvent);
 			}
 			return null;
 		}
 
 		private function handleFormServiceEvent(event:FormServiceEvent):void
 		{
-			EventUtils.removeAll(FormServiceEvent, IEventDispatcher(event.target), this.handleFormServiceEvent);
+			EventUtils.removeAll(FormServiceEvent, IEventDispatcher(event.target), handleFormServiceEvent);
 			
 			// If we have more services left and submit was successful, continue. Otherwise submit result.
-			if (this._currentServiceId < this._services.length - 1
+			if (_currentServiceId < _services.length - 1
 			&& (event.type == FormServiceEvent.SUCCESS || event.type == FormServiceEvent.RESULT && event.result.success))
 			{
-				var result:IFormResult = this.next(this._submitData);
+				var result:IFormResult = next(_submitData);
 				if (result)
 				{
-					this.dispatchEvent(new FormServiceEvent(FormServiceEvent.RESULT, result));
+					dispatchEvent(new FormServiceEvent(FormServiceEvent.RESULT, result));
 				}
 			}
 			else
 			{
-				this.dispatchEvent(event);
+				dispatchEvent(event);
 			}
 		}
 
 		override public function destruct():void
 		{
-			if (this._services)
+			if (_services)
 			{
-				this._services.length = 0;
-				this._services = null;
+				_services.length = 0;
+				_services = null;
 			}
-			this._submitData = null;
+			_submitData = null;
 			super.destruct();
 		}
 

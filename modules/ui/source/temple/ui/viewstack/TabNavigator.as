@@ -56,38 +56,38 @@ package temple.ui.viewstack
 		
 		public function get tabBar():TabBar
 		{
-			return this._tabBar;
+			return _tabBar;
 		}
 		
 		public function set tabBar(value:TabBar):void
 		{
-			if (this._tabBar) this._tabBar.removeEventListener(Event.CHANGE, this.handleTabBarChange);
+			if (_tabBar) _tabBar.removeEventListener(Event.CHANGE, handleTabBarChange);
 			
-			this._tabBar = value;
-			this._tabBar.addEventListener(Event.CHANGE, this.handleTabBarChange);
+			_tabBar = value;
+			_tabBar.addEventListener(Event.CHANGE, handleTabBarChange);
 		}
 
 		override public function set selectedIndex(value:uint):void 
 		{
 			super.selectedIndex = value;
 			
-			if (this._tabBar && this._tabBar.selectedIndex != this.selectedIndex)
+			if (_tabBar && _tabBar.selectedIndex != selectedIndex)
 			{
-				this._tabBar.selectedIndex = this.selectedIndex;
+				_tabBar.selectedIndex = selectedIndex;
 			}
 		}
 
 		protected function handleTabBarChange(event:Event):void
 		{
-			this.selectedIndex = this._tabBar.selectedIndex;
+			selectedIndex = _tabBar.selectedIndex;
 		}
 		
 		override public function destruct():void
 		{
-			if (this._tabBar)
+			if (_tabBar)
 			{
-				this._tabBar.removeEventListener(Event.CHANGE, this.handleTabBarChange);
-				this._tabBar = null;
+				_tabBar.removeEventListener(Event.CHANGE, handleTabBarChange);
+				_tabBar = null;
 			}
 			
 			super.destruct();

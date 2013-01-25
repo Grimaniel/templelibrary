@@ -47,7 +47,7 @@ package temple.ui.animation
 	 * 
 	 * @example
 	 * <listing version="3.0">
-	 * var timelineController:TimelineController = new TimelineController(this.mcClip);
+	 * var timelineController:TimelineController = new TimelineController(mcClip);
 	 * timelineController.addLableEventListener('fadeIn', handleFadeInClip);
 	 * </listing>
 	 * 
@@ -63,18 +63,18 @@ package temple.ui.animation
 
 		public function TimelineController(target:MovieClip, dispatchLabelEvents:Boolean = false) 
 		{
-			this._dispatchLabelEvents = dispatchLabelEvents;
-			this._labels = new Object();
-			this._listeners = new Object();
+			_dispatchLabelEvents = dispatchLabelEvents;
+			_labels = new Object();
+			_listeners = new Object();
 			
 			super(target);
 			
 			addToDebugManager(this);
 			
-			for each (var label:FrameLabel in this.movieClip.currentScene.labels)
+			for each (var label:FrameLabel in movieClip.currentScene.labels)
 			{
-				this.movieClip.addFrameScript(label.frame - 1, this.onFrame);
-				this._labels[label.frame] = this._labels[label.name] = label;
+				movieClip.addFrameScript(label.frame - 1, onFrame);
+				_labels[label.frame] = _labels[label.name] = label;
 			}
 		}
 		
@@ -83,7 +83,7 @@ package temple.ui.animation
 		 */
 		public function get movieClip():MovieClip
 		{
-			return this.target as MovieClip;
+			return target as MovieClip;
 		}
 
 		/**
@@ -98,27 +98,27 @@ package temple.ui.animation
 		 */
 		public function addLabelEventListener(labelName:String, listener:Function, offset:int = 0):Boolean
 		{
-			if (this._labels.hasOwnProperty(labelName))
+			if (_labels.hasOwnProperty(labelName))
 			{
-				var frameNumber:int = FrameLabel(this._labels[labelName]).frame + offset - 1;
+				var frameNumber:int = FrameLabel(_labels[labelName]).frame + offset - 1;
 				
 				if (frameNumber < 0)
 				{
-					this.logError("addLabelEventListener: invalid offset, label '" + labelName + "' is on frame " + (frameNumber - offset + 1) + ". Offset " + offset + " will result in a negative value");
+					logError("addLabelEventListener: invalid offset, label '" + labelName + "' is on frame " + (frameNumber - offset + 1) + ". Offset " + offset + " will result in a negative value");
 					return false;
 				}
-				else if (!this._listeners.hasOwnProperty(frameNumber))
+				else if (!_listeners.hasOwnProperty(frameNumber))
 				{
-					this.movieClip.addFrameScript(frameNumber, this.onFrame);
-					this._listeners[frameNumber] = true;
+					movieClip.addFrameScript(frameNumber, onFrame);
+					_listeners[frameNumber] = true;
 				}
-				this.addEventListener(TimelineControllerEvent.REACH_FRAME + '.' + (frameNumber + 1).toString(), listener);
+				addEventListener(TimelineControllerEvent.REACH_FRAME + '.' + (frameNumber + 1).toString(), listener);
 				
 				return true;
 			}
 			else
 			{
-				this.logError("addLabelEventListener: no frame with label '" + labelName + "' found");
+				logError("addLabelEventListener: no frame with label '" + labelName + "' found");
 			}
 			return false;
 		}
@@ -132,23 +132,23 @@ package temple.ui.animation
 		 */
 		public function removeLabelEventListener(labelName:String, listener:Function, offset:int = 0):Boolean
 		{
-			if (this._labels.hasOwnProperty(labelName))
+			if (_labels.hasOwnProperty(labelName))
 			{
-				var frameNumber:int = FrameLabel(this._labels[labelName]).frame + offset - 1;
+				var frameNumber:int = FrameLabel(_labels[labelName]).frame + offset - 1;
 				
 				if (frameNumber < 0)
 				{
-					this.logError("removeLabelEventListener: invalid offset, label '" + labelName + "' is on frame " + (frameNumber - offset + 1) + ". Offset " + offset + " will result in a negative value");
+					logError("removeLabelEventListener: invalid offset, label '" + labelName + "' is on frame " + (frameNumber - offset + 1) + ". Offset " + offset + " will result in a negative value");
 					return false;
 				}
 				
-				this.removeEventListener(TimelineControllerEvent.REACH_FRAME + '.' + (frameNumber+1).toString(), listener);
+				removeEventListener(TimelineControllerEvent.REACH_FRAME + '.' + (frameNumber+1).toString(), listener);
 				
 				return true;
 			}
 			else
 			{
-				this.logError("removeLabelEventListener: no frame with label '" + labelName + "' found");
+				logError("removeLabelEventListener: no frame with label '" + labelName + "' found");
 			}
 			return false;
 		}
@@ -163,16 +163,16 @@ package temple.ui.animation
 		{
 			if (frameNumber < 1)
 			{
-				this.logError("addFrameEventListener: frameNumber (" + frameNumber + ") must be greater then 0");
+				logError("addFrameEventListener: frameNumber (" + frameNumber + ") must be greater then 0");
 				return false;
 			}
 			
-			if (!this._listeners.hasOwnProperty(frameNumber - 1))
+			if (!_listeners.hasOwnProperty(frameNumber - 1))
 			{
-				this.movieClip.addFrameScript(frameNumber - 1, this.onFrame);
-				this._listeners[frameNumber - 1] = true;
+				movieClip.addFrameScript(frameNumber - 1, onFrame);
+				_listeners[frameNumber - 1] = true;
 			}
-			this.addEventListener(TimelineControllerEvent.REACH_FRAME + '.' + frameNumber.toString(), listener);
+			addEventListener(TimelineControllerEvent.REACH_FRAME + '.' + frameNumber.toString(), listener);
 
 			return true;
 		}
@@ -187,10 +187,10 @@ package temple.ui.animation
 		{
 			if (frameNumber < 1)
 			{
-				this.logError("removeFrameEventListener: frameNumber (" + frameNumber + ") must be greater then 0");
+				logError("removeFrameEventListener: frameNumber (" + frameNumber + ") must be greater then 0");
 				return false;
 			}
-			this.removeEventListener(TimelineControllerEvent.REACH_FRAME + '.' + frameNumber.toString(), listener);
+			removeEventListener(TimelineControllerEvent.REACH_FRAME + '.' + frameNumber.toString(), listener);
 			return true;
 		}
 
@@ -199,7 +199,7 @@ package temple.ui.animation
 		 */
 		public function get dispatchLabelEvents():Boolean
 		{
-			return this._dispatchLabelEvents;
+			return _dispatchLabelEvents;
 		}
 		
 		/**
@@ -207,7 +207,7 @@ package temple.ui.animation
 		 */
 		public function set dispatchLabelEvents(value:Boolean):void
 		{
-			this._dispatchLabelEvents = value;
+			_dispatchLabelEvents = value;
 		}
 		
 		/**
@@ -215,7 +215,7 @@ package temple.ui.animation
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -223,21 +223,21 @@ package temple.ui.animation
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		protected function onFrame():void
 		{
-			if (this._debug) this.logDebug("onFrame: frame=" + this.movieClip.currentFrame + ", label=" + this.movieClip.currentLabel + ", dispatchLabelEvents=" + this._dispatchLabelEvents);
+			if (_debug) logDebug("onFrame: frame=" + movieClip.currentFrame + ", label=" + movieClip.currentLabel + ", dispatchLabelEvents=" + _dispatchLabelEvents);
 			
-			if (this._listeners.hasOwnProperty(this.movieClip.currentFrame-1))
+			if (_listeners.hasOwnProperty(movieClip.currentFrame-1))
 			{
-				if (this._debug) this.logDebug("onFrame: dispatch TimelineControllerEvent '" + (TimelineControllerEvent.REACH_FRAME + '.' + this.movieClip.currentFrame) + "'");
-				this.dispatchEvent(new TimelineControllerEvent(TimelineControllerEvent.REACH_FRAME + '.' + this.movieClip.currentFrame, this, this.movieClip.currentFrame, this.movieClip.currentLabel));
+				if (_debug) logDebug("onFrame: dispatch TimelineControllerEvent '" + (TimelineControllerEvent.REACH_FRAME + '.' + movieClip.currentFrame) + "'");
+				dispatchEvent(new TimelineControllerEvent(TimelineControllerEvent.REACH_FRAME + '.' + movieClip.currentFrame, this, movieClip.currentFrame, movieClip.currentLabel));
 			}
-			if (this._dispatchLabelEvents)
+			if (_dispatchLabelEvents)
 			{
-				this.dispatchEvent(new TimelineControllerEvent(TimelineControllerEvent.REACH_FRAME, this, this.movieClip.currentFrame, this.movieClip.currentLabel));
+				dispatchEvent(new TimelineControllerEvent(TimelineControllerEvent.REACH_FRAME, this, movieClip.currentFrame, movieClip.currentLabel));
 			}
 		}
 		
@@ -246,16 +246,16 @@ package temple.ui.animation
 		 */
 		override public function destruct():void
 		{
-			if (this.movieClip)
+			if (movieClip)
 			{
-				this.movieClip.stop();
-				for each (var label:FrameLabel in this.movieClip.currentScene.labels)
+				movieClip.stop();
+				for each (var label:FrameLabel in movieClip.currentScene.labels)
 				{
-					this.movieClip.addFrameScript(label.frame - 1, null);
+					movieClip.addFrameScript(label.frame - 1, null);
 				}
 			}
-			this._listeners = null;
-			this._labels = null;
+			_listeners = null;
+			_labels = null;
 			
 			super.destruct();
 		}

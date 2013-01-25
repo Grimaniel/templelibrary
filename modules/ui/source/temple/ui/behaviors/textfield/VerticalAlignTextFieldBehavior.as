@@ -68,9 +68,9 @@ package temple.ui.behaviors.textfield
 		{
 			super(target);
 			
-			this._top = target.y;
-			this._bottom = target.y + target.height;
-			this._middle = target.y + target.height * .5;
+			_top = target.y;
+			_bottom = target.y + target.height;
+			_middle = target.y + target.height * .5;
 			
 			switch (autoSize)
 			{
@@ -86,7 +86,7 @@ package temple.ui.behaviors.textfield
 			}
 			
 			this.align = align;
-			target.addEventListener(Event.CHANGE, this.handleTextFieldChange);
+			target.addEventListener(Event.CHANGE, handleTextFieldChange);
 		}
 		
 		/**
@@ -94,7 +94,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get align():String
 		{
-			return this._align;
+			return _align;
 		}
 		
 		/**
@@ -107,8 +107,8 @@ package temple.ui.behaviors.textfield
 				case Align.TOP:
 				case Align.MIDDLE:
 				case Align.BOTTOM:
-					this._align = value;
-					this.doAlign();
+					_align = value;
+					doAlign();
 					break;
 				default:
 					throwError(new TempleError(this, "Invalid value for align: '" + value + "'"));
@@ -121,7 +121,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get top():Number
 		{
-			return this._top;
+			return _top;
 		}
 		
 		/**
@@ -129,7 +129,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function set top(value:Number):void
 		{
-			this._top = value;
+			_top = value;
 		}
 		
 		/**
@@ -137,7 +137,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get middle():Number
 		{
-			return this._middle;
+			return _middle;
 		}
 		
 		/**
@@ -145,7 +145,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function set middle(value:Number):void
 		{
-			this._middle = value;
+			_middle = value;
 		}
 		
 		/**
@@ -153,7 +153,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get bottom():Number
 		{
-			return this._bottom;
+			return _bottom;
 		}
 		
 		/**
@@ -161,29 +161,29 @@ package temple.ui.behaviors.textfield
 		 */
 		public function set bottom(value:Number):void
 		{
-			this._bottom = value;
+			_bottom = value;
 		}
 		
 		private function handleTextFieldChange(event:Event):void
 		{
-			this.doAlign();
+			doAlign();
 		}
 
 		private function doAlign():void
 		{
-			switch (this._align)
+			switch (_align)
 			{
 				case Align.TOP:
-					this.displayObject.y = this._top;
+					this.displayObject.y = _top;
 					break;
 				case Align.BOTTOM:
-					this.displayObject.y = this._bottom - this.displayObject.height;
+					this.displayObject.y = _bottom - this.displayObject.height;
 					break;
 				case Align.MIDDLE:
-					this.displayObject.y = this._middle - .5 * this.displayObject.height;
+					this.displayObject.y = _middle - .5 * displayObject.height;
 					break;
 			}
-			this.dispatchEvent(new Event(Event.CHANGE));
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -191,7 +191,7 @@ package temple.ui.behaviors.textfield
 		 */
 		override public function destruct():void
 		{
-			if (this.displayObject) this.displayObject.removeEventListener(Event.CHANGE, this.handleTextFieldChange);
+			if (displayObject) displayObject.removeEventListener(Event.CHANGE, handleTextFieldChange);
 			
 			super.destruct();
 		}

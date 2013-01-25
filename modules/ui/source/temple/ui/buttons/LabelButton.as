@@ -74,11 +74,11 @@ package temple.ui.buttons
 		{
 			super(textField);
 			
-			this.stop();
+			stop();
 			
-			this._buttonBehavior = new ButtonBehavior(this);
-			if (this.totalFrames > 1) this._timelineBehavior = new ButtonTimelineBehavior(this);
-			this._stateBehavior = new ButtonStateBehavior(this);
+			_buttonBehavior = new ButtonBehavior(this);
+			if (totalFrames > 1) _timelineBehavior = new ButtonTimelineBehavior(this);
+			_stateBehavior = new ButtonStateBehavior(this);
 		}
 		
 		/**
@@ -86,7 +86,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonBehavior():ButtonBehavior
 		{
-			return this._buttonBehavior;
+			return _buttonBehavior;
 		}
 
 		/**
@@ -94,7 +94,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonTimelineBehavior():ButtonTimelineBehavior
 		{
-			return this._timelineBehavior;
+			return _timelineBehavior;
 		}
 
 		/**
@@ -102,7 +102,7 @@ package temple.ui.buttons
 		 */
 		public function get buttonStateBehavior():ButtonStateBehavior
 		{
-			return this._stateBehavior;
+			return _stateBehavior;
 		}
 		
 		/**
@@ -111,8 +111,8 @@ package temple.ui.buttons
 		[Inspectable(name="Enabled", type="Boolean", defaultValue="true")]
 		override public function set enabled(value:Boolean):void
 		{
-			this.mouseEnabled = super.enabled = value; 
-			if (this._buttonBehavior) this._buttonBehavior.disabled = !value;
+			mouseEnabled = super.enabled = value; 
+			if (_buttonBehavior) _buttonBehavior.disabled = !value;
 		}
 		
 		/**
@@ -120,7 +120,7 @@ package temple.ui.buttons
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 		
 		/**
@@ -128,7 +128,7 @@ package temple.ui.buttons
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 		
 		/**
@@ -136,7 +136,7 @@ package temple.ui.buttons
 		 */
 		public function get selected():Boolean
 		{
-			return this._selected;
+			return _selected;
 		}
 
 		/**
@@ -144,10 +144,10 @@ package temple.ui.buttons
 		 */
 		public function set selected(value:Boolean):void 
 		{
-			if (this._selected != value)
+			if (_selected != value)
 			{
-				if (this._buttonBehavior) this._buttonBehavior.selected = this._selected = value;
-				this.dispatchEvent(new Event(Event.CHANGE));
+				if (_buttonBehavior) _buttonBehavior.selected = _selected = value;
+				dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
@@ -156,7 +156,7 @@ package temple.ui.buttons
 		 */
 		public function get focus():Boolean
 		{
-			return this._buttonBehavior ? this._buttonBehavior.focus : false;
+			return _buttonBehavior ? _buttonBehavior.focus : false;
 		}
 		
 		/**
@@ -164,13 +164,13 @@ package temple.ui.buttons
 		 */
 		public function set focus(value:Boolean):void
 		{
-			if (value == this.focus) return;
+			if (value == focus) return;
 			
 			if (value)
 			{
 				FocusManager.focus = this;
 			}
-			else if (this.focus)
+			else if (focus)
 			{
 				FocusManager.focus = null;
 			}
@@ -181,7 +181,7 @@ package temple.ui.buttons
 		 */
 		public function get updateByParent():Boolean
 		{
-			return this._stateBehavior.updateByParent && this._timelineBehavior.updateByParent;
+			return _stateBehavior.updateByParent && _timelineBehavior.updateByParent;
 		}
 		
 		/**
@@ -190,8 +190,8 @@ package temple.ui.buttons
 		[Inspectable(name="Update By Parent", type="Boolean", defaultValue="true")]
 		public function set updateByParent(value:Boolean):void
 		{
-			if (this._stateBehavior) this._stateBehavior.updateByParent = value; 
-			if (this._timelineBehavior) this._timelineBehavior.updateByParent = value;
+			if (_stateBehavior) _stateBehavior.updateByParent = value; 
+			if (_timelineBehavior) _timelineBehavior.updateByParent = value;
 		}
 		
 		/**
@@ -199,9 +199,9 @@ package temple.ui.buttons
 		 */
 		override public function destruct():void
 		{
-			this._buttonBehavior = null;
-			this._timelineBehavior = null;
-			this._stateBehavior = null;
+			_buttonBehavior = null;
+			_timelineBehavior = null;
+			_stateBehavior = null;
 			
 			super.destruct();
 		}

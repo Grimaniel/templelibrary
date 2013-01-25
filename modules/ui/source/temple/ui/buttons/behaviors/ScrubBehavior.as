@@ -45,8 +45,6 @@ package temple.ui.buttons.behaviors
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
-
-
 	/**
 	 * The ScrubBehavior makes a DisplayObject Scrubbable. That means that MouseEvent.CLICK events will be dispatched on the DisplayObject when you are Scrubbing over the Object.
 	 * Scrubbing means: moving the mouse while pressing.
@@ -70,15 +68,15 @@ package temple.ui.buttons.behaviors
 			
 			this.eventType = eventType;
 			
-			target.addEventListener(MouseEvent.MOUSE_DOWN, this.handleTargetMouseDown);
+			target.addEventListener(MouseEvent.MOUSE_DOWN, handleTargetMouseDown);
 
 			if (target.stage)
 			{
-				this._stage = target.stage;
+				_stage = target.stage;
 			}
 			else
 			{
-				target.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+				target.addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 			}
 		}
 		
@@ -87,7 +85,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get eventType():String
 		{
-			return this._eventType;
+			return _eventType;
 		}
 		
 		/**
@@ -95,7 +93,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get enabled():Boolean
 		{
-			return this._enabled;
+			return _enabled;
 		}
 
 		/**
@@ -103,7 +101,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set enabled(value:Boolean):void
 		{
-			this._enabled = value;
+			_enabled = value;
 		}
 
 		/**
@@ -111,7 +109,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function enable():void
 		{
-			this.enabled = true;
+			enabled = true;
 		}
 
 		/**
@@ -119,7 +117,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function disable():void
 		{
-			this.enabled = false;
+			enabled = false;
 		}
 		
 		/**
@@ -133,7 +131,7 @@ package temple.ui.buttons.behaviors
 				case MouseEvent.MOUSE_DOWN:
 				case MouseEvent.MOUSE_UP:
 				{
-					this._eventType = value;
+					_eventType = value;
 					break;
 				}
 				default:
@@ -146,38 +144,39 @@ package temple.ui.buttons.behaviors
 		
 		private function handleTargetMouseDown(event:MouseEvent):void
 		{
-			if (this._enabled) this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
+			if (_enabled) displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
 			
-			if (!this._stage && this.displayObject.stage) this._stage = this.displayObject.stage;
+			if (!_stage && displayObject.stage) _stage = displayObject.stage;
 			
-			if (this._stage)
+			if (_stage)
 			{
-				this._stage.addEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
-				this._stage.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
+				_stage.addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
+				_stage.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
 			}
+			if (_enabled) displayObject.dispatchEvent(new MouseEvent(_eventType, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
 		}
 		
 		private function handleMouseMove(event:MouseEvent):void
 		{
-			if (event.buttonDown && this._enabled) this.displayObject.dispatchEvent(new MouseEvent(this._eventType, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
+			if (event.buttonDown && _enabled) displayObject.dispatchEvent(new MouseEvent(_eventType, true, false, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown));
 		}
 		
 		private function handleMouseUp(event:MouseEvent):void
 		{
-			this._stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
-			this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-			this.displayObject.addEventListener(MouseEvent.CLICK, this.handleClick, false, int.MAX_VALUE);
+			_stage.removeEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
+			_stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+			displayObject.addEventListener(MouseEvent.CLICK, handleClick, false, int.MAX_VALUE);
 		}
 
 		private function handleClick(event:MouseEvent):void
 		{
 			event.stopImmediatePropagation();
-			this.displayObject.removeEventListener(MouseEvent.CLICK, this.handleClick);
+			displayObject.removeEventListener(MouseEvent.CLICK, handleClick);
 		}
 		
 		private function handleAddedToStage(event:Event):void
 		{
-			this._stage = (event.target as DisplayObject).stage;
+			_stage = (event.target as DisplayObject).stage;
 		}
 
 		/**
@@ -185,19 +184,19 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.displayObject)
+			if (displayObject)
 			{
-				this.displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleTargetMouseDown);
-				this.displayObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+				displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, handleTargetMouseDown);
+				displayObject.removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 			}
 			
-			if (this._stage)
+			if (_stage)
 			{
-				this._stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.handleMouseMove);
-				this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-				this._stage = null;
+				_stage.removeEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
+				_stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+				_stage = null;
 			}
-			this._eventType = null;
+			_eventType = null;
 			
 			super.destruct();
 		}

@@ -80,7 +80,7 @@ package temple.ui.behaviors
 		 */
 		override public function clone():Event
 		{
-			return new DragBehaviorEvent(this.type, this.behavior as DragBehavior, this.bubbles);
+			return new DragBehaviorEvent(type, behavior as DragBehavior, bubbles);
 		}
 
 	}

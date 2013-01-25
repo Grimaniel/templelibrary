@@ -82,7 +82,7 @@ package temple.ui.buttons.behaviors
 		
 		public function get displayObjectContainer():DisplayObjectContainer
 		{
-			return this.displayObject as DisplayObjectContainer;
+			return displayObject as DisplayObjectContainer;
 		}
 
 		/**
@@ -90,19 +90,19 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set over(value:Boolean):void
 		{
-			if (this.over == value || !this.enabled) return;
+			if (over == value || !enabled) return;
 			
 			super.over = value;
 			
-			if (this.over)
+			if (over)
 			{
-				StateHelper.showState(this.displayObjectContainer, IOverState);
-				StateHelper.hideState(this.displayObjectContainer, IUpState);
+				StateHelper.showState(displayObjectContainer, IOverState);
+				StateHelper.hideState(displayObjectContainer, IUpState);
 			}
 			else
 			{
-				StateHelper.hideState(this.displayObjectContainer, IOverState);
-				StateHelper.showState(this.displayObjectContainer, IUpState);
+				StateHelper.hideState(displayObjectContainer, IOverState);
+				StateHelper.showState(displayObjectContainer, IUpState);
 			}
 		}
 
@@ -111,17 +111,17 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set down(value:Boolean):void
 		{
-			if (this.down == value || !this.enabled) return;
+			if (down == value || !enabled) return;
 			
 			super.down = value;
 			
-			if (this.down)
+			if (down)
 			{
-				StateHelper.showState(this.displayObjectContainer, IDownState);
+				StateHelper.showState(displayObjectContainer, IDownState);
 			}
 			else
 			{
-				StateHelper.hideState(this.displayObjectContainer, IDownState);
+				StateHelper.hideState(displayObjectContainer, IDownState);
 			}
 		}
 
@@ -130,17 +130,17 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set selected(value:Boolean):void
 		{
-			if (this.selected == value || !this.enabled) return;
+			if (selected == value || !enabled) return;
 			
 			super.selected = value;
 			
-			if (this.selected)
+			if (selected)
 			{
-				StateHelper.showState(this.displayObjectContainer, ISelectState);
+				StateHelper.showState(displayObjectContainer, ISelectState);
 			}
 			else
 			{
-				StateHelper.hideState(this.displayObjectContainer, ISelectState);
+				StateHelper.hideState(displayObjectContainer, ISelectState);
 			}
 		}
 
@@ -149,17 +149,17 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set disabled(value:Boolean):void
 		{
-			if (this.disabled == value || !this.enabled) return;
+			if (disabled == value || !enabled) return;
 			
 			super.disabled = value;
 			
-			if (this.disabled)
+			if (disabled)
 			{
-				StateHelper.showState(this.displayObjectContainer, IDisabledState);
+				StateHelper.showState(displayObjectContainer, IDisabledState);
 			}
 			else
 			{
-				StateHelper.hideState(this.displayObjectContainer, IDisabledState);
+				StateHelper.hideState(displayObjectContainer, IDisabledState);
 			}
 		}
 
@@ -168,17 +168,17 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set focus(value:Boolean):void
 		{
-			if (this.focus == value || !this.enabled) return;
+			if (focus == value || !enabled) return;
 			
 			super.focus = value;
 			
-			if (this.focus)
+			if (focus)
 			{
-				StateHelper.showState(this.displayObjectContainer, IFocusState);
+				StateHelper.showState(displayObjectContainer, IFocusState);
 			}
 			else
 			{
-				StateHelper.hideState(this.displayObjectContainer, IFocusState);
+				StateHelper.hideState(displayObjectContainer, IFocusState);
 			}
 		}
 
@@ -187,7 +187,7 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.target) delete ButtonStateBehavior._dictionary[this.target];
+			if (target) delete ButtonStateBehavior._dictionary[target];
 			
 			super.destruct();
 		}

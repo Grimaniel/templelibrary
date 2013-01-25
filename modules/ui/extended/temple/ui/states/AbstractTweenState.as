@@ -57,12 +57,12 @@ package temple.ui.states
 
 		public function AbstractTweenState(showVars:Object, hideVars:Object, showDuration:Number = .5, hideDuration:Number = .5)
 		{
-			this._showVars = showVars;
-			this._hideVars = hideVars;
+			_showVars = showVars;
+			_hideVars = hideVars;
 			this.showDuration = showDuration;
 			this.hideDuration = hideDuration;
 			
-			this.hide(true);
+			hide(true);
 		}
 		
 		/**
@@ -70,7 +70,7 @@ package temple.ui.states
 		 */
 		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			this.tween(true, instant ? 0 : this._showDuration, this._showVars, onComplete);
+			tween(true, instant ? 0 : _showDuration, _showVars, onComplete);
 		}
 
 		/**
@@ -78,7 +78,7 @@ package temple.ui.states
 		 */
 		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			this.tween(false, instant ? 0 : this._hideDuration, this._hideVars, onComplete);
+			tween(false, instant ? 0 : _hideDuration, _hideVars, onComplete);
 		}
 		
 		/**
@@ -86,7 +86,7 @@ package temple.ui.states
 		 */
 		public function get showVars():Object
 		{
-			return this._showVars;
+			return _showVars;
 		}
 
 		/**
@@ -94,7 +94,7 @@ package temple.ui.states
 		 */
 		public function get hideVars():Object
 		{
-			return this._hideVars;
+			return _hideVars;
 		}
 		
 		/**
@@ -102,7 +102,7 @@ package temple.ui.states
 		 */
 		public final function get showDuration():Number
 		{
-			return this._showDuration;
+			return _showDuration;
 		}
 		
 		/**
@@ -113,7 +113,7 @@ package temple.ui.states
 		{
 			if (isNaN(value)) throwError(new TempleArgumentError(this, "showDuration cannot be NaN"));
 			
-			this._showDuration = value;
+			_showDuration = value;
 		}
 		
 		/**
@@ -121,7 +121,7 @@ package temple.ui.states
 		 */
 		public final function get hideDuration():Number
 		{
-			return this._hideDuration;
+			return _hideDuration;
 		}
 		
 		/**
@@ -132,7 +132,7 @@ package temple.ui.states
 		{
 			if (isNaN(value)) throwError(new TempleArgumentError(this, "hideDuration cannot be NaN"));
 			
-			this._hideDuration = value;
+			_hideDuration = value;
 		}
 		
 		private function tween(show:Boolean, duration:Number, vars:Object, onComplete:Function):void
@@ -142,12 +142,12 @@ package temple.ui.states
 				throwError(new TempleArgumentError(this, "Vars cannot be null"));
 				return;
 			}
-			if (this.enabled == false || this._shown == show && duration > 0) return;
-			this._shown = show;
+			if (enabled == false || _shown == show && duration > 0) return;
+			_shown = show;
 			vars.immediateRender = duration == 0;
 			if (onComplete != null) vars.onComplete = onComplete;
-			if (this._tween) this._tween.kill();
-			this._tween = TweenMax.to(this, duration, vars);
+			if (_tween) _tween.kill();
+			_tween = TweenMax.to(this, duration, vars);
 		}
 
 		/**
@@ -155,13 +155,13 @@ package temple.ui.states
 		 */
 		override public function destruct():void
 		{
-			if (this._tween)
+			if (_tween)
 			{
-				this._tween.kill();
-				this._tween = null;
+				_tween.kill();
+				_tween = null;
 			}
-			this._showVars = null;
-			this._hideVars = null;
+			_showVars = null;
+			_hideVars = null;
 			
 			super.destruct();
 		}

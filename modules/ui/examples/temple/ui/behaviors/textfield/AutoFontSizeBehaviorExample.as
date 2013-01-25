@@ -26,7 +26,7 @@ package
 		{
 			super("Temple - AutoFontSizeBehaviorExample");
 			
-			new AutoFontSizeBehavior(this.textField);
+			new AutoFontSizeBehavior(textField);
 		}
 	}
 }

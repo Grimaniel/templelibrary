@@ -68,7 +68,7 @@ package temple.ui.form.components
 		 */
 		public function get groupName():String
 		{
-			return this._group ? this._group.name : null;
+			return _group ? _group.name : null;
 		}
 		
 		/**
@@ -76,7 +76,7 @@ package temple.ui.form.components
 		 */
 		public function set groupName(value:String):void
 		{
-			this.group = RadioGroup.getInstance(value);
+			group = RadioGroup.getInstance(value);
 		}
 		
 		/**
@@ -84,7 +84,7 @@ package temple.ui.form.components
 		 */
 		public function get group():IRadioGroup
 		{
-			return this._group;
+			return _group;
 		}
 		
 		/**
@@ -93,13 +93,13 @@ package temple.ui.form.components
 		public function set group(value:IRadioGroup):void
 		{
 			// remove from group if we already have a group
-			if (this._group) this._group.remove(this);
+			if (_group) _group.remove(this);
 			
-			this._group = value;
-			if (this._group)
+			_group = value;
+			if (_group)
 			{
-				this._group.add(this, this.selectedValue);
-				if (this.selected) this._group.selected = this;
+				_group.add(this, selectedValue);
+				if (selected) _group.selected = this;
 			}
 		}
 
@@ -126,7 +126,7 @@ package temple.ui.form.components
 		override public function set selectedValue(value:*):void
 		{
 			// also store value as unselectedm since value will allways be get throug the RadioGroup
-			this.unselectedValue = super.selectedValue = value;
+			unselectedValue = super.selectedValue = value;
 		}
 
 		/**
@@ -158,7 +158,7 @@ package temple.ui.form.components
 		 */
 		public function get toggle():Boolean
 		{
-			return this._toggle;
+			return _toggle;
 		}
 
 		/**
@@ -166,7 +166,7 @@ package temple.ui.form.components
 		 */
 		public function set toggle(value:Boolean):void
 		{
-			this._toggle = value;
+			_toggle = value;
 		}
 
 		/**
@@ -174,7 +174,7 @@ package temple.ui.form.components
 		 */
 		override protected function handleClick(event:MouseEvent):void
 		{
-			this.selected = this._toggle ? !this.selected : true;
+			selected = _toggle ? !selected : true;
 		}
 
 		/**
@@ -182,10 +182,10 @@ package temple.ui.form.components
 		 */
 		override public function destruct():void
 		{
-			if (this._group)
+			if (_group)
 			{
-				this._group.remove(this);
-				this._group = null;
+				_group.remove(this);
+				_group = null;
 			}
 			
 			super.destruct();

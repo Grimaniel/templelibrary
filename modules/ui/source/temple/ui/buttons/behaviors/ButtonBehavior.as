@@ -114,7 +114,7 @@ package temple.ui.buttons.behaviors
 					// act as button
 					if (target is Sprite)
 					{
-						this._eventTunneler = new EventTunneler(target as Sprite, ButtonEvent.UPDATE);
+						_eventTunneler = new EventTunneler(target as Sprite, ButtonEvent.UPDATE);
 						
 						(target as Sprite).buttonMode = true;
 						if (target.hasOwnProperty(BaseButton.hitAreaInstanceName) && target[BaseButton.hitAreaInstanceName] is Sprite)
@@ -126,32 +126,32 @@ package temple.ui.buttons.behaviors
 				}
 			}
 
-			target.addEventListener(MouseEvent.ROLL_OVER, this.handleRollOver);
-			target.addEventListener(MouseEvent.ROLL_OUT, this.handleRollOut);
-			target.addEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
-			target.addEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-			target.addEventListener(MouseEvent.CLICK, this.handleClick);
-			target.addEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-			target.addEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
-			target.addEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-			target.addEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp);
+			target.addEventListener(MouseEvent.ROLL_OVER, handleRollOver);
+			target.addEventListener(MouseEvent.ROLL_OUT, handleRollOut);
+			target.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
+			target.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+			target.addEventListener(MouseEvent.CLICK, handleClick);
+			target.addEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+			target.addEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
+			target.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+			target.addEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
 			
-			this._inDelayTimer = new CoreTimer(0);
-			this._inDelayTimer.addEventListener(TimerEvent.TIMER, this.handleInDelay);
+			_inDelayTimer = new CoreTimer(0);
+			_inDelayTimer.addEventListener(TimerEvent.TIMER, handleInDelay);
 			
-			this._outDelayTimer = new CoreTimer(0);
-			this._outDelayTimer.addEventListener(TimerEvent.TIMER, this.handleOutDelay);
+			_outDelayTimer = new CoreTimer(0);
+			_outDelayTimer.addEventListener(TimerEvent.TIMER, handleOutDelay);
 			
 			if (target.stage)
 			{
-				this._stage = target.stage;
-				this._stage.addEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave);
-				this._stage.addEventListener(Event.DEACTIVATE, this.handleMouseLeave);
-				FocusManager.init(this._stage);
+				_stage = target.stage;
+				_stage.addEventListener(Event.MOUSE_LEAVE, handleMouseLeave);
+				_stage.addEventListener(Event.DEACTIVATE, handleMouseLeave);
+				FocusManager.init(_stage);
 			}
 			else
 			{
-				target.addEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
+				target.addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 			}
 		}
 		
@@ -160,10 +160,10 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set over(value:Boolean):void
 		{
-			if (this.over != value)
+			if (over != value)
 			{
 				super.over = value;
-				this.update();
+				update();
 			}
 		}
 		
@@ -172,10 +172,10 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set lockOver(value:Boolean):void
 		{
-			if (this.lockOver != value)
+			if (lockOver != value)
 			{
 				super.lockOver = value;
-				this.update();
+				update();
 			}
 		}
 		
@@ -184,10 +184,10 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set down(value:Boolean):void
 		{
-			if (this.down != value)
+			if (down != value)
 			{
 				super.down = value;
-				this.update();
+				update();
 			}
 		}
 		
@@ -196,10 +196,10 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set lockDown(value:Boolean):void
 		{
-			if (this.lockDown != value)
+			if (lockDown != value)
 			{
 				super.lockDown = value;
-				this.update();
+				update();
 			}
 		}
 		
@@ -208,10 +208,10 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set selected(value:Boolean):void
 		{
-			if (this.selected != value)
+			if (selected != value)
 			{
 				super.selected = value;
-				this.update();
+				update();
 			}
 		}
 		
@@ -220,10 +220,10 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set disabled(value:Boolean):void
 		{
-			if (this.disabled != value)
+			if (disabled != value)
 			{
 				super.disabled = value;
-				this.update();
+				update();
 			}
 		}
 		
@@ -232,10 +232,10 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function set focus(value:Boolean):void
 		{
-			if (this.focus != value)
+			if (focus != value)
 			{
 				super.focus = value;
-				this.update();
+				update();
 			}
 		}
 		
@@ -244,7 +244,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get inDelay():Number
 		{
-			return this._inDelayTimer.delay;
+			return _inDelayTimer.delay;
 		}
 		
 		/**
@@ -252,9 +252,9 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set inDelay(value:Number):void
 		{
-			if (this._inDelayTimer.delay != value && !isNaN(value))
+			if (_inDelayTimer.delay != value && !isNaN(value))
 			{
-				this._inDelayTimer.delay = value;
+				_inDelayTimer.delay = value;
 			}
 		}
 
@@ -263,7 +263,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get outDelay():Number
 		{
-			return this._outDelayTimer.delay;
+			return _outDelayTimer.delay;
 		}
 		
 		/**
@@ -271,9 +271,9 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set outDelay(value:Number):void
 		{
-			if (this._outDelayTimer.delay != value && !isNaN(value))
+			if (_outDelayTimer.delay != value && !isNaN(value))
 			{
-				this._outDelayTimer.delay = value;
+				_outDelayTimer.delay = value;
 			}
 		}
 
@@ -283,7 +283,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get outOnDragOut():Boolean
 		{
-			return this._outOnDragOut;
+			return _outOnDragOut;
 		}
 		
 		/**
@@ -291,7 +291,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set outOnDragOut(value:Boolean):void
 		{
-			this._outOnDragOut = value;
+			_outOnDragOut = value;
 		}
 		
 		/**
@@ -299,7 +299,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get downOnDragIn():Boolean
 		{
-			return this._downOnDragIn;
+			return _downOnDragIn;
 		}
 
 		/**
@@ -307,7 +307,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set downOnDragIn(value:Boolean):void
 		{
-			this._downOnDragIn = value;
+			_downOnDragIn = value;
 		}
 		
 		/**
@@ -315,7 +315,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get clickOnSpacebar():Boolean
 		{
-			return this._clickOnSpacebar;
+			return _clickOnSpacebar;
 		}
 		
 		/**
@@ -323,7 +323,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set clickOnSpacebar(value:Boolean):void
 		{
-			this._clickOnSpacebar = value;
+			_clickOnSpacebar = value;
 		}
 		
 		/**
@@ -331,7 +331,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function get clickOnEnter():Boolean
 		{
-			return this._clickOnEnter;
+			return _clickOnEnter;
 		}
 		
 		/**
@@ -339,7 +339,7 @@ package temple.ui.buttons.behaviors
 		 */
 		public function set clickOnEnter(value:Boolean):void
 		{
-			this._clickOnEnter = value;
+			_clickOnEnter = value;
 		}
 		
 		/**
@@ -347,164 +347,164 @@ package temple.ui.buttons.behaviors
 		 */
 		public function update():void
 		{
-			if (this.enabled)
+			if (enabled)
 			{
-				if (this.debug) this.logDebug("update: over=" + this.over + ", down=" + this.down + ", selected=" + this.selected + ", disabled=" + this.disabled);
+				if (debug) logDebug("update: over=" + over + ", down=" + down + ", selected=" + selected + ", disabled=" + disabled);
 				
-				this.displayObject.dispatchEvent(new ButtonEvent(ButtonEvent.UPDATE, this));
-				this.dispatchEvent(new ButtonEvent(ButtonEvent.UPDATE, this, false));
+				displayObject.dispatchEvent(new ButtonEvent(ButtonEvent.UPDATE, this));
+				dispatchEvent(new ButtonEvent(ButtonEvent.UPDATE, this, false));
 			}
-			else if (this.debug) this.logWarn("ButtonBehavior is disabled");
+			else if (debug) logWarn("ButtonBehavior is disabled");
 		}
 
 		private function handleRollOver(event:MouseEvent):void
 		{
-			if (this.debug) this.logDebug("handleRollOver");
+			if (debug) logDebug("handleRollOver");
 			
 			super.over = true;
-			if (!super.down) super.down = event.buttonDown && this._downOnDragIn;
-			this.resetTimers();
-			this._inDelayTimer.start();
+			if (!super.down) super.down = event.buttonDown && _downOnDragIn;
+			resetTimers();
+			_inDelayTimer.start();
 		}
 
 		private function handleRollOut(event:MouseEvent):void
 		{
-			if (this.debug) this.logDebug("handleRollOut");
+			if (debug) logDebug("handleRollOut");
 			
-			this.resetTimers();
+			resetTimers();
 
-			if (this.over)
+			if (over)
 			{
 				super.over = false;
-				if (this._outDelayTimer.delay > 0)
+				if (_outDelayTimer.delay > 0)
 				{
-					this._outDelayTimer.start();
+					_outDelayTimer.start();
 				}
 				else
 				{
-					this.onOutDelay();
+					onOutDelay();
 				}
 			}
 		}
 
 		private function handleMouseDown(event:MouseEvent):void
 		{
-			if (this.debug) this.logDebug("handleMouseDown");
+			if (debug) logDebug("handleMouseDown");
 			
-			this.resetTimers();
-			this.down = true;
+			resetTimers();
+			down = true;
 		}
 		
 		private function handleMouseUp(event:MouseEvent):void
 		{
-			if (this.debug) this.logDebug("handleMouseUp");
+			if (debug) logDebug("handleMouseUp");
 			
-			this.resetTimers();
-			this.down = false;
+			resetTimers();
+			down = false;
 		}
 		
 		private function handleClick(event:MouseEvent):void
 		{
-			if (this.debug) this.logDebug("handleClick");
+			if (debug) logDebug("handleClick");
 		}
 		
 		private function handleInDelay(event:TimerEvent):void
 		{
-			this.resetTimers();
-			this.update();
+			resetTimers();
+			update();
 		}
 		
 		private function handleOutDelay(event:TimerEvent):void
 		{
-			this.onOutDelay();
+			onOutDelay();
 		}
 		
 		private function onOutDelay():void
 		{
-			this.resetTimers();
+			resetTimers();
 			
 			super.over = false;
 			
-			if (this.down)
+			if (down)
 			{
-				if (this._outOnDragOut)
+				if (_outOnDragOut)
 				{
-					this.down = false;
+					down = false;
 				}
 				else
 				{
-					this._stage.addEventListener(MouseEvent.MOUSE_UP, this.handleStageMouseUp, false, 0, true);
+					_stage.addEventListener(MouseEvent.MOUSE_UP, handleStageMouseUp, false, 0, true);
 				}
 			}
 			else
 			{
-				this.update();
+				update();
 			}
 		}
 		
 		private function handleAddedToStage(event:Event):void
 		{
-			this.displayObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-			this._stage = this.displayObject.stage;
-			this._stage.addEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave);
-			this._stage.addEventListener(Event.DEACTIVATE, this.handleMouseLeave);
-			FocusManager.init(this._stage);
+			displayObject.removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+			_stage = displayObject.stage;
+			_stage.addEventListener(Event.MOUSE_LEAVE, handleMouseLeave);
+			_stage.addEventListener(Event.DEACTIVATE, handleMouseLeave);
+			FocusManager.init(_stage);
 		}
 
 		private function resetTimers():void 
 		{
-			if (this._inDelayTimer) this._inDelayTimer.reset();
-			if (this._outDelayTimer) this._outDelayTimer.reset();
+			if (_inDelayTimer) _inDelayTimer.reset();
+			if (_outDelayTimer) _outDelayTimer.reset();
 		}
 
 		
 		private function handleStageMouseUp(event:MouseEvent):void
 		{
-			this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleStageMouseUp);
-			if (this.down)
+			_stage.removeEventListener(MouseEvent.MOUSE_UP, handleStageMouseUp);
+			if (down)
 			{
-				if (this.debug) this.logDebug("handleStageMouseUp");
-				this.resetTimers();
-				this.down = false;
+				if (debug) logDebug("handleStageMouseUp");
+				resetTimers();
+				down = false;
 			}
 		}
 		
 		private function handleMouseLeave(event:Event):void
 		{
-			if (this.over)
+			if (over)
 			{
-				if (this.debug) this.logDebug("handleMouseLeave");
+				if (debug) logDebug("handleMouseLeave");
 				super.down = false;
-				this.over = false;
+				over = false;
 			}
 		}
 		
 		private function handleFocusIn(event:FocusEvent):void
 		{
-			this.focus = true;
+			focus = true;
 		}
 
 		private function handleFocusOut(event:FocusEvent):void
 		{
-			this.focus = false;
+			focus = false;
 		}
 		
 		private function handleKeyDown(event:KeyboardEvent):void
 		{
-			if (this._clickOnEnter && event.keyCode == KeyCode.ENTER || this._clickOnSpacebar && event.keyCode == KeyCode.SPACE)
+			if (_clickOnEnter && event.keyCode == KeyCode.ENTER || _clickOnSpacebar && event.keyCode == KeyCode.SPACE)
 			{
 				event.stopPropagation();
-				this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false, NaN, NaN, null, event.ctrlKey, event.altKey, event.shiftKey));
-				this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, NaN, NaN, null, event.ctrlKey, event.altKey, event.shiftKey));
+				displayObject.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false, NaN, NaN, null, event.ctrlKey, event.altKey, event.shiftKey));
+				displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, NaN, NaN, null, event.ctrlKey, event.altKey, event.shiftKey));
 			}
 		}
 
 		private function handleKeyUp(event:KeyboardEvent):void
 		{
-			if (this._clickOnEnter && event.keyCode == KeyCode.ENTER || this._clickOnSpacebar && event.keyCode == KeyCode.SPACE)
+			if (_clickOnEnter && event.keyCode == KeyCode.ENTER || _clickOnSpacebar && event.keyCode == KeyCode.SPACE)
 			{
 				event.stopPropagation();
-				this.displayObject.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, true, false, NaN, NaN, null, event.ctrlKey, event.altKey, event.shiftKey));
+				displayObject.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, true, false, NaN, NaN, null, event.ctrlKey, event.altKey, event.shiftKey));
 			}
 		}
 
@@ -513,42 +513,42 @@ package temple.ui.buttons.behaviors
 		 */
 		override public function destruct():void
 		{
-			if (this.target) delete ButtonBehavior._dictionary[this.target];
+			if (target) delete ButtonBehavior._dictionary[target];
 			
-			if (this.displayObject)
+			if (displayObject)
 			{
-				this.displayObject.removeEventListener(MouseEvent.ROLL_OVER, this.handleRollOver);
-				this.displayObject.removeEventListener(MouseEvent.ROLL_OUT, this.handleRollOut);
-				this.displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, this.handleMouseDown);
-				this.displayObject.removeEventListener(MouseEvent.MOUSE_UP, this.handleMouseUp);
-				this.displayObject.removeEventListener(MouseEvent.CLICK, this.handleClick);
-				this.displayObject.removeEventListener(Event.ADDED_TO_STAGE, this.handleAddedToStage);
-				this.displayObject.removeEventListener(FocusEvent.FOCUS_IN, this.handleFocusIn);
-				this.displayObject.removeEventListener(FocusEvent.FOCUS_OUT, this.handleFocusOut);
-				this.displayObject.removeEventListener(KeyboardEvent.KEY_DOWN, this.handleKeyDown);
-				this.displayObject.removeEventListener(KeyboardEvent.KEY_UP, this.handleKeyUp);
+				displayObject.removeEventListener(MouseEvent.ROLL_OVER, handleRollOver);
+				displayObject.removeEventListener(MouseEvent.ROLL_OUT, handleRollOut);
+				displayObject.removeEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
+				displayObject.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+				displayObject.removeEventListener(MouseEvent.CLICK, handleClick);
+				displayObject.removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+				displayObject.removeEventListener(FocusEvent.FOCUS_IN, handleFocusIn);
+				displayObject.removeEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
+				displayObject.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+				displayObject.removeEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
 			}
-			if (this._inDelayTimer)
+			if (_inDelayTimer)
 			{
-				this._inDelayTimer.destruct();
-				this._inDelayTimer = null;
+				_inDelayTimer.destruct();
+				_inDelayTimer = null;
 			}
-			if (this._outDelayTimer)
+			if (_outDelayTimer)
 			{
-				this._outDelayTimer.destruct();
-				this._outDelayTimer = null;
+				_outDelayTimer.destruct();
+				_outDelayTimer = null;
 			}
-			if (this._stage)
+			if (_stage)
 			{
-				this._stage.removeEventListener(MouseEvent.MOUSE_UP, this.handleStageMouseUp);
-				this._stage.removeEventListener(Event.MOUSE_LEAVE, this.handleMouseLeave);
-				this._stage.removeEventListener(Event.DEACTIVATE, this.handleMouseLeave);
-				this._stage = null;
+				_stage.removeEventListener(MouseEvent.MOUSE_UP, handleStageMouseUp);
+				_stage.removeEventListener(Event.MOUSE_LEAVE, handleMouseLeave);
+				_stage.removeEventListener(Event.DEACTIVATE, handleMouseLeave);
+				_stage = null;
 			}
-			if (this._eventTunneler)
+			if (_eventTunneler)
 			{
-				this._eventTunneler.destruct();
-				this._eventTunneler = null;
+				_eventTunneler.destruct();
+				_eventTunneler = null;
 			}
 			super.destruct();
 		}

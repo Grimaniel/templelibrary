@@ -66,35 +66,35 @@ package temple.ui.scroll
 		{
 			super(type);
 			
-			this._scrollH = scrollH;
-			this._scrollV = scrollV;
-			this._maxScrollH = maxScrollH;
-			this._maxScrollV = maxScrollV;
+			_scrollH = scrollH;
+			_scrollV = scrollV;
+			_maxScrollH = maxScrollH;
+			_maxScrollV = maxScrollV;
 		}
 		
 		public function get scrollH():Number
 		{
-			return this._scrollH;
+			return _scrollH;
 		}
 		
 		public function get scrollV():Number
 		{
-			return this._scrollV;
+			return _scrollV;
 		}
 		
 		public function get maxScrollH():Number
 		{
-			return this._maxScrollH;
+			return _maxScrollH;
 		}
 		
 		public function get maxScrollV():Number
 		{
-			return this._maxScrollV;
+			return _maxScrollV;
 		}
 
 		override public function clone():Event
 		{
-			return new ScrollEvent(this.type, this.scrollH, this.scrollV, this.maxScrollH, this.maxScrollV);
+			return new ScrollEvent(type, scrollH, scrollV, maxScrollH, maxScrollV);
 		}
 	}
 }

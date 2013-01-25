@@ -58,7 +58,7 @@ package temple.ui.form.validation.rules
 		{
 			super(target, operator);
 			
-			this._value = value;
+			_value = value;
 			
 			addToDebugManager(this);
 		}
@@ -68,7 +68,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function get value():*
 		{
-			return this._value;
+			return _value;
 		}
 
 		/**
@@ -76,7 +76,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function set value(value:*):void
 		{
-			this._value = value;
+			_value = value;
 		}
 		
 		/**
@@ -84,9 +84,9 @@ package temple.ui.form.validation.rules
 		 */
 		public function isValid():Boolean
 		{
-			if (this.debug) this.logDebug("isValid: " + Comparor.compare(this.target.value, this._value, this.operator) + ": " + this.target.value + " " + this.operator + " " + this._value);
+			if (debug) logDebug("isValid: " + Comparor.compare(target.value, _value, operator) + ": " + target.value + " " + operator + " " + _value);
 			
-			return Comparor.compare(this.target.value, this._value, this.operator);
+			return Comparor.compare(target.value, _value, operator);
 		}
 		
 		/**
@@ -94,7 +94,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 		
 		/**
@@ -102,7 +102,7 @@ package temple.ui.form.validation.rules
 		 */
 		public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 
 		/**
@@ -110,7 +110,7 @@ package temple.ui.form.validation.rules
 		 */
 		override public function destruct():void 
 		{
-			this._value = null;
+			_value = null;
 			
 			super.destruct();
 		}

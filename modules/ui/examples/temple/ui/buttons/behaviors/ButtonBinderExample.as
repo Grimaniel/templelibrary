@@ -32,30 +32,30 @@ package
 			super("Temple - ButtonBinderExample");
 			
 			// create left button (TweenButton), make it yellow in overState
-			this._buttonA = new TweenButton();
-			this._buttonA.name = 'buttonA';
-			this._buttonA.upVars = {tint:null};
-			this._buttonA.upDuration = 0.3;
-			this._buttonA.overVars = {tint:0xFFFF00};
-			this._buttonA.downDuration = 0.6;
-			this._buttonA.graphics.beginFill(0x444444);
-			this._buttonA.graphics.drawRect(0, 0, 100, 50);
-			this._buttonA.graphics.endFill();
-			this._buttonA.x = 50;
-			this._buttonA.y = 50;
-			this._buttonA.addEventListener(MouseEvent.CLICK, handleButtonClick);
-			this.addChild(this._buttonA);
+			_buttonA = new TweenButton();
+			_buttonA.name = 'buttonA';
+			_buttonA.upVars = {tint:null};
+			_buttonA.upDuration = 0.3;
+			_buttonA.overVars = {tint:0xFFFF00};
+			_buttonA.downDuration = 0.6;
+			_buttonA.graphics.beginFill(0x444444);
+			_buttonA.graphics.drawRect(0, 0, 100, 50);
+			_buttonA.graphics.endFill();
+			_buttonA.x = 50;
+			_buttonA.y = 50;
+			_buttonA.addEventListener(MouseEvent.CLICK, handleButtonClick);
+			addChild(_buttonA);
 			
 			// create right button (MultiStateButton)
-			this._buttonB = new MultiStateButton();
-			this._buttonB.name = 'buttonB';
-			this._buttonB.graphics.beginFill(0x444444);
-			this._buttonB.graphics.drawRect(0, 0, 100, 50);
-			this._buttonB.graphics.endFill();
-			this._buttonB.x = 200;
-			this._buttonB.y = 50;
-			this._buttonB.addEventListener(MouseEvent.CLICK, handleButtonClick);
-			this.addChild(this._buttonB);
+			_buttonB = new MultiStateButton();
+			_buttonB.name = 'buttonB';
+			_buttonB.graphics.beginFill(0x444444);
+			_buttonB.graphics.drawRect(0, 0, 100, 50);
+			_buttonB.graphics.endFill();
+			_buttonB.x = 200;
+			_buttonB.y = 50;
+			_buttonB.addEventListener(MouseEvent.CLICK, handleButtonClick);
+			addChild(_buttonB);
 			
 			// create a (fading) overstate for right button, make it orange
 			// constructor parameters set the duration of over- and out durations
@@ -63,22 +63,22 @@ package
 			overClip.graphics.beginFill(0xFF7700);
 			overClip.graphics.drawRect(0, 0, 100, 50);
 			overClip.graphics.endFill();
-			this._buttonB.addChild(overClip);
+			_buttonB.addChild(overClip);
 
 			// create a hitArea that's (also) going to control the other buttons
-			this._hitArea = new CoreSprite();
-			this._hitArea.name = 'hitArea';
-			this._hitArea.graphics.beginFill(0x777777);
-			this._hitArea.graphics.drawRect(0, 0, 250, 50);
-			this._hitArea.graphics.endFill();
-			this._hitArea.x = 50;
-			this._hitArea.y = 150;
-			this._hitArea.buttonMode = true;
-			this._hitArea.addEventListener(MouseEvent.CLICK, handleButtonClick);
-			this.addChild(this._hitArea);
+			_hitArea = new CoreSprite();
+			_hitArea.name = 'hitArea';
+			_hitArea.graphics.beginFill(0x777777);
+			_hitArea.graphics.drawRect(0, 0, 250, 50);
+			_hitArea.graphics.endFill();
+			_hitArea.x = 50;
+			_hitArea.y = 150;
+			_hitArea.buttonMode = true;
+			_hitArea.addEventListener(MouseEvent.CLICK, handleButtonClick);
+			addChild(_hitArea);
 
 			// bind the buttons together and add the hitArea
-			new ButtonBinder(this._buttonA, this._buttonB).add(this._hitArea);
+			new ButtonBinder(_buttonA, _buttonB).add(_hitArea);
 		}
 
 		private function handleButtonClick(event:MouseEvent) : void

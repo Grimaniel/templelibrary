@@ -173,22 +173,22 @@ package temple.ui.scroll
 		 */
 		construct function scrollBar():void
 		{
-			this.liquidBehavior.adjustRelated = true;
-			this.addEventListener(ScrollEvent.SCROLL, this.handleScroll);
-			this.addEventListener(Event.ACTIVATE, this.handleActivate);
-			this.addEventListener(MouseEvent.MOUSE_WHEEL, this.handleMouseWheel);
+			liquidBehavior.adjustRelated = true;
+			addEventListener(ScrollEvent.SCROLL, handleScroll);
+			addEventListener(Event.ACTIVATE, handleActivate);
+			addEventListener(MouseEvent.MOUSE_WHEEL, handleMouseWheel);
 
-			this.track ||= this.getChildByName(trackInstanceName) as InteractiveObject;
-			this.button ||= this.getChildByName(buttonInstanceName) as InteractiveObject;
-			this.upButton ||= this.getChildByName(upButtonInstanceName) as InteractiveObject;
-			this.downButton ||= this.getChildByName(downButtonInstanceName) as InteractiveObject;
-			this.leftButton ||= this.getChildByName(leftButtonInstanceName) as InteractiveObject;
-			this.rightButton ||= this.getChildByName(rightButtonInstanceName) as InteractiveObject;
+			track ||= getChildByName(trackInstanceName) as InteractiveObject;
+			button ||= getChildByName(buttonInstanceName) as InteractiveObject;
+			upButton ||= getChildByName(upButtonInstanceName) as InteractiveObject;
+			downButton ||= getChildByName(downButtonInstanceName) as InteractiveObject;
+			leftButton ||= getChildByName(leftButtonInstanceName) as InteractiveObject;
+			rightButton ||= getChildByName(rightButtonInstanceName) as InteractiveObject;
 			
-			this.toStringProps.push("orientation");
+			toStringProps.push("orientation");
 			
-			if (!this._track) this.logError("No track found.");
-			if (!this._button) this.logError("No button found.");
+			if (!_track) logError("No track found.");
+			if (!_button) logError("No button found.");
 		}
 		
 		/**
@@ -196,7 +196,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollH():Number
 		{
-			return this._slider && this.orientation == Orientation.HORIZONTAL ? this._slider.value : NaN;
+			return _slider && orientation == Orientation.HORIZONTAL ? _slider.value : NaN;
 		}
 		
 		/**
@@ -205,9 +205,9 @@ package temple.ui.scroll
 		[Inspectable(name="ScrollH", type="Number")]
 		public function set scrollH(value:Number):void
 		{
-			if (!this._blockUpdate && this._slider && this.orientation == Orientation.HORIZONTAL)
+			if (!_blockUpdate && _slider && orientation == Orientation.HORIZONTAL)
 			{
-				this._slider.value = value;
+				_slider.value = value;
 			}
 		}
 		
@@ -216,25 +216,25 @@ package temple.ui.scroll
 		 */
 		public function scrollHTo(value:Number):void
 		{
-			if (this._blockUpdate || isNaN(value)) return;
+			if (_blockUpdate || isNaN(value)) return;
 
-			this._targetScrollH = value;
+			_targetScrollH = value;
 			
-			if (this._scrollProxy)
+			if (_scrollProxy)
 			{
-				this._scrollProxy.setValue(this, "scrollH", this._targetScrollH);
+				_scrollProxy.setValue(this, "scrollH", _targetScrollH);
 			}
 			else if (ScrollBar._scrollProxy)
 			{
-				ScrollBar._scrollProxy.setValue(this, "scrollH", this._targetScrollH);
+				ScrollBar._scrollProxy.setValue(this, "scrollH", _targetScrollH);
 			}
 			else
 			{
-				this.scrollH = this._targetScrollH;
+				scrollH = _targetScrollH;
 			}
-			this._blockUpdate = true;
-			this.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, this._targetScrollH, NaN, this.maxScrollH, this.maxScrollV));
-			this._blockUpdate = false;
+			_blockUpdate = true;
+			dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, _targetScrollH, NaN, maxScrollH, maxScrollV));
+			_blockUpdate = false;
 		}
 		
 		/**
@@ -242,7 +242,7 @@ package temple.ui.scroll
 		 */
 		public function get targetScrollH():Number
 		{
-			return this._targetScrollH;
+			return _targetScrollH;
 		}
 		
 		/**
@@ -250,7 +250,7 @@ package temple.ui.scroll
 		 */
 		public function get maxScrollH():Number
 		{
-			return this._slider && this.orientation == Orientation.HORIZONTAL ? 1 : NaN;
+			return _slider && orientation == Orientation.HORIZONTAL ? 1 : NaN;
 		}
 		
 		/**
@@ -258,7 +258,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollV():Number
 		{
-			return this._slider && this.orientation == Orientation.VERTICAL ? this._slider.value : NaN;
+			return _slider && orientation == Orientation.VERTICAL ? _slider.value : NaN;
 		}
 
 		/**
@@ -267,9 +267,9 @@ package temple.ui.scroll
 		[Inspectable(name="ScrollV", type="Number")]
 		public function set scrollV(value:Number):void
 		{
-			if (!this._blockUpdate && this._slider && this.orientation == Orientation.VERTICAL)
+			if (!_blockUpdate && _slider && orientation == Orientation.VERTICAL)
 			{
-				this._slider.value = value;
+				_slider.value = value;
 			}
 		}
 		
@@ -278,25 +278,25 @@ package temple.ui.scroll
 		 */
 		public function scrollVTo(value:Number):void
 		{
-			if (this._blockUpdate || isNaN(value)) return;
+			if (_blockUpdate || isNaN(value)) return;
 
-			this._targetScrollV = value;
+			_targetScrollV = value;
 			
-			if (this._scrollProxy)
+			if (_scrollProxy)
 			{
-				this._scrollProxy.setValue(this, "scrollV", this._targetScrollV);
+				_scrollProxy.setValue(this, "scrollV", _targetScrollV);
 			}
 			else if (ScrollBar._scrollProxy)
 			{
-				ScrollBar._scrollProxy.setValue(this, "scrollV", this._targetScrollV);
+				ScrollBar._scrollProxy.setValue(this, "scrollV", _targetScrollV);
 			}
 			else
 			{
-				this.scrollV = this._targetScrollV;
+				scrollV = _targetScrollV;
 			}
-			this._blockUpdate = true;
-			this.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, this._targetScrollV, this.maxScrollH, this.maxScrollV));
-			this._blockUpdate = false;
+			_blockUpdate = true;
+			dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, NaN, _targetScrollV, maxScrollH, maxScrollV));
+			_blockUpdate = false;
 		}
 		
 		/**
@@ -304,7 +304,7 @@ package temple.ui.scroll
 		 */
 		public function get targetScrollV():Number
 		{
-			return this._targetScrollV;
+			return _targetScrollV;
 		}
 		
 		/**
@@ -312,7 +312,7 @@ package temple.ui.scroll
 		 */
 		public function get maxScrollV():Number
 		{
-			return this._slider && this.orientation == Orientation.VERTICAL ? 1 : NaN;
+			return _slider && orientation == Orientation.VERTICAL ? 1 : NaN;
 		}
 		
 		/**
@@ -320,7 +320,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollPane():IScrollPane
 		{
-			return this._scrollPane;
+			return _scrollPane;
 		}
 		
 		/**
@@ -328,17 +328,17 @@ package temple.ui.scroll
 		 */
 		public function set scrollPane(value:IScrollPane):void
 		{
-			if (this._scrollPane)
+			if (_scrollPane)
 			{
-				this._scrollPane.removeEventListener(ScrollEvent.SCROLL, this.handleScrollPaneScroll);
-				this._scrollPane.removeEventListener(Event.RESIZE, this.handleScrollPaneResize);
+				_scrollPane.removeEventListener(ScrollEvent.SCROLL, handleScrollPaneScroll);
+				_scrollPane.removeEventListener(Event.RESIZE, handleScrollPaneResize);
 			}
-			this._scrollPane = value;
-			if (this._scrollPane)
+			_scrollPane = value;
+			if (_scrollPane)
 			{
-				this._scrollPane.addEventListener(ScrollEvent.SCROLL, this.handleScrollPaneScroll);
-				this._scrollPane.addEventListener(Event.RESIZE, this.handleScrollPaneResize);
-				this.updateToScrollPane();
+				_scrollPane.addEventListener(ScrollEvent.SCROLL, handleScrollPaneScroll);
+				_scrollPane.addEventListener(Event.RESIZE, handleScrollPaneResize);
+				updateToScrollPane();
 			}
 		}
 		
@@ -347,7 +347,7 @@ package temple.ui.scroll
 		 */
 		public function get button():InteractiveObject
 		{
-			return this._button;
+			return _button;
 		}
 		
 		/**
@@ -355,24 +355,24 @@ package temple.ui.scroll
 		 */
 		public function set button(value:InteractiveObject):void
 		{
-			if (this._button)
+			if (_button)
 			{
-				if (this._slider)
+				if (_slider)
 				{
-					this._slider.destruct();
-					this._slider = null;
+					_slider.destruct();
+					_slider = null;
 				}
 			}
-			this._button = value;
-			if (this._button && this._track)
+			_button = value;
+			if (_button && _track)
 			{
-				this._slider = new Slider(this._button, this._track ? this._track.getRect(this) : null, this.orientation);
-				this._slider.addEventListener(SliderEvent.SLIDE_START, this.handleSlideStart);
-				this._slider.addEventListener(SliderEvent.SLIDING, this.handleSliding);
-				this._slider.addEventListener(SliderEvent.SLIDE_STOP, this.handleSlideStop);
+				_slider = new Slider(_button, _track ? _track.getRect(this) : null, orientation);
+				_slider.addEventListener(SliderEvent.SLIDE_START, handleSlideStart);
+				_slider.addEventListener(SliderEvent.SLIDING, handleSliding);
+				_slider.addEventListener(SliderEvent.SLIDE_STOP, handleSlideStop);
 				
 				// auto flip orientation of ScrollBar is rotated
-				if (this.rotation == 90 || this.rotation == -90) this.orientation = this._slider.orientation == Orientation.VERTICAL ? Orientation.HORIZONTAL : Orientation.VERTICAL;
+				if (rotation == 90 || rotation == -90) orientation = _slider.orientation == Orientation.VERTICAL ? Orientation.HORIZONTAL : Orientation.VERTICAL;
 			}
 		}
 		
@@ -381,7 +381,7 @@ package temple.ui.scroll
 		 */
 		public function get track():InteractiveObject
 		{
-			return this._track;
+			return _track;
 		}
 		
 		/**
@@ -389,61 +389,61 @@ package temple.ui.scroll
 		 */
 		public function set track(value:InteractiveObject):void
 		{
-			if (this._track)
+			if (_track)
 			{
-				this._track.removeEventListener(MouseEvent.CLICK, this.handleTrackClick);
-				this._track.removeEventListener(Event.RESIZE, this.handleTrackResize);
-				if (this._trackScrubber)
+				_track.removeEventListener(MouseEvent.CLICK, handleTrackClick);
+				_track.removeEventListener(Event.RESIZE, handleTrackResize);
+				if (_trackScrubber)
 				{
-					this._trackScrubber.destruct();
-					this._trackScrubber = null;
+					_trackScrubber.destruct();
+					_trackScrubber = null;
 				}
 			}
 			
-			this._track = value;
+			_track = value;
 			
-			if (this._track)
+			if (_track)
 			{
-				this._track.addEventListener(MouseEvent.CLICK, this.handleTrackClick);
-				this._track.addEventListener(Event.RESIZE, this.handleTrackResize);
-				this._trackScrubber = new ScrubBehavior(this._track);
+				_track.addEventListener(MouseEvent.CLICK, handleTrackClick);
+				_track.addEventListener(Event.RESIZE, handleTrackResize);
+				_trackScrubber = new ScrubBehavior(_track);
 				
-				if (this._initialized && !LiquidBehavior.getInstance(this._track) && this.rotation == 0)
+				if (_initialized && !LiquidBehavior.getInstance(_track) && rotation == 0)
 				{
-					if (this.orientation == Orientation.VERTICAL)
+					if (orientation == Orientation.VERTICAL)
 					{
-						new LiquidBehavior(this._track,
+						new LiquidBehavior(_track,
 						{
-							top: (this._upButton ? this._upButton.height : 0)
-						, 	bottom: (this._downButton ? this._downButton.height : 0)
+							top: (_upButton ? _upButton.height : 0)
+						, 	bottom: (_downButton ? _downButton.height : 0)
 						,	adjustRelated: true
-						,	minimalHeight: this._minimalButtonSize
+						,	minimalHeight: _minimalButtonSize
 						});
 					}
 					else
 					{
-						new LiquidBehavior(this._track,
+						new LiquidBehavior(_track,
 						{
-						 	left: (this._leftButton ? this._leftButton.width : 0)
-						, 	right: (this._rightButton ? this._rightButton.width : 0)
+						 	left: (_leftButton ? _leftButton.width : 0)
+						, 	right: (_rightButton ? _rightButton.width : 0)
 						,	adjustRelated: true
-						,	minimalWidth: this._minimalButtonSize
+						,	minimalWidth: _minimalButtonSize
 						});
 					}
 				}
 				
-				if (this._slider)
+				if (_slider)
 				{
-					this._slider.bounds = this._track.getRect(this);
-					this._slider.orientation = this._track.width < this._track.height ? Orientation.VERTICAL : Orientation.HORIZONTAL;
+					_slider.bounds = _track.getRect(this);
+					_slider.orientation = _track.width < _track.height ? Orientation.VERTICAL : Orientation.HORIZONTAL;
 					
 					// auto flip orientation of ScrollBar is rotated
-					if (this.rotation == 90 || this.rotation == -90) this.orientation = this._slider.orientation == Orientation.VERTICAL ? Orientation.HORIZONTAL : Orientation.VERTICAL;
+					if (rotation == 90 || rotation == -90) orientation = _slider.orientation == Orientation.VERTICAL ? Orientation.HORIZONTAL : Orientation.VERTICAL;
 				}
-				else if (this._button)
+				else if (_button)
 				{
 					// reset button to force creation of Slider
-					this.button = this._button;
+					button = _button;
 				}
 			}
 		}
@@ -453,7 +453,7 @@ package temple.ui.scroll
 		 */
 		public function get upButton():InteractiveObject
 		{
-			return this._upButton;
+			return _upButton;
 		}
 		
 		/**
@@ -461,23 +461,23 @@ package temple.ui.scroll
 		 */
 		public function set upButton(value:InteractiveObject):void
 		{
-			if (this._upButton)
+			if (_upButton)
 			{
-				this._upButton.removeEventListener(MouseEvent.CLICK, this.handleScrollButtonClick);
-				this._upRepeater.destruct();
-				this._upRepeater = null;
+				_upButton.removeEventListener(MouseEvent.CLICK, handleScrollButtonClick);
+				_upRepeater.destruct();
+				_upRepeater = null;
 			}
 			
-			this._upButton = value;
+			_upButton = value;
 			
-			if (this._upButton)
+			if (_upButton)
 			{
-				this._upButton.addEventListener(MouseEvent.CLICK, this.handleScrollButtonClick);
-				this._upRepeater = new ClickRepeater(this._upButton);
-				if (this._initialized && this.rotation == 0)
+				_upButton.addEventListener(MouseEvent.CLICK, handleScrollButtonClick);
+				_upRepeater = new ClickRepeater(_upButton);
+				if (_initialized && rotation == 0)
 				{
-					if (!LiquidBehavior.getInstance(this._upButton)) new LiquidBehavior(this._upButton, {top: 0, adjustRelated: true});
-					if (this._track) LiquidBehavior.getInstance(this._track).top = this._upButton.height;
+					if (!LiquidBehavior.getInstance(_upButton)) new LiquidBehavior(_upButton, {top: 0, adjustRelated: true});
+					if (_track) LiquidBehavior.getInstance(_track).top = _upButton.height;
 				}
 			}
 		}
@@ -487,7 +487,7 @@ package temple.ui.scroll
 		 */
 		public function get downButton():InteractiveObject
 		{
-			return this._downButton;
+			return _downButton;
 		}
 		
 		/**
@@ -495,24 +495,24 @@ package temple.ui.scroll
 		 */
 		public function set downButton(value:InteractiveObject):void
 		{
-			if (this._downButton) 
+			if (_downButton) 
 			{
-				this._downButton.removeEventListener(MouseEvent.CLICK, this.handleScrollButtonClick);
-				this._downRepeater.destruct();
-				this._downRepeater = null;
+				_downButton.removeEventListener(MouseEvent.CLICK, handleScrollButtonClick);
+				_downRepeater.destruct();
+				_downRepeater = null;
 			}
 			
-			this._downButton = value;
+			_downButton = value;
 			
-			if (this._downButton)
+			if (_downButton)
 			{
-				this._downButton.addEventListener(MouseEvent.CLICK, this.handleScrollButtonClick);
-				this._downRepeater = new ClickRepeater(this._downButton);
+				_downButton.addEventListener(MouseEvent.CLICK, handleScrollButtonClick);
+				_downRepeater = new ClickRepeater(_downButton);
 				
-				if (this._initialized && this.rotation == 0)
+				if (_initialized && rotation == 0)
 				{
-					if (!LiquidBehavior.getInstance(this._downButton)) new LiquidBehavior(this._downButton, {bottom: 0, adjustRelated: true}, this);
-					if (this._track) LiquidBehavior.getInstance(this._track).bottom = this._downButton.height;
+					if (!LiquidBehavior.getInstance(_downButton)) new LiquidBehavior(_downButton, {bottom: 0, adjustRelated: true}, this);
+					if (_track) LiquidBehavior.getInstance(_track).bottom = _downButton.height;
 				}
 			}
 		}
@@ -522,7 +522,7 @@ package temple.ui.scroll
 		 */
 		public function get leftButton():InteractiveObject
 		{
-			return this._leftButton;
+			return _leftButton;
 		}
 		
 		/**
@@ -530,23 +530,23 @@ package temple.ui.scroll
 		 */
 		public function set leftButton(value:InteractiveObject):void
 		{
-			if (this._leftButton)
+			if (_leftButton)
 			{
-				this._leftButton.removeEventListener(MouseEvent.CLICK, this.handleScrollButtonClick);
-				this._leftRepeater.destruct();
-				this._leftRepeater = null;
+				_leftButton.removeEventListener(MouseEvent.CLICK, handleScrollButtonClick);
+				_leftRepeater.destruct();
+				_leftRepeater = null;
 			}
 			
-			this._leftButton = value;
+			_leftButton = value;
 			
-			if (this._leftButton)
+			if (_leftButton)
 			{
-				this._leftButton.addEventListener(MouseEvent.CLICK, this.handleScrollButtonClick);
-				this._leftRepeater = new ClickRepeater(this._leftButton);
-				if (this._initialized && this.rotation == 0)
+				_leftButton.addEventListener(MouseEvent.CLICK, handleScrollButtonClick);
+				_leftRepeater = new ClickRepeater(_leftButton);
+				if (_initialized && rotation == 0)
 				{
-					if (!LiquidBehavior.getInstance(this._leftButton)) new LiquidBehavior(this._leftButton, {left: 0, adjustRelated: true}, this);
-					if (this._track) LiquidBehavior.getInstance(this._track).left = this._leftButton.width;
+					if (!LiquidBehavior.getInstance(_leftButton)) new LiquidBehavior(_leftButton, {left: 0, adjustRelated: true}, this);
+					if (_track) LiquidBehavior.getInstance(_track).left = _leftButton.width;
 				}
 			}
 		}
@@ -556,7 +556,7 @@ package temple.ui.scroll
 		 */
 		public function get rightButton():InteractiveObject
 		{
-			return this._rightButton;
+			return _rightButton;
 		}
 		
 		/**
@@ -564,23 +564,23 @@ package temple.ui.scroll
 		 */
 		public function set rightButton(value:InteractiveObject):void
 		{
-			if (this._rightButton)
+			if (_rightButton)
 			{
-				this._rightButton.removeEventListener(MouseEvent.CLICK, this.handleScrollButtonClick);
-				this._rightRepeater.destruct();
-				this._rightRepeater = null;
+				_rightButton.removeEventListener(MouseEvent.CLICK, handleScrollButtonClick);
+				_rightRepeater.destruct();
+				_rightRepeater = null;
 			}
 			
-			this._rightButton = value;
+			_rightButton = value;
 			
-			if (this._rightButton)
+			if (_rightButton)
 			{
-				this._rightButton.addEventListener(MouseEvent.CLICK, this.handleScrollButtonClick);
-				this._rightRepeater = new ClickRepeater(this._rightButton);
-				if (this._initialized && this.rotation == 0)
+				_rightButton.addEventListener(MouseEvent.CLICK, handleScrollButtonClick);
+				_rightRepeater = new ClickRepeater(_rightButton);
+				if (_initialized && rotation == 0)
 				{
-					if (!LiquidBehavior.getInstance(this._rightButton)) new LiquidBehavior(this._rightButton, {right: 0, adjustRelated: true}, this);
-					if (this._track) LiquidBehavior.getInstance(this._track).right = this._rightButton.width;
+					if (!LiquidBehavior.getInstance(_rightButton)) new LiquidBehavior(_rightButton, {right: 0, adjustRelated: true}, this);
+					if (_track) LiquidBehavior.getInstance(_track).right = _rightButton.width;
 				}
 			}
 		}
@@ -590,7 +590,7 @@ package temple.ui.scroll
 		 */
 		public function get upRepeater():ClickRepeater
 		{
-			return this._upRepeater;
+			return _upRepeater;
 		}
 		
 		/**
@@ -598,7 +598,7 @@ package temple.ui.scroll
 		 */
 		public function get downRepeater():ClickRepeater
 		{
-			return this._downRepeater;
+			return _downRepeater;
 		}
 		
 		/**
@@ -606,7 +606,7 @@ package temple.ui.scroll
 		 */
 		public function get leftRepeater():ClickRepeater
 		{
-			return this._leftRepeater;
+			return _leftRepeater;
 		}
 		
 		/**
@@ -614,7 +614,7 @@ package temple.ui.scroll
 		 */
 		public function get rightRepeater():ClickRepeater
 		{
-			return this._rightRepeater;
+			return _rightRepeater;
 		}
 		
 		/**
@@ -622,7 +622,7 @@ package temple.ui.scroll
 		 */
 		public function get scrollProxy():IPropertyProxy
 		{
-			return this._scrollProxy;
+			return _scrollProxy;
 		}
 		
 		/**
@@ -630,7 +630,7 @@ package temple.ui.scroll
 		 */
 		public function set scrollProxy(value:IPropertyProxy):void
 		{
-			this._scrollProxy = value;
+			_scrollProxy = value;
 		}
 		
 		/**
@@ -638,7 +638,7 @@ package temple.ui.scroll
 		 */
 		public function get showProxy():IPropertyProxy
 		{
-			return this._showProxy;
+			return _showProxy;
 		}
 		
 		/**
@@ -646,7 +646,7 @@ package temple.ui.scroll
 		 */
 		public function set showProxy(value:IPropertyProxy):void
 		{
-			this._showProxy = value;
+			_showProxy = value;
 		}
 	
 		/**
@@ -655,7 +655,7 @@ package temple.ui.scroll
 		 */
 		public function get autoSizeButton():Boolean
 		{
-			return this._autoSizeButton;
+			return _autoSizeButton;
 		}
 
 		/**
@@ -664,8 +664,8 @@ package temple.ui.scroll
 		[Inspectable(name="Auto Size Button", type="Boolean", defaultValue="false")]
 		public function set autoSizeButton(value:Boolean):void
 		{
-			this._autoSizeButton = value;
-			if (this._autoSizeButton) this.updateToScrollPane();
+			_autoSizeButton = value;
+			if (_autoSizeButton) updateToScrollPane();
 		}
 		
 		/**
@@ -673,7 +673,7 @@ package temple.ui.scroll
 		 */
 		public function get minimalButtonSize():Number
 		{
-			return this._minimalButtonSize;
+			return _minimalButtonSize;
 		}
 
 		/**
@@ -682,23 +682,23 @@ package temple.ui.scroll
 		[Inspectable(name="Minimal Button Size", type="Number")]
 		public function set minimalButtonSize(value:Number):void
 		{
-			this._minimalButtonSize = value;
+			_minimalButtonSize = value;
 			
-			if (this._minimalButtonSize) this.updateToScrollPane();
+			if (_minimalButtonSize) updateToScrollPane();
 			
 			var liquid:LiquidBehavior;
-			if (this._track && (liquid = LiquidBehavior.getInstance(this._track)))
+			if (_track && (liquid = LiquidBehavior.getInstance(_track)))
 			{
-				switch (this.orientation)
+				switch (orientation)
 				{
 					case Orientation.HORIZONTAL:
 					{
-						liquid.minimalWidth = this._minimalButtonSize;
+						liquid.minimalWidth = _minimalButtonSize;
 						break;
 					}
 					case Orientation.VERTICAL:
 					{
-						liquid.minimalHeight = this._minimalButtonSize;
+						liquid.minimalHeight = _minimalButtonSize;
 						break;
 					}
 				}
@@ -710,7 +710,7 @@ package temple.ui.scroll
 		 */
 		public function get autoHide():Boolean
 		{
-			return this._autoHide;
+			return _autoHide;
 		}
 
 		/**
@@ -719,8 +719,8 @@ package temple.ui.scroll
 		[Inspectable(name="Auto Hide", type="Boolean", defaultValue="true")]
 		public function set autoHide(value:Boolean):void
 		{
-			this._autoHide = value;
-			if (this._autoHide) this.updateToScrollPane();
+			_autoHide = value;
+			if (_autoHide) updateToScrollPane();
 		}
 		
 		/**
@@ -728,13 +728,13 @@ package temple.ui.scroll
 		 */
 		public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (!this._shown)
+			if (!_shown)
 			{
-				this._shown = true;
+				_shown = true;
 
-				if (!instant && this._showProxy)
+				if (!instant && _showProxy)
 				{
-					this._showProxy.setValue(this, "visible", true, onComplete);
+					_showProxy.setValue(this, "visible", true, onComplete);
 				}
 				else if (!instant && ScrollBar._showProxy)
 				{
@@ -742,7 +742,7 @@ package temple.ui.scroll
 				}
 				else
 				{
-					this.visible = true;
+					visible = true;
 					if (onComplete != null) onComplete(); 
 				}
 			}
@@ -753,13 +753,13 @@ package temple.ui.scroll
 		 */
 		public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (this._shown)
+			if (_shown)
 			{
-				this._shown = false;
+				_shown = false;
 				
-				if (!instant && this._showProxy)
+				if (!instant && _showProxy)
 				{
-					this._showProxy.setValue(this, "visible", false, onComplete);
+					_showProxy.setValue(this, "visible", false, onComplete);
 				}
 				else if (!instant && ScrollBar._showProxy)
 				{
@@ -767,7 +767,7 @@ package temple.ui.scroll
 				}
 				else
 				{
-					this.visible = false;
+					visible = false;
 					if (onComplete != null) onComplete();
 				}
 			}
@@ -778,7 +778,7 @@ package temple.ui.scroll
 		 */
 		public function get shown():Boolean
 		{
-			return this._shown;
+			return _shown;
 		}
 		
 		/**
@@ -789,11 +789,11 @@ package temple.ui.scroll
 		{
 			if (value)
 			{
-				this.show();
+				show();
 			}
 			else
 			{
-				this.hide();
+				hide();
 			}
 		}
 		
@@ -804,17 +804,17 @@ package temple.ui.scroll
 		 */
 		public function get orientation():String
 		{
-			if (this._orientation)
+			if (_orientation)
 			{
-				return this._orientation;
+				return _orientation;
 			}
-			else if (this._slider)
+			else if (_slider)
 			{
-				return this._slider.orientation;
+				return _slider.orientation;
 			}
-			else if (this._track)
+			else if (_track)
 			{
-				return this._track.width > this._track.height ? Orientation.HORIZONTAL : Orientation.VERTICAL;
+				return _track.width > _track.height ? Orientation.HORIZONTAL : Orientation.VERTICAL;
 			}
 			return null;
 		}
@@ -831,13 +831,13 @@ package temple.ui.scroll
 				case "":
 				case "auto":
 				{
-					this._orientation = null;
+					_orientation = null;
 					break;
 				}
 				case Orientation.HORIZONTAL:
 				case Orientation.VERTICAL:
 				{
-					this._orientation = value;
+					_orientation = value;
 					break;
 				}
 				default:
@@ -855,7 +855,7 @@ package temple.ui.scroll
 		 */
 		public function get direction():String
 		{
-			return this._slider.direction;
+			return _slider.direction;
 		}
 		
 		/**
@@ -864,7 +864,7 @@ package temple.ui.scroll
 		[Inspectable(name="Direction", type="String", defaultValue="ascending", enumeration="ascending,descending")]
 		public function set direction(value:String):void
 		{
-			this._slider.direction = value;
+			_slider.direction = value;
 		}
 		
 		/**
@@ -873,7 +873,7 @@ package temple.ui.scroll
 		 */
 		public function get stepSize():Number
 		{
-			return this._stepSize;
+			return _stepSize;
 		}
 		
 		/**
@@ -884,7 +884,7 @@ package temple.ui.scroll
 		{
 			value = Math.max(Math.min(value, 1), 0);
 			
-			this._stepSize = value;
+			_stepSize = value;
 		}
 		
 		/**
@@ -892,7 +892,7 @@ package temple.ui.scroll
 		 */
 		public function get mouseWheelScrollSpeed():Number
 		{
-			return this._mouseWheelScrollSpeed;
+			return _mouseWheelScrollSpeed;
 		}
 		
 		/**
@@ -901,7 +901,7 @@ package temple.ui.scroll
 		[Inspectable(name="MouseWheelScrollSpeed", type="Number")]
 		public function set mouseWheelScrollSpeed(value:Number):void
 		{
-			this._mouseWheelScrollSpeed = value;
+			_mouseWheelScrollSpeed = value;
 		}
 		
 		/**
@@ -910,7 +910,7 @@ package temple.ui.scroll
 		 */
 		public function get mouseWheelEnabled():Boolean
 		{
-			return this._mouseWheelEnabled;
+			return _mouseWheelEnabled;
 		}
 		
 		/**
@@ -919,7 +919,7 @@ package temple.ui.scroll
 		[Inspectable(name="MouseWheelEnabled", type="Boolean", defaultValue="true")]
 		public function set mouseWheelEnabled(value:Boolean):void
 		{
-			this._mouseWheelEnabled = value;
+			_mouseWheelEnabled = value;
 		}
 		
 		/**
@@ -927,7 +927,7 @@ package temple.ui.scroll
 		 */
 		override public function get debug():Boolean
 		{
-			return this._debug;
+			return _debug;
 		}
 
 		/**
@@ -935,7 +935,7 @@ package temple.ui.scroll
 		 */
 		override public function set debug(value:Boolean):void
 		{
-			this._debug = value;
+			_debug = value;
 		}
 		
 		/**
@@ -945,16 +945,16 @@ package temple.ui.scroll
 		{
 			super.initLiquid();
 			
-			this._initialized = true;
+			_initialized = true;
 			
 			/**
 			 * reset buttons and track to init liquid (can't be done before since width and height are not set)
 			 */
-			this.track = this.track;
-			this.upButton = this.upButton;
-			this.downButton = this.downButton;
-			this.leftButton = this.leftButton;
-			this.rightButton = this.rightButton;
+			track = track;
+			upButton = upButton;
+			downButton = downButton;
+			leftButton = leftButton;
+			rightButton = rightButton;
 		}
 
 		/**
@@ -962,71 +962,71 @@ package temple.ui.scroll
 		 */
 		protected function updateToScrollPane():void
 		{
-			if (this._scrollPane)
+			if (_scrollPane)
 			{
 				var visibleFactor:Number;
 				
-				if (this.orientation == Orientation.HORIZONTAL)
+				if (orientation == Orientation.HORIZONTAL)
 				{
-					if (this._autoSizeButton || this._autoHide)
+					if (_autoSizeButton || _autoHide)
 					{
-						visibleFactor = Math.min(this._scrollPane.width / this._scrollPane.contentWidth, 1);
+						visibleFactor = Math.min(_scrollPane.width / _scrollPane.contentWidth, 1);
 						if (isNaN(visibleFactor) || visibleFactor <= 0) visibleFactor = 1;
 						
-						if (this._autoHide) this.shown = visibleFactor < 1;
+						if (_autoHide) shown = visibleFactor < 1;
 						
-						if (this._autoSizeButton)
+						if (_autoSizeButton)
 						{
-							this._button.width = this._track.width * visibleFactor;
-							if (this._button.width < this._minimalButtonSize / this.scaleX) this._button.width = this._minimalButtonSize / this.scaleX;
+							_button.width = _track.width * visibleFactor;
+							if (_button.width < _minimalButtonSize / scaleX) _button.width = _minimalButtonSize / scaleX;
 						}
 					}
-					this.scrollH = this._scrollPane.maxScrollH ? this._scrollPane.scrollH / this._scrollPane.maxScrollH : 0;
-					if (this.debug) this.logDebug("updateToScrollPane: orientation=" + this.orientation + ", width=" + this._scrollPane.width + ", contentWidth=" + this._scrollPane.contentWidth + ", visibleFactor=" + visibleFactor + ", scrollH=" + scrollH);
+					scrollH = _scrollPane.maxScrollH ? _scrollPane.scrollH / _scrollPane.maxScrollH : 0;
+					if (debug) logDebug("updateToScrollPane: orientation=" + orientation + ", width=" + _scrollPane.width + ", contentWidth=" + _scrollPane.contentWidth + ", visibleFactor=" + visibleFactor + ", scrollH=" + scrollH);
 				}
 				else
 				{
-					if (this._autoSizeButton || this._autoHide)
+					if (_autoSizeButton || _autoHide)
 					{
-						visibleFactor = Math.min(this._scrollPane.height / (this._scrollPane.contentHeight-1), 1);
+						visibleFactor = Math.min(_scrollPane.height / (_scrollPane.contentHeight-1), 1);
 						if (isNaN(visibleFactor) || visibleFactor <= 0) visibleFactor = 1;
 						
-						if (this._autoHide) this.shown = visibleFactor < 1;
+						if (_autoHide) shown = visibleFactor < 1;
 						
-						if (this._autoSizeButton)
+						if (_autoSizeButton)
 						{
-							this._button.height = this._track.height * visibleFactor;
-							if (this._button.height < this._minimalButtonSize / this.scaleY) this._button.height = this._minimalButtonSize / this.scaleY;
+							_button.height = _track.height * visibleFactor;
+							if (_button.height < _minimalButtonSize / scaleY) _button.height = _minimalButtonSize / scaleY;
 						}
 					}
-					this.scrollV = this._scrollPane.maxScrollV ? this._scrollPane.scrollV / this._scrollPane.maxScrollV : 0;
-					if (this.debug) this.logDebug("updateToScrollPane: orientation=" + this.orientation + ", height=" + this._scrollPane.height + ", contentHeight=" + this._scrollPane.contentHeight + ", visibleFactor=" + visibleFactor + ", scrollV=" + scrollV);
+					scrollV = _scrollPane.maxScrollV ? _scrollPane.scrollV / _scrollPane.maxScrollV : 0;
+					if (debug) logDebug("updateToScrollPane: orientation=" + orientation + ", height=" + _scrollPane.height + ", contentHeight=" + _scrollPane.contentHeight + ", visibleFactor=" + visibleFactor + ", scrollV=" + scrollV);
 				}
 			}
 		}
 		
 		private function handleSlideStart(event:SliderEvent):void
 		{
-			this._blockUpdate = true;
-			if (this._scrollProxy) this._scrollProxy.cancel();
+			_blockUpdate = true;
+			if (_scrollProxy) _scrollProxy.cancel();
 		}
 		
 		private function handleSliding(event:SliderEvent):void
 		{
-			this.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, this.scrollH, this.scrollV, this.maxScrollH, this.maxScrollV));
+			dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, scrollH, scrollV, maxScrollH, maxScrollV));
 		}
 		
 		private function handleSlideStop(event:SliderEvent):void
 		{
-			this._blockUpdate = false;
+			_blockUpdate = false;
 		}
 		
 		protected function handleScroll(event:ScrollEvent):void
 		{
-			if (this._scrollPane && !this._dontUpdateScrollPane)
+			if (_scrollPane && !_dontUpdateScrollPane)
 			{
-				if (!isNaN(event.scrollH)) this._scrollPane.scrollHTo(event.scrollH * this._scrollPane.maxScrollH);
-				if (!isNaN(event.scrollV)) this._scrollPane.scrollVTo(event.scrollV * this._scrollPane.maxScrollV);
+				if (!isNaN(event.scrollH)) _scrollPane.scrollHTo(event.scrollH * _scrollPane.maxScrollH);
+				if (!isNaN(event.scrollV)) _scrollPane.scrollVTo(event.scrollV * _scrollPane.maxScrollV);
 			}
 		}
 		
@@ -1034,112 +1034,112 @@ package temple.ui.scroll
 		{
 			var scroll:Number;
 			
-			if (this._slider.orientation == Orientation.HORIZONTAL)
+			if (_slider.orientation == Orientation.HORIZONTAL)
 			{
-				scroll = this._track.mouseX * this._track.scaleX / this._track.width;
+				scroll = _track.mouseX * _track.scaleX / _track.width;
 			}
 			else
 			{
-				scroll = (this._track.mouseY * this._track.scaleY -.5 * this._button.height) / (this._track.height - this._button.height);
+				scroll = (_track.mouseY * _track.scaleY -.5 * _button.height) / (_track.height - _button.height);
 			}
 			
-			if (this.orientation == Orientation.HORIZONTAL)
+			if (orientation == Orientation.HORIZONTAL)
 			{
-				if (this.direction == Direction.ASCENDING)
+				if (direction == Direction.ASCENDING)
 				{
-					this.scrollHTo(scroll);
+					scrollHTo(scroll);
 				}
 				else
 				{
-					this.scrollHTo(1 - scroll);
+					scrollHTo(1 - scroll);
 				}
 			}
 			else
 			{
 				
-				if (this.direction == Direction.ASCENDING)
+				if (direction == Direction.ASCENDING)
 				{
-					this.scrollVTo(scroll);
+					scrollVTo(scroll);
 				}
 				else
 				{
-					this.scrollVTo(1 - scroll);
+					scrollVTo(1 - scroll);
 				}
 			}
 		}
 		
 		private function handleTrackResize(event:Event):void
 		{
-			if (this._slider) this._slider.bounds = this._track.getBounds(this);
-			this.updateToScrollPane();
+			if (_slider) _slider.bounds = _track.getBounds(this);
+			updateToScrollPane();
 		}
 		
 		private function handleScrollPaneScroll(event:ScrollEvent):void
 		{
-			if (this._blockUpdate) return;
+			if (_blockUpdate) return;
 			
-			this._dontUpdateScrollPane = true;
-			this.scrollHTo(event.scrollH / event.maxScrollH);
-			this.scrollVTo(event.scrollV / event.maxScrollV);
-			this._dontUpdateScrollPane = false;
+			_dontUpdateScrollPane = true;
+			scrollHTo(event.scrollH / event.maxScrollH);
+			scrollVTo(event.scrollV / event.maxScrollV);
+			_dontUpdateScrollPane = false;
 		}
 		
 		private function handleScrollPaneResize(event:Event):void
 		{
-			this.updateToScrollPane();
+			updateToScrollPane();
 		}
 		
 		private function handleScrollButtonClick(event:MouseEvent):void
 		{
-			if (this.orientation == this._slider.orientation)
+			if (orientation == _slider.orientation)
 			{
 				switch (event.target)
 				{
-					case this._upButton:
+					case _upButton:
 					{
-						if (this._scrollPane)
+						if (_scrollPane)
 						{
-							this._scrollPane.scrollUp();
+							_scrollPane.scrollUp();
 						}
 						else
 						{
-							this.scrollVTo(this.scrollV - this._stepSize);
+							scrollVTo(scrollV - _stepSize);
 						}
 						break;
 					}
-					case this._downButton:
+					case _downButton:
 					{
-						if (this._scrollPane)
+						if (_scrollPane)
 						{
-							this._scrollPane.scrollDown();
+							_scrollPane.scrollDown();
 						}
 						else
 						{
-							this.scrollVTo(this.scrollV + this._stepSize);
+							scrollVTo(scrollV + _stepSize);
 						}
 						break;
 					}
-					case this._leftButton:
+					case _leftButton:
 					{
-						if (this._scrollPane)
+						if (_scrollPane)
 						{
-							this._scrollPane.scrollLeft();
+							_scrollPane.scrollLeft();
 						}
 						else
 						{
-							this.scrollHTo(this.scrollH - this._stepSize);
+							scrollHTo(scrollH - _stepSize);
 						}
 						break;
 					}
-					case this._rightButton:
+					case _rightButton:
 					{
-						if (this._scrollPane)
+						if (_scrollPane)
 						{
-							this._scrollPane.scrollRight();
+							_scrollPane.scrollRight();
 						}
 						else
 						{
-							this.scrollHTo(this.scrollH + this._stepSize);
+							scrollHTo(scrollH + _stepSize);
 						}
 						break;
 					}
@@ -1150,51 +1150,51 @@ package temple.ui.scroll
 				// Swap horizontal - vertical
 				switch (event.target)
 				{
-					case this._upButton:
+					case _upButton:
 					{
-						if (this._scrollPane)
+						if (_scrollPane)
 						{
-							this._scrollPane.scrollLeft();
+							_scrollPane.scrollLeft();
 						}
 						else
 						{
-							this.scrollHTo(this.scrollH - this._stepSize);
+							scrollHTo(scrollH - _stepSize);
 						}
 						break;
 					}
-					case this._downButton:
+					case _downButton:
 					{
-						if (this._scrollPane)
+						if (_scrollPane)
 						{
-							this._scrollPane.scrollRight();
+							_scrollPane.scrollRight();
 						}
 						else
 						{
-							this.scrollHTo(this.scrollH + this._stepSize);
+							scrollHTo(scrollH + _stepSize);
 						}
 						break;
 					}
-					case this._leftButton:
+					case _leftButton:
 					{
-						if (this._scrollPane)
+						if (_scrollPane)
 						{
-							this._scrollPane.scrollUp();
+							_scrollPane.scrollUp();
 						}
 						else
 						{
-							this.scrollVTo(this.scrollV - this._stepSize);
+							scrollVTo(scrollV - _stepSize);
 						}
 						break;
 					}
-					case this._rightButton:
+					case _rightButton:
 					{
-						if (this._scrollPane)
+						if (_scrollPane)
 						{
-							this._scrollPane.scrollDown();
+							_scrollPane.scrollDown();
 						}
 						else
 						{
-							this.scrollVTo(this.scrollV + this._stepSize);
+							scrollVTo(scrollV + _stepSize);
 						}
 						break;
 					}
@@ -1204,23 +1204,23 @@ package temple.ui.scroll
 		
 		protected function handleMouseWheel(event:MouseEvent):void
 		{
-			if (this._mouseWheelEnabled)
+			if (_mouseWheelEnabled)
 			{
-				if (this.orientation == Orientation.VERTICAL)
+				if (orientation == Orientation.VERTICAL)
 				{
-					this.scrollVTo(this.scrollV + (!isNaN(this._mouseWheelScrollSpeed) ? this._mouseWheelScrollSpeed: this._stepSize) * -event.delta);
+					scrollVTo(scrollV + (!isNaN(_mouseWheelScrollSpeed) ? _mouseWheelScrollSpeed: _stepSize) * -event.delta);
 				}
 				else
 				{
-					this.scrollHTo(this.scrollH + (!isNaN(this._mouseWheelScrollSpeed) ? this._mouseWheelScrollSpeed: this._stepSize) * -event.delta);
+					scrollHTo(scrollH + (!isNaN(_mouseWheelScrollSpeed) ? _mouseWheelScrollSpeed: _stepSize) * -event.delta);
 				}
 			}
 		}
 		
 		private function handleActivate(event:Event):void
 		{
-			this.removeEventListener(Event.ACTIVATE, this.handleActivate);
-			this.dispatchEvent(new Event(Event.RESIZE));
+			removeEventListener(Event.ACTIVATE, handleActivate);
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 
 		/**
@@ -1228,16 +1228,16 @@ package temple.ui.scroll
 		 */
 		override public function destruct():void
 		{
-			this.scrollPane = null;
-			this.button = null;
-			this.track = null;
-			this.upButton = null;
-			this.downButton = null;
-			this.leftButton = null;
-			this.rightButton = null;
-			this._scrollProxy = null;
-			this._showProxy = null;
-			this._trackScrubber = null;
+			scrollPane = null;
+			button = null;
+			track = null;
+			upButton = null;
+			downButton = null;
+			leftButton = null;
+			rightButton = null;
+			_scrollProxy = null;
+			_showProxy = null;
+			_trackScrubber = null;
 			
 			super.destruct();
 		}

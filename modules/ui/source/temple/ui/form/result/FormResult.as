@@ -61,7 +61,7 @@ package temple.ui.form.result
 		{
 			super(data, success, message, code);
 			
-			this._errors = errors;
+			_errors = errors;
 		}
 
 		/**
@@ -69,7 +69,7 @@ package temple.ui.form.result
 		 */
 		public function get errors():Vector.<IFormFieldError>
 		{
-			return this._errors;
+			return _errors;
 		}
 		
 		/**
@@ -77,7 +77,7 @@ package temple.ui.form.result
 		 */
 		public function set errors(value:Vector.<IFormFieldError>):void
 		{
-			this._errors = value;
+			_errors = value;
 		}
 		
 		/**
@@ -104,10 +104,10 @@ package temple.ui.form.result
 		 */
 		public function parseXML(xml:XML):Boolean 
 		{
-			this.success = xml.child('success') == "true" || xml.child('success') == "1";
-			this.message = xml.child('message');
-			this.code = xml.child('message').@code;
-			this._errors = new Vector.<IFormFieldError>(XMLParser.parseList(xml.errors.error, FormFieldError));
+			success = xml.child('success') == "true" || xml.child('success') == "1";
+			message = xml.child('message');
+			code = xml.child('message').@code;
+			_errors = new Vector.<IFormFieldError>(XMLParser.parseList(xml.errors.error, FormFieldError));
 			
 			return true;
 		}
@@ -117,7 +117,7 @@ package temple.ui.form.result
 		 */
 		override public function destruct():void
 		{
-			this._errors = null;
+			_errors = null;
 			
 			super.destruct();
 		}

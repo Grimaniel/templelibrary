@@ -84,7 +84,7 @@ package temple.ui.slider
 		private var _orientation:String;
 		private var _direction:String;
 
-		public function Slider(target:InteractiveObject, bounds:Rectangle = null, orientation:String = Orientation.HORIZONTAL, direction:String = Direction.ASCENDING)
+		public function Slider(target:InteractiveObject, bounds:Rectangle = null, orientation:String = "horizontal", direction:String = "ascending")
 		{
 			super(target);
 			
@@ -93,10 +93,10 @@ package temple.ui.slider
 
 		construct function slider(target:InteractiveObject, bounds:Rectangle, orientation:String, direction:String):void
 		{
-			this._dragBehavior = new DragBehavior(target, bounds);
-			this._dragBehavior.addEventListener(DragBehaviorEvent.DRAGGING, this.handleDragging);
-			this._dragBehavior.addEventListener(DragBehaviorEvent.DRAG_START, this.handleDragStart);
-			this._dragBehavior.addEventListener(DragBehaviorEvent.DRAG_STOP, this.handleDragStop);
+			_dragBehavior = new DragBehavior(target, bounds);
+			_dragBehavior.addEventListener(DragBehaviorEvent.DRAGGING, handleDragging);
+			_dragBehavior.addEventListener(DragBehaviorEvent.DRAG_START, handleDragStart);
+			_dragBehavior.addEventListener(DragBehaviorEvent.DRAG_STOP, handleDragStop);
 
 			this.orientation = orientation;
 			this.direction = direction;
@@ -108,14 +108,14 @@ package temple.ui.slider
 		 */
 		public function get value():Number
 		{
-			if (this._dragBehavior == null || !this._dragBehavior.target || !(this._dragBehavior.target as DisplayObject).parent) return NaN;
+			if (_dragBehavior == null || !_dragBehavior.target || !(_dragBehavior.target as DisplayObject).parent) return NaN;
 			
 			var value:Number;
 			
-			var bounds:Rectangle = this._dragBehavior.bounds;
-			var targetBounds:Rectangle = (this._dragBehavior.target as DisplayObject).getBounds((this._dragBehavior.target as DisplayObject).parent);
+			var bounds:Rectangle = _dragBehavior.bounds;
+			var targetBounds:Rectangle = (_dragBehavior.target as DisplayObject).getBounds((_dragBehavior.target as DisplayObject).parent);
 			
-			if (this._orientation == Orientation.HORIZONTAL)
+			if (_orientation == Orientation.HORIZONTAL)
 			{
 				value = (targetBounds.x - bounds.x) / (bounds.width - targetBounds.width); 
 			}
@@ -124,7 +124,7 @@ package temple.ui.slider
 				value = (targetBounds.y - bounds.y) / (bounds.height - targetBounds.height);
 			}
 			
-			if (this._direction == Direction.DESCENDING)
+			if (_direction == Direction.DESCENDING)
 			{
 				value = 1 - value;
 			}
@@ -138,27 +138,20 @@ package temple.ui.slider
 		{
 			if (isNaN(value)) return;
 			
-			if (this._dragBehavior == null || !this._dragBehavior.target || !(this._dragBehavior.target as DisplayObject).parent) return;
+			if (_dragBehavior == null || !_dragBehavior.target || !(_dragBehavior.target as DisplayObject).parent) return;
 			
-			if (value < 0)
-			{
-				value = 0;
-			}
-			else if (value > 1)
-			{
-				value = 1;
-			}
+			value = Math.min(Math.max(value, 0), 1);
 			
-			var bounds:Rectangle = this._dragBehavior.bounds;
-			var target:DisplayObject = this._dragBehavior.target as DisplayObject;
+			var bounds:Rectangle = _dragBehavior.bounds;
+			var target:DisplayObject = _dragBehavior.target as DisplayObject;
 			var targetBounds:Rectangle = target.getBounds(target.parent);
 			
-			if (this._direction == Direction.DESCENDING)
+			if (_direction == Direction.DESCENDING)
 			{
 				value = 1 - value;
 			}
 			
-			if (this._orientation == Orientation.HORIZONTAL)
+			if (_orientation == Orientation.HORIZONTAL)
 			{
 				target.x = bounds.x + (target.x - targetBounds.x) + (bounds.width - targetBounds.width) * value;  
 			}
@@ -167,7 +160,7 @@ package temple.ui.slider
 				target.y = bounds.y + (target.y - targetBounds.y) + (bounds.height - targetBounds.height) * value;  
 			}
 			
-			this.dispatchEvent(new Event(Event.CHANGE));
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -177,7 +170,7 @@ package temple.ui.slider
 		 */
 		public function get orientation():String
 		{
-			return this._orientation;
+			return _orientation;
 		}
 		
 		/**
@@ -189,16 +182,16 @@ package temple.ui.slider
 			{
 				case Orientation.HORIZONTAL:
 				{
-					this._orientation = value;
-					this._dragBehavior.dragVertical = false;
-					this._dragBehavior.dragHorizontal = true;
+					_orientation = value;
+					_dragBehavior.dragVertical = false;
+					_dragBehavior.dragHorizontal = true;
 					break;
 				}
 				case Orientation.VERTICAL:
 				{
-					this._orientation = value;
-					this._dragBehavior.dragVertical = true;
-					this._dragBehavior.dragHorizontal = false;
+					_orientation = value;
+					_dragBehavior.dragVertical = true;
+					_dragBehavior.dragHorizontal = false;
 					break;
 				}
 				default:
@@ -216,7 +209,7 @@ package temple.ui.slider
 		 */
 		public function get direction():String
 		{
-			return this._direction;
+			return _direction;
 		}
 		
 		/**
@@ -229,7 +222,7 @@ package temple.ui.slider
 				case Direction.ASCENDING:
 				case Direction.DESCENDING:
 				{
-					this._direction = value;
+					_direction = value;
 					break;
 				}
 				default:
@@ -244,7 +237,7 @@ package temple.ui.slider
 		 */
 		public function get isSliding():Boolean
 		{
-			return this._isSliding;
+			return _isSliding;
 		}
 		
 		/**
@@ -252,7 +245,7 @@ package temple.ui.slider
 		 */
 		public function get bounds():Rectangle
 		{
-			return this._dragBehavior ? this._dragBehavior.bounds : null;
+			return _dragBehavior ? _dragBehavior.bounds : null;
 		}
 
 		/**
@@ -261,8 +254,9 @@ package temple.ui.slider
 		public function set bounds(value:Rectangle):void
 		{
 			var val:Number = this.value;
-			this._dragBehavior.bounds = value;
+			_dragBehavior.bounds = value;
 			this.value = val;
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -270,7 +264,7 @@ package temple.ui.slider
 		 */
 		public function get dragBehavior():DragBehavior
 		{
-			return this._dragBehavior;
+			return _dragBehavior;
 		}
 		
 		/**
@@ -278,7 +272,8 @@ package temple.ui.slider
 		 */
 		protected function handleDragging(event:DragBehaviorEvent):void
 		{
-			this.dispatchEvent(new SliderEvent(SliderEvent.SLIDING, this.value));
+			dispatchEvent(new SliderEvent(SliderEvent.SLIDING, value));
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -286,8 +281,8 @@ package temple.ui.slider
 		 */
 		protected function handleDragStart(event:DragBehaviorEvent):void
 		{
-			this._isSliding = true;
-			this.dispatchEvent(new SliderEvent(SliderEvent.SLIDE_START, this.value));
+			_isSliding = true;
+			dispatchEvent(new SliderEvent(SliderEvent.SLIDE_START, value));
 		}
 
 		/**
@@ -295,8 +290,8 @@ package temple.ui.slider
 		 */
 		protected function handleDragStop(event:DragBehaviorEvent):void
 		{
-			this._isSliding = false;
-			this.dispatchEvent(new SliderEvent(SliderEvent.SLIDE_STOP, this.value));
+			_isSliding = false;
+			dispatchEvent(new SliderEvent(SliderEvent.SLIDE_STOP, value));
 		}
 
 		/**
@@ -304,10 +299,10 @@ package temple.ui.slider
 		 */
 		override public function destruct():void
 		{
-			if (this._dragBehavior)
+			if (_dragBehavior)
 			{
-				this._dragBehavior.destruct();
-				this._dragBehavior = null;
+				_dragBehavior.destruct();
+				_dragBehavior = null;
 			}
 			super.destruct();
 		}

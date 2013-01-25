@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple UI Module API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/layout/liquid/LiquidSprite.html&amp;temple/ui/layout/liquid/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">LiquidSprite</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple UI Module API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/ui/layout/liquid/LiquidSprite.html&amp;temple/ui/layout/liquid/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">LiquidSprite</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("LiquidSprite"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -258,7 +258,7 @@ package
             LiquidStage.getInstance(stage).minimalWidth = 200;
             
             // header
-            with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
+            with (addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
             {
                 left = 4;
                 top = 4;
@@ -268,7 +268,7 @@ package
             }
 
             // left column
-            with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
+            with (addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
             {
                 left = 4;
                 top = 108;
@@ -278,7 +278,7 @@ package
             }
 
             // footer
-            with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
+            with (addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
             {
                 left = 108;
                 right = 4;
@@ -288,7 +288,7 @@ package
             }
             
             // center
-            with (this.addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
+            with (addChild(new LiquidContainer(100, 100, ScaleMode.NO_SCALE, null, false)) as LiquidContainer)
             {
                 left = 108;
                 top = 108;
@@ -387,7 +387,7 @@ package
             }
             
             // To check how Liquid performs we add a PerformanceStat
-            new LiquidBehavior(this.addChild(new PerformanceStat()), {right: 10, top: 10});
+            new LiquidBehavior(addChild(new PerformanceStat()), {right: 10, top: 10});
         }
     }
 }
@@ -397,16 +397,16 @@ class FullSizeBackground extends LiquidSprite
 {
     public function FullSizeBackground() 
     {
-        this.graphics.beginFill(0xffffff, .5);
-        this.graphics.drawRect(0, 0, 100, 100);
-        this.graphics.endFill();
+        graphics.beginFill(0xffffff, .5);
+        graphics.drawRect(0, 0, 100, 100);
+        graphics.endFill();
         
         this.left = 0;
         this.top = 0;
         this.bottom = 0;
         this.right = 0;
         
-        this.update();
+        update();
     }
 }
 </pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "LiquidExample", "width", "100%",

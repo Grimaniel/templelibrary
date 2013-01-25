@@ -57,9 +57,9 @@ package temple.ui.form.result
 		public function FormFieldError(field:String = null, message:String = null, code:String = null)
 		{
 			super(false, message, code);
-			this.toStringProps.push('field', 'message', 'code');
-			this.emptyPropsInToString = false;
-			this._field = field;
+			toStringProps.push('field', 'message', 'code');
+			emptyPropsInToString = false;
+			_field = field;
 		}
 		
 		/**
@@ -67,7 +67,7 @@ package temple.ui.form.result
 		 */
 		public function get field():String
 		{
-			return this._field;
+			return _field;
 		}
 		
 		/**
@@ -75,7 +75,7 @@ package temple.ui.form.result
 		 */
 		public function set field(value:String):void
 		{
-			this._field = value;
+			_field = value;
 		}
 
 		/**
@@ -83,9 +83,9 @@ package temple.ui.form.result
 		 */
 		public function parseXML(xml:XML):Boolean
 		{
-			this.field = xml.@field;
-			this.code = xml.@code;
-			this.message = xml;
+			field = xml.@field;
+			code = xml.@code;
+			message = xml;
 			
 			return true;
 		}

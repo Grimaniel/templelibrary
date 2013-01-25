@@ -29,29 +29,29 @@ package
 			super("Temple - StepSliderExample");
 			
 			var track:Track = new Track();
-			this.addChild(track);
+			addChild(track);
 			track.x = 30;
 			track.y = 30;
 			
 			var button:Button = new Button();
-			this.addChild(button);
+			addChild(button);
 			button.x = 30;
 			button.y = 30;
 			
-			this._slider = new StepSlider(button, track.getRect(this), -2, 2, .5);
-			this._slider.addEventListener(SliderEvent.SLIDING, this.handleSliding);
+			_slider = new StepSlider(button, track.getRect(this), -2, 2, .5);
+			_slider.addEventListener(SliderEvent.SLIDING, handleSliding);
 			
-			this._textField = new TextField();
-			this.addChildAt(this._textField, 0);
-			this._textField.text = this._slider.value.toString();
-			this._textField.autoSize = TextFieldAutoSize.LEFT;
-			this._textField.x = 30;
-			this._textField.y = 10;
+			_textField = new TextField();
+			addChildAt(_textField, 0);
+			_textField.text = _slider.value.toString();
+			_textField.autoSize = TextFieldAutoSize.LEFT;
+			_textField.x = 30;
+			_textField.y = 10;
 		}
 
 		private function handleSliding(event:SliderEvent):void 
 		{
-			this._textField.text = event.value.toString();
+			_textField.text = event.value.toString();
 		}
 	}
 }
@@ -66,11 +66,11 @@ class Track extends CoreSprite
 {
 	public function Track() 
 	{
-		this.graphics.beginFill(0x888888);
-		this.graphics.drawRect(0, 0, 300, 20);
-		this.graphics.endFill();
+		graphics.beginFill(0x888888);
+		graphics.drawRect(0, 0, 300, 20);
+		graphics.endFill();
 		
-		this.filters = [new DropShadowFilter(1, 45, 0, 1, 3, 3, 1, 1, true)];
+		filters = [new DropShadowFilter(1, 45, 0, 1, 3, 3, 1, 1, true)];
 	}
 }
 
@@ -78,13 +78,13 @@ class Button extends MultiStateButton
 {
 	public function Button() 
 	{
-		this.graphics.beginFill(0xaaaaaa);
-		this.graphics.drawRect(0, 0, 20, 20);
-		this.graphics.endFill();
+		graphics.beginFill(0xaaaaaa);
+		graphics.drawRect(0, 0, 20, 20);
+		graphics.endFill();
 		
-		this.filters = [new BevelFilter(1, 45, 0xffffff, 1, 0, 1, 3, 3)];
+		filters = [new BevelFilter(1, 45, 0xffffff, 1, 0, 1, 3, 3)];
 		
-		this.addChild(new ButtonOverState());
+		addChild(new ButtonOverState());
 		this.outOnDragOut = false;
 	}
 }
@@ -93,8 +93,8 @@ class ButtonOverState extends OverState
 {
 	public function ButtonOverState() 
 	{
-		this.graphics.beginFill(0xeeeeee);
-		this.graphics.drawRect(0, 0, 20, 20);
-		this.graphics.endFill();
+		graphics.beginFill(0xeeeeee);
+		graphics.drawRect(0, 0, 20, 20);
+		graphics.endFill();
 	}
 }

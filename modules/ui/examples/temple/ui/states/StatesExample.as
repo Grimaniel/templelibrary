@@ -30,7 +30,7 @@ package
 			
 			// create a button
 			var button:SwitchButton = new SwitchButton();
-			this.addChild(button);
+			addChild(button);
 			button.x = 50;
 			button.y = 50;
 			

@@ -62,7 +62,7 @@ package temple.ui.scroll
 		 */
 		public function get invertHorizontal():Boolean
 		{
-			return this._invertHorizontal;
+			return _invertHorizontal;
 		}
 
 		/**
@@ -70,7 +70,7 @@ package temple.ui.scroll
 		 */
 		public function set invertHorizontal(value:Boolean):void
 		{
-			this._invertHorizontal = value;
+			_invertHorizontal = value;
 		}
 
 		/**
@@ -78,7 +78,7 @@ package temple.ui.scroll
 		 */
 		public function get invertVertical():Boolean
 		{
-			return this._invertVertical;
+			return _invertVertical;
 		}
 
 		/**
@@ -86,7 +86,7 @@ package temple.ui.scroll
 		 */
 		public function set invertVertical(value:Boolean):void
 		{
-			this._invertVertical = value;
+			_invertVertical = value;
 		}
 		
 		/**
@@ -94,7 +94,7 @@ package temple.ui.scroll
 		 */
 		public function get invert():Boolean
 		{
-			return this._invertHorizontal && this._invertVertical;
+			return _invertHorizontal && _invertVertical;
 		}
 
 		/**
@@ -102,7 +102,7 @@ package temple.ui.scroll
 		 */
 		public function set invert(value:Boolean):void
 		{
-			this._invertHorizontal = this._invertVertical = value;
+			_invertHorizontal = _invertVertical = value;
 		}
 		
 		/**
@@ -110,14 +110,14 @@ package temple.ui.scroll
 		 */
 		override public function keepInBounds():void
 		{
-			var scrollRect:Rectangle = this.displayObject.scrollRect;
+			var scrollRect:Rectangle = displayObject.scrollRect;
 			
-			scrollRect.x = Math.min(scrollRect.x, this.displayObject.transform.pixelBounds.width - this.displayObject.scrollRect.width);
+			scrollRect.x = Math.min(scrollRect.x, displayObject.transform.pixelBounds.width - displayObject.scrollRect.width);
 			scrollRect.x = Math.max(scrollRect.x, 0);
-			scrollRect.y = Math.min(scrollRect.y, this.displayObject.transform.pixelBounds.height - this.displayObject.scrollRect.height);
+			scrollRect.y = Math.min(scrollRect.y, displayObject.transform.pixelBounds.height - displayObject.scrollRect.height);
 			scrollRect.y = Math.max(scrollRect.y, 0);
 			
-			this.displayObject.scrollRect = scrollRect;
+			displayObject.scrollRect = scrollRect;
 		}
 		
 		/**
@@ -125,12 +125,12 @@ package temple.ui.scroll
 		 */
 		override protected function handleMouseDown(event:MouseEvent):void
 		{
-			if (this.displayObject.scrollRect)
+			if (displayObject.scrollRect)
 			{
 				super.handleMouseDown(event);
-				this._startDragOffset = new Point(
-					(this._invertHorizontal ? -1 : 1) * this.displayObject.scrollRect.topLeft.x - this.displayObject.parent.mouseX,
-					(this._invertVertical ? -1 : 1) * this.displayObject.scrollRect.topLeft.y - this.displayObject.parent.mouseY);
+				_startDragOffset = new Point(
+					(_invertHorizontal ? -1 : 1) * displayObject.scrollRect.topLeft.x - displayObject.parent.mouseX,
+					(_invertVertical ? -1 : 1) * displayObject.scrollRect.topLeft.y - displayObject.parent.mouseY);
 			}
 		}
 
@@ -139,24 +139,24 @@ package temple.ui.scroll
 		 */
 		override protected function handleMouseMove(event:MouseEvent):void 
 		{
-			var scrollRect:Rectangle = this.displayObject.scrollRect;
+			var scrollRect:Rectangle = displayObject.scrollRect;
 			
-			if (this.dragHorizontal)
+			if (dragHorizontal)
 			{
-				scrollRect.x = (this._invertHorizontal ? -1 : 1) * (this._startDragOffset.x + this.displayObject.parent.mouseX);
+				scrollRect.x = (_invertHorizontal ? -1 : 1) * (_startDragOffset.x + displayObject.parent.mouseX);
 			}
 			
-			if (this.dragVertical)
+			if (dragVertical)
 			{
-				scrollRect.y = (this._invertHorizontal ? -1 : 1) * (this._startDragOffset.y + this.displayObject.parent.mouseY);
+				scrollRect.y = (_invertHorizontal ? -1 : 1) * (_startDragOffset.y + displayObject.parent.mouseY);
 			}
 			
-			this.displayObject.scrollRect = scrollRect;
-			this.displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, scrollRect.x, scrollRect.y, this.displayObject.transform.pixelBounds.width - this.displayObject.scrollRect.width, this.displayObject.transform.pixelBounds.height - this.displayObject.scrollRect.height));
+			displayObject.scrollRect = scrollRect;
+			displayObject.dispatchEvent(new ScrollEvent(ScrollEvent.SCROLL, scrollRect.x, scrollRect.y, displayObject.transform.pixelBounds.width - displayObject.scrollRect.width, displayObject.transform.pixelBounds.height - displayObject.scrollRect.height));
 			
-			this.keepInBounds();
+			keepInBounds();
 			
-			this.dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
 		}
 	}
 }

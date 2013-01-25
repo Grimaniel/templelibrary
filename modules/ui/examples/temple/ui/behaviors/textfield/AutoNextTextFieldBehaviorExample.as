@@ -45,14 +45,14 @@ package
 			
 			// create behavior, add textfields in sorted order
 			var autoNextTextFieldBehavior:AutoNextTextFieldBehavior = new AutoNextTextFieldBehavior();
-			autoNextTextFieldBehavior.add(this.textfield1);
-			autoNextTextFieldBehavior.add(this.textfield2);
-			autoNextTextFieldBehavior.add(this.textfield3);
-			autoNextTextFieldBehavior.add(this.textfield4);
-			autoNextTextFieldBehavior.add(this.textfield5);
-			autoNextTextFieldBehavior.add(this.textfield6);
-			autoNextTextFieldBehavior.add(this.textfield7);
-			autoNextTextFieldBehavior.add(this.textfield8);
+			autoNextTextFieldBehavior.add(textfield1);
+			autoNextTextFieldBehavior.add(textfield2);
+			autoNextTextFieldBehavior.add(textfield3);
+			autoNextTextFieldBehavior.add(textfield4);
+			autoNextTextFieldBehavior.add(textfield5);
+			autoNextTextFieldBehavior.add(textfield6);
+			autoNextTextFieldBehavior.add(textfield7);
+			autoNextTextFieldBehavior.add(textfield8);
 		}
 	}
 }

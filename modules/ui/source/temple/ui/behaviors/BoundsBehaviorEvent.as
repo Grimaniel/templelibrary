@@ -63,7 +63,7 @@ package temple.ui.behaviors
 		{
 			super(type, behavior);
 			
-			this._direction = direction;
+			_direction = direction;
 		}
 		
 		/**
@@ -71,7 +71,7 @@ package temple.ui.behaviors
 		 */
 		public function get direction():String
 		{
-			return this._direction;
+			return _direction;
 		}
 	}
 }

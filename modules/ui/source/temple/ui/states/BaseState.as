@@ -45,7 +45,7 @@ package temple.ui.states
 	{
 		public function BaseState()
 		{
-			this.visible = false;
+			visible = false;
 		}
 		
 		/**
@@ -53,9 +53,9 @@ package temple.ui.states
 		 */
 		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (this.enabled == false || this._shown) return;
-			this._shown = true;
-			this.visible = true;
+			if (enabled == false || _shown) return;
+			_shown = true;
+			visible = true;
 			if (onComplete != null) onComplete();
 		}
 
@@ -64,9 +64,9 @@ package temple.ui.states
 		 */
 		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (this.enabled == false || !this._shown) return;
-			this._shown = false;
-			this.visible = false;
+			if (enabled == false || !_shown) return;
+			_shown = false;
+			visible = false;
 			if (onComplete != null) onComplete();
 		}
 	}

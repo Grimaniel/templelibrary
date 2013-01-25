@@ -66,12 +66,12 @@ package temple.ui.buttons
 
 		public function AdvancedButton() 
 		{
-			this.addEventListener(MouseEvent.CLICK, this.handleClick);
+			addEventListener(MouseEvent.CLICK, handleClick);
 		}
 		
 		override protected function init(textField:TextField = null):void
 		{
-			this._label = textField ? new TextFieldLabelBehavior(textField) : LabelUtils.findLabel(this);
+			_label = textField ? new TextFieldLabelBehavior(textField) : LabelUtils.findLabel(this);
 		}
 		
 		/**
@@ -79,7 +79,7 @@ package temple.ui.buttons
 		 */
 		public function get groupName():String
 		{
-			return this._group ? this._group.name : null;
+			return _group ? _group.name : null;
 		}
 
 		/**
@@ -87,7 +87,7 @@ package temple.ui.buttons
 		 */
 		public function set groupName(value:String):void
 		{
-			this.group = RadioGroup.getInstance(value);
+			group = RadioGroup.getInstance(value);
 		}
 
 		/**
@@ -95,7 +95,7 @@ package temple.ui.buttons
 		 */
 		public function get group():IRadioGroup
 		{
-			return this._group;
+			return _group;
 		}
 
 		/**
@@ -103,13 +103,13 @@ package temple.ui.buttons
 		 */
 		public function set group(value:IRadioGroup):void
 		{
-			if (this._group == value) return;
+			if (_group == value) return;
 			
 			// remove from group if we already had a group
-			if (this._group) this._group.remove(this);
+			if (_group) _group.remove(this);
 			
-			this._group = value;
-			if (this._group) this._group.add(this);
+			_group = value;
+			if (_group) _group.add(this);
 		}
 
 		/**
@@ -117,7 +117,7 @@ package temple.ui.buttons
 		 */
 		public function get value():*
 		{
-			return this._data;
+			return _data;
 		}
 
 		/**
@@ -125,7 +125,7 @@ package temple.ui.buttons
 		 */
 		public function set value(value:*):void
 		{
-			this._data = value;
+			_data = value;
 		}
 
 		/**
@@ -133,7 +133,7 @@ package temple.ui.buttons
 		 */
 		public function get data():*
 		{
-			return this._data;
+			return _data;
 		}
 
 		/**
@@ -141,7 +141,7 @@ package temple.ui.buttons
 		 */
 		public function set data(value:*):void
 		{
-			this._data = value;
+			_data = value;
 		}
 
 		/**
@@ -149,7 +149,7 @@ package temple.ui.buttons
 		 */
 		public function get toggle():Boolean
 		{
-			return this._toggle;
+			return _toggle;
 		}
 
 		/**
@@ -157,18 +157,18 @@ package temple.ui.buttons
 		 */
 		public function set toggle(value:Boolean):void
 		{
-			this._toggle = value;
+			_toggle = value;
 		}
 		
 		protected function handleClick(event:MouseEvent):void 
 		{
-			if (this._toggle)
+			if (_toggle)
 			{
-				this.selected = !this.selected;
+				selected = !selected;
 			}
-			else if (this._group)
+			else if (_group)
 			{
-				this.selected = true;
+				selected = true;
 			}
 		}
 
@@ -177,9 +177,9 @@ package temple.ui.buttons
 		 */
 		override public function destruct():void
 		{
-			if (this._group)
+			if (_group)
 			{
-				var group:IRadioGroup = this._group;
+				var group:IRadioGroup = _group;
 				group.remove(this);
 				// check if this is the only button in the group. If so, destruct group
 				if (!group.isDestructed && (group.items == null || group.items.length == 0))
@@ -188,8 +188,8 @@ package temple.ui.buttons
 				}
 			}
 			
-			this._group = null;
-			this._data = null;
+			_group = null;
+			_data = null;
 			
 			super.destruct();
 		}

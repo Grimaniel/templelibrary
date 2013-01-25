@@ -57,11 +57,11 @@ package temple.ui.behaviors.textfield
 		{
 			super(target);
 			
-			this._textColor = textColor;
-			this._selectionColor = selectionColor;
-			this._selectedColor = selectedColor;
-			this._colorMatrixFilter = new ColorMatrixFilter();
-			this.updateFilter();
+			_textColor = textColor;
+			_selectionColor = selectionColor;
+			_selectedColor = selectedColor;
+			_colorMatrixFilter = new ColorMatrixFilter();
+			updateFilter();
 		}
 		
 		/**
@@ -69,52 +69,51 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get textField():TextField
 		{
-			return this.target as TextField;
+			return target as TextField;
 		}
 		
 		public function get textColor():uint
 		{
-			return this._textColor;
+			return _textColor;
 		}
 		
 		public function set textColor(value:uint):void
 		{
-			this._textColor = value;
-			this.updateFilter();
+			_textColor = value;
+			updateFilter();
 		}
 		
 		public function get selectedColor():uint
 		{
-			return this._selectedColor;
+			return _selectedColor;
 		}
 		
 		public function set selectedColor(value:uint):void
 		{
-			this._selectedColor = value;
-			this.updateFilter();
+			_selectedColor = value;
+			updateFilter();
 		}
 		
 		public function get selectionColor():uint
 		{
-			return this._selectionColor;
+			return _selectionColor;
 		}
 		
 		public function set selectionColor(value:uint):void
 		{
-			this._selectionColor = value;
-			this.updateFilter();
+			_selectionColor = value;
+			updateFilter();
 		}
 		
 		private function updateFilter():void
 		{
+			textField.textColor = 0xff0000;
 			
-			this.textField.textColor = 0xff0000;
-			
-			ColorUtils.getARGB(this._selectionColor);
+			ColorUtils.getARGB(_selectionColor);
 
-			var o:Object = ColorUtils.getRGB(this._selectionColor);
-			var r:Object = ColorUtils.getRGB(this._textColor);
-			var g:Object = ColorUtils.getRGB(this._selectedColor);
+			var o:Object = ColorUtils.getRGB(_selectionColor);
+			var r:Object = ColorUtils.getRGB(_textColor);
+			var g:Object = ColorUtils.getRGB(_selectedColor);
 			
 			const byteToPerc:Number = 1 / 0xff;
 			
@@ -126,9 +125,9 @@ package temple.ui.behaviors.textfield
 			var gg:Number = ((g.g - 0xff) - o.g) * byteToPerc + 1 - rg;
 			var gb:Number = ((g.b - 0xff) - o.b) * byteToPerc + 1 - rb;
 			
-			this._colorMatrixFilter.matrix = [rr, gr, 0, 0, o.r, rg, gg, 0, 0, o.g, rb, gb, 0, 0, o.b, 0, 0, 0, 1, 0];
+			_colorMatrixFilter.matrix = [rr, gr, 0, 0, o.r, rg, gg, 0, 0, o.g, rb, gb, 0, 0, o.b, 0, 0, 0, 1, 0];
 			
-			this.textField.filters = [this._colorMatrixFilter];
+			textField.filters = [_colorMatrixFilter];
 		}
 	}
 }

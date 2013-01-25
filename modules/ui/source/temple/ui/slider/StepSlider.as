@@ -52,17 +52,17 @@ package temple.ui.slider
 	 */
 	public class StepSlider extends Slider 
 	{
-		protected var _min:Number;
-		protected var _max:Number;
-		protected var _stepSize:Number;
+		private var _min:Number;
+		private var _max:Number;
+		private var _stepSize:Number;
 		
 		public function StepSlider(target:InteractiveObject, bounds:Rectangle, min:Number = 0, max:Number = 1, stepSize:Number = .1, orientation:String = Orientation.HORIZONTAL, direction:String = Direction.ASCENDING)
 		{
 			super(target, bounds, orientation, direction);
 			
-			this._min = min;
-			this._max = max;
-			this._stepSize = stepSize;
+			_min = min;
+			_max = max;
+			_stepSize = stepSize;
 		}
 		
 		/**
@@ -72,7 +72,7 @@ package temple.ui.slider
 		 */
 		override public function get value():Number
 		{
-			return NumberUtils.roundToNearest(this._min + super.value * (this._max - this._min), this._stepSize);
+			return NumberUtils.roundToNearest(_min + super.value * (_max - _min), _stepSize);
 		}
 
 		/**
@@ -80,7 +80,7 @@ package temple.ui.slider
 		 */
 		override public function set value(value:Number):void
 		{
-			super.value = (NumberUtils.roundToNearest(value, this._stepSize) - this._min) / (this._max - this._min);
+			super.value = (NumberUtils.roundToNearest(value, _stepSize) - _min) / (_max - _min);
 		}
 
 		/**
@@ -115,7 +115,7 @@ package temple.ui.slider
 		 */
 		public function get min():Number
 		{
-			return this._min;
+			return _min;
 		}
 		
 		/**
@@ -123,7 +123,7 @@ package temple.ui.slider
 		 */
 		public function set min(value:Number):void
 		{
-			this._min = value;
+			_min = value;
 		}
 		
 		/**
@@ -131,7 +131,7 @@ package temple.ui.slider
 		 */
 		public function get max():Number
 		{
-			return this._max;
+			return _max;
 		}
 		
 		/**
@@ -139,7 +139,7 @@ package temple.ui.slider
 		 */
 		public function set max(value:Number):void
 		{
-			this._max = value;
+			_max = value;
 		}
 		
 		/**
@@ -147,7 +147,7 @@ package temple.ui.slider
 		 */
 		public function get stepSize():Number
 		{
-			return this._stepSize;
+			return _stepSize;
 		}
 		
 		/**
@@ -155,7 +155,7 @@ package temple.ui.slider
 		 */
 		public function set stepSize(value:Number):void
 		{
-			this._stepSize = value;
+			_stepSize = value;
 		}
 		
 		/**
@@ -164,7 +164,7 @@ package temple.ui.slider
 		override protected function handleDragging(event:DragBehaviorEvent):void
 		{
 			// assign to self to snap
-			this.value = this.value;
+			value = value;
 			
 			super.handleDragging(event);
 		}

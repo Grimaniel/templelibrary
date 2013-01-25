@@ -136,20 +136,20 @@ package temple.ui.layout.liquid
 			if (stage == null) throwError(new TempleArgumentError(this, "Stage can not be null"));
 			
 			_instance = this;
-			this._stage = stage;
-			this._stage.addEventListener(Event.RESIZE, this.handleStageResize, false, -1);
+			_stage = stage;
+			_stage.addEventListener(Event.RESIZE, handleStageResize, false, -1);
 			
-			if (this._stage.scaleMode != StageScaleMode.NO_SCALE)
+			if (_stage.scaleMode != StageScaleMode.NO_SCALE)
 			{
-				this._stage.scaleMode = StageScaleMode.NO_SCALE;
-				//this.logWarn("LiquidStage changed the StageScaleMode");
+				_stage.scaleMode = StageScaleMode.NO_SCALE;
+				//logWarn("LiquidStage changed the StageScaleMode");
 			}
-			if (this._stage.align != StageAlign.TOP_LEFT)
+			if (_stage.align != StageAlign.TOP_LEFT)
 			{
-				this._stage.align = StageAlign.TOP_LEFT;
-				//this.logWarn("LiquidStage changed the StageAlign");
+				_stage.align = StageAlign.TOP_LEFT;
+				//logWarn("LiquidStage changed the StageAlign");
 			}
-			new FrameDelay(this.dispatchEvent, 1, [new Event(Event.RESIZE)]);
+			new FrameDelay(dispatchEvent, 1, [new Event(Event.RESIZE)]);
 		}
 		
 		/**
@@ -157,8 +157,8 @@ package temple.ui.layout.liquid
 		 */
 		public function get width():Number
 		{
-			if (!isNaN(this._width)) return this._width;
-			return isNaN(this._minimalWidth) || this._stage.stageWidth > this._minimalWidth ? this._stage.stageWidth : this._minimalWidth;
+			if (!isNaN(_width)) return _width;
+			return isNaN(_minimalWidth) || _stage.stageWidth > _minimalWidth ? _stage.stageWidth : _minimalWidth;
 		}
 
 		/**
@@ -166,7 +166,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set width(value:Number):void
 		{
-			this._width = value;
+			_width = value;
 		}
 
 		/**
@@ -184,7 +184,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get minimalWidth():Number
 		{
-			return this._minimalWidth;
+			return _minimalWidth;
 		}
 		
 		/**
@@ -192,7 +192,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set minimalWidth(value:Number):void
 		{
-			this._minimalWidth = value;
+			_minimalWidth = value;
 		}
 		
 		/**
@@ -200,8 +200,8 @@ package temple.ui.layout.liquid
 		 */
 		public function get height():Number
 		{
-			if (!isNaN(this._height)) return this._height;
-			return isNaN(this._minimalHeight) || this._stage.stageHeight > this._minimalHeight ? this._stage.stageHeight : this._minimalHeight;
+			if (!isNaN(_height)) return _height;
+			return isNaN(_minimalHeight) || _stage.stageHeight > _minimalHeight ? _stage.stageHeight : _minimalHeight;
 		}
 
 		/**
@@ -209,7 +209,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set height(value:Number):void
 		{
-			this._height = value;
+			_height = value;
 		}
 
 		/**
@@ -217,7 +217,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get minimalHeight():Number
 		{
-			return this._minimalHeight;
+			return _minimalHeight;
 		}
 		
 		/**
@@ -225,7 +225,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set minimalHeight(value:Number):void
 		{
-			this._minimalHeight = value;
+			_minimalHeight = value;
 		}
 
 		/**
@@ -243,7 +243,7 @@ package temple.ui.layout.liquid
 		 */
 		public function get displayObject():DisplayObject
 		{
-			return this._stage;
+			return _stage;
 		}
 		
 		/**
@@ -271,20 +271,20 @@ package temple.ui.layout.liquid
 		 */
 		public function get offset():Point
 		{
-			return this._offset;
+			return _offset;
 		}
 		
 		private function handleStageResize(event:Event):void
 		{
-			this.dispatchEvent(event.clone());
-			if (this._resizeDelay) this._resizeDelay.destruct();
-			this._resizeDelay = new FrameDelay(this.delayedResize, 2);
+			dispatchEvent(event.clone());
+			if (_resizeDelay) _resizeDelay.destruct();
+			_resizeDelay = new FrameDelay(delayedResize, 2);
 		}
 
 		private function delayedResize():void 
 		{
-			this._resizeDelay = null;
-			this.dispatchEvent(new Event(Event.RESIZE));
+			_resizeDelay = null;
+			dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**
@@ -293,10 +293,10 @@ package temple.ui.layout.liquid
 		override public function destruct():void
 		{
 			LiquidStage._instance = null;
-			if (this._resizeDelay)
+			if (_resizeDelay)
 			{
-				this._resizeDelay.destruct();
-				this._resizeDelay = null;
+				_resizeDelay.destruct();
+				_resizeDelay = null;
 			}
 			super.destruct();
 		}
