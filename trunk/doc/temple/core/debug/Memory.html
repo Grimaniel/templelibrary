@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/core/debug/Memory.html&amp;temple/core/debug/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Memory</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/core/debug/Memory.html&amp;temple/core/debug/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Memory</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Memory"); titleBar_setSubNav(true,true,false,false,false,false,false,false,true,true,false	,false,false,false,false,false);}	
@@ -48,7 +48,7 @@
                  Memory.registerObject(this);
          }
          </pre></div> 
-		 </div></div><div class="detailSectionHeader">Constant Detail</div><a name="constantDetail"></a><a name="VERSION"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">VERSION</td><td class="detailHeaderType">Constant</td></tr></table><div class="detailBody"><code>templelibrary static const VERSION:String = 3.3.0</code><p></p><p>
+		 </div></div><div class="detailSectionHeader">Constant Detail</div><a name="constantDetail"></a><a name="VERSION"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">VERSION</td><td class="detailHeaderType">Constant</td></tr></table><div class="detailBody"><code>templelibrary static const VERSION:String = 3.4.0</code><p></p><p>
 		 The current version of the Temple Library
 		 </p></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="exampleHeader">CoreDisplayObjectsExample.as</div><br/><div class="detailBody"> 
  <a></a>
@@ -112,25 +112,25 @@ package
         public function CoreDisplayObjectsExample()
         {
             // create a TextField for displaying the output of the Log
-            this._output = new TextField();
-            this._output.textColor = 0xffffff;
-            this._output.autoSize = TextFieldAutoSize.LEFT;
-            this.addChild(this._output);
-            this._output.doubleClickEnabled = true;
+            _output = new TextField();
+            _output.textColor = 0xffffff;
+            _output.autoSize = TextFieldAutoSize.LEFT;
+            addChild(_output);
+            _output.doubleClickEnabled = true;
             // double clicking the TextField destructs all objects
-            this._output.addEventListener(MouseEvent.DOUBLE_CLICK, this.handleOutputDoubleClick);
+            _output.addEventListener(MouseEvent.DOUBLE_CLICK, handleOutputDoubleClick);
             
             // add a listener on the Log to get the log messages
-            Log.addLogListener(this.handleLogEvent);
+            Log.addLogListener(handleLogEvent);
             
             // create an instance of the MemoryDebugger, which checks the Memory for possible leaks
             new MemoryDebugger();
             
             // create a timer for creating objects 
-            this._timer = new CoreTimer(500, 10);
-            this._timer.addEventListener(TimerEvent.TIMER, this.handleTimer);
-            this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
-            this._timer.start();
+            _timer = new CoreTimer(500, 10);
+            _timer.addEventListener(TimerEvent.TIMER, handleTimer);
+            _timer.addEventListener(TimerEvent.TIMER_COMPLETE, handleTimerComplete);
+            _timer.start();
         }
 
         private function handleTimer(event:TimerEvent):void
@@ -144,9 +144,9 @@ package
                     sprite.graphics.beginFill(0x0000ff, .5);
                     sprite.graphics.lineStyle(1, 0x0000ff);
                     sprite.graphics.drawRect(0, 0, 50, 50);
-                    sprite.addEventListener(MouseEvent.CLICK, this.handleClick);
+                    sprite.addEventListener(MouseEvent.CLICK, handleClick);
                     sprite.buttonMode = true;
-                    this.addOnStage(sprite);
+                    addOnStage(sprite);
                     break;
                 }
                 case 1:
@@ -155,9 +155,9 @@ package
                     movieClip.graphics.beginFill(0x00ff00, .5);
                     movieClip.graphics.lineStyle(1, 0x00ff00);
                     movieClip.graphics.drawRect(0, 0, 50, 50);
-                    movieClip.addEventListener(MouseEvent.CLICK, this.handleClick);
+                    movieClip.addEventListener(MouseEvent.CLICK, handleClick);
                     movieClip.buttonMode = true;
-                    this.addOnStage(movieClip);
+                    addOnStage(movieClip);
                     break;
                 }
                 case 2:
@@ -166,7 +166,7 @@ package
                     shape.graphics.beginFill(0xff0000, .5);
                     shape.graphics.lineStyle(1, 0xff0000);
                     shape.graphics.drawRect(0, 0, 50, 50);
-                    this.addOnStage(shape);
+                    addOnStage(shape);
                     break;
                 }
                 case 3:
@@ -174,8 +174,8 @@ package
                     var loader:CoreLoader = new CoreLoader();
                     loader.load(new URLRequest('http://code.google.com/p/templelibrary/logo'));
                     // don't add the COMPLETE listener on the contentLoaderInfo, but on the loader
-                    loader.addEventListenerOnce(Event.COMPLETE, this.handleLoaderComplete);
-                    loader.addEventListener(MouseEvent.CLICK, this.handleClick);
+                    loader.addEventListenerOnce(Event.COMPLETE, handleLoaderComplete);
+                    loader.addEventListener(MouseEvent.CLICK, handleClick);
                     break;
                 }
                 case 4:
@@ -183,41 +183,41 @@ package
                     var bitmapData:BitmapData = new BitmapData(50, 50, false, 0xffff00);
                     var bitmap:CoreBitmap = new CoreBitmap(bitmapData);
                     bitmap.alpha = .7;
-                    this.addOnStage(bitmap);
+                    addOnStage(bitmap);
                 }
             }
             
             // don't allow more than 50 objects
-            if (this.numChildren &gt; 50)
+            if (numChildren &gt; 50)
             {
-                IDestructible(this.getChildAt(1)).destruct();
+                IDestructible(getChildAt(1)).destruct();
             }
         }
 
         private function addOnStage(object:ICoreDisplayObject):void
         {
             // add to stage on a random positon
-            this.addChild(object as DisplayObject);
-            object.position = new Point(int(Math.random() * (this.stage.stageWidth - object.width)), int(Math.random() * (this.stage.stageHeight - object.height)));
+            addChild(object as DisplayObject);
+            object.position = new Point(int(Math.random() * (stage.stageWidth - object.width)), int(Math.random() * (stage.stageHeight - object.height)));
         }
 
 
         private function handleTimerComplete(event:TimerEvent):void
         {
             // destruct the timer (just for testing) and create a new one
-            this._timer.destruct();
-            this._timer = null;
+            _timer.destruct();
+            _timer = null;
             
-            this._timer = new CoreTimer(500, 10);
-            this._timer.addEventListener(TimerEvent.TIMER, this.handleTimer);
-            this._timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.handleTimerComplete);
-            this._timer.start();
+            _timer = new CoreTimer(500, 10);
+            _timer.addEventListener(TimerEvent.TIMER, handleTimer);
+            _timer.addEventListener(TimerEvent.TIMER_COMPLETE, handleTimerComplete);
+            _timer.start();
         }
 
         private function handleLogEvent(event:LogEvent):void
         {
             // put the log output in the TextField
-            this._output.text = "Memory info: (double click to delete all objects)\n" + event.data;
+            _output.text = "Memory info: (double click to delete all objects)\n" + event.data;
         }
         
         private function handleClick(event:MouseEvent):void
@@ -229,7 +229,7 @@ package
         private function handleLoaderComplete(event:Event):void
         {
             // image is loaded, add on stage
-            this.addOnStage(CoreLoader(event.target));
+            addOnStage(CoreLoader(event.target));
         }
         
         private function handleOutputDoubleClick(event:MouseEvent):void
@@ -238,7 +238,7 @@ package
             Destructor.destructChildren(this);
             
             // the TextField is also destructed, so put it back on stage
-            this.addChild(this._output);
+            addChild(_output);
             
             System.gc();
         }

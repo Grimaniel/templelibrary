@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../../override.css" type="text/css"><meta name="keywords" content="JSONCoder,temple.data.encoding.json.JSONCoder,decode,destringify,destruct,destruct,encode,getString,getValue,setExplicitDecoder,setExplicitEncoder,stringify"><title>temple.data.encoding.json.JSONCoder</title><script src="../../../../AC_OETags.js" type="text/javascript"></script></head><body><script language="javascript" type="text/javascript" src="../../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../../override.css" type="text/css"><meta name="keywords" content="JSONCoder,temple.data.encoding.json.JSONCoder,decode,destruct,destruct,encode,getString,getValue,parse,setExplicitDecoder,setExplicitEncoder,stringify"><title>temple.data.encoding.json.JSONCoder</title><script src="../../../../AC_OETags.js" type="text/javascript"></script></head><body><script language="javascript" type="text/javascript" src="../../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
 				asdocTitle = 'JSONCoder - Temple API Documentation';
 				var baseRef = '../../../../';
 				window.onload = configPage;
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/data/encoding/json/JSONCoder.html&amp;temple/data/encoding/json/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">JSONCoder</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?temple/data/encoding/json/JSONCoder.html&amp;temple/data/encoding/json/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">JSONCoder</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("JSONCoder"); titleBar_setSubNav(false,false,false,false,false,false,false,false,true,true,false	,false,false,false,false,false);}	
@@ -52,13 +52,13 @@
 
         public function get friends():Vector.&lt;Person&gt;
         {
-            return this._friends;
+            return _friends;
         }
 
         // note: setter must be untyped, since the JSONDecoder can't create runtime Vectors
         public function set friends(value:*):void
         {
-            this._friends = Vector.&lt;Person&gt;(value);
+            _friends = Vector.&lt;Person&gt;(value);
         }
     }
 }
@@ -130,7 +130,7 @@ package
             // Output Erik
             var erikOutput:TextField = new TextField();
             erikOutput.autoSize = TextFieldAutoSize.LEFT;
-            this.addChild(erikOutput);
+            addChild(erikOutput);
             erikOutput.width = 300;
             erikOutput.text = dump(erik);
             
@@ -142,7 +142,7 @@ package
             // output JSON
             var jsonOutput:TextField = new TextField();
             jsonOutput.autoSize = TextFieldAutoSize.LEFT;
-            this.addChild(jsonOutput);
+            addChild(jsonOutput);
             jsonOutput.width = 600;
             jsonOutput.y = erikOutput.y + erikOutput.height + 4;
             jsonOutput.text = json;
@@ -151,21 +151,21 @@ package
             var decoder:JSONDecoder = new JSONDecoder();
             decoder.setExplicitDecoder(Date, new DateCoder());
             
-            var person:Person = decoder.destringify(json) as Person;
+            var person:Person = decoder.parse(json) as Person;
             
             var personOutput:TextField = new TextField();
             personOutput.autoSize = TextFieldAutoSize.LEFT;
-            this.addChild(personOutput);
+            addChild(personOutput);
             personOutput.width = 600;
             personOutput.y = jsonOutput.y + jsonOutput.height + 4;
             personOutput.text =  dump(person);
         }
     }
 }
-import temple.data.encoding.IDestringifier;
+import temple.data.encoding.IParser;
 import temple.data.encoding.IStringifier;
 
-class DateCoder implements IStringifier, IDestringifier
+class DateCoder implements IStringifier, IParser
 {
     public function stringify(value:*):String
     {
@@ -174,7 +174,7 @@ class DateCoder implements IStringifier, IDestringifier
         return "\"" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "\"";
     }
 
-    public function destringify(value:*):*
+    public function parse(value:*):Object
     {
         if (value && value.indexOf("-"))
         {
@@ -238,7 +238,7 @@ package
             // Out put Erik
             var erikOutput:TextField = new TextField();
             erikOutput.autoSize = TextFieldAutoSize.LEFT;
-            this.addChild(erikOutput);
+            addChild(erikOutput);
             erikOutput.width = 300;
             erikOutput.text = dump(erik);
             
@@ -248,7 +248,7 @@ package
             // out put JSON
             var jsonOutput:TextField = new TextField();
             jsonOutput.autoSize = TextFieldAutoSize.LEFT;
-            this.addChild(jsonOutput);
+            addChild(jsonOutput);
             jsonOutput.width = 600;
             jsonOutput.y = erikOutput.y + erikOutput.height + 4;
             jsonOutput.text = json;
@@ -258,7 +258,7 @@ package
             
             var personOutput:TextField = new TextField();
             personOutput.autoSize = TextFieldAutoSize.LEFT;
-            this.addChild(personOutput);
+            addChild(personOutput);
             personOutput.width = 600;
             personOutput.y = jsonOutput.y + jsonOutput.height + 4;
             personOutput.text =  dump(person);
@@ -266,11 +266,11 @@ package
             // check if person and erik are the same object
             if (erik === person)
             {
-                this.logInfo("erik === person");
+                logInfo("erik === person");
             }
             else
             {
-                this.logError("erik != person");
+                logError("erik != person");
             }
         }
     }
