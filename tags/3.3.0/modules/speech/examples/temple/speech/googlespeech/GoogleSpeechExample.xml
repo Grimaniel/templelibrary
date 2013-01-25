@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build Fla" name="GoogleSpeechExample">
+	<property name="extra-dependencies" value="ui,ui-extended,tweenlite,microphone" />
+	<import file="../../../../tools/ant/build-speech.xml" />
+	<target name="Test" description="Test Fla Example"><antcall target="Test Fla" /></target>
+</project>
