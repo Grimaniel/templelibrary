@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/ui/form/Form.html&amp;temple/ui/form/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Form</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/ui/form/Form.html&amp;temple/ui/form/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Form</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Form"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -349,19 +349,19 @@ package
             super("Temple - FormExample");
             
             // create a PersonData object in which we store the data after submitting.
-            this._data = new PersonData();
+            _data = new PersonData();
             
             // create a new Form with a FormObjectService as service. Pass the PersonData object as object.
-            this._form = new Form(new ObjectFormService(this._data));
+            _form = new Form(new ObjectFormService(_data));
             
             // enable debug, so debug infomation is logged
-            this._form.debug = true;
+            _form.debug = true;
             
             // add InputFields to the Form. Note: the 'name' property (2nd parameter) must match the corresponding property value of the PersonData object, since we want to store the data in that object.
-            this._form.addElement(this.mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
-            this._form.addElement(this.mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
-            this._form.addElement(this.mcCompanyField, "company");
-            this._form.addElement(this.mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
+            _form.addElement(this.mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
+            _form.addElement(this.mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
+            _form.addElement(this.mcCompanyField, "company");
+            _form.addElement(this.mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
             
             // fill country ComboBox with some countries. We use the ISO code as data. (For this case we don't add all countries of the world, since the example would be too large. But ofcourse you can add all the countries you want.)
             this.mcCountryField.addItem("BEL","Belgium");
@@ -407,11 +407,11 @@ package
             radiogroup.add(this.mcGenderFemaleRadioButton, "female");
             
             // add RadioGroup to the Form
-            this._form.addElement(radiogroup, "gender", NullValidationRule, "select your gender");
+            _form.addElement(radiogroup, "gender", NullValidationRule, "select your gender");
             
             // add CheckBoxes to the Form
-            this._form.addElement(this.mcNewsletterCheckBox, "newsletter");
-            this._form.addElement(this.mcTermsCheckBox, "terms", BooleanValidationRule, "You must agree to the terms", -1, false); // Must agree to terms, but we don't want to submit this value
+            _form.addElement(this.mcNewsletterCheckBox, "newsletter");
+            _form.addElement(this.mcTermsCheckBox, "terms", BooleanValidationRule, "You must agree to the terms", -1, false); // Must agree to terms, but we don't want to submit this value
             
             // set some restrictions
             this.mcEmailField.restrict = Restrictions.EMAIL;
@@ -435,13 +435,13 @@ package
             this.mcCountryField.errorTextColor = 0xFF0000;
             
             // add the submit button
-            this._form.addSubmitButton(this.mcSubmitButton);
+            _form.addSubmitButton(this.mcSubmitButton);
 
             // add the reset button
-            this._form.addResetButton(this.mcResetButton);
+            _form.addResetButton(this.mcResetButton);
             
             // reset the form. By resetting the form all elements will be cleared.
-            this._form.reset();
+            _form.reset();
             
             // set labels for RadioButtons and CheckBoxes
             this.mcGenderMaleRadioButton.html = false;
@@ -469,25 +469,25 @@ package
             this.mcPrefillButton.label = "Prefill";
             
             // We add the mcPrefillButton to the tabFocusManager of the Form, so we can tab to this button
-            this._form.tabFocusManager.add(this.mcPrefillButton);
+            _form.tabFocusManager.add(this.mcPrefillButton);
             
-            this.mcPrefillButton.addEventListener(MouseEvent.CLICK, this.handlePrefillClick);
+            this.mcPrefillButton.addEventListener(MouseEvent.CLICK, handlePrefillClick);
             
             // Listen to all FormEvents from the form
-            EventUtils.addAll(FormEvent, this._form, this.handleFormEvent);
+            EventUtils.addAll(FormEvent, _form, handleFormEvent);
         }
 
         private function handlePrefillClick(event:MouseEvent):void
         {
             // Prefill data
-            this._data.name = "Thijs";
-            this._data.email = "thijs@mediamonks.com";
-            this._data.company = "MediaMonks";
-            this._data.country = "NLD";
-            this._data.newsletter = true;
-            this._data.gender = "male";
+            _data.name = "Thijs";
+            _data.email = "thijs@mediamonks.com";
+            _data.company = "MediaMonks";
+            _data.country = "NLD";
+            _data.newsletter = true;
+            _data.gender = "male";
             
-            this._form.prefillData(this._data);
+            _form.prefillData(_data);
         }
 
         private function handleFormEvent(event:FormEvent):void
@@ -521,7 +521,7 @@ package
                 }
                 default:
                 {
-                    this.logError("handleFormEvent: unhandled event '" + event.type + "'");
+                    logError("handleFormEvent: unhandled event '" + event.type + "'");
                     break;
                 }
             }
@@ -582,7 +582,7 @@ package
             super("Temple - XMLFormServiceExample");
             
             // By setting the flash var "success" to true, we fake a successful submit.
-            FlashVars.initialize(this.loaderInfo.parameters);
+            FlashVars.initialize(loaderInfo.parameters);
             FlashVars.configureVar("success",  false, Boolean);
             
             // Create a XMLFormService which handles our form.
@@ -607,14 +607,14 @@ package
             label.autoSize = TextFieldAutoSize.LEFT;
             label.text = "This is an example of a login form";
             label.x = 20;
-            this.addChild(label);
+            addChild(label);
             
             // Create a field for the email
             var emailInput:Input = new Input();
             emailInput.hintText = "email address";
             emailInput.x = 20;
             emailInput.y = 30;
-            this.addChild(emailInput);
+            addChild(emailInput);
             
             // Add field to the form
             form.addElement(emailInput, "email", EmailValidationRule, "This is not a valid email address");
@@ -625,7 +625,7 @@ package
             passwordInput.hintText = "password";
             passwordInput.x = 20;
             passwordInput.y = 60;
-            this.addChild(passwordInput);
+            addChild(passwordInput);
 
             // Add field to the form
             form.addElement(passwordInput, "password", EmptyStringValidationRule, "Please fill in your password");
@@ -634,22 +634,22 @@ package
             var button:Button = new Button();
             button.x = 20;
             button.y = 104;
-            this.addChild(button);
+            addChild(button);
             
             form.addSubmitButton(button);
             
             // Create a label for displaying error or success messages
-            this._label = new TextField();
-            this._label.autoSize = TextFieldAutoSize.LEFT;
-            this._label.x = 20;
-            this._label.y = 82;
-            this.addChild(this._label);
+            _label = new TextField();
+            _label.autoSize = TextFieldAutoSize.LEFT;
+            _label.x = 20;
+            _label.y = 82;
+            addChild(_label);
             
-            form.addEventListener(FormEvent.RESET, this.handleFormEvent);
-            form.addEventListener(FormEvent.VALIDATE_SUCCESS, this.handleFormEvent);
-            form.addEventListener(FormEvent.VALIDATE_ERROR, this.handleFormEvent);
-            form.addEventListener(FormEvent.SUBMIT_SUCCESS, this.handleFormEvent);
-            form.addEventListener(FormEvent.SUBMIT_ERROR, this.handleFormEvent);
+            form.addEventListener(FormEvent.RESET, handleFormEvent);
+            form.addEventListener(FormEvent.VALIDATE_SUCCESS, handleFormEvent);
+            form.addEventListener(FormEvent.VALIDATE_ERROR, handleFormEvent);
+            form.addEventListener(FormEvent.SUBMIT_SUCCESS, handleFormEvent);
+            form.addEventListener(FormEvent.SUBMIT_ERROR, handleFormEvent);
             
             form.reset();
         }
@@ -660,32 +660,32 @@ package
             {
                 case FormEvent.RESET:
                 {
-                    this._label.text = "";
-                    this._label.textColor = Colors.BLACK;
+                    _label.text = "";
+                    _label.textColor = Colors.BLACK;
                     break;
                 }
                 case FormEvent.VALIDATE_SUCCESS:
                 {
-                    this._label.text = "";
-                    this._label.textColor = Colors.BLACK;
+                    _label.text = "";
+                    _label.textColor = Colors.BLACK;
                     break;
                 }
                 case FormEvent.VALIDATE_ERROR:
                 {
-                    this._label.text = event.result.message;
-                    this._label.textColor = Colors.RED;
+                    _label.text = event.result.message;
+                    _label.textColor = Colors.RED;
                     break;
                 }
                 case FormEvent.SUBMIT_SUCCESS:
                 {
-                    this._label.text = event.result.message;
-                    this._label.textColor = Colors.BLACK;
+                    _label.text = event.result.message;
+                    _label.textColor = Colors.BLACK;
                     break;
                 }
                 case FormEvent.SUBMIT_ERROR:
                 {
-                    this._label.text = event.result.message;
-                    this._label.textColor = Colors.RED;
+                    _label.text = event.result.message;
+                    _label.textColor = Colors.RED;
                     break;
                 }
             }
@@ -710,7 +710,7 @@ class Input extends InputField
 {
     public function Input()
     {
-        super(this.addChild(new TextField()) as TextField);
+        super(addChild(new TextField()) as TextField);
         
         textField.border = true;
         textField.background = true;
@@ -718,7 +718,7 @@ class Input extends InputField
         textField.height = 20;
         textField.type = TextFieldType.INPUT;
         textField.filters = [new DropShadowFilter(2, 45, 0, 1, 4, 4, .5, 1, true)];
-        this.addChild(textField);
+        addChild(textField);
 
         this.hintTextColor = Colors.GRAY;
         this.errorTextColor = Colors.RED;
@@ -732,7 +732,7 @@ class Input extends InputField
         errorText.textColor = Colors.RED;
         errorText.autoSize = TextFieldAutoSize.LEFT;
         error.addChild(errorText);
-        this.addChild(error);
+        addChild(error);
         
     }
 }
@@ -741,11 +741,11 @@ class Button extends MultiStateButton
 {
     public function Button()
     {
-        this.graphics.beginFill(Colors.LIGHT_GREY);
-        this.graphics.drawRect(0, 0, 100, 30);
-        this.graphics.endFill();
+        graphics.beginFill(Colors.LIGHT_GREY);
+        graphics.drawRect(0, 0, 100, 30);
+        graphics.endFill();
         
-        this.filters = [new BevelFilter(2, 45, Colors.WHITE, 1, Colors.BLACK, 1, 2, 2)];
+        filters = [new BevelFilter(2, 45, Colors.WHITE, 1, Colors.BLACK, 1, 2, 2)];
         
         // Create an IOverState in the button to highlight the button when the mouse hovers the button.
         // We use a 'FadeState' for this one, the the highlighting is animated.
@@ -753,7 +753,7 @@ class Button extends MultiStateButton
         overState.graphics.beginFill(Colors.GRAY);
         overState.graphics.drawRect(0, 0, 100, 30);
         overState.graphics.endFill();
-        this.addChild(overState);
+        addChild(overState);
         
         var label:TextField = new TextField();
         label.width = 100;
@@ -766,7 +766,7 @@ class Button extends MultiStateButton
         
         label.setTextFormat(format);
         
-        this.addChild(label);
+        addChild(label);
     }
 
 }

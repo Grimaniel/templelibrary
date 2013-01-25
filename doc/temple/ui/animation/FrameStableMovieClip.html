@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.3.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/ui/animation/FrameStableMovieClip.html&amp;temple/ui/animation/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">FrameStableMovieClip</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.4.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/ui/animation/FrameStableMovieClip.html&amp;temple/ui/animation/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">FrameStableMovieClip</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("FrameStableMovieClip"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -92,7 +92,7 @@
 		 Dispatched just before the object is destructed.</td><td class="summaryTableOwnerCol"><a href="../../../temple/core/display/CoreMovieClip.html">CoreMovieClip</a></td></tr></table></div><script language="javascript" type="text/javascript"><!--
 										showHideInherited();
 										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="frameRate"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">frameRate</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>frameRate:Number</code><p></p><p>
-		 The frame rate for playing the timeline of the MovieClip. Is NaN the frame rate of the stage is used.
+		 The frame rate for playing the timeline of the MovieClip. If NaN the frame rate of the stage is used.
 		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get frameRate():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set frameRate(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="useStageFrameRate"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">useStageFrameRate</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>useStageFrameRate:Boolean</code><p></p><p>
 		 A Boolean which indicates if the frame rate of the stage is used, rather then a custom frame rate.
 		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get useStageFrameRate():Boolean</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set useStageFrameRate(value:Boolean):void</code><br/></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="FrameStableMovieClip()"></a><a name="FrameStableMovieClip(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FrameStableMovieClip</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function FrameStableMovieClip(frameRate:Number)</code><br/><br/><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">frameRate</span>:Number</code> (default = <code>NaN</code>)<code></code></td></tr></table></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="destruct()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">destruct</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code>override public function destruct():void</code><p></p><p>
@@ -174,40 +174,40 @@ package
         {
             super("Temple - FrameStableMovieClipExample");
             
-            this.mcNormalTimelineAnimation.stop();
-            this.mcFrameStableTimelineAnimation.stop();
+            mcNormalTimelineAnimation.stop();
+            mcFrameStableTimelineAnimation.stop();
             
-            this.mcPlayButton.addEventListener(MouseEvent.CLICK, this.handlePlayButtonClick);
+            mcPlayButton.addEventListener(MouseEvent.CLICK, handlePlayButtonClick);
             
             // Add fps counter so we can see the frame rate
-            this.addChild(new PerformanceStat()).x = 420;
+            addChild(new PerformanceStat()).x = 420;
             
             // Create a FrameRateKiller for framerate throttling
-            this._frameRateKiller = new FrameRateKiller(25);
+            _frameRateKiller = new FrameRateKiller(25);
             
-            this.txtFPS.restrict = Restrictions.INTEGERS;
-            this.txtFPS.text = this._frameRateKiller.fps.toString();
-            this.txtFPS.addEventListener(Event.CHANGE, this.handleFPSChange);
-            this.txtFPS.borderColor = 0xDDDDDD;
+            txtFPS.restrict = Restrictions.INTEGERS;
+            txtFPS.text = _frameRateKiller.fps.toString();
+            txtFPS.addEventListener(Event.CHANGE, handleFPSChange);
+            txtFPS.borderColor = 0xDDDDDD;
         }
 
         private function handlePlayButtonClick(event:MouseEvent):void 
         {
-            this.mcNormalTimelineAnimation.gotoAndPlay(1);
+            mcNormalTimelineAnimation.gotoAndPlay(1);
             
-            this.mcFrameStableTimelineAnimation.gotoAndPlay(1);
+            mcFrameStableTimelineAnimation.gotoAndPlay(1);
             
-            TweenLite.killTweensOf(this.mcTweenClip);
-            this.mcTweenClip.x = 10;
+            TweenLite.killTweensOf(mcTweenClip);
+            mcTweenClip.x = 10;
             // Tween the clip over 2 seconds, since the other timelines have 62 frames (which would normally take 2 seconds at 31 fps)
-            TweenLite.to(this.mcTweenClip, 2, {x: this.mcTweenClip.x + 400, ease: Linear.easeNone});
+            TweenLite.to(mcTweenClip, 2, {x: mcTweenClip.x + 400, ease: Linear.easeNone});
         }
         
         private function handleFPSChange(event:Event):void 
         {
-            if (int(this.txtFPS.text))
+            if (int(txtFPS.text))
             {
-                this._frameRateKiller.fps = int(this.txtFPS.text);
+                _frameRateKiller.fps = int(txtFPS.text);
             }
         }
     }
