@@ -49,7 +49,7 @@ package temple.core.destruction
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.4.0";
+		templelibrary static const VERSION:String = "3.5.0";
 		
 		/**
 		 * Dispatched just before the object is destructed.

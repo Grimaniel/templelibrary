@@ -6,7 +6,6 @@
 	<property name="dependencies" value="core,utils" />
 	<property name="extended-dependencies" value="" />
 	
-	<property name="skip-license" value="true" />
 	<property name="skip-examples" value="true" />
 	
 	<import file="../../../../tools/ant/build.xml" />
