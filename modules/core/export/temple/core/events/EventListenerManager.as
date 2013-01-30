@@ -61,7 +61,7 @@ package temple.core.events
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.4.0";
+		templelibrary static const VERSION:String = "3.5.0";
 		
 		/**
 		 * If set to <code>true</code> the <code>EventListenerManager</code> will log a debug message when a weak event

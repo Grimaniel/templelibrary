@@ -47,7 +47,7 @@ package temple.core.utils
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.4.0";
+		templelibrary static const VERSION:String = "3.5.0";
 		
 		public static const OBJECT:String = "object";
 		

@@ -5,8 +5,5 @@
 	<property name="name" value="Temple Live Inspector Module" />
 	<property name="dependencies" value="core,common,utils,reflection,ui,data" />
 	
-	<property name="skip-license" value="true" />
-	<property name="skip-author" value="true" />
-	
 	<import file="../../../../tools/ant/build.xml" />
 </project>
