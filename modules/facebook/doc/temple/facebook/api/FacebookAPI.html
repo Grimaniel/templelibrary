@@ -1,0 +1,1263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../override.css" type="text/css"><meta name="keywords" content="FacebookAPI,temple.facebook.api.FacebookAPI,accessToken,adapter,appAccessToken,application,available,cache,canvas,canvas,checkins,checkins,comments,comments,debug,dialogs,dialogs,displayMode,events,events,expireDate,friends,friends,isInitialized,isInitialized,isLoggedIn,me,music,music,openGraph,openGraph,parser,permissions,permissionsLoaded,photos,photos,posts,posts,requiredPermissionsAllowed,scores,scores,service,service,signedRequest,areAllowed,attend,create,create,create,create,createAlbum,decline,deleteObject,destruct,feedDialog,fql,fqlMultiQuery,get,getAlbum,getAlbums,getAlbumsByName,getAllowedPermissions,getAppRequests,getAppRequests,getApplicationData,getApplicationData,getAttendingUsers,getCheckin,getCheckins,getComment,getComments,getDeclinedUsers,getEvent,getEvents,getEventsByName,getFriendList,getFriendListMembers,getFriendLists,getFriendListsOfType,getFriends,getImageUrl,getInvite,getInvites,getLike,getLike,getLikes,getListens,getMaybeUsers,getNotRepliedUsers,getObject,getObjects,getPage,getPage,getPageInfo,getPermissions,getPermissions,getPhoto,getPhotos,getPlaylist,getPost,getPosts,getProfile,getProfilePhotos,getRSVP,getRSVPs,getRawResult,getScore,getSong,getUnparsedResult,getUser,getUser,getUsers,getUsers,hasNext,hasPrevious,init,init,inviteUsers,inviteUsersById,isAllowed,like,like,loadPolicyFiles,login,logout,maybe,nextPage,openProfilePictureURL,post,post,post,previousPage,scrollTo,sendDialog,setAutoGrow,setSize,ui,upload"><title>temple.facebook.api.FacebookAPI</title><script src="../../../AC_OETags.js" type="text/javascript"></script></head><body><script language="javascript" type="text/javascript" src="../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'FacebookAPI - Temple Facebook Module API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Facebook Module API Documentation - 3.5.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/facebook/api/FacebookAPI.html&amp;temple/facebook/api/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">FacebookAPI</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("FacebookAPI"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">temple.facebook.api</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  FacebookAPI</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">FacebookAPI  <img src="../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> <a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a> <img src="../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> flash.events.EventDispatcher</td></tr><tr><td class="classHeaderTableLabel">Implements</td><td> <a href="../../../temple/facebook/api/IFacebookAPI.html">IFacebookAPI</a></td></tr></table><p></p><p></p>
+	 Main entry point for communication with <a href="http://www.facebook.com" target="external">Facebook</a>.
+	 
+	 <p>This FacebookAPI is based on the 
+	 <a href="http://code.google.com/p/facebook-actionscript-api/" target="external">Adobe ActionScript 3 SDK for 
+	 Facebook Platform API</a>, but with some big improvements, like:
+	 </p>
+	              <ul>
+	 	               <li>
+                     <b>Automatic Facebook login, with required permissions</b>
+                  </li>
+	 	               <li>
+                     <b>Strong typed result objects</b>
+                  </li>
+	 	               <li>
+                     <b>Detailed method calls</b>
+                  </li>
+	 	               <li>
+                     <b>Interface based, no Singletons</b>
+                  </li>
+	 	               <li>
+                     <b>Call caching</b>
+                  </li>
+	 	               <li>
+                     <b>Advanced object caching</b>
+                  </li>
+	 	               <li>
+                     <b>Usage of Callbacks <i>and</i> Events</b>
+                  </li>
+	 	               <li>
+                     <b>One API for several environments: web, mobile, desktop, standalone or Flash IDE</b>
+                  </li>
+	 	               <li>
+                     <b>Same result objects for both Graph and FQL calls</b>
+                  </li>
+	              </ul>
+	 
+	              <b>Automatic Facebook login</b>
+	              <p>
+	 	This feature is handled by the <code>FacebookService</code>. The <code>FacebookService</code> will check for
+	 	each call if extended permissions are required. If there are permissions needed and the user didn't allow those
+	 	permissions already, the <code>FacebookService</code> will automatically login with Facebook with the required
+	 	permissions.
+	 </p>
+	              <p>
+	 	After the login, the <code>FacebookService</code> will do the requested call. If the user already allowed the
+	 	needed permissions, the login is skipped. By enabling the <code>autoPermissions</code> (enabled by default)
+	 	the user only needs to accept the permissions right before the call is done and you (as developer) never have to
+	 	digg into the documentation to figure out which permissions are required for the calls you need to do. You are
+	 	still able to request for permissions manually using the <code>login</code> method.
+	 </p>
+	 
+	              <b>Strong typed result objects</b>
+	              <p>
+	 	The result data retreived from Facebook will automatically been parsed to strong typed object. This will make
+	 	your code more neat and stable, and allows you to use auto-completion in your code editor.
+	 </p>
+	 
+	              <b>Detailed method calls</b>
+	              <p>
+	 	For almost every call the FacebookAPI has a build in method with the required and optional arguments. These
+	 	methods also do some type checking and validation, which makes you application more strict and stable.
+	 </p>
+	 
+	              <b>Interface based, no Singletons</b>
+	              <p>
+	 	You can type almost every object as Interface and there is no Singleton implementation. Working with Interfaces
+	 	results in cleaner code and can reduce filesize when you work with multiple SWF files.
+	 </p>
+	 
+	              <b>Call caching</b>
+	              <p>
+	 	The <code>FacebookService</code> has a build in caching system. If <code>cache</code> is enabled the
+	 	<code>FacebookService</code> will retreive the data from it's cache instead of doing a new Facebook call when
+	 	the call is done before. This will improve the speed and response time of your application. Ofcourse you are
+	 	still able to force a Facebook call by setting <code>forceReload</code> to <code>true</code> which is one of the
+	 	arguments in every GET-method.
+	 </p>
+	 
+	              <b>Advanced object caching</b>
+	              <p>
+	 All Facebook object will be cached, in a local database, based on their id (which is unique) and are reused. The 
+	 <code>FacebookAPI</code> will never create the same Facebook Object again, but will reuse the object it already
+	 has. If Facebook provides more information, this information will be applied on this object. Reusing these
+	 objects doesn't only result in a faster application, but will also provide you with more information like you
+	 would expect with a normal Facebook call.   
+	 </p>
+	 
+	              <b>Usage of Callbacks <i>and</i> Events</b>
+	              <p>
+	 	As the 'regular' Facebook API only support callbacks, this FacebookAPI support callbacks and Events. Every
+	 	method returns an <code>IFacebookCall</code> object which dispatches a <code>Event.COMPLETE</code> event when
+	 	the call is completed.
+	 	The FacebookService and FacebookAPI will dispatch a <code>PendingCallEvent.CALL</code> event when a call starts.
+	 	The FacebookService and FacebookAPI will dispatch a <code>PendingCallEvent.RESULT</code> event when a call is
+	 	completed.
+	 </p>
+	              <p>
+	 The FacebookAPI also support callbacks. Every method has a <code>callback</code> argument of type
+	 <code>Function</code>. The supplied function must accept one (and only one) argument of type
+	 <code>IFacebookResult</code>. If a call succeeded, the <code>success</code> property of the result will be true,
+	 if the call supplies data, the requested data is in the <code>data</code> property of the result. If the call
+	 failed, the <code>success</code> property of the result will be false. The <code>code</code> or
+	 <code>message</code> can contain more information about the failure.
+	 </p>
+	              <div class="listing" version="3.0"><pre>
+     // getting the friends of the user, using a callback
+     _facebook.friends.getFriends(onFriends);
+         
+     function onFriends(result:IFacebookResult):void
+     {
+         // Callback won't automatically been released when the object is destructed
+         // So first we need to check if the currect object is still alive 
+         if (isDestructed) return;
+         
+         if (result.success)
+         {
+             var friends:Vector.&lt;IFacebookUserData&gt; = Vector.&lt;IFacebookUserData&gt;(result.data);
+         }
+         else
+         {
+             Log.error("Getting friends failed: " + result.message);
+         }
+     } 
+     </pre></div>
+	              <div class="listing" version="3.0"><pre>
+     // getting the friends of the user, using events
+     _facebook.friends.getFriends().addEventListener(Event.COMPLETE, handleFriendsComplete);
+         
+     function handleFriendsComplete(event:Event):void
+     {
+         var result:IFacebookResult = IFacebookResult(IFacebookCall(event.target).result);
+         
+         if (result.success)
+         {
+             var friends:Vector.&lt;IFacebookUserData&gt; = Vector.&lt;IFacebookUserData&gt;(result.data);
+         }
+         else
+         {
+             Log.error("Getting friends failed: " + result.message);
+         }
+     } 
+     </pre></div>
+	 
+	              <b>One API for several environments: web, mobile, desktop, standalone or Flash IDE</b>
+	 
+	              <p>The <code>FacebookAPI</code> uses an adapter as middle layer between the <code>FacebookService</code> and the
+	 Facebook API by Adobe. By using a different adapter you can switch between different environments. For using in
+	 the web you should use the <code>FacebookAdapter</code>, for mobile the <code>FacebookMobileAdapter</code> 
+	 (available in the facebook-mobile module) and for desktop the <code>FacebookDesktopAdapter</code>
+	 (available in the facebook-desktop module).</p>
+	 
+	              <p>It is also possible to connect with Facebook when running the SWF standalone or in the Flash IDE. Therefore
+	 you should use the <code>FacebookStandaloneAdapter</code> in combination with the
+	 <code>FacebookAccessTokenProvider</code>
+               </p>
+               
+	 
+	 <b>Same result objects for both Graph and FQL calls</b>
+	 
+	              <p>Since all objects from Facebook are converted to strong typed objects by the FacebookService, results from
+	 both the <code>Graph API</code> as <code>FQL</code> are the same. Facebook uses different naming for properties
+	 in FQL, but these are automatically converted by the <code>FacebookAPI</code>.</p>
+	 
+	           <p></p><p><a href="#includeExamplesSummary">View the examples</a></p><p><span class="classHeaderTableLabel">See also</span></p><div class="seeAlso"><a href="../../../../readme.html" target="">Read me</a><br/><a href="../../../temple/facebook/service/FacebookService.html" target="">temple.facebook.service.FacebookService</a><br/><a href="../../../temple/facebook/service/IFacebookService.html" target="">temple.facebook.service.IFacebookService</a></div><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><div class="showHideLinks"><div id="hideInheritedProperty" class="hideInheritedProperty"><a class="showHideLink" href="#propertySummary" onclick="javascript:setInheritedVisible(false,'Property');"><img class="showHideLinkImage" src="../../../images/expanded.gif"> Hide Inherited Public Properties</a></div><div id="showInheritedProperty" class="showInheritedProperty"><a class="showHideLink" href="#propertySummary" onclick="javascript:setInheritedVisible(true,'Property');"><img class="showHideLinkImage" src="../../../images/collapsed.gif"> Show Inherited Public Properties</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#accessToken" class="signatureLink">accessToken</a> : String<div class="summaryTableDescription">[read-only] 
+		 
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#adapter" class="signatureLink">adapter</a> : <a href="../../../temple/facebook/adapters/IFacebookAdapter.html">IFacebookAdapter</a><div class="summaryTableDescription">[read-only] 
+		 
+		 Returns a reference to the IFacebookAdapter
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#application" class="signatureLink">application</a> : <a href="../../../temple/facebook/data/vo/IFacebookApplicationData.html">IFacebookApplicationData</a><div class="summaryTableDescription">[read-only] 
+		 
+		 Returns the Application data, but only if this is loaded first using the getApplicationData()
+		 method this object will be filled.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#cache" class="signatureLink">cache</a> : Boolean<div class="summaryTableDescription">
+		 
+		 Indicates if caching is enabled
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#canvas" class="signatureLink">canvas</a> : <a href="../../../temple/facebook/api/IFacebookCanvasAPI.html">IFacebookCanvasAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to the canvas.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#checkins" class="signatureLink">checkins</a> : <a href="../../../temple/facebook/api/IFacebookCheckinAPI.html">IFacebookCheckinAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to checkins.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#comments" class="signatureLink">comments</a> : <a href="../../../temple/facebook/api/IFacebookCommentAPI.html">IFacebookCommentAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to comments.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#debug" class="signatureLink">debug</a> : Boolean<div class="summaryTableDescription">
+		 
+		 A Boolean which indicates the debug mode of the object.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#dialogs" class="signatureLink">dialogs</a> : <a href="../../../temple/facebook/api/IFacebookDialogAPI.html">IFacebookDialogAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods for displaying special Facebook Dialog windows.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../temple/core/events/CoreEventDispatcher.html#eventListenerManager" class="signatureLink">eventListenerManager</a> : <a href="../../../temple/core/events/EventListenerManager.html">EventListenerManager</a><div class="summaryTableDescription">[read-only] 
+		 
+		 Returns a reference to the EventListenerManager.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#events" class="signatureLink">events</a> : <a href="../../../temple/facebook/api/IFacebookEventAPI.html">IFacebookEventAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to events.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#expireDate" class="signatureLink">expireDate</a> : Date<div class="summaryTableDescription">[read-only] 
+		 
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#friends" class="signatureLink">friends</a> : <a href="../../../temple/facebook/api/IFacebookFriendAPI.html">IFacebookFriendAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to friends, friendLists and other Facebook users.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../temple/core/events/CoreEventDispatcher.html#isDestructed" class="signatureLink">isDestructed</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 
+		 If an object is destructed, this property is set to true.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#isInitialized" class="signatureLink">isInitialized</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 
+		 A Boolean which indicates if the service is already initialized and ready to use.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#isLoggedIn" class="signatureLink">isLoggedIn</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 
+		 A Boolean which indicates if the user is logged in to Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#me" class="signatureLink">me</a> : <a href="../../../temple/facebook/data/vo/IFacebookUserData.html">IFacebookUserData</a><div class="summaryTableDescription">[read-only] 
+		 
+		 Returns a reference to the current Facebook user.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#music" class="signatureLink">music</a> : <a href="../../../temple/facebook/api/IFacebookMusicAPI.html">IFacebookMusicAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to music.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#openGraph" class="signatureLink">openGraph</a> : <a href="../../../temple/facebook/api/IFacebookOpenGraphAPI.html">IFacebookOpenGraphAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains logic for using Open Graph
+		 
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#parser" class="signatureLink">parser</a> : <a href="../../../temple/facebook/data/IFacebookParser.html">IFacebookParser</a><div class="summaryTableDescription">[read-only] 
+		 
+		 Parses the untyped results from Facebook to typed objects.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#permissions" class="signatureLink">permissions</a> : Vector.&lt;String&gt;<div class="summaryTableDescription">[read-only] 
+		 
+		 List of requested permissions.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#permissionsLoaded" class="signatureLink">permissionsLoaded</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 
+		 A Boolean which indicates if the permissions have been loaded at least once.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#photos" class="signatureLink">photos</a> : <a href="../../../temple/facebook/api/IFacebookPhotoAPI.html">IFacebookPhotoAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to photos and photo albums.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#posts" class="signatureLink">posts</a> : <a href="../../../temple/facebook/api/IFacebookPostAPI.html">IFacebookPostAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to post.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../temple/core/events/CoreEventDispatcher.html#registryId" class="signatureLink">registryId</a> : uint<div class="summaryTableDescription">[read-only] 
+		 
+		 The unique identifier of the object.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#requiredPermissionsAllowed" class="signatureLink">requiredPermissionsAllowed</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 
+		 Checks if all permissions, pushed in permissions are allowed.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#scores" class="signatureLink">scores</a> : <a href="../../../temple/facebook/api/IFacebookScoreAPI.html">IFacebookScoreAPI</a><div class="summaryTableDescription">[read-only] 
+		 
+		 This API contains all methods related to scores.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#service" class="signatureLink">service</a> : <a href="../../../temple/facebook/service/IFacebookService.html">IFacebookService</a><div class="summaryTableDescription">[read-only] 
+		 
+		 Returns a reference to the service
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#signedRequest" class="signatureLink">signedRequest</a> : String<div class="summaryTableDescription">[read-only] 
+		 
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr></table></div><a name="protectedPropertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Properties</div><div class="showHideLinks"><div id="hideInheritedProtectedProperty" class="hideInheritedProtectedProperty"><a class="showHideLink" href="#protectedPropertySummary" onclick="javascript:setInheritedVisible(false,'ProtectedProperty');"><img class="showHideLinkImage" src="../../../images/expanded.gif"> Hide Inherited Protected Properties</a></div><div id="showInheritedProtectedProperty" class="showInheritedProtectedProperty"><a class="showHideLink" href="#protectedPropertySummary" onclick="javascript:setInheritedVisible(true,'ProtectedProperty');"><img class="showHideLinkImage" src="../../../images/collapsed.gif"> Show Inherited Protected Properties</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable hideInheritedProtectedProperty" id="summaryTableProtectedProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../temple/core/events/CoreEventDispatcher.html#emptyPropsInToString" class="signatureLink">emptyPropsInToString</a> : Boolean<div class="summaryTableDescription">
+		 A Boolean which indicates if empty properties are output in the toString() method.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../temple/core/events/CoreEventDispatcher.html#toStringProps" class="signatureLink">toStringProps</a> : Vector.&lt;String&gt;<div class="summaryTableDescription">[read-only] 
+		 List of property names which are output in the toString() method.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><div class="showHideLinks"><div id="hideInheritedMethod" class="hideInheritedMethod"><a class="showHideLink" href="#methodSummary" onclick="javascript:setInheritedVisible(false,'Method');"><img class="showHideLinkImage" src="../../../images/expanded.gif"> Hide Inherited Public Methods</a></div><div id="showInheritedMethod" class="showInheritedMethod"><a class="showHideLink" href="#methodSummary" onclick="javascript:setInheritedVisible(true,'Method');"><img class="showHideLinkImage" src="../../../images/collapsed.gif"> Show Inherited Public Methods</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#FacebookAPI()" class="signatureLink">FacebookAPI</a>(adapter:<a href="../../../temple/facebook/adapters/IFacebookAdapter.html">IFacebookAdapter</a>, autoPermissions:Boolean = true, cache:Boolean = true)</div><div class="summaryTableDescription">
+		 Create a new FacebookAPI.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#addEventListener()" class="signatureLink">addEventListener</a>(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void</div><div class="summaryTableDescription">[override] 
+		 </div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#addEventListenerOnce()" class="signatureLink">addEventListenerOnce</a>(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void</div><div class="summaryTableDescription">
+		 
+		 Registers an event listening to the EventListenerManager which will only be called once.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#areAllowed()" class="signatureLink">areAllowed</a>(permissions:Vector.&lt;String&gt;):Boolean</div><div class="summaryTableDescription">
+		 
+		 Checks if a these permissions are allowed.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#deleteObject()" class="signatureLink">deleteObject</a>(method:String, callback:Function = null, id:String = me, params:Object = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Deletes an object from Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#destruct()" class="signatureLink">destruct</a>():void</div><div class="summaryTableDescription">[override] 
+		 
+		 Destructs the object and makes it available for garbage collection.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#dispatchEvent()" class="signatureLink">dispatchEvent</a>(event:Event):Boolean</div><div class="summaryTableDescription">[override] 
+		 </div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#fql()" class="signatureLink">fql</a>(query:String, callback:Function = null, objectClass:Class = null, fields:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a> = null, id:String = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Executes an FQL query on api.facebook.com
+		 
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#fqlMultiQuery()" class="signatureLink">fqlMultiQuery</a>(queries:<a href="../../../temple/facebook/data/vo/FacebookFQLMultiQuery.html">FacebookFQLMultiQuery</a>, callback:Function = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#get()" class="signatureLink">get</a>(callback:Function = null, method:String = null, id:String = me, objectClass:Class = null, params:Object = null, fields:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a> = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getAllowedPermissions()" class="signatureLink">getAllowedPermissions</a>():Vector.&lt;String&gt;</div><div class="summaryTableDescription">
+		 
+		 Returns a list with all allowed permissions
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getApplicationData()" class="signatureLink">getApplicationData</a>(callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookApplicationFields.html">FacebookApplicationFields</a> = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Load the data (IFacebookApplicationData) of the application from Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getAppRequests()" class="signatureLink">getAppRequests</a>(callback:Function = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Gets all application requests for the current user for this application.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getImageUrl()" class="signatureLink">getImageUrl</a>(id:String, size:String = null):String</div><div class="summaryTableDescription">
+		 
+	     Utility method to format a picture URL, in order to load an image from Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getLike()" class="signatureLink">getLike</a>(id:String, callback:Function = null, user:String = me, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Checks if the user liked an object.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getObject()" class="signatureLink">getObject</a>(id:String, createIfNull:Boolean = false, type:Class = null):<a href="../../../temple/facebook/data/vo/IFacebookObjectData.html">IFacebookObjectData</a></div><div class="summaryTableDescription">
+		 
+		 Returns a IFacebookObjectData with a specific ID, if this object is loaded before.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getObjects()" class="signatureLink">getObjects</a>(ids:Vector.&lt;String&gt;, callback:Function = null, objectClass:Class = null, params:Object = null, fields:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a> = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Get multiple objects wiht one call
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getPage()" class="signatureLink">getPage</a>(id:String, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookPageFields.html">FacebookPageFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Get the data of a specific page from Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getPermissions()" class="signatureLink">getPermissions</a>(callback:Function = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Gets the allowed permissions.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getProfile()" class="signatureLink">getProfile</a>(id:String, createIfNull:Boolean = false):<a href="../../../temple/facebook/data/vo/IFacebookProfileData.html">IFacebookProfileData</a></div><div class="summaryTableDescription">
+		 
+		 Returns a IFacebookProfileData with a specific ID, if this object is loaded before.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getRawResult()" class="signatureLink">getRawResult</a>(data:Object):Object</div><div class="summaryTableDescription">
+		 
+		 Returns a reference to the entire raw object Facebook returns (including paging, etc.).</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getUnparsedResult()" class="signatureLink">getUnparsedResult</a>(data:Object):Object</div><div class="summaryTableDescription">
+		 
+		 Returns a reference to unparsed result related to the (parsed) data.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getUser()" class="signatureLink">getUser</a>(callback:Function = null, id:String = me, fields:<a href="../../../temple/facebook/data/vo/FacebookUserFields.html">FacebookUserFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Get the data of a specific user from Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getUsers()" class="signatureLink">getUsers</a>(ids:Vector.&lt;String&gt;, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookUserFields.html">FacebookUserFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Get multiple users with one call
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#hasNext()" class="signatureLink">hasNext</a>(data:Object):Boolean</div><div class="summaryTableDescription">
+		 
+		 Asks if another page exists
+		 after this result object.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#hasPrevious()" class="signatureLink">hasPrevious</a>(data:Object):Boolean</div><div class="summaryTableDescription">
+		 
+		 Asks if a page exists before this result object.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#init()" class="signatureLink">init</a>(applicationId:String, callback:Function = null, accessToken:String = null):void</div><div class="summaryTableDescription">
+		 
+		 Initializes Facebook
+		 
+		 </div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#isAllowed()" class="signatureLink">isAllowed</a>(permission:String):int</div><div class="summaryTableDescription">
+		 
+		 Checks if a specific permission is allowed.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#like()" class="signatureLink">like</a>(id:String, callback:Function = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Like the given object (if it has a /likes connection).</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#loadPolicyFiles()" class="signatureLink">loadPolicyFiles</a>():void</div><div class="summaryTableDescription">
+		 
+		 Loads the Facebook PolicyFiles (crossdomains.xml).</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#login()" class="signatureLink">login</a>(callback:Function = null, permissions:Vector.&lt;String&gt; = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Login into Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#logout()" class="signatureLink">logout</a>(callback:Function = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Logout from Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#nextPage()" class="signatureLink">nextPage</a>(data:Object, callback:Function):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Retrieves the next page that is associated with result object passed in.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#post()" class="signatureLink">post</a>(method:String, callback:Function = null, id:String = me, params:Object = null, objectClass:Class = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Post data to Facebook.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#previousPage()" class="signatureLink">previousPage</a>(data:Object, callback:Function):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Retrieves the previous page that is associated with result object passed in.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#removeAllEventListeners()" class="signatureLink">removeAllEventListeners</a>():void</div><div class="summaryTableDescription">
+		 
+		 Removes all strong (non weak) EventListeners.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#removeAllOnceEventListenersForType()" class="signatureLink">removeAllOnceEventListenersForType</a>(type:String):void</div><div class="summaryTableDescription">
+		 
+		 Removes all once EventListeners of a specific type.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#removeAllStrongEventListenersForListener()" class="signatureLink">removeAllStrongEventListenersForListener</a>(listener:Function):void</div><div class="summaryTableDescription">
+		 
+		 Removes all strong (non weak) EventListeners that are handled by a specified listener.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#removeAllStrongEventListenersForType()" class="signatureLink">removeAllStrongEventListenersForType</a>(type:String):void</div><div class="summaryTableDescription">
+		 
+		 Removes all strong (non-weak) EventListeners of a specific type.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#removeEventListener()" class="signatureLink">removeEventListener</a>(type:String, listener:Function, useCapture:Boolean = false):void</div><div class="summaryTableDescription">[override] 
+		 </div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#toString()" class="signatureLink">toString</a>():String</div><div class="summaryTableDescription">[override] 
+		 </div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#ui()" class="signatureLink">ui</a>(method:String, data:Object, callback:Function = null, display:<a href="../../../temple/facebook/data/enum/FacebookDisplayMode.html">FacebookDisplayMode</a> = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 
+		 Shows a Facebook sharing dialog.</div></td><td class="summaryTableOwnerCol">FacebookAPI</td></tr></table></div><a name="protectedMethodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Methods </div><div class="showHideLinks"><div id="hideInheritedProtectedMethod" class="hideInheritedProtectedMethod"><a class="showHideLink" href="#protectedMethodSummary" onclick="javascript:setInheritedVisible(false,'ProtectedMethod');"><img class="showHideLinkImage" src="../../../images/expanded.gif"> Show Inherited Protected Methods</a></div><div id="showInheritedProtectedMethod" class="showInheritedProtectedMethod"><a class="showHideLink" href="#protectedMethodSummary" onclick="javascript:setInheritedVisible(true,'ProtectedMethod');"><img class="showHideLinkImage" src="../../../images/collapsed.gif"> Show Inherited Protected Methods</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable hideInheritedProtectedMethod" id="summaryTableProtectedMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class="hideInheritedProtectedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#logDebug()" class="signatureLink">logDebug</a>(data:*):void</div><div class="summaryTableDescription">
+		 Does a Log.debug, but has already filled in some known data.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedProtectedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#logError()" class="signatureLink">logError</a>(data:*):void</div><div class="summaryTableDescription">
+		 Does a Log.error, but has already filled in some known data.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedProtectedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#logFatal()" class="signatureLink">logFatal</a>(data:*):void</div><div class="summaryTableDescription">
+		 Does a Log.fatal, but has already filled in some known data.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedProtectedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#logInfo()" class="signatureLink">logInfo</a>(data:*):void</div><div class="summaryTableDescription">
+		 Does a Log.info, but has already filled in some known data.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedProtectedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#logStatus()" class="signatureLink">logStatus</a>(data:*):void</div><div class="summaryTableDescription">
+		 Does a Log.status, but has already filled in some known data.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class="hideInheritedProtectedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#logWarn()" class="signatureLink">logWarn</a>(data:*):void</div><div class="summaryTableDescription">
+		 Does a Log.warn, but has already filled in some known data.</div></td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr></table></div><a name="eventSummary"></a><div class="summarySection"><div class="summaryTableTitle">Events</div><div class="showHideLinks"><div id="hideInheritedEvent" class="hideInheritedEvent"><a class="showHideLink" href="#eventSummary" onclick="javascript:setInheritedVisible(false,'Event');"><img class="showHideLinkImage" src="../../../images/expanded.gif"> Hide Inherited Events</a></div><div id="showInheritedEvent" class="showInheritedEvent"><a class="showHideLink" href="#eventSummary" onclick="javascript:setInheritedVisible(true,'Event');"><img class="showHideLinkImage" src="../../../images/collapsed.gif"> Show Inherited Events</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableEvent"><tr><th>&nbsp;</th><th colspan="2">Event</th><th> Summary </th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class="hideInheritedEvent"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../temple/core/events/CoreEventDispatcher.html#event:DestructEvent.destruct" class="signatureLink">DestructEvent.destruct</a></div></td><td class="summaryTableDescription summaryTableCol">
+		 Dispatched just before the object is destructed.</td><td class="summaryTableOwnerCol"><a href="../../../temple/core/events/CoreEventDispatcher.html">CoreEventDispatcher</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:FacebookEvent.login" class="signatureLink">FacebookEvent.login</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the user is logged in into Facebook.</td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:FacebookEvent.logout" class="signatureLink">FacebookEvent.logout</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the user logs out from Facebook.</td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:FacebookPermissionEvent.allowed" class="signatureLink">FacebookPermissionEvent.allowed</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the user allowes some permissions</td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:FacebookPermissionEvent.denied" class="signatureLink">FacebookPermissionEvent.denied</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the user denies some permissions</td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:FacebookPermissionEvent.update" class="signatureLink">FacebookPermissionEvent.update</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the allowed permissions are updated</td><td class="summaryTableOwnerCol">FacebookAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:init" class="signatureLink">init</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the FacebookService is initialized</td><td class="summaryTableOwnerCol">FacebookAPI</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="accessToken"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">accessToken</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>accessToken:String</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get accessToken():String</code><br/></div><a name="propertyDetail"></a><a name="adapter"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">adapter</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>adapter:<a href="../../../temple/facebook/adapters/IFacebookAdapter.html">IFacebookAdapter</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 Returns a reference to the <code>IFacebookAdapter</code>
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get adapter():<a href="../../../temple/facebook/adapters/IFacebookAdapter.html">IFacebookAdapter</a></code><br/></div><a name="propertyDetail"></a><a name="application"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">application</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>application:<a href="../../../temple/facebook/data/vo/IFacebookApplicationData.html">IFacebookApplicationData</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 Returns the Application data, but only if this is loaded first using the <code>getApplicationData()</code>
+		 method this object will be filled.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get application():<a href="../../../temple/facebook/data/vo/IFacebookApplicationData.html">IFacebookApplicationData</a></code><br/></div><a name="propertyDetail"></a><a name="cache"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">cache</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>cache:Boolean</code><p></p><p>
+		 
+		 Indicates if caching is enabled
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get cache():Boolean</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set cache(value:Boolean):void</code><br/></div><a name="propertyDetail"></a><a name="canvas"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">canvas</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>canvas:<a href="../../../temple/facebook/api/IFacebookCanvasAPI.html">IFacebookCanvasAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to the canvas.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get canvas():<a href="../../../temple/facebook/api/IFacebookCanvasAPI.html">IFacebookCanvasAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="http://developers.facebook.com/docs/guides/canvas/" target="mm_external">http://developers.facebook.com/docs/guides/canvas/</a></div></div><a name="propertyDetail"></a><a name="checkins"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">checkins</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>checkins:<a href="../../../temple/facebook/api/IFacebookCheckinAPI.html">IFacebookCheckinAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to checkins.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get checkins():<a href="../../../temple/facebook/api/IFacebookCheckinAPI.html">IFacebookCheckinAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="http://developers.facebook.com/docs/guides/canvas/" target="mm_external">http://developers.facebook.com/docs/guides/canvas/</a><br/><a href="../../../temple/facebook/data/vo/IFacebookCheckinData.html" target="">temple.facebook.data.vo.IFacebookCheckinData</a></div></div><a name="propertyDetail"></a><a name="comments"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">comments</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>comments:<a href="../../../temple/facebook/api/IFacebookCommentAPI.html">IFacebookCommentAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to comments.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get comments():<a href="../../../temple/facebook/api/IFacebookCommentAPI.html">IFacebookCommentAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookCommentData.html" target="">temple.facebook.data.vo.IFacebookCommentData</a></div></div><a name="propertyDetail"></a><a name="debug"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">debug</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>debug:Boolean</code><p></p><p>
+		 
+		 A Boolean which indicates the debug mode of the object.
+		 If object is in debug mode, more information is logged.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get debug():Boolean</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set debug(value:Boolean):void</code><br/></div><a name="propertyDetail"></a><a name="dialogs"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dialogs</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>dialogs:<a href="../../../temple/facebook/api/IFacebookDialogAPI.html">IFacebookDialogAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods for displaying special Facebook Dialog windows.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get dialogs():<a href="../../../temple/facebook/api/IFacebookDialogAPI.html">IFacebookDialogAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="http://developers.facebook.com/docs/reference/javascript/FB.ui/" target="mm_external">http://developers.facebook.com/docs/reference/javascript/FB.ui/</a></div><br/><span class="label"> Example </span><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookDialogAPI.html" target="">FacebookDialogAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/DialogsExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/DialogsExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.codecomponents.form.components.CodeComboBox;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+    import temple.facebook.data.enum.FacebookDisplayMode;
+    import temple.ui.layout.VBox;
+    import temple.utils.Enum;
+
+    import flash.events.Event;
+    import flash.events.MouseEvent;
+
+    public class DialogsExample extends DocumentClassExample
+    {
+        private var _facebook:FacebookAPI;
+        private var _displayModeComboBox : CodeComboBox;
+        private var _feedDialogButton:CodeLabelButton;
+        private var _friendsDialogButton:CodeLabelButton;
+        private var _requestDialogButton:CodeLabelButton;
+        private var _oauthDialogButton:CodeLabelButton;
+
+        public function DialogsExample()
+        {
+            super("Temple - Facebook - DialogsExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            var box:VBox = new VBox(10);
+            
+            addChild(box);
+            box.x = box.y = 20;
+            
+            _displayModeComboBox = new CodeComboBox(160, 18, Enum.getArray(FacebookDisplayMode));
+            _displayModeComboBox.hintText = "Display mode";
+            box.addChild(_displayModeComboBox);
+            _displayModeComboBox.addEventListener(Event.CHANGE, handleDisplayModeChange);
+            
+            // Create buttons (using CodeComponents)
+            _feedDialogButton = new CodeLabelButton("Feed Dialog");
+            box.addChild(_feedDialogButton);
+            _feedDialogButton.addEventListener(MouseEvent.CLICK, handleClick);
+            
+            _friendsDialogButton = new CodeLabelButton("Friends Dialog");
+            box.addChild(_friendsDialogButton);
+            _friendsDialogButton.addEventListener(MouseEvent.CLICK, handleClick);
+            
+            _requestDialogButton = new CodeLabelButton("Request Dialog");
+            box.addChild(_requestDialogButton);
+            _requestDialogButton.addEventListener(MouseEvent.CLICK, handleClick);
+            
+            _oauthDialogButton = new CodeLabelButton("Oauth Dialog");
+            box.addChild(_oauthDialogButton);
+            _oauthDialogButton.addEventListener(MouseEvent.CLICK, handleClick);
+        }
+
+        private function handleDisplayModeChange(event:Event):void
+        {
+            _facebook.dialogs.displayMode = _displayModeComboBox.value;
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            switch (event.target)
+            {
+                case _feedDialogButton:
+                    _facebook.dialogs.feedDialog();
+                    break;
+                    
+                case _friendsDialogButton:
+                    _facebook.dialogs.friendsDialog("100004032744210");
+                    break;
+                    
+                case _requestDialogButton:
+                    _facebook.dialogs.requestDialog("Check this out!");
+                    break;
+                    
+                case _oauthDialogButton:
+                    _facebook.dialogs.oauthDialog("http://code.google.com/p/templelibrary");
+                    break;
+            }
+        }
+
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "DialogsExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div></div><a name="propertyDetail"></a><a name="events"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">events</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>events:<a href="../../../temple/facebook/api/IFacebookEventAPI.html">IFacebookEventAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to events.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get events():<a href="../../../temple/facebook/api/IFacebookEventAPI.html">IFacebookEventAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookEventData.html" target="">temple.facebook.data.vo.IFacebookEventData</a></div></div><a name="propertyDetail"></a><a name="expireDate"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">expireDate</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>expireDate:Date</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get expireDate():Date</code><br/></div><a name="propertyDetail"></a><a name="friends"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">friends</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>friends:<a href="../../../temple/facebook/api/IFacebookFriendAPI.html">IFacebookFriendAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to friends, friendLists and other Facebook users.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get friends():<a href="../../../temple/facebook/api/IFacebookFriendAPI.html">IFacebookFriendAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookUserData.html" target="">temple.facebook.data.vo.IFacebookUserData</a><br/><a href="../../../temple/facebook/data/vo/IFacebookFriendListData.html" target="">temple.facebook.data.vo.IFacebookFriendListData</a></div><br/><span class="label"> Example </span><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookFriendAPI.html" target="">IFacebookFriendAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/FriendsExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/FriendsExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.utils.types.VectorUtils;
+    import temple.facebook.data.vo.IFacebookUserData;
+    import temple.codecomponents.form.components.CodeInputField;
+    import temple.facebook.data.vo.IFacebookResult;
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+
+    import flash.events.MouseEvent;
+
+    public class FriendsExample extends DocumentClassExample
+    {
+        private var _facebook:FacebookAPI;
+        private var _button:CodeLabelButton;
+        private var _output:CodeInputField;
+        
+        public function FriendsExample()
+        {
+            super("Temple - Facebook - FriendsExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            // Create a button (using CodeComponents)
+            _button = new CodeLabelButton("Click here to load friends");
+            _button.horizontalCenter = 0;
+            _button.verticalCenter = 0;
+            addChild(_button);
+            _button.addEventListener(MouseEvent.CLICK, handleClick);
+            
+            // Create an output field for displaying the result
+            _output = new CodeInputField(stage.stageWidth, stage.stageHeight, true);
+            addChildAt(_output, 0);
+            _output.editable = false;
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            _button.enabled = false;
+            
+            // load friends
+            _facebook.friends.getFriends(this.onFriends);
+        }
+
+        private function onFriends(result:IFacebookResult):void
+        {
+            _button.visible = false;
+            _output.visible = true;
+            
+            if (result.success)
+            {
+                // get friends from data
+                var friends:Vector.&lt;IFacebookUserData&gt; = Vector.&lt;IFacebookUserData&gt;(result.data);
+                
+                // sort by name
+                VectorUtils.sortOn(friends, "name");
+                
+                // show in output
+                for (var i:int = 0, leni:int = friends.length; i &lt; leni; i++)
+                {
+                    _output.appendText(" - " + friends[i].name + "\n");
+                }
+            }
+            else
+            {
+                _output.text = result.message;
+            }
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "FriendsExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div></div><a name="propertyDetail"></a><a name="isInitialized"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isInitialized</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>isInitialized:Boolean</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 A Boolean which indicates if the service is already initialized and ready to use.
+		 Calls done before the service is initialized are queued and executed after initialization.
+		 An <code>Event.INIT</code> will be dispatched when the service is initialized.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isInitialized():Boolean</code><br/></div><a name="propertyDetail"></a><a name="isLoggedIn"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isLoggedIn</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>isLoggedIn:Boolean</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 A Boolean which indicates if the user is logged in to Facebook.
+		 Note: this Boolean is only set after initialization. So check <code>isInitialized()</code> first!
+		 A <code>FacebookEvent.LOGIN</code> will be dispatch when the user is logged in.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isLoggedIn():Boolean</code><br/></div><a name="propertyDetail"></a><a name="me"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">me</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>me:<a href="../../../temple/facebook/data/vo/IFacebookUserData.html">IFacebookUserData</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 Returns a reference to the current Facebook user. Only when the user is logged in. When the user isn't loaded
+		 using the <code>getUser()</code> method, the properties of the user might be empty.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get me():<a href="../../../temple/facebook/data/vo/IFacebookUserData.html">IFacebookUserData</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="IFacebookAPI.html#getUser()" target="">temple.facebook.api.IFacebookAPI.getUser()</a></div></div><a name="propertyDetail"></a><a name="music"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">music</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>music:<a href="../../../temple/facebook/api/IFacebookMusicAPI.html">IFacebookMusicAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to music.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get music():<a href="../../../temple/facebook/api/IFacebookMusicAPI.html">IFacebookMusicAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="http://developers.facebook.com/docs/opengraph/music/" target="mm_external">http://developers.facebook.com/docs/opengraph/music/</a></div></div><a name="propertyDetail"></a><a name="openGraph"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">openGraph</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>openGraph:<a href="../../../temple/facebook/api/IFacebookOpenGraphAPI.html">IFacebookOpenGraphAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains logic for using Open Graph
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get openGraph():<a href="../../../temple/facebook/api/IFacebookOpenGraphAPI.html">IFacebookOpenGraphAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso">https://developers.facebook.com/docs/concepts/opengraph/</div></div><a name="propertyDetail"></a><a name="parser"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">parser</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>parser:<a href="../../../temple/facebook/data/IFacebookParser.html">IFacebookParser</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 Parses the untyped results from Facebook to typed objects.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get parser():<a href="../../../temple/facebook/data/IFacebookParser.html">IFacebookParser</a></code><br/></div><a name="propertyDetail"></a><a name="permissions"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">permissions</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>permissions:Vector.&lt;String&gt;</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 List of requested permissions. You can add more permissions by simply pushing these permissions to the list.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get permissions():Vector.&lt;String&gt;</code><br/></div><a name="propertyDetail"></a><a name="permissionsLoaded"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">permissionsLoaded</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>permissionsLoaded:Boolean</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 A Boolean which indicates if the permissions have been loaded at least once.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get permissionsLoaded():Boolean</code><br/></div><a name="propertyDetail"></a><a name="photos"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">photos</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>photos:<a href="../../../temple/facebook/api/IFacebookPhotoAPI.html">IFacebookPhotoAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to photos and photo albums.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get photos():<a href="../../../temple/facebook/api/IFacebookPhotoAPI.html">IFacebookPhotoAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookPhotoData.html" target="">temple.facebook.data.vo.IFacebookPhotoData</a><br/><a href="../../../temple/facebook/data/vo/IFacebookAlbumData.html" target="">temple.facebook.data.vo.IFacebookAlbumData</a></div><br/><span class="label"> Example </span><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookPhotoAPI.html" target="">FacebookPhotoAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/PhotosExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/PhotosExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.core.display.CoreLoader;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+    import temple.facebook.data.enum.FacebookConstant;
+    import temple.facebook.data.vo.IFacebookPhotoData;
+    import temple.facebook.data.vo.IFacebookResult;
+
+    import flash.events.MouseEvent;
+    import flash.net.URLRequest;
+
+    public class PhotosExample extends DocumentClassExample
+    {
+        private static const _THUMBNAIL_WIDTH:Number = 140; 
+        private static const _THUMBNAIL_HEIGHT:Number = 140; 
+        
+        private var _facebook:FacebookAPI;
+        private var _photosButton:CodeLabelButton;
+        private var _profilePhotosButton:CodeLabelButton;
+
+        public function PhotosExample()
+        {
+            super("Temple - Facebook - PhotosExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            // Create buttons (using CodeComponents)
+            _photosButton = new CodeLabelButton("Click here to load some photos of me");
+            _photosButton.horizontalCenter = 0;
+            _photosButton.verticalCenter = -20;
+            addChild(_photosButton);
+            _photosButton.addEventListener(MouseEvent.CLICK, handleClick);
+
+            _profilePhotosButton = new CodeLabelButton("Click here to load profile photos of me");
+            _profilePhotosButton.horizontalCenter = 0;
+            _profilePhotosButton.verticalCenter = 20;
+            addChild(_profilePhotosButton);
+            _profilePhotosButton.addEventListener(MouseEvent.CLICK, handleClick);
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            _photosButton.enabled = false;
+            _profilePhotosButton.enabled = false;
+            
+            // load photos
+            if (event.target == _profilePhotosButton)
+            {
+                _facebook.photos.getProfilePhotos(this.onPhotos);
+            }
+            else
+            {
+                _facebook.photos.getPhotos(this.onPhotos, FacebookConstant.ME, 0, 40);
+            }
+        }
+
+        private function onPhotos(result:IFacebookResult):void
+        {
+            _photosButton.visible = false;
+            _profilePhotosButton.visible = false;
+            
+            if (result.success)
+            {
+                // get friends from data
+                var photos:Vector.&lt;IFacebookPhotoData&gt; = Vector.&lt;IFacebookPhotoData&gt;(result.data);
+                
+                var cols:int = (stage.stageWidth - 40) / _THUMBNAIL_WIDTH;
+                
+                // show in output
+                for (var i:int = 0, leni:int = photos.length; i &lt; leni; i++)
+                {
+                    var loader:CoreLoader = new CoreLoader();
+                    addChild(loader);
+                    loader.load(new URLRequest(photos[i].thumbnail));
+                    loader.x = 20 + (i % cols) * _THUMBNAIL_WIDTH;
+                    loader.y = 20 + Math.floor(i / cols) * _THUMBNAIL_HEIGHT;
+                }
+            }
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "PhotosExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div></div><a name="propertyDetail"></a><a name="posts"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">posts</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>posts:<a href="../../../temple/facebook/api/IFacebookPostAPI.html">IFacebookPostAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to post.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get posts():<a href="../../../temple/facebook/api/IFacebookPostAPI.html">IFacebookPostAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookPostData.html" target="">temple.facebook.data.vo.IFacebookPostData</a></div></div><a name="propertyDetail"></a><a name="requiredPermissionsAllowed"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">requiredPermissionsAllowed</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>requiredPermissionsAllowed:Boolean</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 Checks if all permissions, pushed in <code>permissions</code> are allowed.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get requiredPermissionsAllowed():Boolean</code><br/></div><a name="propertyDetail"></a><a name="scores"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">scores</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>scores:<a href="../../../temple/facebook/api/IFacebookScoreAPI.html">IFacebookScoreAPI</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 This API contains all methods related to scores.
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scores():<a href="../../../temple/facebook/api/IFacebookScoreAPI.html">IFacebookScoreAPI</a></code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="http://developers.facebook.com/docs/score/" target="mm_external">http://developers.facebook.com/docs/score/</a></div></div><a name="propertyDetail"></a><a name="service"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">service</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>service:<a href="../../../temple/facebook/service/IFacebookService.html">IFacebookService</a></code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 Returns a reference to the service
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get service():<a href="../../../temple/facebook/service/IFacebookService.html">IFacebookService</a></code><br/></div><a name="propertyDetail"></a><a name="signedRequest"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">signedRequest</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>signedRequest:String</code>&nbsp;&nbsp;[read-only] <p></p><p>
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get signedRequest():String</code><br/></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="FacebookAPI()"></a><a name="FacebookAPI(temple.facebook.adapters.IFacebookAdapter,Boolean,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FacebookAPI</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function FacebookAPI(adapter:<a href="../../../temple/facebook/adapters/IFacebookAdapter.html">IFacebookAdapter</a>, autoPermissions:Boolean = true, cache:Boolean = true)</code><p>
+		 Create a new FacebookAPI.
+		 
+		 <p>Allthough this is not a Singleton, you should create only one instance of the FacebookAPI
+		 since it uses the orginal Facebook class (where this FacebookAPI is based on) is a Singleton.</p>
+		 
+		 </p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">adapter</span>:<a href="../../../temple/facebook/adapters/IFacebookAdapter.html">IFacebookAdapter</a></code> &mdash; an IFacebookAdapter which is a wrapper around the "Adobe ActionScript 3 SDK for Facebook
+		 	Platform API". There are different adaptars for web, desktop and mobile.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">autoPermissions</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; is set to true, the FacebookService will automatically handle all Facebook permissions
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">cache</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; if set to true, all calls will be cached.
+		 
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/adapters/FacebookAdapter.html" target="">temple.facebook.adapters.FacebookAdapter</a></div><br/><span class="label"> Example </span><br/><div class="detailBody"><div class="listing" version="3.0"><pre>
+         var facebook:IFacebookAPI = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf('https:') != -1));
+         facebook.init("application id");
+         </pre></div>
+		 
+		 </div></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="areAllowed()"></a><a name="areAllowed(Vector$String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">areAllowed</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function areAllowed(permissions:Vector.&lt;String&gt;):Boolean</code><p></p><p>
+		 
+		 Checks if a these permissions are allowed. If (at least) one of the permissions isn't allowed, the method
+		 returns false.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">permissions</span>:Vector.&lt;String&gt;</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="deleteObject()"></a><a name="deleteObject(String,Function,String,Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">deleteObject</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function deleteObject(method:String, callback:Function = null, id:String = me, params:Object = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Deletes an object from Facebook.
+		 The current user must have granted extended permission to delete the corresponding object, or an error will
+		 be returned.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">method</span>:String</code> &mdash; The ID and connection of the object to delete.
+		 For example, /POST_ID/like to remove a like from a message.
+		 
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> (default = <code>me</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="destruct()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">destruct</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function destruct():void</code><p></p><p>
+		 
+		 Destructs the object and makes it available for garbage collection.
+		 
+		 <p>When overriding this method, always call super.destruct() at the end!</p>
+		 
+		 If you want the object to be available for garbage collection make sure you:
+		 <ul>
+		 	<li>Remove all event listeners on this object (use <code>removeAllEventListeners</code> on Temple objects).</li>
+		 	<li>Remove all event listeners from this object.</li>
+		 	<li>Set all non-primitive variables to null.</li>
+		 	<li>Set all references to this object to null in other objects.</li>
+		 </ul>
+		 
+		 When a Temple object is destructed a <code>DestructEvent.DESTRUCT</code> is dispatched from the object
+		 (if the object implements <code>ICoreEventDispatcher</code>).
+		 
+		 <p>Note: Bear in mind that it is possible an object can be destructed more than once.</p>
+		 
+		  </p></div><a name="fql()"></a><a name="fql(String,Function,Class,temple.facebook.data.vo.IFacebookFields,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">fql</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function fql(query:String, callback:Function = null, objectClass:Class = null, fields:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a> = null, id:String = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Executes an FQL query on api.facebook.com
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">query</span>:String</code> &mdash; the FQL query to call on Facebook
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback method which is called when the FQL is finished
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">objectClass</span>:Class</code> (default = <code>null</code>)<code></code> &mdash; a class which is used for parsing the result
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a></code> (default = <code>null</code>)<code></code> &mdash; an object which defines which fields must be returned. This fields object is only used for
+		 automatically permissions retrieving. The fields you actually want to be in the return value muste be added
+		 in the FQL query.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> (default = <code>null</code>)<code></code> &mdash; used to retreive the correct permissions from the fields object
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="fqlMultiQuery()"></a><a name="fqlMultiQuery(temple.facebook.data.vo.FacebookFQLMultiQuery,Function)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">fqlMultiQuery</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function fqlMultiQuery(queries:<a href="../../../temple/facebook/data/vo/FacebookFQLMultiQuery.html">FacebookFQLMultiQuery</a>, callback:Function = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">queries</span>:<a href="../../../temple/facebook/data/vo/FacebookFQLMultiQuery.html">FacebookFQLMultiQuery</a></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="get()"></a><a name="get(Function,String,String,Class,Object,temple.facebook.data.vo.IFacebookFields,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">get</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function get(callback:Function = null, method:String = null, id:String = me, objectClass:Class = null, params:Object = null, fields:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a> = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">method</span>:String</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> (default = <code>me</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">objectClass</span>:Class</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a></code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="getAllowedPermissions()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getAllowedPermissions</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getAllowedPermissions():Vector.&lt;String&gt;</code><p></p><p>
+		 
+		 Returns a list with all allowed permissions
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Vector.&lt;String&gt;</code></td></tr></table></div><a name="getApplicationData()"></a><a name="getApplicationData(Function,temple.facebook.data.vo.FacebookApplicationFields,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getApplicationData</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getApplicationData(callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookApplicationFields.html">FacebookApplicationFields</a> = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Load the data (<code>IFacebookApplicationData</code>) of the application from Facebook.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookApplicationFields.html">FacebookApplicationFields</a></code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="getAppRequests()"></a><a name="getAppRequests(Function,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getAppRequests</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getAppRequests(callback:Function = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Gets all application requests for the current user for this application.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="getImageUrl()"></a><a name="getImageUrl(String,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getImageUrl</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getImageUrl(id:String, size:String = null):String</code><p></p><p>
+		 
+	     Utility method to format a picture URL, in order to load an image from Facebook.
+	     
+	     </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> &mdash; The ID you wish to load an image from.
+	     </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">size</span>:String</code> (default = <code>null</code>)<code></code> &mdash; The size of image to display from Facebook (square, small, or large).
+	     
+	     </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><a name="getLike()"></a><a name="getLike(String,Function,String,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getLike</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getLike(id:String, callback:Function = null, user:String = me, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Checks if the user liked an object. If the user liked the object, the <code>IFacebookLikeData</code> is
+		 returned with the result. Otherwise null is returned with the result. 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">user</span>:String</code> (default = <code>me</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="getObject()"></a><a name="getObject(String,Boolean,Class)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getObject</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getObject(id:String, createIfNull:Boolean = false, type:Class = null):<a href="../../../temple/facebook/data/vo/IFacebookObjectData.html">IFacebookObjectData</a></code><p></p><p>
+		 
+		 Returns a IFacebookObjectData with a specific ID, if this object is loaded before.
+		 If you specify a type, the object can be created on the fly.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> &mdash; the id of the object
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">createIfNull</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; if set to true, the object will be created when if doesn't exists
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">type</span>:Class</code> (default = <code>null</code>)<code></code> &mdash; the type of the object. This is needed when the object must be created on the fly.
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/data/vo/IFacebookObjectData.html">IFacebookObjectData</a></code></td></tr></table></div><a name="getObjects()"></a><a name="getObjects(Vector$String,Function,Class,Object,temple.facebook.data.vo.IFacebookFields,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getObjects</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getObjects(ids:Vector.&lt;String&gt;, callback:Function = null, objectClass:Class = null, params:Object = null, fields:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a> = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Get multiple objects wiht one call
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">ids</span>:Vector.&lt;String&gt;</code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">objectClass</span>:Class</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a></code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="getPage()"></a><a name="getPage(String,Function,temple.facebook.data.vo.FacebookPageFields,Object,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getPage</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getPage(id:String, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookPageFields.html">FacebookPageFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Get the data of a specific page from Facebook.
+		 
+		 <p>If successful, the result contains an IFacebookPageData object.</p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> &mdash; the id of the page.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookPageFields.html">FacebookPageFields</a></code> (default = <code>null</code>)<code></code> &mdash; a FacebookPageFields object with all the requested fields set to true.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; option params to send with the request.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="getPermissions()"></a><a name="getPermissions(Function,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getPermissions</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getPermissions(callback:Function = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Gets the allowed permissions.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="getProfile()"></a><a name="getProfile(String,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getProfile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getProfile(id:String, createIfNull:Boolean = false):<a href="../../../temple/facebook/data/vo/IFacebookProfileData.html">IFacebookProfileData</a></code><p></p><p>
+		 
+		 Returns a IFacebookProfileData with a specific ID, if this object is loaded before.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> &mdash; the id of the profile
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">createIfNull</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; if set to true, the object will be created when if doesn't exists
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/data/vo/IFacebookProfileData.html">IFacebookProfileData</a></code></td></tr></table></div><a name="getRawResult()"></a><a name="getRawResult(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getRawResult</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getRawResult(data:Object):Object</code><p></p><p>
+		 
+		 Returns a reference to the entire raw object Facebook returns (including paging, etc.).
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">data</span>:Object</code> &mdash; The result object.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Object</code></td></tr></table></div><a name="getUnparsedResult()"></a><a name="getUnparsedResult(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getUnparsedResult</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getUnparsedResult(data:Object):Object</code><p></p><p>
+		 
+		 Returns a reference to unparsed result related to the (parsed) data.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">data</span>:Object</code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Object</code></td></tr></table></div><a name="getUser()"></a><a name="getUser(Function,String,temple.facebook.data.vo.FacebookUserFields,Object,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getUser</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getUser(callback:Function = null, id:String = me, fields:<a href="../../../temple/facebook/data/vo/FacebookUserFields.html">FacebookUserFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Get the data of a specific user from Facebook.
+		 
+		 <p>If successful, the result contains an IFacebookUserData object.</p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> (default = <code>me</code>)<code></code> &mdash; the id of the user.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookUserFields.html">FacebookUserFields</a></code> (default = <code>null</code>)<code></code> &mdash; a FacebookUserFields object with all the requested fields set to true.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; option params to send with the request.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="getUsers()"></a><a name="getUsers(Vector$String,Function,temple.facebook.data.vo.FacebookUserFields,Object,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getUsers</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getUsers(ids:Vector.&lt;String&gt;, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookUserFields.html">FacebookUserFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Get multiple users with one call
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">ids</span>:Vector.&lt;String&gt;</code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookUserFields.html">FacebookUserFields</a></code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="hasNext()"></a><a name="hasNext(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">hasNext</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function hasNext(data:Object):Boolean</code><p></p><p>
+		 
+		 Asks if another page exists
+		 after this result object.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">data</span>:Object</code> &mdash; The result object.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="hasPrevious()"></a><a name="hasPrevious(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">hasPrevious</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function hasPrevious(data:Object):Boolean</code><p></p><p>
+		 
+		 Asks if a page exists before this result object.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">data</span>:Object</code> &mdash; The result object.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="init()"></a><a name="init(String,Function,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">init</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function init(applicationId:String, callback:Function = null, accessToken:String = null):void</code><p></p><p>
+		 
+		 Initializes Facebook
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">applicationId</span>:String</code> &mdash; The application ID you created at http://www.facebook.com/developers/apps.php
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; A valid Facebook access token. If you have a previously saved access token, you can pass
+		 it in here.
+		 
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">accessToken</span>:String</code> (default = <code>null</code>)<code></code></td></tr></table></p><p><span class="label">See also</span></p><div class="seeAlso"><a href="http://developers.facebook.com/docs/reference/javascript/FB.init" target="mm_external">http://developers.facebook.com/docs/reference/javascript/FB.init</a><br/><a href="http://www.facebook.com/developers/apps.php" target="mm_external">http://www.facebook.com/developers/apps.php</a></div></div><a name="isAllowed()"></a><a name="isAllowed(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isAllowed</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function isAllowed(permission:String):int</code><p></p><p>
+		 
+		 Checks if a specific permission is allowed.
+		 
+		 Returns 1 of the permission is allowed.
+		 Returns 0 of the permission is not allowed.
+		 Returns -1 if it is not known if the permission is allowed.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">permission</span>:String</code> &mdash; the permission to check
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>int</code></td></tr></table></div><a name="like()"></a><a name="like(String,Function)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">like</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function like(id:String, callback:Function = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Like the given object (if it has a /likes connection).
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="loadPolicyFiles()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">loadPolicyFiles</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function loadPolicyFiles():void</code><p></p><p>
+		 
+		 Loads the Facebook PolicyFiles (crossdomains.xml). Needed if you want to smooth, cache or draw Facebook images.
+		 You only need to call this once. 
+		 </p></div><a name="login()"></a><a name="login(Function,Vector$String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">login</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function login(callback:Function = null, permissions:Vector.&lt;String&gt; = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Login into Facebook.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">permissions</span>:Vector.&lt;String&gt;</code> (default = <code>null</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="logout()"></a><a name="logout(Function)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">logout</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function logout(callback:Function = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Logout from Facebook.
+		 Clears cache and kills all queued call.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="nextPage()"></a><a name="nextPage(Object,Function)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">nextPage</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function nextPage(data:Object, callback:Function):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Retrieves the next page that is associated with result object passed in.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">data</span>:Object</code> &mdash; The result object.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> &mdash; a function that must be called when the data is retreived from Facebook and parsed.
+		 Note: this function must accept one, and only one, argument of type IFacebookResult.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="post()"></a><a name="post(String,Function,String,Object,Class)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">post</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function post(method:String, callback:Function = null, id:String = me, params:Object = null, objectClass:Class = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Post data to Facebook.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">method</span>:String</code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> (default = <code>me</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code></td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">objectClass</span>:Class</code> (default = <code>null</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="previousPage()"></a><a name="previousPage(Object,Function)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">previousPage</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function previousPage(data:Object, callback:Function):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Retrieves the previous page that is associated with result object passed in.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">data</span>:Object</code> &mdash; The result object.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> &mdash; a function that must be called when the data is retreived from Facebook and parsed.
+		 Note: this function must accept one, and only one, argument of type IFacebookResult.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="ui()"></a><a name="ui(String,Object,Function,temple.facebook.data.enum.FacebookDisplayMode)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">ui</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function ui(method:String, data:Object, callback:Function = null, display:<a href="../../../temple/facebook/data/enum/FacebookDisplayMode.html">FacebookDisplayMode</a> = null):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 
+		 Shows a Facebook sharing dialog.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">method</span>:String</code> &mdash; The related method for this dialog (ex. stream.publish).
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">data</span>:Object</code> &mdash; Data to pass to the dialog, date will be JSON encoded.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; (Optional) Method to call when complete
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">display</span>:<a href="../../../temple/facebook/data/enum/FacebookDisplayMode.html">FacebookDisplayMode</a></code> (default = <code>null</code>)<code></code> &mdash; (Optional) The type of dialog to show (page, iframe or popup).
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><div class="detailSectionHeader"> Event Detail </div><a name="event:FacebookEvent.login"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FacebookEvent.login</td><td class="detailHeaderType"> Event </td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><a href="../../../temple/facebook/events/FacebookEvent.html"><code>temple.facebook.events.FacebookEvent</code></a><br/><span class="label">FacebookEvent.type property = </span><a href="../../../temple/facebook/events/FacebookEvent.html#LOGIN"><code>temple.facebook.events.FacebookEvent.LOGIN</code></a><br/><p></p><p>
+	 Dispatched when the user is logged in into Facebook.
+	 
+	 </p>
+		 Dispatched after login and we know the user
+		 </div><a name="event:FacebookEvent.logout"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FacebookEvent.logout</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><a href="../../../temple/facebook/events/FacebookEvent.html"><code>temple.facebook.events.FacebookEvent</code></a><br/><span class="label">FacebookEvent.type property = </span><a href="../../../temple/facebook/events/FacebookEvent.html#LOGOUT"><code>temple.facebook.events.FacebookEvent.LOGOUT</code></a><br/><p></p><p>
+	 Dispatched when the user logs out from Facebook.
+	 
+	 </p></div><a name="event:FacebookPermissionEvent.allowed"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FacebookPermissionEvent.allowed</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><a href="../../../temple/facebook/events/FacebookPermissionEvent.html"><code>temple.facebook.events.FacebookPermissionEvent</code></a><br/><span class="label">FacebookPermissionEvent.type property = </span><a href="../../../temple/facebook/events/FacebookPermissionEvent.html#ALLOWED"><code>temple.facebook.events.FacebookPermissionEvent.ALLOWED</code></a><br/><p></p><p>
+	 Dispatched when the user allowes some permissions
+	 
+	 </p>
+		 The user allowed some permissions
+		 </div><a name="event:FacebookPermissionEvent.denied"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FacebookPermissionEvent.denied</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><a href="../../../temple/facebook/events/FacebookPermissionEvent.html"><code>temple.facebook.events.FacebookPermissionEvent</code></a><br/><span class="label">FacebookPermissionEvent.type property = </span><a href="../../../temple/facebook/events/FacebookPermissionEvent.html#DENIED"><code>temple.facebook.events.FacebookPermissionEvent.DENIED</code></a><br/><p></p><p>
+	 Dispatched when the user denies some permissions
+	 
+	 </p>
+		 The user denies some permissions
+		 </div><a name="event:FacebookPermissionEvent.update"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">FacebookPermissionEvent.update</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><a href="../../../temple/facebook/events/FacebookPermissionEvent.html"><code>temple.facebook.events.FacebookPermissionEvent</code></a><br/><span class="label">FacebookPermissionEvent.type property = </span><a href="../../../temple/facebook/events/FacebookPermissionEvent.html#UPDATE"><code>temple.facebook.events.FacebookPermissionEvent.UPDATE</code></a><br/><p></p><p>
+	 Dispatched when the allowed permissions are updated
+	 
+	 </p>
+		 The list of allowed permissions is updated
+		 </div><a name="event:init"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">init</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><code>flash.events.Event</code><br/><span class="label">Event.type property = </span><code>flash.events.Event.INIT</code><br/><p></p><p>
+	 Dispatched when the FacebookService is initialized
+	 
+	 </p></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="exampleHeader">FriendsExample.as</div><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookFriendAPI.html" target="">IFacebookFriendAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/FriendsExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/FriendsExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.utils.types.VectorUtils;
+    import temple.facebook.data.vo.IFacebookUserData;
+    import temple.codecomponents.form.components.CodeInputField;
+    import temple.facebook.data.vo.IFacebookResult;
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+
+    import flash.events.MouseEvent;
+
+    public class FriendsExample extends DocumentClassExample
+    {
+        private var _facebook:FacebookAPI;
+        private var _button:CodeLabelButton;
+        private var _output:CodeInputField;
+        
+        public function FriendsExample()
+        {
+            super("Temple - Facebook - FriendsExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            // Create a button (using CodeComponents)
+            _button = new CodeLabelButton("Click here to load friends");
+            _button.horizontalCenter = 0;
+            _button.verticalCenter = 0;
+            addChild(_button);
+            _button.addEventListener(MouseEvent.CLICK, handleClick);
+            
+            // Create an output field for displaying the result
+            _output = new CodeInputField(stage.stageWidth, stage.stageHeight, true);
+            addChildAt(_output, 0);
+            _output.editable = false;
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            _button.enabled = false;
+            
+            // load friends
+            _facebook.friends.getFriends(this.onFriends);
+        }
+
+        private function onFriends(result:IFacebookResult):void
+        {
+            _button.visible = false;
+            _output.visible = true;
+            
+            if (result.success)
+            {
+                // get friends from data
+                var friends:Vector.&lt;IFacebookUserData&gt; = Vector.&lt;IFacebookUserData&gt;(result.data);
+                
+                // sort by name
+                VectorUtils.sortOn(friends, "name");
+                
+                // show in output
+                for (var i:int = 0, leni:int = friends.length; i &lt; leni; i++)
+                {
+                    _output.appendText(" - " + friends[i].name + "\n");
+                }
+            }
+            else
+            {
+                _output.text = result.message;
+            }
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "FriendsExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div><div class="exampleHeader">PhotosExample.as</div><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookPhotoAPI.html" target="">FacebookPhotoAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/PhotosExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/PhotosExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.core.display.CoreLoader;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+    import temple.facebook.data.enum.FacebookConstant;
+    import temple.facebook.data.vo.IFacebookPhotoData;
+    import temple.facebook.data.vo.IFacebookResult;
+
+    import flash.events.MouseEvent;
+    import flash.net.URLRequest;
+
+    public class PhotosExample extends DocumentClassExample
+    {
+        private static const _THUMBNAIL_WIDTH:Number = 140; 
+        private static const _THUMBNAIL_HEIGHT:Number = 140; 
+        
+        private var _facebook:FacebookAPI;
+        private var _photosButton:CodeLabelButton;
+        private var _profilePhotosButton:CodeLabelButton;
+
+        public function PhotosExample()
+        {
+            super("Temple - Facebook - PhotosExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            // Create buttons (using CodeComponents)
+            _photosButton = new CodeLabelButton("Click here to load some photos of me");
+            _photosButton.horizontalCenter = 0;
+            _photosButton.verticalCenter = -20;
+            addChild(_photosButton);
+            _photosButton.addEventListener(MouseEvent.CLICK, handleClick);
+
+            _profilePhotosButton = new CodeLabelButton("Click here to load profile photos of me");
+            _profilePhotosButton.horizontalCenter = 0;
+            _profilePhotosButton.verticalCenter = 20;
+            addChild(_profilePhotosButton);
+            _profilePhotosButton.addEventListener(MouseEvent.CLICK, handleClick);
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            _photosButton.enabled = false;
+            _profilePhotosButton.enabled = false;
+            
+            // load photos
+            if (event.target == _profilePhotosButton)
+            {
+                _facebook.photos.getProfilePhotos(this.onPhotos);
+            }
+            else
+            {
+                _facebook.photos.getPhotos(this.onPhotos, FacebookConstant.ME, 0, 40);
+            }
+        }
+
+        private function onPhotos(result:IFacebookResult):void
+        {
+            _photosButton.visible = false;
+            _profilePhotosButton.visible = false;
+            
+            if (result.success)
+            {
+                // get friends from data
+                var photos:Vector.&lt;IFacebookPhotoData&gt; = Vector.&lt;IFacebookPhotoData&gt;(result.data);
+                
+                var cols:int = (stage.stageWidth - 40) / _THUMBNAIL_WIDTH;
+                
+                // show in output
+                for (var i:int = 0, leni:int = photos.length; i &lt; leni; i++)
+                {
+                    var loader:CoreLoader = new CoreLoader();
+                    addChild(loader);
+                    loader.load(new URLRequest(photos[i].thumbnail));
+                    loader.x = 20 + (i % cols) * _THUMBNAIL_WIDTH;
+                    loader.y = 20 + Math.floor(i / cols) * _THUMBNAIL_HEIGHT;
+                }
+            }
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "PhotosExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example2", "quality", "high", "bgcolor", "", "name",
+						"example2", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div><div class="exampleHeader">DialogsExample.as</div><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookDialogAPI.html" target="">FacebookDialogAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/DialogsExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/DialogsExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.codecomponents.form.components.CodeComboBox;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+    import temple.facebook.data.enum.FacebookDisplayMode;
+    import temple.ui.layout.VBox;
+    import temple.utils.Enum;
+
+    import flash.events.Event;
+    import flash.events.MouseEvent;
+
+    public class DialogsExample extends DocumentClassExample
+    {
+        private var _facebook:FacebookAPI;
+        private var _displayModeComboBox : CodeComboBox;
+        private var _feedDialogButton:CodeLabelButton;
+        private var _friendsDialogButton:CodeLabelButton;
+        private var _requestDialogButton:CodeLabelButton;
+        private var _oauthDialogButton:CodeLabelButton;
+
+        public function DialogsExample()
+        {
+            super("Temple - Facebook - DialogsExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            var box:VBox = new VBox(10);
+            
+            addChild(box);
+            box.x = box.y = 20;
+            
+            _displayModeComboBox = new CodeComboBox(160, 18, Enum.getArray(FacebookDisplayMode));
+            _displayModeComboBox.hintText = "Display mode";
+            box.addChild(_displayModeComboBox);
+            _displayModeComboBox.addEventListener(Event.CHANGE, handleDisplayModeChange);
+            
+            // Create buttons (using CodeComponents)
+            _feedDialogButton = new CodeLabelButton("Feed Dialog");
+            box.addChild(_feedDialogButton);
+            _feedDialogButton.addEventListener(MouseEvent.CLICK, handleClick);
+            
+            _friendsDialogButton = new CodeLabelButton("Friends Dialog");
+            box.addChild(_friendsDialogButton);
+            _friendsDialogButton.addEventListener(MouseEvent.CLICK, handleClick);
+            
+            _requestDialogButton = new CodeLabelButton("Request Dialog");
+            box.addChild(_requestDialogButton);
+            _requestDialogButton.addEventListener(MouseEvent.CLICK, handleClick);
+            
+            _oauthDialogButton = new CodeLabelButton("Oauth Dialog");
+            box.addChild(_oauthDialogButton);
+            _oauthDialogButton.addEventListener(MouseEvent.CLICK, handleClick);
+        }
+
+        private function handleDisplayModeChange(event:Event):void
+        {
+            _facebook.dialogs.displayMode = _displayModeComboBox.value;
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            switch (event.target)
+            {
+                case _feedDialogButton:
+                    _facebook.dialogs.feedDialog();
+                    break;
+                    
+                case _friendsDialogButton:
+                    _facebook.dialogs.friendsDialog("100004032744210");
+                    break;
+                    
+                case _requestDialogButton:
+                    _facebook.dialogs.requestDialog("Check this out!");
+                    break;
+                    
+                case _oauthDialogButton:
+                    _facebook.dialogs.oauthDialog("http://code.google.com/p/templelibrary");
+                    break;
+            }
+        }
+
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "DialogsExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example3", "quality", "high", "bgcolor", "", "name",
+						"example3", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>by MediaMonks | http://www.mediamonks.com</footer><br/> </center></div></body></html><!--by MediaMonks | http://www.mediamonks.com<br/> -->

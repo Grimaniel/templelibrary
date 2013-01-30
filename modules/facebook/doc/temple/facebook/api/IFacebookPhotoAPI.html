@@ -1,0 +1,418 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../override.css" type="text/css"><meta name="keywords" content="IFacebookPhotoAPI,temple.facebook.api.IFacebookPhotoAPI,areAllowed,attend,create,create,create,create,createAlbum,decline,deleteObject,destruct,feedDialog,fql,fqlMultiQuery,get,getAlbum,getAlbums,getAlbumsByName,getAllowedPermissions,getAppRequests,getAppRequests,getApplicationData,getApplicationData,getAttendingUsers,getCheckin,getCheckins,getComment,getComments,getDeclinedUsers,getEvent,getEvents,getEventsByName,getFriendList,getFriendListMembers,getFriendLists,getFriendListsOfType,getFriends,getImageUrl,getInvite,getInvites,getLike,getLike,getLikes,getListens,getMaybeUsers,getNotRepliedUsers,getObject,getObjects,getPage,getPage,getPageInfo,getPermissions,getPermissions,getPhoto,getPhotos,getPlaylist,getPost,getPosts,getProfile,getProfilePhotos,getRSVP,getRSVPs,getRawResult,getScore,getSong,getUnparsedResult,getUser,getUser,getUsers,getUsers,hasNext,hasPrevious,init,init,inviteUsers,inviteUsersById,isAllowed,like,like,loadPolicyFiles,login,logout,maybe,nextPage,openProfilePictureURL,post,post,post,previousPage,scrollTo,sendDialog,setAutoGrow,setSize,ui,upload"><title>temple.facebook.api.IFacebookPhotoAPI</title><script src="../../../AC_OETags.js" type="text/javascript"></script></head><body><script language="javascript" type="text/javascript" src="../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'IFacebookPhotoAPI - Temple Facebook Module API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Facebook Module API Documentation - 3.5.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/facebook/api/IFacebookPhotoAPI.html&amp;temple/facebook/api/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">IFacebookPhotoAPI</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IFacebookPhotoAPI"); titleBar_setSubNav(false,false,false,false,false,false,false,false,true,true,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">temple.facebook.api</a></td></tr><tr><td class="classHeaderTableLabel">Interface</td><td class="classSignature">public  interface  IFacebookPhotoAPI</td></tr></table><p></p><p></p>
+	 API for handling photos and albums on Facebook.
+	 
+	 <p></p><p><a href="#includeExamplesSummary">View the examples</a></p><p><span class="classHeaderTableLabel">See also</span></p><div class="seeAlso"><a href="../../../../readme.html" target="">Read me</a><br/><a href="IFacebookAPI.html#photos" target="">temple.facebook.api.IFacebookAPI.photos</a><br/><a href="FacebookAPI.html#photos" target="">temple.facebook.api.FacebookAPI.photos</a><br/><a href="../../../temple/facebook/data/vo/IFacebookPhotoData.html" target="">temple.facebook.data.vo.IFacebookPhotoData</a><br/><a href="../../../temple/facebook/data/vo/IFacebookAlbumData.html" target="">temple.facebook.data.vo.IFacebookAlbumData</a><br/><a href="http://developers.facebook.com/docs/reference/api/photo/" target="mm_external">http://developers.facebook.com/docs/reference/api/photo/</a><br/><a href="http://developers.facebook.com/docs/reference/api/album/" target="mm_external">http://developers.facebook.com/docs/reference/api/album/</a></div><br/><hr></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#createAlbum()" class="signatureLink">createAlbum</a>(name:String, message:String, callback:Function = null, userId:String = me):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 Create an album on Facebook
+		 </div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getAlbum()" class="signatureLink">getAlbum</a>(id:String, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 Get a single album.</div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getAlbums()" class="signatureLink">getAlbums</a>(callback:Function = null, id:String = me, offset:Number, limit:Number, fields:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 Get all the albums of a user.</div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getAlbumsByName()" class="signatureLink">getAlbumsByName</a>(name:String, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a> = null, userId:String = me):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 Get multiple albums, based on their name.</div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getPhoto()" class="signatureLink">getPhoto</a>(id:String, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookPhotoFields.html">FacebookPhotoFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 Get a photo.</div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getPhotos()" class="signatureLink">getPhotos</a>(callback:Function = null, id:String = me, offset:Number, limit:Number, fields:<a href="../../../temple/facebook/data/vo/FacebookPhotoFields.html">FacebookPhotoFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 Get all the photos of a user or an album.</div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getProfilePhotos()" class="signatureLink">getProfilePhotos</a>(callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a> = null, userId:String = me):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 Get all the photos the user has had as profile picture.</div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#openProfilePictureURL()" class="signatureLink">openProfilePictureURL</a>(photoId:String, target:String = _blank):void</div><div class="summaryTableDescription">
+		 Opens a new Facebook window for setting a photo as profile picture.</div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#upload()" class="signatureLink">upload</a>(photo:*, message:String = null, callback:Function = null, albumId:String = me, noStory:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></div><div class="summaryTableDescription">
+		 Upload a photo to Facebook.</div></td><td class="summaryTableOwnerCol">IFacebookPhotoAPI</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="createAlbum()"></a><a name="createAlbum(String,String,Function,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">createAlbum</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function createAlbum(name:String, message:String, callback:Function = null, userId:String = me):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 Create an album on Facebook
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code> &mdash; the name of the album
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">message</span>:String</code> &mdash; the message of the album
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a method which is called when the call is ready.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">userId</span>:String</code> (default = <code>me</code>)<code></code> &mdash; the id of the user where this album must belong to.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookAlbumData.html" target="">temple.facebook.data.vo.IFacebookAlbumData</a></div></div><a name="getAlbum()"></a><a name="getAlbum(String,Function,temple.facebook.data.vo.FacebookAlbumFields,Object,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getAlbum</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getAlbum(id:String, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 Get a single album.
+		 
+		 If successful, the result contains a IFacebookAlbumData object.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> &mdash; the id of the item.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a></code> (default = <code>null</code>)<code></code> &mdash; a FacebookAlbumFields object with all the requested fields set to true.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; option params to send with the request.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookAlbumData.html" target="">temple.facebook.data.vo.IFacebookAlbumData</a></div></div><a name="getAlbums()"></a><a name="getAlbums(Function,String,Number,Number,temple.facebook.data.vo.FacebookAlbumFields,Object,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getAlbums</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getAlbums(callback:Function = null, id:String = me, offset:Number, limit:Number, fields:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 Get all the albums of a user.
+		 
+		 If successful, the result contains an Array with IFacebookAlbumData objects.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> (default = <code>me</code>)<code></code> &mdash; the id of the user.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">offset</span>:Number</code> (default = <code>NaN</code>)<code></code> &mdash; the position of the first item in the list
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">limit</span>:Number</code> (default = <code>NaN</code>)<code></code> &mdash; the maximum amount of items.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a></code> (default = <code>null</code>)<code></code> &mdash; a FacebookAlbumFields object with all the requested fields set to true.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; option params to send with the request.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookAlbumData.html" target="">temple.facebook.data.vo.IFacebookAlbumData</a></div></div><a name="getAlbumsByName()"></a><a name="getAlbumsByName(String,Function,temple.facebook.data.vo.FacebookAlbumFields,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getAlbumsByName</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getAlbumsByName(name:String, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a> = null, userId:String = me):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 Get multiple albums, based on their name.
+		 
+		 If successful, the result contains an Array with IFacebookAlbumData objects.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code> &mdash; the name of the album to get
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a method which is called when the call is ready.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookAlbumFields.html">FacebookAlbumFields</a></code> (default = <code>null</code>)<code></code> &mdash; an object which the requested fields set to true.
+		 
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">userId</span>:String</code> (default = <code>me</code>)<code></code></td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookAlbumData.html" target="">temple.facebook.data.vo.IFacebookAlbumData</a></div></div><a name="getPhoto()"></a><a name="getPhoto(String,Function,temple.facebook.data.vo.FacebookPhotoFields,Object,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getPhoto</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getPhoto(id:String, callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/FacebookPhotoFields.html">FacebookPhotoFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 Get a photo.
+		 
+		 If successful, the result contains a IFacebookPhotoData object.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> &mdash; the id of the item.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookPhotoFields.html">FacebookPhotoFields</a></code> (default = <code>null</code>)<code></code> &mdash; a FacebookPhotoFields object with all the requested fields set to true.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; option params to send with the request.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookPhotoData.html" target="">temple.facebook.data.vo.IFacebookPhotoData</a></div></div><a name="getPhotos()"></a><a name="getPhotos(Function,String,Number,Number,temple.facebook.data.vo.FacebookPhotoFields,Object,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getPhotos</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getPhotos(callback:Function = null, id:String = me, offset:Number, limit:Number, fields:<a href="../../../temple/facebook/data/vo/FacebookPhotoFields.html">FacebookPhotoFields</a> = null, params:Object = null, forceReload:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 Get all the photos of a user or an album.
+		 
+		 If successful, the result contains an Array with IFacebookPhotoData objects.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">id</span>:String</code> (default = <code>me</code>)<code></code> &mdash; the id of the user or album.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">offset</span>:Number</code> (default = <code>NaN</code>)<code></code> &mdash; the position of the first item in the list
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">limit</span>:Number</code> (default = <code>NaN</code>)<code></code> &mdash; the maximum amount of items.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/FacebookPhotoFields.html">FacebookPhotoFields</a></code> (default = <code>null</code>)<code></code> &mdash; a FacebookPhotoFields object with all the requested fields set to true.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; option params to send with the request.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">forceReload</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../temple/facebook/data/vo/IFacebookPhotoData.html" target="">temple.facebook.data.vo.IFacebookPhotoData</a></div><br/><span class="label"> Example </span><br/><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookPhotoAPI.html" target="">FacebookPhotoAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/PhotosExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/PhotosExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.core.display.CoreLoader;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+    import temple.facebook.data.enum.FacebookConstant;
+    import temple.facebook.data.vo.IFacebookPhotoData;
+    import temple.facebook.data.vo.IFacebookResult;
+
+    import flash.events.MouseEvent;
+    import flash.net.URLRequest;
+
+    public class PhotosExample extends DocumentClassExample
+    {
+        private static const _THUMBNAIL_WIDTH:Number = 140; 
+        private static const _THUMBNAIL_HEIGHT:Number = 140; 
+        
+        private var _facebook:FacebookAPI;
+        private var _photosButton:CodeLabelButton;
+        private var _profilePhotosButton:CodeLabelButton;
+
+        public function PhotosExample()
+        {
+            super("Temple - Facebook - PhotosExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            // Create buttons (using CodeComponents)
+            _photosButton = new CodeLabelButton("Click here to load some photos of me");
+            _photosButton.horizontalCenter = 0;
+            _photosButton.verticalCenter = -20;
+            addChild(_photosButton);
+            _photosButton.addEventListener(MouseEvent.CLICK, handleClick);
+
+            _profilePhotosButton = new CodeLabelButton("Click here to load profile photos of me");
+            _profilePhotosButton.horizontalCenter = 0;
+            _profilePhotosButton.verticalCenter = 20;
+            addChild(_profilePhotosButton);
+            _profilePhotosButton.addEventListener(MouseEvent.CLICK, handleClick);
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            _photosButton.enabled = false;
+            _profilePhotosButton.enabled = false;
+            
+            // load photos
+            if (event.target == _profilePhotosButton)
+            {
+                _facebook.photos.getProfilePhotos(this.onPhotos);
+            }
+            else
+            {
+                _facebook.photos.getPhotos(this.onPhotos, FacebookConstant.ME, 0, 40);
+            }
+        }
+
+        private function onPhotos(result:IFacebookResult):void
+        {
+            _photosButton.visible = false;
+            _profilePhotosButton.visible = false;
+            
+            if (result.success)
+            {
+                // get friends from data
+                var photos:Vector.&lt;IFacebookPhotoData&gt; = Vector.&lt;IFacebookPhotoData&gt;(result.data);
+                
+                var cols:int = (stage.stageWidth - 40) / _THUMBNAIL_WIDTH;
+                
+                // show in output
+                for (var i:int = 0, leni:int = photos.length; i &lt; leni; i++)
+                {
+                    var loader:CoreLoader = new CoreLoader();
+                    addChild(loader);
+                    loader.load(new URLRequest(photos[i].thumbnail));
+                    loader.x = 20 + (i % cols) * _THUMBNAIL_WIDTH;
+                    loader.y = 20 + Math.floor(i / cols) * _THUMBNAIL_HEIGHT;
+                }
+            }
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "PhotosExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div></div><a name="getProfilePhotos()"></a><a name="getProfilePhotos(Function,temple.facebook.data.vo.IFacebookFields,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getProfilePhotos</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getProfilePhotos(callback:Function = null, fields:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a> = null, userId:String = me):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 Get all the photos the user has had as profile picture.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback which is called when the upload is complete. The callback must accept one, and only one, argument of type IFacebookResult
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">fields</span>:<a href="../../../temple/facebook/data/vo/IFacebookFields.html">IFacebookFields</a></code> (default = <code>null</code>)<code></code> &mdash; a IFacebookFields object with all the requested fields set to true.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">userId</span>:String</code> (default = <code>me</code>)<code></code> &mdash; the id of the user to get the profile photos from.
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table><br/><span class="label"> Example </span><br/><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookPhotoAPI.html" target="">FacebookPhotoAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/PhotosExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/PhotosExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.core.display.CoreLoader;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+    import temple.facebook.data.enum.FacebookConstant;
+    import temple.facebook.data.vo.IFacebookPhotoData;
+    import temple.facebook.data.vo.IFacebookResult;
+
+    import flash.events.MouseEvent;
+    import flash.net.URLRequest;
+
+    public class PhotosExample extends DocumentClassExample
+    {
+        private static const _THUMBNAIL_WIDTH:Number = 140; 
+        private static const _THUMBNAIL_HEIGHT:Number = 140; 
+        
+        private var _facebook:FacebookAPI;
+        private var _photosButton:CodeLabelButton;
+        private var _profilePhotosButton:CodeLabelButton;
+
+        public function PhotosExample()
+        {
+            super("Temple - Facebook - PhotosExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            // Create buttons (using CodeComponents)
+            _photosButton = new CodeLabelButton("Click here to load some photos of me");
+            _photosButton.horizontalCenter = 0;
+            _photosButton.verticalCenter = -20;
+            addChild(_photosButton);
+            _photosButton.addEventListener(MouseEvent.CLICK, handleClick);
+
+            _profilePhotosButton = new CodeLabelButton("Click here to load profile photos of me");
+            _profilePhotosButton.horizontalCenter = 0;
+            _profilePhotosButton.verticalCenter = 20;
+            addChild(_profilePhotosButton);
+            _profilePhotosButton.addEventListener(MouseEvent.CLICK, handleClick);
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            _photosButton.enabled = false;
+            _profilePhotosButton.enabled = false;
+            
+            // load photos
+            if (event.target == _profilePhotosButton)
+            {
+                _facebook.photos.getProfilePhotos(this.onPhotos);
+            }
+            else
+            {
+                _facebook.photos.getPhotos(this.onPhotos, FacebookConstant.ME, 0, 40);
+            }
+        }
+
+        private function onPhotos(result:IFacebookResult):void
+        {
+            _photosButton.visible = false;
+            _profilePhotosButton.visible = false;
+            
+            if (result.success)
+            {
+                // get friends from data
+                var photos:Vector.&lt;IFacebookPhotoData&gt; = Vector.&lt;IFacebookPhotoData&gt;(result.data);
+                
+                var cols:int = (stage.stageWidth - 40) / _THUMBNAIL_WIDTH;
+                
+                // show in output
+                for (var i:int = 0, leni:int = photos.length; i &lt; leni; i++)
+                {
+                    var loader:CoreLoader = new CoreLoader();
+                    addChild(loader);
+                    loader.load(new URLRequest(photos[i].thumbnail));
+                    loader.x = 20 + (i % cols) * _THUMBNAIL_WIDTH;
+                    loader.y = 20 + Math.floor(i / cols) * _THUMBNAIL_HEIGHT;
+                }
+            }
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "PhotosExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div></div><a name="openProfilePictureURL()"></a><a name="openProfilePictureURL(String,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">openProfilePictureURL</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function openProfilePictureURL(photoId:String, target:String = _blank):void</code><p></p><p>
+		 Opens a new Facebook window for setting a photo as profile picture.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">photoId</span>:String</code> &mdash; the id of the photo.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">target</span>:String</code> (default = <code>_blank</code>)<code></code> &mdash; the window where the URL must be opened.
+		 </td></tr></table></p></div><a name="upload()"></a><a name="upload(any,String,Function,String,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">upload</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function upload(photo:*, message:String = null, callback:Function = null, albumId:String = me, noStory:Boolean = false):<a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code><p></p><p>
+		 Upload a photo to Facebook.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">photo</span>:*</code> &mdash; the photo to upload. Supported formats are: Bitmap, BitmapData, FileReference, ByteArray, FileData or String (which is a URL to the photo).
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">message</span>:String</code> (default = <code>null</code>)<code></code> &mdash; the message to add to the photo.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; a callback which is called when the upload is complete. The callback must accept one, and only one, argument of type IFacebookResult
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">albumId</span>:String</code> (default = <code>me</code>)<code></code> &mdash; the id of the album to add the photo to. If albumID is 'me' the photo will be added to your wall.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">noStory</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; an optional name for the photo.
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../temple/facebook/service/IFacebookCall.html">IFacebookCall</a></code></td></tr></table></div><a name="includeExamplesSummary"></a><div class="detailSectionHeader">Examples</div><div class="exampleHeader">PhotosExample.as</div><br/><div class="detailBody"> 
+ <a></a>
+ 
+ 
+ <p>This is an example of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/doc/temple/facebook/api/IFacebookPhotoAPI.html" target="">FacebookPhotoAPI.</a></p>
+ 
+ <p>This example uses the Temple's <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/readme.html" target="">CodeComponents</a> for the UI elements.
+ This examples loads friends from Facebook and displays their names in a list.</p>
+ 
+ <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/PhotosExample.html" target="external">View this example</a></p>
+ 
+ <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/PhotosExample.as" target="external">View source</a></p>
+<div class="listing"><pre>
+package
+{
+    import temple.codecomponents.buttons.CodeLabelButton;
+    import temple.core.display.CoreLoader;
+    import temple.facebook.adapters.FacebookAdapter;
+    import temple.facebook.api.FacebookAPI;
+    import temple.facebook.data.enum.FacebookConstant;
+    import temple.facebook.data.vo.IFacebookPhotoData;
+    import temple.facebook.data.vo.IFacebookResult;
+
+    import flash.events.MouseEvent;
+    import flash.net.URLRequest;
+
+    public class PhotosExample extends DocumentClassExample
+    {
+        private static const _THUMBNAIL_WIDTH:Number = 140; 
+        private static const _THUMBNAIL_HEIGHT:Number = 140; 
+        
+        private var _facebook:FacebookAPI;
+        private var _photosButton:CodeLabelButton;
+        private var _profilePhotosButton:CodeLabelButton;
+
+        public function PhotosExample()
+        {
+            super("Temple - Facebook - PhotosExample");
+            
+            _facebook = new FacebookAPI(new FacebookAdapter(loaderInfo.url.indexOf("https:") == 0));
+            _facebook.init(loaderInfo.parameters.appId);
+            
+            // Create buttons (using CodeComponents)
+            _photosButton = new CodeLabelButton("Click here to load some photos of me");
+            _photosButton.horizontalCenter = 0;
+            _photosButton.verticalCenter = -20;
+            addChild(_photosButton);
+            _photosButton.addEventListener(MouseEvent.CLICK, handleClick);
+
+            _profilePhotosButton = new CodeLabelButton("Click here to load profile photos of me");
+            _profilePhotosButton.horizontalCenter = 0;
+            _profilePhotosButton.verticalCenter = 20;
+            addChild(_profilePhotosButton);
+            _profilePhotosButton.addEventListener(MouseEvent.CLICK, handleClick);
+        }
+
+        private function handleClick(event:MouseEvent):void
+        {
+            _photosButton.enabled = false;
+            _profilePhotosButton.enabled = false;
+            
+            // load photos
+            if (event.target == _profilePhotosButton)
+            {
+                _facebook.photos.getProfilePhotos(this.onPhotos);
+            }
+            else
+            {
+                _facebook.photos.getPhotos(this.onPhotos, FacebookConstant.ME, 0, 40);
+            }
+        }
+
+        private function onPhotos(result:IFacebookResult):void
+        {
+            _photosButton.visible = false;
+            _profilePhotosButton.visible = false;
+            
+            if (result.success)
+            {
+                // get friends from data
+                var photos:Vector.&lt;IFacebookPhotoData&gt; = Vector.&lt;IFacebookPhotoData&gt;(result.data);
+                
+                var cols:int = (stage.stageWidth - 40) / _THUMBNAIL_WIDTH;
+                
+                // show in output
+                for (var i:int = 0, leni:int = photos.length; i &lt; leni; i++)
+                {
+                    var loader:CoreLoader = new CoreLoader();
+                    addChild(loader);
+                    loader.load(new URLRequest(photos[i].thumbnail));
+                    loader.x = 20 + (i % cols) * _THUMBNAIL_WIDTH;
+                    loader.y = 20 + Math.floor(i / cols) * _THUMBNAIL_HEIGHT;
+                }
+            }
+        }
+    }
+}
+</pre></div><script language="javascript" type="text/javascript"><!-- AC_FL_RunContent( "src", "PhotosExample", "width", "100%",
+					"height","400px", "salign", "TL", "id", "example1", "quality", "high", "bgcolor", "", "name",
+						"example1", "flashvars","", "allowScriptAccess","sameDomain", "type",
+					"application/x-shockwave-flash","pluginspage", "http://www.macromedia.com/go/getflashplayer" ); --></script></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>by MediaMonks | http://www.mediamonks.com</footer><br/> </center></div></body></html><!--by MediaMonks | http://www.mediamonks.com<br/> -->
