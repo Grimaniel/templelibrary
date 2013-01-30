@@ -28,11 +28,11 @@ package
 			// Open the .fla to see how it is constructed. The objects are set by there instance name.
 			
 			// Set a TweenLitePropertyProxy as scrollProxy to make the scrolling smooth.
-			//this.scrollComponent.scrollBehavior.scrollProxy = new TweenLitePropertyProxy();
+			//scrollComponent.scrollBehavior.scrollProxy = new TweenLitePropertyProxy();
 			
 			// set some margin at the top and bottom to create some space there
-			this.scrollComponent.marginTop = 20;
-			this.scrollComponent.marginBottom = 30;
+			scrollComponent.marginTop = 20;
+			scrollComponent.marginBottom = 30;
 		}
 	}
 }

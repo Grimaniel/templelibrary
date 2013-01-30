@@ -57,41 +57,41 @@ package
 		{
 			super("ComboBoxExample");
 			
-			this.mcDataField.hintTextColor = Colors.GRAY;
-			this.mcLabelField.hintTextColor = Colors.GRAY;
-			this.mcIndexField.hintTextColor = Colors.GRAY;
+			mcDataField.hintTextColor = Colors.GRAY;
+			mcLabelField.hintTextColor = Colors.GRAY;
+			mcIndexField.hintTextColor = Colors.GRAY;
 
-			this.mcDataField.hintText = "data";
-			this.mcLabelField.hintText = "label";
-			this.mcIndexField.hintText = "index";
+			mcDataField.hintText = "data";
+			mcLabelField.hintText = "label";
+			mcIndexField.hintText = "index";
 			
-			this.mcIndexField.restrict = Restrictions.NUMERIC;
+			mcIndexField.restrict = Restrictions.NUMERIC;
 
-			this.mcDataField.reset();
-			this.mcLabelField.reset();
-			this.mcIndexField.reset();
+			mcDataField.reset();
+			mcLabelField.reset();
+			mcIndexField.reset();
 			
-			this.mcComboBox.addItems(["Apple", "Banana", "Orange", "Pear", "Raspberrie", "Grape", "Lemon", "Grapefruit", "Lime", "Mango"]);
-			this.mcComboBox.addEventListener(Event.CHANGE, handleChange);
+			mcComboBox.addItems(["Apple", "Banana", "Orange", "Pear", "Raspberrie", "Grape", "Lemon", "Grapefruit", "Lime", "Mango"]);
+			mcComboBox.addEventListener(Event.CHANGE, handleChange);
 			
-			this.mcAddItemButton.label = "addItem";
-			this.mcAddItemAtButton.label = "addItemAt";
-			this.mcGetItemAtButton.label = "getItemAt";
-			this.mcSetItemAtButton.label = "setItemAt";
-			this.mcGetLabelAtButton.label = "getLabelAt";
-			this.mcSetLabelAtButton.label = "setLabelAt";
-			this.mcRemoveItemButton.label = "removeItem";
-			this.mcRemoveItemAtButton.label = "removeItemAt";
-			this.mcRemoveAllButton.label = "removeAll";
-			this.mcGetSelectedIndexButton.label = "getSelectedIndex";
-			this.mcSetSelectedIndexButton.label = "setSelectedIndex";
-			this.mcGetSelectedItemButton.label = "getSelectedItem";
-			this.mcSetSelectedItemButton.label = "setSelectedItem";
-			this.mcGetSelectedLabelButton.label = "getSelectedLabel";
-			this.mcSetSelectedLabelButton.label = "setSelectedLabel";
-			this.mcOpenButton.label = "open";
-			this.mcCloseButton.label = "close";
-			this.mcAutoCloseButton.label = "autoClose " + (this.mcComboBox.autoClose ? "on" : "off");
+			mcAddItemButton.label = "addItem";
+			mcAddItemAtButton.label = "addItemAt";
+			mcGetItemAtButton.label = "getItemAt";
+			mcSetItemAtButton.label = "setItemAt";
+			mcGetLabelAtButton.label = "getLabelAt";
+			mcSetLabelAtButton.label = "setLabelAt";
+			mcRemoveItemButton.label = "removeItem";
+			mcRemoveItemAtButton.label = "removeItemAt";
+			mcRemoveAllButton.label = "removeAll";
+			mcGetSelectedIndexButton.label = "getSelectedIndex";
+			mcSetSelectedIndexButton.label = "setSelectedIndex";
+			mcGetSelectedItemButton.label = "getSelectedItem";
+			mcSetSelectedItemButton.label = "setSelectedItem";
+			mcGetSelectedLabelButton.label = "getSelectedLabel";
+			mcSetSelectedLabelButton.label = "setSelectedLabel";
+			mcOpenButton.label = "open";
+			mcCloseButton.label = "close";
+			mcAutoCloseButton.label = "autoClose " + (mcComboBox.autoClose ? "on" : "off");
 			
 			addEventListener(MouseEvent.CLICK, handleClick);
 		}
@@ -100,95 +100,95 @@ package
 		{
 			switch(event.target)
 			{
-				case this.mcAddItemButton:
+				case mcAddItemButton:
 				{
-					this.mcComboBox.addItem(mcDataField.value, mcLabelField.value || null);
+					mcComboBox.addItem(mcDataField.value, mcLabelField.value || null);
 					break;
 				}
-				case this.mcAddItemAtButton:
+				case mcAddItemAtButton:
 				{
-					this.mcComboBox.addItemAt(mcDataField.value, mcIndexField.value, mcLabelField.value || null);
+					mcComboBox.addItemAt(mcDataField.value, mcIndexField.value, mcLabelField.value || null);
 					break;
 				}
 				case mcGetItemAtButton:
 				{
-					this.mcDataField.text = mcComboBox.getItemAt(int(this.mcIndexField.text));
+					mcDataField.text = mcComboBox.getItemAt(int(mcIndexField.text));
 					break;
 				}
 				case mcSetItemAtButton:
 				{
-					this.mcComboBox.setItemAt(this.mcDataField.text, int(this.mcIndexField.text), this.mcLabelField.text || null);
+					mcComboBox.setItemAt(mcDataField.text, int(mcIndexField.text), mcLabelField.text || null);
 					break;
 				}
 				case mcGetLabelAtButton:
 				{
-					this.mcLabelField.text = mcComboBox.getLabelAt(int(this.mcIndexField.text));
+					mcLabelField.text = mcComboBox.getLabelAt(int(mcIndexField.text));
 					break;
 				}
 				case mcSetLabelAtButton:
 				{
-					this.mcComboBox.setLabelAt(int(this.mcIndexField.text), this.mcLabelField.text);
+					mcComboBox.setLabelAt(int(mcIndexField.text), mcLabelField.text);
 					break;
 				}
 				case mcRemoveItemButton:
 				{
-					this.mcComboBox.removeItem(mcDataField.value, mcLabelField.value || null);
+					mcComboBox.removeItem(mcDataField.value, mcLabelField.value || null);
 					break;
 				}
 				case mcRemoveItemAtButton:
 				{
-					this.mcComboBox.removeItemAt(int(this.mcIndexField.text));
+					mcComboBox.removeItemAt(int(mcIndexField.text));
 					break;
 				}
 				case mcRemoveAllButton:
 				{
-					this.mcComboBox.removeAll();
+					mcComboBox.removeAll();
 					break;
 				}
 				case mcGetSelectedIndexButton:
 				{
-					this.mcIndexField.text = mcComboBox.selectedIndex.toString();
+					mcIndexField.text = mcComboBox.selectedIndex.toString();
 					break;
 				}
 				case mcSetSelectedIndexButton:
 				{
-					this.mcComboBox.selectedIndex = int(this.mcIndexField.text);
+					mcComboBox.selectedIndex = int(mcIndexField.text);
 					break;
 				}
 				case mcGetSelectedItemButton:
 				{
-					this.mcDataField.text = mcComboBox.selectedItem;
+					mcDataField.text = mcComboBox.selectedItem;
 					break;
 				}
 				case mcSetSelectedItemButton:
 				{
-					this.mcComboBox.selectedItem = mcDataField.text;
+					mcComboBox.selectedItem = mcDataField.text;
 					break;
 				}
 				case mcGetSelectedLabelButton:
 				{
-					this.mcLabelField.text = mcComboBox.selectedLabel;
+					mcLabelField.text = mcComboBox.selectedLabel;
 					break;
 				}
 				case mcSetSelectedLabelButton:
 				{
-					this.mcComboBox.selectedLabel = mcLabelField.text;
+					mcComboBox.selectedLabel = mcLabelField.text;
 					break;
 				}
-				case this.mcOpenButton:
+				case mcOpenButton:
 				{
-					this.mcComboBox.open();
+					mcComboBox.open();
 					break;
 				}
-				case this.mcCloseButton:
+				case mcCloseButton:
 				{
-					this.mcComboBox.close();
+					mcComboBox.close();
 					break;
 				}
-				case this.mcAutoCloseButton:
+				case mcAutoCloseButton:
 				{
-					this.mcComboBox.autoClose = !this.mcComboBox.autoClose;
-					this.mcAutoCloseButton.label = "autoClose " + (this.mcComboBox.autoClose ? "on" : "off");
+					mcComboBox.autoClose = !mcComboBox.autoClose;
+					mcAutoCloseButton.label = "autoClose " + (mcComboBox.autoClose ? "on" : "off");
 					break;
 				}
 			}
@@ -196,14 +196,14 @@ package
 
 		private function handleChange(event:Event):void
 		{
-			this.mcDataField.text = mcComboBox.selectedItem;
-			this.mcLabelField.text = mcComboBox.selectedLabel;
-			this.mcIndexField.text = mcComboBox.selectedIndex.toString();
+			mcDataField.text = mcComboBox.selectedItem;
+			mcLabelField.text = mcComboBox.selectedLabel;
+			mcIndexField.text = mcComboBox.selectedIndex.toString();
 		}
 
 		override public function destruct():void
 		{
-			this.mcComboBox = null;
+			mcComboBox = null;
 			super.destruct();
 		}
 	}

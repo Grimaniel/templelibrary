@@ -14,7 +14,7 @@ package
 		{
 			super();
 			
-			this.mcBackground.stop();
+			mcBackground.stop();
 		}
 
 		override public function set index(value:uint):void 
