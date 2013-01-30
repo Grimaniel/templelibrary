@@ -4,7 +4,7 @@
 	<import file="temple-properties.xml"/>
 	
 	<property name="core-modules" value="core,common,utils,tweenlite,data,control,ui,yalog,net" />
-	<property name="extended-modules" value="mediaplayers,camera,microphone,speech,codecomponents" />
+	<property name="extended-modules" value="mediaplayers,camera,microphone,speech,codecomponents,reflection,liveinspector,facebook" />
 	
 	<property name="targets" value="Prepare,Compile,Extend,Package" />
 	
