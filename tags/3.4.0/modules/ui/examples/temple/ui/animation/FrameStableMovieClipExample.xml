@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build Fla" name="FrameStableMovieClipExample">
+	<property name="extra-dependencies" value="tweenlite" />
+	<import file="../../../../tools/ant/build-ui.xml" />
+	<target name="Test" description="Test Fla Example"><antcall target="Test Fla" /></target>
+</project>

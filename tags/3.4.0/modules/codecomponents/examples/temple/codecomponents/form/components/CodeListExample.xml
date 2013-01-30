@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build" name="CodeListExample">
+	<import file="../../../../../tools/ant/build-codecomponents.xml" />
+</project>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build Fla" name="DateFormatExample">
+	<property name="extra-dependencies" value="data,ui" />
+	<import file="../../../../tools/ant/build-utils.xml" />
+	<target name="Test" description="Test Fla Example"><antcall target="Test Fla" /></target>
+</project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Full Build" basedir="../../../../tools/ant" name="Temple-Microphone">
+
+	<property name="module" value="microphone" />
+	<property name="name" value="Temple Microphone Module" />
+	<property name="dependencies" value="core" />
+	
+	<property name="skip-examples" value="true" />
+	
+	<import file="../../../../tools/ant/build.xml" />
+	
+</project>
