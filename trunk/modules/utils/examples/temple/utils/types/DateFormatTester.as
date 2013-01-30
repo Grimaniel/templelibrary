@@ -19,24 +19,24 @@ package
 		
 		public function DateFormatTester()
 		{
-			this.mcDateSelector.date = new Date();
-			this.mcDateSelector.addEventListener(Event.CHANGE, handleChange);
-			this.txtFormat.addEventListener(Event.CHANGE, handleChange);
+			mcDateSelector.date = new Date();
+			mcDateSelector.addEventListener(Event.CHANGE, handleChange);
+			txtFormat.addEventListener(Event.CHANGE, handleChange);
 			
-			this.mcDateSelector.end = new Date(2100, 0, 1);
+			mcDateSelector.end = new Date(2100, 0, 1);
 			
-			this.mcDateSelector.monthFormat = DateSelector.MONTH_FORMAT_SHORT_EN;
+			mcDateSelector.monthFormat = DateSelector.MONTH_FORMAT_SHORT_EN;
 			
-			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.day).list).scrollBar.button).outOnDragOut = false;
-			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.month).list).scrollBar.button).outOnDragOut = false;
-			MultiStateButton(ScrollComponent(ComboBox(this.mcDateSelector.year).list).scrollBar.button).outOnDragOut = false;
+			MultiStateButton(ScrollComponent(ComboBox(mcDateSelector.day).list).scrollBar.button).outOnDragOut = false;
+			MultiStateButton(ScrollComponent(ComboBox(mcDateSelector.month).list).scrollBar.button).outOnDragOut = false;
+			MultiStateButton(ScrollComponent(ComboBox(mcDateSelector.year).list).scrollBar.button).outOnDragOut = false;
 			
 			setOutput();
 		}
 		
 		public function set format(value:String):void
 		{
-			this.txtFormat.text = value;
+			txtFormat.text = value;
 			setOutput();
 		}
 
@@ -44,17 +44,17 @@ package
 		{
 			super.destruct();
 			
-			if (this.mcDateSelector)
+			if (mcDateSelector)
 			{
-				this.mcDateSelector.destruct();
-				this.mcDateSelector = null;
+				mcDateSelector.destruct();
+				mcDateSelector = null;
 			}
-			if (this.txtFormat)
+			if (txtFormat)
 			{
-				this.txtFormat.removeEventListener(Event.CHANGE, handleChange);
-				this.txtFormat = null;
+				txtFormat.removeEventListener(Event.CHANGE, handleChange);
+				txtFormat = null;
 			}
-			this.txtOutput = null;
+			txtOutput = null;
 		}
 
 		private function handleChange(event:Event):void
@@ -64,7 +64,7 @@ package
 
 		private function setOutput():void
 		{
-			this.txtOutput.text = mcDateSelector.date ? DateUtils.format(txtFormat.text, mcDateSelector.date) : 'Error, no valid date';
+			txtOutput.text = mcDateSelector.date ? DateUtils.format(txtFormat.text, mcDateSelector.date) : 'Error, no valid date';
 		}
 	}
 }

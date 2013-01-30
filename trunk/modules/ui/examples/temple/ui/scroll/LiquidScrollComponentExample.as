@@ -33,31 +33,31 @@ package
 			// Open the .fla to see how it is constructed. The objects are set by there instance name.
 			
 			// Set a TweenLitePropertyProxy as scrollProxy to make the scrolling smooth.
-			//this.scrollComponent.scrollBehavior.scrollProxy = new TweenLitePropertyProxy();
+			//scrollComponent.scrollBehavior.scrollProxy = new TweenLitePropertyProxy();
 			
 			// Set an AutoAlphaPropertyProxy as showProxy for the scrollbar, so it will fade in and out when is should be shown or hidden.
-			//this.scrollComponent.scrollbar.showProxy = new AutoAlphaPropertyProxy();
+			//scrollComponent.scrollbar.showProxy = new AutoAlphaPropertyProxy();
 			
 			// set some margin at the top and bottom to create some space there
-			this.scrollComponent.marginTop = 20;
-			this.scrollComponent.marginBottom = 30;
+			scrollComponent.marginTop = 20;
+			scrollComponent.marginBottom = 30;
 			
 			// make liquid, 10 pixels from every side of the stage
-			this.scrollComponent.top = 10;
-			this.scrollComponent.left = 10;
-			this.scrollComponent.right = 10;
-			this.scrollComponent.bottom = 10;
+			scrollComponent.top = 10;
+			scrollComponent.left = 10;
+			scrollComponent.right = 10;
+			scrollComponent.bottom = 10;
 			
 			// the scrollbar should be at the right side of the ScrollComponent, attached to the top and bottom.
-			this.scrollComponent.scrollBar.top = 0;
-			this.scrollComponent.scrollBar.right = 0;
-			this.scrollComponent.scrollBar.bottom = 0;
+			scrollComponent.scrollBar.top = 0;
+			scrollComponent.scrollBar.right = 0;
+			scrollComponent.scrollBar.bottom = 0;
 			
 			// make the button of the scrollbar resize to the content of the ScrollComponent
-			this.scrollComponent.scrollBar.autoSizeButton = true;
+			scrollComponent.scrollBar.autoSizeButton = true;
 			
 			// Change the way the button reacts on drag out
-			MultiStateButton(this.scrollComponent.scrollBar.button).outOnDragOut = false;
+			MultiStateButton(scrollComponent.scrollBar.button).outOnDragOut = false;
 			
 		}
 	}

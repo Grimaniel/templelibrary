@@ -75,120 +75,120 @@ package
 			_form.debug = true;
 			
 			// add InputFields to the Form. Note: the 'name' property (2nd parameter) must match the corresponding property value of the PersonData object, since we want to store the data in that object.
-			_form.addElement(this.mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
-			_form.addElement(this.mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
-			_form.addElement(this.mcCompanyField, "company");
-			_form.addElement(this.mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
+			_form.addElement(mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
+			_form.addElement(mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
+			_form.addElement(mcCompanyField, "company");
+			_form.addElement(mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
 			
 			// fill country ComboBox with some countries. We use the ISO code as data. (For this case we don't add all countries of the world, since the example would be too large. But ofcourse you can add all the countries you want.)
-			this.mcCountryField.addItem("BEL","Belgium");
-			this.mcCountryField.addItem("CZE","Czech Republic");
-			this.mcCountryField.addItem("DNK","Denmark");
-			this.mcCountryField.addItem("EST","Estonia");
-			this.mcCountryField.addItem("FRA","France");
-			this.mcCountryField.addItem("DEU","Germany");
-			this.mcCountryField.addItem("GRC","Greece");
-			this.mcCountryField.addItem("GRL","Greenland");
-			this.mcCountryField.addItem("HUN","Hungary");
-			this.mcCountryField.addItem("ISL","Iceland");
-			this.mcCountryField.addItem("IRL","Ireland");
-			this.mcCountryField.addItem("ITA","Italy");
-			this.mcCountryField.addItem("JPN","Japan");
-			this.mcCountryField.addItem("LUX","Luxembourg");
-			this.mcCountryField.addItem("MEX","Mexico");
-			this.mcCountryField.addItem("NLD","Netherlands");
-			this.mcCountryField.addItem("NZL","New Zealand");
-			this.mcCountryField.addItem("NOR","Norway");
-			this.mcCountryField.addItem("PER","Peru");
-			this.mcCountryField.addItem("POL","Poland");
-			this.mcCountryField.addItem("PRT","Portugal");
-			this.mcCountryField.addItem("ROU","Romania");
-			this.mcCountryField.addItem("RWA","Rwanda");
-			this.mcCountryField.addItem("SGP","Singapore");
-			this.mcCountryField.addItem("ZAF","South Africa");
-			this.mcCountryField.addItem("ESP","Spain");
-			this.mcCountryField.addItem("SWE","Sweden");
-			this.mcCountryField.addItem("CHE","Switzerland");
-			this.mcCountryField.addItem("THA","Thailand");
-			this.mcCountryField.addItem("TUR","Turkey");
-			this.mcCountryField.addItem("UGA","Uganda");
-			this.mcCountryField.addItem("UKR","Ukraine");
-			this.mcCountryField.addItem("GBR","United Kingdom");
-			this.mcCountryField.addItem("USA","United States");
-			this.mcCountryField.addItem("ZWE","Zimbabwe");
+			mcCountryField.addItem("BEL","Belgium");
+			mcCountryField.addItem("CZE","Czech Republic");
+			mcCountryField.addItem("DNK","Denmark");
+			mcCountryField.addItem("EST","Estonia");
+			mcCountryField.addItem("FRA","France");
+			mcCountryField.addItem("DEU","Germany");
+			mcCountryField.addItem("GRC","Greece");
+			mcCountryField.addItem("GRL","Greenland");
+			mcCountryField.addItem("HUN","Hungary");
+			mcCountryField.addItem("ISL","Iceland");
+			mcCountryField.addItem("IRL","Ireland");
+			mcCountryField.addItem("ITA","Italy");
+			mcCountryField.addItem("JPN","Japan");
+			mcCountryField.addItem("LUX","Luxembourg");
+			mcCountryField.addItem("MEX","Mexico");
+			mcCountryField.addItem("NLD","Netherlands");
+			mcCountryField.addItem("NZL","New Zealand");
+			mcCountryField.addItem("NOR","Norway");
+			mcCountryField.addItem("PER","Peru");
+			mcCountryField.addItem("POL","Poland");
+			mcCountryField.addItem("PRT","Portugal");
+			mcCountryField.addItem("ROU","Romania");
+			mcCountryField.addItem("RWA","Rwanda");
+			mcCountryField.addItem("SGP","Singapore");
+			mcCountryField.addItem("ZAF","South Africa");
+			mcCountryField.addItem("ESP","Spain");
+			mcCountryField.addItem("SWE","Sweden");
+			mcCountryField.addItem("CHE","Switzerland");
+			mcCountryField.addItem("THA","Thailand");
+			mcCountryField.addItem("TUR","Turkey");
+			mcCountryField.addItem("UGA","Uganda");
+			mcCountryField.addItem("UKR","Ukraine");
+			mcCountryField.addItem("GBR","United Kingdom");
+			mcCountryField.addItem("USA","United States");
+			mcCountryField.addItem("ZWE","Zimbabwe");
 						
 			
 			// create a RadioGroup for the RadioButtons.
 			var radiogroup:RadioGroup = new RadioGroup();
-			radiogroup.add(this.mcGenderMaleRadioButton, "male");
-			radiogroup.add(this.mcGenderFemaleRadioButton, "female");
+			radiogroup.add(mcGenderMaleRadioButton, "male");
+			radiogroup.add(mcGenderFemaleRadioButton, "female");
 			
 			// add RadioGroup to the Form
 			_form.addElement(radiogroup, "gender", NullValidationRule, "select your gender");
 			
 			// add CheckBoxes to the Form
-			_form.addElement(this.mcNewsletterCheckBox, "newsletter");
-			_form.addElement(this.mcTermsCheckBox, "terms", BooleanValidationRule, "You must agree to the terms", -1, false); // Must agree to terms, but we don't want to submit this value
+			_form.addElement(mcNewsletterCheckBox, "newsletter");
+			_form.addElement(mcTermsCheckBox, "terms", BooleanValidationRule, "You must agree to the terms", -1, false); // Must agree to terms, but we don't want to submit this value
 			
 			// set some restrictions
-			this.mcEmailField.restrict = Restrictions.EMAIL;
+			mcEmailField.restrict = Restrictions.EMAIL;
 			
 			// set some hintText on the fields
-			this.mcNameField.hintText = "your name here...";
-			this.mcEmailField.hintText = "your e-mailaddress here...";
-			this.mcCompanyField.hintText = "your company here...";
-			this.mcCountryField.hintText = "select your country...";
+			mcNameField.hintText = "your name here...";
+			mcEmailField.hintText = "your e-mailaddress here...";
+			mcCompanyField.hintText = "your company here...";
+			mcCountryField.hintText = "select your country...";
 			
 			// change the color of the hintText
-			this.mcNameField.hintTextColor = 0x888888;
-			this.mcEmailField.hintTextColor = 0x888888;
-			this.mcCompanyField.hintTextColor = 0x888888;
-			this.mcCountryField.hintTextColor = 0x888888;
+			mcNameField.hintTextColor = 0x888888;
+			mcEmailField.hintTextColor = 0x888888;
+			mcCompanyField.hintTextColor = 0x888888;
+			mcCountryField.hintTextColor = 0x888888;
 
 			// change the textColor for errors
-			this.mcNameField.errorTextColor = 0xFF0000;
-			this.mcEmailField.errorTextColor = 0xFF0000;
-			this.mcCompanyField.errorTextColor = 0xFF0000;
-			this.mcCountryField.errorTextColor = 0xFF0000;
+			mcNameField.errorTextColor = 0xFF0000;
+			mcEmailField.errorTextColor = 0xFF0000;
+			mcCompanyField.errorTextColor = 0xFF0000;
+			mcCountryField.errorTextColor = 0xFF0000;
 			
 			// add the submit button
-			_form.addSubmitButton(this.mcSubmitButton);
+			_form.addSubmitButton(mcSubmitButton);
 
 			// add the reset button
-			_form.addResetButton(this.mcResetButton);
+			_form.addResetButton(mcResetButton);
 			
 			// reset the form. By resetting the form all elements will be cleared.
 			_form.reset();
 			
 			// set labels for RadioButtons and CheckBoxes
-			this.mcGenderMaleRadioButton.html = false;
-			this.mcGenderMaleRadioButton.autoSize = TextFieldAutoSize.LEFT;
-			this.mcGenderMaleRadioButton.label = "Male";
-			this.mcGenderFemaleRadioButton.autoSize = TextFieldAutoSize.LEFT;
-			this.mcGenderFemaleRadioButton.label = "Female";
+			mcGenderMaleRadioButton.html = false;
+			mcGenderMaleRadioButton.autoSize = TextFieldAutoSize.LEFT;
+			mcGenderMaleRadioButton.label = "Male";
+			mcGenderFemaleRadioButton.autoSize = TextFieldAutoSize.LEFT;
+			mcGenderFemaleRadioButton.label = "Female";
 			
-			this.mcNewsletterCheckBox.autoSize = TextFieldAutoSize.LEFT;
-			this.mcNewsletterCheckBox.label = "Sign me up for the Newsletter";
-			this.mcTermsCheckBox.autoSize = TextFieldAutoSize.LEFT;
-			this.mcTermsCheckBox.label = "I agree to the terms";
+			mcNewsletterCheckBox.autoSize = TextFieldAutoSize.LEFT;
+			mcNewsletterCheckBox.label = "Sign me up for the Newsletter";
+			mcTermsCheckBox.autoSize = TextFieldAutoSize.LEFT;
+			mcTermsCheckBox.label = "I agree to the terms";
 			
 			// enable submit on enter and spacebar on buttons
-			this.mcResetButton.buttonBehavior.clickOnEnter = true;
-			this.mcResetButton.buttonBehavior.clickOnSpacebar = true;
-			this.mcSubmitButton.buttonBehavior.clickOnEnter = true;
-			this.mcSubmitButton.buttonBehavior.clickOnSpacebar = true;
-			this.mcPrefillButton.buttonBehavior.clickOnEnter = true;
-			this.mcPrefillButton.buttonBehavior.clickOnSpacebar = true;
+			mcResetButton.buttonBehavior.clickOnEnter = true;
+			mcResetButton.buttonBehavior.clickOnSpacebar = true;
+			mcSubmitButton.buttonBehavior.clickOnEnter = true;
+			mcSubmitButton.buttonBehavior.clickOnSpacebar = true;
+			mcPrefillButton.buttonBehavior.clickOnEnter = true;
+			mcPrefillButton.buttonBehavior.clickOnSpacebar = true;
 			
 			// Set the labels of the buttons
-			this.mcSubmitButton.label = "Submit";
-			this.mcResetButton.label = "Reset";
-			this.mcPrefillButton.label = "Prefill";
+			mcSubmitButton.label = "Submit";
+			mcResetButton.label = "Reset";
+			mcPrefillButton.label = "Prefill";
 			
 			// We add the mcPrefillButton to the tabFocusManager of the Form, so we can tab to this button
-			_form.tabFocusManager.add(this.mcPrefillButton);
+			_form.tabFocusManager.add(mcPrefillButton);
 			
-			this.mcPrefillButton.addEventListener(MouseEvent.CLICK, handlePrefillClick);
+			mcPrefillButton.addEventListener(MouseEvent.CLICK, handlePrefillClick);
 			
 			// Listen to all FormEvents from the form
 			EventUtils.addAll(FormEvent, _form, handleFormEvent);

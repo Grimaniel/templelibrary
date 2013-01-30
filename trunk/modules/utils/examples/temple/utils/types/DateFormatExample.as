@@ -27,10 +27,10 @@ package
 			// Uncomment to set in Dutch
 			//DateUtils.setDutch();
 			
-			this.mcDateFormatTester1.format = 'd-m-Y';
-			this.mcDateFormatTester2.format = 'l jS of F \'y';
-			this.mcDateFormatTester3.format = 'j/n/y';
-			this.mcDateFormatTester4.format = 'r';
+			mcDateFormatTester1.format = 'd-m-Y';
+			mcDateFormatTester2.format = 'l jS of F \'y';
+			mcDateFormatTester3.format = 'j/n/y';
+			mcDateFormatTester4.format = 'r';
 		}
 	}
 }

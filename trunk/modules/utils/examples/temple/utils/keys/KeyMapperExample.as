@@ -35,19 +35,19 @@ package
 			_sprite.y = 200;
 			
 			// Create a KeyMapper to control the Sprite with the keyboard 
-			var keyMapper:KeyMapper = new KeyMapper(this.stage);
+			var keyMapper:KeyMapper = new KeyMapper(stage);
 			
 			// Use cursor keys to move left, right, up and down
-			keyMapper.map(KeyCode.LEFT, this.moveHorizontal, [-1]);
-			keyMapper.map(KeyCode.RIGHT, this.moveHorizontal, [1]);
-			keyMapper.map(KeyCode.UP, this.moveVertical, [-1]);
-			keyMapper.map(KeyCode.DOWN, this.moveVertical, [1]);
+			keyMapper.map(KeyCode.LEFT, moveHorizontal, [-1]);
+			keyMapper.map(KeyCode.RIGHT, moveHorizontal, [1]);
+			keyMapper.map(KeyCode.UP, moveVertical, [-1]);
+			keyMapper.map(KeyCode.DOWN, moveVertical, [1]);
 			
 			// use Shift key to move even faster
-			keyMapper.map(KeyCode.LEFT + KeyMapper.SHIFT, this.moveHorizontal, [-20]);
-			keyMapper.map(KeyCode.RIGHT + KeyMapper.SHIFT, this.moveHorizontal, [20]);
-			keyMapper.map(KeyCode.UP + KeyMapper.SHIFT, this.moveVertical, [-20]);
-			keyMapper.map(KeyCode.DOWN + KeyMapper.SHIFT, this.moveVertical, [20]);
+			keyMapper.map(KeyCode.LEFT + KeyMapper.SHIFT, moveHorizontal, [-20]);
+			keyMapper.map(KeyCode.RIGHT + KeyMapper.SHIFT, moveHorizontal, [20]);
+			keyMapper.map(KeyCode.UP + KeyMapper.SHIFT, moveVertical, [-20]);
+			keyMapper.map(KeyCode.DOWN + KeyMapper.SHIFT, moveVertical, [20]);
 			
 			logInfo("Use the following keys to control the object:\n" + keyMapper.getInfo());
 		}

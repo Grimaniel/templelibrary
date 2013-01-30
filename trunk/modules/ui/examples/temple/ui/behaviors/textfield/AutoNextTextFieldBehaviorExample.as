@@ -34,14 +34,14 @@ package
 			super("Temple - AutoNextTextFieldBehaviorExample");
 			
 			// define textfield maxchars
-			this.textfield1.maxChars = 2;
-			this.textfield2.maxChars = 1;
-			this.textfield3.maxChars = 2;
-			this.textfield4.maxChars = 1;
-			this.textfield5.maxChars = 2;
-			this.textfield6.maxChars = 1;
-			this.textfield7.maxChars = 2;
-			this.textfield8.maxChars = 1;
+			textfield1.maxChars = 2;
+			textfield2.maxChars = 1;
+			textfield3.maxChars = 2;
+			textfield4.maxChars = 1;
+			textfield5.maxChars = 2;
+			textfield6.maxChars = 1;
+			textfield7.maxChars = 2;
+			textfield8.maxChars = 1;
 			
 			// create behavior, add textfields in sorted order
 			var autoNextTextFieldBehavior:AutoNextTextFieldBehavior = new AutoNextTextFieldBehavior();

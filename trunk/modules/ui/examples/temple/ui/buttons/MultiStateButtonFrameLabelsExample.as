@@ -73,8 +73,8 @@ package
 			super("Temple - MultiStateButtonFrameLabelsExample");
 			
 			// Switch off playing backwards.
-			this.mcButton6.buttonTimelineBehavior.playMode = ButtonTimelinePlayMode.CONTINUE;
-			this.mcButton6.buttonTimelineBehavior.pressPlayMode = ButtonTimelinePlayMode.IMMEDIATELY;
+			mcButton6.buttonTimelineBehavior.playMode = ButtonTimelinePlayMode.CONTINUE;
+			mcButton6.buttonTimelineBehavior.pressPlayMode = ButtonTimelinePlayMode.IMMEDIATELY;
 			
 		}
 	}

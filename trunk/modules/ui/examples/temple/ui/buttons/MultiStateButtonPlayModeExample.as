@@ -28,9 +28,9 @@ package
 		{
 			super("Temple - MultiStateButtonFrameLabelsExample");
 			
-			this.mcButton1.playMode = ButtonTimelinePlayMode.REVERSED;
-			this.mcButton2.playMode = ButtonTimelinePlayMode.CONTINUE;
-			this.mcButton3.playMode = ButtonTimelinePlayMode.IMMEDIATELY;
+			mcButton1.playMode = ButtonTimelinePlayMode.REVERSED;
+			mcButton2.playMode = ButtonTimelinePlayMode.CONTINUE;
+			mcButton3.playMode = ButtonTimelinePlayMode.IMMEDIATELY;
 		}
 	}
 }
