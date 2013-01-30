@@ -273,23 +273,30 @@ package temple.facebook.data
 						// variable found, check if this variable exist or if we need the Graph alias for this variable
 						variable = variables[0];
 						
-						variable = objectDescription.getVariable(variables[0].name, facebook);
-						
-						if (variable)
+						if (variable.name in object && objectDescription.getProperty(variable.name).isWritable)
 						{
-							// found, now parse again
-							parseProperty(object, objectDescription, fieldsDescription, key, variable.name, data, alias, objectClass, debug);
-							return;
+							if (object[variable.name] != data[key]) object[variable.name] = data[key];
 						}
 						else
 						{
-							// check Graph alias
-							var metadata:IMetadata = variable ? variable.getMetadata(FacebookMetadataTag.ALIAS.value) : null;
-							if (metadata && FacebookFieldAlias.GRAPH.value in metadata.args)
+							variable = objectDescription.getVariable(variables[0].name, facebook);
+							
+							if (variable)
 							{
 								// found, now parse again
-								parseProperty(object, objectDescription, fieldsDescription, key, metadata.args[FacebookFieldAlias.GRAPH.value], data, alias, objectClass, debug);
+								parseProperty(object, objectDescription, fieldsDescription, key, variable.name, data, alias, objectClass, debug);
 								return;
+							}
+							else
+							{
+								// check Graph alias
+								var metadata:IMetadata = variable ? variable.getMetadata(FacebookMetadataTag.ALIAS.value) : null;
+								if (metadata && FacebookFieldAlias.GRAPH.value in metadata.args)
+								{
+									// found, now parse again
+									parseProperty(object, objectDescription, fieldsDescription, key, metadata.args[FacebookFieldAlias.GRAPH.value], data, alias, objectClass, debug);
+									return;
+								}
 							}
 						}
 					}
