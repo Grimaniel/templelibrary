@@ -1,9 +1,9 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="./doc/style.css" type="text/css" media="screen">
-		<link rel="stylesheet" href="./doc/print.css" type="text/css" media="print">
-		<link rel="stylesheet" href="./doc/override.css" type="text/css">
+		<link rel="stylesheet" href="../doc/style.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="../doc/print.css" type="text/css" media="print">
+		<link rel="stylesheet" href="../doc/override.css" type="text/css">
 		<title>Temple</title>
 		<style type="text/css">
 			.example {
@@ -28,12 +28,12 @@
 					<td class="titleTableTitle" align="left">Temple Library for ActionScript 3.0 by MediaMonks</td>
 					<td class="titleTableTopNav" align="right">
 						<a href="http://code.google.com/p/templelibrary/">Project Home</a>&nbsp;|&nbsp;
-						<a href="./doc/index.html">API Documentation</a>&nbsp;|&nbsp;
+						<a href="../doc/index.html">API Documentation</a>&nbsp;|&nbsp;
 						<a href="http://code.google.com/p/templelibrary/source/checkout">Source</a>&nbsp;|&nbsp;
 						<a href="http://code.google.com/p/templelibrary/downloads/list">Downloads</a>
 					</td>
 					<td class="titleTableLogo" align="right" rowspan="3">
-						<img class="logoImage" title=" Temple Logo " alt=" Temple Library " src="./doc/images/logo.jpg" />
+						<img class="logoImage" title=" Temple Logo " alt=" Temple Library " src="../doc/images/logo.jpg" />
 					</td>
 				</tr>
 				<tr class="titleTableRow2">
@@ -63,15 +63,15 @@ or <a href="http://www.greensock.com/tweenlite/" target="_blank">TweenLite</a>.<
 
 <p>The Temple focuses on:</p>
 <ul>
-	<li><a href="./doc/temple/core/debug/Memory.html">Memory Management</a></li>
-	<li><a href="./doc/temple/core/destruction/package-detail.html">Destruction</a></li>
-	<li><a href="./doc/temple/core/debug/package-detail.html">Debugging</a></li>
-	<li><a href="./modules/utils/readme.html">Utilities</a></li>
-	<li><a href="./modules/ui/readme.html">UI Components</a></li>
-	<li><a href="./doc/temple/ui/form/Form.html">Forms</a></li>
-	<li><a href="./modules/data/readme.html">Data loading, parsing and handling</a></li>
-	<li><a href="./doc/temple/ui/layout/liquid/LiquidBehavior.html">Layout</a></li>
-	<li><a href="./doc/temple/data/cache/CacheLoader.html">Caching</a></li>
+	<li><a href="../doc/temple/core/debug/Memory.html">Memory Management</a></li>
+	<li><a href="../doc/temple/core/destruction/package-detail.html">Destruction</a></li>
+	<li><a href="../doc/temple/core/debug/package-detail.html">Debugging</a></li>
+	<li><a href="../modules/utils/readme.html">Utilities</a></li>
+	<li><a href="../modules/ui/readme.html">UI Components</a></li>
+	<li><a href="../doc/temple/ui/form/Form.html">Forms</a></li>
+	<li><a href="../modules/data/readme.html">Data loading, parsing and handling</a></li>
+	<li><a href="../doc/temple/ui/layout/liquid/LiquidBehavior.html">Layout</a></li>
+	<li><a href="../doc/temple/data/cache/CacheLoader.html">Caching</a></li>
 </ul>
 
 <p>But the Temple contains many other classes which can help you in work as a Flash Developer. The Temple can also be
@@ -83,61 +83,61 @@ useful for Flash Animators for creating easy, fast and stable interactive UI Com
 inspired on other frameworks and libraries.
 
 <h1>Modules</h1>
-<p>The Temple consists of several <a href="./modules/index.html">modules</a> which all have there own functionality and 
-can be used together. The most common modules are grouped together in the root <a href="./source">/source</a> folder of 
+<p>The Temple consists of several <a href="../modules/index.html">modules</a> which all have there own functionality and 
+can be used together. The most common modules are grouped together in the root <a href="../source">/source</a> folder of 
 the Temple Library.</p>
 
 <h3>Most common modules:</h3>
 <ul>
-	<li><a href="./modules/core/readme.html">Core</a></li>
-	<li><a href="./modules/common/readme.html">Common</a></li>
-	<li><a href="./modules/utils/readme.html">Utils</a></li>
-	<li><a href="./modules/data/readme.html">Data</a></li>
-	<li><a href="./modules/control/readme.html">Control</a></li>
-	<li><a href="./modules/ui/readme.html">UI</a></li>
-	<li><a href="./modules/yalog/readme.html">Yalog</a></li>
-	<li><a href="./modules/tweenlite/readme.html">TweenLite</a></li>
+	<li><a href="../modules/core/readme.html">Core</a></li>
+	<li><a href="../modules/common/readme.html">Common</a></li>
+	<li><a href="../modules/utils/readme.html">Utils</a></li>
+	<li><a href="../modules/data/readme.html">Data</a></li>
+	<li><a href="../modules/control/readme.html">Control</a></li>
+	<li><a href="../modules/ui/readme.html">UI</a></li>
+	<li><a href="../modules/yalog/readme.html">Yalog</a></li>
+	<li><a href="../modules/tweenlite/readme.html">TweenLite</a></li>
 </ul>
 
 <h3>Other modules:</h3>
 <ul>
-	<li><a href="./modules/camera/readme.html">Camera</a></li>
-	<li><a href="./modules/codecomponents/readme.html">CodeComponents</a></li>
+	<li><a href="../modules/camera/readme.html">Camera</a></li>
+	<li><a href="../modules/codecomponents/readme.html">CodeComponents</a></li>
 	<li>Facebook*</li>
-	<li><a href="./modules/liveinspector/readme.html">Live Inspector</a></li>
-	<li><a href="./modules/mediaplayers/readme.html">MediaPlayers</a></li>
-	<li><a href="./modules/microphone/readme.html">Microphone</a></li>
+	<li><a href="../modules/liveinspector/readme.html">Live Inspector</a></li>
+	<li><a href="../modules/mediaplayers/readme.html">MediaPlayers</a></li>
+	<li><a href="../modules/microphone/readme.html">Microphone</a></li>
 	<li>Multi-Language*</li>
-	<li><a href="./modules/reflection/readme.html">Reflection</a></li>
+	<li><a href="../modules/reflection/readme.html">Reflection</a></li>
 	<li>Sound*</li>
-	<li><a href="./modules/speech/readme.html">Speech</a></li>
+	<li><a href="../modules/speech/readme.html">Speech</a></li>
 </ul>
 <p><i>*coming soon!</i></p>
 
 <h1>Content</h1>
 
 <dl>
-	<dt><a href="./bin">/bin</a></dt>
+	<dt><a href="../bin">/bin</a></dt>
 	<dd>Contains the SWC files of the Temple.</dd>
-	<dt><a href="./doc">/doc</a></dt>
-	<dd>Contains the <a href="./doc/index.html">documentation of the Temple</a>.</dd>
-	<dt><a href="./examples">/examples</a></dt>
-	<dd>Contains <a href="./examples/index.html">examples of the Temple</a>.</dd>
-	<dt><a href="./lib">/lib</a></dt>
+	<dt><a href="../doc">/doc</a></dt>
+	<dd>Contains the <a href="../doc/index.html">documentation of the Temple</a>.</dd>
+	<dt><a href="../examples">/examples</a></dt>
+	<dd>Contains <a href="../examples/index.html">examples of the Temple</a>.</dd>
+	<dt><a href="../lib">/lib</a></dt>
 	<dd>Contains SWC files needed for the Temple.</dd>
-	<dt><a href="./source">/source</a></dt>
+	<dt><a href="../source">/source</a></dt>
 	<dd>Contains the source (.as) files of the Temple. These are the source files of the most common modules of the
 	Temple. These files are set as SVN external, so they are directly 
 	linked to the original source files in the corresponding module.</dd>
-	<dt><a href="./extended">/extended</a></dt>
+	<dt><a href="../extended">/extended</a></dt>
 	<dd>Contains additional source (.as) files of the Temple, from the most common Temple modules. These files are set
 	as SVN external, so they are directly linked to the original source files in the corresponding module.</dd>
-	<dt><a href="./modules">/modules</a></dt>
-	<dd>Contains all <a href="./modules/index.html">Temple modules</a>. The most common modules are also linked in the <code>source</code> folder of the 
+	<dt><a href="../modules">/modules</a></dt>
+	<dd>Contains all <a href="../modules/index.html">Temple modules</a>. The most common modules are also linked in the <code>source</code> folder of the 
 	Temple. The <code>modules</code> folder also contains some more additional modules, like <code>Facebook</code> or 
 	<code>CodeComponents</code>.<em><br/>
 	(This folder is not available in the zip file.)</em></dd>
-	<dt><a href="./tools">/tools</a></dt>
+	<dt><a href="../tools">/tools</a></dt>
 	<dd>Contains ANT scripts which are used to generate docs, examples, swc etc... <br/>
 	<em>(This folder is not available in the zip file.)</em></dd>
 </dl>
@@ -148,10 +148,10 @@ the Temple Library.</p>
 <h3>Adding the Temple to your project</h3>
 
 <p>To add the Temple to your project you could use the SWC file or the AS files. The SWC file can be found in the
-<code><a href="./bin/">bin</a></code> folder. If you want to use the SWC file you need to add the SWC file to the class
+<code><a href="../bin/">bin</a></code> folder. If you want to use the SWC file you need to add the SWC file to the class
 path of your project.</p>
-<p>If you want to use the AS files you just need to copy the content of the <code><a href="./source/">/source</a></code>
-folder to the source folder of your project. Or you could add the <code><a href="./source/">/source</a></code> folder to
+<p>If you want to use the AS files you just need to copy the content of the <code><a href="../source/">/source</a></code>
+folder to the source folder of your project. Or you could add the <code><a href="../source/">/source</a></code> folder to
 the class path of your project.<br/><strong>NOTE:</strong> don't copy folders from an SVN check out, since this can
 cause SVN problems. It would be better to do an SVN export to your own folder.
 </p>
@@ -159,12 +159,12 @@ cause SVN problems. It would be better to do an SVN export to your own folder.
 <h3>Use the Temple in your project</h3>
 
 <p>To get more information about the usage of the classes in the Temple you could check out the
-<a href="./doc/index.html">AS Documentation</a>, the <a href="./examples/index.html">examples</a> or the
-<code>readme.html</code> in every <a href="./modules/index.html">module</a> you want to use.</p>
+<a href="../doc/index.html">AS Documentation</a>, the <a href="../examples/index.html">examples</a> or the
+<code>readme.html</code> in every <a href="../modules/index.html">module</a> you want to use.</p>
 
 <h1>Examples</h1>
-<p>Check out the <a href="./examples">/examples</a> folder for all examples. This folder also contains a
-<a href="./examples/index.html">list of all available examples</a>.</p>
+<p>Check out the <a href="../examples">/examples</a> folder for all examples. This folder also contains a
+<a href="../examples/index.html">list of all available examples</a>.</p>
 <p>Note: every example has an XML file which is an <a href="http://ant.apache.org/" target="_blank">ANT</a> build file
 which can be used to build the example.</p>
 
