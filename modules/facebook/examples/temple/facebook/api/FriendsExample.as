@@ -11,7 +11,7 @@
  * 
  * <p>This example will only run from the HTML file in a browser. Since we are not using a channel.html, this example might not work in all browsers.</p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/facebook/api/FriendsExample.html" target="_blank">View this example</a></p>
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/FriendsExample.html" target="_blank">View this example</a></p>
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/facebook/examples/temple/facebook/api/FriendsExample.as" target="_blank">View source</a></p>
  */
