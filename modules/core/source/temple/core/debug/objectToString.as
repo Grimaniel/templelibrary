@@ -36,7 +36,7 @@ package temple.core.debug
 					{
 						string += sep + name + "=";
 						
-						if (value is String && value !== null)
+						if (value is String && value !== null || value is Namespace)
 						{
 							// remove new lines
 							var s:String = String(value).split("\r").join(" ").split("\n").join(" ");
