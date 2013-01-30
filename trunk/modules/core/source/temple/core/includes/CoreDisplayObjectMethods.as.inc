@@ -5,7 +5,7 @@
 		 */
 		override public function get width():Number
 		{
-			return this.scrollRect ? this.scrollRect.width : super.width;
+			return scrollRect ? scrollRect.width : super.width;
 		}
 		
 		/**
@@ -14,7 +14,7 @@
 		 */
 		override public function set width(value:Number):void
 		{
-			if (super.width || !this.scaleX) super.width = value;
+			if (super.width || !scaleX) super.width = value;
 		}
 		
 		/**
@@ -24,7 +24,7 @@
 		 */
 		override public function get height():Number
 		{
-			return this.scrollRect ? this.scrollRect.height : super.height;
+			return scrollRect ? scrollRect.height : super.height;
 		}
 
 		/**
@@ -33,7 +33,7 @@
 		 */
 		override public function set height(value:Number):void
 		{
-			if (super.height || !this.scaleY) super.height = value;
+			if (super.height || !scaleY) super.height = value;
 		}
 		
 		/**
@@ -50,7 +50,7 @@
 		 */
 		public function get onStage():Boolean
 		{
-			return this._onStage;
+			return _onStage;
 		}
 		
 		/**
@@ -58,7 +58,7 @@
 		 */
 		public function get hasParent():Boolean
 		{
-			return this._onParent;
+			return _onParent;
 		}
 		
 		/**
@@ -66,7 +66,7 @@
 		 */
 		public function removeFromParent():void
 		{
-			if (this.parent && this._onParent) this.parent.removeChild(this);
+			if (parent && _onParent) parent.removeChild(this);
 		}
 		
 		/**
@@ -74,7 +74,7 @@
 		 */
 		public function get autoAlpha():Number
 		{
-			return this.visible ? this.alpha : 0;
+			return visible ? alpha : 0;
 		}
 
 		/**
@@ -82,8 +82,8 @@
 		 */
 		public function set autoAlpha(value:Number):void
 		{
-			this.alpha = value;
-			this.visible = this.alpha > 0;
+			alpha = value;
+			visible = alpha > 0;
 		}
 		
 		/**
@@ -91,7 +91,7 @@
 		 */
 		public function get position():Point
 		{
-			return new Point(this.x, this.y);
+			return new Point(x, y);
 		}
 		
 		/**
@@ -99,8 +99,8 @@
 		 */
 		public function set position(value:Point):void
 		{
-			this.x = value.x;
-			this.y = value.y;
+			x = value.x;
+			y = value.y;
 		}
 		
 		/**
@@ -108,7 +108,7 @@
 		 */
 		public function get scale():Number
 		{
-			return this.scaleX == this.scaleY ? this.scaleX : NaN;
+			return scaleX == scaleY ? scaleX : NaN;
 		}
 		
 		/**
@@ -116,7 +116,7 @@
 		 */
 		public function set scale(value:Number):void
 		{
-			this.scaleX = this.scaleY = value;
+			scaleX = scaleY = value;
 		}
 		
 		/**
@@ -124,7 +124,7 @@
 		 */
 		public function get destructOnUnload():Boolean
 		{
-			return this._destructOnUnload;
+			return _destructOnUnload;
 		}
 		
 		/**
@@ -132,5 +132,5 @@
 		 */
 		public function set destructOnUnload(value:Boolean):void
 		{
-			this._destructOnUnload = value;
+			_destructOnUnload = value;
 		}

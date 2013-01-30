@@ -76,7 +76,7 @@ package temple.core
 		 * (Format: 'yyyy-mm-dd')
 		 * 
 		 */
-		public static const DATE:String = "2013-01-25";
+		public static const DATE:String = "2013-01-30";
 
 		/**
 		 * The official website of the Temple.

@@ -154,7 +154,7 @@ package temple.core.display
 		 */
 		public final function get registryId():uint
 		{
-			return this._registryId;
+			return _registryId;
 		}
 		
 		/**
@@ -164,7 +164,7 @@ package temple.core.display
 		 */
 		override public function get width():Number
 		{
-			return this.scrollRect ? this.scrollRect.width : super.width;
+			return scrollRect ? scrollRect.width : super.width;
 		}
 		
 		/**
@@ -173,7 +173,7 @@ package temple.core.display
 		 */
 		override public function set width(value:Number):void
 		{
-			if (super.width || !this.scaleX) super.width = value;
+			if (super.width || !scaleX) super.width = value;
 		}
 		
 		/**
@@ -183,7 +183,7 @@ package temple.core.display
 		 */
 		override public function get height():Number
 		{
-			return this.scrollRect ? this.scrollRect.height : super.height;
+			return scrollRect ? scrollRect.height : super.height;
 		}
 
 		/**
@@ -192,7 +192,7 @@ package temple.core.display
 		 */
 		override public function set height(value:Number):void
 		{
-			if (super.height || !this.scaleY) super.height = value;
+			if (super.height || !scaleY) super.height = value;
 		}
 		
 		/**
@@ -209,7 +209,7 @@ package temple.core.display
 		 */
 		public function get onStage():Boolean
 		{
-			return this._onStage;
+			return _onStage;
 		}
 		
 		/**
@@ -217,7 +217,7 @@ package temple.core.display
 		 */
 		public function get hasParent():Boolean
 		{
-			return this._onParent;
+			return _onParent;
 		}
 		
 		/**
@@ -225,7 +225,7 @@ package temple.core.display
 		 */
 		public function removeFromParent():void
 		{
-			if (this.parent && this._onParent) this.parent.removeChild(this);
+			if (parent && _onParent) parent.removeChild(this);
 		}
 		
 		/**
@@ -233,7 +233,7 @@ package temple.core.display
 		 */
 		public function get autoAlpha():Number
 		{
-			return this.visible ? this.alpha : 0;
+			return visible ? alpha : 0;
 		}
 
 		/**
@@ -241,8 +241,8 @@ package temple.core.display
 		 */
 		public function set autoAlpha(value:Number):void
 		{
-			this.alpha = value;
-			this.visible = this.alpha > 0;
+			alpha = value;
+			visible = alpha > 0;
 		}
 		
 		/**
@@ -250,7 +250,7 @@ package temple.core.display
 		 */
 		public function get position():Point
 		{
-			return new Point(this.x, this.y);
+			return new Point(x, y);
 		}
 		
 		/**
@@ -258,8 +258,8 @@ package temple.core.display
 		 */
 		public function set position(value:Point):void
 		{
-			this.x = value.x;
-			this.y = value.y;
+			x = value.x;
+			y = value.y;
 		}
 		
 		/**
@@ -267,7 +267,7 @@ package temple.core.display
 		 */
 		public function get scale():Number
 		{
-			return this.scaleX == this.scaleY ? this.scaleX : NaN;
+			return scaleX == scaleY ? scaleX : NaN;
 		}
 		
 		/**
@@ -275,7 +275,7 @@ package temple.core.display
 		 */
 		public function set scale(value:Number):void
 		{
-			this.scaleX = this.scaleY = value;
+			scaleX = scaleY = value;
 		}
 		
 		/**
@@ -283,7 +283,7 @@ package temple.core.display
 		 */
 		public function get destructOnUnload():Boolean
 		{
-			return this._destructOnUnload;
+			return _destructOnUnload;
 		}
 		
 		/**
@@ -291,7 +291,7 @@ package temple.core.display
 		 */
 		public function set destructOnUnload(value:Boolean):void
 		{
-			this._destructOnUnload = value;
+			_destructOnUnload = value;
 		}
 		
 		/**
@@ -302,7 +302,7 @@ package temple.core.display
 		 */
 		override public function dispatchEvent(event:Event):Boolean 
 		{
-			if (this.hasEventListener(event.type) || event.bubbles) 
+			if (hasEventListener(event.type) || event.bubbles) 
 			{
 				return super.dispatchEvent(event);
 			}
@@ -315,7 +315,7 @@ package temple.core.display
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
-			if (this.getEventListenerManager()) this._eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			if (getEventListenerManager()) _eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 		
 		/**
@@ -323,7 +323,7 @@ package temple.core.display
 		 */
 		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
 		{
-			if (this.getEventListenerManager()) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+			if (getEventListenerManager()) _eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
 		}
 
 		/**
@@ -332,7 +332,7 @@ package temple.core.display
 		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
 		{
 			super.removeEventListener(type, listener, useCapture);
-			if (this._eventListenerManager) this._eventListenerManager.removeEventListener(type, listener, useCapture);
+			if (_eventListenerManager) _eventListenerManager.removeEventListener(type, listener, useCapture);
 		}
 
 		/**
@@ -340,7 +340,7 @@ package temple.core.display
 		 */
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllStrongEventListenersForType(type);
+			if (_eventListenerManager) _eventListenerManager.removeAllStrongEventListenersForType(type);
 		}
 		
 		/**
@@ -348,7 +348,7 @@ package temple.core.display
 		 */
 		public function removeAllOnceEventListenersForType(type:String):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
+			if (_eventListenerManager) _eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**
@@ -356,7 +356,7 @@ package temple.core.display
 		 */
 		public function removeAllStrongEventListenersForListener(listener:Function):void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllStrongEventListenersForListener(listener);
+			if (_eventListenerManager) _eventListenerManager.removeAllStrongEventListenersForListener(listener);
 		}
 
 		/**
@@ -364,7 +364,7 @@ package temple.core.display
 		 */
 		public function removeAllEventListeners():void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllEventListeners();
+			if (_eventListenerManager) _eventListenerManager.removeAllEventListeners();
 		}
 		
 		
@@ -374,17 +374,17 @@ package temple.core.display
 		 */
 		public function get eventListenerManager():EventListenerManager
 		{
-			return this._eventListenerManager;
+			return _eventListenerManager;
 		}
 		
 		private function getEventListenerManager():EventListenerManager
 		{
-			if (this._isDestructed)
+			if (_isDestructed)
 			{
-				this.logError("Object is destructed, don't add event listeners");
+				logError("Object is destructed, don't add event listeners");
 				return null;
 			}
-			return this._eventListenerManager ||= new EventListenerManager(this);
+			return _eventListenerManager ||= new EventListenerManager(this);
 		}
 
 		/**
@@ -396,7 +396,7 @@ package temple.core.display
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.DEBUG, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.DEBUG, _registryId);
 		}
 		
 		/**
@@ -408,7 +408,7 @@ package temple.core.display
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.ERROR, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.ERROR, _registryId);
 		}
 		
 		/**
@@ -420,7 +420,7 @@ package temple.core.display
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.FATAL, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.FATAL, _registryId);
 		}
 		
 		/**
@@ -432,7 +432,7 @@ package temple.core.display
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.INFO, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.INFO, _registryId);
 		}
 		
 		/**
@@ -444,7 +444,7 @@ package temple.core.display
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.STATUS, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.STATUS, _registryId);
 		}
 		
 		/**
@@ -456,22 +456,22 @@ package temple.core.display
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.WARN, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.WARN, _registryId);
 		}
 
 		private function handleUnload(event:Event):void
 		{
-			if (this._destructOnUnload) this.destruct();
+			if (_destructOnUnload) destruct();
 		}
 		
 		private function handleAdded(event:Event):void
 		{
-			if (event.currentTarget == this) this._onParent = true;
+			if (event.currentTarget == this) _onParent = true;
 		}
 
 		private function handleAddedToStage(event:Event):void
 		{
-			this._onStage = true;
+			_onStage = true;
 			StageProvider.stage ||= super.stage;
 		}
 
@@ -479,15 +479,15 @@ package temple.core.display
 		{
 			if (event.target == this)
 			{
-				this._onParent = false;
-				if (!this._isDestructed) super.addEventListener(Event.ENTER_FRAME, this.handleDestructedFrameDelay);
+				_onParent = false;
+				if (!_isDestructed) super.addEventListener(Event.ENTER_FRAME, handleDestructedFrameDelay);
 			}
 		}
 		
 		private function handleDestructedFrameDelay(event:Event):void
 		{
-			super.removeEventListener(Event.ENTER_FRAME, this.handleDestructedFrameDelay);
-			this.checkParent();
+			super.removeEventListener(Event.ENTER_FRAME, handleDestructedFrameDelay);
+			checkParent();
 		}
 
 		/**
@@ -496,12 +496,12 @@ package temple.core.display
 		 */
 		private function checkParent():void
 		{
-			if (this.parent && !this._onParent) this.destruct();
+			if (parent && !_onParent) destruct();
 		}
 
 		private function handleRemovedFromStage(event:Event):void
 		{
-			this._onStage = false;
+			_onStage = false;
 		}		
 
 		/**
@@ -509,7 +509,7 @@ package temple.core.display
 		 */
 		protected final function get toStringProps():Vector.<String>
 		{
-			return this._toStringProps;
+			return _toStringProps;
 		}
 		
 		/**
@@ -519,7 +519,7 @@ package temple.core.display
 		 */
 		templelibrary final function get toStringProps():Vector.<String>
 		{
-			return this._toStringProps;
+			return _toStringProps;
 		}
 		
 		/**
@@ -527,7 +527,7 @@ package temple.core.display
 		 */
 		protected final function get emptyPropsInToString():Boolean
 		{
-			return this._emptyPropsInToString;
+			return _emptyPropsInToString;
 		}
 
 		/**
@@ -535,7 +535,7 @@ package temple.core.display
 		 */
 		protected final function set emptyPropsInToString(value:Boolean):void
 		{
-			this._emptyPropsInToString = value;
+			_emptyPropsInToString = value;
 		}
 
 		/**
@@ -545,7 +545,7 @@ package temple.core.display
 		 */
 		templelibrary final function get emptyPropsInToString():Boolean
 		{
-			return this._emptyPropsInToString;
+			return _emptyPropsInToString;
 		}
 		
 		/**
@@ -553,7 +553,7 @@ package temple.core.display
 		 */
 		templelibrary final function set emptyPropsInToString(value:Boolean):void
 		{
-			this._emptyPropsInToString = value;
+			_emptyPropsInToString = value;
 		}
 
 		/**
@@ -561,7 +561,7 @@ package temple.core.display
 		 */
 		override public function toString():String
 		{
-			return objectToString(this, this.toStringProps, !this.emptyPropsInToString);
+			return objectToString(this, toStringProps, !emptyPropsInToString);
 		}
 		
 		[Temple]
@@ -570,7 +570,7 @@ package temple.core.display
 		 */
 		public final function get isDestructed():Boolean
 		{
-			return this._isDestructed;
+			return _isDestructed;
 		}
 
 		/**

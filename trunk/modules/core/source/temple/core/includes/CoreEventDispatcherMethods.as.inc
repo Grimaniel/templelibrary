@@ -6,7 +6,7 @@
 		 */
 		override public function dispatchEvent(event:Event):Boolean 
 		{
-			if (this.hasEventListener(event.type) || event.bubbles) 
+			if (hasEventListener(event.type) || event.bubbles) 
 			{
 				return super.dispatchEvent(event);
 			}
@@ -19,7 +19,7 @@
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
-			if (this.getEventListenerManager()) this._eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			if (getEventListenerManager()) _eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 		
 		/**
@@ -27,7 +27,7 @@
 		 */
 		public function addEventListenerOnce(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
 		{
-			if (this.getEventListenerManager()) this._eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
+			if (getEventListenerManager()) _eventListenerManager.addEventListenerOnce(type, listener, useCapture, priority);
 		}
 
 		/**
@@ -36,7 +36,7 @@
 		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
 		{
 			super.removeEventListener(type, listener, useCapture);
-			if (this._eventListenerManager) this._eventListenerManager.removeEventListener(type, listener, useCapture);
+			if (_eventListenerManager) _eventListenerManager.removeEventListener(type, listener, useCapture);
 		}
 
 		/**
@@ -44,7 +44,7 @@
 		 */
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllStrongEventListenersForType(type);
+			if (_eventListenerManager) _eventListenerManager.removeAllStrongEventListenersForType(type);
 		}
 		
 		/**
@@ -52,7 +52,7 @@
 		 */
 		public function removeAllOnceEventListenersForType(type:String):void
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllOnceEventListenersForType(type);
+			if (_eventListenerManager) _eventListenerManager.removeAllOnceEventListenersForType(type);
 		}
 
 		/**
@@ -60,7 +60,7 @@
 		 */
 		public function removeAllStrongEventListenersForListener(listener:Function):void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllStrongEventListenersForListener(listener);
+			if (_eventListenerManager) _eventListenerManager.removeAllStrongEventListenersForListener(listener);
 		}
 
 		/**
@@ -68,7 +68,7 @@
 		 */
 		public function removeAllEventListeners():void 
 		{
-			if (this._eventListenerManager) this._eventListenerManager.removeAllEventListeners();
+			if (_eventListenerManager) _eventListenerManager.removeAllEventListeners();
 		}
 		
 		
@@ -78,15 +78,15 @@
 		 */
 		public function get eventListenerManager():EventListenerManager
 		{
-			return this._eventListenerManager;
+			return _eventListenerManager;
 		}
 		
 		private function getEventListenerManager():EventListenerManager
 		{
-			if (this._isDestructed)
+			if (_isDestructed)
 			{
-				this.logError("Object is destructed, don't add event listeners");
+				logError("Object is destructed, don't add event listeners");
 				return null;
 			}
-			return this._eventListenerManager ||= new EventListenerManager(this);
+			return _eventListenerManager ||= new EventListenerManager(this);
 		}

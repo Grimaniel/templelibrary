@@ -3,7 +3,7 @@
 		 */
 		protected final function get toStringProps():Vector.<String>
 		{
-			return this._toStringProps;
+			return _toStringProps;
 		}
 		
 		/**
@@ -13,7 +13,7 @@
 		 */
 		templelibrary final function get toStringProps():Vector.<String>
 		{
-			return this._toStringProps;
+			return _toStringProps;
 		}
 		
 		/**
@@ -21,7 +21,7 @@
 		 */
 		protected final function get emptyPropsInToString():Boolean
 		{
-			return this._emptyPropsInToString;
+			return _emptyPropsInToString;
 		}
 
 		/**
@@ -29,7 +29,7 @@
 		 */
 		protected final function set emptyPropsInToString(value:Boolean):void
 		{
-			this._emptyPropsInToString = value;
+			_emptyPropsInToString = value;
 		}
 
 		/**
@@ -39,7 +39,7 @@
 		 */
 		templelibrary final function get emptyPropsInToString():Boolean
 		{
-			return this._emptyPropsInToString;
+			return _emptyPropsInToString;
 		}
 		
 		/**
@@ -47,5 +47,5 @@
 		 */
 		templelibrary final function set emptyPropsInToString(value:Boolean):void
 		{
-			this._emptyPropsInToString = value;
+			_emptyPropsInToString = value;
 		}

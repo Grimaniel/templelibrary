@@ -7,7 +7,7 @@
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.DEBUG, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.DEBUG, _registryId);
 		}
 		
 		/**
@@ -19,7 +19,7 @@
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.ERROR, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.ERROR, _registryId);
 		}
 		
 		/**
@@ -31,7 +31,7 @@
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.FATAL, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.FATAL, _registryId);
 		}
 		
 		/**
@@ -43,7 +43,7 @@
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.INFO, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.INFO, _registryId);
 		}
 		
 		/**
@@ -55,7 +55,7 @@
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.STATUS, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.STATUS, _registryId);
 		}
 		
 		/**
@@ -67,5 +67,5 @@
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.WARN, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.WARN, _registryId);
 		}

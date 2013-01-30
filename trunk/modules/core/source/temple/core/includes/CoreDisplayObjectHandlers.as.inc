@@ -1,16 +1,16 @@
 		private function handleUnload(event:Event):void
 		{
-			if (this._destructOnUnload) this.destruct();
+			if (_destructOnUnload) destruct();
 		}
 		
 		private function handleAdded(event:Event):void
 		{
-			if (event.currentTarget == this) this._onParent = true;
+			if (event.currentTarget == this) _onParent = true;
 		}
 
 		private function handleAddedToStage(event:Event):void
 		{
-			this._onStage = true;
+			_onStage = true;
 			StageProvider.stage ||= super.stage;
 		}
 
@@ -18,15 +18,15 @@
 		{
 			if (event.target == this)
 			{
-				this._onParent = false;
-				if (!this._isDestructed) super.addEventListener(Event.ENTER_FRAME, this.handleDestructedFrameDelay);
+				_onParent = false;
+				if (!_isDestructed) super.addEventListener(Event.ENTER_FRAME, handleDestructedFrameDelay);
 			}
 		}
 		
 		private function handleDestructedFrameDelay(event:Event):void
 		{
-			super.removeEventListener(Event.ENTER_FRAME, this.handleDestructedFrameDelay);
-			this.checkParent();
+			super.removeEventListener(Event.ENTER_FRAME, handleDestructedFrameDelay);
+			checkParent();
 		}
 
 		/**
@@ -35,10 +35,10 @@
 		 */
 		private function checkParent():void
 		{
-			if (this.parent && !this._onParent) this.destruct();
+			if (parent && !_onParent) destruct();
 		}
 
 		private function handleRemovedFromStage(event:Event):void
 		{
-			this._onStage = false;
+			_onStage = false;
 		}		
