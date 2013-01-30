@@ -95,7 +95,7 @@ package temple.core
 		 */
 		public final function get registryId():uint
 		{
-			return this._registryId;
+			return _registryId;
 		}
 
 		/**
@@ -107,7 +107,7 @@ package temple.core
 		 */
 		protected final function logDebug(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.DEBUG, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.DEBUG, _registryId);
 		}
 		
 		/**
@@ -119,7 +119,7 @@ package temple.core
 		 */
 		protected final function logError(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.ERROR, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.ERROR, _registryId);
 		}
 		
 		/**
@@ -131,7 +131,7 @@ package temple.core
 		 */
 		protected final function logFatal(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.FATAL, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.FATAL, _registryId);
 		}
 		
 		/**
@@ -143,7 +143,7 @@ package temple.core
 		 */
 		protected final function logInfo(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.INFO, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.INFO, _registryId);
 		}
 		
 		/**
@@ -155,7 +155,7 @@ package temple.core
 		 */
 		protected final function logStatus(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.STATUS, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.STATUS, _registryId);
 		}
 		
 		/**
@@ -167,7 +167,7 @@ package temple.core
 		 */
 		protected final function logWarn(data:*):void
 		{
-			Log.templelibrary::send(data, this.toString(), LogLevel.WARN, this._registryId);
+			Log.templelibrary::send(data, toString(), LogLevel.WARN, _registryId);
 		}
 		
 		/**
@@ -175,7 +175,7 @@ package temple.core
 		 */
 		protected final function get toStringProps():Vector.<String>
 		{
-			return this._toStringProps;
+			return _toStringProps;
 		}
 		
 		/**
@@ -185,7 +185,7 @@ package temple.core
 		 */
 		templelibrary final function get toStringProps():Vector.<String>
 		{
-			return this._toStringProps;
+			return _toStringProps;
 		}
 		
 		/**
@@ -193,7 +193,7 @@ package temple.core
 		 */
 		protected final function get emptyPropsInToString():Boolean
 		{
-			return this._emptyPropsInToString;
+			return _emptyPropsInToString;
 		}
 
 		/**
@@ -201,7 +201,7 @@ package temple.core
 		 */
 		protected final function set emptyPropsInToString(value:Boolean):void
 		{
-			this._emptyPropsInToString = value;
+			_emptyPropsInToString = value;
 		}
 
 		/**
@@ -211,7 +211,7 @@ package temple.core
 		 */
 		templelibrary final function get emptyPropsInToString():Boolean
 		{
-			return this._emptyPropsInToString;
+			return _emptyPropsInToString;
 		}
 		
 		/**
@@ -219,7 +219,7 @@ package temple.core
 		 */
 		templelibrary final function set emptyPropsInToString(value:Boolean):void
 		{
-			this._emptyPropsInToString = value;
+			_emptyPropsInToString = value;
 		}
 		
 		/**
@@ -236,7 +236,7 @@ package temple.core
 		 */
 		public final function get isDestructed():Boolean
 		{
-			return this._isDestructed;
+			return _isDestructed;
 		}
 
 		/**

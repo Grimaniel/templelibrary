@@ -74,7 +74,7 @@ package temple.core.events
 		 */
 		protected final function get toStringProps():Vector.<String>
 		{
-			return this._toStringProps;
+			return _toStringProps;
 		}
 		
 		/**
@@ -84,7 +84,7 @@ package temple.core.events
 		 */
 		templelibrary final function get toStringProps():Vector.<String>
 		{
-			return this._toStringProps;
+			return _toStringProps;
 		}
 		
 		/**
@@ -92,7 +92,7 @@ package temple.core.events
 		 */
 		protected final function get emptyPropsInToString():Boolean
 		{
-			return this._emptyPropsInToString;
+			return _emptyPropsInToString;
 		}
 
 		/**
@@ -100,7 +100,7 @@ package temple.core.events
 		 */
 		protected final function set emptyPropsInToString(value:Boolean):void
 		{
-			this._emptyPropsInToString = value;
+			_emptyPropsInToString = value;
 		}
 
 		/**
@@ -110,7 +110,7 @@ package temple.core.events
 		 */
 		templelibrary final function get emptyPropsInToString():Boolean
 		{
-			return this._emptyPropsInToString;
+			return _emptyPropsInToString;
 		}
 		
 		/**
@@ -118,7 +118,7 @@ package temple.core.events
 		 */
 		templelibrary final function set emptyPropsInToString(value:Boolean):void
 		{
-			this._emptyPropsInToString = value;
+			_emptyPropsInToString = value;
 		}
 		
 		/**

@@ -3,7 +3,7 @@
 		 */
 		public function get isLoading():Boolean
 		{
-			return this._isLoading;
+			return _isLoading;
 		}
 		
 		/**
@@ -11,7 +11,7 @@
 		 */
 		public function get isLoaded():Boolean
 		{
-			return this._isLoaded;
+			return _isLoaded;
 		}
 		
 		/**
@@ -19,7 +19,7 @@
 		 */
 		public function get url():String
 		{
-			return this._url;
+			return _url;
 		}
 		
 		/**
@@ -27,7 +27,7 @@
 		 */
 		public function get logErrors():Boolean
 		{
-			return this._logErrors;
+			return _logErrors;
 		}
 		
 		/**
@@ -35,5 +35,5 @@
 		 */
 		public function set logErrors(value:Boolean):void
 		{
-			this._logErrors = value;
+			_logErrors = value;
 		}
