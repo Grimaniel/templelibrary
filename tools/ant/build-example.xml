@@ -2,8 +2,6 @@
 <project default="Build" name="Example">
 	
 	<target name="Build">
-		<property name="startswf" value="true"/>
-		
 		<script language="javascript">
 			<![CDATA[
 			importPackage(java.io);
@@ -47,14 +45,19 @@
 		<fdt.launch.application projectname="${project}"
 			mainclass="${ant.project.name}.as"
 			target="${ant.project.name}.swf"
-			startswf="${startswf}"
+			startswf="false"
 			swflauncher="Adobe Flash Player"
 			debug="true"
 			autoaddclasspath="false"
 			killpreviousviewer="false"
 			compilerarguments="
 				-compiler.source-path+=${source.dir},${examples.dir}/templates${extended-source-path}
+				-keep-as3-metadata+=Alias
 				${library-path}" />
+		
+		<antcall target="Scoutenabler" />
+		
+		<antcall target="Start SWF" />
 	</target>
 	
 	<target name="Build Fla">
@@ -146,5 +149,24 @@
 			<arg line="'${root.dir}/tools/jsfl/close.jsfl'"/>
 		</exec>
 	</target>
-
+	
+	<target name="Scoutenabler">
+		<exec executable="${root.dir}/tools/scoutenabler/SWFScoutEnablerCommandLine.exe">
+	        <arg value="basedir=${basedir}" />
+	        <arg value="swfpath=/${ant.project.name}.swf" />
+	        <arg value="suffix=" />
+	        <arg value="password=" />
+	        <arg value="buildtimeout=0" />
+	    </exec>
+	</target>
+	
+	<target name="Start SWF">
+		<echo>${basedir}/${ant.project.name}.swf</echo>
+		
+		<fdt.startDebugger projectname="${project}" targetswf="${basedir}/${ant.project.name}.swf" />
+		
+		<exec executable="${player}">
+			<arg line="'${basedir}/${ant.project.name}.swf'"/>
+		</exec>
+	</target> 
 </project>
