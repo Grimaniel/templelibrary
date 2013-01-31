@@ -35,9 +35,7 @@
 
 package temple.facebook.adapters
 {
-	import com.facebook.graph.data.FacebookSession;
 	import temple.core.CoreObject;
-	import temple.core.debug.IDebuggable;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
 
@@ -45,6 +43,7 @@ package temple.facebook.adapters
 	import com.facebook.graph.data.Batch;
 	import com.facebook.graph.data.FQLMultiQuery;
 	import com.facebook.graph.data.FacebookAuthResponse;
+	import com.facebook.graph.data.FacebookSession;
 	import com.facebook.graph.net.FacebookRequest;
 	import com.facebook.graph.utils.IResultParser;
 
@@ -63,7 +62,7 @@ package temple.facebook.adapters
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FacebookAdapter extends CoreObject implements IFacebookAdapter, IDebuggable
+	public class FacebookAdapter extends CoreObject implements IFacebookAdapter
 	{
 		/**
 		 * Checks if the Facebook JavaScript (needed for Facebook communication) is available.

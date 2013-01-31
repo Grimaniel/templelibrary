@@ -276,6 +276,7 @@ package temple.facebook.data
 						if (variable.name in object && objectDescription.getProperty(variable.name).isWritable)
 						{
 							if (object[variable.name] != data[key]) object[variable.name] = data[key];
+							return;
 						}
 						else
 						{
@@ -290,6 +291,7 @@ package temple.facebook.data
 							else
 							{
 								// check Graph alias
+								variable = variables[0];
 								var metadata:IMetadata = variable ? variable.getMetadata(FacebookMetadataTag.ALIAS.value) : null;
 								if (metadata && FacebookFieldAlias.GRAPH.value in metadata.args)
 								{
