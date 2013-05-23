@@ -108,12 +108,12 @@ package temple.ui.slider
 		 */
 		public function get value():Number
 		{
-			if (_dragBehavior == null || !_dragBehavior.target || !(_dragBehavior.target as DisplayObject).parent) return NaN;
+			if (_dragBehavior == null || !_dragBehavior.target || !_dragBehavior.displayObject.parent) return NaN;
 			
 			var value:Number;
 			
 			var bounds:Rectangle = _dragBehavior.bounds;
-			var targetBounds:Rectangle = (_dragBehavior.target as DisplayObject).getBounds((_dragBehavior.target as DisplayObject).parent);
+			var targetBounds:Rectangle = _dragBehavior.displayObject.getBounds(_dragBehavior.displayObject.parent);
 			
 			if (_orientation == Orientation.HORIZONTAL)
 			{
@@ -138,12 +138,12 @@ package temple.ui.slider
 		{
 			if (isNaN(value)) return;
 			
-			if (_dragBehavior == null || !_dragBehavior.target || !(_dragBehavior.target as DisplayObject).parent) return;
+			if (_dragBehavior == null || !_dragBehavior.target || !_dragBehavior.displayObject.parent) return;
 			
 			value = Math.min(Math.max(value, 0), 1);
 			
 			var bounds:Rectangle = _dragBehavior.bounds;
-			var target:DisplayObject = _dragBehavior.target as DisplayObject;
+			var target:DisplayObject = _dragBehavior.displayObject;
 			var targetBounds:Rectangle = target.getBounds(target.parent);
 			
 			if (_direction == Direction.DESCENDING)

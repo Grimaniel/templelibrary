@@ -86,7 +86,7 @@ package temple.ui.behaviors
 	 */
 	public class ZoomBehavior extends BoundsBehavior implements IDebuggable
 	{
-		private var _zoom:Number;
+		private var _zoomLevel:Number;
 		private var _minZoom:Number;
 		private var _maxZoom:Number;
 		private var _newScale:Number;
@@ -108,7 +108,7 @@ package temple.ui.behaviors
 			_minZoom = minZoom;
 			_maxZoom = maxZoom;
 			
-			_zoom = 0;
+			_zoomLevel = 0;
 			
 			_newScale = target.scaleX;
 			_newX = target.x;
@@ -131,7 +131,7 @@ package temple.ui.behaviors
 		 */
 		public function zoomTo(zoom:Number, point:Point = null):void
 		{
-			_zoom = Math.log(zoom) / Math.log(2);
+			_zoomLevel = Math.log(zoom) / Math.log(2);
 			updateZoom(point || getCenter());
 		}
 
@@ -140,7 +140,7 @@ package temple.ui.behaviors
 		 */
 		public function stopZoom():void
 		{
-			if (_running == true)
+			if (_running)
 			{
 				_running = false;
 				displayObject.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
@@ -185,7 +185,7 @@ package temple.ui.behaviors
 		 */
 		public function get zoom():Number
 		{
-			return Math.pow(2, _zoom);
+			return Math.pow(2, _zoomLevel);
 		}
 
 		/**
@@ -193,7 +193,7 @@ package temple.ui.behaviors
 		 */
 		public function set zoom(value:Number):void
 		{
-			_zoom = Math.log(value) / Math.log(2);
+			_zoomLevel = Math.log(value) / Math.log(2);
 			updateZoom(getCenter());
 		}
 
@@ -202,7 +202,7 @@ package temple.ui.behaviors
 		 */
 		public function get zoomLevel():Number
 		{
-			return _zoom;
+			return _zoomLevel;
 		}
 
 		/**
@@ -210,7 +210,7 @@ package temple.ui.behaviors
 		 */
 		public function recalculateZoom():void
 		{
-			_zoom = Math.log(displayObject.scaleX) / Math.log(2);
+			_zoomLevel = Math.log(displayObject.scaleX) / Math.log(2);
 		}
 		
 		/**
@@ -255,7 +255,7 @@ package temple.ui.behaviors
 		 */
 		protected function handleMouseWheel(event:MouseEvent):void
 		{
-			_zoom += (event.delta / 3) / 4;
+			_zoomLevel += (event.delta / 3) / 4;
 			updateZoom(new Point((displayObject.mouseX * displayObject.scaleX) / displayObject.width, (displayObject.mouseY * displayObject.scaleY) / displayObject.height));
 		}
 
@@ -267,9 +267,9 @@ package temple.ui.behaviors
 			var prevW:Number = displayObject.width;
 			var prevH:Number = displayObject.height;
 			
-			_newScale = Math.max(_minZoom, Math.min(_maxZoom, Math.pow(2, _zoom)));
+			_newScale = Math.max(_minZoom, Math.min(_maxZoom, Math.pow(2, _zoomLevel)));
 			
-			_zoom = Math.log(_newScale) / Math.log(2);
+			_zoomLevel = Math.log(_newScale) / Math.log(2);
 			
 			_newX = displayObject.x + point.x * (prevW - (displayObject.width / displayObject.scaleX * _newScale));
 			_newY = displayObject.y + point.y * (prevH - (displayObject.height / displayObject.scaleY * _newScale));

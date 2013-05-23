@@ -35,12 +35,14 @@
 
 package temple.ui.slider 
 {
+	import temple.core.events.CoreEvent;
+
 	import flash.events.Event;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class SliderEvent extends Event 
+	public class SliderEvent extends CoreEvent 
 	{
 		/**
 		 * Dispatched while sliding

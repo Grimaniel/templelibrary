@@ -322,9 +322,9 @@ package temple.ui.form.validation
 		/**
 		 * @private
 		 */
-		public function set autoFocus(autoFocus:Boolean):void
+		public function set autoFocus(value:Boolean):void
 		{
-			_autoFocus = autoFocus;
+			_autoFocus = value;
 		}
 		
 		/**

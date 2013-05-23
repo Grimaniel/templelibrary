@@ -435,10 +435,15 @@ package temple.ui.scroll
 				if (_slider)
 				{
 					_slider.bounds = _track.getRect(this);
-					_slider.orientation = _track.width < _track.height ? Orientation.VERTICAL : Orientation.HORIZONTAL;
 					
-					// auto flip orientation of ScrollBar is rotated
-					if (rotation == 90 || rotation == -90) orientation = _slider.orientation == Orientation.VERTICAL ? Orientation.HORIZONTAL : Orientation.VERTICAL;
+					// don't overwrite the orientation if an orientation has been set!
+					if (!_orientation)
+					{
+						_orientation = _slider.orientation =_track.width < _track.height ? Orientation.VERTICAL : Orientation.HORIZONTAL;
+
+						// auto flip orientation of ScrollBar is rotated
+						if (this.rotation == 90 || this.rotation == -90) this.orientation = this._slider.orientation == Orientation.VERTICAL ? Orientation.HORIZONTAL : Orientation.VERTICAL;
+					}
 				}
 				else if (_button)
 				{
@@ -838,6 +843,7 @@ package temple.ui.scroll
 				case Orientation.VERTICAL:
 				{
 					_orientation = value;
+					if (_slider) _slider.orientation = value;
 					break;
 				}
 				default:
@@ -920,6 +926,14 @@ package temple.ui.scroll
 		public function set mouseWheelEnabled(value:Boolean):void
 		{
 			_mouseWheelEnabled = value;
+		}
+		
+		/**
+		 * Returns a reference to the <code>Slider</code>.
+		 */
+		public function get slider():Slider
+		{
+			return _slider;
 		}
 		
 		/**

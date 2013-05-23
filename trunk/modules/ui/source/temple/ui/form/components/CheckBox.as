@@ -181,7 +181,7 @@ package temple.ui.form.components
 			{
 				selected = false;
 			}
-			else if (value == true && _selectedValue == '' && _unselectedValue == _selectedValue)
+			else if (value && _selectedValue == '' && _unselectedValue == _selectedValue)
 			{
 				selected = true;
 			}

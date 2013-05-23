@@ -50,7 +50,7 @@ package temple.ui.form.validation.rules
 		/**
 		 *
 		 */
-		public function AbstractValidationRule(target:IHasValue):void 
+		public function AbstractValidationRule(target:IHasValue) 
 		{
 			_target = target;
 			toStringProps.push('target');

@@ -214,7 +214,7 @@ package temple.ui.scroll
 		 */
 		public function get maxScrollH():Number
 		{
-			return contentWidth - width;
+			return Math.max(contentWidth - width, 0);
 		}
 
 		/**
@@ -287,7 +287,7 @@ package temple.ui.scroll
 		 */
 		public function get maxScrollV():Number
 		{
-			return contentHeight - height;
+			return Math.max(contentHeight - height, 0);
 		}
 
 		/**

@@ -48,7 +48,7 @@ package temple.ui.form.validation.rules
 		 * Constructor
 		 * @param target IHasValue object
 		 */
-		public function NullValidationRule(target:IHasValue):void 
+		public function NullValidationRule(target:IHasValue) 
 		{
 			super(target);
 		}

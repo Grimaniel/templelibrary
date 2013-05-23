@@ -73,7 +73,7 @@ package temple.ui
 			return this;
 		}
 		
-		public function drawAt(x:Number = 0, y:Number = 0, radius:Number = 5, color:uint = 0xFF0000, alpha:uint = 1):Dot
+		public function drawAt(x:Number = 0, y:Number = 0, radius:Number = 5, color:uint = 0xFF0000, alpha:Number = 1):Dot
 		{
 			this.x = x;
 			this.y = y;

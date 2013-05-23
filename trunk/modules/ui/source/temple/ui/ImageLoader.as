@@ -164,7 +164,7 @@ imageLoaderExample.load("image.jpg");</listing>
 		 */
 		public function load(url:String, context:LoaderContext = null):void
 		{
-			if (_debug) logDebug("load: " + url + ' context: ' + context);
+			if (_debug) logDebug("load: '" + url + "' context: " + context);
 			_loader.load(new URLRequest(url), !context && _loaderContext ? _loaderContext : context);
 		}
 		
@@ -526,10 +526,6 @@ imageLoaderExample.load("image.jpg");</listing>
 			dispatchEvent(event);
 		}
 
-		/**
-		 * PRIVATE METHODS
-		 */
-
 		private function layoutImage():void
 		{
 			if (!_loader || !_loader.isLoaded) return;
@@ -565,14 +561,14 @@ imageLoaderExample.load("image.jpg");</listing>
 				}
 				case ScaleMode.SHOW_ALL:
 				{
-					scale = ratioX < ratioY ? ratioX : ratioY;
+					scale = Math.min(ratioX, ratioY);
 					_loader.scaleX = _loader.scaleY = _upscaleEnabled ? scale : Math.min(1, scale);
 					
 					break;
 				}
 				case ScaleMode.NO_BORDER:
 				{
-					scale = ratioX > ratioY ? ratioX : ratioY;
+					scale = Math.max(ratioX, ratioY);
 					_loader.scaleX = _loader.scaleY = _upscaleEnabled ? scale : Math.min(1, scale);
 					
 					break;

@@ -908,7 +908,7 @@ final class FrameLabelData
 	public function FrameLabelData(name:String, startframe:int) 
 	{
 		this.name = name;
-		this.endframe = this.startframe = startframe;
+		endframe = this.startframe = startframe;
 	}
 
 	/**

@@ -178,8 +178,8 @@ class Input extends InputField
 		textField.filters = [new DropShadowFilter(2, 45, 0, 1, 4, 4, .5, 1, true)];
 		addChild(textField);
 
-		this.hintTextColor = Colors.GRAY;
-		this.errorTextColor = Colors.RED;
+		hintTextColor = Colors.GRAY;
+		errorTextColor = Colors.RED;
 		
 		// create an error state
 		var errorText:TextField = new TextField();

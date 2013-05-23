@@ -35,27 +35,29 @@
 
 package temple.ui.scroll 
 {
+	import temple.core.events.CoreEvent;
+
 	import flash.events.Event;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class ScrollEvent extends Event 
+	public class ScrollEvent extends CoreEvent 
 	{
 		/**
 		 * Dispatched when the scrollable object is scrolled
 		 */
-		public static var SCROLL:String = "ScrollEvent.scroll";
+		public static const SCROLL:String = "ScrollEvent.scroll";
 		
 		/**
 		 * Dispatched by the scroll bar to scroll up one step
 		 */
-		public static var SCROLL_UP:String = "ScrollEvent.scrollUp";
+		public static const SCROLL_UP:String = "ScrollEvent.scrollUp";
 		
 		/**
 		 * Dispatched by the scroll bar to scroll down one step
 		 */
-		public static var SCROLL_DOWN:String = "ScrollEvent.scrollDown";
+		public static const SCROLL_DOWN:String = "ScrollEvent.scrollDown";
 		
 		private var _scrollH:Number;
 		private var _scrollV:Number;
@@ -70,6 +72,9 @@ package temple.ui.scroll
 			_scrollV = scrollV;
 			_maxScrollH = maxScrollH;
 			_maxScrollV = maxScrollV;
+			
+			emptyPropsInToString = false;
+			toStringProps.push("scrollH", "scrollV", "maxScrollH", "maxScrollV");
 		}
 		
 		public function get scrollH():Number

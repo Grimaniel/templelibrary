@@ -174,13 +174,13 @@ package temple.ui.behaviors.textfield
 			switch (_align)
 			{
 				case Align.TOP:
-					this.displayObject.y = _top;
+					displayObject.y = _top;
 					break;
 				case Align.BOTTOM:
-					this.displayObject.y = _bottom - this.displayObject.height;
+					displayObject.y = _bottom - displayObject.height;
 					break;
 				case Align.MIDDLE:
-					this.displayObject.y = _middle - .5 * displayObject.height;
+					displayObject.y = _middle - .5 * displayObject.height;
 					break;
 			}
 			dispatchEvent(new Event(Event.CHANGE));

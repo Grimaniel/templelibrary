@@ -80,7 +80,7 @@ package temple.ui.buttons.behaviors
 		/**
 		 * Returns the ButtonBehavior of a DisplayObject if the DisplayObject has ButtonBehavior. Otherwise null is returned. 
 		 */
-		public static function getInstance(target:DisplayObject):ButtonBehavior
+		public static function getInstance(target:InteractiveObject):ButtonBehavior
 		{
 			return ButtonBehavior._dictionary[target] as ButtonBehavior;
 		}

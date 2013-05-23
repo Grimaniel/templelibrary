@@ -600,15 +600,6 @@ package temple.ui.layout.liquid
 		}
 		
 		/**
-		 * @inheritDoc
-		 */
-		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
-		override public function set debug(value:Boolean):void
-		{
-			super.debug = liquidBehavior.debug = value;
-		}
-		
-		/**
 		 * Initializes the liquid behavior
 		 */
 		protected function initLiquid():void

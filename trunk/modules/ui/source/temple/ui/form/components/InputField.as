@@ -482,7 +482,7 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Indicates if the method getValue() trim the value.
+		 * Indicates if the value is trimmed.
 		 */
 		public function get trimValue():Boolean
 		{
@@ -672,7 +672,7 @@ package temple.ui.form.components
 		public function set multiline(value:Boolean):void
 		{
 			_textField.multiline = value;
-			if (_textField.multiline == true)
+			if (_textField.multiline)
 			{
 				_submitOnEnter = false;
 			}
@@ -714,7 +714,7 @@ package temple.ui.form.components
 		[Inspectable(name="Submit on Enter", type="Boolean", defaultValue="true")]
 		public function set submitOnEnter(value:Boolean):void
 		{
-			if (_textField.multiline == true && value == true)
+			if (_textField.multiline && value)
 			{
 				_submitOnEnter = false;
 			}
@@ -876,13 +876,7 @@ package temple.ui.form.components
 			
 			if (_updateHintOnChange && _textField.text == "")
 			{
-				_showsHint = true;
-				if (_hintText)
-				{
-					_textField.text = _hintText;
-					_textField.textColor = _hintTextColor;
-					_textField.displayAsPassword = false;
-				}
+				showHint();
 			}
 			
 			if (!isNaN(_minimalFontSize))

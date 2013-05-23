@@ -89,7 +89,7 @@ class Button extends MultiStateButton
 		filters = [new BevelFilter(1, 45, 0xffffff, 1, 0, 1, 3, 3)];
 		
 		addChild(new ButtonOverState());
-		this.outOnDragOut = false;
+		outOnDragOut = false;
 	}
 }
 
