@@ -1,4 +1,4 @@
-/*
+	/*
  *	Temple Library for ActionScript 3.0
  *	Copyright © MediaMonks B.V.
  *	All rights reserved.
@@ -399,7 +399,7 @@ package temple.ui.form
 		 */
 		public function addResetButton(button:DisplayObject, tabIndex:int = -1, tabEnabled:Boolean = true):void 
 		{
-			if (_debug) logDebug("addCancelButton: " + button);
+			if (_debug) logDebug("addResetButton: " + button);
 			
 			_resetButtons[button] = 'cancelbutton';
 			button.addEventListener(MouseEvent.CLICK, handleResetButtonClicked, false, 0, true);
@@ -407,11 +407,11 @@ package temple.ui.form
 		}
 		
 		/**
-		 * Remove a button for submitting the form 
+		 * Remove a button for resetting the form 
 		 */
-		public function removeCancelButton(button:DisplayObject):void 
+		public function removeResetButton(button:DisplayObject):void 
 		{
-			if (_debug) logDebug("removeCancelButton: " + button);
+			if (_debug) logDebug("removeResetButton: " + button);
 			
 			delete _resetButtons[button];
 			button.removeEventListener(MouseEvent.CLICK, handleResetButtonClicked);
@@ -838,8 +838,23 @@ package temple.ui.form
 		{
 			if (_debug) logDebug("destruct: ");
 			
-			_submitButtons = null;
-			_resetButtons = null;
+			if (_submitButtons)
+			{
+				for (var submitButton:Object in _submitButtons)
+				{
+					removeSubmitButton(submitButton as DisplayObject);
+				}
+				_submitButtons = null;
+			}
+			if (_resetButtons)
+			{
+				for (var resetButton:Object in _resetButtons)
+				{
+					removeSubmitButton(resetButton as DisplayObject);
+				}
+				_resetButtons = null;
+			}
+			
 			_service = null;
 			
 			// Destruct validator

@@ -56,7 +56,6 @@ package temple.ui.layout.liquid
 	public class LiquidSprite extends CoreSprite implements ILiquidObject
 	{
 		private var _liquidBehavior:LiquidBehavior;
-		private var _debug:Boolean;
 
 		public function LiquidSprite(initObject:Object = null, relatedObject:ILiquidObject = null)
 		{
@@ -579,23 +578,6 @@ package temple.ui.layout.liquid
 		public function get liquidBehavior():LiquidBehavior
 		{
 			return _liquidBehavior;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get debug():Boolean
-		{
-			return _debug;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		[Inspectable(name="Debug", type="Boolean", defaultValue="false")]
-		public function set debug(value:Boolean):void
-		{
-			liquidBehavior.debug = _debug = value;
 		}
 		
 		/**

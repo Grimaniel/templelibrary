@@ -166,7 +166,7 @@ package temple.ui.behaviors
 			displayObject.stage.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp, false, 0, true);
 			displayObject.stage.addEventListener(Event.MOUSE_LEAVE, handleMouseLeave, false, 0, true);
 			
-			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this, true));
+			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
 		}
 		
 		/**
@@ -180,7 +180,7 @@ package temple.ui.behaviors
 			displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
 			displayObject.stage.removeEventListener(Event.MOUSE_LEAVE, handleMouseLeave);
 			
-			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this, true));
+			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
 		}
 
 		/**
@@ -288,7 +288,7 @@ package temple.ui.behaviors
 		{
 			if (_dragHorizontal)
 			{
-				var newX:Number = _startDragOffset.x + displayObject.parent.mouseX;;
+				var newX:Number = _startDragOffset.x + displayObject.parent.mouseX;
 				if (_positionProxy)
 				{
 					_positionProxy.setValue(displayObject, "x", newX);

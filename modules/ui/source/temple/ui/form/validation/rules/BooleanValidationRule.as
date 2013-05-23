@@ -49,7 +49,7 @@ package temple.ui.form.validation.rules
 		 * Constructor
 		 * @param target IHasValue object
 		 */
-		public function BooleanValidationRule(target:IHasValue):void 
+		public function BooleanValidationRule(target:IHasValue)
 		{
 			super(target);
 		}

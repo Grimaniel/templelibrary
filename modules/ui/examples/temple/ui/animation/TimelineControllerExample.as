@@ -74,7 +74,7 @@ package
 		
 		private function handleEnterFrame(event:Event):void
 		{
-			this.txtFrameNum.text = currentFrame.toString();
+			txtFrameNum.text = currentFrame.toString();
 		}
 	}
 }

@@ -199,25 +199,25 @@ package temple.ui.style
 				case TextTransform.UCFIRST:
 				{
 					_textTransform = value;
-					this.label = StringUtils.ucFirst(this.label);
+					label = StringUtils.ucFirst(label);
 					break;
 				}
 				case TextTransform.LOWERCASE:
 				{
 					_textTransform = value;
-					this.label = label.toLowerCase();
+					label = label.toLowerCase();
 					break;
 				}
 				case TextTransform.UPPERCASE:
 				{
 					_textTransform = value;
-					this.label = label.toUpperCase();
+					label = label.toUpperCase();
 					break;
 				}	
 				case TextTransform.CAPITALIZE:
 				{
 					_textTransform = value;
-					this.label = StringUtils.capitalize(this.label);
+					label = StringUtils.capitalize(label);
 					break;
 				}
 				default:
@@ -314,7 +314,7 @@ package temple.ui.style
 
 		protected function resetStyle():void
 		{
-			this.textTransform = _textTransform;
+			textTransform = _textTransform;
 		}
 
 		override public function destruct():void

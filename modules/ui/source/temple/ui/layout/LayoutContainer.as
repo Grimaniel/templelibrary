@@ -62,7 +62,8 @@ package temple.ui.layout
 			super(width, height);
 			
 			_layoutBehavior = new LayoutBehavior(this, orientation, direction, spacing, orientation == Orientation.HORIZONTAL ? isNaN(width) : isNaN(height), false);
-			// wait a frame before enabling 
+			initLayout(); 
+			// wait a frame before enabling
 			new FrameDelay(initLayout);
 		}
 

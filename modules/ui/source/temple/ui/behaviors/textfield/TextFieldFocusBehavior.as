@@ -87,7 +87,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get textField():TextField
 		{
-			return this.target as TextField;
+			return target as TextField;
 		}
 
 		/**
@@ -95,7 +95,7 @@ package temple.ui.behaviors.textfield
 		 */
 		public function get name():String
 		{
-			return this.textField.name;
+			return textField.name;
 		}
 
 		

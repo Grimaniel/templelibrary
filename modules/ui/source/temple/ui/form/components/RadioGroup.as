@@ -35,6 +35,7 @@
 
 package temple.ui.form.components 
 {
+	import temple.core.destruction.DestructEvent;
 	import temple.common.interfaces.IFocusable;
 	import temple.common.interfaces.IHasValue;
 	import temple.common.interfaces.IResettable;
@@ -65,11 +66,11 @@ package temple.ui.form.components
 	[Event(name = "change", type = "flash.events.Event")]
 
 	/**
-	 * Class for implementing radio button groups.
+	 * Class for implementing RadioGroups.
 	 * @example
 	 * Assume 3 objects of type CheckBox are placed on the stage, with instance names "mcRadio1", "mcRadio2", "mcRadio3"
 	 * <listing version="3.0">
-	 * // create new group, add radio buttons, select first button, listen to change event
+	 * // create new group, add radio buttons, select first buttonitemen to change event
 	 * var rg:RadioGroup = new RadioGroup();
 	 * rg.add(mcRadio1, "1");
 	 * rg.add(mcRadio2, "2");
@@ -136,7 +137,7 @@ package temple.ui.form.components
 		protected var _dispatchChangeEvent:Boolean = true;
 
 		/** objects of type Selection */
-		private var _buttons:Array = new Array();
+		private var _items:Array = new Array();
 		private var _focus:Boolean;
 		private var _name:String;
 		private var _prefillValue:*;
@@ -158,17 +159,17 @@ package temple.ui.form.components
 		 */
 		public function add(item:ISelectable, value:* = null, selected:Boolean = false, tabIndex:int = -1):ISelectable 
 		{
-			if (!item) throwError(new TempleArgumentError(this, "Parameter 'button' not defined."));
+			if (!item) throwError(new TempleArgumentError(this, "Parameter 'item' not defined."));
 			
-			if (ArrayUtils.inArrayField(_buttons, 'button', item)) return item;
+			if (ArrayUtils.inArrayField(_items, 'item', item)) return item;
 			
-			if (_debug) logDebug("addButton: " + item + ", value='" + value + "', selected=" + selected + "");
+			if (_debug) logDebug("add: " + item + ", value='" + value + "', selected=" + selected + "");
 			
 			if (item is IDebuggable) addToDebugManager(item as IDebuggable, this);
 			
-			var selection:Selection = new Selection(item, value, (tabIndex == -1 ? RadioGroup._NO_INDEX + _buttons.length : tabIndex));
+			var selection:Selection = new Selection(item, value, (tabIndex == -1 ? RadioGroup._NO_INDEX + _items.length : tabIndex));
 			
-			_buttons.push(selection);
+			_items.push(selection);
 			
 			if (item is IRadioButton && IRadioButton(item).group != this) IRadioButton(item).group = this;
 			
@@ -179,6 +180,7 @@ package temple.ui.form.components
 				IEventDispatcher(item).addEventListener(FocusEvent.FOCUS_OUT, handleButtonFocusOut, false, 0, true);
 				IEventDispatcher(item).addEventListener(FocusEvent.KEY_FOCUS_CHANGE, handleKeyFocusChange, false, 0, true);
 				IEventDispatcher(item).addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown, false, 0, true);
+				IEventDispatcher(item).addEventListener(DestructEvent.DESTRUCT, handleItemDestruct, false, 0, true);
 			}
 			else
 			{
@@ -189,12 +191,12 @@ package temple.ui.form.components
 
 			if (_prefillValue != null && _prefillValue == selection.value)
 			{
-				selection.button.selected = true;
+				selection.item.selected = true;
 				
-				if (_debug) logDebug("addButton: buttons value is prefillValue, select button");
+				if (_debug) logDebug("add: buttons value is prefillValue, select item");
 			}
 			
-			_buttons.sort(sortButtons);
+			_items.sort(sortButtons);
 			
 			return item;
 		}
@@ -202,34 +204,39 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function remove(button:ISelectable):void
+		public function remove(item:ISelectable):void
 		{
-			if (button == _selected) _selected = null;
+			if (_items == null) return;
 			
-			if (_buttons == null) return;
-			
-			var leni:int = _buttons.length;
+			var leni:int = _items.length;
 			var selection:Selection;
-			for (var i:int = 0; i < leni ; i++)
+			loop: for (var i:int = 0; i < leni ; i++)
 			{
-				selection = Selection(_buttons[i]);
-				if (selection.button == button)
+				selection = Selection(_items[i]);
+				if (selection.item == item)
 				{
-					_buttons.splice(i, 1);
-					if (button is IEventDispatcher)
+					_items.splice(i, 1);
+					if (item is IEventDispatcher)
 					{
-						IEventDispatcher(button).removeEventListener(Event.CHANGE, handleButtonChange);
-						IEventDispatcher(button).removeEventListener(FocusEvent.FOCUS_IN, handleButtonFocusIn);
-						IEventDispatcher(button).removeEventListener(FocusEvent.FOCUS_OUT, handleButtonFocusOut);
-						IEventDispatcher(button).removeEventListener(FocusEvent.KEY_FOCUS_CHANGE, handleKeyFocusChange);
-						IEventDispatcher(button).removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+						IEventDispatcher(item).removeEventListener(Event.CHANGE, handleButtonChange);
+						IEventDispatcher(item).removeEventListener(FocusEvent.FOCUS_IN, handleButtonFocusIn);
+						IEventDispatcher(item).removeEventListener(FocusEvent.FOCUS_OUT, handleButtonFocusOut);
+						IEventDispatcher(item).removeEventListener(FocusEvent.KEY_FOCUS_CHANGE, handleKeyFocusChange);
+						IEventDispatcher(item).removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+						IEventDispatcher(item).removeEventListener(DestructEvent.DESTRUCT, handleItemDestruct);
 					}
 					selection.destruct();
 					
-					if (button is IRadioButton) IRadioButton(button).group = null;
+					if (item is IRadioButton) IRadioButton(item).group = null;
 					
-					return;
+					break loop;
 				}
+			}
+			
+			if (item == _selected)
+			{
+				_selected = null;
+				dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
@@ -238,7 +245,7 @@ package temple.ui.form.components
 		 */
 		public function removeAllButtons():void
 		{
-			if (_buttons) while (_buttons.length) remove((_buttons[0] as Selection).button);
+			if (_items) while (_items.length) remove((_items[0] as Selection).item);
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 
@@ -280,30 +287,30 @@ package temple.ui.form.components
 		 */
 		public function get items():Array 
 		{
-			if (_buttons == null) return null;
+			if (_items == null) return null;
 			
 			var a:Array = new Array();
-			var leni:uint = _buttons.length;
+			var leni:uint = _items.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				a.push((_buttons[i] as Selection).button);
+				a.push((_items[i] as Selection).item);
 			}
 			
 			return a;
 		}
 
 		/**
-		 * @return the value of the currently selected button as provided during addition; returns null if no button is selected. 
+		 * @return the value of the currently selected item as provided during addition; returns null if no item is selected. 
 		 */
 		public function get value():* 
 		{
 			if (_selected)
 			{
-				var leni:uint = _buttons.length;
+				var leni:uint = _items.length;
 				for (var i:uint = 0;i < leni; i++) 
 				{
-					var sel:Selection = _buttons[i];
-					if (_selected == sel.button) return sel.value;
+					var sel:Selection = _items[i];
+					if (_selected == sel.item) return sel.value;
 				}
 			}
 			return null;
@@ -320,7 +327,7 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Set the value of the RadioGroup. Value can only be set to the value of one of his buttons. If no button with current value exists value will not be set.
+		 * Set the value of the RadioGroup. Value can only be set to the value of one of his buttons. If no item with current value exists value will not be set.
 		 * @param value the value to set to
 		 * @param dispatchChangeEvent indicates if an Event.CHANGE event will be dispatched when the value is changed, true will dispatch an Event.CHANGE event, false will not 
 		 */
@@ -329,17 +336,17 @@ package temple.ui.form.components
 			_dispatchChangeEvent = dispatchChangeEvent;
 
 			
-			for each (var selection:Selection in _buttons)
+			for each (var selection:Selection in _items)
 			{
 				if (value == null)
 				{
-					selection.button.selected = false;
+					selection.item.selected = false;
 				}
 				else if (selection.value == value)
 				{
 					if (_selected) _selected.selected = false;
-					selection.button.selected = true;
-					_selected = selection.button;
+					selection.item.selected = true;
+					_selected = selection.item;
 					_dispatchChangeEvent = true;
 					return;
 				}
@@ -350,7 +357,7 @@ package temple.ui.form.components
 			
 			if (value != null)
 			{
-				// store value, maybe the button is added later
+				// store value, maybe the item is added later
 				_prefillValue = value;
 			}
 		}
@@ -384,10 +391,10 @@ package temple.ui.form.components
 		public function showError(message:String = null):void 
 		{
 			_hasError = true;
-			var leni:uint = _buttons.length;
+			var leni:uint = _items.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var btn:IHasError = (_buttons[i] as Selection).button as IHasError;
+				var btn:IHasError = (_items[i] as Selection).item as IHasError;
 				if (btn) btn.showError(message); 
 			}
 		}
@@ -398,10 +405,10 @@ package temple.ui.form.components
 		public function hideError():void 
 		{
 			_hasError = false;
-			var leni:uint = _buttons.length;
+			var leni:uint = _items.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var btn:IHasError = (_buttons[i] as Selection).button as IHasError;
+				var btn:IHasError = (_items[i] as Selection).item as IHasError;
 				if (btn) btn.hideError(); 
 			}
 		}
@@ -412,17 +419,17 @@ package temple.ui.form.components
 		public function reset():void 
 		{
 			_dispatchChangeEvent = false;
-			var leni:uint = _buttons.length;
+			var leni:uint = _items.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var sel:Selection = _buttons[i];
-				if (sel.button is IResettable)
+				var sel:Selection = _items[i];
+				if (sel.item is IResettable)
 				{
-					(sel.button as IResettable).reset();
+					(sel.item as IResettable).reset();
 				}
 				else 
 				{
-					var btn:ISelectable = sel.button;
+					var btn:ISelectable = sel.item;
 					btn.selected = false;
 				}
 			}
@@ -447,9 +454,9 @@ package temple.ui.form.components
 			
 			if (value)
 			{
-				if (_buttons && _buttons.length)
+				if (_items && _items.length)
 				{
-					FocusManager.focus = Selection(_buttons[0]).button as InteractiveObject;
+					FocusManager.focus = Selection(_items[0]).item as InteractiveObject;
 				}
 			}
 			else
@@ -504,18 +511,18 @@ package temple.ui.form.components
 		 */
 		public function hasValue(value:*):Boolean 
 		{
-			for each (var selection:Selection in _buttons)
+			for each (var selection:Selection in _items)
 			{
 				if (selection.value == value) return true;
 			}
 			return false;
 		}
 		
-		public function getValueForButton(button:ISelectable):*
+		public function getValueForButton(item:ISelectable):*
 		{
-			for each (var selection:Selection in _buttons)
+			for each (var selection:Selection in _items)
 			{
-				if (selection.button == button) return selection.value;
+				if (selection.item == item) return selection.value;
 			}
 			
 			return null;
@@ -538,17 +545,17 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Selects the next button in the list
+		 * Selects the next item in the list
 		 */
 		public function next():void
 		{
 			var item:ISelectable;
-			var leni:int = _buttons.length;
+			var leni:int = _items.length;
 			for (var i:int = 0; i < leni ;i++)
 			{
-				if (Selection(_buttons[i]).button == _selected)
+				if (Selection(_items[i]).item == _selected)
 				{
-					item = Selection(_buttons[++i < leni ? i : 0]).button;
+					item = Selection(_items[++i < leni ? i : 0]).item;
 					if (item is IFocusable)
 					{
 						(item as IFocusable).focus = true;
@@ -564,17 +571,17 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Selects the previous button in the list
+		 * Selects the previous item in the list
 		 */
 		public function previous():void
 		{
 			var item:ISelectable;
-			var leni:int = _buttons.length;
+			var leni:int = _items.length;
 			for (var i:int = 0; i < leni ; i++) 
 			{
-				if (Selection(_buttons[i]).button == _selected)
+				if (Selection(_items[i]).item == _selected)
 				{
-					item = Selection(_buttons[--i >= 0 ? i : leni-1]).button;
+					item = Selection(_items[--i >= 0 ? i : leni-1]).item;
 					if (item is IFocusable)
 					{
 						(item as IFocusable).focus = true;
@@ -675,6 +682,11 @@ package temple.ui.form.components
 		{
 			if (_submitOnChange) if (_submitOnChange) dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 		}
+		
+		private function handleItemDestruct(event:DestructEvent):void
+		{
+			if (event.target is ISelectable) remove(ISelectable(event.target));
+		}
 
 		private function sortButtons(a:Selection, b:Selection):int
 		{
@@ -689,7 +701,7 @@ package temple.ui.form.components
 			removeAllStrongEventListenersForType(Event.CHANGE);
 			removeAllButtons();
 			_selected = null;
-			_buttons = null;
+			_items = null;
 			
 			if (_name) delete RadioGroup._instances[_name];
 			
@@ -704,28 +716,28 @@ import temple.ui.form.components.ISetValue;
 
 final class Selection extends CoreObject
 {
-	public var button:ISelectable;
+	public var item:ISelectable;
 	public var position:int;
 	
 	private var _value:*;
 
-	public function Selection(button:ISelectable, value:*, position:int) 
+	public function Selection(item:ISelectable, value:*, position:int) 
 	{
-		this.button = button;
+		this.item = item;
 		_value = value;
 		this.position = position;
 	}
 
 	public function get value():*
 	{
-		return _value != null ? _value : button is IHasValue ? IHasValue(button).value : null;
+		return _value != null ? _value : item is IHasValue ? IHasValue(item).value : null;
 	}
 
 	public function set value(value:*):void
 	{
-		if (button is ISetValue)
+		if (item is ISetValue)
 		{
-			ISetValue(button).value = value;
+			ISetValue(item).value = value;
 		}
 		else
 		{
@@ -735,7 +747,8 @@ final class Selection extends CoreObject
 	
 	override public function destruct():void
 	{
-		button = null;
+		item = null;
+		_value = null;
 		
 		super.destruct();
 	}
