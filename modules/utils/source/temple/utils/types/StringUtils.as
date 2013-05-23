@@ -88,8 +88,8 @@ package temple.utils.types
 			
 			if (string.length < length)
 			{
-				var iLim:Number = length - string.length;
-				for (var i:Number = 0;i < iLim;i++)
+				var lim:int = length - string.length;
+				for (var i:int = 0; i < lim;i++)
 				{
 					string = fillChar + string;
 				}
@@ -114,8 +114,8 @@ package temple.utils.types
 		{
 			if (string.length < length)
 			{
-				var iLim:Number = length - string.length;
-				for (var i:Number = 0;i < iLim;i++)
+				var lim:int = length - string.length;
+				for (var i:int = 0; i < lim;i++)
 				{
 					string += fillChar;
 				}
@@ -168,8 +168,8 @@ package temple.utils.types
 		 */	
 		public static function ltrim(string:String):String
 		{
-			var size:Number = string.length;
-			for (var i:Number = 0;i < size;i++)
+			var size:int = string.length;
+			for (var i:int = 0;i < size;i++)
 			{
 				if (string.charCodeAt(i) > 32)
 				{
@@ -186,8 +186,8 @@ package temple.utils.types
 		 */	
 		public static function rtrim(string:String):String
 		{
-			var size:Number = string.length;
-			for (var i:Number = size;i > 0;i--)
+			var size:int = string.length;
+			for (var i:int = size;i > 0;i--)
 			{
 				if (string.charCodeAt(i - 1) > 32)
 				{

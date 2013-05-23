@@ -124,7 +124,7 @@ package temple.utils
 		 */
 		public function restart():void
 		{
-			if (_timer != null && _timer.running == true)
+			if (_timer != null && _timer.running)
 			{
 				_timer.stop();
 			}
@@ -144,7 +144,7 @@ package temple.utils
 		 */
 		public function pause():void
 		{
-			if (_timer != null && _timer.running == true)
+			if (_timer != null && _timer.running)
 			{
 				_remainingMilliseconds = _timer.delay - (getTimer() - _startMilliseconds);
 				_timer.stop();
@@ -186,7 +186,7 @@ package temple.utils
 		 */
 		public function stop():void
 		{
-			if (_timer != null && _timer.running == true)
+			if (_timer != null && _timer.running)
 			{
 				_timer.stop();
 			}

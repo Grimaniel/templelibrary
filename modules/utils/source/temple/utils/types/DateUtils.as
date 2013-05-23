@@ -1133,7 +1133,7 @@ package temple.utils.types
 		 */
 		public static function getWeekDayAsText(date:Date, short:Boolean = false ):String
 		{
-			if (short == true )
+			if (short)
 			{
 				return String(DateUtils.WEEKDAYS_SHORT[date.getDay() ]);
 			}
