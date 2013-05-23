@@ -144,7 +144,7 @@ package
 			
 			if (audio)
 			{
-				_speechApi.request(this.onSpeechResult, audio, _micRecorder.sampleRate, 'en-US', 5, 0);
+				_speechApi.request(onSpeechResult, audio, _micRecorder.sampleRate, 'en-US', 5, 0);
 			}
 		}
 
@@ -171,7 +171,7 @@ package
 				}
 				else
 				{
-					TweenLite.to(_resultField, 0.3, new TweenLiteVars({alpha: 0}).onComplete(this.onHideResultField));
+					TweenLite.to(_resultField, 0.3, new TweenLiteVars({alpha: 0}).onComplete(onHideResultField));
 				}
 			}
 			else
