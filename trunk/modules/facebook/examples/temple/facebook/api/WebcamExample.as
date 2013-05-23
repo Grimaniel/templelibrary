@@ -32,7 +32,7 @@ package
 	import temple.core.media.CoreVideo;
 	import temple.core.utils.CoreTimer;
 	import temple.facebook.adapters.FacebookAdapter;
-	import temple.facebook.adapters.FacebookStandaloneAdapter;
+	import temple.facebook.adapters.FacebookLocalConnectionAdapter;
 	import temple.facebook.api.FacebookAPI;
 	import temple.facebook.data.enum.FacebookConnection;
 	import temple.facebook.data.enum.FacebookConstant;
@@ -186,7 +186,7 @@ package
 			_flash.autoAlpha = 0;
 			new LiquidBehavior(_flash, {left:0, right:0, top:0, bottom: 0});
 			
-			_facebook = new FacebookAPI(FacebookAdapter.available ? new FacebookAdapter(loaderInfo.url.indexOf("https") == 0) : new FacebookStandaloneAdapter());
+			_facebook = new FacebookAPI(FacebookAdapter.available ? new FacebookAdapter(loaderInfo.url.indexOf("https") == 0) : new FacebookLocalConnectionAdapter());
 			_facebook.debug = true;
 			_facebook.init(loaderInfo.parameters.appId);
 			

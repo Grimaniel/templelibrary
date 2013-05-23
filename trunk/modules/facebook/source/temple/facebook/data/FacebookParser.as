@@ -88,6 +88,8 @@ package temple.facebook.data
 
 		private function parseObject(data:Object, objectClass:Class, alias:FacebookFieldAlias, debug:Boolean):Object
 		{
+			if (data == null) return null;
+			
 			var object:Object;
 			var key:String;
 

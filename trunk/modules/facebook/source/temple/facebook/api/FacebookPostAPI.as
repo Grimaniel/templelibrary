@@ -62,9 +62,12 @@ package temple.facebook.api
 		/**
 		 * @inheritDoc
 		 */
-		public function getPosts(callback:Function = null, id:String = 'me', offset:Number = NaN, limit:Number = NaN, fields:FacebookPostFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall
+		public function getPosts(callback:Function = null, id:String = 'me', since:Date = null, until:Date = null, fields:FacebookPostFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall
 		{
-			return getItems(callback, id, offset, limit, fields, params, forceReload);
+			if (since) (params ||= {}).since = int(since.time * .001);
+			if (until) (params ||= {}).until = int(until.time * .001);
+			
+			return getItems(callback, id, NaN, NaN, fields, params, forceReload);
 		}
 
 		/**
