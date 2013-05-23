@@ -70,7 +70,9 @@ package temple.facebook.api
 		/**
 		 * Get all the post on the wall of a user or event.
 		 * 
-		 * If successful, the result contains an Array with IFacebookPostData objects.
+		 * <p>If successful, the result contains an Array with IFacebookPostData objects.</p>
+		 *
+		 * <p>Note: February 2013 Breaking Changes: Offset no longer allowed when searching posts.</p> 
 		 * 
 		 * @param callback a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
 		 * @param id the id of the user (or the album for photos or event for invites).
@@ -81,11 +83,14 @@ package temple.facebook.api
 		 * @param forceReload when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
 		 * 
 		 * @see temple.facebook.data.vo.IFacebookPostData
+		 * @see https://developers.facebook.com/blog/post/478/
 		 */
-		function getPosts(callback:Function = null, id:String = 'me', offset:Number = NaN, limit:Number = NaN, fields:FacebookPostFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall;
+		function getPosts(callback:Function = null, id:String = 'me', since:Date = null, until:Date = null, fields:FacebookPostFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall;
 		
 		/**
 		 * Publish a new post on the given profile's feed/wall
+		 * 
+		 * <p>February 2013 Breaking Changes: Removing ability to post to friends walls via Graph API.</p> 
 		 * 
 		 * @param message The message
 		 * @param id The id of the object where this post belangs to
