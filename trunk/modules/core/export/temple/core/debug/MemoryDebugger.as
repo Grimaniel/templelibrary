@@ -72,7 +72,7 @@ package temple.core.debug
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.0";
+		templelibrary static const VERSION:String = "3.5.1";
 		
 		private var _timer:CoreTimer;
 		private var _includeCreationStack:Boolean;

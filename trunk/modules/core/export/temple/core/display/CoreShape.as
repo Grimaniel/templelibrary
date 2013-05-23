@@ -81,7 +81,7 @@ package temple.core.display
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.0";
+		templelibrary static const VERSION:String = "3.5.1";
 		
 		/**
 		 * @private

@@ -30,7 +30,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library.
 		 */
-		public static const VERSION:String = "3.5.0";
+		public static const VERSION:String = "3.5.1";
 		
 		/**
 		 * The Authors of the Temple.
@@ -42,7 +42,7 @@ package temple.core
 		 * (Format: 'yyyy-mm-dd')
 		 * 
 		 */
-		public static const DATE:String = "2013-01-30";
+		public static const DATE:String = "2013-05-23";
 
 		/**
 		 * The official website of the Temple.

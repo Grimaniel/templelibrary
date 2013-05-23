@@ -73,7 +73,7 @@ package temple.core.debug
 					
 					// If not in Registry, add it there
 					// Registry will add it to the memory again
-					if (Temple.registerObjectsInMemory == true && registryId == 0)
+					if (Temple.registerObjectsInMemory && registryId == 0)
 					{
 						Registry.add(object);
 					}

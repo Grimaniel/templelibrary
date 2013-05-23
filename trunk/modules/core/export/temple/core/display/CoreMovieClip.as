@@ -86,7 +86,7 @@ package temple.core.display
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.0";
+		templelibrary static const VERSION:String = "3.5.1";
 		
 		/**
 		 * @private
@@ -393,6 +393,18 @@ package temple.core.display
 			}
 			return children;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function addChildAtPosition(child:DisplayObject, x:Number, y:Number, index:int = -1):DisplayObject
+		{
+			child.x = x;
+			child.y = y;
+			
+			return index < 0 ? addChild(child) : addChildAt(child, index);
+		}
+		
 		
 		/**
 		 * @inheritDoc

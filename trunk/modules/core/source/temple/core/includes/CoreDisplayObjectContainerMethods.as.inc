@@ -11,3 +11,15 @@
 			}
 			return children;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function addChildAtPosition(child:DisplayObject, x:Number, y:Number, index:int = -1):DisplayObject
+		{
+			child.x = x;
+			child.y = y;
+			
+			return index < 0 ? addChild(child) : addChildAt(child, index);
+		}
+		

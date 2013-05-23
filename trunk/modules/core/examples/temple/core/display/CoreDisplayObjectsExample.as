@@ -52,6 +52,7 @@ package
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
 	
 	[SWF(backgroundColor="#000000", frameRate="31", width="640", height="480")]
 	public class CoreDisplayObjectsExample extends CoreSprite
@@ -63,7 +64,7 @@ package
 		{
 			// create a TextField for displaying the output of the Log
 			_output = new TextField();
-			_output.textColor = 0xffffff;
+			_output.defaultTextFormat = new TextFormat("Arial", 11, 0xffffff);
 			_output.autoSize = TextFieldAutoSize.LEFT;
 			addChild(_output);
 			_output.doubleClickEnabled = true;
