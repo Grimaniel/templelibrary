@@ -94,14 +94,14 @@ package temple.mediaplayers.players.controls
 		 */
 		construct function playerProgressBar(width:Number = NaN, height:Number = NaN):void
 		{
-			this.loadBar ||= getChildByName(loadBarInstanceName) as DisplayObject;
-			this.progressBar ||= getChildByName(progressBarInstanceName) as DisplayObject;
-			this.knob ||= getChildByName(knobInstanceName) as DisplayObject;
-			this.progressLabel ||= getChildByName(progressLabelInstanceName) as ILabel;
-			this.durationLabel ||= getChildByName(durationLabelInstanceName) as ILabel;
+			loadBar ||= getChildByName(loadBarInstanceName) as DisplayObject;
+			progressBar ||= getChildByName(progressBarInstanceName) as DisplayObject;
+			knob ||= getChildByName(knobInstanceName) as DisplayObject;
+			progressLabel ||= getChildByName(progressLabelInstanceName) as ILabel;
+			durationLabel ||= getChildByName(durationLabelInstanceName) as ILabel;
 			
-			this.mouseChildren = false;
-			this.buttonMode = true;
+			mouseChildren = false;
+			buttonMode = true;
 			
 			this.width = contentWidth = width;
 			this.height = contentHeight = height;
@@ -112,9 +112,6 @@ package temple.mediaplayers.players.controls
 			new ScrubBehavior(this);
 			
 			toStringProps.push("player");
-			
-			width;
-			height;
 		}
 
 		public function get player():IPlayer
@@ -186,11 +183,11 @@ package temple.mediaplayers.players.controls
 			{
 				if (_progressBar)
 				{
-					_progressBar.width = Math.max(_player.currentPlayFactor * this.width, .1);
+					_progressBar.width = Math.max(_player.currentPlayFactor * width, .1);
 				}
 				if (_loadBar && _player is IProgressiveDownloadPlayer)
 				{
-					_loadBar.width = IProgressiveDownloadPlayer(_player).bytesLoaded / IProgressiveDownloadPlayer(_player).bytesTotal * this.width || .1;
+					_loadBar.width = IProgressiveDownloadPlayer(_player).bytesLoaded / IProgressiveDownloadPlayer(_player).bytesTotal * width || .1;
 				}
 				else if (_loadBar)
 				{

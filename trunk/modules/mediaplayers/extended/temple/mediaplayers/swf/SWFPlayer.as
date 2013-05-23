@@ -78,7 +78,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get swf():MovieClip
 		{
-			return this.content as MovieClip;
+			return content as MovieClip;
 		}
 
 		/**
@@ -204,7 +204,7 @@ package temple.mediaplayers.swf
 		 */
 		public function get bufferLength():Number
 		{
-			return this.swf ? this.swf.framesLoaded - this.swf.currentFrame : 0;
+			return swf ? swf.framesLoaded - swf.currentFrame : 0;
 		}
 		
 		/**
@@ -319,16 +319,16 @@ package temple.mediaplayers.swf
 		
 		private function handleEnterFrame(event:Event):void
 		{
-			if (this.isLoaded && _isBuffering)
+			if (isLoaded && _isBuffering)
 			{
 				_isBuffering = false;
 				if (_playWhenReady) resume();
 			}
-			else if (this.isLoading)
+			else if (isLoading)
 			{
 				var buffering:Boolean = _isBuffering;
 				
-				_isBuffering = bufferLength && this.bufferLength < this.bufferTime;
+				_isBuffering = bufferLength && bufferLength < bufferTime;
 				
 				if (buffering != _isBuffering)
 				{
@@ -342,7 +342,7 @@ package temple.mediaplayers.swf
 					}
 					else
 					{
-						dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
+						dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, status));
 					}
 				}
 			}
@@ -350,7 +350,7 @@ package temple.mediaplayers.swf
 		
 		private function handleMovieClipPlayerStatusChange(event:StatusEvent):void
 		{
-			dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
+			dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, status));
 		}
 
 		/**
