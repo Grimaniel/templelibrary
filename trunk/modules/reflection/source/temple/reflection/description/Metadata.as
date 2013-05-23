@@ -48,7 +48,7 @@ package temple.reflection.description
 		public function Metadata(xml:XML)
 		{
 			_xml = xml;
-			this.toStringProps.push("name");
+			toStringProps.push("name");
 		}
 
 		public function get name():String
