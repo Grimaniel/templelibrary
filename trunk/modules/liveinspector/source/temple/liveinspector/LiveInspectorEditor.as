@@ -83,15 +83,15 @@ package temple.liveinspector
 			_propertyName = propertyName;
 			_scope = scope;
 			
-			this.type = TextFieldType.INPUT;
-			this.defaultTextFormat = LiveInspector.THEME_EDITOR_TEXTFORMAT;
+			type = TextFieldType.INPUT;
+			defaultTextFormat = LiveInspector.THEME_EDITOR_TEXTFORMAT;
 			filters = [new GlowFilter(color, .1, 5, 5, 2, 3)];
 			
-			this.background = true;
-			this.backgroundColor = LiveInspector.THEME_BACKGROUND_COLOR;
+			background = true;
+			backgroundColor = LiveInspector.THEME_BACKGROUND_COLOR;
 
-			this.border = true;
-			this.borderColor = LiveInspector.THEME_BORDER_COLOR;
+			border = true;
+			borderColor = LiveInspector.THEME_BORDER_COLOR;
 			
 			addEventListener(Event.CHANGE, handleValueChange, false, 0, true);
 			addEventListener(KeyboardEvent.KEY_DOWN, handleKeyPress, false, 0, true);
@@ -101,22 +101,22 @@ package temple.liveinspector
 			{
 				case 'int':
 				{
-					this.restrict = "0-9-";
+					restrict = "0-9-";
 					break;
 				}
 				case 'uint':
 				{
-					this.restrict = "0-9";
+					restrict = "0-9";
 					break;
 				}
 				case 'Number':
 				{
-					this.restrict = "0-9-.";
+					restrict = "0-9-.";
 					break;
 				}
 				case 'Boolean':
 				{
-					this.restrict = "falsetru";
+					restrict = "falsetru";
 					break;
 				}
 			}

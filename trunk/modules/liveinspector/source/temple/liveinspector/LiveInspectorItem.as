@@ -342,9 +342,9 @@ package temple.liveinspector
 	
 		private function layoutContainer():void
 		{
-			if (this.parent && this.parent is LayoutContainer) 
+			if (parent && parent is LayoutContainer) 
 			{
-				LayoutContainer(this.parent).layoutChildren();
+				LayoutContainer(parent).layoutChildren();
 			}
 		}
 		
