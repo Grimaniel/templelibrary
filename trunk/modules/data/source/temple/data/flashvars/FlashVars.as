@@ -91,7 +91,7 @@ package temple.data.flashvars
 		 */
 		public static function isInitialized():Boolean
 		{
-			return Boolean(FlashVars._flashvars != null);
+			return FlashVars._flashvars != null;
 		}
 
 		/**

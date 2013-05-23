@@ -97,7 +97,8 @@ package temple.data.url
 		}
 		
 		/**
-		 * A string that determines the various window features to be included in the popup window (like status bar, address bar etc)
+		 * A string that determines the various window features to be included in the popup window (like status bar,
+		 * address bar etc)
 		 */
 		public function get features():String
 		{

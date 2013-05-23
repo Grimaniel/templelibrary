@@ -212,13 +212,13 @@ package temple.data.url
 			
 			if (!_isLoaded)
 			{
-				logError("getURLDataByName: URLs are not loaded yet");
+				logError("URLs are not loaded yet");
 				return null;
 			}
 			
 			if (name in _urls) return _urls[name];
 			
-			logError("getURLDataByName: url with name '" + name + "' not found. Check urls.xml!");
+			logError("URL with name '" + name + "' not found. Check urls.xml!");
 			logError(TraceUtils.stackTrace());
 			
 			return null;
@@ -233,7 +233,7 @@ package temple.data.url
 			
 			if (!_isLoaded)
 			{
-				logError("getURLByName: URLs are not loaded yet");
+				logError("URLs are not loaded yet");
 				return null;
 			}
 			
@@ -243,7 +243,7 @@ package temple.data.url
 				return variables ? StringUtils.replaceVars(url, variables, true) : url;
 			}
 			
-			logError("getURLByName: url with name '" + name + "' not found. Check urls.xml!");
+			logError("URL with name '" + name + "' not found. Check urls.xml!");
 			return null;
 		}
 		
@@ -305,7 +305,8 @@ package temple.data.url
 					if (userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7))
 					{
 						if (debug) logDebug("openURL using JavaScript, userAgent=\"" + userAgent + "\"");
-						ExternalInterface.call(<script><![CDATA[window.open]]></script>, url, target);
+						// window.open call must be wrapped inside an anonymous function to prevent a "too much recursion" error
+						ExternalInterface.call(<script><![CDATA[function (url, target) {window.open(url, target); }]]></script>, url, target);
 					}
 					else
 					{
@@ -448,12 +449,12 @@ package temple.data.url
 		{
 			if (_group)
 			{
-				if (debug) logInfo("processData: group is set to '" + _group + "'");
+				if (debug) logInfo("Group is set to '" + _group + "'");
 			}
 			else
 			{
 				_group = _rawData.@currentgroup; 
-				if (debug) logInfo("processData: group is '" + _group + "'");
+				if (debug) logInfo("Group is '" + _group + "'");
 			}
 			
 			var groups:Array = _group.split(',');
@@ -532,7 +533,7 @@ package temple.data.url
 				// check if currentgroup is valid
 				if (groups[i] && _rawData.group.(@id == (groups[i])) == undefined)
 				{
-					logError("processData: group '" + groups[i] + "' not found, check urls.xml");
+					logError("Group '" + groups[i] + "' not found, check urls.xml");
 				}
 				else
 				{
@@ -549,7 +550,7 @@ package temple.data.url
 			{
 				if (ud.name in _urls)
 				{
-					logError("Duplicate URL name '" + ud.name + "'");
+					logWarn("Duplicate URL name '" + ud.name + "'");
 				}
 				else
 				{

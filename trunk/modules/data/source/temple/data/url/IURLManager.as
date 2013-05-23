@@ -81,6 +81,8 @@ package temple.data.url
 		 * @param url the URL to open
 		 * @param target the name of the target window
 		 * @param name the name of the URL which is added to the URLEvent
+		 * @param features A string that determines the various window features to be included in the popup window (like
+		 * status bar, address bar etc)
 		 */
 		function open(url:String, target:String = null, name:String = null, features:String = null):void;
 		
@@ -117,7 +119,7 @@ package temple.data.url
 		 * Removes a groupname from the urlgroups. Will process the xml again.
 		 * @param group The groupname to remove
 		 */
-		function removeGroup(group:String):void
+		function removeGroup(group:String):void;
 		
 		/**
 		 * Checks if a variable with a specific name is defined.
@@ -134,6 +136,6 @@ package temple.data.url
 		 * @param name the variable name
 		 * @param value the variable value
 		 */
-		function setVariable(name:String, value:String):void
+		function setVariable(name:String, value:String):void;
 	}
 }
