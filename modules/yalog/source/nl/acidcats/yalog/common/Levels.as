@@ -18,7 +18,7 @@ package nl.acidcats.yalog.common
 {
 	import temple.core.debug.log.LogLevel;
 
-	public class Levels 
+	public final class Levels 
 	{
 		public static var DEBUG:uint = 0;
 		public static var INFO:uint = 1;
@@ -26,7 +26,12 @@ package nl.acidcats.yalog.common
 		public static var WARN:uint = 3;
 		public static var FATAL:uint = 4;
 		public static var STATUS:uint = 5;
+		
+		private static const _NAMES:Vector.<String> = Vector.<String>([LogLevel.DEBUG, LogLevel.INFO, LogLevel.WARN, LogLevel.ERROR, LogLevel.FATAL, LogLevel.STATUS]);
 
-		public static var NAMES:Array = [LogLevel.DEBUG, LogLevel.INFO, LogLevel.ERROR, LogLevel.WARN, LogLevel.FATAL, LogLevel.STATUS];
+		public static function getName(level:uint):String
+		{
+			return level < _NAMES.length ? _NAMES[level] : null;
+		}
 	}
 }
