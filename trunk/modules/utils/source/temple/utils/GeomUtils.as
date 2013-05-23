@@ -44,7 +44,7 @@ package temple.utils
 	{
 		/**
 		 * Converts an angle from radians to degrees.
-		 * === WARNING: this is MUCH slower than the actual calculation : "radians / Math.PI * 180" ===
+		 * <p><strong>WARNING: this is MUCH slower than the actual calculation : "radians / Math.PI * 180"</strong></p>
 		 *  
 		 * @param radians The angle in radians
 		 * @return The angle in degrees
@@ -56,7 +56,7 @@ package temple.utils
 		
 		/**
 		 * Converts an angle from degrees to radians.
-		 * === WARNING: this is MUCH slower than the actual calculation : "degrees / 180 * Math.PI" ===
+		 * <p><strong>WARNING: this is MUCH slower than the actual calculation : "degrees / 180 * Math.PI"</strong></p>
 		 * 
 		 * @param degrees The angle in degrees
 		 * @return The angle in radians

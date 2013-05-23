@@ -166,7 +166,7 @@ package temple.utils
 		 */
 		public function resume():void
 		{
-			if (_paused == true)
+			if (_paused)
 			{
 				_endDate.setMilliseconds(_endDate.getMilliseconds() - (getTimer() - _pauseTime));
 				_paused = false;

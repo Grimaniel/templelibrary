@@ -102,7 +102,7 @@ package temple.utils
 				{
 					_method();
 				}
-				if (_destructAfterCall == true)
+				if (_destructAfterCall)
 				{
 					destruct();
 				}

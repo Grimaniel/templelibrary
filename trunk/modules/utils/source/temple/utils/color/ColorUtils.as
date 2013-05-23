@@ -309,6 +309,51 @@ package temple.utils.color
 			}
 			return new ARGB(rgb.r, rgb.g, rgb.b);
 		}
+		
+		/**
+		 * Convert RGB to HSB
+		 */
+		public static function RGBtoHSB(r:int, g:int, b:int):Object
+		{
+			var hsb:Object = {};
+			var _max:Number = Math.max(r,g,b);
+			var _min:Number = Math.min(r,g,b);
+			 
+			hsb.s = (_max != 0) ? (_max - _min) / _max * 100: 0;
+			hsb.b = _max / 255 * 100;
+			 
+			if(hsb.s == 0)
+			{
+				hsb.h = 0;
+			}
+			else
+			{
+				switch(_max)
+				{
+					case r:
+					{
+						hsb.h = (g - b)/(_max - _min)*60 + 0;
+						break;
+					}
+					case g:
+					{
+						hsb.h = (b - r)/(_max - _min)*60 + 120;
+						break;
+					}
+					case b:
+					{
+						hsb.h = (r - g)/(_max - _min)*60 + 240;
+						break;
+					}
+				}
+			}
+			 
+			hsb.h = Math.min(360, Math.max(0, Math.round(hsb.h)));
+			hsb.s = Math.min(100, Math.max(0, Math.round(hsb.s)));
+			hsb.b = Math.min(100, Math.max(0, Math.round(hsb.b)));
+			 
+			return hsb;
+		}
 
 		/**
 		 * Generates a random color with a specific saturation and brightness

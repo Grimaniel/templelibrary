@@ -96,7 +96,7 @@ package temple.utils
 		{
 			if (name == null || name == '') throwError(new ArgumentError('null or empty name'));
 			
-			if (DefinitionProvider._isInitialized == true)
+			if (DefinitionProvider._isInitialized)
 			{
 				//check our cache
 				if (DefinitionProvider._definitionCache[name] !== undefined)
@@ -130,7 +130,7 @@ package temple.utils
 		 */
 		public static function getDefinition(name:String):Class
 		{
-			if (DefinitionProvider._isInitialized == true)
+			if (DefinitionProvider._isInitialized)
 			{
 				//check our cache
 				if (DefinitionProvider._definitionCache[name] !== undefined)
@@ -177,7 +177,7 @@ package temple.utils
 		{
 			var count:uint = 0;
 			
-			if (DefinitionProvider._isInitialized == true)
+			if (DefinitionProvider._isInitialized)
 			{
 				for each (var appDomain:ApplicationDomain in DefinitionProvider._domainRegister)
 				{
