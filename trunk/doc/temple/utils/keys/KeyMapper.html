@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.5.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/utils/keys/KeyMapper.html&amp;temple/utils/keys/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">KeyMapper</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#constantSummary">Constants</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.5.1</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/utils/keys/KeyMapper.html&amp;temple/utils/keys/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">KeyMapper</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#constantSummary">Constants</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("KeyMapper"); titleBar_setSubNav(true,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -183,19 +183,19 @@ package
             _sprite.y = 200;
             
             // Create a KeyMapper to control the Sprite with the keyboard 
-            var keyMapper:KeyMapper = new KeyMapper(this.stage);
+            var keyMapper:KeyMapper = new KeyMapper(stage);
             
             // Use cursor keys to move left, right, up and down
-            keyMapper.map(KeyCode.LEFT, this.moveHorizontal, [-1]);
-            keyMapper.map(KeyCode.RIGHT, this.moveHorizontal, [1]);
-            keyMapper.map(KeyCode.UP, this.moveVertical, [-1]);
-            keyMapper.map(KeyCode.DOWN, this.moveVertical, [1]);
+            keyMapper.map(KeyCode.LEFT, moveHorizontal, [-1]);
+            keyMapper.map(KeyCode.RIGHT, moveHorizontal, [1]);
+            keyMapper.map(KeyCode.UP, moveVertical, [-1]);
+            keyMapper.map(KeyCode.DOWN, moveVertical, [1]);
             
             // use Shift key to move even faster
-            keyMapper.map(KeyCode.LEFT + KeyMapper.SHIFT, this.moveHorizontal, [-20]);
-            keyMapper.map(KeyCode.RIGHT + KeyMapper.SHIFT, this.moveHorizontal, [20]);
-            keyMapper.map(KeyCode.UP + KeyMapper.SHIFT, this.moveVertical, [-20]);
-            keyMapper.map(KeyCode.DOWN + KeyMapper.SHIFT, this.moveVertical, [20]);
+            keyMapper.map(KeyCode.LEFT + KeyMapper.SHIFT, moveHorizontal, [-20]);
+            keyMapper.map(KeyCode.RIGHT + KeyMapper.SHIFT, moveHorizontal, [20]);
+            keyMapper.map(KeyCode.UP + KeyMapper.SHIFT, moveVertical, [-20]);
+            keyMapper.map(KeyCode.DOWN + KeyMapper.SHIFT, moveVertical, [20]);
             
             logInfo("Use the following keys to control the object:\n" + keyMapper.getInfo());
         }
