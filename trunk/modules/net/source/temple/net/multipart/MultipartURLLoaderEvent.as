@@ -53,8 +53,8 @@ package temple.net.multipart
 		{
 			super(type);
 			
-			this.bytesTotal = bytesWritten;
-			this.bytesWritten = bytesTotal;
+			this.bytesTotal = bytesTotal;
+			this.bytesWritten = bytesWritten;
 		}
 		
 	}

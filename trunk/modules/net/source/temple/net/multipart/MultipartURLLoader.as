@@ -722,8 +722,8 @@ internal class VariablePart
 
 	public function dispose():void
 	{
-		this.name = null;
-		this.value = null;
-		this.contentType = null;
+		name = null;
+		value = null;
+		contentType = null;
 	}
 }
