@@ -67,7 +67,7 @@ package temple.core.debug
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.0";
+		templelibrary static const VERSION:String = "3.5.1";
 		
 		private static var _registry:Dictionary;
 		private static var _debug:Boolean; 
@@ -107,7 +107,7 @@ package temple.core.debug
 					
 					// If not in Registry, add it there
 					// Registry will add it to the memory again
-					if (Temple.registerObjectsInMemory == true && registryId == 0)
+					if (Temple.registerObjectsInMemory && registryId == 0)
 					{
 						Registry.add(object);
 					}

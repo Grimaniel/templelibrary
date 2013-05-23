@@ -52,7 +52,7 @@ package temple.core.utils
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.0";
+		templelibrary static const VERSION:String = "3.5.1";
 		
 		public static const WEB:String = 'web';
 		public static const IDE:String = 'IDE';
@@ -104,7 +104,7 @@ package temple.core.utils
 		 * Determines if the SWF is being served on the internet.
 		 * 	
 		 * @param location: DisplayObject to get location of.
-		 * @return Returns {@code true} if SWF is being served on the internet; otherwise {@code false}.
+		 * @return Returns <code>true</code> if SWF is being served on the internet; otherwise <code>false</code>.
 		 * @usage
 		 * <code>
 		 * trace(LocationUtil.isWeb(_root));
@@ -120,7 +120,7 @@ package temple.core.utils
 		 *	
 		 * @param object: MovieClip to compare location of.
 		 * @param domain: Web domain.
-		 * @return Returns {@code true} if file's embed location matched passed domain; otherwise {@code false}.
+		 * @return Returns <code>true</code> if file's embed location matched passed domain; otherwise <code>false</code>.
 		 * @usage
 		 * 	To check for domain:
 		 *		<code>
@@ -158,7 +158,7 @@ package temple.core.utils
 		/**
 		 * Determines if the SWF is running in a browser plug-in.
 		 *	
-		 * @return Returns {@code true} if SWF is running in the Flash Player browser plug-in; otherwise {@code false}.
+		 * @return Returns <code>true</code> if SWF is running in the Flash Player browser plug-in; otherwise <code>false</code>.
 		 */
 		public static function isPlugin():Boolean 
 		{
@@ -168,7 +168,7 @@ package temple.core.utils
 		/**
 		 * Determines if the SWF is running in the IDE.
 		 *
-		 * @return Returns {@code true} if SWF is running in the Flash Player version used by the external player or test movie mode; otherwise {@code false}.
+		 * @return Returns <code>true</code> if SWF is running in the Flash Player version used by the external player or test movie mode; otherwise <code>false</code>.
 		 */
 		public static function isIDE():Boolean 
 		{
@@ -178,7 +178,7 @@ package temple.core.utils
 		/**
 		 * Determines if the SWF is running in the StandAlone player.
 		 *	
-		 * @return Returns {@code true} if SWF is running in the Flash StandAlone Player; otherwise {@code false}.
+		 * @return Returns <code>true</code> if SWF is running in the Flash StandAlone Player; otherwise <code>false</code>.
 		 */
 		public static function isStandAlone():Boolean 
 		{
@@ -188,7 +188,7 @@ package temple.core.utils
 		/**
 		 * Determines if the runtime environment is an Air application.
 		 *
-		 * @return Returns {@code true} if the runtime environment is an Air application; otherwise {@code false}.
+		 * @return Returns <code>true</code> if the runtime environment is an Air application; otherwise <code>false</code>.
 		 */
 		public static function isAirApplication():Boolean 
 		{
