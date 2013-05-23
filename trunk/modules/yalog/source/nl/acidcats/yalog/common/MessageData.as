@@ -31,7 +31,7 @@ package nl.acidcats.yalog.common
 		/**
 		 * the time of dispatch
 		 */
-		public var time:Number; 
+		public var time:uint; 
 		
 		/**
 		 * name of sender
@@ -51,7 +51,7 @@ package nl.acidcats.yalog.common
 		/**
 		 * id of the connection 
 		 */
-		public var connectionId:Number;
+		public var connectionId:uint;
 
 		/**
 		 * Name of the connection 
@@ -59,12 +59,16 @@ package nl.acidcats.yalog.common
 		public var connectionName:String;
 		
 		/**
-		 * ID of the channel
+		 * id of the channel
 		 */
-		public var channelID:Number;
+		public var channelId:uint;
 		
+		/**
+		 * The current frame
+		 */
+		public var frame:uint;
 
-		public function MessageData(text:String, level:uint, time:Number = Number.NaN, sender:String = null, senderId:uint = 0, stackTrace:String = null, connectionId:Number = NaN) 
+		public function MessageData(text:String = null, level:uint = 0, time:uint = 0, sender:String = null, senderId:uint = 0, stackTrace:String = null, frame:uint = 0, connectionId:int = 0) 
 		{
 			switch (text)
 			{
@@ -82,6 +86,7 @@ package nl.acidcats.yalog.common
 			this.sender = sender;
 			this.senderId = senderId;
 			this.stackTrace = stackTrace;
+			this.frame = frame;
 			this.connectionId = connectionId;
 		}
 
@@ -89,7 +94,7 @@ package nl.acidcats.yalog.common
 		{
 			var s:String = "";
 			if (!isNaN(time)) s += time + "\t";
-			s += Levels.NAMES[level] + ": " + text;
+			s += Levels.getName(level) + ": " + text;
 			if (sender != null) s += " -- " + sender;
 			
 			return s;

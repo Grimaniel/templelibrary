@@ -72,22 +72,22 @@ package nl.acidcats.yalog.util
 			switch (event.level) 
 			{
 				case LogLevel.DEBUG: 
-					Yalog.debug(event.data, event.sender, event.objectId, event.stackTrace); 
+					Yalog.debug(event.data, event.sender, event.objectId, event.stackTrace, event.frame); 
 					break;
 				case LogLevel.ERROR: 
-					Yalog.error(event.data, event.sender, event.objectId, event.stackTrace); 
+					Yalog.error(event.data, event.sender, event.objectId, event.stackTrace, event.frame); 
 					break;
 				case LogLevel.FATAL: 
-					Yalog.fatal(event.data, event.sender, event.objectId, event.stackTrace); 
+					Yalog.fatal(event.data, event.sender, event.objectId, event.stackTrace, event.frame); 
 					break;
 				case LogLevel.INFO: 
-					Yalog.info(event.data, event.sender, event.objectId, event.stackTrace); 
+					Yalog.info(event.data, event.sender, event.objectId, event.stackTrace, event.frame); 
 					break;
 				case LogLevel.STATUS: 
-					Yalog.info(event.data, event.sender, event.objectId, event.stackTrace); 
+					Yalog.info(event.data, event.sender, event.objectId, event.stackTrace, event.frame); 
 					break;
 				case LogLevel.WARN: 
-					Yalog.warn(event.data, event.sender, event.objectId, event.stackTrace); 
+					Yalog.warn(event.data, event.sender, event.objectId, event.stackTrace, event.frame); 
 					break;
 			}
 		}

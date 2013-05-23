@@ -71,9 +71,9 @@ package nl.acidcats.yalog
 		 *	@param text: the message
 		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function debug(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
+		public static function debug(text:String, sender:String, objectId:uint = 0, stackTrace:String = null, frame:uint = 0):void 
 		{
-			Yalog.sendToConsole(text, Levels.DEBUG, sender, objectId, stackTrace);
+			Yalog.sendToConsole(text, Levels.DEBUG, sender, objectId, stackTrace, frame);
 		}
 
 		/**
@@ -81,9 +81,9 @@ package nl.acidcats.yalog
 		 *	@param text: the message
 		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function info(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
+		public static function info(text:String, sender:String, objectId:uint = 0, stackTrace:String = null, frame:uint = 0):void 
 		{
-			Yalog.sendToConsole(text, Levels.INFO, sender, objectId, stackTrace);
+			Yalog.sendToConsole(text, Levels.INFO, sender, objectId, stackTrace, frame);
 		}
 
 		/**
@@ -91,9 +91,9 @@ package nl.acidcats.yalog
 		 *	@param text: the message
 		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function error(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
+		public static function error(text:String, sender:String, objectId:uint = 0, stackTrace:String = null, frame:uint = 0):void 
 		{
-			Yalog.sendToConsole(text, Levels.ERROR, sender, objectId, stackTrace);
+			Yalog.sendToConsole(text, Levels.ERROR, sender, objectId, stackTrace, frame);
 		}
 
 		/**
@@ -101,9 +101,9 @@ package nl.acidcats.yalog
 		 *	@param text: the message
 		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function warn(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
+		public static function warn(text:String, sender:String, objectId:uint = 0, stackTrace:String = null, frame:uint = 0):void 
 		{
-			Yalog.sendToConsole(text, Levels.WARN, sender, objectId, stackTrace);
+			Yalog.sendToConsole(text, Levels.WARN, sender, objectId, stackTrace, frame);
 		}
 
 		/**
@@ -111,9 +111,9 @@ package nl.acidcats.yalog
 		 *	@param text: the message
 		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		public static function fatal(text:String, sender:String, objectId:uint = 0, stackTrace:String = null):void 
+		public static function fatal(text:String, sender:String, objectId:uint = 0, stackTrace:String = null, frame:uint = 0):void 
 		{
-			Yalog.sendToConsole(text, Levels.FATAL, sender, objectId, stackTrace);
+			Yalog.sendToConsole(text, Levels.FATAL, sender, objectId, stackTrace, frame);
 		}
 
 		/**
@@ -122,9 +122,9 @@ package nl.acidcats.yalog
 		 *	@param level: the level of importance
 		 *	@param sender: a String denoting the sender (p.e. the classname)
 		 */
-		private static function sendToConsole(text:String, level:uint, sender:String, objectId:uint, stackTrace:String):void 
+		private static function sendToConsole(text:String, level:uint, sender:String, objectId:uint, stackTrace:String, frame:uint):void 
 		{
-			var md:MessageData = new MessageData(text, level, getTimer(), sender, objectId, stackTrace);
+			var md:MessageData = new MessageData(text, level, getTimer(), sender, objectId, stackTrace, frame);
 			
 			if (Yalog._showTrace) trace(md.toString());
 
@@ -290,7 +290,7 @@ package nl.acidcats.yalog
 		 */
 		private function sendData(data:MessageData):void 
 		{
-			data.channelID = _receiver.channelID;
+			data.channelId = _receiver.channelId;
 			data.connectionId = Yalog.connectionId;
 			data.connectionName = Yalog.connectionName;
 			
@@ -459,7 +459,7 @@ dynamic final class PongConnection extends LocalConnection
 {
 	public static var EVENT_PONG_RECEIVED:String = "onPongReceived";
 
-	private var _channelID:int;
+	private var _channelId:int;
 	private var _receiverChannel:String;
 
 	/**
@@ -480,13 +480,13 @@ dynamic final class PongConnection extends LocalConnection
 	public function start():Boolean 
 	{
 		var receiverConnected:Boolean = false;
-		_channelID = 0;
+		_channelId = 0;
 
 		// loop available channels, try to connect
 		do 
 		{
-			_channelID++;
-			_receiverChannel = Functions.CHANNEL_PING + _channelID;
+			_channelId++;
+			_receiverChannel = Functions.CHANNEL_PING + _channelId;
 			
 			try 
 			{
@@ -498,7 +498,7 @@ dynamic final class PongConnection extends LocalConnection
 				receiverConnected = false;
 			}
 		}
-		while (!receiverConnected && (_channelID < Functions.MAX_CHANNEL_COUNT));
+		while (!receiverConnected && (_channelId < Functions.MAX_CHANNEL_COUNT));
 		
 		if (receiverConnected) 
 		{
@@ -515,9 +515,9 @@ dynamic final class PongConnection extends LocalConnection
 		return _receiverChannel;
 	}
 	
-	public function get channelID():int
+	public function get channelId():int
 	{
-		return _channelID;
+		return _channelId;
 	}
 
 	/**
