@@ -61,7 +61,7 @@ package temple.mediaplayers.players
 		function seek(seconds:Number = 0):void;
 
 		/**
-		 *	the current progress time in seconds.
+		 *	The current progress time in seconds.
 		 */
 		function get currentPlayTime():Number;
 		

@@ -608,7 +608,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get bytesLoaded():uint 
 		{
-			if (_isClosed == true) return _bytesLoaded;
+			if (_isClosed) return _bytesLoaded;
 			return _netStream.bytesLoaded;
 		}
 
@@ -617,7 +617,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get bytesTotal():uint 
 		{
-			if (_isClosed == true) return _bytesTotal;
+			if (_isClosed) return _bytesTotal;
 			return _netStream.bytesTotal;
 		}
 

@@ -102,15 +102,15 @@ package temple.mediaplayers.players.controls
 
 		construct function playerControls():void
 		{
-			this.mouseChildren = true;
-			this.mouseEnabled = true;
+			mouseChildren = true;
+			mouseEnabled = true;
 			
-			this.playButton ||= getChildByName(playButtonInstanceName) as InteractiveObject;
-			this.pauseButton ||= getChildByName(pauseButtonInstanceName) as InteractiveObject;
-			this.resumeButton ||= getChildByName(resumeButtonInstanceName) as InteractiveObject;
-			this.muteButton ||= getChildByName(PlayerControls.muteButtonInstanceName) as InteractiveObject;
-			this.fullScreenButton ||= getChildByName(PlayerControls.fullScreenButtonInstanceName) as InteractiveObject;
-			this.progressBar ||= getChildByName(PlayerControls.progressBarInstanceName) as PlayerProgressBar;
+			playButton ||= getChildByName(playButtonInstanceName) as InteractiveObject;
+			pauseButton ||= getChildByName(pauseButtonInstanceName) as InteractiveObject;
+			resumeButton ||= getChildByName(resumeButtonInstanceName) as InteractiveObject;
+			muteButton ||= getChildByName(PlayerControls.muteButtonInstanceName) as InteractiveObject;
+			fullScreenButton ||= getChildByName(PlayerControls.fullScreenButtonInstanceName) as InteractiveObject;
+			progressBar ||= getChildByName(PlayerControls.progressBarInstanceName) as PlayerProgressBar;
 			
 			_autoHideTimer = new CoreTimer(1000);
 			_autoHideTimer.addEventListener(TimerEvent.TIMER, handleAutoHideTimerEvent);
@@ -343,7 +343,7 @@ package temple.mediaplayers.players.controls
 		{
 			super.show(instant, onComplete);
 			_autoHideTimer.reset();
-			if (_autoHide && this.enabled) _autoHideTimer.start();
+			if (_autoHide && enabled) _autoHideTimer.start();
 		}
 		
 		override public function hide(instant:Boolean = false, onComplete:Function = null):void
@@ -399,7 +399,7 @@ package temple.mediaplayers.players.controls
 		
 		override public function set enabled(value:Boolean):void
 		{
-			this.mouseEnabled = mouseChildren = super.enabled = value;
+			mouseEnabled = mouseChildren = super.enabled = value;
 			if (_progressBar) _progressBar.enabled = value;
 		}
 		
@@ -416,7 +416,7 @@ package temple.mediaplayers.players.controls
 					pause();
 					break;
 				case _resumeButton:
-					if (this.status == PlayerStatus.STOPPED)
+					if (status == PlayerStatus.STOPPED)
 					{
 						play();
 					}
@@ -426,10 +426,10 @@ package temple.mediaplayers.players.controls
 					}
 					break;
 				case _muteButton:
-					this.volume = volume ? 0 : 1;
+					volume = volume ? 0 : 1;
 					break;
 				case _fullScreenButton:
-					if (this.stage)
+					if (stage)
 					{
 						stage.displayState = stage.displayState == StageDisplayState.NORMAL ? StageDisplayState.FULL_SCREEN : StageDisplayState.NORMAL;
 					}
@@ -439,8 +439,8 @@ package temple.mediaplayers.players.controls
 		
 		private function handlePlayerStatusChange(event:StatusEvent):void
 		{
-			updateToStatus(this.status);
-			dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, this.status));
+			updateToStatus(status);
+			dispatchEvent(new StatusEvent(StatusEvent.STATUS_CHANGE, status));
 		}
 
 		private function updateToStatus(status:String):void
@@ -454,17 +454,17 @@ package temple.mediaplayers.players.controls
 		
 		private function handleAutoHideTimerEvent(event:TimerEvent):void
 		{
-			if (_autoHide && this.enabled) hide();
+			if (_autoHide && enabled) hide();
 		}
 		
 		private function handleMouseMove(event:MouseEvent):void
 		{
-			if (_autoHide && this.enabled && !this.shown) show();
+			if (_autoHide && enabled && !shown) show();
 		}
 		
 		private function handlePlayerRollOut(event:MouseEvent):void
 		{
-			if (_autoHide && this.shown) hide();
+			if (_autoHide && shown) hide();
 		}
 		
 		private function handlePlayerVolumeChanged(event:SoundEvent):void
@@ -477,12 +477,12 @@ package temple.mediaplayers.players.controls
 		 */
 		override public function destruct():void
 		{
-			this.player = null;
-			this.playButton = null;
-			this.pauseButton = null;
-			this.resumeButton = null;
-			this.muteButton = null;
-			this.progressBar = null;
+			player = null;
+			playButton = null;
+			pauseButton = null;
+			resumeButton = null;
+			muteButton = null;
+			progressBar = null;
 			
 			if (_autoHideTimer)
 			{
