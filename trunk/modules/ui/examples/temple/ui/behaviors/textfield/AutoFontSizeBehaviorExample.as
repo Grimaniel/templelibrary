@@ -15,9 +15,7 @@ package
 	import temple.ui.behaviors.textfield.AutoFontSizeBehavior;
 
 	import flash.text.TextField;
-	/**
-	 * @author Thijs Broerse
-	 */
+
 	public class AutoFontSizeBehaviorExample extends DocumentClassExample 
 	{
 		public var textField:TextField;
