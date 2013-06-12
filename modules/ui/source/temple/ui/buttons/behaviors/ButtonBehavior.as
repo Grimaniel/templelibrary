@@ -43,7 +43,6 @@ package temple.ui.buttons.behaviors
 	import temple.ui.focus.FocusManager;
 	import temple.utils.keys.KeyCode;
 
-	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
