@@ -8,7 +8,7 @@
  *  
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/animation/TimelineControllerExample.swf" target="_blank">View this example</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/behaviors/DragBehaviorExample.as" target="_blank">View source</a></p>
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/animation/TimelineControllerExample.as" target="_blank">View source</a></p>
  */
 package  
 {

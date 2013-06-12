@@ -8,7 +8,7 @@
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/ImageLoaderExample.swf" target="_blank">View this example</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/states/StatesExample.as" target="_blank">View source</a></p>
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/ImageLoaderExample.as" target="_blank">View source</a></p>
  */
 package  
 {

@@ -8,7 +8,7 @@
  * 
  * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/behaviors/textfield/VerticalAlignTextFieldBehaviorExample.swf" target="_blank">View this example</a></p>
  * 
- * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/behaviors/textfield/AutoNextTextFieldBehaviorExample.as" target="_blank">View source</a></p>
+ * <p><a href="http://templelibrary.googlecode.com/svn/trunk/modules/ui/examples/temple/ui/behaviors/textfield/VerticalAlignTextFieldBehaviorExample.as" target="_blank">View source</a></p>
  */
 package  
 {
