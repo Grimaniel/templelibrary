@@ -35,11 +35,6 @@
 
 package temple.codecomponents.form.components 
 {
-	import flash.display.CapsStyle;
-	import flash.display.JointStyle;
-	import flash.display.LineScaleMode;
-	import flash.text.TextField;
-	import flash.text.TextFieldType;
 	import temple.codecomponents.graphics.CodeBackground;
 	import temple.codecomponents.style.CodeStyle;
 	import temple.core.display.CoreShape;
@@ -47,6 +42,13 @@ package temple.codecomponents.form.components
 	import temple.ui.form.components.IList;
 	import temple.ui.states.error.ErrorFadeState;
 	import temple.ui.states.focus.FocusFadeState;
+	import temple.utils.types.TextFormatUtils;
+
+	import flash.display.CapsStyle;
+	import flash.display.JointStyle;
+	import flash.display.LineScaleMode;
+	import flash.text.TextField;
+	import flash.text.TextFieldType;
 
 	/**
 	 * @includeExample CodeComboBoxExample.as
@@ -62,11 +64,13 @@ package temple.codecomponents.form.components
 			textField.type = TextFieldType.DYNAMIC;
 			textField.width = width;
 			textField.height = height;
-			textField.defaultTextFormat = CodeStyle.textFormat;
+			defaultTextFormat = CodeStyle.textFormat;
 			this.multiline = multiline;
 			
-			hintTextColor = 0x888888;
-			errorTextColor = 0xff0000;
+			hintTextFormat = TextFormatUtils.clone(defaultTextFormat);
+			hintTextFormat.color = 0x888888;
+			errorTextFormat = TextFormatUtils.clone(defaultTextFormat);
+			errorTextFormat.color = 0xff0000;
 			
 			addChildAt(new CodeBackground(width, height), 0);
 			

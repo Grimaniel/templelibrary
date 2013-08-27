@@ -12,16 +12,13 @@
  */
 package
 {
-	import temple.utils.propertyproxy.ReplaceTextPropertyProxy;
-	import temple.utils.ValueBinder;
+	import temple.codecomponents.form.components.CodeRadioButton;
 	import temple.codecomponents.label.CodeLabel;
 	import temple.ui.form.components.RadioGroup;
-	import flash.display.DisplayObject;
-	import temple.codecomponents.form.components.CodeRadioButton;
+	import temple.ui.layout.VBox;
+	import temple.utils.ValueBinder;
+	import temple.utils.propertyproxy.ReplaceTextPropertyProxy;
 	
-	/**
-	 * @author Thijs Broerse
-	 */
 	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeRadioButtonExample extends DocumentClassExample
 	{
@@ -29,29 +26,23 @@ package
 		{
 			super("Temple - CodeRadioButtonExample");
 			
+			var vbox:VBox = new VBox(4);
+			addChildAtPosition(vbox, 10, 10);
+			
 			var group:RadioGroup = new RadioGroup();
 			
-			group.add(CodeRadioButton(add(new CodeRadioButton("This is option 1", 1), 10, 10)));
-			group.add(CodeRadioButton(add(new CodeRadioButton("This is option 2", 2), 10, 30)));
-			group.add(CodeRadioButton(add(new CodeRadioButton("This is option 3", 3), 10, 50)));
-			group.add(CodeRadioButton(add(new CodeRadioButton("This is option 4", 4), 10, 70)));
+			group.add(CodeRadioButton(vbox.addChild(new CodeRadioButton("This is option 1", 1))));
+			group.add(CodeRadioButton(vbox.addChild(new CodeRadioButton("This is option 2", 2))));
+			group.add(CodeRadioButton(vbox.addChild(new CodeRadioButton("This is option 3", 3))));
+			group.add(CodeRadioButton(vbox.addChild(new CodeRadioButton("This is option 4", 4))));
 			
 			var output:CodeLabel = new CodeLabel();
-			add(output, 10, 100);
+			vbox.addChild(output);
 			
 			// Use a ValueBinder to set the selected value in a label
 			var replacer:ReplaceTextPropertyProxy = new ReplaceTextPropertyProxy("You selected value {value}");
 			replacer.setTextForValue(null, "Nothing selected");
 			new ValueBinder(group, output, "label", replacer);
-		}
-
-		private function add(child:DisplayObject, x:Number, y:Number):DisplayObject
-		{
-			addChild(child);
-			child.x = x;
-			child.y = y;
-			
-			return child;
 		}
 	}
 }

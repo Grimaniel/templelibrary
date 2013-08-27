@@ -116,7 +116,7 @@ package temple.codecomponents.tooltip
 		 */
 		override public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (enabled == false || _shown) return;
+			if (_shown) return;
 			_shown = true;
 			if (instant)
 			{
@@ -134,7 +134,7 @@ package temple.codecomponents.tooltip
 		 */
 		override public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			if (enabled == false || !_shown) return;
+			if (!_shown) return;
 			_shown = false;
 			if (instant)
 			{

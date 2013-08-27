@@ -18,6 +18,7 @@ package
 
 	import flash.display.DisplayObject;
 
+	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeCheckBoxExample extends DocumentClassExample
 	{
 		public function CodeCheckBoxExample()

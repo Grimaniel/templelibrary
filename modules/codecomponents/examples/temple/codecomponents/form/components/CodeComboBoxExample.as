@@ -14,6 +14,7 @@ package
 {
 	import temple.codecomponents.form.components.CodeComboBox;
 
+	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeComboBoxExample extends DocumentClassExample 
 	{
 		public function CodeComboBoxExample()
