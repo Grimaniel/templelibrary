@@ -47,7 +47,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class DateSelector extends DateInputField implements IHasValue, IHasError, IResettable, ISetValue 
+	public class DateSelector extends DateInputField implements IHasValue, IHasError, IResettable 
 	{
 		// statics for month formatting
 		public static const MONTH_FORMAT_NUMBER:String = 'number';

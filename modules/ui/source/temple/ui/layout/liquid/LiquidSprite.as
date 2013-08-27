@@ -389,6 +389,18 @@ package temple.ui.layout.liquid
 		}
 		
 		/**
+		 * @private
+		 */
+		[Inspectable(name="Minimal height", type="String")]
+		public function set inspectableMinimalHeight(value:String):void
+		{
+			if (value != '' && !isNaN(Number(value)))
+			{
+				minimalHeight = Number(value);
+			}
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function get relativeHeight():Number

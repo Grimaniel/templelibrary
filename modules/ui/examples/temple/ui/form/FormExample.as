@@ -18,6 +18,7 @@
  */
 package
 {
+	import temple.utils.types.TextFormatUtils;
 	import temple.utils.types.EventUtils;
 	import flash.events.Event;
 	import temple.ui.buttons.LabelButton;
@@ -140,16 +141,24 @@ package
 			mcCountryField.hintText = "select your country...";
 			
 			// change the color of the hintText
-			mcNameField.hintTextColor = 0x888888;
-			mcEmailField.hintTextColor = 0x888888;
-			mcCompanyField.hintTextColor = 0x888888;
-			mcCountryField.hintTextColor = 0x888888;
-
+			mcNameField.hintTextFormat = TextFormatUtils.clone(mcNameField.defaultTextFormat);
+			mcNameField.hintTextFormat.color = 0x888888;
+			mcEmailField.hintTextFormat = TextFormatUtils.clone(mcEmailField.defaultTextFormat);
+			mcEmailField.hintTextFormat.color = 0x888888;
+			mcCompanyField.hintTextFormat = TextFormatUtils.clone(mcCompanyField.defaultTextFormat);
+			mcCompanyField.hintTextFormat.color = 0x888888;
+			mcCountryField.hintTextFormat = TextFormatUtils.clone(mcCountryField.defaultTextFormat);
+			mcCountryField.hintTextFormat.color = 0x888888;
+			
 			// change the textColor for errors
-			mcNameField.errorTextColor = 0xFF0000;
-			mcEmailField.errorTextColor = 0xFF0000;
-			mcCompanyField.errorTextColor = 0xFF0000;
-			mcCountryField.errorTextColor = 0xFF0000;
+			mcNameField.errorTextFormat = TextFormatUtils.clone(mcNameField.defaultTextFormat);
+			mcNameField.errorTextFormat.color = 0xFF0000;
+			mcEmailField.errorTextFormat = TextFormatUtils.clone(mcEmailField.defaultTextFormat);
+			mcEmailField.errorTextFormat.color = 0xFF0000;
+			mcCompanyField.errorTextFormat = TextFormatUtils.clone(mcCompanyField.defaultTextFormat);
+			mcCompanyField.errorTextFormat.color = 0xFF0000;
+			mcCountryField.errorTextFormat = TextFormatUtils.clone(mcCountryField.defaultTextFormat);
+			mcCountryField.errorTextFormat.color = 0xFF0000;
 			
 			// add the submit button
 			_form.addSubmitButton(mcSubmitButton);

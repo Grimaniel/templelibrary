@@ -35,6 +35,7 @@
 
 package temple.ui.form.result 
 {
+	import temple.common.interfaces.IHasValue;
 	import temple.common.interfaces.IResult;
 
 	/**
@@ -54,6 +55,11 @@ package temple.ui.form.result
 		/**
 		 * Name of the field which contains the error
 		 */
-		function get field():String;
+		function get name():String;
+		
+		/**
+		 * The field which contains the error
+		 */
+		function get field():IHasValue;
 	}
 }

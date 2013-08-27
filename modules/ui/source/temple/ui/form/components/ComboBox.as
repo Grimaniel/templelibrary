@@ -599,7 +599,7 @@ package temple.ui.form.components
 		 */
 		override public function set value(value:*):void
 		{
-			(_list as ISetValue).value = value;
+			_list.value = value;
 			
 			if (this.value != value)
 			{

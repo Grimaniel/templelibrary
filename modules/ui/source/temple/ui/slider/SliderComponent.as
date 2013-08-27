@@ -38,7 +38,6 @@ package temple.ui.slider
 	import temple.common.interfaces.IHasValue;
 	import temple.core.display.CoreSprite;
 	import temple.ui.buttons.behaviors.ScrubBehavior;
-	import temple.ui.form.components.ISetValue;
 
 	import flash.display.InteractiveObject;
 	import flash.events.Event;
@@ -53,7 +52,7 @@ package temple.ui.slider
 	 * 
 	 * @author Mark Knol
 	 */
-	public class SliderComponent extends CoreSprite implements IHasValue, ISetValue
+	public class SliderComponent extends CoreSprite implements IHasValue
 	{
 		/**
 		 * Instance name of a child which acts as button for the ScrollBar.

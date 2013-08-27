@@ -35,6 +35,7 @@
 
 package temple.ui.form.result 
 {
+	import temple.common.interfaces.IHasValue;
 	import temple.common.interfaces.IXMLParsable;
 	import temple.data.result.Result;
 
@@ -52,20 +53,38 @@ package temple.ui.form.result
 	 */
 	public class FormFieldError extends Result implements IFormFieldError, IXMLParsable 
 	{
-		private var _field:String;
+		private var _name:String;
+		private var _field:IHasValue;
 
-		public function FormFieldError(field:String = null, message:String = null, code:String = null)
+		public function FormFieldError(name:String = null, field:IHasValue = null, message:String = null, code:String = null)
 		{
 			super(false, message, code);
-			toStringProps.push('field', 'message', 'code');
+			toStringProps.push('name', 'message', 'code');
 			emptyPropsInToString = false;
+			_name = name;
 			_field = field;
 		}
 		
 		/**
+		 * @inheritDoc
+		 */
+		public function get name():String
+		{
+			return _name;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set name(value:String):void
+		{
+			_name = value;
+		}
+			
+		/**
 		 * @inheritDoc 
 		 */
-		public function get field():String
+		public function get field():IHasValue
 		{
 			return _field;
 		}
@@ -73,11 +92,11 @@ package temple.ui.form.result
 		/**
 		 * @private
 		 */
-		public function set field(value:String):void
+		public function set field(value:IHasValue):void
 		{
 			_field = value;
 		}
-
+		
 		/**
 		 * @inheritDoc 
 		 */
@@ -89,5 +108,17 @@ package temple.ui.form.result
 			
 			return true;
 		}
+
+		/**
+		 * @inheritDoc 
+		 */
+		override public function destruct():void
+		{
+			_field = null;
+			_name = null;
+			
+			super.destruct();
+		}
+
 	}
 }

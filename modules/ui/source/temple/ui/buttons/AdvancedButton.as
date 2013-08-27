@@ -38,7 +38,6 @@ package temple.ui.buttons
 	import temple.common.interfaces.IHasValue;
 	import temple.ui.form.components.IRadioButton;
 	import temple.ui.form.components.IRadioGroup;
-	import temple.ui.form.components.ISetValue;
 	import temple.ui.form.components.RadioGroup;
 	import temple.ui.label.LabelUtils;
 	import temple.ui.label.TextFieldLabelBehavior;
@@ -58,7 +57,7 @@ package temple.ui.buttons
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AdvancedButton extends LabelButton implements IHasValue, ISetValue, IRadioButton
+	public class AdvancedButton extends LabelButton implements IHasValue, IRadioButton
 	{
 		protected var _group:IRadioGroup;
 		protected var _data:*;

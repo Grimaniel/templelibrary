@@ -35,6 +35,7 @@
 
 package temple.ui.form.validation 
 {
+	import temple.ui.form.validation.rules.ValidationRuleData;
 	import temple.common.interfaces.IEnableable;
 	import temple.common.interfaces.IFocusable;
 	import temple.common.interfaces.IHasValue;
@@ -70,17 +71,15 @@ package temple.ui.form.validation
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class Validator extends CoreObject implements IDebuggable
+	public class Validator extends CoreObject implements IDebuggable, IValidator
 	{
-		private var _rules:Vector.<RuleData>;
-		private var _errorMessage:String;
-		private var _errorMessages:Vector.<String>;
+		private var _rules:Vector.<ValidationRuleData>;
 		private var _autoFocus:Boolean;
 		private var _debug:Boolean;
 
 		public function Validator(autoFocus:Boolean = true) 
 		{
-			_rules = new Vector.<RuleData>();
+			_rules = new Vector.<ValidationRuleData>();
 			_autoFocus = autoFocus;
 			addToDebugManager(this);
 		}
@@ -92,7 +91,7 @@ package temple.ui.form.validation
 		 */
 		public function addValidationRule(rule:IValidationRule, message:String = null):IValidationRule 
 		{
-			if (rule) _rules.push(new RuleData(rule, message));
+			if (rule) _rules.push(new ValidationRuleData(rule, message));
 			return rule;
 		}
 
@@ -103,122 +102,91 @@ package temple.ui.form.validation
 		{
 			for (var i:int = _rules.length - 1 ;i >= 0; i--) 
 			{
-				if (RuleData(_rules[i]).rule.target == element)
+				if (_rules[i].rule.target == element)
 				{
 					_rules.splice(i, 1);
 				}
 			}
 			if (element is IEventDispatcher)
 			{
-				// first remove, to prevent double listening
 				IEventDispatcher(element).removeEventListener(Event.CHANGE, handleErrorInputFieldChange);
 			}
 		}
 
 		/**
-		 * Check validity of all added validation rules
-		 * @return a list of all validation rules that did not validate; objects of type IValidationRule
+		 * @inheritDoc
 		 */
-		public function validate():Vector.<IValidationRule> 
+		public function validate(showErrors:Boolean = true, keepValidating:Boolean = true):Vector.<ValidationRuleData> 
 		{
-			var errors:Vector.<IValidationRule> = new Vector.<IValidationRule>();
+			var errors:Vector.<ValidationRuleData> = new Vector.<ValidationRuleData>();
 			
-			var leni:uint = _rules.length;
-			for (var i:uint = 0;i < leni; i++) 
-			{
-				var rule:IValidationRule = RuleData(_rules[i]).rule;
-				
-				// check if target is enabled
-				if (rule.target is IEnableable && IEnableable(rule.target).enabled == false) continue;
-				
-				if (!rule.isValid())
-				{
-					errors.push(rule);
-					
-					if (debug) logDebug("Not valid: " + rule);
-				}
-				else if (debug) logDebug("Valid: " + rule);
-				
-			}
-			return errors;
-		}
-
-		/**
-		 * Checks if the Validator is valid and shows errors for the validator which has errors if showErrors is set to true. Return true if form is valid.
-		 * Sets focus on the first elements which is IFocusable.
-		 * @param keepValidating if set to true the form will keep validation after each change
-		 * @param showError if set to true wrong elements will show their ErrorState
-		 */
-		public function isValid(keepValidating:Boolean = true, showErrors:Boolean = true):Boolean 
-		{
-			var valid:Boolean = true;
 			var focussed:Boolean = !_autoFocus;
-			_errorMessage = null;
-			_errorMessages = new Vector.<String>();
 			
 			// Create a dictionary for object validation, necessary when there are more then one validation rules on an object
-			var dictionary:Dictionary = new Dictionary(true);
+			if (showErrors) var dictionary:Dictionary = new Dictionary(true);
 			
 			var leni:uint = _rules.length;
-			
-			if (debug) logDebug("isValid: validator has " + leni + " rules");
-			
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var ruleData:RuleData = RuleData(_rules[i]);
+				var data:ValidationRuleData = _rules[i];
+				var rule:IValidationRule = data.rule;
+				var target:IHasValue = rule.target;
 				
 				// check if target is enabled
-				if (ruleData.rule.target is IEnableable && IEnableable(ruleData.rule.target).enabled == false)
+				if (target is IEnableable && IEnableable(target).enabled == false)
 				{
-					if (debug) logDebug("Target is not enabled, skip: " + ruleData);
+					if (debug) logDebug("Target is not enabled, skip: " + data);
 					
 					continue;
 				}
 				
-				if (!ruleData.rule.isValid())
+				if (rule.isValid())
 				{
-					if (_errorMessage == null) _errorMessage = ruleData.message;
-					if (ruleData.message != null) _errorMessages.push(ruleData.message);
-					valid = false;
+					if (debug) logDebug("Valid: " + rule);
 					
-					if (debug) logDebug("Not valid: " + ruleData);
+					if (showErrors && target is IHasError && !(target in dictionary))
+					{
+						IHasError(target).hideError();
+					}
+					
 				}
-				else if (debug) logDebug("Valid: " + ruleData);
-				
-				var target:IHasValue = ruleData.rule.target;
-				if (target is IHasError)
+				else
 				{
-					if (ruleData.rule.isValid())
+					errors.push(data);
+					
+					if (debug) logDebug("Not valid: " + rule);
+					
+					if (showErrors && target is IHasError && !(target in dictionary))
 					{
-						if (dictionary[target] == null)
-						{
-							IHasError(target).hideError();
-						}
-					}
-					else
-					{
-						if (!dictionary[target] && showErrors)
-						{
-							IHasError(target).showError(ruleData.message);
-							if (target is IFocusable && !focussed)
-							{
-								IFocusable(target).focus = true;
-								focussed = true;
-							}
-						}
+						IHasError(target).showError(_rules[i].message);
 						dictionary[target] = true;
+						
+						if (target is IFocusable && !focussed)
+						{
+							IFocusable(target).focus = true;
+							focussed = true;
+						}
 					}
-					if (target is IEventDispatcher && keepValidating)
-					{
-						// first remove, to prevent double listening
-						IEventDispatcher(target).removeEventListener(Event.CHANGE, handleErrorInputFieldChange);
-						IEventDispatcher(target).addEventListener(Event.CHANGE, handleErrorInputFieldChange);
-					}
+				}
+				
+				if (keepValidating && target is IEventDispatcher)
+				{
+					// first remove, to prevent double listening
+					IEventDispatcher(target).removeEventListener(Event.CHANGE, handleErrorInputFieldChange);
+					IEventDispatcher(target).addEventListener(Event.CHANGE, handleErrorInputFieldChange);
 				}
 			}
-			return valid;
+			return errors;
 		}
 		
+		/**
+		 * Checks if the Validator is valid.
+		 */
+		public function isValid():Boolean 
+		{
+			return validate().length > 0;
+		}
+
 		/**
 		 * Checks if a single element is valid and shows error if the element has an error and showError is set to true (default: false). Return true if element is valid.
 		 * @param showError if set to true the element will show an ErrorState if the element is not valid.
@@ -231,14 +199,14 @@ package temple.ui.form.validation
 			var leni:uint = _rules.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var ruleData:RuleData = RuleData(_rules[i]);
+				var data:ValidationRuleData = _rules[i];
 				
-				if (ruleData.rule.target == element && !ruleData.rule.isValid())
+				if (data.rule.target == element && !data.rule.isValid())
 				{
 					valid = false;
 					if (errorMessage == null)
 					{
-						errorMessage = ruleData.message;
+						errorMessage = data.message;
 					}
 				}
 			}
@@ -257,7 +225,7 @@ package temple.ui.form.validation
 			var elements:Vector.<IHasValue> = new Vector.<IHasValue>();
 			for (var i:uint = 0, leni:uint = _rules.length; i < leni; i++) 
 			{
-				elements.push(RuleData(_rules[i]).rule.target);
+				elements.push(ValidationRuleData(_rules[i]).rule.target);
 			}
 			return elements;
 		}
@@ -271,7 +239,7 @@ package temple.ui.form.validation
 			var leni:uint = _rules.length;
 			for (var i:uint = 0;i < leni; i++) 
 			{
-				var ruleData:RuleData = RuleData(_rules[i]);
+				var ruleData:ValidationRuleData = ValidationRuleData(_rules[i]);
 				if (ruleData.rule.target == element) rules.push(ruleData.rule);
 			}
 			return rules;
@@ -287,27 +255,9 @@ package temple.ui.form.validation
 				var leni:uint = _rules.length;
 				for (var i:uint = 0;i < leni; i++) 
 				{
-					IEventDispatcher(RuleData(_rules[i]).rule.target).removeEventListener(Event.CHANGE, handleErrorInputFieldChange);
+					IEventDispatcher(ValidationRuleData(_rules[i]).rule.target).removeEventListener(Event.CHANGE, handleErrorInputFieldChange);
 				}
 			}
-		}
-		
-		/**
-		 * Returns the error message of the first Element with an error
-		 * Call method 'isValid()' function before, to generate the message
-		 */
-		public function getErrorMessage():String
-		{
-			return _errorMessage;
-		}
-		
-		/**
-		 * Returns the list of all error messages of elements with an error
-		 * Call method 'isValid()' function before, to generate the message
-		 */
-		public function getErrorMessages():Vector.<String>
-		{
-			return _errorMessages;
 		}
 		
 		/**
@@ -350,19 +300,20 @@ package temple.ui.form.validation
 				var leni:uint = _rules.length;
 				var isValid:Boolean = true;
 				var message:String;
-				var ruleData:RuleData;
+				var data:ValidationRuleData;
 				for (var i:Number = 0;i < leni; i++) 
 				{
-					ruleData = RuleData(_rules[i]);
+					data = _rules[i];
 					
-					if (ruleData.rule.target != event.currentTarget) continue;
+					if (data.rule.target != event.currentTarget) continue;
 
-					if (ruleData.rule.target is IHasError)
+					if (data.rule.target is IHasError)
 					{
-						if (!ruleData.rule.isValid())
+						if (!data.rule.isValid())
 						{
 							isValid = false;
-							message = ruleData.message;
+							message = data.message;
+							break;
 						}
 					}
 				}
@@ -386,47 +337,11 @@ package temple.ui.form.validation
 			
 			if (_rules)
 			{
-				for (var i:int = 0; i < _rules.length; ++i)
-				{
-					RuleData(_rules[i]).destruct();
-				}
+				while (_rules.length) _rules.shift().destruct();
 				_rules = null;
 			}
 			
-			_errorMessages = null;
-			_errorMessage = null;
-			
 			super.destruct();
 		}
-	}
-}
-import temple.core.CoreObject;
-import temple.ui.form.validation.rules.IValidationRule;
-
-final class RuleData extends CoreObject
-{
-	public var rule:IValidationRule;
-	public var message:String;
-
-	public function RuleData(rule:IValidationRule, message:String) 
-	{
-		this.rule = rule;
-		this.message = message;
-		toStringProps.push('rule', 'message');
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	override public function destruct():void
-	{
-		if (rule)
-		{
-			rule.destruct();
-			rule = null;
-		}
-		message = null;
-		
-		super.destruct();
 	}
 }

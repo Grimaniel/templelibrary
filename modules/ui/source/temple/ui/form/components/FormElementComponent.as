@@ -81,6 +81,14 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
+		public function set value(value:*):void
+		{
+			throwError(new TempleError(this, "Override this method"));
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function get dataName():String
 		{
 			return _dataName;

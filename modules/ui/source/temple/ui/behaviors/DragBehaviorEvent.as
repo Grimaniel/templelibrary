@@ -70,7 +70,7 @@ package temple.ui.behaviors
 		 * @param behavior the DragBehavior
 		 * @param bubbles indicates if the event should bubble
 		 */
-		public function DragBehaviorEvent(type:String, behavior:DragBehavior, bubbles:Boolean = false) 
+		public function DragBehaviorEvent(type:String, behavior:DragBehavior, bubbles:Boolean = true) 
 		{
 			super(type, behavior, bubbles);
 		}

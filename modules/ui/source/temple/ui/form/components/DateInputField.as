@@ -35,20 +35,20 @@
 
 package temple.ui.form.components 
 {
-	import temple.common.interfaces.IHasValue;
 	import temple.ui.form.validation.rules.NullValidationRule;
 	import temple.ui.form.validation.rules.Restrictions;
 	import temple.utils.keys.KeyManager;
 	import temple.utils.types.DateUtils;
 
 	import flash.events.Event;
+	import flash.text.TextFormat;
 
 	/**
 	 * Input for a date. The date is filled in with text.
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class DateInputField extends MultiElementComponent implements IHasValue, ISetValue
+	public class DateInputField extends MultiElementComponent implements IInputField
 	{
 		public static var DAY_FIELD_NAME:String = "mcDay";
 		public static var MONTH_FIELD_NAME:String = "mcMonth";
@@ -185,7 +185,7 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function set value(value:*):void
+		override public function set value(value:*):void
 		{
 			if (value == null) return;
 			
@@ -232,27 +232,68 @@ package temple.ui.form.components
 		{
 			_year.hintText = value;
 		}
-
+		
 		/**
-		 * Set the colour of the hint text
+		 * @inheritDoc
 		 */
-		[Inspectable(name="Hint text color", type="Color", defaultValue="#888888")]
-		public function set hintTextColor(value:uint):void 
+		public function get defaultTextFormat():TextFormat 
 		{
-			if (_day) _day.hintTextColor = value;
-			if (_month) _month.hintTextColor = value;
-			if (_year) _year.hintTextColor = value;
+			if (_day) return _day.defaultTextFormat;
+			if (_month) return _month.defaultTextFormat;
+			if (_year) return _year.defaultTextFormat;
+			return null;
 		}
 
 		/**
-		 * Set the colour of the error text
+		 * @inheritDoc
 		 */
-		[Inspectable(name="Error text color", type="Color", defaultValue="#FF0000")]
-		public function set errorTextColor(value:uint):void 
+		public function set defaultTextFormat(value:TextFormat):void 
 		{
-			if (_day) _day.errorTextColor = value;
-			if (_month) _month.errorTextColor = value;
-			if (_year) _year.errorTextColor = value;
+			if (_day) _day.defaultTextFormat = value;
+			if (_month) _month.defaultTextFormat = value;
+			if (_year) _year.defaultTextFormat = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get hintTextFormat():TextFormat 
+		{
+			if (_day) return _day.hintTextFormat;
+			if (_month) return _month.hintTextFormat;
+			if (_year) return _year.hintTextFormat;
+			return null;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set hintTextFormat(value:TextFormat):void 
+		{
+			if (_day) _day.hintTextFormat = value;
+			if (_month) _month.hintTextFormat = value;
+			if (_year) _year.hintTextFormat = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get errorTextFormat():TextFormat 
+		{
+			if (_day) return _day.errorTextFormat;
+			if (_month) return _month.errorTextFormat;
+			if (_year) return _year.errorTextFormat;
+			return null;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set errorTextFormat(value:TextFormat):void 
+		{
+			if (_day) _day.errorTextFormat = value;
+			if (_month) _month.errorTextFormat = value;
+			if (_year) _year.errorTextFormat = value;
 		}
 
 		/**

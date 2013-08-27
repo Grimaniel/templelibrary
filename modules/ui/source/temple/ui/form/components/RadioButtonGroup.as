@@ -56,7 +56,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class RadioButtonGroup extends FormElementComponent implements IHasError, IResettable, ISetValue, IRadioGroup
+	public class RadioButtonGroup extends FormElementComponent implements IHasError, IResettable, IRadioGroup
 	{
 		private var _radioGroup:RadioGroup;
 		
@@ -81,7 +81,7 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function set value(value:*):void
+		override public function set value(value:*):void
 		{
 			_radioGroup.value = value;
 		}

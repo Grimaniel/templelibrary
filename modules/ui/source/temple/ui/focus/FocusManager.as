@@ -35,6 +35,7 @@
 
 package temple.ui.focus 
 {
+	import flash.events.Event;
 	import temple.core.CoreObject;
 	import temple.core.debug.IDebuggable;
 	import temple.core.errors.TempleError;
@@ -54,6 +55,7 @@ package temple.ui.focus
 		private static const _instance:FocusManager = new FocusManager();
 		
 		private var _stage:Stage;
+		private var _eventType:String;
 		private var _debug:Boolean;
 
 		public function FocusManager()
@@ -94,6 +96,24 @@ package temple.ui.focus
 		}
 		
 		/**
+		 * Which event must be used to handle the focus. Default: MouseEvent.MOUSE_DOWN
+		 * 
+		 * This can be switched to MouseEvent.CLICK
+		 */
+		public static function get eventType():String
+		{
+			return FocusManager._instance._eventType;
+		}
+
+		/**
+		 * @private
+		 */
+		public static  function set eventType(value:String):void
+		{
+			FocusManager._instance.eventType = value;
+		}
+		
+		/**
 		 * @private
 		 */
 		public static function get debug():Boolean
@@ -107,6 +127,26 @@ package temple.ui.focus
 		public static function set debug(value:Boolean):void
 		{
 			FocusManager._instance.debug = value;
+		}
+		
+		/**
+		 * @private
+		 * 
+		 * @see FocusManager#eventType
+		 */
+		public function get eventType():String
+		{
+			return _eventType;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set eventType(value:String):void
+		{
+			if (_eventType && _stage) _stage.removeEventListener(_eventType, handleEvent);
+			_eventType = value;
+			if (_stage) _stage.addEventListener(_eventType, handleEvent);
 		}
 		
 		/**
@@ -136,7 +176,7 @@ package temple.ui.focus
 			}
 			catch (error:Error) {}
 			
-			_stage.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
+			eventType = _eventType || MouseEvent.MOUSE_DOWN;
 		}
 
 		private function get focus():InteractiveObject
@@ -154,9 +194,9 @@ package temple.ui.focus
 			}
 		}
 		
-		private function handleMouseDown(event:MouseEvent):void
+		private function handleEvent(event:Event):void
 		{
-			if (_debug) logDebug("handleMouseDown: " + event.target);
+			if (_debug) logDebug("handleEvent: " + event.type + ": " + event.target);
 			focus = event.target as InteractiveObject;
 		}
 	}

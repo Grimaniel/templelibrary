@@ -58,7 +58,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IList extends ICoreEventDispatcher, IDisplayObjectContainer, IHasValue, ISetValue, IFocusable, ICoreDisplayObject, IResettable
+	public interface IList extends ICoreEventDispatcher, IDisplayObjectContainer, IHasValue, IFocusable, ICoreDisplayObject, IResettable
 	{
 		/**
 		 * Add an items to the list.

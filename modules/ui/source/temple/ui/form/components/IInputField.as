@@ -33,14 +33,45 @@
  *	repository with their own license!
  */
 
-package temple.ui.form.components 
+package temple.ui.form.components
 {
+	import temple.common.interfaces.IResettable;
+	import temple.ui.form.validation.IHasError;
 
+	import flash.text.TextFormat;
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface ISetValue 
+	public interface IInputField extends IHasError, IResettable
 	{
-		function set value(value:*):void;
+		/**
+		 * Default <code>TextFormat</code>
+		 */
+		function get defaultTextFormat():TextFormat;
+		
+		/**
+		 * @private
+		 */
+		function set defaultTextFormat(value:TextFormat):void
+		
+		/**
+		 * The <code>TextFormat</code> of the hint text
+		 */
+		function get hintTextFormat():TextFormat;
+		
+		/**
+		 * @private
+		 */
+		function set hintTextFormat(value:TextFormat):void
+		
+		/**
+		 * The <code>TextFormat</code> of the text when the InputField has an error.
+		 */
+		function get errorTextFormat():TextFormat;
+		
+		/**
+		 * @private
+		 */
+		function set errorTextFormat(value:TextFormat):void
 	}
 }

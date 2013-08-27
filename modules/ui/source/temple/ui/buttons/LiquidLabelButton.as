@@ -72,10 +72,7 @@ package temple.ui.buttons
 		{
 			super(textField);
 			
-			stop();
-			
 			_buttonBehavior = new ButtonBehavior(this);
-			if (totalFrames > 1) _timelineBehavior = new ButtonTimelineBehavior(this);
 			_stateBehavior = new ButtonStateBehavior(this);
 		}
 		
@@ -106,10 +103,18 @@ package temple.ui.buttons
 		/**
 		 * @inheritDoc
 		 */
-		[Inspectable(name="Enabled", type="Boolean", defaultValue="true")]
-		override public function set enabled(value:Boolean):void
+		public function get enabled():Boolean
 		{
-			mouseEnabled = super.enabled = value; 
+			return mouseChildren;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		[Inspectable(name="Enabled", type="Boolean", defaultValue="true")]
+		public function set enabled(value:Boolean):void
+		{
+			mouseEnabled = value; 
 			if (_buttonBehavior) _buttonBehavior.disabled = !value;
 		}
 		
