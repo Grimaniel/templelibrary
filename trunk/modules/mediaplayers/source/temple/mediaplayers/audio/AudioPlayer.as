@@ -124,6 +124,14 @@ package temple.mediaplayers.audio
 		/**
 		 * @inheritDoc
 		 */
+		public function get isPlaying():Boolean
+		{
+			return __status == PlayerStatus.PLAYING;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function play():void
 		{
 			if (_debug) logDebug("play: ");
@@ -176,7 +184,7 @@ package temple.mediaplayers.audio
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean
+		public function get isPaused():Boolean
 		{
 			return __status == PlayerStatus.PAUSED;
 		}

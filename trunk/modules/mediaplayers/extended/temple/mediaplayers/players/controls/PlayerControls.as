@@ -35,24 +35,28 @@
 
 package temple.mediaplayers.players.controls
 {
-	import flash.display.InteractiveObject;
-	import flash.display.StageDisplayState;
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
 	import temple.common.events.SoundEvent;
 	import temple.common.events.StatusEvent;
 	import temple.common.interfaces.IAudible;
 	import temple.common.interfaces.ISelectable;
+	import temple.common.interfaces.IShowable;
 	import temple.core.debug.IDebuggable;
+	import temple.core.display.CoreSprite;
 	import temple.core.utils.CoreTimer;
 	import temple.mediaplayers.players.IPlayer;
 	import temple.mediaplayers.players.PlayerStatus;
-	import temple.ui.states.BaseFadeState;
+
+	import com.greensock.TweenLite;
+
+	import flash.display.InteractiveObject;
+	import flash.display.StageDisplayState;
+	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class PlayerControls extends BaseFadeState implements IPlayer, IDebuggable, IAudible
+	public class PlayerControls extends CoreSprite implements IPlayer, IDebuggable, IAudible, IShowable
 	{
 		/**
 		 * Instance name of a child which acts as playButton.
@@ -94,6 +98,9 @@ package temple.mediaplayers.players.controls
 		private var _toggleResumePauseButtonsVisibility:Boolean;
 		private var _autoHide:Boolean;
 		private var _autoHideTimer:CoreTimer;
+		private var _shown:Boolean;
+		private var _enabled:Boolean;
+		private var _debug:Boolean;
 		
 		public function PlayerControls()
 		{
@@ -118,11 +125,59 @@ package temple.mediaplayers.players.controls
 			
 			addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
 		}
+		
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get shown():Boolean
+		{
+			return _shown;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set shown(value:Boolean):void
+		{
+			if (value)
+			{
+				show();
+			}
+			else
+			{
+				hide();
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			enabled = true;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			enabled = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get isPlaying():Boolean
+		{
+			return _player && _player.isPlaying;
+		}
 
 		/**
 		 * @inheritDoc
 		 */
-		override public function play():void
+		public function play():void
 		{
 			if (debug) logDebug("play: ");
 			if (_player) _player.play();
@@ -131,7 +186,7 @@ package temple.mediaplayers.players.controls
 		/**
 		 * @inheritDoc
 		 */
-		override public function stop():void
+		public function stop():void
 		{
 			if (debug) logDebug("stop: ");
 			if (_player) _player.stop();
@@ -208,9 +263,9 @@ package temple.mediaplayers.players.controls
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean
+		public function get isPaused():Boolean
 		{
-			return _player ? _player.paused : false;
+			return _player ? _player.isPaused : false;
 		}
 
 		/**
@@ -339,16 +394,38 @@ package temple.mediaplayers.players.controls
 			if (_player) updateToStatus(_player.status);
 		}
 		
-		override public function show(instant:Boolean = false, onComplete:Function = null):void
+		/**
+		 * @inheritDoc
+		 */
+		public function show(instant:Boolean = false, onComplete:Function = null):void
 		{
-			super.show(instant, onComplete);
+			if (instant)
+			{
+				autoAlpha = 1;
+				if (onComplete != null) onComplete();
+			}
+			else
+			{
+				TweenLite.to(this, .5, {autoAlpha: 1, onComplete: onComplete});
+			}
 			_autoHideTimer.reset();
-			if (_autoHide && enabled) _autoHideTimer.start();
+			if (_autoHide && _enabled) _autoHideTimer.start();
 		}
 		
-		override public function hide(instant:Boolean = false, onComplete:Function = null):void
+		/**
+		 * @inheritDoc
+		 */
+		public function hide(instant:Boolean = false, onComplete:Function = null):void
 		{
-			super.hide(instant, onComplete);
+			if (instant)
+			{
+				autoAlpha = 0;
+				if (onComplete != null) onComplete();
+			}
+			else
+			{
+				TweenLite.to(this, .5, {autoAlpha: 0, onComplete: onComplete});
+			}
 			if (_autoHideTimer) _autoHideTimer.reset();
 		}
 		
@@ -397,10 +474,37 @@ package temple.mediaplayers.players.controls
 			}
 		}
 		
-		override public function set enabled(value:Boolean):void
+		/**
+		 * @inheritDoc
+		 */
+		public function get enabled():Boolean
 		{
-			mouseEnabled = mouseChildren = super.enabled = value;
+			return _enabled;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set enabled(value:Boolean):void
+		{
+			_enabled = mouseEnabled = mouseChildren = value;
 			if (_progressBar) _progressBar.enabled = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return _debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			_debug = value;
 		}
 		
 		private function handleClick(event:MouseEvent):void

@@ -35,6 +35,7 @@
 
 package temple.mediaplayers.players
 {
+	import temple.utils.types.VectorUtils;
 	import temple.common.events.SoundEvent;
 	import temple.common.events.StatusEvent;
 	import temple.common.interfaces.IAudible;
@@ -42,7 +43,6 @@ package temple.mediaplayers.players
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
 	import temple.core.events.CoreEventDispatcher;
-	import temple.utils.types.ArrayUtils;
 
 	/**
 	 * @author Thijs Broerse
@@ -50,13 +50,13 @@ package temple.mediaplayers.players
 	public class MultiPlayer extends CoreEventDispatcher implements IProgressiveDownloadPlayer, IAudible, IDebuggable
 	{
 		private var _primaryPlayer:IPlayer;
-		private var _players:Array;
+		private var _players:Vector.<IPlayer>;
 		private var _debug:Boolean;
 		
 		public function MultiPlayer(primaryPlayer:IPlayer)
 		{
 			_primaryPlayer = primaryPlayer;
-			_players = [_primaryPlayer];
+			_players = Vector.<IPlayer>([_primaryPlayer]);
 			
 			_primaryPlayer.addEventListener(StatusEvent.STATUS_CHANGE, handlePrimaryPlayerStatusChange);
 			_primaryPlayer.addEventListener(PlayerEvent.PLAY_STARTED, dispatchEvent);
@@ -77,7 +77,7 @@ package temple.mediaplayers.players
 		 */
 		public function remove(player:IPlayer):void
 		{
-			ArrayUtils.removeValueFromArray(_players, player);
+			VectorUtils.removeValueFromVector(_players, player);
 		}
 
 		/**
@@ -105,9 +105,9 @@ package temple.mediaplayers.players
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean
+		public function get isPaused():Boolean
 		{
-			return _primaryPlayer.paused;
+			return _primaryPlayer.isPaused;
 		}
 
 		/**
@@ -116,6 +116,14 @@ package temple.mediaplayers.players
 		public function get status():String
 		{
 			return _primaryPlayer.status;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get isPlaying():Boolean
+		{
+			return _primaryPlayer && _primaryPlayer.isPlaying;
 		}
 
 		/**

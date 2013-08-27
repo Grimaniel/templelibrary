@@ -49,6 +49,7 @@ package temple.mediaplayers.video.net
 		public static const NETSTREAM_PLAY_STOP:String = "NetStream.Play.Stop";
 		public static const NETSTREAM_PLAY_STREAM_NOT_FOUND:String = "NetStream.Play.StreamNotFound";
 		public static const NETSTREAM_PLAY_RESET:String = "NetStream.Play.Reset";
+		public static const NETSTREAM_PLAY_FAILED:String = "NetStream.Play.Failed";
 
 		public static const NETSTREAM_SEEK_INVALID_TIME:String = "NetStream.Seek.InvalidTime";
 		public static const NETSTREAM_SEEK_NOTIFY:String = "NetStream.Seek.Notify";

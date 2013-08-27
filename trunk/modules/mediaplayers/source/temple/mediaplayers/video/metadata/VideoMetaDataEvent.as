@@ -42,21 +42,21 @@ package temple.mediaplayers.video.metadata
 	 */
 	public class VideoMetaDataEvent extends Event 
 	{
-		public static const METADATA:String = "VideoMetaDataEvent.metadata";
+		public static const METADATA:String = "VideoMetaDataEvent.videoMetaData";
 		public static const NOT_FOUND:String = "VideoMetaDataEvent.notFound";
 
-		private var _metadata:VideoMetaData;
+		private var _videoMetaData:VideoMetaData;
 
-		public function VideoMetaDataEvent(type:String, metadata:VideoMetaData = null, bubbles:Boolean = false):void
+		public function VideoMetaDataEvent(type:String, videoMetaData:VideoMetaData = null, bubbles:Boolean = false):void
 		{
 			super(type, bubbles);
 			
-			_metadata = metadata;
+			_videoMetaData = videoMetaData;
 		}
 		
-		public function get metadata():VideoMetaData
+		public function get videoMetaData():VideoMetaData
 		{
-			return _metadata;
+			return _videoMetaData;
 		}
 
 		/**
@@ -64,7 +64,7 @@ package temple.mediaplayers.video.metadata
 		 */
 		override public function clone():Event 
 		{
-			return new VideoMetaDataEvent(type, metadata, bubbles);
+			return new VideoMetaDataEvent(type, _videoMetaData, bubbles);
 		}
 	}
 }

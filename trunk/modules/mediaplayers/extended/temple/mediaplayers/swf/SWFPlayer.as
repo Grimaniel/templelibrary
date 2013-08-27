@@ -102,9 +102,9 @@ package temple.mediaplayers.swf
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean
+		public function get isPaused():Boolean
 		{
-			return _movieClipPlayer.paused;
+			return _movieClipPlayer.isPaused;
 		}
 
 		/**
@@ -142,6 +142,14 @@ package temple.mediaplayers.swf
 			_playWhenReady = true;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
+		public function get isPlaying():Boolean
+		{
+			return _movieClipPlayer.isPlaying;
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
