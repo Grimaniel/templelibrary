@@ -35,12 +35,11 @@
 
 package temple.facebook.api
 {
-	import temple.facebook.data.vo.FacebookFriendListData;
 	import temple.facebook.data.enum.FacebookConnection;
+	import temple.facebook.data.vo.FacebookFriendListData;
 	import temple.facebook.data.vo.FacebookFriendListFields;
 	import temple.facebook.data.vo.FacebookUserData;
 	import temple.facebook.data.vo.FacebookUserFields;
-	import temple.facebook.data.vo.IFacebookFields;
 	import temple.facebook.service.IFacebookCall;
 	import temple.facebook.service.IFacebookService;
 
@@ -75,9 +74,8 @@ package temple.facebook.api
 		 */
 		public function getFriendLists(callback:Function = null, userId:String = 'me', offset:Number = NaN, limit:Number = NaN, fields:FacebookFriendListFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall
 		{
-			params ||= {};
-			params.offset = offset;
-			params.limit = limit;
+			if (!isNaN(offset)) (params ||= {}).offset = uint(offset);
+			if (!isNaN(limit)) (params ||= {}).limit = uint(limit);
 			
 			return service.get(callback, FacebookConnection.FRIENDLISTS, userId, FacebookFriendListData, params, fields, forceReload);
 		}
@@ -85,19 +83,18 @@ package temple.facebook.api
 		/**
 		 * @inheritDoc
 		 */
-		public function getFriendListsOfType(type:String, callback:Function = null, userId:String = 'me', offset:Number = NaN, limit:Number = NaN, fields:IFacebookFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall
+		public function getFriendListsOfType(type:String, callback:Function = null, userId:String = 'me', offset:Number = NaN, limit:Number = NaN, fields:FacebookFriendListFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall
 		{
-			params ||= {};
-			params.offset = offset;
-			params.limit = limit;
+			if (!isNaN(offset)) (params ||= {}).offset = uint(offset);
+			if (!isNaN(limit)) (params ||= {}).limit = uint(limit);
 			
-			return service.get(callback, method + "/" + type, userId, objectClass, params, fields, forceReload);
+			return service.get(callback, FacebookConnection.FRIENDLISTS + "/" + type, userId, FacebookFriendListData, params, fields, forceReload);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function getFriendListMembers(friendListId:String, callback:Function = null, fields:IFacebookFields = null, forceReload:Boolean = false):IFacebookCall
+		public function getFriendListMembers(friendListId:String, callback:Function = null, fields:FacebookUserFields = null, forceReload:Boolean = false):IFacebookCall
 		{
 			return service.get(callback, FacebookConnection.MEMBERS, friendListId, FacebookUserData, null, fields, forceReload);
 		}

@@ -100,9 +100,7 @@ package temple.facebook.api
 		 * @param callback a callback which is called when the upload is complete. The callback must accept one, and only one, argument of type IFacebookResult
 		 * @param albumId the id of the album to add the photo to. If albumID is 'me' the photo will be added to your wall.
 		 * @param fileName an optional name for the photo.
-		 * @param noStory when a photo is upload, by default there is a wallpost created. When you want to share this uploaded photo in your own wallpost you can choose to hide this upload from your timeline.
-		 * 
-		 * Note: you need 'publish_stream' permission if you want Facebook to make a wallpost for this photo.
+		 * @param noStory when a photo is upload, by default there is a wallpost created. When you want to share this uploaded photo in your own wallpost you can choose to hide this upload from your timeline
 		 */
 		function upload(photo:*, message:String = null, callback:Function = null, albumId:String = 'me', noStory:Boolean = false):IFacebookCall;
 

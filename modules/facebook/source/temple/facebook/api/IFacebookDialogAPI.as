@@ -83,7 +83,9 @@ package temple.facebook.api
 		 * 	description, with each property on its own line. Keys must be strings, and values can be either strings or
 		 * 	objects with the keys <code>text</code> and <code>href</code>.
 		 * @param actions An array of action links which will appear next to the "Comment" and "Like" link under posts.
-		 * 	Each action link should be represented as an object with keys <code>name</code> and <code>link</code>. 
+		 * 	Each action link should be represented as an object with keys <code>name</code> and <code>link</code>.
+		 * @param ref A text reference for the category of feed post. This category is used in Facebook Insights to help
+		 *  you measure the performance of different types of post.
 		 * @param display (Optional) The type of dialog to show (page, iframe or popup).
 		 * @param from The ID or username of the user posting the message. If this is unspecified, it defaults to the
 		 * 	current user. If specified, it must be the ID of the user or of a page that the user administers.
