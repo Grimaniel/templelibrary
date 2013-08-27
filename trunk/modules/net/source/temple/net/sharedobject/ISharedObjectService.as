@@ -61,7 +61,7 @@ package temple.net.sharedobject
 	 * 
 	 * @author Arjan van Wijk, Bart van der Schoor
 	 */
-	public interface ISharedObjectService extends ICoreEventDispatcher, ICoreObject, IEventDispatcher
+	public interface ISharedObjectService extends ICoreEventDispatcher
 	{
 		/**
 		 * Sets a property on the SharedObject
