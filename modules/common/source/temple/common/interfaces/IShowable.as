@@ -36,7 +36,7 @@
 package temple.common.interfaces
 {
 	/**
-	 * Interface for objects which can be sh showing or hiding an object.
+	 * Interface for objects which can be showing or hiding an object.
 	 * 
 	 * @author Thijs Broerse
 	 */
@@ -57,13 +57,8 @@ package temple.common.interfaces
 		function hide(instant:Boolean = false, onComplete:Function = null):void;
 		
 		/**
-		 * Getter/setter wrapper for show and hide method. Where shown=true mains show() and shown=false means hide()
+		 * A Boolean which indicates if the object is currently shown.
 		 */
 		function get shown():Boolean;
-
-		/**
-		 * @private 
-		 */
-		function set shown(value:Boolean):void;
 	}
 }

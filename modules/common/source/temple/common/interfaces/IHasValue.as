@@ -47,5 +47,10 @@ package temple.common.interfaces
 		 * Returns the value of the object.
 		 */
 		function get value():*;
+		
+		/**
+		 * @private
+		 */
+		function set value(value:*):void;
 	}
 }
