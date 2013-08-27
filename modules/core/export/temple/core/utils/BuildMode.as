@@ -54,7 +54,7 @@ package temple.core.utils
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.1";
+		templelibrary static const VERSION:String = "3.6.0";
 		
 		/**
 		 * Returns true if the SWF is built in debug mode.
@@ -83,7 +83,7 @@ package temple.core.utils
 		{
 			if (!displayObject) throwError(new TempleArgumentError(BuildMode, "No displayObject"));
 			
-			if (displayObject.loaderInfo.hasOwnProperty('bytes'))
+			if (displayObject.loaderInfo && displayObject.loaderInfo.hasOwnProperty('bytes'))
 			{
 				var bytes:ByteArray = displayObject.loaderInfo['bytes'] as ByteArray;
 				

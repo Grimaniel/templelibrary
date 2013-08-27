@@ -50,7 +50,7 @@ package temple.core.behaviors
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.1";
+		templelibrary static const VERSION:String = "3.6.0";
 		
 		private var _behavior:IBehavior;
 
@@ -63,7 +63,7 @@ package temple.core.behaviors
 		{
 			super(type, bubbles);
 			_behavior = behavior;
-			toStringProps.splice(1, 0, 'behaviorTarget');
+			toStringProps.splice(1, 0, 'behavior', 'behaviorTarget');
 		}
 
 		/**

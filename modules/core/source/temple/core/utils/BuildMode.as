@@ -49,7 +49,7 @@ package temple.core.utils
 		{
 			if (!displayObject) throwError(new TempleArgumentError(BuildMode, "No displayObject"));
 			
-			if (displayObject.loaderInfo.hasOwnProperty('bytes'))
+			if (displayObject.loaderInfo && displayObject.loaderInfo.hasOwnProperty('bytes'))
 			{
 				var bytes:ByteArray = displayObject.loaderInfo['bytes'] as ByteArray;
 				

@@ -35,6 +35,7 @@
 
 package temple.core.events 
 {
+	import temple.core.destruction.DestructEvent;
 	import temple.core.CoreObject;
 	import temple.core.Temple;
 	import temple.core.errors.TempleArgumentError;
@@ -61,13 +62,23 @@ package temple.core.events
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.1";
+		templelibrary static const VERSION:String = "3.6.0";
 		
 		/**
 		 * If set to <code>true</code> the <code>EventListenerManager</code> will log a debug message when a weak event
 		 * listener is set.
 		 */
 		public static var logWeakListeners:Boolean;
+		
+		private static const _dictionary:Dictionary = new Dictionary(true);
+		
+		/**
+		 * Returns the ButtonBehavior of a DisplayObject if the DisplayObject has ButtonBehavior. Otherwise null is returned. 
+		 */
+		public static function getInstance(target:IEventDispatcher):EventListenerManager
+		{
+			return EventListenerManager._dictionary[target] as EventListenerManager;
+		}
 		
 		private var _target:IEventDispatcher;
 		private var _events:Vector.<EventData>;
@@ -78,15 +89,21 @@ package temple.core.events
 		 * ICoreEventDispatcher!
 		 * @param eventDispatcher the EventDispatcher of this EventListenerManager
 		 */
-		public function EventListenerManager(eventDispatcher:ICoreEventDispatcher) 
+		public function EventListenerManager(target:IEventDispatcher) 
 		{
-			_target = eventDispatcher;
+			if (target == null) throwError(new TempleArgumentError(this, "dispatcher can not be null"));
+			if (EventListenerManager._dictionary[target]) throwError(new TempleError(this, target + " already has an EventListenerManager"));
+			
+			EventListenerManager._dictionary[this] = EventListenerManager._dictionary[target] = this;
+			
+			_target = target;
 			_events = new Vector.<EventData>();
+			_blockRequest = true;
+			_target.addEventListener(DestructEvent.DESTRUCT, handleTargetDestructed);
+			_blockRequest = false;
 			
 			super();
 			
-			if (eventDispatcher == null) throwError(new TempleArgumentError(this, "dispatcher can not be null"));
-			if (eventDispatcher.eventListenerManager) throwError(new TempleError(this, "dispatcher already has an EventListenerManager"));
 			toStringProps.push('target');
 		}
 		
@@ -99,33 +116,36 @@ package temple.core.events
 		}
 
 		/**
-		 * Registers an event listening to the EventListenerManager
-		 * 	
-		 * @param type The type of event.
-		 * @param listener The listener function that processes the event.
-		 * @param useCapture Determines whether the listener works in the capture phase or the target and bubbling phases.
-		 * @param priority The priority level of the event listener.
-		 * @param useWeakReference Determines whether the reference to the listener is strong or weak.
+		 * @inheritDoc
 		 */
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
+		{
+			_target.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			if (!(_target is ICoreEventDispatcher)) templelibrary::addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+
+		/**
+		 * @private
+		 */
+		templelibrary function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
 			// Don't store weak reference info, since storing the listener will make it strong
 			if (useWeakReference)
 			{
-				if (EventListenerManager.logWeakListeners) logDebug("Weak listener used for '" + type + "'");
+				if (EventListenerManager.logWeakListeners) logWarn("Weak listener used for '" + type + "'");
 				return;
 			}
 			
 			var i:int = _events.length;
 			while (i--)
 			{
-				if (_events[i].equals(type, listener, useCapture))
+				if (_events[i].equals(_target, type, listener, useCapture))
 				{
 					_events[i].once = false;
 					return;
 				}
 			}
-			_events.push(new EventData(type, listener, useCapture, false, priority));
+			_events.push(new EventData(_target, type, listener, useCapture, false, priority));
 		}
 		
 		/**
@@ -136,11 +156,12 @@ package temple.core.events
 			var i:int = _events.length;
 			while (i--)
 			{
-				if (_events[i].equals(type, listener, useCapture)) return;
+				if (_events[i].equals(_target, type, listener, useCapture)) return;
 			}
-			_events.push(new EventData(type, listener, useCapture, true, priority));
+			_events.push(new EventData(_target, type, listener, useCapture, true, priority));
 			_events.sort(sort);
 			_target.addEventListener(type, handleOnceEvent, useCapture, priority);
+
 		}
 
 		/**
@@ -168,21 +189,26 @@ package temple.core.events
 		}
 
 		/**
-		 * Notifies the ListenerManager instance that a listener has been removed from the IEventDispatcher.
-		 * 	
-		 * @param type The type of event.
-		 * @param listener The listener function that processes the event.
-		 * @param useCapture Determines whether the listener works in the capture phase or the target and bubbling phases.
+		 * @inheritDoc
 		 */
 		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
 		{
-			if (_blockRequest || !_events) return;
+			_target.removeEventListener(type, listener, useCapture);
+			if (!(_target is ICoreEventDispatcher)) templelibrary::removeEventListener(type, listener, useCapture);
+		}
+		
+		/**
+		 * @private
+		 */
+		templelibrary function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
+		{
+			if (!_events) return;
 			var i:int = _events.length;
 			while (i--)
 			{
-				if (_events[i].equals(type, listener, useCapture))
+				if (_events[i].equals(_target, type, listener, useCapture))
 				{
-					EventData(_events.splice(i, 1)[0]).destruct();
+					_events.splice(i, 1)[0].destruct();
 				}
 			}
 		}
@@ -193,17 +219,12 @@ package temple.core.events
 		public function removeAllStrongEventListenersForType(type:String):void 
 		{
 			_blockRequest = true;
-			
 			var i:int = _events.length;
-			var eventData:EventData;
 			while (i--) 
 			{
-				eventData = _events[i];
-				if (eventData.type == type) 
+				if (_events[i].type == type) 
 				{
-					eventData = _events.splice(i, 1)[0];
-					if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
-					eventData.destruct();
+					_events.splice(i, 1)[0].destruct();
 				}
 			}
 			_blockRequest = false;
@@ -222,9 +243,7 @@ package temple.core.events
 				eventData = _events[i];
 				if (eventData.type == type && eventData.once) 
 				{
-					eventData = _events.splice(i, 1)[0];
-					if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
-					eventData.destruct();
+					_events.splice(i, 1)[0].destruct();
 				}
 			}
 			_blockRequest = false;
@@ -237,18 +256,11 @@ package temple.core.events
 		{
 			_blockRequest = true;
 			var i:int = _events.length;
-			var eventData:EventData;
 			while (i--) 
 			{
-				eventData = _events[i];
-				
-				if (eventData.listener == listener) 
+				if (_events[i].listener == listener) 
 				{
-					eventData = _events.splice(i, 1)[0];
-					
-					if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
-					
-					eventData.destruct();
+					_events.splice(i, 1)[0].destruct();
 				}
 			}
 			_blockRequest = false;
@@ -260,22 +272,46 @@ package temple.core.events
 		public function removeAllEventListeners():void 
 		{
 			_blockRequest = true;
-			if (_events)
+			if (_events) while (_events.length) _events.pop().destruct();
+			_blockRequest = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function listenTo(dispatcher:IEventDispatcher, type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
+		{
+			var manager:EventListenerManager = getInstance(dispatcher) || new EventListenerManager(dispatcher);
+			manager.addEventListener(type, listener, useCapture, priority);
+			var i:int = manager._events.length;
+			while (i--)
 			{
-				var i:int = _events.length;
-				var eventData:EventData;
-				while (i--) 
+				if (manager._events[i].equals(dispatcher, type, listener, useCapture))
 				{
-					eventData = _events.splice(i, 1)[0];
-					
-					if (!eventData.isDestructed)
-					{
-						if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
-						eventData.destruct();
-					}
+					_events.push(manager._events[i]);
+					return;
 				}
 			}
-			_blockRequest = false;
+			logError("EventData not found");
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function listenOnceTo(dispatcher:IEventDispatcher, type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
+		{
+			var manager:EventListenerManager = getInstance(dispatcher) || new EventListenerManager(dispatcher);
+			manager.addEventListenerOnce(type, listener, useCapture, priority);
+			var i:int = manager._events.length;
+			while (i--)
+			{
+				if (manager._events[i].equals(dispatcher, type, listener, useCapture))
+				{
+					_events.push(manager._events[i]);
+					return;
+				}
+			}
+			logError("EventData not found");
 		}
 		
 		/**
@@ -296,7 +332,7 @@ package temple.core.events
 			{
 				for each (var eventData:EventData in _events)
 				{
-					list.push(eventData.type + ": " + functionToString(eventData.listener));
+					if (!eventData.isDestructed) list.push(eventData.dispatcher + "." + eventData.type + ": " + functionToString(eventData.listener));
 				}
 			}
 			return list;
@@ -323,7 +359,6 @@ package temple.core.events
 				{
 					eventData = _events.splice(i, 1)[0];
 					var listener:Function = eventData.listener;
-					if (_target) _target.removeEventListener(eventData.type, eventData.listener, eventData.useCapture);
 					eventData.destruct();
 					if (listener.length == 1)
 					{
@@ -336,6 +371,11 @@ package temple.core.events
 				}
 			}
 			_blockRequest = false;
+		}
+		
+		private function handleTargetDestructed(event:DestructEvent):void
+		{
+			destruct();
 		}
 		
 		private function functionToString(func:Function):String 
@@ -377,6 +417,13 @@ package temple.core.events
 		 */
 		override public function destruct():void 
 		{
+			if (_target)
+			{
+				_target.removeEventListener(DestructEvent.DESTRUCT, handleTargetDestructed);
+				delete EventListenerManager._dictionary[_target];
+			}
+			delete EventListenerManager._dictionary[this];
+			
 			removeAllEventListeners();
 			
 			for each (var eventData:EventData in _events) eventData.destruct();
@@ -388,30 +435,32 @@ package temple.core.events
 		}
 	}
 }
+import flash.events.IEventDispatcher;
 import temple.core.CoreObject;
 
 final class EventData extends CoreObject
 {
+	public var dispatcher:IEventDispatcher;
 	public var type:String;
 	public var listener:Function;
 	public var useCapture:Boolean;
 	public var once:Boolean;
 	public var priority:int;
 	
-	public function EventData(type:String, listener:Function, useCapture:Boolean, once:Boolean, priority:int) 
+	public function EventData(dispatcher:IEventDispatcher, type:String, listener:Function, useCapture:Boolean, once:Boolean, priority:int) 
 	{
+		this.dispatcher = dispatcher;
 		this.type = type;
 		this.listener = listener;
 		this.useCapture = useCapture;
 		this.once = once;
 		this.priority = priority;
-		super();
 		toStringProps.push('type');
 	}
 
-	public function equals(type:String, listener:Function, useCapture:Boolean):Boolean 
+	public function equals(dispatcher:IEventDispatcher, type:String, listener:Function, useCapture:Boolean):Boolean 
 	{
-		return this.type == type && this.listener == listener && this.useCapture == useCapture;
+		return this.dispatcher == dispatcher && this.type == type && this.listener == listener && this.useCapture == useCapture;
 	}
 
 	/**
@@ -419,7 +468,13 @@ final class EventData extends CoreObject
 	 */
 	override public function destruct():void
 	{
+		if (dispatcher && type && listener != null)
+		{
+			dispatcher.removeEventListener(type, listener, useCapture);
+		}
+		dispatcher = null;
 		type = null;
 		listener = null;
+		super.destruct();
 	}
 }

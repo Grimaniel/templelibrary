@@ -226,7 +226,7 @@ package temple.core.debug.log
 				
 				if (Log._showTrace) 
 				{
-					trace(Log.padLeft(String(frame % 1000), 3, " ") + " " + Log.formatTime(time) + " \t" + level + ": \t" + String(data) + " \t-- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#") + (stack ? " " + stack : ""));
+					trace(Log.padLeft(String(frame % 1000), 3, frame >= 1000 ? "0" : " ") + " " + Log.formatTime(time) + " \t" + level + ": \t" + String(data) + " \t-- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#") + (stack ? " " + stack : ""));
 				}
 				
 				if (Log._instance.hasEventListener(LogEvent.EVENT))

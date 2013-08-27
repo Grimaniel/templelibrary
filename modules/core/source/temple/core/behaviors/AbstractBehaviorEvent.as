@@ -29,7 +29,7 @@ package temple.core.behaviors
 		{
 			super(type, bubbles);
 			_behavior = behavior;
-			toStringProps.splice(1, 0, 'behaviorTarget');
+			toStringProps.splice(1, 0, 'behavior', 'behaviorTarget');
 		}
 
 		/**

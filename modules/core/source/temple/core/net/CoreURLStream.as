@@ -4,11 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.net 
 {
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.net.URLRequest;
-	import flash.net.URLStream;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.log.LogLevel;
@@ -17,6 +12,13 @@ package temple.core.net
 	import temple.core.destruction.IDestructibleOnError;
 	import temple.core.events.EventListenerManager;
 	import temple.core.templelibrary;
+
+	import flash.events.Event;
+	import flash.events.IEventDispatcher;
+	import flash.events.IOErrorEvent;
+	import flash.events.SecurityErrorEvent;
+	import flash.net.URLRequest;
+	import flash.net.URLStream;
 
 	/**
 	 * @eventType temple.core.destruction.DestructEvent.DESTRUCT

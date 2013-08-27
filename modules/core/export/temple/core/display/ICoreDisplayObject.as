@@ -35,10 +35,9 @@
 
 package temple.core.display 
 {
-	import flash.geom.Point;
-	import temple.core.ICoreObject;
 	import temple.core.events.ICoreEventDispatcher;
 
+	import flash.geom.Point;
 
 	/**
 	 * The <code>ICoreDisplayObjects</code> extends Flash native DisplayObject classes, like <code>Sprite</code>,
@@ -58,7 +57,7 @@ package temple.core.display
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface ICoreDisplayObject extends IDisplayObject, ICoreObject, ICoreEventDispatcher
+	public interface ICoreDisplayObject extends IDisplayObject, ICoreEventDispatcher
 	{
 		/**
 		 * Returns <code>true</code> if this object is on the <code>Stage</code>, <code>false</code> if not.

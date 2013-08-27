@@ -4,8 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.net 
 {
-	import flash.events.Event;
-	import flash.net.NetConnection;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.log.LogLevel;
@@ -14,6 +12,10 @@ package temple.core.net
 	import temple.core.events.EventListenerManager;
 	import temple.core.events.ICoreEventDispatcher;
 	import temple.core.templelibrary;
+
+	import flash.events.Event;
+	import flash.events.IEventDispatcher;
+	import flash.net.NetConnection;
 
 	/**
 	 * Base class for all NetConnections in the Temple. The CoreNetConnection handles some core features of the Temple:

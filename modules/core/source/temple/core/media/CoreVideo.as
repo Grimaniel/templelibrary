@@ -17,6 +17,7 @@ package temple.core.media
 	import flash.display.Loader;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.IEventDispatcher;
 	import flash.geom.Point;
 	import flash.media.Camera;
 	import flash.media.Video;

@@ -106,7 +106,7 @@ package temple.core.debug.log
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.1";
+		templelibrary static const VERSION:String = "3.6.0";
 		
 		private static const _instance:Log = new Log();
 		
@@ -260,7 +260,7 @@ package temple.core.debug.log
 				
 				if (Log._showTrace) 
 				{
-					trace(Log.padLeft(String(frame % 1000), 3, " ") + " " + Log.formatTime(time) + " \t" + level + ": \t" + String(data) + " \t-- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#") + (stack ? " " + stack : ""));
+					trace(Log.padLeft(String(frame % 1000), 3, frame >= 1000 ? "0" : " ") + " " + Log.formatTime(time) + " \t" + level + ": \t" + String(data) + " \t-- " + (sender ? sender.toString() : 'null') + (objectId == 0 ? '' : " #" + objectId + "#") + (stack ? " " + stack : ""));
 				}
 				
 				if (Log._instance.hasEventListener(LogEvent.EVENT))

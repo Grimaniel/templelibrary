@@ -79,6 +79,12 @@ package temple.core.debug
 						{
 							string += "\"" + value + "\"";
 						}
+						else if ((value is int || value is uint) && name.toLowerCase().indexOf("color") != -1)
+						{
+							value = int(value).toString(16).toUpperCase();
+							while (value.length < 6) value = "0" + value;
+							string += "0x" + value;
+						}
 						else
 						{
 							string += value;

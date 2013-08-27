@@ -4,6 +4,7 @@ include "../includes/License.as.inc";
 
 package temple.core.display 
 {
+	import flash.events.IEventDispatcher;
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
