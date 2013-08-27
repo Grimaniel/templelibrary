@@ -37,7 +37,6 @@ package temple.facebook.api
 {
 	import temple.facebook.data.vo.FacebookFriendListFields;
 	import temple.facebook.data.vo.FacebookUserFields;
-	import temple.facebook.data.vo.IFacebookFields;
 	import temple.facebook.service.IFacebookCall;
 
 	/**
@@ -122,11 +121,11 @@ package temple.facebook.api
 		 * 
 		 * @see temple.facebook.data.enum.FacebookFriendListType
 		 */
-		function getFriendListsOfType(type:String, callback:Function = null, userId:String = 'me', offset:Number = NaN, limit:Number = NaN, fields:IFacebookFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall;
+		function getFriendListsOfType(type:String, callback:Function = null, userId:String = 'me', offset:Number = NaN, limit:Number = NaN, fields:FacebookFriendListFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall;
 
 		/**
 		 * Get the members of a FriendList
 		 */
-		function getFriendListMembers(friendListId:String, callback:Function = null, fields:IFacebookFields = null, forceReload:Boolean = false):IFacebookCall;
+		function getFriendListMembers(friendListId:String, callback:Function = null, fields:FacebookUserFields = null, forceReload:Boolean = false):IFacebookCall;
 	}
 }
