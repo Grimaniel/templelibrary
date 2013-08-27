@@ -74,9 +74,9 @@ package temple.utils.propertyproxy
 			_max = value;
 		}
 		
-		public function getValue(target:Object, property:String):Number
+		override public function getValue(target:Object, property:String):*
 		{
-			return (target[property]- _min) / (_max - _min);
+			return (target[property] - _min) / (_max - _min);
 		}
 
 		override public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void

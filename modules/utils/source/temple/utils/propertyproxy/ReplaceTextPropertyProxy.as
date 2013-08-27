@@ -98,6 +98,14 @@ package temple.utils.propertyproxy
 		{
 			return true;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getValue(target:Object, property:String):*
+		{
+			return target[property];
+		}
 
 		/**
 		 * @inheritDoc

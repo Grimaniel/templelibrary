@@ -87,7 +87,7 @@ package temple.utils
 		private var _currentFrame:int;
 		private var _callback:Function;
 		private var _params:Array;
-		private var _paused:Boolean;
+		private var _isPaused:Boolean;
 		private var _debug:Boolean;
 		private var _callbackString:String;
 
@@ -127,7 +127,7 @@ package temple.utils
 			if (debug) logDebug("pause: ");
 			
 			FramePulse.removeEnterFrameListener(handleEnterFrame);
-			_paused = true;
+			_isPaused = true;
 		}
 		
 		/**
@@ -137,7 +137,7 @@ package temple.utils
 		{
 			if (debug) logDebug("resume: ");
 			
-			if (!isDestructed && _paused)
+			if (!isDestructed && _isPaused)
 			{
 				FramePulse.addEnterFrameListener(handleEnterFrame);
 			}
@@ -146,9 +146,9 @@ package temple.utils
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean
+		public function get isPaused():Boolean
 		{
-			return _paused;
+			return _isPaused;
 		}
 		
 		/**

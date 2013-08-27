@@ -41,6 +41,8 @@ import flash.utils.getQualifiedClassName;
 
 class Functions
 {
+	private static const WRITEONLY:Object = {};
+	
 	internal static function dump(object:Object, depth:uint, objects:Dictionary, constants:Boolean, namespaces:Boolean, methods:Boolean, dates:Boolean, skipEmpty:Boolean, isInited:Boolean, tabs:String):String
 	{
 		var output:String = "";
@@ -76,7 +78,7 @@ class Functions
 				}
 				else if (object is uint || object is int)
 				{
-					output += " (0x" + Number(object).toString(16).toUpperCase() + ")";
+					output += " (0x" + int(object).toString(16).toUpperCase() + ")";
 					return output;
 				}
 				else if (!ObjectUtils.isPrimitive(object))
@@ -110,14 +112,17 @@ class Functions
 			// variables, getters, constants and methods
 			var description:XML = describeType(object);
 			
-			var list:XMLList  = description.variable.(namespaces || !hasOwnProperty("@uri"));
-			list += description.accessor.((!hasOwnProperty("@access") || @access != "writeonly") && (namespaces || !hasOwnProperty("@uri")));
-			if (constants) list += description.constant.(namespaces || !hasOwnProperty("@uri"));
-			if (methods) list += description.method.(namespaces || !hasOwnProperty("@uri"));
+			var list:XMLList  = description.variable;
+			list += description.accessor;
+			if (constants) list += description.constant;
+			if (methods) list += description.method;
 			
 			for each (var node:XML in list)
 			{
-				variables.push(new ObjectVariableData(node.@name, node.@type, node, node.@uri));
+				if (namespaces || !("@uri" in node))
+				{
+					variables.push(new ObjectVariableData(node.@name, node.@type, node, node.@uri, node.@access));
+				}
 			}
 			
 			// dynamic values
@@ -146,128 +151,154 @@ class Functions
 
 			keys[vardata.name] = true;
 
-			try
-			{
-				if (vardata.uri)
-				{
-					var ns:Namespace = spaces[vardata.uri] ||= new Namespace(null, vardata.uri);
-					variable = object.ns::[vardata.name];
-				}
-				else
-				{
-					variable = object[vardata.name];
-				}
-			}
-			catch (e:Error)
-			{
-				variable = e.message;
-			}
-			
-			var type:String = typeof(variable);
-			
-			if (skipEmpty && (variable === null || variable != variable)) continue;
-			
-			output += "\n" + tabs + (vardata.uri ? "[" + vardata.uri + "]::" : "") + vardata.name;
+			var type:String = null;
 
-			// determine what's inside...
-			switch (type)
+			if (vardata.access != "writeonly")
 			{
-				case ObjectType.STRING:
+				try
 				{
-					output += ": \"" + variable + "\" (" + (vardata.type ? vardata.type : "String") + ")" ;
-					break;
-				}
-				case ObjectType.OBJECT:
-				{
-					// check to see if the variable is an Array or Vector.
-					if (variable is Array || Functions.isVector(variable))
+					if (vardata.uri)
 					{
-						if ((objects == null || !objects[variable]) && ObjectUtils.hasValues(variable) && depth)
-						{
-							if (objects) objects[variable] = true;
-
-							output += ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")";
-							if (variable.length) output += "\n" + tabs + "[";
-							output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, skipEmpty, isInited, tabs);
-							if (variable.length) output += "\n" + tabs + "]";
-						}
-						else
-						{
-							output += ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")" + (objects && objects[variable] ? " (duplicate)" : "");;
-						}
-					}
-					else if (variable is ByteArray)
-					{
-						output += ": " + uint(ByteArray(variable).bytesAvailable / 1024) + "KB " + (['AMF0',,, 'AMF3'][(ByteArray(variable).objectEncoding)]) + " position:" + ByteArray(variable).position + " (ByteArray)";
-					}
-					else if (variable is Enumerator)
-					{
-						output += ": " + variable + " (" + getClassName(vardata.type ? variable || vardata.type : getQualifiedClassName(variable)) + ") (" + getClassName(Enumerator) + ")";
+						var ns:Namespace = spaces[vardata.uri] ||= new Namespace(null, vardata.uri);
+						variable = object.ns::[vardata.name];
 					}
 					else
 					{
-						// object, make exception for Date
-						if ((objects == null || !objects[variable]) && (variable && depth && (dates || !(variable is Date))))
+						variable = object[vardata.name];
+					}
+				}
+				catch (e:Error)
+				{
+					variable = e.message;
+				}
+				type = typeof(variable);
+			}
+			else
+			{
+				variable = WRITEONLY;
+			}
+			
+			if (skipEmpty && (variable === null || variable != variable || variable == Functions.WRITEONLY)) continue;
+			
+			output += "\n" + tabs + (vardata.uri ? "[" + vardata.uri + "]::" : "") + vardata.name;
+			
+			if (variable != Functions.WRITEONLY)
+			{
+				// determine what's inside...
+				switch (type)
+				{
+					case ObjectType.STRING:
+					{
+						output += ": \"" + variable + "\"";
+						break;
+					}
+					case ObjectType.OBJECT:
+					{
+						// check to see if the variable is an Array or Vector.
+						if (variable is Array || Functions.isVector(variable))
 						{
-							if (objects) objects[variable] = true;
-
-							// recursive call
-							output += ": " + variable;
-							if (ObjectUtils.hasValues(variable))
+							if ((objects == null || !objects[variable]) && ObjectUtils.hasValues(variable) && depth)
 							{
-								if (ObjectUtils.isDynamic(variable))
-								{
-									output += " (dynamic)";
-								}
-
-								output += "\n" + tabs + "\u007B";
+								if (objects) objects[variable] = true;
+	
+								output += ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")";
+								if (variable.length) output += "\n" + tabs + "[";
 								output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, skipEmpty, isInited, tabs);
-								output += "\n" + tabs + "}";
+								if (variable.length) output += "\n" + tabs + "]";
 							}
+							else
+							{
+								output += ": " + getClassName(variable) + "(" + variable.length + (variable.fixed ? ", fixed" : "") + ")" + (objects && objects[variable] ? " (duplicate)" : "");;
+							}
+						}
+						else if (variable is ByteArray)
+						{
+							output += ": " + uint(ByteArray(variable).bytesAvailable / 1024) + "KB " + (['AMF0',,, 'AMF3'][(ByteArray(variable).objectEncoding)]) + " position:" + ByteArray(variable).position + " (ByteArray)";
+						}
+						else if (variable is Enumerator)
+						{
+							output += ": " + variable + " (" + getClassName(vardata.type ? variable || vardata.type : getQualifiedClassName(variable)) + ") (" + getClassName(Enumerator) + ")";
 						}
 						else
 						{
-							output += ": " + ObjectUtils.convertToString(variable) + (vardata.type ? " (" + (vardata.type == "*" ? vardata.type : getClassName(variable || vardata.type)) + ")" : "") + (objects && objects[variable] ? " (duplicate)" : "");
-						}
-					}
-					break;
-				}
-				case ObjectType.FUNCTION:
-				{
-					output += "(";
-
-					if (vardata.xml && vardata.xml.parameter && vardata.xml.parameter is XMLList)
-					{
-						var lenj:int = (vardata.xml.parameter as XMLList).length();
-						var optional:Boolean = false;
-						for (var j:int = 0; j < lenj; j++)
-						{
-							if (j) output += ", ";
-							if (!optional && vardata.xml.parameter[j].@optional == "true")
+							// object, make exception for Date
+							if ((objects == null || !objects[variable]) && (variable && depth && (dates || !(variable is Date))))
 							{
-								optional = true;
-								output += "(";
+								if (objects) objects[variable] = true;
+	
+								// recursive call
+								output += ": " + variable;
+								if (ObjectUtils.hasValues(variable))
+								{
+									if (ObjectUtils.isDynamic(variable))
+									{
+										output += " (dynamic)";
+									}
+	
+									output += "\n" + tabs + "\u007B";
+									output += Functions.dump(variable, depth - 1, objects, constants, namespaces, methods, dates, skipEmpty, isInited, tabs);
+									output += "\n" + tabs + "}";
+								}
 							}
-							output += "arg" + vardata.xml.parameter[j].@index + ":" + getClassName(String(vardata.xml.parameter[j].@type));
+							else
+							{
+								output += ": " + ObjectUtils.convertToString(variable) + (objects && objects[variable] ? " (duplicate)" : "");
+							}
 						}
-						if (optional) output += ")";
+						break;
 					}
-					output += ")" + (vardata.xml ? ":" + getClassName(String(vardata.xml.@returnType)) : "") + " (" + getClassName(variable) + ")";
-					break;
-				}
-				default:
-				{
-					vardata.type ||= getClassName(variable);
-
-					// variable is not an object nor string, just trace it out normally
-					output += ": " + variable + " (" + vardata.type + ")";
-
-					// add value as hex for uints
-					if (vardata.type == "uint" || vardata.type == "int") output += " 0x" + uint(variable).toString(16).toUpperCase();
-
-					break;
+					case ObjectType.FUNCTION:
+					{
+						output += "(";
+	
+						if (vardata.xml && vardata.xml.parameter && vardata.xml.parameter is XMLList)
+						{
+							var lenj:int = (vardata.xml.parameter as XMLList).length();
+							var optional:Boolean = false;
+							for (var j:int = 0; j < lenj; j++)
+							{
+								if (j) output += ", ";
+								if (!optional && vardata.xml.parameter[j].@optional == "true")
+								{
+									optional = true;
+									output += "(";
+								}
+								output += "arg" + vardata.xml.parameter[j].@index + ":" + getClassName(String(vardata.xml.parameter[j].@type));
+							}
+							if (optional) output += ")";
+						}
+						output += ")" + (vardata.xml ? ":" + getClassName(String(vardata.xml.@returnType)) : "");
+						break;
+					}
+					default:
+					{
+						vardata.type ||= getClassName(variable);
+	
+						// variable is not an object nor string, just trace it out normally
+						output += ": " + variable;
+	
+						// add value as hex for uints
+						if (vardata.type == "uint" || vardata.type == "int") output += " (0x" + uint(variable).toString(16).toUpperCase() + ")";
+	
+						break;
+					}
 				}
 			}
+			output += " (";
+			var varType:String = getClassName(vardata.type);
+			var valueType:String = variable !== null && variable != WRITEONLY ? getClassName(variable is String ? String : variable) : null;
+			if (vardata.type)
+			{
+				output += varType;
+				if (valueType != varType && valueType && varType != "Number" && varType != "uint") output += " -> " + valueType;
+			}
+			else
+			{
+				output += varType;
+			}
+			output += ")";
+			
+			if (vardata.access && vardata.access != "readwrite") output += " (" + vardata.access + ")"; 
 		}
 
 		// here we need to displaying the closing '}' or ']', so we bring
@@ -292,12 +323,14 @@ final class ObjectVariableData
 	public var type:String;
 	public var xml:XML;
 	public var uri:String;
+	public var access:String;
 
-	public function ObjectVariableData(name:*, type:String = null, xml:XML = null, uri:String = null) 
+	public function ObjectVariableData(name:*, type:String = null, xml:XML = null, uri:String = null, access:String = null) 
 	{
 		this.name = name;
 		this.type = type;
 		this.xml = xml;
 		this.uri = uri;
+		this.access = access;
 	}
 }
