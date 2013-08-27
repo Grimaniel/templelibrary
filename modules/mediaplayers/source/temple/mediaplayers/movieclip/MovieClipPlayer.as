@@ -105,6 +105,14 @@ package temple.mediaplayers.movieclip
 				}
 			}
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get isPlaying():Boolean
+		{
+			return _status == PlayerStatus.PLAYING;
+		}
 
 		/**
 		 * @inheritDoc
@@ -224,7 +232,7 @@ package temple.mediaplayers.movieclip
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean
+		public function get isPaused():Boolean
 		{
 			return _status == PlayerStatus.PAUSED;
 		}

@@ -35,6 +35,8 @@
 
 package temple.mediaplayers.players.controls
 {
+	import temple.common.interfaces.IEnableable;
+	import temple.core.debug.IDebuggable;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -48,7 +50,7 @@ package temple.mediaplayers.players.controls
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class PlayerProgressBar extends LiquidContainer
+	public class PlayerProgressBar extends LiquidContainer implements IDebuggable, IEnableable
 	{
 		/**
 		 * Instance name of a child which acts as loadBar.
@@ -81,6 +83,8 @@ package temple.mediaplayers.players.controls
 		private var _knob:DisplayObject;
 		private var _progressLabel:ILabel;
 		private var _durationLabel:ILabel;
+		private var _enabled:Boolean = true;
+		private var _debug:Boolean;
 		
 		public function PlayerProgressBar(width:Number = NaN, height:Number = NaN)
 		{
@@ -173,6 +177,55 @@ package temple.mediaplayers.players.controls
 		public function set knob(value:DisplayObject):void
 		{
 			_knob = value;
+		}
+		
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get enabled():Boolean
+		{
+			return _enabled;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set enabled(value:Boolean):void
+		{
+			_enabled = value;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function enable():void
+		{
+			enabled = true;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function disable():void
+		{
+			enabled = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return _debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			_debug = value;
 		}
 		
 		private function handleEnterFrame(event:Event):void

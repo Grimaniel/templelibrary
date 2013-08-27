@@ -111,8 +111,8 @@ package temple.mediaplayers.video.utils
 
 		private function onMetaData(event:VideoMetaDataEvent):void
 		{
-			event.metadata.parseObject(_metadata);
-			dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.METADATA, event.metadata));
+			event.videoMetaData.parseObject(_metadata);
+			dispatchEvent(new VideoMetaDataEvent(VideoMetaDataEvent.METADATA, event.videoMetaData));
 			_ncMetaData.close();
 			_netstreamMetaData.close();
 			

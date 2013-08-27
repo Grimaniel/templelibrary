@@ -45,7 +45,12 @@ package temple.mediaplayers.players
 	public interface IPlayer extends ICoreEventDispatcher, IPauseable, IHasStatus
 	{
 		/**
-		 * 	start from beginning
+		 * A Boolean which indicates if the player is currently playing
+		 */
+		function get isPlaying():Boolean;
+		
+		/**
+		 * Start from beginning
 		 */
 		function play():void;
 
@@ -61,7 +66,7 @@ package temple.mediaplayers.players
 		function seek(seconds:Number = 0):void;
 
 		/**
-		 *	The current progress time in seconds.
+		 * The current progress time in seconds.
 		 */
 		function get currentPlayTime():Number;
 		
@@ -71,8 +76,8 @@ package temple.mediaplayers.players
 		function get duration():Number;
 
 		/**
-		 *	returns the current progress (value between 0 and 1)
-		 *	if the duration has been set, otherwise returns 0.
+		 * Returns the current progress (value between 0 and 1)
+		 * if the duration has been set, otherwise returns 0.
 		 */
 		function get currentPlayFactor():Number;
 		

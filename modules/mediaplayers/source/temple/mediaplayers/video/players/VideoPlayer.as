@@ -71,9 +71,6 @@ package temple.mediaplayers.video.players
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 
-
-
-
 	/**
 	 * Dispatched when the status is changed
 	 * @eventType temple.status.StatusEvent.STATUS_CHANGE
@@ -165,13 +162,13 @@ package temple.mediaplayers.video.players
 	{
 		/** @private */
 		protected var _netStream:VideoNetStream;
-		/** @private */
-		private var _metaData:VideoMetaData;
+
 		
 		// if pausing when status is between connected<>playing, the video is paused but the NetStream.Play.Start is still broadcasted (so the UI is updated)
 		protected var _delayedPause:Boolean;
 
 		private var _netConnection:VideoNetConnection;
+		private var _videoMetaData:VideoMetaData;
 		private var _cuePoint:VideoCuePoint;
 		private var _video:CoreVideo;
 		private var _videoPath:String;
@@ -387,13 +384,21 @@ package temple.mediaplayers.video.players
 			playUrl(url);
 			_video.visible = false;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get isPlaying():Boolean
+		{
+			return _status == PlayerStatus.PLAYING;
+		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function play():void 
 		{
-			if (_debug) logDebug("play: ");
+			if (_debug) logDebug("play");
 			
 			_delayedPause = false;
 			
@@ -426,7 +431,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function pause():void 
 		{
-			if (_debug) logDebug("pause: ");
+			if (_debug) logDebug("pause");
 			
 			_delayedPause = true;
 			
@@ -470,7 +475,7 @@ package temple.mediaplayers.video.players
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean
+		public function get isPaused():Boolean
 		{
 			return _status == PlayerStatus.PAUSED;
 		}
@@ -480,7 +485,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function stop():void 
 		{
-			if (_debug) logDebug("stop: ");
+			if (_debug) logDebug("stop");
 			
 			_bytesLoaded = bytesLoaded;
 			_bytesTotal = bytesTotal;
@@ -521,7 +526,7 @@ package temple.mediaplayers.video.players
 		{
 			if (_debug) logDebug("seek: " + seconds);
 			
-			if (_netStream && (_metaData || seconds == 0))
+			if (_netStream)
 			{
 				if (seconds == 0 || seconds >= 0 && seconds < duration)
 				{
@@ -563,11 +568,19 @@ package temple.mediaplayers.video.players
 		}
 
 		/**
-		 * Returns the width of the current video
+		 * @inheritDoc
 		 */
 		public function get videoWidth():Number
 		{
-			return _metaData ? _metaData.width : _video.videoWidth;
+			if (_videoMetaData)
+			{
+				return _videoMetaData.width;
+			}
+			else if (_video)
+			{
+				return _video.videoWidth;
+			}
+			return NaN;
 		}
 
 		/**
@@ -596,11 +609,19 @@ package temple.mediaplayers.video.players
 		}
 		
 		/**
-		 * Returns the height of the current video
+		 * @inheritDoc
 		 */
 		public function get videoHeight():Number
 		{
-			return _metaData ? _metaData.height : _video.videoHeight;
+			if (_videoMetaData)
+			{
+				return _videoMetaData.height;
+			}
+			else if (_video)
+			{
+				return _video.videoHeight;
+			}
+			return NaN;
 		}
 
 		/**
@@ -624,9 +645,9 @@ package temple.mediaplayers.video.players
 		/**
 		 * @inheritDoc
 		 */
-		public function get metaData():VideoMetaData 
+		public function get videoMetaData():VideoMetaData 
 		{
-			return _metaData;
+			return _videoMetaData;
 		}
 
 		/**
@@ -693,7 +714,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get duration():Number
 		{
-			return _metaData ? metaData.duration : 0;
+			return _videoMetaData ? _videoMetaData.duration : 0;
 		}
 
 		/**
@@ -701,7 +722,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function get currentPlayFactor():Number 
 		{
-			if (!metaData || isNaN(duration)) return 0;
+			if (!_videoMetaData || isNaN(duration)) return 0;
 			
 			return currentPlayTime / duration;
 		}
@@ -736,7 +757,7 @@ package temple.mediaplayers.video.players
 		 */
 		public function isBufferFull():Boolean
 		{
-			if (_metaData)
+			if (_videoMetaData)
 			{
 				return Math.round(_netStream.bufferLength) == Math.round(duration) || Math.round(_netStream.bufferLength) == Math.round(_netStream.bufferTime);
 			}
@@ -1255,9 +1276,9 @@ package temple.mediaplayers.video.players
 		 */
 		private function handleMetaDataEvent(event:VideoMetaDataEvent):void 
 		{
-			if (_debug) logDebug("handleMetaDataEvent: " + event.metadata);
+			if (_debug) logDebug("handleMetaDataEvent: " + event.videoMetaData);
 			
-			_metaData = event.metadata;
+			_videoMetaData = event.videoMetaData;
 			new FrameDelay(setVideoSize);
 			
 			// max buffertime to duration
@@ -1522,7 +1543,7 @@ package temple.mediaplayers.video.players
 				_netConnection.destruct();
 				_netConnection = null;
 			}
-			_metaData = null;
+			_videoMetaData = null;
 			
 			if (_video)
 			{

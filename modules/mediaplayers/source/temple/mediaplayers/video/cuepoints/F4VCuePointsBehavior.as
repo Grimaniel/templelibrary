@@ -52,7 +52,7 @@ package temple.mediaplayers.video.cuepoints
 
 		private function handleMetaData(event : VideoMetaDataEvent) : void
 		{
-			for each (var cuepoint : VideoCuePoint in event.metadata.cuePoints)
+			for each (var cuepoint : VideoCuePoint in event.videoMetaData.cuePoints)
 			{
 				addCuePoint(cuepoint);
 			}

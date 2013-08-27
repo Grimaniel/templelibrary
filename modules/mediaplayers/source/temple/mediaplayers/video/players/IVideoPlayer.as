@@ -118,9 +118,19 @@ package temple.mediaplayers.video.players
 		function set videoPath(value:String):void
 		
 		/**
-		 *	Returns metadata of loaded movie
+		 *	Returns VideoMetaData of loaded movie
 		 */
-		function get metaData():VideoMetaData;
+		function get videoMetaData():VideoMetaData;
+		
+		/**
+		 * Returns the width of the current video
+		 */
+		function get videoWidth():Number;
+		
+		/**
+		 * Returns the height of the current video
+		 */
+		function get videoHeight():Number;
 		
 		/**
 		 * Get or set the scale mode of the Video
