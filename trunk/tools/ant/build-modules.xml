@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="Build Modules" name="Temple-Modules">
+<project name="Temple-Modules">
 
 	<import file="temple-properties.xml"/>
 	
@@ -8,11 +8,22 @@
 	
 	<property name="targets" value="Prepare,Compile,Extend,Package" />
 	
-	<target name="Build Modules" >
+	<property name="log" value="log.txt" />
+	
+	<target name="Full Build Modules" description="">
+		<antcall target="Clear log" />
+		<antcall target="Incremental Build Modules" />
+	</target>
+	
+	<target name="Incremental Build Modules" description="">
 		<antcall target="Build Core Modules" />
 		<antcall target="Build Extended Modules" />
 	</target>
-
+	
+	<target name="Clear log" >
+		<echo file="${log}"></echo>
+	</target>
+	
 	<target name="Build Core Modules" >
 		<script language="javascript">
 			<![CDATA[
@@ -22,7 +33,7 @@
 				if (target.length())
 				{
 					var echo = project.createTask("echo");
-					echo.setMessage("\nTarget: " + target);
+					echo.setMessage(target);
 					echo.perform();
 			
 					for each (var module in project.getProperty("core-modules").split(","))
@@ -49,7 +60,7 @@
 				if (target.length())
 				{
 					var echo = project.createTask("echo");
-					echo.setMessage("\nTarget: " + target);
+					echo.setMessage(target);
 					echo.perform();
 			
 					for each (var module in project.getProperty("extended-modules").split(","))
@@ -69,13 +80,38 @@
 		</script>
 	</target>
 
-
 	<macrodef name="module">
-		<attribute name="name"/>
+		<attribute name="name" />
 		<attribute name="target"/>
+		
 		<sequential>
-			<echo>Building module @{name}</echo>
+		    <local name="output"/>
+        	<property name="output" value="@{target} @{name}"/>
+		    
+			<!-- Check log if we already have done this -->
+			<fileset includes="${log}" id="check" dir=".">
+				<containsregexp expression="${output}" />
+			</fileset>
+			
+			<!-- if found, set antfile to 'skip.xml' else to the correct value -->
+			<local name="antfile"/>
+			<condition property="antfile" value="${root.dir}/modules/@{name}/tools/ant/build-@{name}.xml" else="skip.xml">
+				<resourcecount count="0" refid="check" />
+			</condition>
+			<local name="action"/>
+			<condition property="action" value="execute" else="skip">
+				<resourcecount count="0" refid="check" />
+			</condition>
+			
+			<echo>${action} ${output}</echo>
+			
+			<ant antfile="${antfile}" target="@{target}" />
+			
+			<!-- 
 			<ant antfile="${root.dir}/modules/@{name}/tools/ant/build-@{name}.xml" target="@{target}" />
+			 -->
+			<echo file="${log}" append="true">${action} ${output}
+</echo>
 		</sequential>
 	</macrodef>
 </project>
