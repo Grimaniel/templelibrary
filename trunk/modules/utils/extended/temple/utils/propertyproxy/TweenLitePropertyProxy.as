@@ -100,6 +100,14 @@ package temple.utils.propertyproxy
 		/**
 		 * @inheritDoc
 		 */
+		public function getValue(target:Object, property:String):*
+		{
+			return target[property];
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			if (_vars == null) _vars = {};

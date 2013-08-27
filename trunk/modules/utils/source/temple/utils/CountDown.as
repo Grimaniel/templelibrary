@@ -50,7 +50,7 @@ package temple.utils
 	 */
 	public class CountDown extends CoreObject implements IPauseable
 	{
-		private var _paused:Boolean;
+		private var _isPaused:Boolean;
 		private var _duration:Number;
 		private var _pauseTime:Number;
 		private var _endDate:Date;
@@ -137,7 +137,7 @@ package temple.utils
 			_endDate = new Date();
 			_endDate.setMilliseconds(_endDate.getMilliseconds() + _duration);
 			
-			_paused = false;
+			_isPaused = false;
 		}
 
 		/**
@@ -148,7 +148,7 @@ package temple.utils
 			_endDate = null;
 			_pauseTime = NaN;
 			_pauseEndTime = null;
-			_paused = false;
+			_isPaused = false;
 		}
 
 		/**
@@ -158,7 +158,7 @@ package temple.utils
 		{
 			_pauseTime = getTimer();
 			_pauseEndTime = time;
-			_paused = true;
+			_isPaused = true;
 		}
 		
 		/**
@@ -166,19 +166,19 @@ package temple.utils
 		 */
 		public function resume():void
 		{
-			if (_paused)
+			if (_isPaused)
 			{
 				_endDate.setMilliseconds(_endDate.getMilliseconds() - (getTimer() - _pauseTime));
-				_paused = false;
+				_isPaused = false;
 			}
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean 
+		public function get isPaused():Boolean 
 		{
-			return _paused;
+			return _isPaused;
 		}
 		
 		/**
@@ -186,7 +186,7 @@ package temple.utils
 		 */
 		public function get time():Date
 		{
-			if (_paused)
+			if (_isPaused)
 			{
 				return _pauseEndTime;
 			}

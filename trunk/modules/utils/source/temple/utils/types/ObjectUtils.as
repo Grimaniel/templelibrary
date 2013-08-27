@@ -35,7 +35,6 @@
 
 package temple.utils.types
 {
-	import flash.utils.Proxy;
 	import temple.core.ICoreObject;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.objectToString;
@@ -46,6 +45,8 @@ package temple.utils.types
 
 	import flash.display.DisplayObject;
 	import flash.text.TextField;
+	import flash.utils.ByteArray;
+	import flash.utils.Proxy;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -132,16 +133,14 @@ package temple.utils.types
 		}
 		
 		/**
-		 * Creates a clone of an object. Works only for dynamic properties.
+		 * Creates a clone of an object.
 		 */
 		public static function clone(object:Object):Object
 		{
-			var copy:Object = new Object();
-			for (var key:* in object)
-			{
-				copy[key] = object[key];
-			}
-			return copy;
+			var byteArray:ByteArray = new ByteArray();
+			byteArray.writeObject(object);
+			byteArray.position = 0;
+			return byteArray.readObject();
 		}
 
 		/**

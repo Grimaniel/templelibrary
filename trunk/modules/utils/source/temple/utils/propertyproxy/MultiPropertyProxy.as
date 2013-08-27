@@ -79,6 +79,9 @@ package temple.utils.propertyproxy
 			_value = value;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function cancel():Boolean
 		{
 			for each (var proxy:IPropertyProxy in _proxies)
@@ -87,7 +90,18 @@ package temple.utils.propertyproxy
 			}
 			return true;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getValue(target:Object, property:String):*
+		{
+			return _value;
+		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{
 			_value = value;

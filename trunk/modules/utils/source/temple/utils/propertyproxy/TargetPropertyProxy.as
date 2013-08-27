@@ -62,6 +62,14 @@ package temple.utils.propertyproxy
 		{
 			_target = value;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getValue(target:Object, property:String):*
+		{
+			return _target[property];
+		}
 
 		public function setValue(target:Object, property:String, value:*, onComplete:Function = null):void
 		{

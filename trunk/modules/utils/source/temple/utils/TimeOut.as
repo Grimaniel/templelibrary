@@ -176,7 +176,7 @@ package temple.utils
 		/**
 		 * @inheritDoc
 		 */
-		public function get paused():Boolean
+		public function get isPaused():Boolean
 		{
 			return _timer ? !_timer.running : false;
 		}

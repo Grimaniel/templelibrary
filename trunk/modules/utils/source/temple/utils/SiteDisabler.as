@@ -136,7 +136,7 @@ package temple.utils
 		public static function set debug(value:Boolean):void
 		{
 			SiteDisabler._debug = value;
-			SiteDisabler._mouseBlocker.alpha = value ? .1 : 0;
+			if (SiteDisabler._mouseBlocker) SiteDisabler._mouseBlocker.alpha = value ? .1 : 0;
 		}
 		
 		private static function handleStageResize(event:Event):void
