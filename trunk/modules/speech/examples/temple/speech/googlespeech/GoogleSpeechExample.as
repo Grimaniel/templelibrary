@@ -12,6 +12,7 @@
  */
 package
 {
+	import temple.utils.types.TextFormatUtils;
 	import assets.Background;
 	import assets.LocaleField;
 	import assets.RecordButton;
@@ -77,7 +78,8 @@ package
 			_localeField = new LocaleField();
 			_localeField.value = 'en-US';
 			_localeField.hintText = 'locale';
-			_localeField.hintTextColor = 0x666666;
+			_localeField.hintTextFormat = TextFormatUtils.clone(_localeField.defaultTextFormat);
+			_localeField.hintTextFormat.color = 0x666666;
 			
 			addChild(_startButton);
 			_startButton.x = Math.round((stage.stageWidth - 72) / 2);
