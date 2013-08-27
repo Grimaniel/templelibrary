@@ -35,6 +35,7 @@
 
 package temple.core.display 
 {
+	import flash.events.IEventDispatcher;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.log.LogLevel;
@@ -86,7 +87,7 @@ package temple.core.display
 		/**
 		 * The current version of the Temple Library
 		 */
-		templelibrary static const VERSION:String = "3.5.1";
+		templelibrary static const VERSION:String = "3.6.0";
 		
 		/**
 		 * @private
@@ -427,7 +428,7 @@ package temple.core.display
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
-			if (getEventListenerManager()) _eventListenerManager.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			if (getEventListenerManager()) _eventListenerManager.templelibrary::addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 		
 		/**
@@ -444,7 +445,7 @@ package temple.core.display
 		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
 		{
 			super.removeEventListener(type, listener, useCapture);
-			if (_eventListenerManager) _eventListenerManager.removeEventListener(type, listener, useCapture);
+			if (_eventListenerManager) _eventListenerManager.templelibrary::removeEventListener(type, listener, useCapture);
 		}
 
 		/**
@@ -479,6 +480,21 @@ package temple.core.display
 			if (_eventListenerManager) _eventListenerManager.removeAllEventListeners();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
+		public function listenTo(dispatcher:IEventDispatcher, type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
+		{
+			if (getEventListenerManager()) _eventListenerManager.listenTo(dispatcher, type, listener, useCapture, priority);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function listenOnceTo(dispatcher:IEventDispatcher, type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void
+		{
+			if (getEventListenerManager()) _eventListenerManager.listenOnceTo(dispatcher, type, listener, useCapture, priority);
+		}
 		
 		[Temple]
 		/**
@@ -496,7 +512,7 @@ package temple.core.display
 				logError("Object is destructed, don't add event listeners");
 				return null;
 			}
-			return _eventListenerManager ||= new EventListenerManager(this);
+			return _eventListenerManager ||= EventListenerManager.getInstance(this) || new EventListenerManager(this);
 		}
 		
 		/**

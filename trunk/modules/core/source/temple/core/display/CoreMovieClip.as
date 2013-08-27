@@ -4,6 +4,7 @@ include "../includes/License.as.inc";
 
 package temple.core.display 
 {
+	import flash.events.IEventDispatcher;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.log.LogLevel;

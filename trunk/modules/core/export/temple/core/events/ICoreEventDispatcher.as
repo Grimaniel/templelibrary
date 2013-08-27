@@ -35,8 +35,10 @@
 
 package temple.core.events 
 {
-	import flash.events.IEventDispatcher;
+	import temple.core.ICoreObject;
 	import temple.core.destruction.IDestructible;
+	
+	import flash.events.IEventDispatcher;
 
 	/**
 	 * @eventType temple.core.destruction.DestructEvent.DESTRUCT
@@ -48,7 +50,7 @@ package temple.core.events
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface ICoreEventDispatcher extends IEventDispatcher, IDestructible 
+	public interface ICoreEventDispatcher extends IEventDispatcher, IDestructible, ICoreObject
 	{
 		/**
 		 * Registers an event listening to the EventListenerManager which will only be called once. After the event is dispatched and all once listeners are called, the once listeners are removed.
@@ -87,6 +89,16 @@ package temple.core.events
 		 * Removes all strong (non weak) EventListeners.
 		 */
 		function removeAllEventListeners():void;
+		
+		/**
+		 * Adds an EventListener on an other object and stores the reference, so it can automatically be removed.
+		 */
+		function listenTo(dispatcher:IEventDispatcher, type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void;
+
+		/**
+		 * Adds a once EventListener on an other object and stores the reference, so it can automatically be removed.
+		 */
+		function listenOnceTo(dispatcher:IEventDispatcher, type:String, listener:Function, useCapture:Boolean = false, priority:int = 0):void;
 
 		[Temple]
 		/**

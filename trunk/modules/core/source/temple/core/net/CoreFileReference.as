@@ -4,8 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.net 
 {
-	import flash.events.Event;
-	import flash.net.FileReference;
 	import temple.core.ICoreObject;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
@@ -16,6 +14,9 @@ package temple.core.net
 	import temple.core.events.ICoreEventDispatcher;
 	import temple.core.templelibrary;
 
+	import flash.events.Event;
+	import flash.events.IEventDispatcher;
+	import flash.net.FileReference;
 
 	/**
 	 * @eventType temple.core.destruction.DestructEvent.DESTRUCT

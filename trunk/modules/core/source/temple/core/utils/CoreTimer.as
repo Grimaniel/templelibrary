@@ -4,8 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.utils 
 {
-	import flash.events.Event;
-	import flash.utils.Timer;
 	import temple.core.ICoreObject;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
@@ -16,6 +14,9 @@ package temple.core.utils
 	import temple.core.events.ICoreEventDispatcher;
 	import temple.core.templelibrary;
 
+	import flash.events.Event;
+	import flash.events.IEventDispatcher;
+	import flash.utils.Timer;
 
 	/**
 	 * @eventType temple.core.destruction.DestructEvent.DESTRUCT

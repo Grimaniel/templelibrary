@@ -15,6 +15,7 @@ package temple.core.net
 	import temple.core.templelibrary;
 
 	import flash.events.Event;
+	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;

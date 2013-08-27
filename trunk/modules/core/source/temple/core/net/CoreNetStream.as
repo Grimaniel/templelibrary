@@ -4,12 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.net 
 {
-	import flash.display.Shape;
-	import flash.events.Event;
-	import flash.events.NetStatusEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.net.NetConnection;
-	import flash.net.NetStream;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
@@ -18,6 +12,14 @@ package temple.core.net
 	import temple.core.destruction.DestructEvent;
 	import temple.core.events.EventListenerManager;
 	import temple.core.templelibrary;
+
+	import flash.display.Shape;
+	import flash.events.Event;
+	import flash.events.IEventDispatcher;
+	import flash.events.NetStatusEvent;
+	import flash.events.SecurityErrorEvent;
+	import flash.net.NetConnection;
+	import flash.net.NetStream;
 
 	/**
 	 * @eventType temple.core.destruction.DestructEvent.DESTRUCT
@@ -43,11 +45,11 @@ package temple.core.net
 		
 		include "../includes/ConstructNamespace.as.inc";
 		
+		private static var _framePulser:Shape;
 		private const _toStringProps:Vector.<String> = new Vector.<String>();
 		private var _eventListenerManager:EventListenerManager;
 		private var _isDestructed:Boolean;
 		private var _isLoaded:Boolean;
-		private var _framePulser:Shape;
 		private var _registryId:uint;
 		private var _isLoading:Boolean;
 		private var _logErrors:Boolean;
@@ -74,6 +76,8 @@ package temple.core.net
 			_logErrors = logErrors;
 			
 			netConnection;
+			
+			toStringProps.push('url');
 		}
 		
 		/**
@@ -147,7 +151,7 @@ package temple.core.net
 			if (_framePulser)
 			{
 				_framePulser.removeEventListener(Event.ENTER_FRAME, handleEnterFrame);
-				_framePulser = null;
+				if (!_framePulser.hasEventListener(Event.ENTER_FRAME)) _framePulser = null;
 			}
 			
 			if (_eventListenerManager)

@@ -4,12 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.display 
 {
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.Loader;
-	import flash.display.Stage;
-	import flash.events.Event;
-	import flash.geom.Point;
 	import temple.core.debug.Registry;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.log.LogLevel;
@@ -17,6 +11,15 @@ package temple.core.display
 	import temple.core.destruction.DestructEvent;
 	import temple.core.events.EventListenerManager;
 	import temple.core.templelibrary;
+
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.Loader;
+	import flash.display.Stage;
+	import flash.events.Event;
+	import flash.events.IEventDispatcher;
+	import flash.geom.Point;
+
 
 
 	/**
