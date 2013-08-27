@@ -56,6 +56,6 @@ package temple.common.interfaces
 		/**
 		 * Indicates if the player or object is currently paused
 		 */
-		function get paused():Boolean;
+		function get isPaused():Boolean;
 	}
 }
