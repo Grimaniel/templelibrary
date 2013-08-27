@@ -26,9 +26,9 @@ package
 			super("Temple - JSONIndexExample");
 			
 			// register class alias for Person so het typed JSON
-			// the Person class extends AbstractIndexable, therefor instances of the Person class will automatically be registered in the Indexer
 			registerClassAlias("Person", Person);
 			
+			// Create some people			
 			var erik:Person = new Person();
 			erik.id = "1";
 			erik.name = "Erik Ooten";
@@ -52,7 +52,6 @@ package
 			jsonOutput.text = json;
 			
 			// convert back to object
-			// the JSONCoder will check the Indexer if the object class implements IIndexable and will return the registered object if it has the same id
 			var person:Person = JSONCoder.decode(json) as Person;
 			
 			var personOutput:TextField = new TextField();
