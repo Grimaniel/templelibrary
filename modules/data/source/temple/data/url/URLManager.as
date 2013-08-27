@@ -185,6 +185,9 @@ package temple.data.url
 				_loader.dataFormat = URLLoaderDataFormat.TEXT;
 				_loader.addEventListener(Event.COMPLETE, handleURLLoaderEvent);
 				_loader.addEventListener(IOErrorEvent.IO_ERROR, handleURLLoaderEvent);
+				_loader.addEventListener(IOErrorEvent.DISK_ERROR, handleURLLoaderEvent);
+				_loader.addEventListener(IOErrorEvent.NETWORK_ERROR, handleURLLoaderEvent);
+				_loader.addEventListener(IOErrorEvent.VERIFY_ERROR, handleURLLoaderEvent);
 				_loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleURLLoaderEvent);
 				_loader.addEventListener(ProgressEvent.PROGRESS, dispatchEvent);
 			}
@@ -420,11 +423,19 @@ package temple.data.url
 					break;
 				}
 				case IOErrorEvent.IO_ERROR:
+				case IOErrorEvent.DISK_ERROR:
+				case IOErrorEvent.NETWORK_ERROR:
+				case IOErrorEvent.VERIFY_ERROR:
 				case SecurityErrorEvent.SECURITY_ERROR:
 				{
 					_isLoaded = false;
 					_isLoading = false;
 					dispatchEvent(event);
+					break;
+				}
+				default:
+				{
+					logError("Unhandled event '" + event.type + "'");
 					break;
 				}
 			}
@@ -573,6 +584,7 @@ package temple.data.url
 			{
 				for each (ud in _urls)
 				{
+					if (ud.features) ud.features = StringUtils.replaceVars(ud.features, _variables, true);
 					ud.url = StringUtils.replaceVars(ud.url, _variables, true);
 				}
 			}
