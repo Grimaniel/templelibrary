@@ -44,7 +44,7 @@ package temple.ui.form.validation.rules
 	 */
 	public class BirthdateValidationRule extends RegExpValidationRule 
 	{
-		private static const _REG_EXP:RegExp = /^([1-9]|[0-2][0-9]|3[0-1])[- \/]([0]?[1-9]|1[0-2])[- \/]([0-9]{2}|19[0-9]{2}|200[0-9])$/;
+		private static const _REG_EXP:RegExp = /^([1-9]|[0-2][0-9]|3[0-1])[- \/]([0]?[1-9]|1[0-2])[- \/]([0-9]{2}|19[0-9]{2}|20[0-9]{2})$/;
 		
 		public function BirthdateValidationRule(target:IHasValue) 
 		{

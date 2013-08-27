@@ -36,11 +36,9 @@
 package temple.ui.form.components 
 {
 	import temple.common.interfaces.IEnableable;
-	import temple.common.interfaces.IResettable;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.Registry;
 	import temple.ui.focus.FocusManager;
-	import temple.ui.form.validation.IHasError;
 	import temple.ui.form.validation.rules.DutchMobilePhoneValidationRule;
 	import temple.ui.form.validation.rules.DutchPhoneValidationRule;
 	import temple.ui.form.validation.rules.DutchPostalcodeValidationRule;
@@ -99,15 +97,15 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class InputField extends FormElementComponent implements IHasError, IResettable, ISetValue, IEnableable, IDebuggable
+	public class InputField extends FormElementComponent implements IInputField, IEnableable, IDebuggable
 	{
 		private var _textField:TextField;
 		private var _hintText:String;
 		private var _prefillText:String;
 		private var _showsHint:Boolean;
-		private var _textColor:uint;
-		private var _hintTextColor:uint;
-		private var _errorTextColor:uint;
+		private var _defaultTextFormat:TextFormat;
+		private var _hintTextFormat:TextFormat;
+		private var _errorTextFormat:TextFormat;
 		private var _trimValue:Boolean = true;
 		private var _displayAsPassword:Boolean;
 		private var _debug:Boolean;
@@ -141,7 +139,7 @@ package temple.ui.form.components
 			_textField.addEventListener(Event.CHANGE, handleTextFieldChange, false, 0, true);
 			_textField.addEventListener(TextEvent.TEXT_INPUT, handleTextInput, false, 0, true);
 			_textField.addEventListener(Event.SCROLL, handleTextFieldScroll, false, 0, true);
-			_textColor = _hintTextColor = _errorTextColor = _textField.textColor;
+			_defaultTextFormat = _textField.defaultTextFormat; 
 			_normalFontSize = fontSize;
 			
 			if (_textField.multiline) _submitOnEnter = false;
@@ -196,6 +194,9 @@ package temple.ui.form.components
 			_textField.dispatchEvent(new Event(Event.CHANGE));
 		}
 
+		/**
+		 * 
+		 */
 		public function appendText(newText:String):void
 		{
 			if (_textField)
@@ -208,20 +209,23 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Color of the text, if not set the original color of the TextField is used.
+		 * @inheritDoc
 		 */
-		public function get textColor():uint
+		public function get defaultTextFormat():TextFormat
 		{
-			return _textColor;
+			return _defaultTextFormat;
 		}
 		
 		/**
-		 * @private
+		 * @inheritDoc
 		 */
-		public function set textColor(textColor:uint):void
+		public function set defaultTextFormat(value:TextFormat):void
 		{
-			_textColor = textColor;
-			if (!_showsHint && !hasError) _textField.textColor = _textColor;
+			_defaultTextFormat = value;
+			if (!_showsHint && !hasError)
+			{
+				setTextFormat(_defaultTextFormat);
+			}
 		}
 		
 		/**
@@ -267,41 +271,39 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * Set the colour of the hint text
+		 * @inheritDoc
 		 */
-		public function get hintTextColor():uint
+		public function get hintTextFormat():TextFormat
 		{
-			 return _hintTextColor;
+			 return _hintTextFormat;
 		}
 		
 		/**
-		 * @private
+		 * @inheritDoc
 		 */
-		[Inspectable(name="Hint text color", type="Color", defaultValue="#888888")]
-		public function set hintTextColor(value:uint):void 
+		public function set hintTextFormat(value:TextFormat):void 
 		{
-			_hintTextColor = value;
+			_hintTextFormat = value;
 			
-			if (_showsHint) _textField.textColor = _hintTextColor;
+			if (_showsHint) setTextFormat(_hintTextFormat);
 		}
 		
 		/**
-		 * Set the colour of the text when the InputField has an error.
+		 * @inheritDoc
 		 */
-		public function get errorTextColor():uint
+		public function get errorTextFormat():TextFormat
 		{
-			 return _errorTextColor;
+			 return _errorTextFormat;
 		}
 		
 		/**
-		 * @private
+		 * @inheritDoc
 		 */
-		[Inspectable(name="Error text color", type="Color", defaultValue="#FF0000")]
-		public function set errorTextColor(value:uint):void 
+		public function set errorTextFormat(value:TextFormat):void 
 		{
-			_errorTextColor = value;
+			_errorTextFormat = value;
 			
-			if (hasError) _textField.textColor = _errorTextColor;
+			if (hasError) setTextFormat(_errorTextFormat);
 		}
 
 		/**
@@ -351,7 +353,7 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc 
 		 */
-		public function set value(value:*):void
+		override public function set value(value:*):void
 		{
 			if (value == null) return;
 			text = value;
@@ -363,7 +365,8 @@ package temple.ui.form.components
 		override public function showError(message:String = null):void 
 		{
 			super.showError(message);
-			_textField.textColor = _errorTextColor;
+			
+			if (_errorTextFormat) setTextFormat(_errorTextFormat);
 		}
 
 		/**
@@ -372,14 +375,7 @@ package temple.ui.form.components
 		override public function hideError():void 
 		{
 			super.hideError();
-			if (_showsHint)
-			{
-				_textField.textColor = _hintTextColor;
-			}
-			else
-			{
-				_textField.textColor = _textColor;
-			}
+			setTextFormat(_showsHint ? _hintTextFormat : _defaultTextFormat);
 		}
 
 		/**
@@ -746,7 +742,7 @@ package temple.ui.form.components
 		 */
 		public function get fontSize():Number
 		{
-			return _textField.defaultTextFormat.size as Number;
+			return _defaultTextFormat.size as Number;
 		}
 
 		/**
@@ -754,11 +750,23 @@ package temple.ui.form.components
 		 */
 		public function set fontSize(value:Number):void
 		{
-			var format:TextFormat = _textField.defaultTextFormat;
-			format.size = value;
- 
-			_textField.setTextFormat(format);
-			_textField.defaultTextFormat = format;
+			_defaultTextFormat.size = value;
+			
+			if (_hintTextFormat) _defaultTextFormat.size = value;
+			if (_errorTextFormat) _errorTextFormat.size = value;
+			
+			if (hasError)
+			{
+				setTextFormat(_errorTextFormat);
+			}
+			else if (_showsHint)
+			{
+				setTextFormat(_hintTextFormat);
+			}
+			else
+			{
+				setTextFormat(_defaultTextFormat);
+			}
 		}
 		
 		/**
@@ -925,7 +933,7 @@ package temple.ui.form.components
 			{
 				_showsHint = false;
 				_textField.text = "";
-				_textField.textColor = _textColor;
+				setTextFormat(_defaultTextFormat);
 				_textField.displayAsPassword = _displayAsPassword;
 			}
 			else if (!focus && !_showsHint && (_textField.text == "")) 
@@ -935,7 +943,7 @@ package temple.ui.form.components
 			else if (_textField.text != _hintText && !hasError)
 			{
 				_showsHint = false;
-				_textField.textColor = _textColor;
+				setTextFormat(_defaultTextFormat);
 				_textField.displayAsPassword = _displayAsPassword;
 			}
 		}
@@ -946,7 +954,7 @@ package temple.ui.form.components
 			if (_hintText)
 			{
 				_textField.text = _hintText;
-				_textField.textColor = _hintTextColor;
+				setTextFormat(_hintTextFormat);
 				_textField.displayAsPassword = false;
 			}
 		}
@@ -980,6 +988,12 @@ package temple.ui.form.components
 			_previousText = _textField.text;
 			if (_showsHint) updateHint();
 		}
+
+		private function setTextFormat(format:TextFormat):void
+		{
+			_textField.setTextFormat(_textField.defaultTextFormat = format || _defaultTextFormat);
+		}
+
 		
 		/**
 		 * @inheritDoc 

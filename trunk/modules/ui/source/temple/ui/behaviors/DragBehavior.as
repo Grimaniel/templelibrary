@@ -101,9 +101,10 @@ package temple.ui.behaviors
 	{
 		/** @private */
 		protected var _startDragOffset:Point;
+		/** @private */
+		protected  var _isDragging:Boolean;
 		
 		private var _dragButton:InteractiveObject;
-		private var _isDragging:Boolean;
 		private var _enabled:Boolean;
 		private var _dragVertical:Boolean;
 		private var _dragHorizontal:Boolean;
@@ -111,6 +112,7 @@ package temple.ui.behaviors
 		private var _useCursorKeys:Boolean;
 		private var _cursorStepSize:Number = 1;
 		private var _cursorBigStepSize:Number = 10;
+		private var _threshold:Number = 0;
 
 		/**
 		 * Create the possibility to drag an object
@@ -158,15 +160,11 @@ package temple.ui.behaviors
 			// Can't drag objects with no parent
 			if (!displayObject.parent) return;
 			
-			_isDragging = true;
-			
 			_startDragOffset = new Point(displayObject.x - displayObject.parent.mouseX, displayObject.y - displayObject.parent.mouseY);
 			
 			displayObject.stage.addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove, false, 0, true);
 			displayObject.stage.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp, false, 0, true);
 			displayObject.stage.addEventListener(Event.MOUSE_LEAVE, handleMouseLeave, false, 0, true);
-			
-			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
 		}
 		
 		/**
@@ -174,13 +172,15 @@ package temple.ui.behaviors
 		 */
 		public function stopDrag():void
 		{
-			_isDragging = false;
-			
 			displayObject.stage.removeEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
 			displayObject.stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
 			displayObject.stage.removeEventListener(Event.MOUSE_LEAVE, handleMouseLeave);
 			
-			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+			if (_isDragging)
+			{
+				_isDragging = false;
+				dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_STOP, this));
+			}
 		}
 
 		/**
@@ -283,35 +283,56 @@ package temple.ui.behaviors
 		
 		/**
 		 * Update position of the target
+		 * 
+		 * @return true if the position has actually changed 
 		 */
-		public function update():void
+		public function update():Boolean
 		{
-			if (_dragHorizontal)
+			var newX:Number, newY:Number;
+			
+			if (_dragHorizontal) newX = _startDragOffset.x + displayObject.parent.mouseX;
+			if (_dragVertical) newY = _startDragOffset.y + displayObject.parent.mouseY;
+			
+			if (_dragHorizontal && Math.abs(newX - displayObject.x) > _threshold || _dragVertical &&  Math.abs(newY - displayObject.y) > _threshold)
 			{
-				var newX:Number = _startDragOffset.x + displayObject.parent.mouseX;
-				if (_positionProxy)
+				if (!_isDragging)
 				{
-					_positionProxy.setValue(displayObject, "x", newX);
-				}
-				else
-				{
-					displayObject.x = newX;
+					_isDragging = true;
+					dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAG_START, this));
 				}
 				
-			}
-			if (dragVertical)
-			{
-				var newY:Number = _startDragOffset.y + displayObject.parent.mouseY;
-				if (_positionProxy)
+				// Check again if enable, since it can be turned off by the DRAG_START handler
+				if (!_enabled) return false;
+				
+				if (_dragHorizontal) 
 				{
-					_positionProxy.setValue(displayObject, "y", newY);
+					if (_positionProxy)
+					{
+						_positionProxy.setValue(displayObject, "x", newX);
+					}
+					else
+					{
+						displayObject.x = newX;
+					}
 				}
-				else
+				
+				if (_dragVertical) 
 				{
-					displayObject.y = newY;
+					if (_positionProxy)
+					{
+						_positionProxy.setValue(displayObject, "y", newY);
+					}
+					else
+					{
+						displayObject.y = newY;
+					}
 				}
+				keepInBounds();
+				
+				return true;
 			}
-			keepInBounds();
+			
+			return false;
 		}
 		
 		/**
@@ -369,6 +390,22 @@ package temple.ui.behaviors
 		public function set cursorBigStepSize(value:Number):void
 		{
 			_cursorBigStepSize = value;
+		}
+		
+		/**
+		 * The minimal amount of movement to trigger the scrolling
+		 */
+		public function get threshold():Number
+		{
+			return _threshold;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set threshold(value:Number):void
+		{
+			_threshold = value;
 		}
 
 		private function handleKeyDown(event:KeyboardEvent):void
@@ -469,9 +506,10 @@ package temple.ui.behaviors
 		 */
 		protected function handleMouseMove(event:MouseEvent):void 
 		{
-			update();
-			
-			dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+			if (update())
+			{
+				dispatchEvent(new DragBehaviorEvent(DragBehaviorEvent.DRAGGING, this));
+			}
 		}
 
 		/**

@@ -59,7 +59,7 @@ package temple.ui.layout.liquid
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class LiquidContainer extends LiquidMovieClip implements IHasBackground
+	public class LiquidContainer extends LiquidSprite implements IHasBackground
 	{
 		protected var _originalScale:Point;
 		

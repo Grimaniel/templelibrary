@@ -48,14 +48,16 @@ package temple.ui.form
 	import temple.data.collections.HashMap;
 	import temple.ui.focus.TabFocusManager;
 	import temple.ui.form.components.FormElementEvent;
-	import temple.ui.form.components.ISetValue;
+	import temple.ui.form.result.FormFieldError;
 	import temple.ui.form.result.FormResult;
 	import temple.ui.form.result.IFormFieldError;
 	import temple.ui.form.result.IFormResult;
 	import temple.ui.form.services.FormServiceEvent;
 	import temple.ui.form.services.IFormService;
 	import temple.ui.form.validation.IHasError;
+	import temple.ui.form.validation.IValidator;
 	import temple.ui.form.validation.Validator;
+	import temple.ui.form.validation.rules.ValidationRuleData;
 	import temple.utils.types.ObjectUtils;
 
 	import flash.display.DisplayObject;
@@ -165,12 +167,13 @@ package temple.ui.form
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class Form extends CoreEventDispatcher implements IDebuggable, IEnableable, IResettable, IFocusable
+	public class Form extends CoreEventDispatcher implements IDebuggable, IEnableable, IResettable, IFocusable, IValidator
 	{
 		private var _validator:Validator;
 		private var _service:IFormService;
 		private var _dataModel:Object;
 		private var _elements:HashMap;
+		private var _names:Dictionary;
 		private var _tabFocusManager:TabFocusManager;
 		private var _debug:Boolean;
 		private var _enabled:Boolean = true;
@@ -195,6 +198,7 @@ package temple.ui.form
 			
 			_dataModel = new Object();
 			_elements = new HashMap("Form Elements");
+			_names = new Dictionary(true);
 			
 			_submitButtons = new Dictionary(true);
 			_resetButtons = new Dictionary(true);
@@ -269,13 +273,17 @@ package temple.ui.form
 				throwError(new TempleArgumentError(this, "element can not be null"));
 			}
 			
-			if (_elements[name])
+			if (name in _elements)
 			{
 				throwError(new TempleArgumentError(this, "element with name '" + name + "' already exists"));
 			}
+			if (element in _names)
+			{
+				throwError(new TempleArgumentError(this, "element already exists in form"));
+			}
 			
+			_names[element] = name;
 			_elements[name] = new FormElementData(name, element, tabIndex == -1 ? ObjectUtils.length(_elements) : tabIndex, submit);
-			if (element is IDebuggable) addToDebugManager(element as IDebuggable, this);
 			
 			if (validationRule)
 			{
@@ -284,9 +292,9 @@ package temple.ui.form
 			
 			if (element is IFocusable) _tabFocusManager.add(element as IFocusable);
 			
-			if (element is ISetValue && _prefillData && _prefillData.hasOwnProperty(name))
+			if (_prefillData && _prefillData.hasOwnProperty(name))
 			{
-				ISetValue(element).value = _prefillData[name];
+				element.value = _prefillData[name];
 			}
 			
 			if (_debug && element is IDebuggable)
@@ -317,6 +325,8 @@ package temple.ui.form
 				}
 			}
 			
+			delete _names[element];
+			
 			// remove from validator
 			if (_validator) _validator.removeElement(element);
 			
@@ -340,6 +350,14 @@ package temple.ui.form
 		public function getElement(name:String):IHasValue
 		{
 			return _elements[name] ? FormElementData(_elements[name]).element : null;
+		}
+		
+		/**
+		 * Returns the name of element in this form
+		 */
+		public function getNameForElement(element:IHasValue):String
+		{
+			return _names[element];
 		}
 		
 		/**
@@ -429,8 +447,7 @@ package temple.ui.form
 			
 			if (enabled)
 			{
-				// validate
-				if (validate())
+				if (validate().length == 0)
 				{
 					if (_debug) logDebug(dump(getModelData()));
 					send();
@@ -471,45 +488,46 @@ package temple.ui.form
 			
 			dispatchEvent(new FormEvent(FormEvent.RESET));
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function isValid():Boolean
+		{
+			return _validator.isValid();
+		}
 
 		/**
-		 * Validates the form
-		 * @param keepValidating if set to true the form will keep validation after each change
-		 * @param showError if set to true wrong elements will show their ErrorState
-		 * @return a Boolean which indicates if the form is valid
+		 * @inheritDoc
 		 */
-		public function validate(keepValidating:Boolean = true, showErrors:Boolean = true):Boolean
+		public function validate(showErrors:Boolean = true, keepValidating:Boolean = true):Vector.<ValidationRuleData>
 		{
 			if (_debug) logDebug("validate");
 			
-			if (!_enabled)
-			{
-				if (_debug) logWarn("Form is disabled");
-				return false;
-			}
+			var errors:Vector.<ValidationRuleData> = _validator.validate(showErrors, keepValidating);
 			
-			if (_validator.isValid(keepValidating, showErrors))
+			if (!errors.length)
 			{
 				if (_debug) logInfo("Form is valid");
-				// reset errors states on all elements
-				for each (var fed:FormElementData in _elements)
-				{
-					if (fed.element is IHasError && IHasError(fed.element).hasError)
-					{
-						IHasError(fed.element).hideError();
-					}
-				}
 				dispatchEvent(new FormEvent(FormEvent.VALIDATE_SUCCESS));
-				return true;
+				return errors;
 			}
 			if (_debug)
 			{
-				logError("Form is invalid: " + _validator.validate());
-				if (_validator.getErrorMessages().length) logError("Error messages: " + _validator.getErrorMessages());
+				logError("Form is invalid: " + errors);
 			}
 			
-			dispatchEvent(new FormEvent(FormEvent.VALIDATE_ERROR, new FormResult(false, _validator.getErrorMessage())));
-			return false;
+			var fields:Vector.<IFormFieldError> = new Vector.<IFormFieldError>();
+			
+			for (var i:int = 0, leni:int = errors.length; i < leni; i++)
+			{
+				var element:IHasValue = errors[i].rule.target;
+				
+				fields.push(new FormFieldError(getNameForElement(element), element, errors[i].message));
+			}
+			
+			dispatchEvent(new FormEvent(FormEvent.VALIDATE_ERROR, new FormResult(false, "Form is not valid", null, null, fields)));
+			return errors;
 		}
 
 		/**
@@ -549,9 +567,9 @@ package temple.ui.form
 			{
 				for each (var fed:FormElementData in _elements)
 				{
-					if (_prefillData.hasOwnProperty(fed.name) && fed.element is ISetValue)
+					if (_prefillData.hasOwnProperty(fed.name))
 					{
-						ISetValue(fed.element).value = data[fed.name];
+						fed.element.value = data[fed.name];
 						if (_debug) logDebug("prefillData: " + fed.name + " is set to " + data[fed.name]);
 					}
 					else if (_debug) logDebug("prefillData: " + fed.name + " not found"); 
@@ -794,19 +812,21 @@ package temple.ui.form
 			{
 				if (_debug) logError("onResult: error " + (result.message ? "\"" + result.message + "\"" : ""));
 				
-				var element:FormElementData;
+				var data:FormElementData;
 				var focussed:Boolean;
 				for each (var error:IFormFieldError in result.errors)
 				{
-					element = _elements[error.field];
-					if (element)
+					data = _elements[error.field];
+					if (data)
 					{
-						if (element.element is IHasError)
+						if (!error.field && error is FormFieldError) FormFieldError(error).field = data.element;
+						
+						if (data.element is IHasError)
 						{
-							IHasError(element.element).showError(error.message);
-							if (!focussed && element.element is IFocusable)
+							IHasError(data.element).showError(error.message);
+							if (!focussed && data.element is IFocusable)
 							{
-								IFocusable(element.element).focus = true;
+								IFocusable(data.element).focus = true;
 								focussed = true;
 							}
 						}
@@ -885,7 +905,7 @@ package temple.ui.form
 }
 import temple.common.interfaces.IHasValue;
 
-class FormElementData
+final class FormElementData
 {
 	public var name:String;
 	public var element:IHasValue;

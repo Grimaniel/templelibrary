@@ -150,6 +150,7 @@ package
 		}
 	}
 }
+import temple.utils.types.TextFormatUtils;
 import temple.ui.buttons.MultiStateButton;
 import temple.ui.form.components.InputField;
 import temple.ui.states.error.ErrorFadeState;
@@ -178,8 +179,11 @@ class Input extends InputField
 		textField.filters = [new DropShadowFilter(2, 45, 0, 1, 4, 4, .5, 1, true)];
 		addChild(textField);
 
-		hintTextColor = Colors.GRAY;
-		errorTextColor = Colors.RED;
+		hintTextFormat = TextFormatUtils.clone(defaultTextFormat);
+		errorTextFormat = TextFormatUtils.clone(defaultTextFormat);
+
+		hintTextFormat.color = Colors.GRAY;
+		errorTextFormat.color = Colors.RED;
 		
 		// create an error state
 		var errorText:TextField = new TextField();

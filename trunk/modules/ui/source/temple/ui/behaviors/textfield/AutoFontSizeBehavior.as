@@ -35,6 +35,7 @@
 
 package temple.ui.behaviors.textfield 
 {
+	import temple.core.debug.IDebuggable;
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
 	import temple.ui.behaviors.AbstractDisplayObjectBehavior;
@@ -64,9 +65,10 @@ package temple.ui.behaviors.textfield
 	 * 
 	 * @author Jankees van Woezik, Thijs Broerse
 	 */
-	public class AutoFontSizeBehavior extends AbstractDisplayObjectBehavior 
+	public class AutoFontSizeBehavior extends AbstractDisplayObjectBehavior implements IDebuggable
 	{
 		private static const _dictionary:Dictionary = new Dictionary(true);
+		private var _debug:Boolean;
 		
 		/**
 		 * Returns the AutoFontSizeBehavior of a TextField if the TextField has AutoFontSizeBehavior. Otherwise null is returned.
@@ -76,21 +78,21 @@ package temple.ui.behaviors.textfield
 			return AutoFontSizeBehavior._dictionary[target] as AutoFontSizeBehavior;
 		}
 		
-		private var _maximalFontSize:Number;
-		private var _minimalFontSize:uint;
+		private var _maxFontSize:Number;
+		private var _minFontSize:uint;
 		private var _currentFontSize:Number;
 		private var _previousText:String;
-		private var _maximalHeight:Number;
-		private var _maximalWidth:Number;
+		private var _maxWidth:Number;
+		private var _maxHeight:Number;
 		
 		/**
 		 * Adds AutoFontSizeBehavior to a TextField
 		 * @param textField the TextField that needs te be autosized
-		 * @param maximalFontSize the maximal size of the font in the TextField. If NaN the current size of the font is used.
-		 * @param minimalFontSize the minimal size of the font in the TextField.
+		 * @param maxFontSize the maximum size of the font in the TextField. If NaN the current size of the font is used.
+		 * @param minFontSize the minimim size of the font in the TextField.
 		 * @param willUpdateOnInput indicates if the text in the TextField could be updated and the AutoFontSizeBehavior would update the fontsize.
 		 */
-		public function AutoFontSizeBehavior(textField:TextField, maximalFontSize:Number = NaN, minimalFontSize:uint = 9, willUpdateOnInput:Boolean = true)
+		public function AutoFontSizeBehavior(textField:TextField, maxFontSize:Number = NaN, minFontSize:uint = 9, willUpdateOnInput:Boolean = true)
 		{
 			super(textField);
 			
@@ -98,19 +100,19 @@ package temple.ui.behaviors.textfield
 			
 			AutoFontSizeBehavior._dictionary[target] = this;
 			
-			_minimalFontSize = minimalFontSize;
+			_minFontSize = minFontSize;
 			
-			if (isNaN(maximalFontSize)) maximalFontSize = Number(textField.getTextFormat().size);
+			if (isNaN(maxFontSize)) maxFontSize = Number(textField.getTextFormat().size);
 			
-			_currentFontSize = _maximalFontSize = maximalFontSize;
-			_previousText = "";
-			_maximalHeight = textField.height;
-			_maximalWidth = textField.width;
+			_currentFontSize = _maxFontSize = maxFontSize;
+			_maxHeight = textField.height;
+			_maxWidth = textField.width;
 			
 			update();
 			
 			if (willUpdateOnInput)
 			{
+				_previousText = "";
 				textField.addEventListener(Event.CHANGE, handleTextFieldChange);
 				textField.addEventListener(KeyboardEvent.KEY_UP, handleTextFieldChange);
 				textField.addEventListener(TextEvent.TEXT_INPUT, handleTextFieldChange);
@@ -126,36 +128,41 @@ package temple.ui.behaviors.textfield
 		{
 			textField.scrollV = 0;
 			textField.scrollH = 0;
+			
+			if (debug) logDebug("update: ");
  
-			if (_previousText.length > textField.length)
+			if (_previousText == null || _previousText.length > textField.length)
 			{
-                setFontSize(_maximalFontSize);
+                setFontSize(_maxFontSize);
 			}
  
 			if (textField.multiline)
 			{
-				while (_maximalHeight < textField.textHeight + (4 * textField.numLines)) 
+				while (_maxHeight < textField.textHeight + (4 * textField.numLines)) 
 				{ 
-					if (_currentFontSize <= _minimalFontSize) break;
+					if (_currentFontSize <= _minFontSize) break;
 					setFontSize(_currentFontSize - 0.5);
 				}
 			}
 			else
 			{
-				while (_maximalWidth < textField.textWidth) 
+				while (_maxWidth < textField.textWidth) 
 				{ 
-					if (_currentFontSize <= _minimalFontSize) break;
+					if (_currentFontSize <= _minFontSize) break;
 					setFontSize(_currentFontSize - 0.5);
 				}
 			}
- 
-			if (_currentFontSize <= _minimalFontSize) 
-			{
-				textField.text = _previousText;
-			} 
-			else 
-			{
-				_previousText = textField.text;
+			
+			if (_previousText != null)
+ 			{
+				if (_currentFontSize <= _minFontSize) 
+				{
+					textField.text = _previousText;
+				} 
+				else 
+				{
+					_previousText = textField.text;
+				}
 			}
 		}
 
@@ -168,39 +175,91 @@ package temple.ui.behaviors.textfield
 		}
 		
 		/**
-		 * The maximal size of the font of the TextField
+		 * The maximum size of the font of the TextField
 		 */
-		public function get maximalFontSize():Number
+		public function get maxFontSize():Number
 		{
-			return _maximalFontSize;
+			return _maxFontSize;
 		}
 		
 		/**
 		 * @private
 		 */
-		public function set maximalFontSize(value:Number):void
+		public function set maxFontSize(value:Number):void
 		{
-			_maximalFontSize = value;
+			_maxFontSize = value;
 		}
 		
 		/**
 		 * The minimal size of the font of the TextField
 		 */
-		public function get minimalFontSize():uint
+		public function get minFontSize():uint
 		{
-			return _minimalFontSize;
+			return _minFontSize;
 		}
 		
 		/**
 		 * @private
 		 */
-		public function set minimalFontSize(value:uint):void
+		public function set minFontSize(value:uint):void
 		{
-			_minimalFontSize = value;
+			_minFontSize = value;
+		}
+		
+		/**
+		 * 
+		 */
+		public function get maxWidth():Number
+		{
+			return _maxWidth;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set maxWidth(value:Number):void
+		{
+			_maxWidth = value;
+			update();
+		}
+		
+		/**
+		 * 
+		 */
+		public function get maxHeight():Number
+		{
+			return _maxHeight;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set maxHeight(value:Number):void
+		{
+			_maxHeight = value;
+			update();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get debug():Boolean
+		{
+			return _debug;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set debug(value:Boolean):void
+		{
+			_debug = value;
 		}
 		
 		private function setFontSize(size:Number):void 
 		{
+			if (debug) logDebug("setFontSize: " + size);
+			
 			_currentFontSize = size;
  
 			var currentTextFormat:TextFormat = textField.getTextFormat();
@@ -227,6 +286,8 @@ package temple.ui.behaviors.textfield
 		override public function destruct():void
 		{
 			if (target) delete AutoFontSizeBehavior._dictionary[target];
+			
+			_previousText = null;
 			
 			if (textField)
 			{

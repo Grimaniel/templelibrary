@@ -939,7 +939,7 @@ package temple.ui.scroll
 		/**
 		 * @inheritDoc
 		 */
-		override public function get debug():Boolean
+		public function get debug():Boolean
 		{
 			return _debug;
 		}
@@ -947,7 +947,7 @@ package temple.ui.scroll
 		/**
 		 * @inheritDoc
 		 */
-		override public function set debug(value:Boolean):void
+		public function set debug(value:Boolean):void
 		{
 			_debug = value;
 		}

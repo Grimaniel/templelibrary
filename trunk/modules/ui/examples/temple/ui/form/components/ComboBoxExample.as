@@ -14,6 +14,7 @@
  */
 package  
 {
+	import temple.utils.types.TextFormatUtils;
 	import temple.ui.buttons.LabelButton;
 	import temple.ui.form.components.ComboBox;
 	import temple.ui.form.components.InputField;
@@ -57,9 +58,14 @@ package
 		{
 			super("ComboBoxExample");
 			
-			mcDataField.hintTextColor = Colors.GRAY;
-			mcLabelField.hintTextColor = Colors.GRAY;
-			mcIndexField.hintTextColor = Colors.GRAY;
+			mcDataField.hintTextFormat = TextFormatUtils.clone(mcDataField.defaultTextFormat);
+			mcDataField.hintTextFormat.color = Colors.GRAY;
+
+			mcLabelField.hintTextFormat = TextFormatUtils.clone(mcLabelField.defaultTextFormat);
+			mcLabelField.hintTextFormat.color = Colors.GRAY;
+
+			mcIndexField.hintTextFormat = TextFormatUtils.clone(mcIndexField.defaultTextFormat);
+			mcIndexField.hintTextFormat.color = Colors.GRAY;
 
 			mcDataField.hintText = "data";
 			mcLabelField.hintText = "label";

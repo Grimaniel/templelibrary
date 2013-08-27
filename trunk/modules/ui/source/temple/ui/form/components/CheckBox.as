@@ -82,7 +82,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CheckBox extends SwitchButton implements ISelectable, IHasError, IHasValue, IResettable, IFormElementComponent, ITextFieldLabel, ISetValue
+	public class CheckBox extends SwitchButton implements ISelectable, IHasError, IHasValue, IResettable, IFormElementComponent, ITextFieldLabel
 	{
 		private var _selectedValue:* = true;
 		private var _unselectedValue:* = false;

@@ -38,7 +38,6 @@ package temple.ui.form.validation.rules
 	import temple.common.interfaces.IHasValue;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.addToDebugManager;
-	import temple.ui.form.components.ISetValue;
 	import temple.utils.Comparor;
 
 	/**
@@ -49,7 +48,7 @@ package temple.ui.form.validation.rules
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class CompareValuesValidationRule extends AbstractCompareValidationRule implements IValidationRule, IHasValue, ISetValue, IDebuggable
+	public class CompareValuesValidationRule extends AbstractCompareValidationRule implements IValidationRule, IHasValue, IDebuggable
 	{
 		private var _value:*;
 		private var _debug:Boolean;

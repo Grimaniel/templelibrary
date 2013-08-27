@@ -99,6 +99,14 @@ package temple.ui.form.components
 		{
 			return data;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set value(value:*):void
+		{
+			_data = value;
+		}
 
 		/**
 		 * @inheritDoc

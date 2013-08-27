@@ -104,7 +104,15 @@ package temple.ui.form.components
 		 */
 		public function get value():*
 		{
-			return fileData;
+			return _fileData;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set value(value:*):void
+		{
+			_fileData = value as FileData;
 		}
 
 		/**

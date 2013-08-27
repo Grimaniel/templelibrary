@@ -35,7 +35,6 @@
 
 package temple.ui.form.components 
 {
-	import temple.core.destruction.DestructEvent;
 	import temple.common.interfaces.IFocusable;
 	import temple.common.interfaces.IHasValue;
 	import temple.common.interfaces.IResettable;
@@ -44,13 +43,13 @@ package temple.ui.form.components
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.addToDebugManager;
 	import temple.core.debug.log.Log;
+	import temple.core.destruction.DestructEvent;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
 	import temple.core.events.CoreEventDispatcher;
 	import temple.data.collections.HashMap;
 	import temple.ui.focus.FocusManager;
 	import temple.ui.form.validation.IHasError;
-	import temple.utils.types.ArrayUtils;
 
 	import flash.display.InteractiveObject;
 	import flash.events.Event;
@@ -85,7 +84,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class RadioGroup extends CoreEventDispatcher implements IRadioGroup, IHasValue, IHasError, IResettable, IFocusable, ISetValue, IDebuggable 
+	public class RadioGroup extends CoreEventDispatcher implements IRadioGroup, IHasValue, IHasError, IResettable, IFocusable, IDebuggable 
 	{
 		private static const _NO_INDEX:int = 10000;
 
@@ -136,8 +135,7 @@ package temple.ui.form.components
 		/** @private */
 		protected var _dispatchChangeEvent:Boolean = true;
 
-		/** objects of type Selection */
-		private var _items:Array = new Array();
+		private var _items:Vector.<Selection> = new Vector.<Selection>();
 		private var _focus:Boolean;
 		private var _name:String;
 		private var _prefillValue:*;
@@ -161,7 +159,7 @@ package temple.ui.form.components
 		{
 			if (!item) throwError(new TempleArgumentError(this, "Parameter 'item' not defined."));
 			
-			if (ArrayUtils.inArrayField(_items, 'item', item)) return item;
+			if (has(item)) return item;
 			
 			if (_debug) logDebug("add: " + item + ", value='" + value + "', selected=" + selected + "");
 			
@@ -176,11 +174,11 @@ package temple.ui.form.components
 			if (item is IEventDispatcher)
 			{
 				IEventDispatcher(item).addEventListener(Event.CHANGE, handleButtonChange);
-				IEventDispatcher(item).addEventListener(FocusEvent.FOCUS_IN, handleButtonFocusIn, false, 0, true);
-				IEventDispatcher(item).addEventListener(FocusEvent.FOCUS_OUT, handleButtonFocusOut, false, 0, true);
-				IEventDispatcher(item).addEventListener(FocusEvent.KEY_FOCUS_CHANGE, handleKeyFocusChange, false, 0, true);
-				IEventDispatcher(item).addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown, false, 0, true);
-				IEventDispatcher(item).addEventListener(DestructEvent.DESTRUCT, handleItemDestruct, false, 0, true);
+				IEventDispatcher(item).addEventListener(FocusEvent.FOCUS_IN, handleButtonFocusIn);
+				IEventDispatcher(item).addEventListener(FocusEvent.FOCUS_OUT, handleButtonFocusOut);
+				IEventDispatcher(item).addEventListener(FocusEvent.KEY_FOCUS_CHANGE, handleKeyFocusChange);
+				IEventDispatcher(item).addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+				IEventDispatcher(item).addEventListener(DestructEvent.DESTRUCT, handleItemDestruct);
 			}
 			else
 			{
@@ -199,6 +197,15 @@ package temple.ui.form.components
 			_items.sort(sortButtons);
 			
 			return item;
+		}
+		
+		public function has(item:ISelectable):Boolean 
+		{
+			for each (var selection:Selection in _items)
+			{
+				if (selection.item == item) return true;
+			}
+			return false;
 		}
 
 		/**
@@ -712,7 +719,6 @@ package temple.ui.form.components
 import temple.common.interfaces.IHasValue;
 import temple.common.interfaces.ISelectable;
 import temple.core.CoreObject;
-import temple.ui.form.components.ISetValue;
 
 final class Selection extends CoreObject
 {
@@ -735,9 +741,9 @@ final class Selection extends CoreObject
 
 	public function set value(value:*):void
 	{
-		if (item is ISetValue)
+		if (item is IHasValue)
 		{
-			ISetValue(item).value = value;
+			IHasValue(item).value = value;
 		}
 		else
 		{
