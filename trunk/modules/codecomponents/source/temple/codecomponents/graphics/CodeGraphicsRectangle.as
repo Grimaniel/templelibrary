@@ -42,9 +42,41 @@ package temple.codecomponents.graphics
 	 */
 	public class CodeGraphicsRectangle extends CoreSprite
 	{
+		private var _color:uint;
+		
 		public function CodeGraphicsRectangle(width:Number, height:Number, color:uint, alpha:Number = 1)
 		{
-			graphics.beginFill(color, alpha);
+			_color = color;
+			this.alpha = alpha;
+			draw(width, height);
+			
+			toStringProps.push("width", "height", "color");
+		}
+		
+		public function get color():uint
+		{
+			return _color;
+		}
+
+		public function set color(value:uint):void
+		{
+			_color = value;
+		}
+		
+		override public function set width(value:Number):void
+		{
+			draw(value, height);
+		}
+		
+		override public function set height(value:Number):void
+		{
+			draw(width, value);
+		}
+	
+		private function draw(width:Number, height:Number):void
+		{
+			graphics.clear();
+			graphics.beginFill(_color, 1);
 			graphics.drawRect(0, 0, width, height);
 			graphics.endFill();
 		}

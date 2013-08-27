@@ -16,6 +16,7 @@ package
 	import temple.codecomponents.label.CodeLabel;
 	import temple.utils.ValueBinder;
 
+	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeListExample extends DocumentClassExample 
 	{
 		public function CodeListExample()

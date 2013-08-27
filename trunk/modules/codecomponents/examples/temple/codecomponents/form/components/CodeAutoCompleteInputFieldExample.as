@@ -14,6 +14,7 @@ package
 {
 	import temple.codecomponents.form.components.CodeAutoCompleteInputField;
 
+	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeAutoCompleteInputFieldExample extends DocumentClassExample 
 	{
 		public function CodeAutoCompleteInputFieldExample()

@@ -56,6 +56,16 @@ package temple.codecomponents.buttons
 			addChild(new ButtonOverState(width, height));
 			addChild(new ButtonDownState(width, height));
 		}
+
+		override public function set width(value:Number):void
+		{
+			for (var i:int = 0, leni:int = numChildren; i < leni; i++) getChildAt(i).width = value;
+		}
+		
+		override public function set height(value:Number):void
+		{
+			for (var i:int = 0, leni:int = numChildren; i < leni; i++) getChildAt(i).height = value;
+		}
 	}
 }
 import temple.codecomponents.style.CodeStyle;
@@ -68,11 +78,28 @@ class ButtonOverState extends OverFadeState
 	{
 		super(.1, .25);
 		
+		draw(width, height);
+	}
+
+	override public function set width(value:Number):void
+	{
+		draw(value, height);
+	}
+	
+	override public function set height(value:Number):void
+	{
+		draw(width, value);
+	}
+
+	private function draw(width:Number, height:Number):void
+	{
+		graphics.clear();
 		graphics.beginFill(CodeStyle.buttonOverstateColor, CodeStyle.buttonOverstateAlpha);
 		graphics.drawRect(0, 0, width, height);
 		graphics.endFill();
 		filters = CodeStyle.buttonFilters;
 	}
+
 }
 
 class ButtonDownState extends DownFadeState
@@ -81,6 +108,22 @@ class ButtonDownState extends DownFadeState
 	{
 		super(0, .25);
 		
+		draw(width, height);
+	}
+
+	override public function set width(value:Number):void
+	{
+		draw(value, height);
+	}
+	
+	override public function set height(value:Number):void
+	{
+		draw(width, value);
+	}
+
+	private function draw(width:Number, height:Number):void
+	{
+		graphics.clear();
 		graphics.beginFill(CodeStyle.buttonDownstateColor, CodeStyle.buttonDownstateAlpha);
 		graphics.drawRect(0, 0, width, height);
 		graphics.endFill();

@@ -150,6 +150,7 @@ package temple.codecomponents.style
 			textFormat.font = "_sans";
 			textFormat.size = 11;
 			textFormat.leftMargin = textFormat.rightMargin = 4;
+			textFormat.color = textColor;
 
 			toolTipTextFormat.font = "_sans";
 			toolTipTextFormat.size = 10;

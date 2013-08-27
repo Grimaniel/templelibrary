@@ -59,6 +59,12 @@ package temple.codecomponents.buttons
 			this.label = label;
 			textField.multiline = multiline;
 			this.autoSize = autoSize;
+			
+			if (autoSize == TextFieldAutoSize.NONE || autoSize == null)
+			{
+				textField.width = 100;
+				textField.height = 20;
+			}
 		}
 
 		override protected function init(textField:TextField = null):void 

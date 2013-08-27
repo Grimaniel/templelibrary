@@ -39,7 +39,6 @@ package temple.codecomponents.slider
 	import temple.codecomponents.graphics.CodeBackground;
 	import temple.common.enum.Direction;
 	import temple.common.interfaces.IHasValue;
-	import temple.ui.form.components.ISetValue;
 	import temple.ui.slider.SliderComponent;
 
 	import flash.display.InteractiveObject;
@@ -47,7 +46,7 @@ package temple.codecomponents.slider
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class CodeSlider extends SliderComponent implements IHasValue, ISetValue
+	public class CodeSlider extends SliderComponent implements IHasValue
 	{
 		public function CodeSlider(width:Number = 200, height:Number = 10, direction:String = Direction.ASCENDING, value:Number = 0)
 		{
