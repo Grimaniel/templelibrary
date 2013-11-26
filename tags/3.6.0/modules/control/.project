@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Temple-Control</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.powerflasher.fdt.core.FlashBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.powerflasher.fdt.core.FlashNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>TempleCommon</name>
+			<type>2</type>
+			<locationURI>TempleCommon</locationURI>
+		</link>
+		<link>
+			<name>TempleCore</name>
+			<type>2</type>
+			<locationURI>TempleCore</locationURI>
+		</link>
+		<link>
+			<name>TempleData</name>
+			<type>2</type>
+			<locationURI>TempleData</locationURI>
+		</link>
+		<link>
+			<name>TempleTweenLite</name>
+			<type>2</type>
+			<locationURI>TempleTweenLite</locationURI>
+		</link>
+		<link>
+			<name>TempleUtils</name>
+			<type>2</type>
+			<locationURI>TempleUtils</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Skip">
+    <target name="Prepare" >
+	</target>
+	<target name="Compile" >
+	</target>
+	<target name="Extend" >
+	</target>
+	<target name="Package" >
+	</target>
+</project>

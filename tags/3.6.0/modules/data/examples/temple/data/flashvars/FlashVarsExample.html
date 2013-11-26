@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Temple - FlashvarsExmaple</title>
+<script type="text/javascript" src="swfobject.js"></script>
+<script type="text/javascript">
+	var params = {
+		quality: "high",
+		scale: "noscale",
+		wmode: "window",
+		allowscriptaccess: "always",
+		bgcolor: "#FFFFFF"
+	};
+	var flashvars = {
+		version: "999"
+	};
+	var attributes = {
+		id:"flashcontent",
+		name:"flashcontent"
+	};
+	swfobject.embedSWF("FlashVarsExample.swf", "flashcontent", "100%", "100%", "9.0.28", "expressInstall.swf", flashvars, params, attributes);
+	
+</script>
+<style type="text/css">
+	/*hide from ie on mac\*/
+	html {
+		height: 100%;
+		overflow: hidden;
+	}
+	#flashcontent {
+		width: 100%;
+		height: 100%;
+	}
+	/* end hide */
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #FFFFFF;
+	}
+</style>
+</head>
+<body>
+	<div id="flashcontent">
+		<div id="noflash">
+			<p><strong>U heeft een verouderde versie van de Flash player</strong>
+			<a href="http://www.adobe.com/products/flashplayer/">Klik hier om een nieuwe versie te downloaden</a></p>
+		</div>
+	</div>
+</body>
+</html>
