@@ -111,7 +111,6 @@ package temple.ui.form.components
 		private var _debug:Boolean;
 		private var _debugValue:*;
 		private var _submitOnEnter:Boolean = true;
-		private var _submitOnChange:Boolean;
 		private var _previousText:String;
 		private var _limitInputToDesign:Boolean;
 		private var _normalFontSize:Number;
@@ -131,7 +130,7 @@ package temple.ui.form.components
 				textField.addEventListener(FocusEvent.FOCUS_OUT, handleFocusOut);
 			}
 			
-			_textField = textField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField || addChild(new TextField()) as TextField;
+			_textField = textField || DisplayObjectContainerUtils.getChildOfType(this, TextField) as TextField || addChild(new TextField()) as TextField;
 
 			addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			_textField.defaultTextFormat = _textField.getTextFormat();
@@ -721,23 +720,6 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * If set to true the InputField will dispatch an FormElementEvent.SUBMIT when the user pressed any key and the form (if enabled) can be submitted.
-		 */
-		public function get submitOnChange():Boolean
-		{
-			return _submitOnChange;
-		}
-		
-		/**
-		 * @private
-		 */
-		[Inspectable(name="Submit on Change", type="Boolean", defaultValue="false")]
-		public function set submitOnChange(value:Boolean):void
-		{
-			_submitOnChange = value;
-		}
-		
-		/**
 		 * The point size of text in this text format. 
 		 */
 		public function get fontSize():Number
@@ -849,6 +831,7 @@ package temple.ui.form.components
 		public function set updateHintOnChange(value:Boolean):void
 		{
 			_updateHintOnChange = value;
+			updateHint();
 		}
 		
 		/**
@@ -918,7 +901,7 @@ package temple.ui.form.components
 			event.stopPropagation();
 			dispatchEvent(new Event(Event.CHANGE));
 			
-			if (_submitOnChange)
+			if (submitOnChange)
 			{
 				dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 			}
@@ -940,7 +923,7 @@ package temple.ui.form.components
 			{
 				showHint();
 			}
-			else if (_textField.text != _hintText && !hasError)
+			else if (_showsHint && _textField.text != _hintText && !hasError)
 			{
 				_showsHint = false;
 				setTextFormat(_defaultTextFormat);

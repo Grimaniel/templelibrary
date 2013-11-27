@@ -35,6 +35,7 @@
 
 package temple.ui.form.components 
 {
+	import temple.ui.buttons.behaviors.IToggleable;
 	import temple.core.debug.IDebuggable;
 
 	import flash.events.MouseEvent;
@@ -53,7 +54,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class RadioButton extends CheckBox implements IRadioButton, IDebuggable
+	public class RadioButton extends CheckBox implements IRadioButton, IDebuggable, IToggleable
 	{
 		private var _group:IRadioGroup;
 		private var _toggle:Boolean;
@@ -154,7 +155,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Indicates if button can be selected deselect when selected. Default: false
+		 * @inheritDoc
 		 */
 		public function get toggle():Boolean
 		{

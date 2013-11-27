@@ -184,7 +184,7 @@ package temple.ui.form.validation
 		 */
 		public function isValid():Boolean 
 		{
-			return validate().length > 0;
+			return validate().length == 0;
 		}
 
 		/**

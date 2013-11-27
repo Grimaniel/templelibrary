@@ -35,18 +35,18 @@
 
 package temple.ui.style
 {
-	import temple.core.errors.TempleArgumentError;
-	import temple.core.errors.throwError;
-	import temple.ui.label.TextFieldLabelBehavior;
-	import temple.ui.layout.liquid.LiquidContainer;
-	import temple.utils.types.DisplayObjectContainerUtils;
-	import temple.utils.types.StringUtils;
-
 	import flash.events.Event;
 	import flash.text.AntiAliasType;
 	import flash.text.GridFitType;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import temple.core.errors.TempleArgumentError;
+	import temple.core.errors.throwError;
+	import temple.ui.labels.TextFieldLabelBehavior;
+	import temple.ui.layout.liquid.LiquidContainer;
+	import temple.utils.types.DisplayObjectContainerUtils;
+	import temple.utils.types.StringUtils;
+
 
 	/**
 	 * Dispatched after the text in the TextField is changed
@@ -90,7 +90,7 @@ package temple.ui.style
 		{
 			super();
 			toStringProps.push('label');
-			var textField:TextField = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
+			var textField:TextField = DisplayObjectContainerUtils.getChildOfType(this, TextField) as TextField;
 			
 			_label = new TextFieldLabelBehavior(new TextField());
 			
@@ -127,7 +127,7 @@ package temple.ui.style
 			
 			if (label)
 			{
-				this.label = label;
+				this.text = label;
 			}
 			this.cssClass = cssClass;
 		}
@@ -135,24 +135,24 @@ package temple.ui.style
 		/**
 		 * @inheritDoc
 		 */
-		public function get label():String
+		public function get text():String
 		{
-			return _label ? _label.label : null;
+			return _label ? _label.text : null;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		[Inspectable(name="Label", type="String")]
-		public function set label(value:String):void
+		public function set text(value:String):void
 		{
-			_label.label = value;
+			_label.text = value;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function get autoSize():String
+		public function get autoSize():Boolean
 		{
 			return _label.autoSize;
 		}
@@ -160,10 +160,44 @@ package temple.ui.style
 		/**
 		 * @inheritDoc
 		 */
-		[Inspectable(name="AutoSize", type="String", defaultValue="none", enumeration="none,left,right,center")]
-		public function set autoSize(value:String):void
+		[Inspectable(name="AutoSize", type="Boolean")]
+		public function set autoSize(value:Boolean):void
 		{
 			_label.autoSize = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get multiline():Boolean
+		{
+			return _label.multiline;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		[Inspectable(name="Multiline", type="Boolean")]
+		public function set multiline(value:Boolean):void
+		{
+			_label.multiline = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get wordWrap():Boolean
+		{
+			return _label.wordWrap;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		[Inspectable(name="WordWrap", type="Boolean")]
+		public function set wordWrap(value:Boolean):void
+		{
+			_label.wordWrap = value;
 		}
 
 		/**
@@ -255,25 +289,25 @@ package temple.ui.style
 				case TextTransform.UCFIRST:
 				{
 					_textTransform = value;
-					label = StringUtils.ucFirst(label);
+					text = StringUtils.ucFirst(text);
 					break;
 				}
 				case TextTransform.LOWERCASE:
 				{
 					_textTransform = value;
-					label = label.toLowerCase();
+					text = text.toLowerCase();
 					break;
 				}
 				case TextTransform.UPPERCASE:
 				{
 					_textTransform = value;
-					label = label.toUpperCase();
+					text = text.toUpperCase();
 					break;
 				}
 				case TextTransform.CAPITALIZE:
 				{
 					_textTransform = value;
-					label = StringUtils.capitalize(label);
+					text = StringUtils.capitalize(text);
 					break;
 				}
 				default:
@@ -340,23 +374,6 @@ package temple.ui.style
 					break;
 				}
 			}
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get multiline():Boolean
-		{
-			return _label.textField.multiline;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		[Inspectable(name="Multiline", type="Boolean")]
-		public function set multiline(value:Boolean):void
-		{
-			_label.textField.multiline = value;
 		}
 		
 		/**

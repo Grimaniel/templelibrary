@@ -44,7 +44,7 @@ package temple.ui.buttons.behaviors
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface INestableButton 
+	public interface INestableButton
 	{
 		/**
 		 * A Boolean that indicates if the button should update on a (tunneled) ButtonEvent from his parent (or other ancestors).

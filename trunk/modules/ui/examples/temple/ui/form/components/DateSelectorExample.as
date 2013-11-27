@@ -14,15 +14,18 @@
  */
 package  
 {
+	import temple.utils.localization.DutchDateLabels;
+	import temple.utils.localization.DateLabelFormat;
 	import temple.ui.form.Form;
 	import temple.ui.form.components.DateSelector;
 	import temple.ui.form.components.InputField;
 
 	public class DateSelectorExample extends DocumentClassExample 
 	{
-		public var mcInputField1:InputField;
-		public var mcDateSelector:DateSelector;
-		public var mcInputField2:InputField;
+		public var mcDateSelector1:DateSelector;
+		public var mcDateSelector2:DateSelector;
+		public var mcDateSelector3:DateSelector;
+		public var mcDateSelector4:DateSelector;
 		
 		public function DateSelectorExample()
 		{
@@ -31,10 +34,17 @@ package
 			// put elements in form to test tabbing
 			
 			var form:Form = new Form();
-			form.addElement(mcInputField1);
-			form.addElement(mcDateSelector);
-			form.addElement(mcInputField2);
+			form.addElement(mcDateSelector1);
+			form.addElement(mcDateSelector2);
+			form.addElement(mcDateSelector3);
+			form.addElement(mcDateSelector4);
 			form.reset();
+			
+			mcDateSelector2.monthFormat = DateLabelFormat.FULL;
+			mcDateSelector3.monthFormat = DateLabelFormat.SHORT;
+			
+			mcDateSelector4.monthLabels = DutchDateLabels;
+			mcDateSelector4.monthFormat = DateLabelFormat.FULL;
 		}
 	}
 }

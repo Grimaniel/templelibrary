@@ -35,6 +35,7 @@
 
 package temple.ui.form.components 
 {
+	import temple.ui.buttons.behaviors.IToggleable;
 	import temple.common.events.SelectEvent;
 	import temple.common.interfaces.IResettable;
 	import temple.common.interfaces.ISelectable;
@@ -113,7 +114,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class List extends ScrollComponent implements IList, IHasError, IResettable
+	public class List extends ScrollComponent implements IList, IHasError, IResettable, IToggleable
 	{
 		private static const _CLEAR_STRING_SEARCH_DELAY:Number = 500;
 
@@ -437,7 +438,7 @@ package temple.ui.form.components
 				listItemData.label = label;
 				if (listItemData.row && _rowItemDictionary[listItemData.row] == listItemData)
 				{
-					listItemData.row.label = label;
+					listItemData.row.text = label;
 				}
 			}
 			else
@@ -1117,7 +1118,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * Indicates if a selected item can be deselected by clicking it again
+		 * @inheritDoc
 		 */
 		public function get toggle():Boolean
 		{
@@ -1125,7 +1126,7 @@ package temple.ui.form.components
 		}
 		
 		/**
-		 * @private
+		 * @inheritDoc
 		 */
 		[Inspectable(name="Toggle", type="Boolean", defaultValue=false)]
 		public function set toggle(value:Boolean):void
@@ -1279,7 +1280,7 @@ package temple.ui.form.components
 			{
 				row.visible = true;
 				row.data = item.data;
-				row.label = getListItemLabel(item);
+				row.text = getListItemLabel(item);
 				if (row is ISelectable) ISelectable(row).selected = item.selected;
 				row.focus = item == _focusItem;
 				row.index = _items.indexOf(item);
@@ -1290,7 +1291,7 @@ package temple.ui.form.components
 			{
 				row.visible = false;
 				row.data = null;
-				row.label = null;
+				row.text = null;
 				if (row is ISelectable) ISelectable(row).selected = false;
 				row.focus = false;
 				

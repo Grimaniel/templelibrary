@@ -61,7 +61,6 @@ package temple.ui.form.components
 		private var _format:String;
 		private var _begin:Date;
 		private var _end:Date;
-		private var _submitOnChange:Boolean;
 		
 		public function DateInputField(begin:Date = null, end:Date = null, day:InputField = null, month:InputField = null, year:InputField = null)
 		{
@@ -458,27 +457,10 @@ package temple.ui.form.components
 			if (year) year.resetScale();
 		}
 		
-		/**
-		 * If set to true the InputField will dispatch an FormElementEvent.SUBMIT when the user pressed any key and the form (if enabled) can be submitted.
-		 */
-		public function get submitOnChange():Boolean
-		{
-			return _submitOnChange;
-		}
-		
-		/**
-		 * @private
-		 */
-		[Inspectable(name="Submit on Change", type="Boolean", defaultValue="false")]
-		public function set submitOnChange(value:Boolean):void
-		{
-			_submitOnChange = value;
-		}
-
 		private function handleChange(event:Event):void
 		{
 			dispatchEvent(new Event(Event.CHANGE));
-			if (_submitOnChange) dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
+			if (submitOnChange) dispatchEvent(new FormElementEvent(FormElementEvent.SUBMIT));
 		}
 
 		/**

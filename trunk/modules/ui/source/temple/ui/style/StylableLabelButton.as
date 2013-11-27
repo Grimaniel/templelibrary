@@ -35,21 +35,21 @@
 
 package temple.ui.style 
 {
-	import temple.core.errors.TempleArgumentError;
-	import temple.core.errors.throwError;
-	import temple.ui.buttons.LabelButton;
-	import temple.ui.label.IHTMLLabel;
-	import temple.ui.label.ITextFieldLabel;
-	import temple.ui.label.TextFieldLabelBehavior;
-	import temple.utils.types.DisplayObjectContainerUtils;
-	import temple.utils.types.StringUtils;
-
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
 	import flash.text.AntiAliasType;
 	import flash.text.GridFitType;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import temple.core.errors.TempleArgumentError;
+	import temple.core.errors.throwError;
+	import temple.ui.buttons.LabelButton;
+	import temple.ui.labels.IHTMLLabel;
+	import temple.ui.labels.ITextFieldLabel;
+	import temple.ui.labels.TextFieldLabelBehavior;
+	import temple.utils.types.DisplayObjectContainerUtils;
+	import temple.utils.types.StringUtils;
+
 
 	/**
 	 * Dispatched after the text in the TextField is changed
@@ -96,7 +96,7 @@ package temple.ui.style
 
 		override protected function init(textField:TextField = null):void
 		{
-			if (!textField) textField = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
+			if (!textField) textField = DisplayObjectContainerUtils.getChildOfType(this, TextField) as TextField;
 				
 			var newTextField:TextField = new TextField();
 			
@@ -199,25 +199,25 @@ package temple.ui.style
 				case TextTransform.UCFIRST:
 				{
 					_textTransform = value;
-					label = StringUtils.ucFirst(label);
+					text = StringUtils.ucFirst(text);
 					break;
 				}
 				case TextTransform.LOWERCASE:
 				{
 					_textTransform = value;
-					label = label.toLowerCase();
+					text = text.toLowerCase();
 					break;
 				}
 				case TextTransform.UPPERCASE:
 				{
 					_textTransform = value;
-					label = label.toUpperCase();
+					text = text.toUpperCase();
 					break;
 				}	
 				case TextTransform.CAPITALIZE:
 				{
 					_textTransform = value;
-					label = StringUtils.capitalize(label);
+					text = StringUtils.capitalize(text);
 					break;
 				}
 				default:
@@ -290,23 +290,6 @@ package temple.ui.style
 			}
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
-		public function get multiline():Boolean
-		{
-			return (_label as ITextFieldLabel).textField.multiline;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		[Inspectable(name="Multiline", type="Boolean")]
-		public function set multiline(value:Boolean):void
-		{
-			(_label as ITextFieldLabel).textField.multiline = value;
-		}
-
 		private function handleLabelChange(event:Event):void
 		{
 			if (_resetStyle) resetStyle();

@@ -58,6 +58,7 @@ package temple.ui.form.components
 		private var _tabIndex:int;
 		private var _submit:Boolean = true;
 		private var _hasError:Boolean;
+		private var _submitOnChange:Boolean;
 		
 		public function FormElementComponent()
 		{
@@ -231,6 +232,23 @@ package temple.ui.form.components
 			StateHelper.hideError(this);
 			
 			dispatchEvent(new FormElementErrorEvent(FormElementErrorEvent.HIDE_ERROR));
+		}
+		
+		/**
+		 * @inheritDoc 
+		 */
+		public function get submitOnChange():Boolean
+		{
+			return _submitOnChange;
+		}
+
+		/**
+		 * @inheritDoc 
+		 */
+		[Inspectable(name="Submit on Change", type="Boolean", defaultValue="false")]
+		public function set submitOnChange(value:Boolean):void
+		{
+			_submitOnChange = value;
 		}
 		
 		/**

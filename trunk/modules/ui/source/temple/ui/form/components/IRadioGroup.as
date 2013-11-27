@@ -41,7 +41,7 @@ package temple.ui.form.components
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IRadioGroup extends ICoreEventDispatcher
+	public interface IRadioGroup extends ICoreEventDispatcher, IFormElement
 	{
 		/**
 		 * Get the name of the group

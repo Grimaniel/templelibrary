@@ -35,13 +35,23 @@
 
 package temple.ui.form.components
 {
-	import temple.ui.label.ILabel;
+	import temple.core.destruction.IDestructible;
 	
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IListItemData extends ILabel
+	public interface IListItemData extends IDestructible
 	{
+		/**
+		 * The text for the label
+		 */
+		function get label():String;
+
+		/**
+		 * @private
+		 */
+		function set label(value:String):void;
+		
 		/**
 		 * The data of the list item
 		 */

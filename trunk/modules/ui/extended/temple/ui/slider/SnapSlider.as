@@ -35,12 +35,13 @@
 
 package temple.ui.slider
 {
-	import temple.utils.propertyproxy.TargetPropertyProxy;
 	import temple.common.enum.Direction;
 	import temple.common.enum.Orientation;
+	import temple.utils.propertyproxy.TargetPropertyProxy;
 	import temple.utils.types.NumberUtils;
 
 	import com.greensock.TweenLite;
+	import com.greensock.easing.Ease;
 
 	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;
@@ -55,9 +56,9 @@ package temple.ui.slider
 		private var _targetValue:Number;
 		private var _proxy:Object;
 		private var _duration:Number;
-		private var _ease:Function;
+		private var _ease:Ease;
 		
-		public function SnapSlider(target:InteractiveObject, bounds:Rectangle, min:Number = 0, max:Number = 1, stepSize:Number = .1, orientation:String = Orientation.HORIZONTAL, direction:String = Direction.ASCENDING, duration:Number = .25, ease:Function = null)
+		public function SnapSlider(target:InteractiveObject, bounds:Rectangle, min:Number = 0, max:Number = 1, stepSize:Number = .1, orientation:String = Orientation.HORIZONTAL, direction:String = Direction.ASCENDING, duration:Number = .25, ease:Ease = null)
 		{
 			super(target, bounds, min, max, stepSize, orientation, direction);
 			_proxy = {};
@@ -85,7 +86,7 @@ package temple.ui.slider
 		/**
 		 * Ease of the snap animation
 		 */
-		public function get ease():Function
+		public function get ease():Ease
 		{
 			return _ease;
 		}
@@ -93,7 +94,7 @@ package temple.ui.slider
 		/**
 		 * @private
 		 */
-		public function set ease(value:Function):void
+		public function set ease(value:Ease):void
 		{
 			_ease = value;
 		}

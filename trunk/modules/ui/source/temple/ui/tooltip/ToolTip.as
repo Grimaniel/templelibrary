@@ -35,12 +35,6 @@
 
 package temple.ui.tooltip 
 {
-	import temple.core.debug.log.Log;
-	import temple.core.debug.objectToString;
-	import temple.core.utils.CoreTimer;
-	import temple.ui.label.LiquidLabel;
-	import temple.utils.types.DisplayObjectUtils;
-
 	import flash.display.DisplayObject;
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
@@ -48,6 +42,12 @@ package temple.ui.tooltip
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
+	import temple.core.debug.log.Log;
+	import temple.core.debug.objectToString;
+	import temple.core.utils.CoreTimer;
+	import temple.ui.labels.LiquidLabel;
+	import temple.utils.types.DisplayObjectUtils;
+
 
 	/**
 	 * The tooltip is a graphical user interface element. It is used in conjunction with a cursor, usually a pointer.
@@ -287,7 +287,7 @@ package temple.ui.tooltip
 			}
 			else
 			{
-				ToolTip._clip.label = ToolTip._nextMessage;
+				ToolTip._clip.text = ToolTip._nextMessage;
 				ToolTip._clip.show();
 				
 				if (ToolTip._clip.parent == null)

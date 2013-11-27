@@ -35,8 +35,6 @@
 
 package temple.ui.form.components 
 {
-	import temple.common.interfaces.IFocusable;
-	import temple.common.interfaces.IHasValue;
 	import temple.core.display.IDisplayObject;
 
 	/**
@@ -46,7 +44,7 @@ package temple.ui.form.components
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IFormElementComponent extends IHasValue, IDisplayObject, IFocusable
+	public interface IFormElementComponent extends IFormElement, IDisplayObject
 	{
 		/**
 		 * If this element is automatically added by the FormComponent, the FormComponent will use this as property name for this element.

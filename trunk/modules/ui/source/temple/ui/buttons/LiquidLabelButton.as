@@ -35,6 +35,8 @@
 
 package temple.ui.buttons 
 {
+	import flash.events.Event;
+	import flash.text.TextField;
 	import temple.common.interfaces.IEnableable;
 	import temple.common.interfaces.IFocusable;
 	import temple.common.interfaces.ISelectable;
@@ -43,10 +45,8 @@ package temple.ui.buttons
 	import temple.ui.buttons.behaviors.ButtonTimelineBehavior;
 	import temple.ui.buttons.behaviors.INestableButton;
 	import temple.ui.focus.FocusManager;
-	import temple.ui.label.LiquidLabel;
+	import temple.ui.labels.LiquidLabel;
 
-	import flash.events.Event;
-	import flash.text.TextField;
 
 	/**
 	 * A button with text and built-in <code>LiquidBehavior</code>. 

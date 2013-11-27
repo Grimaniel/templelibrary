@@ -65,7 +65,7 @@ package temple.ui.form.components
 		 */
 		public function get data():*
 		{
-			return _data ? _data : label;
+			return _data ? _data : text;
 		}
 
 		/**

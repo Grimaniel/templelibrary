@@ -78,6 +78,7 @@ package temple.ui.pagination
 		public function set array(value:Array):void
 		{
 			_array = value;
+			_currentPage = 0;
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		

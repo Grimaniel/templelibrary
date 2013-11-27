@@ -172,14 +172,14 @@ package
 			// set labels for RadioButtons and CheckBoxes
 			mcGenderMaleRadioButton.html = false;
 			mcGenderMaleRadioButton.autoSize = TextFieldAutoSize.LEFT;
-			mcGenderMaleRadioButton.label = "Male";
+			mcGenderMaleRadioButton.text = "Male";
 			mcGenderFemaleRadioButton.autoSize = TextFieldAutoSize.LEFT;
-			mcGenderFemaleRadioButton.label = "Female";
+			mcGenderFemaleRadioButton.text = "Female";
 			
 			mcNewsletterCheckBox.autoSize = TextFieldAutoSize.LEFT;
-			mcNewsletterCheckBox.label = "Sign me up for the Newsletter";
+			mcNewsletterCheckBox.text = "Sign me up for the Newsletter";
 			mcTermsCheckBox.autoSize = TextFieldAutoSize.LEFT;
-			mcTermsCheckBox.label = "I agree to the terms";
+			mcTermsCheckBox.text = "I agree to the terms";
 			
 			// enable submit on enter and spacebar on buttons
 			mcResetButton.buttonBehavior.clickOnEnter = true;
@@ -190,9 +190,9 @@ package
 			mcPrefillButton.buttonBehavior.clickOnSpacebar = true;
 			
 			// Set the labels of the buttons
-			mcSubmitButton.label = "Submit";
-			mcResetButton.label = "Reset";
-			mcPrefillButton.label = "Prefill";
+			mcSubmitButton.text = "Submit";
+			mcResetButton.text = "Reset";
+			mcPrefillButton.text = "Prefill";
 			
 			// We add the mcPrefillButton to the tabFocusManager of the Form, so we can tab to this button
 			_form.tabFocusManager.add(mcPrefillButton);

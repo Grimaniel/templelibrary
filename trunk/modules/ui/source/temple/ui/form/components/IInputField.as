@@ -36,13 +36,12 @@
 package temple.ui.form.components
 {
 	import temple.common.interfaces.IResettable;
-	import temple.ui.form.validation.IHasError;
 
 	import flash.text.TextFormat;
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IInputField extends IHasError, IResettable
+	public interface IInputField extends IFormElement, IResettable
 	{
 		/**
 		 * Default <code>TextFormat</code>
