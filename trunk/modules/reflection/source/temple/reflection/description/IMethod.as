@@ -41,8 +41,14 @@ package temple.reflection.description
 	 */
 	public interface IMethod extends IMember
 	{
+		/**
+		 * 
+		 */
 		function get length():uint;
 
+		/**
+		 * 
+		 */
 		function get parameters():Vector.<IParameter>;
 	}
 }

@@ -41,24 +41,74 @@ package temple.reflection.description
 	 */
 	public interface IDescription
 	{
+		/**
+		 * Name of the class
+		 */
 		function get name():String;
 		
+		/**
+		 * 
+		 */
 		function get type():Class;
 
+		/**
+		 * 
+		 */
 		function get extendsClass():Vector.<Class>;
 
+		/**
+		 * 
+		 */
 		function get interfaces():Vector.<Class>;
 
+		/**
+		 * 
+		 */
 		function get constructor():IMethod;
 
+		/**
+		 * A list of all public vars and vars with a namespace.
+		 */
 		function get variables():Vector.<IVariable>;
 
+		/**
+		 * Returns a variable with a specific name
+		 */
 		function getVariable(name:String, namespace:Namespace = null):IVariable;
 
+		/**
+		 * A list of all getters and setters.
+		 */
 		function get properties():Vector.<IProperty>;
 
+		/**
+		 * Returns a getter/setter with a specific name.
+		 */
 		function getProperty(name:String, namespace:Namespace = null):IProperty;
+		
+		/**
+		 * A list of all <code>variables</code>, <code>properties</code> and <code>methods</code>.
+		 */
+		function get members():Vector.<IMember>;
+		
+		/**
+		 * Returns a <code>variable</code>, <code>property</code> or <code>method</code> with a specific name
+		 */
+		function getMember(name:String, namespace:Namespace = null):IMember;
 
+		/**
+		 * A list of all methods
+		 */
 		function get methods():Vector.<IMethod>;
+		
+		/**
+		 * 
+		 */
+		function get metadata():Vector.<IMetadata>;
+		
+		/**
+		 * 
+		 */
+		function getMetadata(name:String):IMetadata;
 	}
 }

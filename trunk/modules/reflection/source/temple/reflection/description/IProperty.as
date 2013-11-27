@@ -41,10 +41,19 @@ package temple.reflection.description
 	 */
 	public interface IProperty extends IMember
 	{
+		/**
+		 * 
+		 */
 		function get access():String;
 
+		/**
+		 * 
+		 */
 		function get isReadable():Boolean;
 
+		/**
+		 * 
+		 */
 		function get isWritable():Boolean;
 	}
 }
