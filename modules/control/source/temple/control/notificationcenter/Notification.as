@@ -35,9 +35,9 @@
 
 package temple.control.notificationcenter
 {
-	import temple.core.debug.objectToString;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
+	import temple.core.events.CoreEvent;
 
 	import flash.events.Event;
 
@@ -51,10 +51,8 @@ package temple.control.notificationcenter
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public final class Notification extends Event
+	public final class Notification extends CoreEvent
 	{
-		private static const _TO_STRING_PROPS:Vector.<String> = Vector.<String>(['type', 'data']);
-		
 		private var _notificationCenter:NotificationCenter;
 		private var _data:*;
 
@@ -69,6 +67,9 @@ package temple.control.notificationcenter
 			
 			_notificationCenter = notificationCenter;
 			_data = data;
+			
+			toStringProps.length = 0;
+			toStringProps.push('type', 'data');
 
 			if (type == null) throwError(new TempleArgumentError(this, "type can't be null"));
 		}
@@ -120,14 +121,6 @@ package temple.control.notificationcenter
 		public function get notificationCenter():NotificationCenter
 		{
 			return _notificationCenter;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function toString():String 
-		{
-			return objectToString(this, _TO_STRING_PROPS);
 		}
 	}
 }
