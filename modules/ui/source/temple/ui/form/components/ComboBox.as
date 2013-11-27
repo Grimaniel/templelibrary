@@ -35,19 +35,6 @@
 
 package temple.ui.form.components 
 {
-	import temple.common.interfaces.IOpenable;
-	import temple.common.interfaces.IHasValue;
-	import temple.core.errors.TempleError;
-	import temple.core.errors.throwError;
-	import temple.data.collections.ICollection;
-	import temple.ui.label.ILabel;
-	import temple.ui.scroll.ScrollBehavior;
-	import temple.ui.states.StateHelper;
-	import temple.ui.states.open.IOpenState;
-	import temple.utils.FrameDelay;
-	import temple.utils.propertyproxy.IPropertyProxy;
-	import temple.utils.types.DisplayObjectContainerUtils;
-
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
@@ -57,6 +44,19 @@ package temple.ui.form.components
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	import flash.ui.Keyboard;
+	import temple.common.interfaces.IHasValue;
+	import temple.common.interfaces.IOpenable;
+	import temple.core.errors.TempleError;
+	import temple.core.errors.throwError;
+	import temple.data.collections.ICollection;
+	import temple.ui.labels.ILabel;
+	import temple.ui.scroll.ScrollBehavior;
+	import temple.ui.states.StateHelper;
+	import temple.ui.states.open.IOpenState;
+	import temple.utils.FrameDelay;
+	import temple.utils.propertyproxy.IPropertyProxy;
+	import temple.utils.types.DisplayObjectContainerUtils;
+
 	
 	/**
 	 * A ComboBox let the user select from a (predefined) list of options.
@@ -125,7 +125,7 @@ package temple.ui.form.components
 			}
 			else
 			{
-				_list = DisplayObjectContainerUtils.findChildOfType(this, IList) as IList;
+				_list = DisplayObjectContainerUtils.getChildOfType(this, IList) as IList;
 			}
 			
 			if (_list == null) throwError(new TempleError(this, "No List found"));
@@ -707,22 +707,6 @@ package temple.ui.form.components
 		public function set labelProxy(value:IPropertyProxy):void
 		{
 			_labelProxy = value;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get label():String
-		{
-			return text;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function set label(value:String):void
-		{
-			text = value;
 		}
 		
 		/**

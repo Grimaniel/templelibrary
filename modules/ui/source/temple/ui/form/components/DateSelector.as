@@ -37,10 +37,10 @@ package temple.ui.form.components
 {
 	import temple.common.interfaces.IHasValue;
 	import temple.common.interfaces.IResettable;
-	import temple.core.errors.TempleArgumentError;
-	import temple.core.errors.throwError;
 	import temple.ui.form.validation.IHasError;
-	import temple.utils.types.DateUtils;
+	import temple.utils.localization.DateLabelFormat;
+	import temple.utils.localization.EnglishDateLabels;
+	import temple.utils.localization.IDateLabels;
 
 	/**
 	 * Input for Date. The date can be selected from <code>Comboxes</code>.
@@ -49,14 +49,8 @@ package temple.ui.form.components
 	 */
 	public class DateSelector extends DateInputField implements IHasValue, IHasError, IResettable 
 	{
-		// statics for month formatting
-		public static const MONTH_FORMAT_NUMBER:String = 'number';
-		public static const MONTH_FORMAT_SHORT_EN:String = 'short EN';
-		public static const MONTH_FORMAT_NAME_EN:String = 'name EN';
-		public static const MONTH_FORMAT_SHORT_NL:String = 'short NL';
-		public static const MONTH_FORMAT_NAME_NL:String = 'name NL';
-		
-		private var _monthFormat:String = MONTH_FORMAT_NUMBER;
+		private var _monthFormat:DateLabelFormat = DateLabelFormat.NUMERIC;
+		private var _monthLabels:IDateLabels = EnglishDateLabels;
 		
 		public function DateSelector(begin:Date = null, end:Date = null, day:InputField = null, month:InputField = null, year:InputField = null)
 		{
@@ -109,9 +103,9 @@ package temple.ui.form.components
 		}
 
 		/**
-		 * The format of the month in de month selector, possible values: number,short EN,name EN,short NL,name NL
+		 * The format of the month in de month selector
 		 */
-		public function get monthFormat():String
+		public function get monthFormat():DateLabelFormat
 		{
 			return _monthFormat;
 		}
@@ -119,61 +113,34 @@ package temple.ui.form.components
 		/**
 		 * @private
 		 */
-		[Inspectable(name="Month format", type="String", defaultValue="number", enumeration="number,short EN,name EN,short NL,name NL")]
-		public function set monthFormat(value:String):void
+		public function set monthFormat(value:DateLabelFormat):void
 		{
-			var labels:Array;
-			var i:int;
-			switch (value)
-			{
-				case MONTH_FORMAT_NUMBER:
-				{
-					labels = [1,2,3,4,5,6,7,8,9,10,11,12];
-					break;
-				}
-				case MONTH_FORMAT_SHORT_EN:
-				{
-					labels = DateUtils.MONTHS_EN;
-					for (i = labels.length-1; i >= 0 ; --i)
-					{
-						labels[i] = String(labels[i]).substr(0,3);
-					}
-					break;
-				}
-				case MONTH_FORMAT_NAME_EN:
-				{
-					labels = DateUtils.MONTHS_EN;
-					break;
-				}
-				case MONTH_FORMAT_SHORT_NL:
-				{
-					labels = DateUtils.MONTHS_NL;
-					for (i = labels.length-1; i >= 0 ; --i)
-					{
-						labels[i] = String(labels[i]).substr(0,3);
-					}
-					break;
-				}
-				case MONTH_FORMAT_NAME_NL:
-				{
-					labels = DateUtils.MONTHS_NL;
-					break;
-				}
-				default:
-				{
-					throwError(new TempleArgumentError(this, "invalid value for monthFormat '" + value + "'"));
-					break;
-				}
-			}
 			_monthFormat = value;
 			
 			if (month is ComboBox)
 			{
-				for (i = labels.length-1; i >= 0 ; --i)
+				for (var i:int = 11; i >= 0 ; --i)
 				{
-					ComboBox(month).setLabelAt(i, labels[i]);
+					ComboBox(month).setLabelAt(i, _monthLabels ? _monthLabels.getMonth(i, _monthFormat) : i.toString());
 				}
 			}
+		}
+		
+		/**
+		 * IDateLabels object for localization of the month labels
+		 */
+		public function get monthLabels():IDateLabels
+		{
+			return _monthLabels;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set monthLabels(value:IDateLabels):void
+		{
+			_monthLabels = value;
+			if (_monthLabels && (_monthFormat == DateLabelFormat.FULL || _monthFormat == DateLabelFormat.SHORT)) monthFormat = _monthFormat;
 		}
 		
 		/**

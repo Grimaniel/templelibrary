@@ -35,6 +35,8 @@
 
 package temple.ui.slider
 {
+	import com.greensock.easing.Ease;
+
 	import flash.display.InteractiveObject;
 	import flash.geom.Rectangle;
 
@@ -73,7 +75,7 @@ package temple.ui.slider
 		/**
 		 * Ease of the snap animation
 		 */
-		public function get ease():Function
+		public function get ease():Ease
 		{
 			return SnapSlider(slider).ease;
 		}
@@ -81,7 +83,7 @@ package temple.ui.slider
 		/**
 		 * @private
 		 */
-		public function set ease(value:Function):void
+		public function set ease(value:Ease):void
 		{
 			SnapSlider(slider).ease = value;
 		}

@@ -51,7 +51,7 @@ package temple.ui.states.error
 		
 		public function ErrorTimelineState()
 		{
-			_textField = DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
+			_textField = DisplayObjectContainerUtils.getChildOfType(this, TextField) as TextField;
 			if (_textField) _textField.text = "";
 		}
 		

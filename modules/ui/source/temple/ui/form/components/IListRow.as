@@ -35,11 +35,11 @@
 
 package temple.ui.form.components 
 {
-	import temple.core.destruction.IDestructible;
 	import temple.common.interfaces.IFocusable;
 	import temple.common.interfaces.ISelectable;
+	import temple.core.destruction.IDestructible;
 	import temple.core.display.IDisplayObject;
-	import temple.ui.label.ILabel;
+	import temple.ui.labels.ILabel;
 
 	/**
 	 * A ListRow visualizes an item in a list.

@@ -37,7 +37,6 @@ package temple.ui.buttons.behaviors
 {
 	import temple.data.collections.HashMap;
 
-	import com.greensock.OverwriteManager;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.EaseLookup;
 
@@ -68,8 +67,6 @@ package temple.ui.buttons.behaviors
 		public function ButtonTweenBehavior(target:DisplayObject, upDuration:Number = NaN, upVars:Object = null, overDuration:Number = NaN, overVars:Object = null, downDuration:Number = NaN, downVars:Object = null)
 		{
 			super(target);
-			
-			OverwriteManager.init();
 			
 			_states = new HashMap("ButtonTweenBehaviorStates");
 			

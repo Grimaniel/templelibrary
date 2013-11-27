@@ -55,7 +55,7 @@ package temple.ui.states.error
 		{
 			super(showDuration, hideDuration);
 			
-			_textField = textField || DisplayObjectContainerUtils.findChildOfType(this, TextField) as TextField;
+			_textField = textField || DisplayObjectContainerUtils.getChildOfType(this, TextField) as TextField;
 			if (_textField) _textField.text = "";
 		}
 		

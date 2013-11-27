@@ -68,7 +68,6 @@ package temple.ui.behaviors.textfield
 	public class AutoFontSizeBehavior extends AbstractDisplayObjectBehavior implements IDebuggable
 	{
 		private static const _dictionary:Dictionary = new Dictionary(true);
-		private var _debug:Boolean;
 		
 		/**
 		 * Returns the AutoFontSizeBehavior of a TextField if the TextField has AutoFontSizeBehavior. Otherwise null is returned.
@@ -78,12 +77,59 @@ package temple.ui.behaviors.textfield
 			return AutoFontSizeBehavior._dictionary[target] as AutoFontSizeBehavior;
 		}
 		
+		/**
+		 * Updates the size of the font of the TextField.
+		 * The AutoFontSizeBehavior will set the maximal fontsize that will fit in the TextField.
+		 * Returns true if the update could resize the font so it will fit, otherwise it will return false. 
+		 */
+		public static function update(textField:TextField, maxFontSize:Number = NaN, minFontSize:uint = 9, maxWidth:Number = NaN, maxHeight:Number = NaN):Boolean
+		{
+			textField.scrollV = 0;
+			textField.scrollH = 0;
+			
+			if (!isNaN(maxFontSize)) setFontSize(textField, maxFontSize);
+			
+			maxWidth ||= textField.width;
+			maxHeight ||= textField.height;
+			var size:Number = Number(textField.getTextFormat().size);
+			
+			var notfit:Boolean;
+ 
+			if (textField.multiline)
+			{
+				while (notfit = maxHeight < textField.textHeight + (4 * textField.numLines)) 
+				{ 
+					if (size <= minFontSize) break;
+					setFontSize(textField, size -= 0.5);
+				}
+			}
+			else
+			{
+				while (notfit = maxWidth < textField.textWidth) 
+				{ 
+					if (size <= minFontSize) break;
+					setFontSize(textField, size -= 0.5);
+				}
+			}
+			
+			return !notfit;
+		}
+		
+		private static function setFontSize(textField:TextField, size:Number):void 
+		{
+			var currentTextFormat:TextFormat = textField.getTextFormat();
+			currentTextFormat.size = size;
+ 
+			textField.setTextFormat(currentTextFormat);
+			textField.defaultTextFormat = currentTextFormat;
+		}
+		
 		private var _maxFontSize:Number;
 		private var _minFontSize:uint;
-		private var _currentFontSize:Number;
 		private var _previousText:String;
 		private var _maxWidth:Number;
 		private var _maxHeight:Number;
+		private var _debug:Boolean;
 		
 		/**
 		 * Adds AutoFontSizeBehavior to a TextField
@@ -104,9 +150,9 @@ package temple.ui.behaviors.textfield
 			
 			if (isNaN(maxFontSize)) maxFontSize = Number(textField.getTextFormat().size);
 			
-			_currentFontSize = _maxFontSize = maxFontSize;
-			_maxHeight = textField.height;
+			_maxFontSize = maxFontSize;
 			_maxWidth = textField.width;
+			_maxHeight = textField.height;
 			
 			update();
 			
@@ -126,43 +172,15 @@ package temple.ui.behaviors.textfield
 		 */
 		public function update():void
 		{
-			textField.scrollV = 0;
-			textField.scrollH = 0;
-			
 			if (debug) logDebug("update: ");
- 
-			if (_previousText == null || _previousText.length > textField.length)
-			{
-                setFontSize(_maxFontSize);
-			}
- 
-			if (textField.multiline)
-			{
-				while (_maxHeight < textField.textHeight + (4 * textField.numLines)) 
-				{ 
-					if (_currentFontSize <= _minFontSize) break;
-					setFontSize(_currentFontSize - 0.5);
-				}
-			}
-			else
-			{
-				while (_maxWidth < textField.textWidth) 
-				{ 
-					if (_currentFontSize <= _minFontSize) break;
-					setFontSize(_currentFontSize - 0.5);
-				}
-			}
 			
-			if (_previousText != null)
+			if (!AutoFontSizeBehavior.update(textField, _maxFontSize, _minFontSize, _maxWidth, _maxHeight) && _previousText != null )
  			{
-				if (_currentFontSize <= _minFontSize) 
-				{
-					textField.text = _previousText;
-				} 
-				else 
-				{
-					_previousText = textField.text;
-				}
+				textField.text = _previousText;
+			}
+			else 
+			{
+				_previousText = textField.text;
 			}
 		}
 
@@ -254,19 +272,6 @@ package temple.ui.behaviors.textfield
 		public function set debug(value:Boolean):void
 		{
 			_debug = value;
-		}
-		
-		private function setFontSize(size:Number):void 
-		{
-			if (debug) logDebug("setFontSize: " + size);
-			
-			_currentFontSize = size;
- 
-			var currentTextFormat:TextFormat = textField.getTextFormat();
-			currentTextFormat.size = _currentFontSize;
- 
-			textField.setTextFormat(currentTextFormat);
-			textField.defaultTextFormat = currentTextFormat;
 		}
 		
 		private function handleTextFieldChange(event:Event):void

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @exampleText
  * 
  * <a name="ComboBox"></a>
@@ -80,24 +80,24 @@ package
 			mcComboBox.addItems(["Apple", "Banana", "Orange", "Pear", "Raspberrie", "Grape", "Lemon", "Grapefruit", "Lime", "Mango"]);
 			mcComboBox.addEventListener(Event.CHANGE, handleChange);
 			
-			mcAddItemButton.label = "addItem";
-			mcAddItemAtButton.label = "addItemAt";
-			mcGetItemAtButton.label = "getItemAt";
-			mcSetItemAtButton.label = "setItemAt";
-			mcGetLabelAtButton.label = "getLabelAt";
-			mcSetLabelAtButton.label = "setLabelAt";
-			mcRemoveItemButton.label = "removeItem";
-			mcRemoveItemAtButton.label = "removeItemAt";
-			mcRemoveAllButton.label = "removeAll";
-			mcGetSelectedIndexButton.label = "getSelectedIndex";
-			mcSetSelectedIndexButton.label = "setSelectedIndex";
-			mcGetSelectedItemButton.label = "getSelectedItem";
-			mcSetSelectedItemButton.label = "setSelectedItem";
-			mcGetSelectedLabelButton.label = "getSelectedLabel";
-			mcSetSelectedLabelButton.label = "setSelectedLabel";
-			mcOpenButton.label = "open";
-			mcCloseButton.label = "close";
-			mcAutoCloseButton.label = "autoClose " + (mcComboBox.autoClose ? "on" : "off");
+			mcAddItemButton.text = "addItem";
+			mcAddItemAtButton.text = "addItemAt";
+			mcGetItemAtButton.text = "getItemAt";
+			mcSetItemAtButton.text = "setItemAt";
+			mcGetLabelAtButton.text = "getLabelAt";
+			mcSetLabelAtButton.text = "setLabelAt";
+			mcRemoveItemButton.text = "removeItem";
+			mcRemoveItemAtButton.text = "removeItemAt";
+			mcRemoveAllButton.text = "removeAll";
+			mcGetSelectedIndexButton.text = "getSelectedIndex";
+			mcSetSelectedIndexButton.text = "setSelectedIndex";
+			mcGetSelectedItemButton.text = "getSelectedItem";
+			mcSetSelectedItemButton.text = "setSelectedItem";
+			mcGetSelectedLabelButton.text = "getSelectedLabel";
+			mcSetSelectedLabelButton.text = "setSelectedLabel";
+			mcOpenButton.text = "open";
+			mcCloseButton.text = "close";
+			mcAutoCloseButton.text = "autoClose " + (mcComboBox.autoClose ? "on" : "off");
 			
 			addEventListener(MouseEvent.CLICK, handleClick);
 		}
@@ -194,7 +194,7 @@ package
 				case mcAutoCloseButton:
 				{
 					mcComboBox.autoClose = !mcComboBox.autoClose;
-					mcAutoCloseButton.label = "autoClose " + (mcComboBox.autoClose ? "on" : "off");
+					mcAutoCloseButton.text = "autoClose " + (mcComboBox.autoClose ? "on" : "off");
 					break;
 				}
 			}

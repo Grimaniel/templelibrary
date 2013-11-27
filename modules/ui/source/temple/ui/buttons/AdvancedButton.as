@@ -35,15 +35,16 @@
 
 package temple.ui.buttons 
 {
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
 	import temple.common.interfaces.IHasValue;
+	import temple.ui.buttons.behaviors.IToggleable;
 	import temple.ui.form.components.IRadioButton;
 	import temple.ui.form.components.IRadioGroup;
 	import temple.ui.form.components.RadioGroup;
-	import temple.ui.label.LabelUtils;
-	import temple.ui.label.TextFieldLabelBehavior;
+	import temple.ui.labels.LabelUtils;
+	import temple.ui.labels.TextFieldLabelBehavior;
 
-	import flash.events.MouseEvent;
-	import flash.text.TextField;
 
 	/**
 	 * The most advanced button of the Temple.
@@ -57,7 +58,7 @@ package temple.ui.buttons
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AdvancedButton extends LabelButton implements IHasValue, IRadioButton
+	public class AdvancedButton extends LabelButton implements IHasValue, IRadioButton, IToggleable
 	{
 		protected var _group:IRadioGroup;
 		protected var _data:*;
@@ -144,7 +145,7 @@ package temple.ui.buttons
 		}
 
 		/**
-		 * Indicates if button can be selected deselect when selected. Default: false
+		 * @inheritDoc
 		 */
 		public function get toggle():Boolean
 		{

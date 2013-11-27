@@ -38,7 +38,6 @@ package temple.ui.animation
 	import temple.core.debug.IDebuggable;
 	import temple.core.display.CoreMovieClip;
 
-	import flash.display.FrameLabel;
 	import flash.events.Event;
 	import flash.utils.getTimer;
 
@@ -173,22 +172,6 @@ package temple.ui.animation
 					addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
 				}
 			}
-		}
-
-		/**
-		 * Gets the frame
-		 */
-		private function getFrame(label:String):int
-		{
-			if (!_labels)
-			{
-				_labels = {};
-				for each (var frameLabel:FrameLabel in currentLabels)
-				{
-					_labels[frameLabel.name] = frameLabel;
-				}
-			}
-			return label in _labels ? FrameLabel(_labels[label]).frame : 0;
 		}
 
 		private function handleAddedToStage(event:Event):void

@@ -35,6 +35,7 @@
 
 package temple.ui.form
 {
+	import temple.utils.PropertyApplier;
 	import temple.common.interfaces.IEnableable;
 	import temple.common.interfaces.IFocusable;
 	import temple.common.interfaces.IHasValue;
@@ -231,10 +232,6 @@ package temple.ui.form
 			}
 			_service = value;
 			
-			if (_service)
-			{
-				if (_service is IDebuggable) addToDebugManager(value as IDebuggable, this);
-			}
 			if (_debug) logDebug("service: " + _service);
 		}
 
@@ -479,13 +476,17 @@ package temple.ui.form
 		{
 			if (_debug) logDebug("clear: ");
 			
+			// temporary disable submitByElement
+			var submitByElement:Boolean = _submitByElement;
+			_submitByElement = false;
+			
 			_validator.stopRealtimeValidating();
 			for each (var fed:FormElementData in _elements)
 			{
 				if (fed.element is IHasError) IHasError(fed.element).hideError();
 				if (fed.element is IResettable) IResettable(fed.element).reset();
 			}
-			
+			_submitByElement = submitByElement;
 			dispatchEvent(new FormEvent(FormEvent.RESET));
 		}
 		
@@ -561,20 +562,25 @@ package temple.ui.form
 		{
 			_prefillData = data;
 			
-			if (_debug) logDebug("prefillData: " + dump(data, 0));
+			// temporary disable submitByElement
+			var submitByElement:Boolean = _submitByElement;
+			_submitByElement = false;
+			
+			if (_debug) logDebug("prefillData: " + dump(_prefillData, 0));
 			
 			if (_prefillData != null)
 			{
 				for each (var fed:FormElementData in _elements)
 				{
-					if (_prefillData.hasOwnProperty(fed.name))
+					if (PropertyApplier.hasProperty(_prefillData, fed.name))
 					{
-						fed.element.value = data[fed.name];
-						if (_debug) logDebug("prefillData: " + fed.name + " is set to " + data[fed.name]);
+						fed.element.value = PropertyApplier.getProperty(_prefillData, fed.name);
+						if (_debug) logDebug("prefillData: " + fed.name + " is set to " + fed.element.value);
 					}
 					else if (_debug) logDebug("prefillData: " + fed.name + " not found"); 
 				}
 			}
+			_submitByElement = submitByElement;
 		}
 
 		/**

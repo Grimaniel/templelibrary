@@ -35,11 +35,11 @@
 
 package temple.ui.tooltip 
 {
+	import flash.geom.Point;
 	import temple.common.interfaces.IShowable;
 	import temple.core.display.ICoreDisplayObject;
-	import temple.ui.label.ILabel;
+	import temple.ui.labels.ILabel;
 
-	import flash.geom.Point;
 
 	/**
 	 * The tooltip is a graphical user interface element. It is used in conjunction with a cursor, usually a pointer.

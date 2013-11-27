@@ -35,7 +35,7 @@
 
 package temple.ui.style 
 {
-	import temple.ui.label.ITextFieldLabel;
+	import temple.ui.labels.ITextFieldLabel;
 
 	/**
 	 * Interface for labels which can be styled with the <code>StyleManager</code> and CSS.

@@ -141,13 +141,11 @@ package temple.ui.layout.liquid
 			
 			if (_stage.scaleMode != StageScaleMode.NO_SCALE)
 			{
-				_stage.scaleMode = StageScaleMode.NO_SCALE;
-				//logWarn("LiquidStage changed the StageScaleMode");
+				logWarn("stage.scaleMode is '" + _stage.scaleMode +"', should be set to '" + StageScaleMode.NO_SCALE + "' for liquid to function properly");
 			}
 			if (_stage.align != StageAlign.TOP_LEFT)
 			{
-				_stage.align = StageAlign.TOP_LEFT;
-				//logWarn("LiquidStage changed the StageAlign");
+				logWarn("stage.align is '" + _stage.align +"', should be set to '" + StageAlign.TOP_LEFT + "' for liquid to function properly");
 			}
 			new FrameDelay(dispatchEvent, 1, [new Event(Event.RESIZE)]);
 		}

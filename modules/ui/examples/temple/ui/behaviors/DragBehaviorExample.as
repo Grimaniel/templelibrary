@@ -12,10 +12,10 @@
  */
 package  
 {
+	import com.greensock.TweenMax;
 	import temple.ui.behaviors.DragBehavior;
-	import temple.utils.propertyproxy.TweenLitePropertyProxy;
+	import temple.utils.propertyproxy.TweenMaxPropertyProxy;
 
-	import com.greensock.OverwriteManager;
 	import com.greensock.easing.Elastic;
 
 	import flash.display.Sprite;
@@ -49,10 +49,7 @@ package
 			addChild(box2);
 			
 			// add DragBehavior to make the box draggable, using 
-			new DragBehavior(box2).positionProxy = new TweenLitePropertyProxy(2, {ease:Elastic.easeOut});
-			
-			OverwriteManager.init();
-			
+			new DragBehavior(box2).positionProxy = new TweenMaxPropertyProxy(2, {ease:Elastic.easeOut});
 			
 			// create label
 			var label:TextField = new TextField();

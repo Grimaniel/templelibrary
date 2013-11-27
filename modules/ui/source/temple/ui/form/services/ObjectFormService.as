@@ -35,6 +35,7 @@
 
 package temple.ui.form.services 
 {
+	import temple.utils.PropertyApplier;
 	import temple.common.interfaces.IObjectParsable;
 	import temple.core.events.CoreEventDispatcher;
 	import temple.ui.form.result.FormResult;
@@ -97,11 +98,11 @@ package temple.ui.form.services
 
 				for (var key:String in data)
 				{
-					if (_object.hasOwnProperty(key) || isDynamic)
+					if (key in _object || isDynamic)
 					{
 						_object[key] = data[key];
 					}
-					else
+					else if (!PropertyApplier.setProperty(_object, key, data[key]))
 					{
 						logError("submit: object has no property '" + key + "'");
 						success = false;

@@ -35,6 +35,8 @@
 
 package temple.ui.form.components 
 {
+	import flash.events.Event;
+	import flash.text.TextField;
 	import temple.common.interfaces.IHasValue;
 	import temple.common.interfaces.IResettable;
 	import temple.common.interfaces.ISelectable;
@@ -44,15 +46,13 @@ package temple.ui.form.components
 	import temple.ui.form.validation.IHasError;
 	import temple.ui.form.validation.rules.BooleanValidationRule;
 	import temple.ui.form.validation.rules.EmptyStringValidationRule;
-	import temple.ui.label.IAutoSizableLabel;
-	import temple.ui.label.IHTMLLabel;
-	import temple.ui.label.ILabel;
-	import temple.ui.label.ITextFieldLabel;
-	import temple.ui.label.LabelUtils;
+	import temple.ui.labels.IAutoSizableLabel;
+	import temple.ui.labels.IHTMLLabel;
+	import temple.ui.labels.ILabel;
+	import temple.ui.labels.ITextFieldLabel;
+	import temple.ui.labels.LabelUtils;
 	import temple.ui.states.StateHelper;
 
-	import flash.events.Event;
-	import flash.text.TextField;
 
 
 	/**
@@ -356,20 +356,20 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function get label():String
+		public function get text():String
 		{
-			return _label ? _label.label : '';
+			return _label ? _label.text : '';
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		[Inspectable(name="Label", type="String")]
-		public function set label(value:String):void
+		public function set text(value:String):void
 		{
 			if (_label)
 			{
-				_label.label = value;
+				_label.text = value;
 			}
 			else if (value != '')
 			{
@@ -404,22 +404,63 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		public function get autoSize():String
+		public function get autoSize():Boolean
 		{
-			return (_label is IAutoSizableLabel) ? (_label as IAutoSizableLabel).autoSize : null;
+			return (_label is IAutoSizableLabel) ? (_label as IAutoSizableLabel).autoSize : false;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		[Inspectable(name="AutoSize", type="String", defaultValue="none", enumeration="none,left, right, center")]
-		public function set autoSize(value:String):void
+		[Inspectable(name="AutoSize", type="Boolean")]
+		public function set autoSize(value:Boolean):void
 		{
 			if (_label is IAutoSizableLabel)
 			{
 				(_label as IAutoSizableLabel).autoSize = value;
 			}
 		}
+		
+				/**
+		 * @inheritDoc
+		 */
+		public function get multiline():Boolean
+		{
+			return _label is IAutoSizableLabel && (_label as IAutoSizableLabel).multiline;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		[Inspectable(name="Multiline", type="Boolean")]
+		public function set multiline(value:Boolean):void
+		{
+			if (_label is IAutoSizableLabel)
+			{
+				(_label as IAutoSizableLabel).multiline = value;
+			}
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get wordWrap():Boolean
+		{
+			return _label is IAutoSizableLabel && (_label as IAutoSizableLabel).wordWrap;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		[Inspectable(name="WordWrap", type="Boolean")]
+		public function set wordWrap(value:Boolean):void
+		{
+			if (_label is IAutoSizableLabel)
+			{
+				(_label as IAutoSizableLabel).wordWrap = value;
+			}
+		}
+		
 		
 		/**
 		 * @inheritDoc
