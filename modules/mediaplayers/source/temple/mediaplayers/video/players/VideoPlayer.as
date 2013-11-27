@@ -191,6 +191,7 @@ package temple.mediaplayers.video.players
 		private var _bufferTime:Number;
 		private var _screenShot:BitmapData;
 		private var _rtmpConnection:String;
+		private var _offset:Rectangle;
 		
 		private var _background:Boolean;
 		private var _backgroundColor:uint = 0;
@@ -1088,6 +1089,23 @@ package temple.mediaplayers.video.players
 		}
 		
 		/**
+		 * Position and dimension offset for the video
+		 */
+		public function get offset():Rectangle
+		{
+			return _offset;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set offset(value:Rectangle):void
+		{
+			_offset = value;
+			setVideoSize();
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function get debug():Boolean
@@ -1247,7 +1265,7 @@ package temple.mediaplayers.video.players
 				
 				default:
 				{
-					logError("handleNetStatusEvent: unhandled NetStatusEvent '" + event.info.code + "'");
+					if (debug) logWarn("handleNetStatusEvent: unhandled NetStatusEvent '" + event.info.code + "'");
 					break;
 				}
 			}
@@ -1407,14 +1425,13 @@ package temple.mediaplayers.video.players
 		{
 			var videoWidth:Number = videoWidth;
 			var videoHeight:Number = videoHeight;
-			
+		
 			if (debug) logDebug("setVideoSize: " + _scaleMode + " " + videoWidth + "*" + videoHeight);
 			
 			switch (_scaleMode)
 			{
 				case ScaleMode.EXACT_FIT:
 				{
-					// do nothing
 					_video.width = _width;
 					_video.height = _height;
 					break;
@@ -1467,6 +1484,12 @@ package temple.mediaplayers.video.players
 			}
 			setAlign();
 			
+			if (_offset)
+			{
+				_video.width -= _offset.width;
+				_video.height -= _offset.height;
+			}
+			
 			setBackground();
 		}
 		
@@ -1510,6 +1533,12 @@ package temple.mediaplayers.video.players
 				default:
 					_video.y = - 0.5 * (_video.height - _height);
 					break;
+			}
+			
+			if (_offset)
+			{
+				_video.x += _offset.x;
+				_video.y += _offset.y;
 			}
 		}
 

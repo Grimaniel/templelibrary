@@ -170,7 +170,7 @@ package temple.mediaplayers.video.players
 		function get rtmpConnection():String;
 		
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		function set rtmpConnection(value:String):void;
 	}
