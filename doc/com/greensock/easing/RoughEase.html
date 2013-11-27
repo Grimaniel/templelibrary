@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../override.css" type="text/css"><meta name="keywords" content="RoughEase,com.greensock.easing.RoughEase,ease,ease,ease,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeIn,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeInOut,easeNone,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,easeOut,config,config,config,find,getRatio,getRatio,getRatio,getRatio"><title>com.greensock.easing.RoughEase</title></head><body><script language="javascript" type="text/javascript" src="../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'RoughEase - Temple API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.7.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?com/greensock/easing/RoughEase.html&amp;com/greensock/easing/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">RoughEase</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("RoughEase"); titleBar_setSubNav(false,true,false,false,false,false,false,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">com.greensock.easing</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  RoughEase</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">RoughEase  <img src="../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> <a href="../../../com/greensock/easing/Ease.html">Ease</a> <img src="../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr></table><p></p><p></p>
+ Most easing equations give a smooth, gradual transition between the start and end values, but RoughEase provides
+ an easy way to get a rough, jagged effect instead, or you can also get an evenly-spaced back-and-forth movement 
+ if you prefer. Configure the RoughEase by passing an object to the constructor or config() method with any
+ of the following properties (all are optional):
+ 
+ <ul>
+                  <li>
+                     <b>template</b> : Ease - an ease that should be used as a template, like a general guide.  
+ 				The RoughEase will plot points that wander from that template. You can use this to influence 
+ 				the general shape of the RoughEase. (Default: <code>Linear.easeNone</code>)</li>
+ 
+                  <li>
+                     <b>strength</b> : Number - controls how far from the template ease the points are allowed to wander 
+ 				(a small number like 0.1 keeps it very close to the template ease whereas a larger number like 5 creates 
+ 				much bigger variations). (Default: <code>1</code>)</li>
+ 
+                  <li>
+                     <b>points</b> : Number - the number of points to be plotted along the ease, making it jerk more or less
+ 				frequently. (Default: <code>20</code>)</li>
+ 
+                  <li>
+                     <b>clamp</b> : Boolean - setting <code>clamp</code> to <code>true</code> will prevent points from 
+ 				exceeding the end value or dropping below the starting value. For example, if you're tweening the x 
+ 				property from 0 to 100, the RoughEase would force all random points to stay between 0 and 100 if 
+ 				<code>clamp</code> is <code>true</code>, but if it is <code>false</code>, x could potentially jump 
+ 				above 100 or below 0 at some point during the tween (it would always end at 100 though in this example)
+ 				(Default: <code>false</code>).</li>
+ 
+                  <li>
+                     <b>taper</b> : String (<code>"in" | "out" | "both" | "none"</code>) - to make the strength of the 
+ 				roughness taper towards the end or beginning or both, use <code>"out"</code>, <code>"in"</code>, 
+ 				or <code>"both"</code> respectively. (Default: <code>"none"</code>)</li>
+ 
+                  <li>
+                     <b>randomize</b> : Boolean - by default, the placement of points will be randomized (creating the roughness)
+ 				but you can set <code>randomize</code> to <code>false</code> to make the points zig-zag evenly across the ease.
+ 				Using this in conjunction with a <code>taper</code> value can create a nice effect. (Default: <code>true</code>)</li>
+               </ul>
+ 
+               <p>For a visual example and more details, check out <a href="http://www.greensock.com/roughease/" target="">http://www.greensock.com/roughease/</a>.</p>
+ 
+               <p>
+                  <b>Example code</b>
+               </p>
+               <div class="listing" version="3.0"><pre>
+import com.greensock.TweenLite;
+import com.greensock.easing.*;
+ 
+//use the default values
+TweenLite.from(mc, 3, {alpha:0, ease:RoughEase.ease});
+ 
+//or customize the configuration
+TweenLite.to(mc, 3, {y:300, ease:RoughEase.ease.config({strength:3, points:50, template:Strong.easeInOut, taper:"both", randomize:false}) });
+ 
+//or create a RoughEase that we can pass in to multiple tweens later
+var rough:RoughEase = new RoughEase({strength:3, points:50, template:Strong.easeInOut, taper:"both", randomize:false});
+TweenLite.to(mc, 3, {y:300, ease:rough});
+TweenLite.to(mc2, 5, {x:500, ease:rough});
+</pre></div>
+ 
+               <p>
+                  <b>Copyright 2010-2013, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html" target="">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/" target="">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
+ 
+            <p></p><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#ease" class="signatureLink">ease</a> : <a href="../../../com/greensock/easing/RoughEase.html">RoughEase</a><div class="summaryTableDescription">[static]  The default ease instance which can be reused many times in various tweens in order to conserve memory and improve performance slightly compared to creating a new instance each time.</div></td><td class="summaryTableOwnerCol">RoughEase</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#RoughEase()" class="signatureLink">RoughEase</a>(vars:* = null, ... args)</div><div class="summaryTableDescription">
+		 Constructor
+		 
+		 </div></td><td class="summaryTableOwnerCol">RoughEase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#config()" class="signatureLink">config</a>(vars:Object = null):<a href="../../../com/greensock/easing/RoughEase.html">RoughEase</a></div><div class="summaryTableDescription">
+		 Permits customization of the ease with various parameters.</div></td><td class="summaryTableOwnerCol">RoughEase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getRatio()" class="signatureLink">getRatio</a>(p:Number):Number</div><div class="summaryTableDescription">[override] 
+		 Translates the tween's progress ratio into the corresponding ease ratio.</div></td><td class="summaryTableOwnerCol">RoughEase</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="ease"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">ease</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>public static var ease:<a href="../../../com/greensock/easing/RoughEase.html">RoughEase</a></code><p></p><p> The default ease instance which can be reused many times in various tweens in order to conserve memory and improve performance slightly compared to creating a new instance each time. </p></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="RoughEase()"></a><a name="RoughEase(any,restParam)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">RoughEase</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function RoughEase(vars:* = null, ... args)</code><p>
+		 Constructor
+		 
+		 </p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">vars</span>:*</code> (default = <code>null</code>)<code></code> &mdash; a generic object with any of the following properties (all are completely optional): 
+		 <ul>
+		 <li><b>template</b> : Ease - an ease that should be used as a template, like a general guide.  
+		 				The RoughEase will plot points that wander from that template. You can use this to influence 
+		 				the general shape of the RoughEase. (Default: <code>Linear.easeNone</code>)</li>
+		 
+		 <li><b>strength</b> : Number - controls how far from the template ease the points are allowed to wander 
+		 				(a small number like 0.1 keeps it very close to the template ease whereas a larger number like 5 creates 
+		 				much bigger variations). (Default: <code>1</code>)</li>
+		 
+		 <li><b>points</b> : Number - the number of points to be plotted along the ease, making it jerk more or less
+		 				frequently. (Default: <code>20</code>)</li>
+		 
+		 <li><b>clamp</b> : Boolean - setting <code>clamp</code> to <code>true</code> will prevent points from 
+		 				exceeding the end value or dropping below the starting value. For example, if you're tweening the x 
+		 				property from 0 to 100, the RoughEase would force all random points to stay between 0 and 100 if 
+		 				<code>clamp</code> is <code>true</code>, but if it is <code>false</code>, x could potentially jump 
+		 				above 100 or below 0 at some point during the tween (it would always end at 100 though in this example)
+		 				(Default: <code>false</code>).</li>
+		 
+		 <li><b>taper</b> : String (<code>"in" | "out" | "both" | "none"</code>) - to make the strength of the 
+		 				roughness taper towards the end or beginning or both, use <code>"out"</code>, <code>"in"</code>, 
+		 				or <code>"both"</code> respectively. (Default: <code>"none"</code>)</li>
+		 
+		 <li><b>randomize</b> : Boolean - by default, the placement of points will be randomized (creating the roughness)
+		 				but you can set <code>randomize</code> to <code>false</code> to make the points zig-zag evenly across the ease.
+		 				Using this in conjunction with a <code>taper</code> value can create a nice effect. (Default: <code>true</code>)</li>
+		 </ul>
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code>... <span class="label">args</span></code></td></tr></table></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="config()"></a><a name="config(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">config</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function config(vars:Object = null):<a href="../../../com/greensock/easing/RoughEase.html">RoughEase</a></code><p></p><p>
+		 Permits customization of the ease with various parameters.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; a generic object with any of the following properties (all are completely optional): 
+		 <ul>
+		 <li><b>template</b> : Ease - an ease that should be used as a template, like a general guide.  
+		 				The RoughEase will plot points that wander from that template. You can use this to influence 
+		 				the general shape of the RoughEase. (Default: <code>Linear.easeNone</code>)</li>
+		 
+		 <li><b>strength</b> : Number - controls how far from the template ease the points are allowed to wander 
+		 				(a small number like 0.1 keeps it very close to the template ease whereas a larger number like 5 creates 
+		 				much bigger variations). (Default: <code>1</code>)</li>
+		 
+		 <li><b>points</b> : Number - the number of points to be plotted along the ease, making it jerk more or less
+		 				frequently. (Default: <code>20</code>)</li>
+		 
+		 <li><b>clamp</b> : Boolean - setting <code>clamp</code> to <code>true</code> will prevent points from 
+		 				exceeding the end value or dropping below the starting value. For example, if you're tweening the x 
+		 				property from 0 to 100, the RoughEase would force all random points to stay between 0 and 100 if 
+		 				<code>clamp</code> is <code>true</code>, but if it is <code>false</code>, x could potentially jump 
+		 				above 100 or below 0 at some point during the tween (it would always end at 100 though in this example)
+		 				(Default: <code>false</code>).</li>
+		 
+		 <li><b>taper</b> : String (<code>"in" | "out" | "both" | "none"</code>) - to make the strength of the 
+		 				roughness taper towards the end or beginning or both, use <code>"out"</code>, <code>"in"</code>, 
+		 				or <code>"both"</code> respectively. (Default: <code>"none"</code>)</li>
+		 
+		 <li><b>randomize</b> : Boolean - by default, the placement of points will be randomized (creating the roughness)
+		 				but you can set <code>randomize</code> to <code>false</code> to make the points zig-zag evenly across the ease.
+		 				Using this in conjunction with a <code>taper</code> value can create a nice effect. (Default: <code>true</code>)</li>
+		 </ul>
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../com/greensock/easing/RoughEase.html">RoughEase</a></code> &mdash; new RoughEase instance that is configured according to the parameters provided
+		 </td></tr></table></div><a name="getRatio()"></a><a name="getRatio(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getRatio</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function getRatio(p:Number):Number</code><p></p><p>
+		 Translates the tween's progress ratio into the corresponding ease ratio. This is the heart of the Ease, where it does all its work.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">p</span>:Number</code> &mdash; progress ratio (a value between 0 and 1 indicating the progress of the tween/ease)
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Number</code> &mdash; translated number
+		 </td></tr></table></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>by MediaMonks | http://www.mediamonks.com</footer><br/> </center></div></body></html><!--by MediaMonks | http://www.mediamonks.com<br/> -->
