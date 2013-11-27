@@ -128,6 +128,7 @@ person.gender = new Gender("some value");</listing>
 		 */
 		public static function get(enumClass:Class, value:*):Enumerator
 		{
+			if (value is enumClass) return value;
 			var className:String = getQualifiedClassName(enumClass);
 			return Enumerator._lookup[className] ? Enumerator._lookup[className][value] : null;
 		}
@@ -169,7 +170,7 @@ person.gender = new Gender("some value");</listing>
 		}
 
 		/**
-		 * The value of the Enumarator.
+		 * The value of the Enumerator.
 		 */
 		public final function get value():*
 		{
