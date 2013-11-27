@@ -34,10 +34,8 @@
  */
 package temple.net.sharedobject
 {
-	import temple.core.ICoreObject;
 	import temple.core.events.ICoreEventDispatcher;
 
-	import flash.events.IEventDispatcher;
 	import flash.net.SharedObject;
 
 	/**
