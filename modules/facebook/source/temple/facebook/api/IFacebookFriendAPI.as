@@ -58,7 +58,7 @@ package temple.facebook.api
 	public interface IFacebookFriendAPI
 	{
 		/**
-		 * Get all the friends of a user.
+		 * Get the friends of a user.
 		 * 
 		 * If successful, the result contains an Array with IFacebookUserData objects.
 		 * 
@@ -75,6 +75,23 @@ package temple.facebook.api
 		 * @includeExample FriendsExample.as
 		 */
 		function getFriends(callback:Function = null, id:String = 'me', offset:Number = NaN, limit:Number = NaN, fields:FacebookUserFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall;
+		
+		/**
+		 * Get the all friends of a user.
+		 * 
+		 * If successful, the result contains an Array with IFacebookUserData objects.
+		 * 
+		 * @param callback a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
+		 * @param id the id of the user (or the album for photos or event for invites).
+		 * @param fields a IFacebookFields object with all the requested fields set to true.
+		 * @param resultsPerPage length of each batch
+		 * @param forceReload when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
+		 * 
+		 * @see temple.facebook.data.vo.IFacebookUserData
+		 * 
+		 * @includeExample FriendsExample.as
+		 */
+		function getAllFriends(callback:Function = null, id:String = 'me', fields:FacebookUserFields = null, resultsPerPage:Number = NaN, forceReload:Boolean = false):IFacebookCall;
 		
 		/**
 		 * Get a FriendList.

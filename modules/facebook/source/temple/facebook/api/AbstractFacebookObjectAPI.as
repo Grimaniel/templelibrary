@@ -57,7 +57,7 @@ package temple.facebook.api
 		}
 
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		protected function getItem(id:String, callback:Function, fields:IFacebookFields, params:Object, forceReload:Boolean):IFacebookCall
 		{
@@ -65,7 +65,7 @@ package temple.facebook.api
 		}
 
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		protected function getItems(callback:Function, id:String, offset:Number, limit:Number, fields:IFacebookFields, params:Object, forceReload:Boolean):IFacebookCall
 		{
@@ -76,7 +76,17 @@ package temple.facebook.api
 		}
 		
 		/**
-		 * @inheritDoc
+		 * @private
+		 */
+		protected function getAlltems(callback:Function, id:String, fields:IFacebookFields, forceReload:Boolean, resultsPerPage:Number = NaN):IFacebookCall
+		{
+			if (!isNaN(resultsPerPage)) var params:Object = {offset: 0, limit: resultsPerPage};
+			
+			return new FacebookBatchCall(_service, callback, _method, id, _objectClass, params, fields, forceReload);
+		}
+		
+		/**
+		 * @private
 		 */
 		protected function getItemsById(ids:Vector.<String>, objectClass:Class, callback:Function, offset:Number, limit:Number, fields:IFacebookFields, params:Object, forceReload:Boolean):IFacebookCall
 		{

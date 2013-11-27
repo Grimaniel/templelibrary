@@ -46,16 +46,49 @@ package temple.facebook.data.vo
 	public interface IFacebookFields
 	{
 		/**
+		 * The maximum result count
+		 */
+		function get limit():uint;
+		
+		/**
+		 * @inheritDoc
+		 */
+		function set limit(value:uint):void;
+		
+		/**
+		 * Set all fields in the list to <code>true</code>
+		 */
+		function select(fields:Vector.<String>):void;
+		
+		/**
+		 * Returns a list with all fields
+		 */
+		function all():Vector.<String>
+		
+		/**
 		 * Returns a list of all properties which are set to true.
-		 * @param alias defines which alias for every property is used. If set to null, FacebookFieldAlias.GRAPH is used.
+		 * @param alias defines which alias for every property is used. If set to null no alias is used.
 		 * 
 		 * @see temple.facebook.data.enum.FacebookFieldAlias
 		 */
-		function getFields(alias:FacebookFieldAlias = null):Vector.<String>;
+		function getFieldsList(alias:FacebookFieldAlias):Vector.<String>;
+		
+		/**
+		 * Returns a string of all properties which are set to true.
+		 * @param alias defines which alias for every property is used. If set to null no alias is used.
+		 * 
+		 * @see temple.facebook.data.enum.FacebookFieldAlias
+		 */
+		function getFieldsString(alias:FacebookFieldAlias):String;
 
 		/**
 		 * Returns a list of needed permissions for getting all the selected fields in this object.
 		 */
 		function getPermissions(me:Boolean = true):Vector.<String>;
+
+		/**
+		 * Adds a field to the list which isn't defined by default. This can be a field in the FQL table.
+		 */
+		function addCustomField(field:String):void;
 	}
 }

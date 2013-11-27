@@ -147,7 +147,7 @@ package temple.facebook.api
 		 */
 		public function getProfilePhotos(callback:Function = null, fields:IFacebookFields = null, userId:String = 'me'):IFacebookCall
 		{
-			return service.fql("SELECT " + (fields ? fields.getFields(FacebookFieldAlias.FQL) : "object_id, caption, src_small, src_big, src, images") + " FROM " + FacebookTable.PHOTO + " " +
+			return service.fql("SELECT " + (fields ? fields.getFieldsList(FacebookFieldAlias.FQL) : "object_id, caption, src_small, src_big, src, images") + " FROM " + FacebookTable.PHOTO + " " +
 									"WHERE album_object_id IN (SELECT object_id FROM " + FacebookTable.ALBUM + " WHERE owner=" + (userId == FacebookConstant.ME ? "me()" : "'" + userId + "'") + " AND type='profile') ORDER BY position"
 									, callback, FacebookPhotoData, fields, userId);
 		}
@@ -176,7 +176,7 @@ package temple.facebook.api
 		 */
 		public function getAlbumsByName(name:String, callback:Function = null, fields:FacebookAlbumFields = null, userId:String = 'me'):IFacebookCall
 		{
-			return service.fql("SELECT " + (fields ? fields.getFields(FacebookFieldAlias.FQL) : "object_id, name") + " FROM " + FacebookTable.ALBUM + " WHERE owner=" + (userId == FacebookConstant.ME ? "me()" : "'" + userId + "'" ) + " AND name='" + name + "'", callback, FacebookAlbumData, fields, FacebookConstant.ME);
+			return service.fql("SELECT " + (fields ? fields.getFieldsList(FacebookFieldAlias.FQL) : "object_id, name") + " FROM " + FacebookTable.ALBUM + " WHERE owner=" + (userId == FacebookConstant.ME ? "me()" : "'" + userId + "'" ) + " AND name='" + name + "'", callback, FacebookAlbumData, fields, FacebookConstant.ME);
 		}
 
 		/**

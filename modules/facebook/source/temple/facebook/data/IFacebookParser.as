@@ -47,6 +47,6 @@ package temple.facebook.data
 		/**
 		 * Parses the untyped results from Facebook to typed objects.
 		 */
-		function parse(data:Object, objectClass:Class, alias:FacebookFieldAlias = null):Object
+		function parse(data:Object, objectClass:Class, alias:FacebookFieldAlias = null, parent:Object = null):Object
 	}
 }

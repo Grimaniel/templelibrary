@@ -43,7 +43,7 @@ package temple.facebook.data.vo
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IFacebookPhotoData extends IFacebookObjectData, IFacebookImageData
+	public interface IFacebookPhotoData extends IFacebookLocatedData, IFacebookImageData
 	{
 		/**
 		 * The profile (user or page) that posted this photo
@@ -54,6 +54,12 @@ package temple.facebook.data.vo
 		 * The tagged users and their positions in this photo
 		 */
 		function get tags():Vector.<IFacebookPhotoTagData>;
+		
+		/**
+		 * Returns the <code>IFacebookPhotoTagData</code> of a specific user or <code>null</code> if the user is not
+		 * tagged in the photo 
+		 */
+		function getTag(user:IFacebookUserData):IFacebookPhotoTagData;
 
 		/**
 		 * The tagged users in the name of the photo

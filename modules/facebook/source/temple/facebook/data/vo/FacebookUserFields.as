@@ -54,6 +54,14 @@ package temple.facebook.data.vo
 	public class FacebookUserFields extends AbstractFacebookFields
 	{
 		/**
+		 * Returns a list of all fields of a <code>IFacebookUserData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookUserFields);
+		}
+		
+		/**
 		 * The user's Facebook ID
 		 */
 		[Alias(fql="uid")]
@@ -209,7 +217,7 @@ package temple.facebook.data.vo
 		 * @copy temple.facebook.data.vo.IFacebookUserData#significantOther
 		 */
 		[Alias(graph="significant_other", fql="significant_other_id")]
-		public var significantOther:Boolean;
+		public var significantOther:*;
 		
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookUserData#videoUploadLimits
@@ -235,8 +243,8 @@ package temple.facebook.data.vo
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookUserData#image
 		 */
-		[Alias(fql="pic", graph="not-available")]
-		public var picture:Boolean;
+		[Alias(fql="pic")]
+		public var picture:*;
 		
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookUserData#numNotes
@@ -273,9 +281,112 @@ package temple.facebook.data.vo
 		 */
 		public var cover:Boolean;
 		
-		public function FacebookUserFields(selectAll:Boolean = false)
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#albums
+		 */
+		public var albums:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#checkins
+		 */
+		public var checkins:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#events
+		 */
+		public var events:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#family
+		 */
+		public var family:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#feed
+		 */
+		public var feed:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#friendlists
+		 */
+		public var friendlists:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#friends
+		 */
+		public var friends:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#groups
+		 */
+		public var groups:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#home
+		 */
+		public var home:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#interests
+		 */
+		public var interests:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#likes
+		 */
+		public var likes:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#locations
+		 */
+		public var locations:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#movies
+		 */
+		public var movies:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#music
+		 */
+		public var music:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#photos
+		 */
+		public var photos:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#posts
+		 */
+		public var posts:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#statuses
+		 */
+		public var statuses:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#tagged
+		 */
+		public var tagged:*;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookUserData#television
+		 */
+		public var television:*;
+		
+//		/**
+//		 * @copy temple.facebook.data.vo.IFacebookUserData#videos
+//		 */
+//		public var videos:*;
+		
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookUserFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 
 		/**
@@ -285,8 +396,9 @@ package temple.facebook.data.vo
 		{
 			var permissions:Vector.<String> = new Vector.<String>();
 			
-			if (languages && me) permissions.push(FacebookPermission.USER_LIKES);
-			if (bio) permissions.push(me ? FacebookPermission.USER_ABOUT_ME : FacebookPermission.FRIENDS_ABOUT_ME);
+			if (languages && me || favoriteTeams || likes || movies || music || television) permissions.push(me ? FacebookPermission.USER_LIKES : FacebookPermission.FRIENDS_LIKES);
+			
+			if (bio || quotes) permissions.push(me ? FacebookPermission.USER_ABOUT_ME : FacebookPermission.FRIENDS_ABOUT_ME);
 			if (birthday) permissions.push(me ? FacebookPermission.USER_BIRTHDAY : FacebookPermission.FRIENDS_BIRTHDAY);
 			if (education) permissions.push(me ? FacebookPermission.USER_EDUCATION_HISTORY : FacebookPermission.FRIENDS_EDUCATION_HISTORY);
 			if (email && me) permissions.push(FacebookPermission.EMAIL);
@@ -294,17 +406,19 @@ package temple.facebook.data.vo
 			if (interestedIn) permissions.push(me ? FacebookPermission.USER_RELATIONSHIP_DETAILS : FacebookPermission.FRIENDS_RELATIONSHIP_DETAILS);
 			if (location) permissions.push(me ? FacebookPermission.USER_LOCATION : FacebookPermission.FRIENDS_LOCATION);
 			if (political) permissions.push(me ? FacebookPermission.USER_RELIGION_POLITICS : FacebookPermission.FRIENDS_RELIGION_POLITICS);
-			if (favoriteTeams) permissions.push(me ? FacebookPermission.USER_LIKES : FacebookPermission.FRIENDS_LIKES);
-			if (quotes) permissions.push(me ? FacebookPermission.USER_ABOUT_ME : FacebookPermission.FRIENDS_ABOUT_ME);
-			if (relationshipStatus) permissions.push(me ? FacebookPermission.USER_RELATIONSHIPS : FacebookPermission.FRIENDS_RELATIONSHIPS);
+			if (relationshipStatus || significantOther || family) permissions.push(me ? FacebookPermission.USER_RELATIONSHIPS : FacebookPermission.FRIENDS_RELATIONSHIPS);
 			if (religion) permissions.push(me ? FacebookPermission.USER_RELIGION_POLITICS : FacebookPermission.FRIENDS_RELIGION_POLITICS);
-			if (significantOther)
-			{
-				if (me) permissions.push(FacebookPermission.USER_RELATIONSHIPS, FacebookPermission.USER_RELATIONSHIP_DETAILS);
-				else permissions.push(FacebookPermission.FRIENDS_RELATIONSHIPS, FacebookPermission.FRIENDS_RELATIONSHIP_DETAILS);
-			}
 			if (website) permissions.push(me ? FacebookPermission.USER_WEBSITE : FacebookPermission.FRIENDS_WEBSITE);
 			if (work) permissions.push(me ? FacebookPermission.USER_WORK_HISTORY : FacebookPermission.FRIENDS_WORK_HISTORY);
+			if (albums || photos || locations) permissions.push(me ? FacebookPermission.USER_PHOTOS : FacebookPermission.FRIENDS_PHOTOS);
+			if (checkins || locations) permissions.push(me ? FacebookPermission.USER_CHECKINS : FacebookPermission.FRIENDS_CHECKINS);
+			if (events) permissions.push(me ? FacebookPermission.USER_EVENTS : FacebookPermission.FRIENDS_EVENTS);
+			if (feed || home || posts || statuses || tagged) permissions.push(FacebookPermission.READ_STREAM);
+			if (friendlists) permissions.push(FacebookPermission.READ_FRIENDLISTS);
+			if (groups) permissions.push(me ? FacebookPermission.USER_GROUPS : FacebookPermission.FRIENDS_GROUPS);
+			if (interests) permissions.push(me ? FacebookPermission.USER_INTERESTS : FacebookPermission.FRIENDS_INTERESTS);
+			if (locations) permissions.push(me ? FacebookPermission.USER_STATUS : FacebookPermission.FRIENDS_STATUS);
+//			if (videos) permissions.push(me ? FacebookPermission.USER_VIDEOS : FacebookPermission.FRIENDS_VIDEOS);
 			
 			return permissions;
 		}

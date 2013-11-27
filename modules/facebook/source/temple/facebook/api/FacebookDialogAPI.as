@@ -144,9 +144,12 @@ package temple.facebook.api
 		/**
 		 * @inheritDoc
 		 */
-		public function sendDialog(display:FacebookDisplayMode = null):IFacebookCall
+		public function sendDialog(link:String, to:String = null, callback:Function = null, display:FacebookDisplayMode = null):IFacebookCall
 		{
-			return _service.ui(FacebookUIMethod.SEND_DIALOG, {}, null, display || _displayMode);
+			var vars:Object = {link: link};
+			if (to) vars.to = to;
+			
+			return _service.ui(FacebookUIMethod.SEND_DIALOG, vars, callback, display || _displayMode);
 		}
 		
 		/**

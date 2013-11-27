@@ -89,12 +89,14 @@ package temple.facebook.data.vo
 		// Register classes as implementation of Interfaces or types
 		FacebookParser.facebook::CLASS_MAP[FacebookObjectType.PAGE] = FacebookPageData;
 		FacebookParser.facebook::CLASS_MAP[IFacebookPageData] = FacebookPageData;
+		FacebookParser.facebook::CLASS_MAP[IFacebookLocationData] = FacebookLocationData;
 		
 		facebook var username:String;
 		facebook var link:String;
 		facebook var category:String;
+		facebook var category_list:Vector.<IFacebookObjectData>;
 		facebook var likes:int = -1;
-		facebook var location:Object;
+		facebook var location:IFacebookLocationData;
 		facebook var phone:String;
 		facebook var checkins:int = -1;
 		facebook var place:String;
@@ -109,12 +111,16 @@ package temple.facebook.data.vo
 		facebook var is_community_page:Trivalent;
 		facebook var were_here_count:int = -1;
 		facebook var description:String;
+		facebook var created_time:Date;
+		facebook var alternates:Vector.<IFacebookPageData>;
 		
 		private var _picture:IFacebookPictureData;
 		
 		public function FacebookPageData(service:IFacebookService)
 		{
 			super(service, FacebookObjectType.PAGE, CONNECTIONS, true);
+			
+			toStringProps.push("category");
 		}
 		
 		/**
@@ -140,6 +146,14 @@ package temple.facebook.data.vo
 		{
 			return facebook::category;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get categories():Vector.<IFacebookObjectData>
+		{
+			return facebook::category_list;
+		}
 
 		/**
 		 * @inheritDoc
@@ -152,7 +166,7 @@ package temple.facebook.data.vo
 		/**
 		 * @inheritDoc
 		 */
-		public function get location():Object
+		public function get location():IFacebookLocationData
 		{
 			return facebook::location;
 		}
@@ -178,7 +192,7 @@ package temple.facebook.data.vo
 		 */
 		public function get picture():IFacebookPictureData
 		{
-			return _picture ||= new FacebookPictureData(this);;
+			return _picture ||= new FacebookPictureData(this);
 		}
 
 		/**
@@ -203,6 +217,14 @@ package temple.facebook.data.vo
 		public function get numTalkingAbouts():int
 		{
 			return facebook::talking_about_count;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get alternates():Vector.<IFacebookPageData>
+		{
+			return facebook::alternates;
 		}
 	}
 }

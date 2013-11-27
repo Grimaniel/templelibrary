@@ -38,6 +38,18 @@ package temple.facebook.data.enum
 	/**
 	 * Possible sizes for Facebook pictures. Not every size is available for every picture.
 	 * 
+	 * <p>Used in URL like:</p>
+	 * 
+	 * @example
+	 * <listing version="3.0">
+	 * 	http://graph.facebook.com/{id}/picture?type={size}
+	 * </listing>
+	 * 
+	 * <p><code>IFacebookUserData</code> only supports small, normal, large, square.</p>
+	 * 
+	 * @see temple.facebook.service.IFacebookService#getImageUrl()
+	 * @see http://developers.facebook.com/docs/api#pictures
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public final class FacebookPictureSize

@@ -36,7 +36,6 @@
 package temple.facebook.data.vo
 {
 	import temple.facebook.data.enum.FacebookPermission;
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for friendlists.
@@ -51,6 +50,14 @@ package temple.facebook.data.vo
 	 */
 	public class FacebookFriendListFields extends AbstractFacebookFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookFriendListData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookFriendListFields);
+		}
+		
 		/**
 		 * The friend list ID
 		 */
@@ -73,11 +80,14 @@ package temple.facebook.data.vo
 		[Alias(fql="not-available")]
 		public var members:Boolean;
 		
-		public function FacebookFriendListFields(selectAll:Boolean = false)
+		public function FacebookFriendListFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
 		override public function getPermissions(me:Boolean = true):Vector.<String>
 		{
 			return Vector.<String>([FacebookPermission.READ_FRIENDLISTS]);

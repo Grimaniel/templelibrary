@@ -43,7 +43,7 @@ package temple.facebook.data.vo
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IFacebookRSVPData
+	public interface IFacebookRSVPData extends IFacebookCoupleData
 	{
 		/**
 		 * A reference of the user.

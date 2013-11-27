@@ -78,9 +78,12 @@ package temple.facebook.data.vo
 		 */
 		public var projects:Boolean;
 		
-		public function FacebookWorkFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookWorkFields(select:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(select, limit);
 		}
 	}
 }

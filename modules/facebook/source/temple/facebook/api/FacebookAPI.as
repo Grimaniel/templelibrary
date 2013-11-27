@@ -381,6 +381,14 @@ package temple.facebook.api
 		/**
 		 * @inheritDoc
 		 */
+		public function get optionalPermissions():Vector.<String>
+		{
+			return _service ? _service.optionalPermissions : null;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function get isInitialized():Boolean
 		{
 			return _service ? _service.isInitialized : false;
@@ -735,6 +743,22 @@ package temple.facebook.api
 			if (id == null) return throwError(new TempleArgumentError(this, "id cannot be null"));
 			return _service.getProfile(id, createIfNull);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get checkPermissionsAfterLogin():Boolean
+		{
+			return _service.checkPermissionsAfterLogin;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set checkPermissionsAfterLogin(value:Boolean):void
+		{
+			_service.checkPermissionsAfterLogin = value;
+		}
 
 		
 		/**
@@ -828,17 +852,17 @@ package temple.facebook.api
 		/**
 		 * @inheritDoc
 		 */
-		public function nextPage(data:Object, callback:Function):IFacebookCall
+		public function getNext(data:Object, callback:Function):IFacebookCall
 		{
-			return _service.nextPage(data, callback);
+			return _service.getNext(data, callback);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function previousPage(data:Object, callback:Function):IFacebookCall
+		public function getPrevious(data:Object, callback:Function):IFacebookCall
 		{
-			return _service.previousPage(data, callback);
+			return _service.getPrevious(data, callback);
 		}
 		
 		/**

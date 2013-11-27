@@ -49,7 +49,12 @@ package temple.facebook.data.enum
 	public final class FacebookFieldAlias extends Enumerator
 	{
 		/**
-		 * Default alias
+		 * No alias
+		 */
+		public static const NONE:FacebookFieldAlias = null;
+		
+		/**
+		 * Alias for Graph data
 		 */
 		public static const GRAPH:FacebookFieldAlias = new FacebookFieldAlias("graph");
 		

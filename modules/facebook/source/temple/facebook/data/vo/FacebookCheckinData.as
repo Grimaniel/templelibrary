@@ -67,6 +67,7 @@ package temple.facebook.data.vo
 		}
 		
 		FacebookParser.facebook::CLASS_MAP[IFacebookCheckinData] = FacebookCheckinData;
+		FacebookParser.facebook::CLASS_MAP[FacebookObjectType.CHECKIN] = FacebookCheckinData;
 		FacebookParser.facebook::CLASS_MAP[IFacebookApplicationData] = FacebookApplicationData;
 		FacebookParser.facebook::CLASS_MAP[IFacebookPageData] = FacebookPageData;
 

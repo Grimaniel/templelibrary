@@ -64,6 +64,14 @@ package temple.facebook.api
 		/**
 		 * @inheritDoc
 		 */
+		public function getAllFriends(callback:Function = null, id:String = 'me', fields:FacebookUserFields = null, resultsPerPage:Number = NaN, forceReload:Boolean = false):IFacebookCall
+		{
+			return getAlltems(callback, id, fields, forceReload, resultsPerPage);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function getFriendList(friendListId:String, callback:Function = null, fields:FacebookFriendListFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall
 		{
 			return service.get(callback, null, friendListId, FacebookFriendListData, params, fields, forceReload);

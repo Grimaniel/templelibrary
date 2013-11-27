@@ -46,9 +46,9 @@ package temple.facebook.data.vo
 	{
 		function get employer():IFacebookProfileData;
 		
-		function get location():IFacebookObjectData;
+		function get location():IFacebookPageData;
 		
-		function get position():IFacebookObjectData;
+		function get position():IFacebookPageData;
 		
 		function get start():Date;
 		

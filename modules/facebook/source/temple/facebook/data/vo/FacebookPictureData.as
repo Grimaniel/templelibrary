@@ -35,6 +35,7 @@
 
 package temple.facebook.data.vo
 {
+	import temple.facebook.data.facebook;
 	import temple.facebook.data.enum.FacebookPictureSize;
 
 	import com.facebook.graph.Facebook;
@@ -46,9 +47,10 @@ package temple.facebook.data.vo
 	 */
 	internal class FacebookPictureData extends AbstractFacebookPictureData implements IFacebookPictureData
 	{
-		private var _square:String;
-		private var _small:String;
-		private var _large:String;
+		facebook var square:String;
+		facebook var small:String;
+		facebook var large:String;
+		facebook var is_silhouette:Boolean;
 		
 		public function FacebookPictureData(object:IFacebookObjectData)
 		{
@@ -60,15 +62,15 @@ package temple.facebook.data.vo
 		 */
 		public function get square():String
 		{
-			return _square ||= Facebook.getImageUrl(object.id, FacebookPictureSize.SQUARE);
+			return facebook::square ||= Facebook.getImageUrl(object.id, FacebookPictureSize.SQUARE);
 		}
-
+		
 		/**
 		 * @inheritDoc
 		 */
 		public function get small():String
 		{
-			return _small ||= Facebook.getImageUrl(object.id, FacebookPictureSize.SMALL);
+			return facebook::small ||= Facebook.getImageUrl(object.id, FacebookPictureSize.SMALL);
 		}
 
 		/**
@@ -76,7 +78,15 @@ package temple.facebook.data.vo
 		 */
 		public function get large():String
 		{
-			return _large ||= Facebook.getImageUrl(object.id, FacebookPictureSize.LARGE);
+			return facebook::large ||= Facebook.getImageUrl(object.id, FacebookPictureSize.LARGE);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get isSilhouette():Boolean
+		{
+			return Boolean(facebook::is_silhouette);
 		}
 
 		/**
@@ -84,9 +94,9 @@ package temple.facebook.data.vo
 		 */
 		override public function destruct():void
 		{
-			_large = null;
-			_square = null;
-			_small = null;
+			facebook::large = null;
+			facebook::square = null;
+			facebook::small = null;
 			
 			super.destruct();
 		}

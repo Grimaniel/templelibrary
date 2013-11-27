@@ -178,13 +178,21 @@ package temple.facebook.api
 		function requestDialog(message:String, to:String = null, callback:Function = null, filters:Array = null, excludeIds:Array = null, maxRecipients:uint = 0, data:String = null, title:String = null, display:FacebookDisplayMode = null):IFacebookCall;
 
 		/**
-		 * The Send Dialog lets people to send content to specific friends. They’ll have the option to privately share a
-		 * link as a Facebook message, Group post or email.
+		 * The Send Dialog lets people to send content to specific friends. They’ll have the option to privately share
+		 * a link as a Facebook message, Group post or email.
+		 *
+		 * @param link The URL that is being sent in the message.
+		 * @param to A user ID or username of a recipient. Once the dialog comes up, the sender can specify additional
+		 * 	people, groups, and email addresses as recipients. Sending content to a Facebook group will post it to the
+		 * 	group's wall.
+		 * @param display (Optional) The type of dialog to show (page, iframe or popup).
 		 * 
-		 * TODO
+		 * Note: If the app is running in sandbox mode, it's not possible to send a link to someone who is not in the
+		 * sandbox. The link will appear as: "This attachment may have been removed or the person who shared it may not
+		 * have permission to share it with you." 
 		 * 
 		 * @see http://developers.facebook.com/docs/reference/dialogs/send/
 		 */
-		function sendDialog(display:FacebookDisplayMode = null):IFacebookCall;
+		function sendDialog(link:String, to:String = null, callback:Function = null, display:FacebookDisplayMode = null):IFacebookCall;
 	}
 }

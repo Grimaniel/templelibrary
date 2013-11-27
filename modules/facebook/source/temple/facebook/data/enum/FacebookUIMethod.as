@@ -72,7 +72,7 @@ package temple.facebook.data.enum
 		public static const REQUESTS_DIALOG:String = "apprequests";
 
 		/**
-		 * The Send Dialog lets people to send content to specific friends. They’ll have the option to privately share a link as a Facebook message, Group post or email.
+		 * The Send Dialog lets people to send content to specific friends. They'll have the option to privately share a link as a Facebook message, Group post or email.
 		 */
 		public static const SEND_DIALOG:String = "send";
 	}

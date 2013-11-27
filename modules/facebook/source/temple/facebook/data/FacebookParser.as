@@ -35,11 +35,17 @@
 
 package temple.facebook.data
 {
+	import temple.facebook.data.vo.IFacebookLocatedData;
 	import temple.core.CoreObject;
 	import temple.data.Trivalent;
+	import temple.data.index.IIndexable;
 	import temple.data.index.Indexer;
 	import temple.facebook.data.enum.FacebookFieldAlias;
 	import temple.facebook.data.enum.FacebookMetadataTag;
+	import temple.facebook.data.vo.FacebookDateData;
+	import temple.facebook.data.vo.FacebookObjectData;
+	import temple.facebook.data.vo.IFacebookCoupleData;
+	import temple.facebook.data.vo.IFacebookDateData;
 	import temple.facebook.data.vo.IFacebookFields;
 	import temple.facebook.data.vo.IFacebookObjectData;
 	import temple.facebook.service.IFacebookService;
@@ -74,19 +80,20 @@ package temple.facebook.data
 		public function FacebookParser(service:IFacebookService)
 		{
 			_service = service;
+			facebook::CLASS_MAP[IFacebookLocatedData] = IFacebookLocatedData;
 		}
 		
 		/**
 		 * @private
 		 */
-		public function parse(data:Object, objectClass:Class, alias:FacebookFieldAlias = null):Object
+		public function parse(data:Object, objectClass:Class, alias:FacebookFieldAlias = null, parent:Object = null):Object
 		{
 			alias ||= FacebookFieldAlias.GRAPH;
 			
-			return data is Array ? parseList(data as Array, objectClass, alias, _service.debug) : parseObject(data, objectClass, alias, _service.debug);
+			return data is Array ? parseList(data as Array, objectClass, alias, parent, _service.debug) : parseObject(data, objectClass, alias, parent, _service.debug);
 		}
 
-		private function parseObject(data:Object, objectClass:Class, alias:FacebookFieldAlias, debug:Boolean):Object
+		private function parseObject(data:Object, objectClass:Class, alias:FacebookFieldAlias, parent:Object, debug:Boolean):Object
 		{
 			if (data == null) return null;
 			
@@ -96,9 +103,27 @@ package temple.facebook.data
 			// lookup the correct class
 			if (objectClass in facebook::CLASS_MAP) objectClass = facebook::CLASS_MAP[objectClass];
 			
+			// if objectClass is FacebookObjectData check the 'type' property, maybe we can define the objectClass better
+			if ((objectClass == FacebookObjectData || objectClass == IFacebookLocatedData) && 'type' in data)
+			{
+				if (data.type in facebook::CLASS_MAP)
+				{
+					objectClass = facebook::CLASS_MAP[data.type];
+				}
+				else if (debug)
+				{
+					logWarn("No class found for type '" + data.type + "'");
+				}
+			}
+			if (objectClass == IFacebookLocatedData)
+			{
+				logError("Unable to parse data to IFacebookLocatedData");
+				return null;
+			}
+			
 			if (Indexer.INDEX_CLASS in objectClass)
 			{
-				// Class in Indexable, check of we already have the object in cache
+				// Class is Indexable, check of we already have the object in cache
 				key = "id";
 				
 				if (data is String || data is int) data = {id: data};
@@ -108,7 +133,15 @@ package temple.facebook.data
 					// key is not found, check if there is an alias
 					if (alias == FacebookFieldAlias.FQL && "FIELDS" in objectClass && objectClass.FIELDS is IFacebookFields)
 					{
-						key = Descriptor.get(objectClass.FIELDS).getVariable("id").getMetadata(FacebookMetadataTag.ALIAS.value).args[alias.value];
+						var variable:IVariable = Descriptor.get(objectClass.FIELDS).getVariable("id");
+						if (variable)
+						{
+							var metadata:IMetadata = variable.getMetadata(FacebookMetadataTag.ALIAS.value);
+							if (metadata)
+							{
+								key = metadata.args[alias.value];
+							}
+						}
 					}
 					if (!(key in data))
 					{
@@ -142,7 +175,18 @@ package temple.facebook.data
 					logError("unable to construct " + objectClass);
 					return null;
 				}
+				// set id first, so it's immediately indexed
+				if (object is IIndexable && data[key])
+				{
+					object.id = data[key];
+				}
+				
+				if (object is IFacebookCoupleData && parent)
+				{
+					IFacebookCoupleData(object).couple(parseObject(data, IFacebookCoupleData(object).couple(parent), alias, parent, debug));
+				}
 			}
+			
 			for (key in data)
 			{
 				parseProperty(object, description, null, key, key, data, alias, objectClass, debug);
@@ -150,22 +194,25 @@ package temple.facebook.data
 			return object;
 		}
 		
-		private function parseList(data:Array, objectClass:Class, alias:FacebookFieldAlias, debug:Boolean):Array
+		private function parseList(data:Array, objectClass:Class, alias:FacebookFieldAlias, parent:Object, debug:Boolean):Array
 		{
 			var list:Array = [];
 			for (var i:int = 0, leni:int = data.length; i < leni; i++)
 			{
-				list.push(parseObject(data[i], objectClass, alias, debug));
+				list.push(parseObject(data[i], objectClass, alias, parent, debug));
 			}
 			return list;
 		}
 
 		private function parseProperty(object:Object, objectDescription:IDescription, fieldsDescription:IDescription, key:String, property:String, data:Object, alias:FacebookFieldAlias, objectClass:Class, debug:Boolean):void
 		{
+			if (data[key] == null) return;
+			
 			objectDescription ||= Descriptor.get(object);
 			
 			// Check if the object has this property in the facebook namespace
 			var variable:IVariable = objectDescription.getVariable(property, facebook);
+			
 			if (variable)
 			{
 				var a:Array;
@@ -180,14 +227,22 @@ package temple.facebook.data
 					case Number:
 					case Object:
 					case Array:
+					{
 						object.facebook::[property] = data[key];
 						break;
-						
+					}	
 					case Trivalent:
+					{
 						object.facebook::[property] = Trivalent.get(data[key]);
 						break;
-						
+					}
+					case IFacebookDateData:
+					{
+						object.facebook::[property] = new FacebookDateData(data[key]);
+						break;
+					}	
 					case Date:
+					{
 						if (int(data[key]) == data[key])
 						{
 							object.facebook::[property] = new Date(1000 * data[key]);
@@ -207,12 +262,13 @@ package temple.facebook.data
 							logError("Don't know how to parse " + data[key] + " to a Date");
 						}
 						break;
-						
+					}
 					default:
+					{
 						if (variable.type in FacebookParser.facebook::CLASS_MAP)
 						{
 							// facebook object, parse again
-							object.facebook::[property] = parseObject(data[key], FacebookParser.facebook::CLASS_MAP[variable.type], alias, debug);
+							object.facebook::[property] = parseObject(data[key], FacebookParser.facebook::CLASS_MAP[variable.type], alias, object, debug);
 							break;
 						}
 						if (String(variable.type).indexOf("[class Vector.<") == 0)
@@ -224,12 +280,12 @@ package temple.facebook.data
 							{
 								if (data[key] is Array)
 								{
-									object.facebook::[property] = variable.type(parseList(data[key], FacebookParser.facebook::CLASS_MAP[baseType], alias, debug));
+									object.facebook::[property] = variable.type(parseList(data[key], FacebookParser.facebook::CLASS_MAP[baseType], alias, object, debug));
 									break;
 								}
 								else if ("data" in data[key] && data[key].data is Array)
 								{
-									object.facebook::[property] = variable.type(parseList(data[key].data, FacebookParser.facebook::CLASS_MAP[baseType], alias, debug));
+									object.facebook::[property] = variable.type(parseList(data[key].data, FacebookParser.facebook::CLASS_MAP[baseType], alias, object, debug));
 									break;
 								}
 								else if ("count" in data[key] && data[key].count == 0)
@@ -244,7 +300,7 @@ package temple.facebook.data
 										if (item is Array)
 										{
 											a ||= [];
-											a.push.apply(null, parseList(item as Array, FacebookParser.facebook::CLASS_MAP[baseType], alias, debug));
+											a.push.apply(null, parseList(item as Array, FacebookParser.facebook::CLASS_MAP[baseType], alias, object, debug));
 										}
 									}
 									if (a) object.facebook::[property] = variable.type(a);
@@ -254,9 +310,11 @@ package temple.facebook.data
 						}
 						if (debug) logError("Don't know how to parse " + key + " to " + variable.type);
 						break;
+					}
 				}
 			}
-			else if (property in object && objectDescription.getProperty(property).isWritable)
+			// Check if there is a writable property with this name (but not for FQL if this property is already set)
+			else if (property in object && objectDescription.getProperty(property) && objectDescription.getProperty(property).isWritable && !(alias == FacebookFieldAlias.FQL && object[property]))
 			{
 				if (object[property] != data[key]) object[property] = data[key];
 			}
@@ -348,8 +406,7 @@ package temple.facebook.data
 					}
 					return;
 				}
-				
-				if (debug)
+				if (debug && !(object is IFacebookCoupleData))
 				{
 					logWarn(object + " doesn't have a property for '" + key + "' (" + data[key] + ")");
 				}

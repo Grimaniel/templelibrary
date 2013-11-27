@@ -69,6 +69,11 @@ package temple.facebook.data.enum
 		public static const POST:String = "post";
 		
 		/**
+		 * @see temple.facebook.data.vo.IFacebookPostData
+		 */
+		public static const STATUS:String = "status";
+		
+		/**
 		 * @see temple.facebook.data.vo.IFacebookCheckinData
 		 */
 		public static const CHECKIN:String = "checkin";

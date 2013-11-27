@@ -47,8 +47,16 @@ package temple.facebook.data.vo
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FacebookCheckinFields extends AbstractFacebookFields
+	public class FacebookCheckinFields extends FacebookLocationFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookCheckinData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookCheckinFields);
+		}
+		
 		/**
 		 * The checkin ID
 		 */
@@ -69,11 +77,6 @@ package temple.facebook.data.vo
 		 * @copy temple.facebook.data.vo.IFacebookCheckinData#tags
 		 */
 		public var tags:Boolean;
-		
-		/**
-		 * @copy temple.facebook.data.vo.IFacebookCheckinData#place
-		 */
-		public var place:Boolean;
 		
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookCheckinData#application
@@ -101,9 +104,12 @@ package temple.facebook.data.vo
 		 */
 		public var comments:Boolean;
 		
-		public function FacebookCheckinFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookCheckinFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }

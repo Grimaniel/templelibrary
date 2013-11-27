@@ -68,6 +68,8 @@ package temple.facebook.data.vo
 		
 		/**
 		 * The user's gender
+		 * 
+		 * @see temple.facebook.data.enum.FacebookUserGender
 		 */
 		function get gender():String;
 		
@@ -119,7 +121,7 @@ package temple.facebook.data.vo
 		/**
 		 * The user's birthday
 		 */
-		function get birthday():Date;
+		function get birthday():IFacebookDateData;
 		
 		/**
 		 * A list of the user's education history
@@ -134,7 +136,7 @@ package temple.facebook.data.vo
 		/**
 		 * The user's hometown
 		 */
-		function get hometown():IFacebookObjectData;
+		function get hometown():IFacebookPageData;
 		
 		/**
 		 * The genders the user is interested in
@@ -170,6 +172,8 @@ package temple.facebook.data.vo
 		
 		/**
 		 * The user's relationship status
+		 * 
+		 * @see temple.facebook.data.enum.FacebookUserRelationshipStatus
 		 */
 		function get relationshipStatus():String;
 		
@@ -201,7 +205,7 @@ package temple.facebook.data.vo
 		/**
 		 * A list of the user's sports
 		 */
-		function get sports():Vector.<IFacebookObjectData>;
+		function get sports():Vector.<IFacebookPageData>;
 
 		/**
 		 * The user's profile picture.
@@ -247,5 +251,107 @@ package temple.facebook.data.vo
 		 * The user's cover photo (must be explicitly requested using)
 		 */
 		function get cover():IFacebookPhotoData;
+		
+		/**
+		 * The photo albums this user has created.
+		 */
+		function get albums():Vector.<IFacebookAlbumData>;
+
+		/**
+		 * The places that the user has checked-into.
+		 */
+		function get checkins():Vector.<IFacebookCheckinData>;
+
+		/**
+		 * The events this user is attending.
+		 */
+		function get events():Vector.<IFacebookRSVPData>;
+		
+		/**
+		 * The user's family relationships
+		 */
+		function get family():Vector.<IFacebookUserData>;
+		
+		/**
+		 * The user's wall
+		 */
+		function get feed():Vector.<IFacebookPostData>;
+
+		/**
+		 * The user's friend lists.
+		 */
+		function get friendlists():Vector.<IFacebookFriendListData>;
+
+		/**
+		 * The user's friends.
+		 */
+		function get friends():Vector.<IFacebookUserData>;
+
+		/**
+		 * The Groups that the user belongs to.
+		 */
+		function get groups():Vector.<IFacebookGroupData>;
+		
+		/**
+		 * The user's news feed.
+		 */
+		function get home():Vector.<IFacebookPostData>;
+		
+		/**
+		 * The interests listed on the user's profile.
+		 */
+		function get interests():Vector.<IFacebookLikeData>;
+		
+		/**
+		 * All the pages this user has liked.
+		 */
+		function get likes():Vector.<IFacebookLikeData>;
+		
+		/**
+		 * Posts, statuses, and photos in which the user has been tagged at a location, or where the user has authored
+		 * content (i.e. this excludes objects with no location information, and objects in which the user is not
+		 * tagged). See documentation of the location_post table for more detailed information on permissions.
+		 */
+		function get locations():Vector.<IFacebookLocatedData>;
+		
+		/**
+		 * The movies listed on the user's profile.
+		 */
+		function get movies():Vector.<IFacebookLikeData>;
+		
+		/**
+		 * The music listed on the user's profile.
+		 */
+		function get music():Vector.<IFacebookLikeData>;
+		
+		/**
+		 * Photos the user (or friend) is tagged in.
+		 */
+		function get photos():Vector.<IFacebookPhotoData>;
+		
+		/**
+		 * The user's own posts.
+		 */
+		function get posts():Vector.<IFacebookPostData>;
+		
+		/**
+		 * The user's status updates.
+		 */
+		function get statuses():Vector.<IFacebookPostData>;
+		
+		/**
+		 * Posts the user is tagged in.
+		 */
+		function get tagged():Vector.<IFacebookPostData>;
+		
+		/**
+		 * The television listed on the user's profile.
+		 */
+		function get television():Vector.<IFacebookLikeData>;
+		
+//		/**
+//		 * The videos this user has been tagged in.
+//		 */
+//		function get videos():Vector.<IFacebookVideoData>;
 	}
 }

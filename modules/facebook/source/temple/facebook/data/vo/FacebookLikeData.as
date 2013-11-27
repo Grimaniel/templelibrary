@@ -36,8 +36,9 @@
 package temple.facebook.data.vo
 {
 	import temple.core.CoreObject;
+	import temple.core.errors.TempleArgumentError;
+	import temple.core.errors.throwError;
 	import temple.facebook.data.enum.FacebookConnection;
-	import temple.facebook.data.enum.FacebookFieldAlias;
 	import temple.facebook.data.facebook;
 	import temple.facebook.service.IFacebookService;
 
@@ -60,37 +61,55 @@ package temple.facebook.data.vo
 			facebook.registerVO(FacebookConnection.TELEVISION, FacebookLikeData);
 		}
 
-		facebook var id:String;
-		facebook var category:String;
-		facebook var name:String;
-		
-		facebook var user:IFacebookUserData;
-		facebook var page:IFacebookPageData;
 		facebook var created_time:Date;
 		
+		private var _user:IFacebookUserData;
+		private var _page:IFacebookPageData;
 		private var _facebook:IFacebookService;
 		
 		public function FacebookLikeData(facebook:IFacebookService)
 		{
 			super();
 			_facebook = facebook;
-			toStringProps.push("user", "page");
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function get user():IFacebookUserData
-		{
-			return facebook::user;
+			toStringProps.push("name", "created");
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
+		public function couple(parent:Object):Class
+		{
+			if (parent is IFacebookUserData && !_user)
+			{
+				_user = IFacebookUserData(parent);
+				return IFacebookPageData;
+			}
+			else if (parent is IFacebookPageData && !_page)
+			{
+				_page = IFacebookPageData(parent);
+				return FacebookUserData;
+			}
+			else
+			{
+				throwError(new TempleArgumentError(this, "Coupling failed " + parent));
+			}
+			return null;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get user():IFacebookUserData
+		{
+			return _user;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
 		public function get page():IFacebookPageData
 		{
-			return facebook::page ||= facebook::id ? _facebook.parser.parse({id: facebook::id, name: facebook::name, category: facebook::category}, FacebookPageData, FacebookFieldAlias.GRAPH) as IFacebookPageData : null;
+			return _page;
 		}
 
 		/**
@@ -106,7 +125,7 @@ package temple.facebook.data.vo
 		 */
 		public function get name():String
 		{
-			return facebook::page ? facebook::page.name : facebook::name;
+			return _page ? _page.name : null;
 		}
 	}
 }

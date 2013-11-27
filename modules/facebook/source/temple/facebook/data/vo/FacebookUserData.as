@@ -94,8 +94,7 @@ package temple.facebook.data.vo
 			FacebookConnection.SUBSCRIBERS,
 			FacebookConnection.TAGGED,
 			FacebookConnection.TELEVISION,
-			FacebookConnection.UPDATES,
-			FacebookConnection.VIDEOS]);
+			FacebookConnection.UPDATES, FacebookConnection.VIDEOS]);
 		
 		/**
 		 * Used by Indexer
@@ -119,6 +118,10 @@ package temple.facebook.data.vo
 		FacebookParser.facebook::CLASS_MAP[IFacebookWorkData] = FacebookWorkData;
 		FacebookParser.facebook::CLASS_MAP[IFacebookCollegeData] = FacebookCollegeData;
 		FacebookParser.facebook::CLASS_MAP[IFacebookVideoUploadLimitData] = FacebookVideoUploadLimitData;
+		FacebookParser.facebook::CLASS_MAP[IFacebookLikeData] = FacebookLikeData;
+		FacebookParser.facebook::CLASS_MAP[IFacebookAlbumData] = FacebookAlbumData;
+		FacebookParser.facebook::CLASS_MAP[IFacebookFriendListData] = FacebookFriendListData;
+		// TODO: FacebookParser.facebook::CLASS_MAP[IFacebookVideoData] = FacebookVideoData;
 
 		facebook var link:String;
 		facebook var first_name:String;
@@ -136,9 +139,9 @@ package temple.facebook.data.vo
 		facebook var timezone:Number;
 		facebook var updated_time:Date;
 		facebook var bio:String;
-		facebook var birthday:Date;
+		facebook var birthday:IFacebookDateData;
 		facebook var education:Vector.<IFacebookCollegeData>;
-		facebook var hometown:IFacebookObjectData;
+		facebook var hometown:IFacebookPageData;
 		facebook var interested_in:Array;
 		facebook var political:String;
 		[Deprecated]
@@ -152,19 +155,46 @@ package temple.facebook.data.vo
 		facebook var video_upload_limits:IFacebookVideoUploadLimitData;
 		facebook var website:String;
 		facebook var work:Vector.<IFacebookWorkData>;
-		facebook var sports:Vector.<IFacebookObjectData>;
+		facebook var sports:Vector.<IFacebookPageData>;
 		facebook var installed:Object;
 		facebook var cover:IFacebookPhotoData;
 		facebook var currency:Object;
 		facebook var devices:Array;
 		facebook var administrator:Boolean;
 		facebook var age_range:String;
+		facebook var payment_pricepoints:Object;
+		facebook var payment_mobile_pricepoints:Object;
+		facebook var security_settings:Object;
+		
+		// TODO: make this more dynamic
+		facebook var picture:Object;
 		
 		facebook var num_notes:int = -1;
 		facebook var num_wallposts:int = -1;
 		facebook var num_likes:int = -1;
 		facebook var num_friends:int = -1;
 		facebook var num_mutial_friends:int = -1;
+
+		facebook var albums:Vector.<IFacebookAlbumData>;
+		facebook var checkins:Vector.<IFacebookCheckinData>;
+		facebook var events:Vector.<IFacebookRSVPData>;
+		facebook var family:Vector.<IFacebookUserData>;
+		facebook var feed:Vector.<IFacebookPostData>;
+		facebook var friendlists:Vector.<IFacebookFriendListData>;
+		facebook var friends:Vector.<IFacebookUserData>;
+		facebook var groups:Vector.<IFacebookGroupData>;
+		facebook var home:Vector.<IFacebookPostData>;
+		facebook var interests:Vector.<IFacebookLikeData>;
+		facebook var likes:Vector.<IFacebookLikeData>;
+		facebook var locations:Vector.<IFacebookLocatedData>;
+		facebook var movies:Vector.<IFacebookLikeData>;
+		facebook var music:Vector.<IFacebookLikeData>;
+		facebook var photos:Vector.<IFacebookPhotoData>;
+		facebook var posts:Vector.<IFacebookPostData>;
+		facebook var statuses:Vector.<IFacebookPostData>;
+		facebook var tagged:Vector.<IFacebookPostData>;
+		facebook var television:Vector.<IFacebookLikeData>;
+		//facebook var videos:Vector.<IFacebookVideoData>;
 		
 		private var _picture:IFacebookPictureData;
 		
@@ -320,7 +350,7 @@ package temple.facebook.data.vo
 		/**
 		 * @inheritDoc
 		 */
-		public function get birthday():Date
+		public function get birthday():IFacebookDateData
 		{
 			return facebook::birthday;
 		}
@@ -336,7 +366,7 @@ package temple.facebook.data.vo
 		/**
 		 * @inheritDoc
 		 */
-		public function get hometown():IFacebookObjectData
+		public function get hometown():IFacebookPageData
 		{
 			return facebook::hometown;
 		}
@@ -434,7 +464,7 @@ package temple.facebook.data.vo
 		/**
 		 * @inheritDoc
 		 */
-		public function get sports():Vector.<IFacebookObjectData>
+		public function get sports():Vector.<IFacebookPageData>
 		{
 			return facebook::sports;
 		}
@@ -494,5 +524,162 @@ package temple.facebook.data.vo
 		{
 			return facebook::cover;
 		}
+		
+		public function get albums():Vector.<IFacebookAlbumData>
+		{
+			return facebook::albums;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get checkins():Vector.<IFacebookCheckinData>
+		{
+			return facebook::checkins;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get events():Vector.<IFacebookRSVPData> 
+		{
+			return facebook::events;		
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get family():Vector.<IFacebookUserData>
+		{
+			return facebook::family;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get feed():Vector.<IFacebookPostData>
+		{
+			return facebook::feed;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get friendlists():Vector.<IFacebookFriendListData>
+		{
+			return facebook::friendlists;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get friends():Vector.<IFacebookUserData>
+		{
+			return facebook::friends;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get groups():Vector.<IFacebookGroupData>
+		{
+			return facebook::groups;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get home():Vector.<IFacebookPostData>
+		{
+			return facebook::home;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get interests():Vector.<IFacebookLikeData>
+		{
+			return facebook::interests;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get likes():Vector.<IFacebookLikeData>
+		{
+			return facebook::likes;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get locations():Vector.<IFacebookLocatedData>
+		{
+			return facebook::locations;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get movies():Vector.<IFacebookLikeData>
+		{
+			return facebook::movies;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get music():Vector.<IFacebookLikeData>
+		{
+			return facebook::music;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get photos():Vector.<IFacebookPhotoData>
+		{
+			return facebook::photos;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get posts():Vector.<IFacebookPostData>
+		{
+			return facebook::posts;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get statuses():Vector.<IFacebookPostData>
+		{
+			return facebook::statuses;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get tagged():Vector.<IFacebookPostData>
+		{
+			return facebook::tagged;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get television():Vector.<IFacebookLikeData>
+		{
+			return facebook::television;
+		}
+
+//		/**
+//		 * @inheritDoc
+//		 */
+//		public function get videos():Vector.<IFacebookVideoData>
+//		{
+//			return facebook::videos;
+//		}
 	}
 }

@@ -69,6 +69,14 @@ package temple.facebook.api
 			
 			return getItems(callback, id, NaN, NaN, fields, params, forceReload);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getAllPosts(callback:Function = null, id:String = 'me', fields:FacebookPostFields = null, forceReload:Boolean = false):IFacebookCall
+		{
+			return getAlltems(callback, id, fields, forceReload);
+		}
 
 		/**
 		 * @inheritDoc

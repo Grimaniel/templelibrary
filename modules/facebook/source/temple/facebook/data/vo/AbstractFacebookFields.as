@@ -35,11 +35,11 @@
 
 package temple.facebook.data.vo
 {
-	import temple.utils.types.VectorUtils;
-	import temple.facebook.data.enum.FacebookMetadataTag;
 	import temple.core.CoreObject;
+	import temple.core.debug.getClassName;
 	import temple.data.Trivalent;
 	import temple.facebook.data.enum.FacebookFieldAlias;
+	import temple.facebook.data.enum.FacebookMetadataTag;
 	import temple.reflection.reflect;
 
 	/**
@@ -47,15 +47,85 @@ package temple.facebook.data.vo
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class AbstractFacebookFields extends CoreObject implements IFacebookFields
+	internal class AbstractFacebookFields extends CoreObject implements IFacebookFields
 	{
+		protected static function all(type:Class):Vector.<String>
+		{
+			var desciption:XML = reflect(type);
+			
+			var all:Vector.<String> = new Vector.<String>();
+			var list:XMLList = desciption..variable.(@type == "Boolean" || @type == "*");
+			for each (var node:XML in list)
+			{
+				all.push(node.@['name']);
+			}
+			return all;
+		}
+		
 		private static var _aliasesAvailable:Trivalent = Trivalent.UNDEFINED;
 		
 		private var _desciption:XML;
-		
-		public function AbstractFacebookFields(selectAll:Boolean = false)
+		private var _limit:uint;
+		private var _customFields:Vector.<String>;
+
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function AbstractFacebookFields(fields:Vector.<String>, limit:int)
 		{
-			if (selectAll) this.selectAll();
+			if (fields) select(fields);
+			_limit = limit;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get limit():uint
+		{
+			return _limit;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set limit(value:uint):void
+		{
+			_limit = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function select(fields:Vector.<String>):void
+		{
+			for (var i:int = 0, leni:int = fields.length; i < leni; i++)
+			{
+				if (fields[i] in this)
+				{
+					this[fields[i]] = true;
+				}
+				else
+				{
+					logWarn(getClassName(this) + " has no field '" + fields[i] + "'");
+				}
+			}
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function all():Vector.<String>
+		{
+			_desciption ||= reflect(this);
+			
+			var all:Vector.<String> = new Vector.<String>();
+			var list:XMLList = _desciption..variable.(@type == "Boolean" || @type == "*");
+			for each (var node:XML in list)
+			{
+				all.push(node.@['name']);
+			}
+			
+			return all;
 		}
 		
 		/**
@@ -76,10 +146,8 @@ package temple.facebook.data.vo
 		/**
 		 * @inheritDoc
 		 */
-		public function getFields(alias:FacebookFieldAlias = null):Vector.<String>
+		public function getFieldsList(alias:FacebookFieldAlias):Vector.<String>
 		{
-			alias ||= FacebookFieldAlias.GRAPH;
-			
 			if (alias && !aliasesAvailable())
 			{
 				logWarn("Alias metadata is not available. Please compile your SWF with the \"-keep-as3-metadata+=Alias\" argument");
@@ -88,22 +156,59 @@ package temple.facebook.data.vo
 			var fields:Vector.<String> = new Vector.<String>();
 			_desciption ||= reflect(this);
 			
-			var list:XMLList = _desciption..variable.(@type == "Boolean");
+			var list:XMLList = _desciption..variable.(@type == "Boolean" || @type == "*");
 			var name:String, nameAlias:String;		
 			for each (var node:XML in list)
 			{
 				name = node.@['name'];
-				if (this[name] === true)
+				if (this[name] === true || this[name] is IFacebookFields)
 				{
 					if (alias) nameAlias = node.metadata.(@name == "Alias").arg.(@key == alias.value).@value;
 					if (nameAlias != "not-available") fields.push(nameAlias || name);
 				}
 
 			}
+			if (_customFields) fields = fields.concat(_customFields);
+			
 			// sort 
-			VectorUtils.sort(fields);
+			fields.sort(0);
 			
 			return fields;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getFieldsString(alias:FacebookFieldAlias):String
+		{
+			var list:Vector.<String> = getFieldsList(alias);
+			
+			if (alias == FacebookFieldAlias.GRAPH)
+			{
+				var props:Vector.<String> = getFieldsList(null);
+				for (var i:int = 0, leni:int = list.length; i < leni; i++)
+				{
+					if (props[i] in this && this[props[i]] is IFacebookFields)
+					{
+						var fields:IFacebookFields = IFacebookFields(this[props[i]]);
+						// TODO: make this more dynamic
+						if (fields is FacebookPictureFields)
+						{
+							if (FacebookPictureFields(fields).width) list[i] += ".width(" + FacebookPictureFields(fields).width + ")";
+							if (FacebookPictureFields(fields).height) list[i] += ".height(" + FacebookPictureFields(fields).height + ")";
+							if (FacebookPictureFields(fields).type) list[i] += ".type(" + FacebookPictureFields(fields).type + ")";
+						}
+						else
+						{
+							// call getFieldsList if fields object is the same as this to prevent an infinite loop
+							list[i] += ".fields(" + (fields == this ? fields.getFieldsList(alias) : fields.getFieldsString(alias)) + ")";
+							
+							if (fields.limit) list[i] += ".limit(" + fields.limit + ")";
+						}
+					}
+				}
+			}
+			return list.toString();
 		}
 
 		/**
@@ -119,10 +224,18 @@ package temple.facebook.data.vo
 		 */
 		public function selectAll():void
 		{
-			for each (var node:XML in reflect(this)..variable.(@type == "Boolean"))
+			for each (var node:XML in reflect(this)..variable.(@type == "Boolean" || @type == "*"))
 			{
 				this[node.@['name']] = true;
 			}
+		}
+		
+		/**
+		 * @includeExample
+		 */
+		public function addCustomField(field:String):void
+		{
+			(_customFields ||= new Vector.<String>()).push(field);
 		}
 
 		/**
@@ -131,6 +244,7 @@ package temple.facebook.data.vo
 		override public function destruct():void
 		{
 			_desciption = null;
+			_customFields = null;
 			
 			super.destruct();
 		}

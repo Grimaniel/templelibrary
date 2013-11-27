@@ -59,6 +59,7 @@ package temple.facebook.data.vo
 		facebook var y:Number;
 		facebook var created_time:Date;
 		facebook var photo:IFacebookPhotoData;
+		facebook var category:String;
 		
 		private var _service:IFacebookService;
 		private var _user:IFacebookUserData;
@@ -116,14 +117,6 @@ package temple.facebook.data.vo
 		public function get photo():IFacebookPhotoData
 		{
 			return facebook::photo;
-		}
-		
-		/**
-		 * @private
-		 */
-		public function set photo(value:IFacebookPhotoData):void
-		{
-			facebook::photo = value;
 		}
 	}
 }

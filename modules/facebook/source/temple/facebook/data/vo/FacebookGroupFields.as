@@ -35,7 +35,6 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for groups.
@@ -48,6 +47,14 @@ package temple.facebook.data.vo
 	 */
 	public class FacebookGroupFields extends AbstractFacebookFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookGroupData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookGroupFields);
+		}
+		
 		/**
 		 * The group ID
 		 */
@@ -109,9 +116,12 @@ package temple.facebook.data.vo
 		 */
 		public var docs:Boolean;
 		
-		public function FacebookGroupFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookGroupFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }
