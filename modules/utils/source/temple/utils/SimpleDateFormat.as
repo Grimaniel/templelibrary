@@ -35,9 +35,10 @@
 
 package temple.utils
 {
-	import temple.utils.types.DateUtils;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.objectToString;
+	import temple.utils.localization.IDateLabels;
+	import temple.utils.types.DateUtils;
 	
 	/**
 	 * SimpleDateFormat is a class for formatting and parsing dates in a locale-sensitive manner.
@@ -75,7 +76,7 @@ package temple.utils
 
 		private static var _regExp:RegExp;
 		
-		public static function format(date:Date, pattern:String):String
+		public static function format(date:Date, pattern:String, labels:IDateLabels):String
 		{
 			// replace quotes for a temperary sign, so we can replace it back later
 			pattern = pattern.split("''").join(_TEMP_QUOTE_SIGN);
@@ -102,12 +103,12 @@ package temple.utils
 							return date.date < 10 ? "0" + date.date : date.date;
 						
 						case 'E':
-							return DateUtils.getWeekDayAsText(date);
+							return DateUtils.getDayName(date, labels);
 						case 'EEE':
-							return DateUtils.getWeekDayAsText(date).substr(0, 3);
+							return DateUtils.getShortDayName(date, labels);
 						case 'EEEE':
 						case 'EEEEE':
-							return DateUtils.getWeekDayAsText(date);
+							return DateUtils.getDayName(date, labels);
 							
 						case 'G':
 						case 'GG':
@@ -142,12 +143,12 @@ package temple.utils
 						case 'MM':
 							return date.month < 9 ? "0" + (date.month + 1) : date.month + 1;
 						case 'MMM':
-							return DateUtils.getShortMonthName(date.month);
+							return DateUtils.getShortMonthName(date, labels);
 						case 'MMMM':
 						case 'MMMMM':
 						case 'MMMMMM':
 						case 'MMMMMMM':
-							return DateUtils.getMonthName(date.month);
+							return DateUtils.getMonthName(date, labels);
 
 						case 'm':
 							return date.minutes;

@@ -35,6 +35,7 @@
 
 package temple.utils.types 
 {
+	import flash.text.TextFieldAutoSize;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.objectToString;
 	import temple.core.errors.TempleError;
@@ -358,6 +359,30 @@ package temple.utils.types
                 field.height = lineMetrics.height + 4 + lineMetrics.leading * (lines - 1);
             }
         }
+		
+		/**
+		 * Splits a <code>TextField</code> to multiple <code>TextFields</code> which one character in each <code>TextField</code>.
+		 */
+		public static function split(textField:TextField):Vector.<TextField>
+		{
+			var fields:Vector.<TextField> = new Vector.<TextField>();
+			var x:Number = 0;
+			var text:String = textField.text;
+			
+			for (var i:int = 0, leni:int = text.length; i < leni; i++)
+			{
+				var field:TextField = copy(textField);
+				field.defaultTextFormat = textField.getTextFormat();
+				field.autoSize = TextFieldAutoSize.LEFT;
+				field.text = text.charAt(i);
+				field.x = x;
+
+				x += field.textWidth;
+
+				fields.push(field);
+			}
+			return fields;
+		}
 		
 		/**
 		 * @private

@@ -64,7 +64,7 @@ package temple.utils
 
 		/**
 		 * Add a listener to the FramePulse
-		 * @param handler function to be called on enterframe, with parameter FramePulseEvent
+		 * @param handler function to be called on enterframe, with parameter Event
 		 */
 		public static function addEnterFrameListener(handler:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
@@ -78,6 +78,24 @@ package temple.utils
 		public static function removeEnterFrameListener(handler:Function, useCapture:Boolean = false):void 
 		{
 			if (FramePulse._shape) FramePulse._shape.removeEventListener(Event.ENTER_FRAME, handler, useCapture);
+		}
+		
+		/**
+		 * Add a listener to the FramePulse
+		 * @param handler function to be called on exitFrame, with parameter Event
+		 */
+		public static function addExitFrameListener(handler:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
+		{
+			(FramePulse._shape ||= new Shape()).addEventListener(Event.EXIT_FRAME, handler, useCapture, priority, useWeakReference);
+		}
+
+		/**
+		 * Remove a listener from the FramePulse
+		 * @param handler function that was previously added
+		 */
+		public static function removeExitFrameListener(handler:Function, useCapture:Boolean = false):void 
+		{
+			if (FramePulse._shape) FramePulse._shape.removeEventListener(Event.EXIT_FRAME, handler, useCapture);
 		}
 	}
 }

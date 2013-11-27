@@ -44,6 +44,7 @@ package temple.utils
 	public final class Diacritics
 	{
 		private static var _entities:Object;
+		private static var _regexps:Object;
 		
 		/**
 		 * Replaces all Diacritics to their "normal" equivalent.
@@ -51,18 +52,19 @@ package temple.utils
 		 */
 		public static function normalize(string:String):String
 		{
-			Diacritics._entities ||= Diacritics.getEntities();
+			_entities ||= Diacritics.getEntities();
+			_regexps ||= {};
         	
-			for (var entity:String in Diacritics._entities)
+			for (var entity:String in _entities)
 			{
-				string = string.replace(new RegExp(entity, 'g'), Diacritics._entities[entity]);
+				string = string.replace(_regexps[entity] ||= new RegExp(entity, 'g'), _entities[entity]);
 			}
 			return string;
 		}
 		
 		private static function getEntities():Object
 		{
-			var entities: Object = new Object();
+			var entities:Object = new Object();
 			
 			entities['Æ'] = 'A';
 			entities['ß'] = 'S';

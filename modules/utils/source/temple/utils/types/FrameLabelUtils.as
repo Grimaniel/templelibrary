@@ -89,7 +89,7 @@ package temple.utils.types
 		 */
 		public static function addLabelScriptEnd(clip:MovieClip, label:String, frameScript:Function):void
 		{
-			clip.addFrameScript(FrameLabelUtils.getLastFrameOfSection(clip, label) - 1, frameScript);
+			clip.addFrameScript(FrameLabelUtils.getLastFrameOfLabel(clip, label) - 1, frameScript);
 		}
 		
 		/**
@@ -144,7 +144,7 @@ package temple.utils.types
 		/**
 		 * Get the last frame of a section of timeline started by label
 		 */
-		public static function getLastFrameOfSection(clip:MovieClip, label:String):int
+		public static function getLastFrameOfLabel(clip:MovieClip, label:String):int
 		{
 			var start:FrameLabel = FrameLabelUtils.getLabel(clip, label);
 			var closest:int = clip.totalFrames;

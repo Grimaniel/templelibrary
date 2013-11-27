@@ -57,7 +57,7 @@ package temple.utils
 		private var _propertyProxy:IPropertyProxy;
 		private var _eventType:String;
 		
-		public function ValueBinder(source:IHasValue, target:Object, property:String, propertyProxy:IPropertyProxy = null, eventType:String = Event.CHANGE, updateSource:Boolean = true)
+		public function ValueBinder(source:IHasValue, target:Object, property:String = "value", propertyProxy:IPropertyProxy = null, eventType:String = Event.CHANGE, updateSource:Boolean = true)
 		{
 			if (!source) throwError(new TempleArgumentError(this, "source cannot be null"));
 			if (!target) throwError(new TempleArgumentError(this, "target cannot be null"));

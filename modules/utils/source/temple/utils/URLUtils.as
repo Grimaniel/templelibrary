@@ -112,6 +112,15 @@ package temple.utils
 		}
 
 		/**
+		 * Checks if a url is absolute (<code>true</code>) or relative (<code>false</code>) 
+		 */
+		public static function isAbsolute(url:String):Boolean
+		{
+			return /^[\w-\.]*:/.test(url);
+		}
+
+
+		/**
 		 * @private
 		 */
 		public static function toString():String

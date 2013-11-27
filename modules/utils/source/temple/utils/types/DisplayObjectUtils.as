@@ -399,6 +399,22 @@ package temple.utils.types
 		}
 
 		/**
+		 * Searches in the parent tree for a parent with a specific name and returns this parent
+		 */
+		public static function getAncestorByName(displayObject:DisplayObject, name:String):DisplayObjectContainer
+		{
+			var parent:DisplayObjectContainer = displayObject.parent;
+			
+			while (parent)
+			{
+				if (parent.name == name) return parent;
+				parent = parent.parent;
+			}
+			return null;
+		}
+
+
+		/**
 		 * @private
 		 */
 		public static function toString():String

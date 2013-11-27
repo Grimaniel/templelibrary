@@ -40,6 +40,7 @@ package temple.utils.types
 	import temple.core.errors.TempleError;
 	import temple.core.errors.throwError;
 	import temple.utils.TimeUnit;
+	import temple.utils.localization.IDateLabels;
 
 	/**
 	 * This class contains some functions for Dates.
@@ -48,19 +49,6 @@ package temple.utils.types
 	 */
 	public final class DateUtils 
 	{
-		public static const WEEKDAYS_NL:Array = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
-		public static const WEEKDAYS_EN:Array = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-		public static const WEEKDAYS_SHORT_NL:Array = ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'];
-		public static const WEEKDAYS_SHORT_EN:Array = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-		public static const MONTHS_NL:Array = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
-		public static const MONTHS_EN:Array = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		
-		public static var WEEKDAYS:Array = DateUtils.WEEKDAYS_EN;
-		public static var WEEKDAYS_SHORT:Array = DateUtils.WEEKDAYS_SHORT_EN;
-		public static var MONTHS:Array = DateUtils.MONTHS_EN;
-		
 		public static const DAYS_IN_JANUARY:int = 31;
 		public static const DAYS_IN_FEBRUARY:int = 28;
 		public static const DAYS_IN_FEBRUARY_LEAP_YEAR:int = 29;
@@ -78,17 +66,9 @@ package temple.utils.types
 		public static const DAYS_IN_LEAP_YEAR:int = 366;
 		
 		private static const _MONTHS_TO_INTEGERS:Object = {January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11,Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
-	
-		/**
-		 * Set language to Dutch
-		 */
-		public static function setDutch():void
-		{
-			DateUtils.WEEKDAYS = DateUtils.WEEKDAYS_NL;
-			DateUtils.WEEKDAYS_SHORT = DateUtils.WEEKDAYS_SHORT_NL;
-			DateUtils.MONTHS = DateUtils.MONTHS_NL;
-		}
-
+		
+		private static const _ERROR_LABELS_IS_NULL:String = "labels cannot be null";
+		
 		/**
 		 * The number of days appearing in each month. May be used for easy index lookups.
 		 * The stored value for February corresponds to a standard year--not a leap year.
@@ -418,30 +398,6 @@ package temple.utils.types
 		}
 
 		/**
-		 * Gets the English name of the month specified by index. This is the month value
-		 * as stored in a Date object.
-		 * 
-		 * @param		index	the numeric value of the month
-		 * @return		the string name of the month in English
-		 */
-		public static function getMonthName(index:int):String
-		{
-			return DateUtils.MONTHS[index];
-		}
-
-		/**
-		 * Gets the abbreviated month name specified by index. This is the month value
-		 * as stored in a Date object.
-		 * 
-		 * @param index	the numeric value of the month
-		 * @return the short string name of the month in English
-		 */
-		public static function getShortMonthName(index:int):String
-		{
-			return DateUtils.getMonthName(index).substr(0, 3);
-		}
-
-		/**
 		 * Rounds a Date value up to the nearest value on the specified time unit.
 		 * 
 		 * @see temple.utils.TimeUnit
@@ -736,12 +692,13 @@ package temple.utils.types
 		 * @see http://www.php.net/date
 		 *
 		 * @param String the format pattern
-		 * @param Integer the unix-timestamp, optional 
+		 * @param Integer the unix-timestamp, optional
+		 * @param labels an object containing the localized labels for days and months
 		 * @return the new formated date string
 		 * 
 		 * @includeExample DateFormatExample.as
 		 */
-		public static function format(format:String, date:* = null):String
+		public static function format(format:String, date:* = null, labels:IDateLabels = null):String
 		{
 			var d:Date;
 			
@@ -769,7 +726,7 @@ package temple.utils.types
 				throwError(new TempleArgumentError(DateUtils, "Invalid value for date: '" + date + "'"));
 			}
 			
-			return DateUtils.parseFormatString(d, format);
+			return DateUtils.parseFormatString(d, format, labels);
 		}
 
 		/**
@@ -778,7 +735,7 @@ package temple.utils.types
 		 * @param String the full format String
 		 * @return String
 		 */
-		private static function parseFormatString(date:Date, format:String ):String
+		private static function parseFormatString(date:Date, format:String, labels:IDateLabels):String
 		{
 			var result:String = "";
 			
@@ -795,7 +752,7 @@ package temple.utils.types
 				}
 				else if (i == 0 || format.charAt(i - 1) != "\\")
 				{
-					result += DateUtils.parseSingleChar(date, format.charAt(i));
+					result += DateUtils.parseSingleChar(date, format.charAt(i), labels);
 				}
 				else
 				{
@@ -812,7 +769,7 @@ package temple.utils.types
 		 * @param char single char of a format string
 		 * @return String
 		 */
-		private static function parseSingleChar(date:Date, char:String):String
+		private static function parseSingleChar(date:Date, char:String, labels:IDateLabels):String
 		{
 			if (!char || char.length != 1) throwError(new TempleArgumentError(DateUtils, "char must be a single char"));
 			
@@ -834,10 +791,10 @@ package temple.utils.types
 				case 'd': return DateUtils.addLeadingZero(date.getDate());
 				
 				// A textual representation of a day, three letters
-				case 'D': return DateUtils.getWeekDayAsText(date, true);
+				case 'D': return DateUtils.getShortDayName(date, labels);
 				
 				// A full textual representation of a month, such as January or March
-				case 'F': return DateUtils.getMonthAsText(date);
+				case 'F': return DateUtils.getMonthName(date, labels);
 				
 				// 12-hour format of an hour without leading zeros
 				case 'g': return String(date.getHours() % 12);
@@ -861,7 +818,7 @@ package temple.utils.types
 				case 'j': return String(date.getDate());
 				
 				// A full textual representation of the day of the week
-				case 'l': return DateUtils.getWeekDayAsText(date);
+				case 'l': return DateUtils.getDayName(date, labels);
 				
 				// Whether it's a leap year
 				case 'L': return DateUtils.isLeapYear(date.getFullYear()) ? "1" : "0";
@@ -870,7 +827,7 @@ package temple.utils.types
 				case 'm': return DateUtils.addLeadingZero(date.getMonth() + 1);
 				
 				// A short textual representation of a month, three letters
-				case 'M': return DateUtils.getMonthAsText(date, true);
+				case 'M': return DateUtils.getShortMonthName(date, labels);
 				
 				// Numeric representation of a month, without leading zeros
 				case 'n': return String(date.getMonth() + 1);
@@ -885,7 +842,7 @@ package temple.utils.types
 				case 'P': return DateUtils.getDifferenceBetweenGmt(date, ":");
 				
 				// RFC 2822 formatted date
-				case 'r': return DateUtils.getRfc2822(date);
+				case 'r': return DateUtils.getRfc2822(date, labels);
 				
 				// Seconds, with leading zeros
 				case 's': return DateUtils.addLeadingZero(date.getSeconds());
@@ -906,7 +863,7 @@ package temple.utils.types
 				case 'U': return DateUtils.getUnixTimestamp(date);
 				
 				// Numeric representation of the day of the week
-				case 'w': return DateUtils.getWeekDay(date);
+				case 'w': return String(date.getDay());
 				
 				// ISO-8601 week number of year, weeks starting on Monday
 				case 'W': return String(DateUtils.getWeekOfYear(date));
@@ -927,7 +884,7 @@ package temple.utils.types
 		}
 
 		/**
-		 * check if the current date lays in summertime.
+		 * Check if the current date lays in summertime.
 		 * 
 		 * @return Boolean
 		 */
@@ -951,7 +908,7 @@ package temple.utils.types
 		}
 
 		/**
-		 * returns the unix timestamp( seconds since the 1st January 1970 )
+		 * Returns the unix timestamp( seconds since the 1st January 1970 )
 		 * 
 		 * @return String
 		 */
@@ -961,7 +918,7 @@ package temple.utils.types
 		}
 
 		/**
-		 * returns ISO8601 formated date, like 2008-05-22T19:15:21+02:00
+		 * Returns ISO8601 formated date, like 2008-05-22T19:15:21+02:00
 		 * 
 		 * @return String
 		 */
@@ -971,14 +928,14 @@ package temple.utils.types
 		}
 
 		/**
-		 * returns a RFC2822 formated date string,
+		 * Returns a RFC2822 formated date string,
 		 * such as Tue, 25 Jan 1983 16:55:00 +0100
 		 * 
 		 * @return String
 		 */
-		public static function getRfc2822(date:Date):String
+		public static function getRfc2822(date:Date, labels:IDateLabels):String
 		{
-			return DateUtils.getWeekDayAsText(date, true) + ", " + DateUtils.addLeadingZero(date.getDate()) + " " + DateUtils.getMonthAsText(date, true) + " " + date.getFullYear() + " " + DateUtils.addLeadingZero(date.getHours()) + ":" + DateUtils.addLeadingZero(date.getMinutes()) + ":" + DateUtils.addLeadingZero(date.getSeconds()) + " " + DateUtils.getDifferenceBetweenGmt(date);
+			return DateUtils.getShortDayName(date, labels) + ", " + DateUtils.addLeadingZero(date.getDate()) + " " + DateUtils.getShortMonthName(date, labels) + " " + date.getFullYear() + " " + DateUtils.addLeadingZero(date.getHours()) + ":" + DateUtils.addLeadingZero(date.getMinutes()) + ":" + DateUtils.addLeadingZero(date.getSeconds()) + " " + DateUtils.getDifferenceBetweenGmt(date);
 		}
 
 		/**
@@ -1075,7 +1032,7 @@ package temple.utils.types
 		}
 
 		/**
-		 * returns the beats of the swatch internet time
+		 * Returns the beats of the swatch internet time
 		 * 
 		 * @return String
 		 */
@@ -1087,17 +1044,6 @@ package temple.utils.types
 			
 			// 1day = 1000 .beat ... 1 second = 0.01157 .beat 		
 			return String(Math.round(daySeconds * 0.01157));
-		}
-
-		/**
-		 * returns the month as text (such as Janury - December or Jan - Dec)
-		 * 
-		 * @param Boolean flag to get the short version of month, optional
-		 * @return String 
-		 */
-		public static function getMonthAsText(date:Date, short:Boolean = false):String
-		{
-			return short ? DateUtils.getShortMonthName(date.month) : DateUtils.getMonthName(date.month);	
 		}
 
 		/**
@@ -1116,28 +1062,42 @@ package temple.utils.types
 		}
 
 		/**
-		 * returns the numeric weekday ( 0 Sunday - 6 Saturday )
-		 * 
-		 * @return String
+		 * Returns the weekday in textual presentation (such as Monday or Tuesday)
 		 */
-		public static function getWeekDay(date:Date):String
+		public static function getDayName(date:Date, labels:IDateLabels):String
 		{
-			return String(date.getDay());
+			if (labels == null) throwError(new TempleArgumentError(DateUtils, _ERROR_LABELS_IS_NULL));
+			return labels.getDay(date.getDay());
+		}
+		
+		/**
+		 * Returns a short version of the weekday in textual presentation (such as Mon or Tue)
+		 */
+		public static function getShortDayName(date:Date, labels:IDateLabels):String
+		{
+			if (labels == null) throwError(new TempleArgumentError(DateUtils, _ERROR_LABELS_IS_NULL));
+			return labels.getShortDay(date.getDay());
+		}
+		
+		/**
+		 * Gets the name of the month.
+		 * 
+		 * @param labels localized labels object containing all the names of the months
+		 * @return the string name of the month
+		 */
+		public static function getMonthName(date:Date, labels:IDateLabels):String
+		{
+			if (labels == null) throwError(new TempleArgumentError(DateUtils, _ERROR_LABELS_IS_NULL));
+			return labels.getMonth(date.getMonth());
 		}
 
 		/**
-		 * returns the weekday in textual presentation (such as Monday or Mon)
-		 * 
-		 * @param Boolean flag to switch between short and long weekdays
-		 * @return String
+		 * Gets the abbreviated month name.
 		 */
-		public static function getWeekDayAsText(date:Date, short:Boolean = false ):String
+		public static function getShortMonthName(date:Date, labels:IDateLabels):String
 		{
-			if (short)
-			{
-				return String(DateUtils.WEEKDAYS_SHORT[date.getDay() ]);
-			}
-			return DateUtils.WEEKDAYS[date.getDay() ];
+			if (labels == null) throwError(new TempleArgumentError(DateUtils, _ERROR_LABELS_IS_NULL));
+			return labels.getShortMonth(date.getMonth());
 		}
 
 		/**
