@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../override.css" type="text/css"><meta name="keywords" content="BevelFilterPlugin,com.greensock.plugins.BevelFilterPlugin"><title>com.greensock.plugins.BevelFilterPlugin</title></head><body><script language="javascript" type="text/javascript" src="../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'BevelFilterPlugin - Temple API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.7.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?com/greensock/plugins/BevelFilterPlugin.html&amp;com/greensock/plugins/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">BevelFilterPlugin</td><td class="titleTableSubNav" id="subNav" align="right"></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("BevelFilterPlugin"); titleBar_setSubNav(false,false,false,false,false,false,false,false,false,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">com.greensock.plugins</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  BevelFilterPlugin</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">BevelFilterPlugin  <img src="../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> com.greensock.plugins.FilterPlugin</td></tr></table><p></p><p></p>
+ [AS3/AS2 only] Tweens a BevelFilter. The following properties are available (you only need to define the ones you want to tween): 
+ <code>
+                  <ul>
+ 		                  <li> distance : Number [0]</li>
+ 		                  <li> angle : Number [0]</li>
+ 		                  <li> highlightColor : uint [0xFFFFFF]</li>
+ 		                  <li> highlightAlpha : Number [0.5]</li>
+ 		                  <li> shadowColor : uint [0x000000]</li>
+ 		                  <li> shadowAlpha :Number [0.5]</li>
+ 		                  <li> blurX : Number [2]</li>
+ 		                  <li> blurY : Number [2]</li>
+ 		                  <li> strength : Number [0]</li>
+ 		                  <li> quality : uint [2]</li>
+ 		                  <li> index : uint</li>
+ 		                  <li> addFilter : Boolean [false]</li>
+ 		                  <li> remove : Boolean [false]</li>
+                  </ul>
+               </code>
+ 
+ 
+               <p>
+                  <b>USAGE:</b>
+               </p>
+               <div class="listing" version="3.0"><pre>
+import com.greensock.TweenLite;
+import com.greensock.plugins.TweenPlugin; 
+import com.greensock.plugins.BevelFilterPlugin; 
+TweenPlugin.activate([BevelFilterPlugin]); //activation is permanent in the SWF, so this line only needs to be run once.
+TweenLite.to(mc, 1, {bevelFilter:{blurX:10, blurY:10, distance:6, angle:45, strength:1}});
+</pre></div>
+ 
+               <p>
+                  <b>Copyright 2008-2013, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html" target="">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/" target="">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
+ 
+            <p></p><br/><hr></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><br/><br/><hr><br/><p></p><center class="copyright"><footer>by MediaMonks | http://www.mediamonks.com</footer><br/> </center></div></body></html><!--by MediaMonks | http://www.mediamonks.com<br/> -->
