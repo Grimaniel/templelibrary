@@ -12,6 +12,7 @@
  */
 package
 {
+	import temple.utils.localization.EnglishDateLabels;
 	import temple.utils.SimpleDateFormat;
 	import flash.text.TextField;
 
@@ -40,7 +41,7 @@ package
 
 		private function test(pattern:String):void
 		{
-			_output.appendText(pattern + "\t\t" + SimpleDateFormat.format(new Date(), pattern) + "\n");
+			_output.appendText(pattern + "\t\t" + SimpleDateFormat.format(new Date(), pattern, EnglishDateLabels) + "\n");
 		}
 	}
 }

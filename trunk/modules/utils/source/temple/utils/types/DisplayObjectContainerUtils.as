@@ -68,7 +68,7 @@ package temple.utils.types
 		 * 
 		 * @return the first child of the type
 		 */
-		public static function findChildOfType(container:DisplayObjectContainer, type:Class, recursive:Boolean = false):DisplayObject
+		public static function getChildOfType(container:DisplayObjectContainer, type:Class, recursive:Boolean = false):DisplayObject
 		{
 			if (recursive) var queue:Vector.<DisplayObjectContainer> = new Vector.<DisplayObjectContainer>();
 			
@@ -94,7 +94,7 @@ package temple.utils.types
 		}
 		
 		/**
-		 * Searches the display list for  children of a specific type.
+		 * Searches the display list for children of a specific type.
 		 * 
 		 * @param container The DisplayObjectContainer that has the child
 		 * @param type the Class of the child to find
@@ -103,7 +103,7 @@ package temple.utils.types
 		 * 
 		 * @return all children of the type
 		 */
-		public static function findChildrenOfType(container:DisplayObjectContainer, type:Class, recursive:Boolean = false, addTo:Array = null):Array
+		public static function getChildrenOfType(container:DisplayObjectContainer, type:Class, recursive:Boolean = false, addTo:Array = null):Array
 		{
 			if (!container) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'null or empty container'));
 			if (!type) throwError(new TempleArgumentError(DisplayObjectContainerUtils, 'null or empty type'));
@@ -122,10 +122,44 @@ package temple.utils.types
 				}
 				else if (recursive && child is DisplayObjectContainer)
 				{
-					DisplayObjectContainerUtils.findChildrenOfType(child as DisplayObjectContainer, type, recursive, addTo);
+					DisplayObjectContainerUtils.getChildrenOfType(child as DisplayObjectContainer, type, recursive, addTo);
 				}
 			}
 			return addTo;
+		}
+		
+		/**
+		 * Searches the display list for a child with a specific name.
+		 * 
+		 * @param container The DisplayObjectContainer that has the child
+		 * @param name The the name of the child to find
+		 * @param type the Class of the child to find
+		 * 
+		 * @return all children of the type
+		 */
+		public static function getDescendantByName(container:DisplayObjectContainer, name:String, type:Class = null):DisplayObject
+		{
+			var queue:Vector.<DisplayObjectContainer> = new Vector.<DisplayObjectContainer>();
+			
+			var i:uint, leni:int, child:DisplayObject;
+
+			while (container)
+			{
+				for (i = 0, leni = container.numChildren; i < leni; i++)
+				{
+					child = container.getChildAt(i);
+					if (child.name == name && (type == null || child is type))
+					{
+						return child;
+					}
+					else if (child is DisplayObjectContainer)
+					{
+						queue.push(child);
+					}
+				}
+				container = queue.length ? queue.shift() : null;
+			}
+			return null;
 		}
 
 		/**

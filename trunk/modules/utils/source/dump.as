@@ -217,7 +217,7 @@ class Functions
 						}
 						else if (variable is Enumerator)
 						{
-							output += ": " + variable + " (" + getClassName(vardata.type ? variable || vardata.type : getQualifiedClassName(variable)) + ") (" + getClassName(Enumerator) + ")";
+							output += ": " + (variable.value is String ? "\"" + variable.value + "\"" : variable.value) + " (" + getClassName(vardata.type ? variable || vardata.type : getQualifiedClassName(variable)) + ") (" + getClassName(Enumerator) + ")";
 						}
 						else
 						{
@@ -285,16 +285,16 @@ class Functions
 				}
 			}
 			output += " (";
-			var varType:String = getClassName(vardata.type);
 			var valueType:String = variable !== null && variable != WRITEONLY ? getClassName(variable is String ? String : variable) : null;
 			if (vardata.type)
 			{
+				var varType:String = getClassName(vardata.type);
 				output += varType;
 				if (valueType != varType && valueType && varType != "Number" && varType != "uint") output += " -> " + valueType;
 			}
 			else
 			{
-				output += varType;
+				output += valueType;
 			}
 			output += ")";
 			

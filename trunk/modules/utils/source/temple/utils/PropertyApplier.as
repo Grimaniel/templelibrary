@@ -1,6 +1,6 @@
 /*
  *	Temple Library for ActionScript 3.0
- *	Copyright © MediaMonks B.V.
+ *	Copyright � MediaMonks B.V.
  *	All rights reserved.
  *	
  *	Redistribution and use in source and binary forms, with or without
@@ -37,15 +37,17 @@ package temple.utils
 {
 	import temple.core.debug.log.Log;
 	import temple.core.debug.objectToString;
-	import temple.core.utils.ObjectType;
-	import temple.utils.types.BooleanUtils;
 
 	/**
 	 * The PropertyApllier can aplly the properties of a (dynamic) property-object to an other object.
 	 * 
 	 * <p>The PropertyApllier loops through all the properies of the property-object and tries to set
 	 * the values to the object.</p>
-	 *
+	 * 
+	 * TODO: rename this class
+	 * 
+	 * @includeExample PropertyApplierExample.as
+	 * 
 	 * @author Thijs Broerse
 	 */
 	public final class PropertyApplier 
@@ -57,7 +59,7 @@ package temple.utils
 		 * @param debug if set to true, warnings are logged when properties can't be applied
 		 * @return the object
 		 */
-				public static function apply(target:Object, properties:Object, debug:Boolean = false):Object
+		public static function apply(target:*, properties:Object, debug:Boolean = false):*
 		{
 			if (target == null)
 			{
@@ -70,38 +72,114 @@ package temple.utils
 				return target;
 			}
 			
-			for (var key:String in properties)
+			for (var property:String in properties)
 			{
-				if (key in target)
+				if (!setProperty(target, property, properties[property], debug))
 				{
-					try
-					{
-						switch (typeof(target[key]))
-						{
-							case ObjectType.BOOLEAN:
-							{
-								target[key] = BooleanUtils.getBoolean(properties[key]);
-								break;
-							}
-							default:
-							{
-								target[key] = properties[key];
-								break;
-							}
-						}
-					}
-					catch (error:Error)
-					{
-						if (debug) Log.warn("property '" + key + "' can not be applied to " + target, PropertyApplier);
-					}
-				}
-				else
-				{
-					if (debug) Log.warn("Target '" + target + "' has no property '" + key + "'", PropertyApplier);
+					if (debug) Log.warn("Target '" + target + "' has no property '" + property + "'", PropertyApplier);
 				}
 			}
 			
 			return target;
+		}
+		
+		/**
+		 * Sets a propety of an object
+		 * @param object the object
+		 * @param property the property that must set. Property can contain dots to set nested properties.
+		 * @param value the value to set the property to
+		 * @param debug if set to true, warnings are logged when the property can't be set
+		 * @return true if is was successful
+		 */
+		public static function setProperty(target:Object, property:String, value:*, debug:Boolean = false):Boolean
+		{
+			if (target === null) return false;
+			var index:int, prop:String;
+			
+			if (property in target)
+			{
+				try
+				{
+					switch (true)
+					{
+						case target[property] is Function && (target[property] as Function).length == 1:
+						{
+							target[property](value);
+							break;
+						}
+						case target[property] is Boolean:
+						{
+							target[property] = value;
+							break;
+						}
+						default:
+						{
+							target[property] = value;
+							break;
+						}
+					}
+				}
+				catch (error:Error)
+				{
+					if (debug) Log.warn("property '" + property + "' can not be applied to " + target + "\n" + error, PropertyApplier);
+					
+					return false;
+				}
+				return true;
+			}
+			else if ((index = property.indexOf(".")) != -1 && (prop = property.substr(0, index)) in target)
+			{
+				return setProperty(target[prop], property.substr(index + 1), value, debug);
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * Gets the value of a propety of an object
+		 * @param object the object
+		 * @param property the property that must set. Property can contain dots to set nested properties.
+		 * @return the value of the property
+		 */
+		public static function getProperty(target:Object, property:String):*
+		{
+			var index:int, prop:String;
+			
+			if (property in target)
+			{
+				return target[property];
+			}
+			else if ((index = property.indexOf(".")) != -1 && (prop = property.substr(0, index)) in target)
+			{
+				return getProperty(target[prop], property.substr(index + 1));
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * Checks if the object has a specific propety
+		 * @param object the object
+		 * @param property the property that must set. Property can contain dots to set nested properties.
+		 * @return the value of the property
+		 */
+		public static function hasProperty(target:Object, property:String):*
+		{
+			var index:int, prop:String;
+			
+			if (!target)
+			{
+				return false;
+			}
+			else if (property in target)
+			{
+				return true;
+			}
+			else if ((index = property.indexOf(".")) != -1 && (prop = property.substr(0, index)) in target)
+			{
+				return hasProperty(target[prop], property.substr(index + 1));
+			}
+			return false;
 		}
 
 		/**

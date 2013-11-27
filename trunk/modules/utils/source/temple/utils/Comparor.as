@@ -173,8 +173,8 @@ package temple.utils
 				case Comparor.OR: return value1 || value2;
 				case Comparor.NOR: return !(value1 || value2);
 
-				case Comparor.MODULO:	return !(value1 % value2);
-				case Comparor.NOT_MODULO:	return !!(value1 % value2);
+				case Comparor.MODULO: return !(value1 % value2);
+				case Comparor.NOT_MODULO: return !!(value1 % value2);
 
 				case Comparor.HAS_OWN_PROPERTY: return value1 && Object(value1).hasOwnProperty(value2);
 				

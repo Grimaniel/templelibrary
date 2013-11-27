@@ -50,14 +50,14 @@ package temple.utils
 		 * Creates a function delegate
 		 * @param method the function that needs to be delegated
 		 * @param scope the scope of the funtion
-		 * @param arguments a list of arguments to be passed to the function
+		 * @param args a list of arguments to be passed to the function
 		 * @return a function
 		 */
-		public static function create(method:Function, scope:Object = null, arguments:Array = null):Function
+		public static function create(method:Function, scope:Object = null, args:Array = null):Function
 		{
 			return function (...innerArgs):void
 			{
-				method.apply(scope, (innerArgs as Array).concat(arguments));
+				method.apply(scope, (innerArgs as Array).concat(args));
 			};
 		}
 	}

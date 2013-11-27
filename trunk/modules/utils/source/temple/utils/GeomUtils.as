@@ -42,6 +42,9 @@ package temple.utils
 	 */
 	public final class GeomUtils
 	{
+		public static const RAD2DEG:Number = 180 / Math.PI;
+		public static const DEG2RAD:Number = Math.PI / 180;
+		
 		/**
 		 * Converts an angle from radians to degrees.
 		 * <p><strong>WARNING: this is MUCH slower than the actual calculation : "radians / Math.PI * 180"</strong></p>
@@ -51,7 +54,7 @@ package temple.utils
 		 */
 		public static function radiansToDegrees(radians:Number):Number
 		{
-			return radians / Math.PI * 180;
+			return radians * RAD2DEG;
 		}
 		
 		/**
@@ -63,7 +66,7 @@ package temple.utils
 		 */
 		public static function degreesToRadians(degrees:Number):Number
 		{
-			return degrees / 180 * Math.PI;
+			return degrees * DEG2RAD;
 		}
 	}
 }

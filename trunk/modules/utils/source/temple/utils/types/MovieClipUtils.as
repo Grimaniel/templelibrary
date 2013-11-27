@@ -87,7 +87,7 @@ package temple.utils.types
 		 * @param speed indication (negative for backwards playing)
 		 * @param loop the movieclip if reached the end or beginning
 		 */
-		public static function play(movieclip:MovieClip, speed:Number = 1, loop:Boolean = false):void
+		public static function play(movieclip:MovieClip, speed:Number = 1, loop:Boolean = false, to:int = 0):void
 		{
 			MovieClipUtils.stop(movieclip);
 			
@@ -96,16 +96,16 @@ package temple.utils.types
 				if (MovieClipUtils._playInfoDictionary == null) MovieClipUtils._playInfoDictionary = new Dictionary(true);
 				
 				movieclip.addEventListener(Event.ENTER_FRAME, MovieClipUtils.handleEnterFrame, false, 0, true);
-				MovieClipUtils._playInfoDictionary[movieclip] = new PlayInfo(speed, loop, movieclip.currentFrame);
+				MovieClipUtils._playInfoDictionary[movieclip] = new PlayInfo(speed, loop, movieclip.currentFrame, to);
 			}
 		}
 		
 		/**
 		 * Plays a movieclip backwards
 		 */
-		public static function playBackwards(movieclip:MovieClip):void
+		public static function playBackwards(movieclip:MovieClip, to:int = 0):void
 		{
-			MovieClipUtils.play(movieclip, -1);
+			MovieClipUtils.play(movieclip, -1, false, to);
 		}
 		
 		private static function handleEnterFrame(event:Event):void
@@ -117,7 +117,12 @@ package temple.utils.types
 			{
 				playInfo.frame += playInfo.speed;
 				
-				if (playInfo.frame < 1 || playInfo.frame > movieclip.totalFrames)
+				if (playInfo.to && (playInfo.frame >= playInfo.to && playInfo.speed > 0 || playInfo.frame <= playInfo.to && playInfo.speed < 0))
+				{
+					playInfo.frame = playInfo.to;
+					MovieClipUtils.stop(movieclip);
+				}
+				else if (playInfo.frame < 1 || playInfo.frame > movieclip.totalFrames)
 				{
 					if (playInfo.loop)
 					{
@@ -336,11 +341,13 @@ class PlayInfo
 	public var speed:Number;
 	public var loop:Boolean;
 	public var frame:int;
+	public var to:int;
 
-	public function PlayInfo(speed:Number, loop:Boolean, frame:int)
+	public function PlayInfo(speed:Number, loop:Boolean, frame:int, to:int)
 	{
 		this.speed = speed;
 		this.loop = loop;
 		this.frame = frame;
+		this.to = to;
 	}
 }

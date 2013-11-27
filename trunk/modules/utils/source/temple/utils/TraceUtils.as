@@ -55,7 +55,7 @@ package temple.utils
 		 * Default properties of every object which are traced in the 'rootTrace' method.
 		 * You can change this array if you want to trace more (or less) properties
 		 */
-		public static const ROOT_TRACE_PROPS:Vector.<String> = Vector.<String>(['name', 'visible', 'alpha', 'mouseEnabled', 'mouseChildren']);
+		public static const ROOT_TRACE_PROPS:Vector.<String> = Vector.<String>(['name', 'visible', 'alpha', 'mouseEnabled', 'mouseChildren' , 'text']);
 		
 		/**
 		 * Log the stack trace only for the debugger version of Flash Player and the AIR Debug Launcher (ADL)
