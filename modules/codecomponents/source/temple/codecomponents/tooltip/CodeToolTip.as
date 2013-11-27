@@ -35,16 +35,17 @@
 
 package temple.codecomponents.tooltip 
 {
-	import com.greensock.TweenLite;
-	import flash.display.LineScaleMode;
-	import flash.events.Event;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
 	import temple.codecomponents.style.CodeStyle;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
 	import temple.ui.layout.liquid.LiquidSprite;
 	import temple.ui.tooltip.ToolTip;
+
+	import com.greensock.TweenLite;
+
+	import flash.display.LineScaleMode;
+	import flash.events.Event;
+	import flash.text.TextField;
 
 
 
@@ -82,7 +83,7 @@ package temple.codecomponents.tooltip
 			
 			super.init();
 			
-			autoSize = TextFieldAutoSize.LEFT;
+			autoSize = true;
 			padding = 0;
 			paddingLeft = paddingRight = 2;
 			
@@ -90,10 +91,10 @@ package temple.codecomponents.tooltip
 		}
 
 		
-		override public function set label(value:String):void 
+		override public function set text(value:String):void 
 		{
 			textField.width = 400;
-			super.label = value;
+			super.text = value;
 			
 			var height:Number = textField.height;
 			

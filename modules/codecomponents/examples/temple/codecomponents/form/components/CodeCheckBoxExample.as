@@ -13,7 +13,7 @@
 package
 {
 	import temple.codecomponents.form.components.CodeCheckBox;
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	import temple.utils.ValueBinder;
 
 	import flash.display.DisplayObject;
@@ -31,7 +31,7 @@ package
 			// Easy way to handle the value of a CheckBox is using a ValueBinder
 			new ValueBinder(
 				add(new CodeCheckBox("Click here", "Selected", false, "Unselected"), 10, 50) as CodeCheckBox,
-				add(new CodeLabel(), 10, 70), "label");
+				add(new CodeLabel(), 10, 70), "text");
 		}
 		
 		private function add(child:DisplayObject, x:Number, y:Number):DisplayObject

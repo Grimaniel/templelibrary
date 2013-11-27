@@ -44,7 +44,7 @@ package temple.codecomponents.windows
 	import temple.codecomponents.buttons.CodeCloseButton;
 	import temple.codecomponents.buttons.CodeCollapseButton;
 	import temple.codecomponents.buttons.CodeExpandButton;
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	import temple.codecomponents.scroll.CodeScrollBar;
 	import temple.codecomponents.style.CodeStyle;
 	import temple.common.enum.Align;
@@ -239,14 +239,14 @@ package temple.codecomponents.windows
 			this.closable = closable;
 		}
 
-		public function get label():String
+		public function get text():String
 		{
-			return _label ? _label.label : null;
+			return _label ? _label.text : null;
 		}
 
-		public function set label(value:String):void
+		public function set text(value:String):void
 		{
-			_label.label = value;
+			_label.text = value;
 		}
 
 		public function get draggable():Boolean

@@ -13,7 +13,7 @@
 package  
 {
 	import temple.codecomponents.form.components.CodeList;
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	import temple.utils.ValueBinder;
 
 	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
@@ -43,8 +43,8 @@ package
 			output.y = 220;
 			addChild(output);
 			
-			// When the list is changed, the value will be set in the "label" property of output
-			new ValueBinder(list, output, "label");
+			// When the list is changed, the value will be set in the "text" property of output
+			new ValueBinder(list, output, "text");
 			
 			// Create a 'liquid' List by setting some liquid properties. Resize the SWF to see the list resize.
 			list = new CodeList();

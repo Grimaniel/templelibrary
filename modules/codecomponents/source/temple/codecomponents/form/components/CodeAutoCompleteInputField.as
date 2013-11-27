@@ -40,6 +40,7 @@ package temple.codecomponents.form.components
 	import temple.core.display.CoreShape;
 	import temple.ui.form.components.AutoCompleteInputField;
 	import temple.ui.form.components.IList;
+	import temple.ui.states.error.ErrorFadeState;
 	import temple.ui.states.focus.FocusFadeState;
 	import temple.utils.types.TextFormatUtils;
 
@@ -98,6 +99,14 @@ package temple.codecomponents.form.components
 			icon.x = width - 7;
 			icon.y = height * .5;
 			icon.filters = CodeStyle.iconFilters;
+			
+			// error state
+			var error:ErrorFadeState = new ErrorFadeState(.2, .2);
+			error.graphics.beginFill(0xff0000, 1);
+			error.graphics.drawRect(-1, -1, width+2, height+2);
+			error.graphics.endFill();
+			addChild(error);
+			error.filters = CodeStyle.errorFilters;
 			
 			if (items) addItems(items);
 			this.inSearch = inSearch;
