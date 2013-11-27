@@ -35,9 +35,9 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.enum.FacebookObjectType;
 	import temple.facebook.data.FacebookParser;
 	import temple.facebook.data.enum.FacebookConnection;
+	import temple.facebook.data.enum.FacebookObjectType;
 	import temple.facebook.data.facebook;
 	import temple.facebook.service.IFacebookService;
 
@@ -90,7 +90,7 @@ package temple.facebook.data.vo
 		facebook var width:Number;
 		facebook var images:Vector.<IFacebookImageData>;
 		facebook var link:String;
-		facebook var place:IFacebookProfileData;
+		facebook var place:IFacebookPageData;
 		facebook var created_time:Date;
 		facebook var updated_time:Date;
 		facebook var position:int = -1;
@@ -100,6 +100,8 @@ package temple.facebook.data.vo
 		facebook var name_tags:Vector.<IFacebookTagData>;
 		facebook var offset_y:int = -1;
 		facebook var post_id:String;
+		facebook var application:IFacebookApplicationData;
+		facebook var like_info:Object;
 		
 		private var _imageOriginal:IFacebookImageData;
 		private var _imageBig:IFacebookImageData;
@@ -111,6 +113,14 @@ package temple.facebook.data.vo
 		public function FacebookPhotoData(service:IFacebookService)
 		{
 			super(service, FacebookObjectType.PHOTO, FacebookPhotoData.CONNECTIONS);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get place():IFacebookPageData
+		{
+			return facebook::place;
 		}
 		
 		/**
@@ -135,6 +145,22 @@ package temple.facebook.data.vo
 		public function get tags():Vector.<IFacebookPhotoTagData>
 		{
 			return facebook::tags;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getTag(user:IFacebookUserData):IFacebookPhotoTagData
+		{
+			if (facebook::tags)
+			{
+				for (var i:int = 0, leni:int = facebook::tags.length; i < leni; i++)
+				{
+					if (facebook::tags[i].user == user) return facebook::tags[i];
+				}
+			}
+			
+			return null;
 		}
 		
 		/**

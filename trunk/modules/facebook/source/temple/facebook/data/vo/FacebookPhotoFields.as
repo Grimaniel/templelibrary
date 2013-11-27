@@ -36,7 +36,6 @@
 package temple.facebook.data.vo
 {
 	import temple.facebook.data.enum.FacebookPermission;
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for photos.
@@ -49,8 +48,16 @@ package temple.facebook.data.vo
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FacebookPhotoFields extends AbstractFacebookFields
+	public class FacebookPhotoFields extends FacebookLocationFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookPhotoData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookPhotoFields);
+		}
+		
 		/**
 		 * The id of the Photo
 		 */
@@ -190,9 +197,12 @@ package temple.facebook.data.vo
 		[Alias(graph="not-available", fql="album_object_id")]
 		public var album:Boolean;
 
-		public function FacebookPhotoFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookPhotoFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 		
 		override public function getPermissions(me:Boolean = true):Vector.<String>

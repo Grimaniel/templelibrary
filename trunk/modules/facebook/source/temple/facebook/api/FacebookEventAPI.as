@@ -35,24 +35,21 @@
 
 package temple.facebook.api
 {
-	import temple.common.interfaces.IDataResult;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
 	import temple.facebook.data.enum.FacebookConnection;
 	import temple.facebook.data.enum.FacebookConstant;
 	import temple.facebook.data.enum.FacebookFieldAlias;
 	import temple.facebook.data.enum.FacebookTable;
-	import temple.facebook.data.facebook;
 	import temple.facebook.data.vo.FacebookEventData;
 	import temple.facebook.data.vo.FacebookEventFields;
 	import temple.facebook.data.vo.FacebookRSVPData;
 	import temple.facebook.data.vo.FacebookUserData;
 	import temple.facebook.data.vo.IFacebookEventData;
+	import temple.facebook.data.vo.IFacebookObjectData;
 	import temple.facebook.data.vo.IFacebookUserData;
 	import temple.facebook.service.IFacebookCall;
 	import temple.facebook.service.IFacebookService;
-
-	import flash.events.Event;
 
 	/**
 	 * @private
@@ -208,26 +205,11 @@ package temple.facebook.api
 				throwError(new TempleArgumentError(this, "user cannot be null"));
 				return null;
 			}
-			var call:IFacebookCall = service.get(callback, FacebookConnection.EVENTS, userId, FacebookEventData, null, null, forceReload);
 			
-			var handler:Function = function(event:Event):void
-			{
-				call.removeEventListener(Event.COMPLETE, handler);
-				
-				var result:IDataResult = call.result;
-				var data:Array = result.data as Array;
-				
-				if (result.success && data)
-				{
-					var user:IFacebookUserData = service.parser.parse(userId, FacebookUserData) as IFacebookUserData;
-					for (var i:int = 0, leni:int = data.length; i < leni; i++)
-					{
-						data[i] = new FacebookRSVPData(user, FacebookEventData(data[i]),  FacebookEventData(data[i]).facebook::rsvp_status);
-					}
-				}
-			};
-			
-			call.addEventListener(Event.COMPLETE, handler, false, int.MAX_VALUE);
+			// Check event
+			var object:IFacebookObjectData = service.getObject(userId, true, FacebookUserData);
+			if (object && !(object is IFacebookUserData)) throwError(new TempleArgumentError(this, "object is not an user: " + object));
+			var call:IFacebookCall = service.get(callback, FacebookConnection.EVENTS, userId, FacebookRSVPData, null, null, forceReload);
 			
 			return call;
 		}
@@ -237,35 +219,18 @@ package temple.facebook.api
 		 */
 		public function getEventsByName(name:String, callback:Function = null, fields:FacebookEventFields = null):IFacebookCall
 		{
-			var fql:String = "SELECT " + (fields ? fields.getFields(FacebookFieldAlias.FQL) : "eid, name, start_time") + " FROM " + FacebookTable.EVENT + " WHERE name = \"" + name + "\"";
+			var fql:String = "SELECT " + (fields ? fields.getFieldsList(FacebookFieldAlias.FQL) : "eid, name, start_time") + " FROM " + FacebookTable.EVENT + " WHERE name = \"" + name + "\"";
 			
 			return service.fql(fql, callback, FacebookEventData, fields, FacebookConstant.ME);
 		}
 		
 		private function get(eventId:String, method:String, callback:Function, forceReload:Boolean = false):IFacebookCall
 		{
-			var call:IFacebookCall = service.get(callback, method, eventId, FacebookRSVPData, null, null, forceReload);
+			// Check event
+			var object:IFacebookObjectData = service.getObject(eventId, true, FacebookEventData);
+			if (object && !(object is IFacebookEventData)) throwError(new TempleArgumentError(this, "object is not an event: " + object));
 			
-			var handler:Function = function(event:Event):void
-			{
-				call.removeEventListener(Event.COMPLETE, handler);
-				
-				var result:IDataResult = call.result;
-				
-				if (result.success && result.data is Array)
-				{
-					var data:IFacebookEventData = service.parser.parse(eventId, FacebookEventData) as IFacebookEventData;
-					for each (var rvsp:FacebookRSVPData in result.data)
-					{
-						rvsp.facebook::event = data;
-						rvsp.facebook::user = service.parser.parse({id: rvsp.facebook::id, name: rvsp.facebook::name}, FacebookUserData) as IFacebookUserData;
-					}
-				}
-			};
-			
-			call.addEventListener(Event.COMPLETE, handler, false, int.MAX_VALUE);
-			
-			return call;
+			return service.get(callback, method, eventId, FacebookRSVPData, null, null, forceReload);
 		}
 	}
 }

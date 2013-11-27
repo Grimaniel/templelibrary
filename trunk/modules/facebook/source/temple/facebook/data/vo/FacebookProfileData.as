@@ -63,6 +63,7 @@ package temple.facebook.data.vo
 		facebook var description:String;
 		facebook var url:String;
 		facebook var version:String;
+		facebook var category_list:Object;
 		
 		private var _object:IFacebookObjectData;
 

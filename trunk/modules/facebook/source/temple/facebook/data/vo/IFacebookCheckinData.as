@@ -35,7 +35,6 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.vo.IFacebookObjectData;
 
 	/**
 	 * A Checkin represents a single visit by a user to a location. The User and Page objects have checkin connections.
@@ -45,7 +44,7 @@ package temple.facebook.data.vo
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IFacebookCheckinData extends IFacebookObjectData
+	public interface IFacebookCheckinData extends IFacebookLocatedData
 	{
 		/**
 		 * The user who made the checkin
@@ -56,11 +55,6 @@ package temple.facebook.data.vo
 		 * The users the author tagged in the checkin
 		 */
 		function get tags():Vector.<IFacebookUserData>;
-
-		/**
-		 * Information about the Facebook Page that represents the location of the checkin
-		 */
-		function get place():IFacebookPageData;
 
 		/**
 		 * The application that made the checkin

@@ -68,7 +68,7 @@ package temple.facebook.api
 		function getPost(id:String, callback:Function = null, fields:FacebookPostFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall;
 
 		/**
-		 * Get all the post on the wall of a user or event.
+		 * Get the post on the wall of a user or event.
 		 * 
 		 * <p>If successful, the result contains an Array with IFacebookPostData objects.</p>
 		 *
@@ -76,8 +76,8 @@ package temple.facebook.api
 		 * 
 		 * @param callback a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
 		 * @param id the id of the user (or the album for photos or event for invites).
-		 * @param offset the position of the first item in the list
-		 * @param limit the maximum amount of items.
+		 * @param since date range of the posts
+		 * @param until date range of the posts
 		 * @param fields a FacebookPostFields object with all the requested fields set to true.
 		 * @param params option params to send with the request.
 		 * @param forceReload when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
@@ -86,6 +86,21 @@ package temple.facebook.api
 		 * @see https://developers.facebook.com/blog/post/478/
 		 */
 		function getPosts(callback:Function = null, id:String = 'me', since:Date = null, until:Date = null, fields:FacebookPostFields = null, params:Object = null, forceReload:Boolean = false):IFacebookCall;
+		
+		/**
+		 * Get the all post on the wall of a user or event.
+		 * 
+		 * <p>If successful, the result contains an Array with IFacebookPostData objects.</p>
+		 * 
+		 * @param callback a callback method which must be called when the data is ready. This callback must accept one (and only one) argument of type IFacebookResult. If the call was successful the success Boolean of the result is true and the photos are in the data property of the result object.
+		 * @param id the id of the user (or the album for photos or event for invites).
+		 * @param fields a FacebookPostFields object with all the requested fields set to true.
+		 * @param forceReload when caching is enabled you can force the service to reload the data and not get the cached data when setting this value to true.
+		 * 
+		 * @see temple.facebook.data.vo.IFacebookPostData
+		 * @see https://developers.facebook.com/blog/post/478/
+		 */
+		function getAllPosts(callback:Function = null, id:String = 'me', fields:FacebookPostFields = null, forceReload:Boolean = false):IFacebookCall;
 		
 		/**
 		 * Publish a new post on the given profile's feed/wall

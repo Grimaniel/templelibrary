@@ -44,10 +44,18 @@ package temple.facebook.data.vo
 	 */
 	public interface IFacebookCollegeData
 	{
-		function get school():IFacebookObjectData;
+		function get school():IFacebookPageData;
+		
+		/**
+		 * Name of the school
+		 */
+		function get name():String;
 
 		function get year():uint;
 
+		/**
+		 * @see temple.facebook.data.enum.FacebookCollegeType
+		 */
 		function get type():String;
 
 		function get concentration():Vector.<IFacebookObjectData>;

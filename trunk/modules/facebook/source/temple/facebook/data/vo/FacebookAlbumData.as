@@ -79,6 +79,7 @@ package temple.facebook.data.vo
 		facebook var can_upload:Trivalent;
 		facebook var likes:Vector.<IFacebookProfileData>;
 		facebook var comments:Vector.<IFacebookCommentData>;
+		facebook var place:Object;
 		
 		private var _picture:IFacebookPhotoPictureData;
 		private var _coverPhoto:IFacebookPhotoData;

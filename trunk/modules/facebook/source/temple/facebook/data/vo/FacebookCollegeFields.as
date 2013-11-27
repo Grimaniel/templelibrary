@@ -35,7 +35,6 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * @private
@@ -44,6 +43,14 @@ package temple.facebook.data.vo
 	 */
 	internal class FacebookCollegeFields extends AbstractFacebookFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookCollegeData</code>
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookCollegeFields);
+		}
+		
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookEducationData#school
 		 */
@@ -75,10 +82,9 @@ package temple.facebook.data.vo
 		 */
 		public var degree:Boolean;
 		
-		
-		public function FacebookCollegeFields(selectAll:Boolean = false)
+		public function FacebookCollegeFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }

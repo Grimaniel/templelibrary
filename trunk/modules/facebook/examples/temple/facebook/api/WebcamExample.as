@@ -23,7 +23,7 @@ package
 	import temple.codecomponents.form.components.CodeComboBox;
 	import temple.codecomponents.form.components.CodeInputField;
 	import temple.codecomponents.form.components.CodeRadioButton;
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	import temple.codecomponents.windows.CodeWindow;
 	import temple.common.interfaces.ISelectable;
 	import temple.core.display.CoreBitmap;
@@ -247,7 +247,7 @@ package
 		{
 			_photoTimer.reset();
 			_countDown.visible = true;
-			_countDown.label = String(_photoTimer.repeatCount - _photoTimer.currentCount);
+			_countDown.text = String(_photoTimer.repeatCount - _photoTimer.currentCount);
 			_photoTimer.start();
 			_photoButton.disable();
 		}
@@ -256,7 +256,7 @@ package
 		{
 			if (event.type == TimerEvent.TIMER)
 			{
-				_countDown.label = String(_photoTimer.repeatCount - _photoTimer.currentCount);
+				_countDown.text = String(_photoTimer.repeatCount - _photoTimer.currentCount);
 			}
 			else if (event.type == TimerEvent.TIMER_COMPLETE)
 			{

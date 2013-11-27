@@ -40,13 +40,13 @@ package temple.facebook.data.vo
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IFacebookLikeData
+	public interface IFacebookLikeData extends IFacebookCoupleData
 	{
 		/**
 		 * A reference to the user.
 		 */
 		function get user():IFacebookUserData;
-
+		
 		/**
 		 * A reference to the 'liked' page.
 		 */

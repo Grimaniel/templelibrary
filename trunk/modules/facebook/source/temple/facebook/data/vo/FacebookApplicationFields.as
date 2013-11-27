@@ -35,7 +35,6 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for Facebook applications.
@@ -49,6 +48,14 @@ package temple.facebook.data.vo
 	 */
 	public class FacebookApplicationFields extends AbstractFacebookFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookApplicationData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookApplicationFields);
+		}
+		
 		/**
 		 * The application ID
 		 */
@@ -113,9 +120,12 @@ package temple.facebook.data.vo
 		 */
 		public var namespace:Boolean;
 		
-		public function FacebookApplicationFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookApplicationFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }

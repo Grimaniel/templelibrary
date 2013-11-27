@@ -36,7 +36,6 @@
 package temple.facebook.data.vo
 {
 	import temple.facebook.data.enum.FacebookPermission;
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for posts.
@@ -50,8 +49,16 @@ package temple.facebook.data.vo
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public class FacebookPostFields extends AbstractFacebookFields
+	public class FacebookPostFields extends FacebookLocationFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookPostData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookPostFields);
+		}
+		
 		/**
 		 * The post ID
 		 */
@@ -77,6 +84,12 @@ package temple.facebook.data.vo
 		 */
 		[Alias(graph="message_tags")]
 		public var messageTags:Boolean;
+		
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookPostData#withTags
+		 */
+		[Alias(graph="with_tags")]
+		public var withTags:Boolean;
 		
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookPostData#picture
@@ -129,11 +142,6 @@ package temple.facebook.data.vo
 		public var privacy:Boolean;
 		
 		/**
-		 * A string indicating the type for this post (including link, photo, video)
-		 */
-		public var type:Boolean;
-		
-		/**
 		 * @copy temple.facebook.data.vo.IFacebookPostData#likes
 		 */
 		public var likes:Boolean;
@@ -183,9 +191,12 @@ package temple.facebook.data.vo
 		 */
 		public var targeting:Boolean;
 		
-		public function FacebookPostFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookPostFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 		
 		override public function getPermissions(me:Boolean = true):Vector.<String>

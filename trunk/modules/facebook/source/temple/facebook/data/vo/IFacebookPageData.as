@@ -51,9 +51,14 @@ package temple.facebook.data.vo
 		function get link():String;
 		
 		/**
-		 * Category of the object, like 'Book', 'Video' 
+		 * Category of the page
 		 */
 		function get category():String;
+		
+		/**
+		 * The Page's categories
+		 */
+		function get categories():Vector.<IFacebookObjectData>
 
 		/**
 		 * The number of users who like the Page
@@ -64,7 +69,7 @@ package temple.facebook.data.vo
 		/**
 		 * The Page's street address, latitude, and longitude (when available)
 		 */
-		function get location():Object;
+		function get location():IFacebookLocationData;
 		
 		/**
 		 * The phone number (not always normalized for country code) for the Page.
@@ -95,6 +100,11 @@ package temple.facebook.data.vo
 		 * The number of people that are talking about this page (last seven days)
 		 */
 		function get numTalkingAbouts():int;
+		
+		/**
+		 * Alternates for this page
+		 */
+		function get alternates():Vector.<IFacebookPageData>;
 
 	}
 }

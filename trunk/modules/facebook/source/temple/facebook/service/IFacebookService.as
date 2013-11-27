@@ -114,11 +114,28 @@ package temple.facebook.service
 		 * List of requested permissions. You can add more permissions by simply pushing these permissions to the list.
 		 * 
 		 * @example
-	 	* <listing version="3.0">
-	 	* _facebookAPI.permissions.push(FacebookPermission.PUBLISH_STREAM);
-	 	* </listing>
+	  	 * <listing version="3.0">
+	 	 * _facebookAPI.permissions.push(FacebookPermission.PUBLISH_STREAM);
+	 	 * </listing>
+	 	 * 
+	 	 * @see temple.facebook.data.enum.FacebookPermission
 		 */
 		function get permissions():Vector.<String>;
+		
+		/**
+		 * List of optional permissions. You can add more permissions by simply pushing these permissions to the list.
+		 * 
+		 * <p>Optional permissions are only asked for when one or more of the other permissions is asked. If all other
+		 * permissions are already allowed, the optional permissions are ignored.</p>
+		 * 
+		 * @example
+	 	 * <listing version="3.0">
+	 	 * _facebookAPI.optionalPermissions.push(FacebookPermission.PUBLISH_STREAM);
+	 	 * </listing>
+	 	 * 
+	 	 * @see temple.facebook.data.enum.FacebookPermission
+		 */
+		function get optionalPermissions():Vector.<String>;
 		
 		/**
 		 * A Boolean which indicates if the service is already initialized and ready to use.
@@ -336,6 +353,16 @@ package temple.facebook.service
 		function getProfile(id:String, createIfNull:Boolean = false):IFacebookProfileData;
 		
 		/**
+		 * If set to true the service will do an extra call to check the allowed permissions.
+		 */
+		function get checkPermissionsAfterLogin():Boolean;
+
+		/**
+		 * @private
+		 */
+		function set checkPermissionsAfterLogin(value:Boolean):void;
+		
+		/**
 		 * Returns a reference to unparsed result related to the (parsed) data.
 		 */
 		function getUnparsedResult(data:Object):Object;
@@ -378,7 +405,7 @@ package temple.facebook.service
 		 * @see com.facebook.graph.net.FacebookDesktop#request()
 		 * @see http://developers.facebook.com/docs/api#reading
 		 */
-		function nextPage(data:Object, callback:Function):IFacebookCall;
+		function getNext(data:Object, callback:Function):IFacebookCall;
 		
 		/**
 		 * Retrieves the previous page that is associated with result object passed in.
@@ -390,6 +417,6 @@ package temple.facebook.service
 		 * @see com.facebook.graph.net.FacebookDesktop#request()
 		 * @see http://developers.facebook.com/docs/api#reading
 		 */
-		function previousPage(data:Object, callback:Function):IFacebookCall;
+		function getPrevious(data:Object, callback:Function):IFacebookCall;
 	}
 }

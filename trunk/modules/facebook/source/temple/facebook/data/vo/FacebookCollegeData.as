@@ -47,7 +47,7 @@ package temple.facebook.data.vo
 	{
 		public static const FIELDS:FacebookCollegeFields = new FacebookCollegeFields();
 		
-		facebook var school:IFacebookObjectData;
+		facebook var school:IFacebookPageData;
 		facebook var year:uint;
 		facebook var concentration:Vector.<IFacebookObjectData>;
 		facebook var among:Vector.<IFacebookUserData>;
@@ -61,9 +61,14 @@ package temple.facebook.data.vo
 			toStringProps.push("year", "school");
 		}
 		
-		public function get school():IFacebookObjectData
+		public function get school():IFacebookPageData
 		{
 			return facebook::school;
+		}
+		
+		public function get name():String
+		{
+			return facebook::school ? facebook::school.name : null;
 		}
 
 		public function get year():uint

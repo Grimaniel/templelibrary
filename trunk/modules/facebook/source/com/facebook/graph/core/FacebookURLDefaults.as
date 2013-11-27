@@ -83,20 +83,32 @@ package com.facebook.graph.core {
      */
 	public static var LOGIN_SUCCESS_URL:String
       = 'http://www.facebook.com/connect/login_success.html';
+
+	public static var MOBILE_LOGIN_SUCCESS_URL:String
+      = 'http://m.facebook.com/connect/login_success.html';
 	  
 	public static var LOGIN_SUCCESS_SECUREURL:String
 	  = 'https://www.facebook.com/connect/login_success.html';
 
+	public static var MOBILE_LOGIN_SUCCESS_SECUREURL:String
+	  = 'https://m.facebook.com/connect/login_success.html';
+
 	public static var LOGIN_FAIL_URL:String
 	  = 'http://www.facebook.com/connect/login_success.html?error_reason';
+
+	public static var MOBILE_LOGIN_FAIL_URL:String
+	  = 'http://m.facebook.com/connect/login_success.html?error_reason';
 	
 	public static var LOGIN_FAIL_SECUREURL:String 
 	  = 'https://www.facebook.com/connect/login_success.html?error_reason';
+
+	public static var MOBILE_LOGIN_FAIL_SECUREURL:String 
+	  = 'https://m.facebook.com/connect/login_success.html?error_reason';
 
 	public static var LOGIN_URL:String
 	  = 'https://login.facebook.com/login.php';
 
 	public static var AUTHORIZE_CANCEL:String
-	  = 'https://graph.facebook.com/oauth/authorize_cancel';
+	  = 'https://graph.facebook.com/oauth/authorize_cancel'
   }
 }

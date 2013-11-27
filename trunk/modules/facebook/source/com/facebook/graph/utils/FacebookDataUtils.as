@@ -182,7 +182,8 @@ package com.facebook.graph.utils {
 
 			if (url.indexOf('?') != -1) {
 				params = url.slice(url.indexOf('?')+1);
-			} else if (url.indexOf('#') != -1) {
+			} 
+			if (url.indexOf('#') != -1) {
 				params = url.slice(url.indexOf('#')+1);
 			}
 

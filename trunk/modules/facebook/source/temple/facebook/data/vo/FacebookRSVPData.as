@@ -35,8 +35,11 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.facebook;
+	import temple.core.errors.TempleArgumentError;
+	import temple.core.errors.throwError;
 	import temple.core.CoreObject;
+	import temple.facebook.data.facebook;
+	import temple.facebook.service.IFacebookService;
 
 	/**
 	 * @private
@@ -45,30 +48,54 @@ package temple.facebook.data.vo
 	 */
 	public class FacebookRSVPData extends CoreObject implements IFacebookRSVPData
 	{
-		facebook var id:String;
-		facebook var name:String;
 		facebook var rsvp_status:String;
 		
-		facebook var user:IFacebookUserData;
-		facebook var event:IFacebookEventData;
+		private var _user:IFacebookUserData;
+		private var _event:IFacebookEventData;
 		
-		public function FacebookRSVPData(user:IFacebookUserData = null, event:IFacebookEventData = null, status:String = null)
+		private var _service:IFacebookService;
+		
+		public function FacebookRSVPData(service:IFacebookService, user:IFacebookUserData = null, event:IFacebookEventData = null, status:String = null)
 		{
 			super();
-
-			facebook::user = user;
-			facebook::event = event;
+			
+			_service = service;
+			_user = user;
+			_event = event;
+			
 			facebook::rsvp_status = status;
 			
 			toStringProps.push("user", "event", "status");
 		}
-
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function couple(parent:Object):Class
+		{
+			if (parent is IFacebookUserData && !_user)
+			{
+				_user = IFacebookUserData(parent);
+				return FacebookEventData;
+			}
+			else if (parent is IFacebookEventData && !_event)
+			{
+				_event = IFacebookEventData(parent);
+				return FacebookUserData;
+			}
+			else
+			{
+				throwError(new TempleArgumentError(this, "Coupling failed " + parent));
+			}
+			return null;
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
 		public function get user():IFacebookUserData
 		{
-			return facebook::user;
+			return _user;
 		}
 		
 		/**
@@ -76,7 +103,7 @@ package temple.facebook.data.vo
 		 */
 		public function get event():IFacebookEventData
 		{
-			return facebook::event;
+			return _event;
 		}
 
 		/**
@@ -92,7 +119,7 @@ package temple.facebook.data.vo
 		 */
 		public function get start():Date
 		{
-			return facebook::event ? facebook::event.start : null;
+			return _event ? _event.start : null;
 		}
 	}
 }

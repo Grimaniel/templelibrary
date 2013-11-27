@@ -36,6 +36,7 @@
 package temple.facebook.data.vo
 {
 	import temple.data.index.Indexer;
+	import temple.facebook.data.FacebookParser;
 	import temple.facebook.data.enum.FacebookConnection;
 	import temple.facebook.data.enum.FacebookObjectType;
 	import temple.facebook.data.facebook;
@@ -73,12 +74,15 @@ package temple.facebook.data.vo
 			facebook.registerVO(FacebookConnection.LINKS, FacebookPostData);
 			facebook.registerVO(FacebookConnection.HOME, FacebookPostData);
 		}
+		
+		FacebookParser.facebook::CLASS_MAP[FacebookObjectType.POST] = FacebookPostData;
+		FacebookParser.facebook::CLASS_MAP[FacebookObjectType.STATUS] = FacebookPostData;
 
 		facebook var from:IFacebookProfileData;
 		facebook var to:Vector.<IFacebookProfileData>;
 		facebook var message:String;
 		facebook var message_tags:Vector.<IFacebookTagData>;
-		facebook var with_tags:Vector.<IFacebookTagData>;
+		facebook var with_tags:Vector.<IFacebookProfileData>;
 		facebook var picture:String;
 		facebook var link:String;
 		facebook var caption:String;
@@ -96,7 +100,7 @@ package temple.facebook.data.vo
 		facebook var updated_time:Date;
 		facebook var targeting:Object;
 		facebook var type:String;
-		facebook var place:IFacebookProfileData;
+		facebook var place:IFacebookPageData;
 		facebook var story:String;
 		facebook var shares:Object;
 		facebook var status_type:String;
@@ -107,7 +111,7 @@ package temple.facebook.data.vo
 		{
 			super(service, FacebookObjectType.POST);
 			
-			toStringProps.push("from");
+			toStringProps.push("from", "message");
 		}
 		
 		/**
@@ -148,6 +152,15 @@ package temple.facebook.data.vo
 		public function get messageTags():Vector.<IFacebookTagData>
 		{
 			return facebook::message_tags;
+		}
+		
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get withTags():Vector.<IFacebookProfileData>
+		{
+			return facebook::with_tags;
 		}
 
 		/**
@@ -292,6 +305,14 @@ package temple.facebook.data.vo
 		public function get postType():String
 		{
 			return facebook::type;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get place():IFacebookPageData
+		{
+			return facebook::place;
 		}
 	}
 }

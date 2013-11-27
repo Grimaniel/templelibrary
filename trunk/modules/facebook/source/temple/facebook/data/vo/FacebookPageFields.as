@@ -35,7 +35,6 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for pages.
@@ -50,8 +49,17 @@ package temple.facebook.data.vo
 	public class FacebookPageFields extends AbstractFacebookFields
 	{
 		/**
+		 * Returns a list of all fields of a <code>IFacebookPageData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookPageFields);
+		}
+		
+		/**
 		 * The Page's ID
 		 */
+		[Alias(fql="page_id")]
 		public var id:Boolean;
 		
 		/**
@@ -67,6 +75,7 @@ package temple.facebook.data.vo
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookPageData#category
 		 */
+		[Alias(fql="type")]
 		public var category:Boolean;
 		
 		/**
@@ -104,9 +113,17 @@ package temple.facebook.data.vo
 		 */
 		public var website:Boolean;
 		
-		public function FacebookPageFields(selectAll:Boolean = false)
+		/**
+		 * @copy temple.facebook.data.vo.IFacebookPageData#alternates
+		 */
+		public var alternates:Boolean;
+		
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookPageFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }

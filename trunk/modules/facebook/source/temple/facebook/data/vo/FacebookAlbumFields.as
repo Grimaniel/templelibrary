@@ -50,6 +50,14 @@ package temple.facebook.data.vo
 	public class FacebookAlbumFields extends AbstractFacebookFields
 	{
 		/**
+		 * Returns a list of all fields of a <code>IFacebookAlbumData</code>
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookAlbumFields);
+		}
+		
+		/**
 		 * The id of the Album
 		 */
 		[Alias(fql="object_id")]
@@ -136,9 +144,9 @@ package temple.facebook.data.vo
 		[Alias(graph="type", fql="type")]
 		public var albumType:Boolean;
 		
-		public function FacebookAlbumFields(selectAll:Boolean = false)
+		public function FacebookAlbumFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }

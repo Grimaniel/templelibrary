@@ -167,6 +167,7 @@ package temple.facebook.service
 		private var _secure:Boolean;
 		private var _voRegistry:HashMap;
 		private var _permissions:Vector.<String>;
+		private var _optionalPermissions:Vector.<String>;
 		private var _autoPermissions:Boolean;
 		private var _initialized:Boolean;
 		private var _queue:Vector.<IFacebookCall>;
@@ -197,6 +198,7 @@ package temple.facebook.service
 			_adapter = adapter;
 			_autoPermissions = autoPermissions;
 			_permissions = new Vector.<String>();
+			_optionalPermissions = new Vector.<String>();
 			_queue = new Vector.<IFacebookCall>();
 			_parseMap = new Dictionary(true);
 			this.cache = cache;
@@ -287,6 +289,14 @@ package temple.facebook.service
 		public function get permissions():Vector.<String>
 		{
 			return _permissions;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get optionalPermissions():Vector.<String>
+		{
+			return _optionalPermissions;
 		}
 		
 		/**
@@ -433,6 +443,12 @@ package temple.facebook.service
 				
 				if (!isLoggedIn || login)
 				{
+					// Add optional permissions
+					for each (permission in _optionalPermissions)
+					{
+						if (permissions.indexOf(permission) == -1) permissions.push(permission);
+					}
+					
 					/**
 					 * For some reason the 'availablePermissions' property is not filled with the first callback. The availablePermissions is filled later.
 					 * For that reason we just wait a frame the let the availablePermissions get filled. Not sure if this is the best solution.
@@ -452,12 +468,12 @@ package temple.facebook.service
 		{
 			if (debug) logDebug("onLogin: " + success);
 			
-			var permission:String;
+			var permission:String, permissions:Vector.<String>;
 			if (success is FacebookAuthResponse)
 			{
 				var response:FacebookAuthResponse = FacebookAuthResponse(success);
 				
-				if (!_me)
+				if (!_me && response.uid)
 				{
 					_me = _parser.parse(response.uid, FacebookUserData) as IFacebookUserData;
 					dispatchEvent(new FacebookEvent(FacebookEvent.LOGIN));
@@ -496,13 +512,14 @@ package temple.facebook.service
 				else
 				{
 					_allowed ||= {};
-					
+					permissions = new Vector.<String>();
 					for each (permission in call.params)
 					{
 						_allowed[permission] = 1;
+						permissions.push(permission);
 					}
-					if (debug) logDebug("Allowed permissions: " + _permissions.join(", "));
-					dispatchEvent(new FacebookPermissionEvent(FacebookPermissionEvent.ALLOWED, _permissions.concat()));
+					if (debug) logDebug("Allowed permissions: " + permissions.join(", "));
+					dispatchEvent(new FacebookPermissionEvent(FacebookPermissionEvent.ALLOWED, permissions));
 					
 					onResult(success, fail, call);
 				}
@@ -518,13 +535,14 @@ package temple.facebook.service
 				}
 				
 				_allowed ||= {};
-				
+				permissions = new Vector.<String>();
 				for each (permission in session.availablePermissions)
 				{
 					_allowed[permission] = 1;
+					permissions.push(permission);
 				}
-				if (debug) logDebug("Allowed permissions: " + _permissions.join(", "));
-				dispatchEvent(new FacebookPermissionEvent(FacebookPermissionEvent.ALLOWED, _permissions.concat()));
+				if (debug) logDebug("Allowed permissions: " + permissions.join(", "));
+				dispatchEvent(new FacebookPermissionEvent(FacebookPermissionEvent.ALLOWED, permissions.concat()));
 				
 				onResult(success, fail, call);
 			}
@@ -744,6 +762,19 @@ package temple.facebook.service
 					// Cast to the correct type
 					if (data && call.objectClass) data = data as call.objectClass;
 				}
+				// Check if we have all the fields we want
+				if (data && !(data is Array) && call.fields)
+				{
+					for each (var field:String in call.fields.getFieldsList(FacebookFieldAlias.NONE))
+					{
+						if (!data[field])
+						{
+							if (debug) logDebug("call: field '" + field + "' is missing in cached data, force reload");
+							data = null;
+							break;
+						}
+					}
+				}
 				if (data)
 				{
 					if (debug) logDebug("call: get result from cache");
@@ -860,7 +891,7 @@ package temple.facebook.service
 				if (call.fields)
 				{
 					params ||= {};
-					params.fields = call.fields.getFields().toString();
+					params.fields = call.fields.getFieldsString(FacebookFieldAlias.GRAPH);
 					if (debug) logDebug("get: fields = " + params.fields);
 				}
 				var requestMethod:String;
@@ -932,10 +963,15 @@ package temple.facebook.service
 						success = response && !response.error;
 						break;
 					}
+					case FacebookUIMethod.SEND_DIALOG:
+					{
+						success = response && response.success;
+						break;
+					}
 					default:
 					{
 						success = Boolean(response);
-						logWarn("ui: can't devine if response is successful");
+						logWarn("ui: can't devine if response is successful (" + method + ")");
 						break;
 					}
 				}
@@ -1054,7 +1090,7 @@ package temple.facebook.service
 								for each (var object : * in success) data.push(object);
 							}
 							
-							data = _parser.parse(data, objectClass, call.requestMethod == FacebookRequestMethod.FQL || call.requestMethod == FacebookRequestMethod.FQL_MULTI_QUERY ? FacebookFieldAlias.FQL : FacebookFieldAlias.GRAPH);
+							data = _parser.parse(data, objectClass, call.requestMethod == FacebookRequestMethod.FQL || call.requestMethod == FacebookRequestMethod.FQL_MULTI_QUERY ? FacebookFieldAlias.FQL : FacebookFieldAlias.GRAPH, getObject(call.id));
 							
 							if (_cacheMap)
 							{
@@ -1177,11 +1213,13 @@ package temple.facebook.service
 			return areAllowed(permissions);
 		}
 		
-				/**
+		/**
 		 * @inheritDoc
 		 */
 		public function getObject(id:String, createIfNull:Boolean = false, type:Class = null):IFacebookObjectData
 		{
+			if (id == FacebookConstant.ME) return _me;
+			
 			return (createIfNull ? _parser.parse(id, type) : Indexer.get(IFacebookObjectData, id)) as IFacebookObjectData;
 		}
 
@@ -1220,7 +1258,7 @@ package temple.facebook.service
 		}
 		
 		/**
-		 * If set to true the service will do an extra FQL call to check the allowed permissions.
+		 * @inheritDoc
 		 */
 		public function get checkPermissionsAfterLogin():Boolean
 		{
@@ -1228,7 +1266,7 @@ package temple.facebook.service
 		}
 
 		/**
-		 * @private
+		 * @inheritDoc
 		 */
 		public function set checkPermissionsAfterLogin(value:Boolean):void
 		{
@@ -1240,7 +1278,7 @@ package temple.facebook.service
 		 */
 		public function getUnparsedResult(data:Object):Object
 		{
-			return ParseData(_parseMap[data]).unparsed;
+			return data in _parseMap ? ParseData(_parseMap[data]).unparsed : null;
 		}
 
 		public function getRawResult(data:Object):Object
@@ -1267,7 +1305,7 @@ package temple.facebook.service
 		/**
 		 * @inheritDoc
 		 */
-		public function nextPage(data:Object, callback:Function):IFacebookCall
+		public function getNext(data:Object, callback:Function):IFacebookCall
 		{
 			var parseData:ParseData = ParseData(_parseMap[data]);
 			var call:FacebookCall = new FacebookCall(this, null, null, callback, null, null, parseData ? parseData.parseClass : null);
@@ -1285,7 +1323,7 @@ package temple.facebook.service
 		/**
 		 * @inheritDoc
 		 */
-		public function previousPage(data:Object, callback:Function):IFacebookCall
+		public function getPrevious(data:Object, callback:Function):IFacebookCall
 		{
 			var parseData:ParseData = ParseData(_parseMap[data]);
 			var call:FacebookCall = new FacebookCall(this, null, null, callback, null, null, parseData ? parseData.parseClass : null);
@@ -1347,6 +1385,11 @@ package temple.facebook.service
 				_permissions.length = 0;
 				_permissions = null;
 			}
+			if (_optionalPermissions)
+			{
+				_optionalPermissions.length = 0;
+				_optionalPermissions = null;
+			}
 			if (_parser)
 			{
 				_parser.destruct();
@@ -1357,6 +1400,7 @@ package temple.facebook.service
 			
 			super.destruct();
 		}
+
 	}
 }
 import temple.core.destruction.IDestructible;

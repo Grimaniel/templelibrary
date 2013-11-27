@@ -35,7 +35,6 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for events.
@@ -51,6 +50,14 @@ package temple.facebook.data.vo
 	 */
 	public class FacebookEventFields extends AbstractFacebookFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookEventData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookEventFields);
+		}
+		
 		/**
 		 * The ID of the event
 		 */
@@ -116,37 +123,37 @@ package temple.facebook.data.vo
 		 * @copy temple.facebook.data.vo.IFacebookEventData#feed
 		 */
 		[Alias(fql="not-available")]
-		public var feed:Boolean;
+		public var feed:*;
 
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookEventData#noreply
 		 */
 		[Alias("not-available")]
-		public var noreply:Boolean;
+		public var noreply:*;
 
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookEventData#invited
 		 */
 		[Alias(fql="not-available")]
-		public var invited:Boolean;
+		public var invited:*;
 		
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookEventData#attending
 		 */
 		[Alias(fql="not-available")]
-		public var attending:Boolean;
+		public var attending:*;
 		
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookEventData#maybe
 		 */
 		[Alias(fql="not-available")]
-		public var maybe:Boolean;
+		public var maybe:*;
 		
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookEventData#declined
 		 */
 		[Alias(fql="not-available")]
-		public var declined:Boolean;
+		public var declined:*;
 
 		/**
 		 * @copy temple.facebook.data.vo.IFacebookEventData#picture
@@ -159,9 +166,12 @@ package temple.facebook.data.vo
 		 */
 		public var videos:Boolean;
 
-		public function FacebookEventFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookEventFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }

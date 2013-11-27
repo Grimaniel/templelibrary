@@ -35,7 +35,6 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for searches.
@@ -48,9 +47,12 @@ package temple.facebook.data.vo
 		public var likes:Boolean;
 		public var category:Boolean;
 		
-		public function FacebookSearchFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookSearchFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }

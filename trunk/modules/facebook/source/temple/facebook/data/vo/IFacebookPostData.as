@@ -36,15 +36,18 @@
 package temple.facebook.data.vo
 {
 	/**
-	 * Stores the data of a Facebook post.
+	 * Stores the data of a Facebook post or a status message.
 	 * 
 	 * @see temple.facebook.api.IFacebookAPI#posts
+	 * @see temple.facebook.data.vo.IFacebookUserData#posts
+	 * @see temple.facebook.data.vo.IFacebookUserData#statuses
 	 * 
 	 * @see http://developers.facebook.com/docs/reference/api/post/
+	 * @see http://developers.facebook.com/docs/reference/api/status/
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface IFacebookPostData extends IFacebookObjectData
+	public interface IFacebookPostData extends IFacebookLocatedData
 	{
 		/**
 		 * Information about the user who posted the message
@@ -65,6 +68,11 @@ package temple.facebook.data.vo
 		 * Tags used in the message
 		 */
 		function get messageTags():Vector.<IFacebookTagData>;
+		
+		/**
+		 * Objects (Users, Pages, etc) tagged as being with the publisher of the post ("Who are you with?" on Facebook)
+		 */
+		function get withTags():Vector.<IFacebookProfileData>;
 		
 		/**
 		 * If available, a link to the picture included with this post

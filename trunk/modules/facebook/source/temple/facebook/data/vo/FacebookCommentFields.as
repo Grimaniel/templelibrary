@@ -35,7 +35,6 @@
 
 package temple.facebook.data.vo
 {
-	import temple.facebook.data.vo.AbstractFacebookFields;
 
 	/**
 	 * Fields object for comments.
@@ -50,6 +49,14 @@ package temple.facebook.data.vo
 	 */
 	public class FacebookCommentFields extends AbstractFacebookFields
 	{
+		/**
+		 * Returns a list of all fields of a <code>IFacebookCommentData</code> object
+		 */
+		public static function all():Vector.<String>
+		{
+			return AbstractFacebookFields.all(FacebookCommentFields);
+		}
+		
 		/**
 		 * The Facebook ID of the comment
 		 */
@@ -95,9 +102,12 @@ package temple.facebook.data.vo
 		[Alias(graph="user_likes")]
 		public var userLikes:Boolean;
 		
-		public function FacebookCommentFields(selectAll:Boolean = false)
+		/**
+		 * @param fields an optional list of fields with must be set to <code>true</code> automatically
+		 */
+		public function FacebookCommentFields(fields:Vector.<String> = null, limit:int = 0)
 		{
-			super(selectAll);
+			super(fields, limit);
 		}
 	}
 }

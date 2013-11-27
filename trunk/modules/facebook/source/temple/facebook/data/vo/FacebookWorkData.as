@@ -46,8 +46,8 @@ package temple.facebook.data.vo
 		public static const FIELDS:FacebookWorkFields = new FacebookWorkFields();
 		
 		facebook var employer:IFacebookProfileData;
-		facebook var location:IFacebookObjectData;
-		facebook var position:IFacebookObjectData;
+		facebook var location:IFacebookPageData;
+		facebook var position:IFacebookPageData;
 		facebook var start_date:Date;
 		facebook var end_date:Date;
 		facebook var description:String;
@@ -67,12 +67,12 @@ package temple.facebook.data.vo
 			return facebook::employer;
 		}
 
-		public function get location():IFacebookObjectData
+		public function get location():IFacebookPageData
 		{
 			return facebook::location;
 		}
 
-		public function get position():IFacebookObjectData
+		public function get position():IFacebookPageData
 		{
 			return facebook::position;
 		}

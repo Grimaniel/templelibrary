@@ -80,10 +80,6 @@ package com.facebook.graph.core {
 							},
 								
 							init: function( opts ) {
-								if(FB.JSON.parse !== undefined){
-									JSONParser = FB.JSON;
-								}
-								
 								var options = JSONParser.parse( opts );
 								FB.init( options );
 								FB.Event.subscribe( 'auth.authResponseChange', function( response ) {

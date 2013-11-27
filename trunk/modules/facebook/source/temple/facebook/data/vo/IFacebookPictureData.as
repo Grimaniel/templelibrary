@@ -87,5 +87,10 @@ package temple.facebook.data.vo
 		 * @see temple.facebook.data.enum.FacebookPictureSize.LARGE
 		 */
 		function get large():String;
+
+		/**
+		 * <code>true</code> if the user has not uploaded a profile picture
+		 */
+		function get isSilhouette():Boolean;
 	}
 }
