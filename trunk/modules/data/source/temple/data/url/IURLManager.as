@@ -137,5 +137,10 @@ package temple.data.url
 		 * @param value the variable value
 		 */
 		function setVariable(name:String, value:String):void;
+		
+		/**
+		 * Returns the base url of the SWF
+		 */
+		function getBase():String
 	}
 }

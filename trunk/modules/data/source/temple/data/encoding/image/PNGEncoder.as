@@ -77,7 +77,7 @@ package temple.data.encoding.image
 	 * 
 	 * @author Adobe
 	 */	
-	public class PNGEncoder
+	public final class PNGEncoder
 	{
 		/**
 		 * Created a PNG image from the specified BitmapData

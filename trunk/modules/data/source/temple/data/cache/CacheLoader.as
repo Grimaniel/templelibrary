@@ -109,7 +109,7 @@ package temple.data.cache
 		 */
 		override public function get url():String
 		{
-			return super.url || (_cacheURLLoader ? _cacheURLLoader.url : null);
+			return super.url || (_cacheURLLoader && (isLoaded || isLoading) ? _cacheURLLoader.url : null);
 		}
 
 		/**
@@ -187,7 +187,7 @@ package temple.data.cache
 		 */
 		public function get bytes():ByteArray
 		{
-			return _cacheURLLoader.data || contentLoaderInfo.bytes;
+			return bytesLoaded ? (_cacheURLLoader.data || contentLoaderInfo.bytes) : null;
 		}
 
 		private function handleURLLoaderComplete(event:Event):void

@@ -391,91 +391,108 @@ package temple.data.encoding.json
 					}
 					else
 					{
-						for (var prop:String in o)
-						{
-							if (prop == _EXPLICIT_TYPE) continue;
-							
-							// skip null values (if enabled)
-							if (_skipNulls && o[prop] == null) continue;
-							
-							if (prop in obj)
-							{
-								try
-								{
-									obj[prop] = o[prop];
-								}
-								catch (error:TypeError)
-								{
-									// hack TyZ for Enumerator
-									// Here we can get the following error: "TypeError: Error #1034: Type Coercion failed: cannot convert <> to <>"
-									// This can happen when we try to set an Enumerator. So we need to look up the correct Enumerator based on the value.
-									var description:XML = describeType(obj);
-									var typeName:String = description.variable.(@name == prop).@type || description.accessor.(@name == prop).@type;
-									if (typeName)
-									{
-										try
-										{
-											var type:Class = getDefinitionByName(typeName) as Class;
-										}
-										catch (error:Error)
-										{
-											// Can't find correct class
-											logError(error.message);
-										}
-										if (type)
-										{
-											var decoder:IParser;
-											if (_explicitDecoders)
-											{
-												decoder = _explicitDecoders[getQualifiedClassName(type)];
-											}
-											if (decoder)
-											{
-												obj[prop] = decoder.parse(o[prop]);
-											}
-											else
-											{
-												var superclassName:String = getQualifiedSuperclassName(type);
-												
-												// Check if this class extends the Enumerator class
-												if (superclassName && superclassName != "__AS3__.vec::Vector.<*>" && getDefinitionByName(superclassName) == Enumerator)
-												{
-													// Get the Enumerator
-													var enum:Enumerator = Enumerator.get(type, o[prop]);
-													if (enum)
-													{
-														obj[prop] = enum;
-													}
-													else
-													{
-														// Can't find this Enumerator, so the value might be wrong, so log a warning
-														logWarn("'" + o[prop] + "' is not a valid value for '" + prop + "'");
-													}
-												}
-												else
-												{
-													logWarn("Don't know how to handle '" + o[prop] + "' as a value for '" + prop + "'");
-												}
-											}
-										}
-									}
-									else
-									{
-										logError(error.message);
-									}
-								}
-							}
-							else
-							{
-								logWarn('Object "' + classRef + '" missing property: "' + prop + '"');
-							}
-						}
+						applyProperties(obj, o);
 					}
 					return obj;
 				}
 			}
 			return o;
 		}
+
+		private function applyProperties(object:Object, properties:Object):void
+		{
+			for (var prop:String in properties)
+			{
+				if (prop == _EXPLICIT_TYPE) continue;
+				
+				// skip null values (if enabled)
+				if (_skipNulls && properties[prop] == null) continue;
+				
+				if (prop in object)
+				{
+					try
+					{
+						object[prop] = properties[prop];
+					}
+					catch (error:TypeError)
+					{
+						// hack TyZ for Enumerator
+						// Here we can get the following error: "TypeError: Error #1034: Type Coercion failed: cannot convert <> to <>"
+						// This can happen when we try to set an Enumerator. So we need to look up the correct Enumerator based on the value.
+						var description:XML = describeType(object);
+						var typeName:String = description.variable.(@name == prop).@type || description.accessor.(@name == prop).@type;
+						
+						
+						if (typeName)
+						{
+							try
+							{
+								var type:Class = getDefinitionByName(typeName) as Class;
+							}
+							catch (error:Error)
+							{
+								// Can't find correct class
+								logError(error.message);
+							}
+							if (type)
+							{
+								var decoder:IParser;
+								if (_explicitDecoders)
+								{
+									decoder = _explicitDecoders[getQualifiedClassName(type)];
+								}
+								if (decoder)
+								{
+									object[prop] = decoder.parse(properties[prop]);
+								}
+								else
+								{
+									var superclassName:String = getQualifiedSuperclassName(type);
+									
+									// Check if this class extends the Enumerator class
+									if (superclassName && superclassName != "__AS3__.vec::Vector.<*>" && getDefinitionByName(superclassName) == Enumerator)
+									{
+										// Get the Enumerator
+										var enum:Enumerator = Enumerator.get(type, properties[prop]);
+										if (enum)
+										{
+											object[prop] = enum;
+										}
+										else
+										{
+											// Can't find this Enumerator, so the value might be wrong, so log a warning
+											logWarn("'" + properties[prop] + "' is not a valid value for '" + prop + "'");
+										}
+									}
+									else
+									{
+										// try to create this class
+										try
+										{
+											object[prop] = new type();
+										}
+										catch (error:Error)
+										{
+											logWarn("Don't know how to handle '" + properties[prop] + "' as a value for '" + prop + "'");
+										}
+										if (object[prop]) applyProperties(object[prop], properties[prop]);
+									}
+								}
+							}
+						}
+						else
+						{
+							logError(error.message);
+						}
+					}
+				}
+				else
+				{
+					logWarn("Object '" + object + "' missing property: '" + prop + "'");
+				}
+			}
+		}
+
 		
 		/**
 		 * Attempt to parse a value
