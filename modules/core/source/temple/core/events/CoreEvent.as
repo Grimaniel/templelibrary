@@ -16,8 +16,6 @@ package temple.core.events
 	 */
 	public class CoreEvent extends Event
 	{
-		include "../includes/Version.as.inc";
-		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['type', 'bubbles', 'cancelable', 'eventPhase']);
 		
 		private var _emptyPropsInToString:Boolean = true;

@@ -35,13 +35,13 @@
 
 package temple.core.behaviors 
 {
-	import flash.events.IEventDispatcher;
 	import temple.core.destruction.DestructEvent;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
 	import temple.core.events.CoreEventDispatcher;
-	import temple.core.templelibrary;
 
+	import flash.events.IEventDispatcher;
+	
 	/**
 	 * Abstract implementation of a Behavior. This class is used as super class 
 	 * for other Behaviors.
@@ -57,11 +57,6 @@ package temple.core.behaviors
 	 */
 	public class AbstractBehavior extends CoreEventDispatcher implements IBehavior 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private var _target:Object;
 		
 		/**

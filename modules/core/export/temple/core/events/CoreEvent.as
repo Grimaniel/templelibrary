@@ -47,11 +47,6 @@ package temple.core.events
 	 */
 	public class CoreEvent extends Event
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['type', 'bubbles', 'cancelable', 'eventPhase']);
 		
 		private var _emptyPropsInToString:Boolean = true;

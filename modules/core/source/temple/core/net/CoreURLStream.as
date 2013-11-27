@@ -45,8 +45,6 @@ package temple.core.net
 	 */
 	public class CoreURLStream extends URLStream implements ICoreLoader, IDestructibleOnError
 	{
-		include "../includes/Version.as.inc";
-		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();

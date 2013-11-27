@@ -28,8 +28,6 @@ package temple.core.events
 	 */
 	public final class EventListenerManager extends CoreObject implements IEventDispatcher, ICoreEventDispatcher 
 	{
-		include "../includes/Version.as.inc";
-		
 		/**
 		 * If set to <code>true</code> the <code>EventListenerManager</code> will log a debug message when a weak event
 		 * listener is set.

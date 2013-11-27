@@ -38,8 +38,6 @@ package temple.core.debug
 	 */
 	public class MemoryDebugger 
 	{
-		include "../includes/Version.as.inc";
-		
 		private var _timer:CoreTimer;
 		private var _includeCreationStack:Boolean;
 

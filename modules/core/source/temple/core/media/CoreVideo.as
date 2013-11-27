@@ -52,8 +52,6 @@ package temple.core.media
 	 */
 	public class CoreVideo extends Video implements ICoreDisplayObject 
 	{
-		include "../includes/Version.as.inc";
-		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);

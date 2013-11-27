@@ -5,7 +5,6 @@ include "../includes/License.as.inc";
 package temple.core.errors 
 {
 	import temple.core.debug.log.Log;
-	import temple.core.templelibrary;
 
 	/**
 	 * Error thrown when a error in the Temple occurs.
@@ -15,8 +14,6 @@ package temple.core.errors
 	 */
 	public class TempleError extends Error implements ITempleError
 	{
-		include "../includes/Version.as.inc";
-		
 		private var _sender:Object;
 		
 		/**

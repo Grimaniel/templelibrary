@@ -35,9 +35,9 @@
 
 package temple.core.debug
 {
-	import flash.events.Event;
 	import temple.core.events.CoreEvent;
-	import temple.core.templelibrary;
+	
+	import flash.events.Event;
 	
 	/**
 	 * Event dispatched by the GlobalErrorHandler when a global error has occurred.
@@ -48,11 +48,6 @@ package temple.core.debug
 	 */
 	public class GlobalErrorEvent extends CoreEvent
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		public static const GLOBAL_ERROR:String = "GlobalErrorEvent.globalError";
 		
 		private var _error:*;

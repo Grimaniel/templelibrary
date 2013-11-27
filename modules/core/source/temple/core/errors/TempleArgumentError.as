@@ -5,7 +5,6 @@ include "../includes/License.as.inc";
 package temple.core.errors 
 {
 	import temple.core.debug.log.Log;
-	import temple.core.templelibrary;
 
 	/**
 	 * Error thrown when a method argument is invalid.
@@ -15,8 +14,6 @@ package temple.core.errors
 	 */
 	public class TempleArgumentError extends ArgumentError implements ITempleError
 	{
-		include "../includes/Version.as.inc";
-		
 		private var _sender:Object;
 		
 		/**

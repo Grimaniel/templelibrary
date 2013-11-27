@@ -79,11 +79,6 @@ package temple.core.net
 	public class CoreURLLoader extends URLLoader implements ICoreLoader, IDestructibleOnError, IDebuggable
 	{
 		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
-		/**
 		 * @private
 		 * 
 		 * Protected namespace for construct method. This makes overriding of constructor possible.

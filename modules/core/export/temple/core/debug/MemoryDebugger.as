@@ -69,11 +69,6 @@ package temple.core.debug
 	 */
 	public class MemoryDebugger 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private var _timer:CoreTimer;
 		private var _includeCreationStack:Boolean;
 

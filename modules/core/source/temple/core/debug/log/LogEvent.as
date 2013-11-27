@@ -4,9 +4,9 @@ include "../includes/License.as.inc";
 
 package temple.core.debug.log 
 {
-	import flash.events.Event;
 	import temple.core.events.CoreEvent;
-	import temple.core.templelibrary;
+	
+	import flash.events.Event;
 
 	/**
 	 * Event dispatched by the <code>Log</code> class when someting is logged. You can listen for this Event if you want
@@ -18,8 +18,6 @@ package temple.core.debug.log
 	 */
 	public class LogEvent extends CoreEvent 
 	{
-		include "../../includes/Version.as.inc";
-		
 		/**
 		 * Event type
 		 */

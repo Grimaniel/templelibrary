@@ -40,8 +40,6 @@ package temple.core.events
 	 */
 	public class CoreEventDispatcher extends EventDispatcher implements ICoreEventDispatcher, ICoreObject
 	{
-		include "../includes/Version.as.inc";
-
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();

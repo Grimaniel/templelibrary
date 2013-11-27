@@ -35,12 +35,12 @@
 
 package temple.core.utils 
 {
+	import temple.core.debug.log.Log;
+	import temple.core.debug.objectToString;
+
 	import flash.display.DisplayObject;
 	import flash.external.ExternalInterface;
 	import flash.system.Capabilities;
-	import temple.core.debug.log.Log;
-	import temple.core.debug.objectToString;
-	import temple.core.templelibrary;
 
 	/**
 	 * Utility class for checking the environment of the SWF, like Flash Player version and Operating System.
@@ -49,11 +49,6 @@ package temple.core.utils
 	 */
 	public final class Environment 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		public static const WEB:String = 'web';
 		public static const IDE:String = 'IDE';
 		public static const STANDALONE:String = 'StandAlone';

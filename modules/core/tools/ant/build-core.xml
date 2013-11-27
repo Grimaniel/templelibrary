@@ -9,7 +9,6 @@
 	<property name="export.dir" value="${base.dir}/export" />
 	
 	<target name="Prepare">
-		<antcall target="Check version" />
 		<antcall target="Update Temple properties" />
 		<antcall target="Generate Export" />
 		<antcall target="Check license" />
@@ -24,7 +23,6 @@
 	<target name="Update Temple properties">
 		<!-- Version -->
 		<replaceregexp file="${source.dir}/temple/core/Temple.as" match='VERSION:String = "[0-9].[0-9].[0-9]"' replace='VERSION:String = "${version}"' flags="" byline="true" />
-		<replaceregexp file="${source.dir}/temple/core/includes/Version.as.inc" match='VERSION:String = "[0-9].[0-9].[0-9]"' replace='VERSION:String = "${version}"' flags="" byline="true" />
 
 		<!-- Date -->
 		<replaceregexp file="${source.dir}/temple/core/Temple.as" match='DATE:String = "[0-9]{4}-[0-9]{2}-[0-9]{2}"' replace='DATE:String = "${date}"' flags="" byline="true" />
@@ -48,24 +46,6 @@
 		<echo>License checked</echo>
 	</target>
 
-	<target name="Check version">
-		<fileset dir="${source.dir}/temple" id="wrongfileset" includes="**/*.as">
-			<containsregexp expression="(public|internal)\s+(final\s+)?class" />
-			<not>
-				<containsregexp expression="Version\.as\.inc" />
-			</not>
-		</fileset>
-		<property name="wrongfiles" refid="wrongfileset" />
-		<fail message="The following files does not contain a version: ${wrongfiles}">
-			<condition>
-				<not>
-					<resourcecount count="0" refid="wrongfileset" />
-				</not>
-			</condition>
-		</fail>
-		<echo>Version checked ${wrongfiles}</echo>
-	</target>
-	
 	<target name="Create Zip">
 		<zip destfile="${root.dir}/../zips/temple_${module}_${version}.zip">
 			<zipfileset dir="${bin.dir}" prefix="bin" />
@@ -77,7 +57,7 @@
 		<echo>Zip file created</echo>
 	</target>
 	
-	<target name="Generate Export" >
+	<target name="Generate Export" description="" >
 		<antcall target="Clear export dir" />
 		<antcall target="Copy files" />
 		<antcall target="Parse files" />

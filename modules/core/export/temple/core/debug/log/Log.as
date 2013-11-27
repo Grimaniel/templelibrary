@@ -103,11 +103,6 @@ package temple.core.debug.log
 	 */
 	public final class Log extends EventDispatcher 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private static const _instance:Log = new Log();
 		
 		private static var _showTrace:Boolean = true;

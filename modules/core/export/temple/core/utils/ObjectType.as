@@ -35,8 +35,6 @@
 
 package temple.core.utils 
 {
-	import temple.core.templelibrary;
-
 	/**
 	 * Possible result value when using 'typeof' function on a variable.
 	 * 
@@ -44,11 +42,6 @@ package temple.core.utils
 	 */
 	public final class ObjectType 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		public static const OBJECT:String = "object";
 		
 		public static const BOOLEAN:String = "boolean";

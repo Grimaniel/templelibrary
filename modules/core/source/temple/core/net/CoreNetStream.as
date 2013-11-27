@@ -41,8 +41,6 @@ package temple.core.net
 	 */
 	public class CoreNetStream extends NetStream implements ICoreLoader, IDebuggable
 	{
-		include "../includes/Version.as.inc";
-		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private static var _framePulser:Shape;

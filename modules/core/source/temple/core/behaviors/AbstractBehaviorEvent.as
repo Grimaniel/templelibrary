@@ -5,7 +5,6 @@ include "../includes/License.as.inc";
 package temple.core.behaviors 
 {
 	import temple.core.events.CoreEvent;
-	import temple.core.templelibrary;
 
 	/**
 	 * Abstract implementation of a BehaviorEvent. This class is used as super class for other BehaviorEvents.
@@ -16,8 +15,6 @@ package temple.core.behaviors
 	 */
 	public class AbstractBehaviorEvent extends CoreEvent implements IBehaviorEvent
 	{
-		include "../includes/Version.as.inc";
-		
 		private var _behavior:IBehavior;
 
 		/**

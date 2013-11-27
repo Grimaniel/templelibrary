@@ -36,7 +36,6 @@
 package temple.core.destruction 
 {
 	import temple.core.CoreObject;
-	import temple.core.templelibrary;
 
 	import flash.utils.Dictionary;
 
@@ -51,11 +50,6 @@ package temple.core.destruction
 	 */
 	public class DestructController extends CoreObject
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		protected static var _instance:DestructController;
 
 		private var _list:Dictionary;

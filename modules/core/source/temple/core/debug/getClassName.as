@@ -29,7 +29,7 @@ package temple.core.debug
 			if (qualifiedClassName.indexOf('<') != -1)
 			{
 				// Vector exception
-				var a:Array = qualifiedClassName.match(/(?<=::)\w+/g);
+				var a:Array = qualifiedClassName.match(/((?<=::)\w+)|(?<=\<)\w+(?=>)/g);
 				var s:String = a.shift();
 				var e:String = "";
 				while (a.length)

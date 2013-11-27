@@ -37,8 +37,6 @@ package temple.core.net
 	 */
 	dynamic public class CoreNetConnection extends NetConnection implements ICoreEventDispatcher
 	{
-		include "../includes/Version.as.inc";
-		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();

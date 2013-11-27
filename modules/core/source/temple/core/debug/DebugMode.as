@@ -4,7 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.debug 
 {
-	import temple.core.templelibrary;
 
 	/**
 	 * This class contains possible values for debugMode. DebugMode is used by the DebugManager.
@@ -15,8 +14,6 @@ package temple.core.debug
 	 */
 	public final class DebugMode
 	{
-		include "../includes/Version.as.inc";
-		
 		/**
 		 * Debug will be set to false on all debuggable object. So no debug messages will be logged.
 		 */

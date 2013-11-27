@@ -4,8 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.debug
 {
-	import temple.core.templelibrary;
-	
 	import flash.display.Shape;
 	import flash.events.Event;
 	
@@ -16,8 +14,6 @@ package temple.core.debug
 	 */
 	public final class FrameCounter
 	{
-		include "../includes/Version.as.inc";
-		
 		/**
 		 * DisplayObject for EnterFrame events
 		 */

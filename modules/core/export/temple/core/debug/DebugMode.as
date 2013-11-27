@@ -35,7 +35,6 @@
 
 package temple.core.debug 
 {
-	import temple.core.templelibrary;
 
 	/**
 	 * This class contains possible values for debugMode. DebugMode is used by the DebugManager.
@@ -46,11 +45,6 @@ package temple.core.debug
 	 */
 	public final class DebugMode
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		/**
 		 * Debug will be set to false on all debuggable object. So no debug messages will be logged.
 		 */

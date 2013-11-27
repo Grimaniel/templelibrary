@@ -35,14 +35,14 @@
 
 package temple.core.utils 
 {
-	import flash.display.DisplayObject;
-	import flash.utils.ByteArray;
-	import flash.utils.Endian;
 	import temple.core.debug.log.Log;
 	import temple.core.debug.objectToString;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
-	import temple.core.templelibrary;
+
+	import flash.display.DisplayObject;
+	import flash.utils.ByteArray;
+	import flash.utils.Endian;
 
 	/**
 	 * Utility class for checking if the SWF is compiled for debug mode.
@@ -51,11 +51,6 @@ package temple.core.utils
 	 */
 	public final class BuildMode 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		/**
 		 * Returns true if the SWF is built in debug mode.
 		 * Note: only works in a debug player.
