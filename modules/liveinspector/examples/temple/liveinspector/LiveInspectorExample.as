@@ -17,7 +17,7 @@ package
 {
 	import temple.codecomponents.buttons.CodeLabelButton;
 	import temple.codecomponents.graphics.CodeBackground;
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	import temple.liveinspector.liveInspectorInstance;
 
 	import com.greensock.TweenMax;
@@ -25,7 +25,6 @@ package
 	import com.greensock.easing.Sine;
 
 	import flash.events.MouseEvent;
-	import flash.text.TextFieldAutoSize;
 	
 	// This class extends the DocumentClassExample, which handles some default Temple settings. This class can be found in directory '/examples/templates/'
 	public class LiveInspectorExample extends DocumentClassExample 
@@ -43,7 +42,7 @@ package
 			createUI();
 
 			// inspects the label of the button.
-			liveInspectorInstance.add(_button, ["label", "enabled"]);
+			liveInspectorInstance.add(_button, ["text", "enabled"]);
 
 			// inspect the position of the panel. Try to scroll on the live inspector editor or use the up/down keys on your keyboard.
 			liveInspectorInstance.add(_panel, ["x", "y"]);
@@ -75,15 +74,15 @@ package
 			_label = new CodeLabel("Your goal: hide or move the panel using the Live Inspector\nChange the label of the button to 'done' and click the button!");
 			_label.x = (stage.stageWidth - _label.width) / 2;
 			_label.y = stage.stageHeight - _label.height - 10;
-			_label.autoSize = TextFieldAutoSize.CENTER;
+			_label.autoSize = true;
 			addChild(_label);
 		}
 
 		private function handleButtonClick(event:MouseEvent):void
 		{
-			if (_button.label.toLowerCase() === "done")
+			if (_button.text.toLowerCase() === "done")
 			{
-				_label.label = "Congrats! Enjoy live debugging using the Temple Library!";
+				_label.text = "Congrats! Enjoy live debugging using the Temple Library!";
 			}
 		}
 	}
