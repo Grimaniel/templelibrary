@@ -35,15 +35,15 @@
 
 package temple.mediaplayers.players.controls
 {
-	import temple.common.interfaces.IEnableable;
-	import temple.core.debug.IDebuggable;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import temple.common.interfaces.IEnableable;
+	import temple.core.debug.IDebuggable;
 	import temple.mediaplayers.players.IPlayer;
 	import temple.mediaplayers.players.IProgressiveDownloadPlayer;
 	import temple.ui.buttons.behaviors.ScrubBehavior;
-	import temple.ui.label.ILabel;
+	import temple.ui.labels.ILabel;
 	import temple.ui.layout.liquid.LiquidContainer;
 	import temple.utils.TimeUtils;
 
@@ -248,11 +248,11 @@ package temple.mediaplayers.players.controls
 				}
 				if (_progressLabel)
 				{
-					_progressLabel.label = TimeUtils.secondsToString(_player.currentPlayTime);
+					_progressLabel.text = TimeUtils.secondsToString(_player.currentPlayTime);
 				}
 				if (_durationLabel)
 				{
-					_durationLabel.label = TimeUtils.secondsToString(_player.duration);
+					_durationLabel.text = TimeUtils.secondsToString(_player.duration);
 				}
 				if (_knob)
 				{
