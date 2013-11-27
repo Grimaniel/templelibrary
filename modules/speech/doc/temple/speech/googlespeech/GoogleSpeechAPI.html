@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Speech Module API Documentation - 3.6.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/speech/googlespeech/GoogleSpeechAPI.html&amp;temple/speech/googlespeech/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">GoogleSpeechAPI</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple Speech Module API Documentation - 3.7.0</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?temple/speech/googlespeech/GoogleSpeechAPI.html&amp;temple/speech/googlespeech/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">GoogleSpeechAPI</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GoogleSpeechAPI"); titleBar_setSubNav(false,true,false,false,false,false,true,false,true,true,false	,false,false,false,false,false);}	
@@ -60,6 +60,7 @@
 <div class="listing"><pre>
 package
 {
+    import temple.utils.types.TextFormatUtils;
     import assets.Background;
     import assets.LocaleField;
     import assets.RecordButton;
@@ -74,7 +75,7 @@ package
     import temple.speech.utils.FlacEncoder;
     import temple.ui.buttons.MultiStateButton;
     import temple.ui.form.components.InputField;
-    import temple.ui.label.Label;
+    import temple.ui.labels.Label;
     import temple.utils.types.NumberUtils;
 
     import com.greensock.TweenLite;
@@ -125,7 +126,8 @@ package
             _localeField = new LocaleField();
             _localeField.value = 'en-US';
             _localeField.hintText = 'locale';
-            _localeField.hintTextColor = 0x666666;
+            _localeField.hintTextFormat = TextFormatUtils.clone(_localeField.defaultTextFormat);
+            _localeField.hintTextFormat.color = 0x666666;
             
             addChild(_startButton);
             _startButton.x = Math.round((stage.stageWidth - 72) / 2);
@@ -215,7 +217,7 @@ package
                     _resultField.y = Math.round((stage.stageHeight - 32) / 2);
                     TweenLite.to(_resultField, 1, new TweenLiteVars({y: Math.round(stage.stageHeight + 10)}).ease(Quad.easeOut).runBackwards(true));
                     
-                    _resultField.label = _hypothese.utterance + '  (' + NumberUtils.format(_hypothese.confidence, ',', '.', 3) + ')';
+                    _resultField.text = _hypothese.utterance + '  (' + NumberUtils.format(_hypothese.confidence, ',', '.', 3) + ')';
                 }
                 else
                 {
@@ -235,18 +237,18 @@ package
                     _resultField.y = Math.round((stage.stageHeight - 32) / 2);
                     TweenLite.to(_resultField, 1, new TweenLiteVars({y: Math.round(stage.stageHeight + 10)}).ease(Quad.easeOut).runBackwards(true));
                     
-                    _resultField.label = 'Failed: ' + result.code + ' | ' + result.message;
+                    _resultField.text = 'Failed: ' + result.code + ' | ' + result.message;
                 }
                 else
                 {
-                    _resultField.label = 'Failed: ' + result.code + ' | ' + result.message;
+                    _resultField.text = 'Failed: ' + result.code + ' | ' + result.message;
                 }
             }
         }
         
         private function onHideResultField():void
         {
-            _resultField.label = _hypothese.utterance + '  (' + NumberUtils.format(_hypothese.confidence, ',', '.', 3) + ')';
+            _resultField.text = _hypothese.utterance + '  (' + NumberUtils.format(_hypothese.confidence, ',', '.', 3) + ')';
             
             TweenLite.to(_resultField, 0.4, new TweenLiteVars({alpha: 1}));
             

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @exampleText
  * 
  * <a name="GoogleSpeech"></a>
@@ -27,7 +27,7 @@ package
 	import temple.speech.utils.FlacEncoder;
 	import temple.ui.buttons.MultiStateButton;
 	import temple.ui.form.components.InputField;
-	import temple.ui.label.Label;
+	import temple.ui.labels.Label;
 	import temple.utils.types.NumberUtils;
 
 	import com.greensock.TweenLite;
@@ -169,7 +169,7 @@ package
 					_resultField.y = Math.round((stage.stageHeight - 32) / 2);
 					TweenLite.to(_resultField, 1, new TweenLiteVars({y: Math.round(stage.stageHeight + 10)}).ease(Quad.easeOut).runBackwards(true));
 					
-					_resultField.label = _hypothese.utterance + '  (' + NumberUtils.format(_hypothese.confidence, ',', '.', 3) + ')';
+					_resultField.text = _hypothese.utterance + '  (' + NumberUtils.format(_hypothese.confidence, ',', '.', 3) + ')';
 				}
 				else
 				{
@@ -189,18 +189,18 @@ package
 					_resultField.y = Math.round((stage.stageHeight - 32) / 2);
 					TweenLite.to(_resultField, 1, new TweenLiteVars({y: Math.round(stage.stageHeight + 10)}).ease(Quad.easeOut).runBackwards(true));
 					
-					_resultField.label = 'Failed: ' + result.code + ' | ' + result.message;
+					_resultField.text = 'Failed: ' + result.code + ' | ' + result.message;
 				}
 				else
 				{
-					_resultField.label = 'Failed: ' + result.code + ' | ' + result.message;
+					_resultField.text = 'Failed: ' + result.code + ' | ' + result.message;
 				}
 			}
 		}
 		
 		private function onHideResultField():void
 		{
-			_resultField.label = _hypothese.utterance + '  (' + NumberUtils.format(_hypothese.confidence, ',', '.', 3) + ')';
+			_resultField.text = _hypothese.utterance + '  (' + NumberUtils.format(_hypothese.confidence, ',', '.', 3) + ')';
 			
 			TweenLite.to(_resultField, 0.4, new TweenLiteVars({alpha: 1}));
 			
