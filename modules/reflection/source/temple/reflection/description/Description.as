@@ -57,7 +57,10 @@ package temple.reflection.description
 		private var _variablesMap:Dictionary;
 		private var _properties:Vector.<IProperty>;
 		private var _propertiesMap:Dictionary;
+		private var _members:Vector.<IMember>;
 		private var _methods:Vector.<IMethod>;
+		private var _metadata:Vector.<IMetadata>;
+		private var _metadataMap:Object;
 		
 		public function Description(object:*, domain:ApplicationDomain = null)
 		{
@@ -130,6 +133,42 @@ package temple.reflection.description
 		public function get constructor():IMethod
 		{
 			return _constructor ||= new Method(_xml..constructor[0]);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get metadata():Vector.<IMetadata>
+		{
+			if (!_metadata)
+			{
+				var metadata:XMLList = "factory" in _xml ? _xml.factory.metadata : _xml.metadata;;
+				
+				var len:int = metadata.length();
+				_metadata = new Vector.<IMetadata>(len, true);
+				
+				for (var i:int = 0; i < len; i++)
+				{
+					_metadata[i] = new Metadata(metadata[i]);
+				}
+			}
+			return _metadata;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getMetadata(name:String):IMetadata
+		{
+			if (!_metadataMap)
+			{
+				_metadataMap = {};
+				for (var i:int = 0, leni:int = metadata.length; i < leni; i++)
+				{
+					_metadataMap[_metadata[i].name] = _metadata[i];
+				}
+			}
+			return _metadataMap[name];
 		}
 
 		/**
@@ -224,6 +263,28 @@ package temple.reflection.description
 			}
 			
 			return namespace && namespace in _propertiesMap ? _propertiesMap[namespace][name] : _propertiesMap[name];
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get members():Vector.<IMember>
+		{
+			if (!_members)
+			{
+				_members = Vector.<IMember>(properties).concat(variables).concat(methods);
+				_members.fixed = true;
+			}
+			
+			return _members;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getMember(name:String, namespace:Namespace = null):IMember
+		{
+			return getVariable(name, namespace) || getProperty(name, namespace);
 		}
 		
 		/**

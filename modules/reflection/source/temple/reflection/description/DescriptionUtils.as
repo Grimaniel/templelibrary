@@ -43,6 +43,9 @@ package temple.reflection.description
 	 */
 	public final class DescriptionUtils
 	{
+		/**
+		 * 
+		 */
 		public static function findVariablesWithMetadata(description:IDescription, name:String, value:String = null, key:String = null):Vector.<IVariable>
 		{
 			if (description == null) return throwError(new TempleArgumentError(DescriptionUtils, "description cannot be null"));
@@ -73,6 +76,94 @@ package temple.reflection.description
 				}
 			}
 			return variables;
+		}
+		
+		/**
+		 * 
+		 */
+		public static function findMembersWithMetadata(description:IDescription, name:String, value:String = null, key:String = null):Vector.<IMember>
+		{
+			if (description == null) return throwError(new TempleArgumentError(DescriptionUtils, "description cannot be null"));
+			
+			var members:Vector.<IMember> = new Vector.<IMember>(), metadata:IMetadata;
+			
+			members: for (var i:int = 0, leni:int = description.members.length; i < leni; i++)
+			{
+				metadata = description.members[i].getMetadata(name);
+				
+				if (metadata)
+				{
+					if (!value && !key || key && metadata.args[key] == value || !value && key && key in metadata.args)
+					{
+						members.push(description.members[i]);
+					}
+					else if (!key && value)
+					{
+						for each (var v:String in metadata.args)
+						{
+							if (v == value)
+							{
+								members.push(description.members[i]);
+								break members;
+							}
+						}
+					}
+				}
+			}
+			return members;
+		}
+		
+		/**
+		 * Gets list of meta data of full inheritance chain
+		 */
+		public static function getMetaDataOfExtendClasses(description:IDescription, name:String, key:String = null):Vector.<IMetadata>
+		{
+			var metaData:Vector.<IMetadata> = new Vector.<IMetadata>();
+			
+			var currentData:IMetadata = description.getMetadata(name);
+			if (key != null)
+			{
+				if (currentData && key in currentData.args) metaData.push(currentData);
+			}
+			else
+			{
+				if (currentData) metaData.push(currentData);
+			}
+			
+			var extendsClass:IDescription;
+			for (var i:uint = 0, leni:uint = description.extendsClass.length; i < leni; i++)
+			{
+				extendsClass = Descriptor.get(description.extendsClass[i]);
+				var data:IMetadata = extendsClass.getMetadata(name);
+				if (key != null)
+				{
+					if (data && key in data.args) metaData.push(data);
+				}
+				else
+				{
+					if (data) metaData.push(data);
+				}
+			}
+			return metaData;
+		}
+		
+		/**
+		 * Merges args of full inheritance chain to one object
+		 */
+		public static function getMergedMetaDataArgsOfExtendClasses(description:IDescription, name:String):Object
+		{
+			var args:Object = {};
+			var metadata:Vector.<IMetadata> = getMetaDataOfExtendClasses(description, name);
+			for (var i:uint = 0, leni:uint = metadata.length; i < leni; i++)
+			{
+				var classArgs:Object = metadata[i].args;
+				
+				for(var key:String in classArgs)
+				{
+					args[key] = classArgs[key]; // merge/overwrite if already exist
+				}
+			}
+			return args;
 		}
 		
 		/**

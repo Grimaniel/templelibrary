@@ -35,16 +35,15 @@
 
 package temple.reflection
 {
-	import flash.display.DisplayObject;
-
-	import temple.core.templelibrary;
-	import temple.core.debug.objectToString;
 	import temple.core.debug.log.Log;
+	import temple.core.debug.objectToString;
+	import temple.core.templelibrary;
 
-	import flash.utils.describeType;
-	import flash.utils.getQualifiedClassName;
+	import flash.display.DisplayObject;
 	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
+	import flash.utils.describeType;
+	import flash.utils.getQualifiedClassName;
 
 	/**
 	 * Static class for optimizing the <code>describeType</code> call.
@@ -87,6 +86,25 @@ package temple.reflection
 			{
 				return Reflection._cache[domain][name] ||= Reflection.getDescription(object, name, domain);
 			}
+		}
+
+		/**
+		 * Sets the description of an object.
+		 */
+		templelibrary static function set(description:XML, domain:ApplicationDomain = null):void
+		{
+			domain ||= Reflection.currentDomain;
+			Reflection._cache[domain] ||= {};
+			
+			var name:String = description.@name;
+			
+			if (Reflection._cache[domain][name])
+			{
+				Log.warn("Description of '" + name + "' is already cached", Reflection);
+			}
+			Reflection._cache[domain][name] = description;
+			
+			if (debug) Log.debug("description of '" + name + "' is set manualy", Reflection);
 		}
 
 		/**

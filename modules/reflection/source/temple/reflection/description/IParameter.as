@@ -42,10 +42,19 @@ package temple.reflection.description
 	 */
 	public interface IParameter extends ICoreObject
 	{
+		/**
+		 * 
+		 */
 		function get type():Class;
 
+		/**
+		 * 
+		 */
 		function get optional():Boolean;
 
+		/**
+		 * 
+		 */
 		function get index():uint;
 	}
 }

@@ -41,8 +41,19 @@ package temple.reflection.description
 	 */
 	public interface IMetadata
 	{
+		/**
+		 * 
+		 */
 		function get name():String;
 
+		/**
+		 * 
+		 */
 		function get args():Object;
+		
+		/**
+		 * 
+		 */
+		function getArg(key:String):String;
 	}
 }

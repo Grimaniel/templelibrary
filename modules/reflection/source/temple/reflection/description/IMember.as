@@ -41,16 +41,34 @@ package temple.reflection.description
 	 */
 	public interface IMember
 	{
+		/**
+		 * 
+		 */
 		function get name():String;
 
+		/**
+		 * 
+		 */
 		function get namespace():Namespace;
 
+		/**
+		 * 
+		 */
 		function get type():Class;
 
+		/**
+		 * 
+		 */
 		function get declaredBy():Class;
 
+		/**
+		 * 
+		 */
 		function get metadata():Vector.<IMetadata>;
 
+		/**
+		 * 
+		 */
 		function getMetadata(name:String):IMetadata;
 	}
 }
