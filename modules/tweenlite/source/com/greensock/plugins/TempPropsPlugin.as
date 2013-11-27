@@ -22,13 +22,10 @@ package com.greensock.plugins
 		
 		public function TempPropsPlugin()
 		{
-			super();
-			
-			this.propName = "temp";
-			this.overwriteProps = ["temp"];
+			super("temp");
 		}
 		/** @private **/
-		override public function onInitTween(target:Object, value:*, tween:TweenLite):Boolean {
+		override public function _onInitTween(target:Object, value:*, tween:TweenLite):Boolean {
 			_target = target;
 			_tween = tween;
 			_initProps = {};
@@ -44,9 +41,9 @@ package com.greensock.plugins
 		}
 		
 		/** @private **/
-		override public function set changeFactor(n:Number):void {
+		override public function setRatio(n:Number):void {
 			var key : *;
-			if (n == 1 && (_tween.cachedDuration == _tween.cachedTime || _tween.cachedTime == 0)) { //a changeFactor of 1 doesn't necessarily mean the tween is done - if the ease is Elastic.easeOut or Back.easeOut for example, they could hit 1 mid-tween. The reason we check to see if cachedTime is 0 is for from() tweens
+			if (n == 1) { //a changeFactor of 1 doesn't necessarily mean the tween is done - if the ease is Elastic.easeOut or Back.easeOut for example, they could hit 1 mid-tween. The reason we check to see if cachedTime is 0 is for from() tweens
 				for (key in _tempProps)
 				{
 					_target[key] = _initProps[key];

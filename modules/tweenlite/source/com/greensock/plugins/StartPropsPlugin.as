@@ -13,13 +13,10 @@ package com.greensock.plugins
 		
 		public function StartPropsPlugin()
 		{
-			super();
-			
-			this.propName = "start";
-			this.overwriteProps = ["start"];
+			super("start");
 		}
 		/** @private **/
-		override public function onInitTween(target:Object, value:*, tween:TweenLite):Boolean {
+		override public function _onInitTween(target:Object, value:*, tween:TweenLite):Boolean {
 			for (var key : * in value)
 			{
 				target[key] = value[key];
@@ -28,7 +25,7 @@ package com.greensock.plugins
 		}
 		
 		/** @private **/
-		override public function set changeFactor(n:Number):void {
+		override public function setRatio(n:Number):void {
 		}
 	}
 }
