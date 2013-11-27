@@ -157,11 +157,6 @@ package temple.core.display
 	public class CoreLoader extends Loader implements ICoreDisplayObject, ICoreLoader, IDebuggable
 	{
 		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
-		/**
 		 * Hashmap of CoreURLLoaders which loads policy files (crossdomain.xml files)
 		 */
 		templelibrary static const POLICYFILE_LOADERS:Object = {};
@@ -173,7 +168,7 @@ package temple.core.display
 		 */
 		protected namespace construct;
 		
-		private const _toStringProps:Vector.<String> = Vector.<String>(['name', 'url']);
+		private const _toStringProps:Vector.<String> = Vector.<String>(['name', 'url', 'content']);
 		private var _isLoading:Boolean;
 		private var _isLoaded:Boolean;
 		private var _logErrors:Boolean;
@@ -849,6 +844,12 @@ package temple.core.display
 				{
 					// Policy file is already loaded, continue
 					if (_debug) logDebug("Policy file is already loaded");
+					_policyFileLoader = null;
+				}
+				else if (_policyFileLoader.isDestructed)
+				{
+					// Policy file can not be loaded, continue
+					if (_debug) logDebug("Policy file cannot be loaded");
 					_policyFileLoader = null;
 				}
 				else

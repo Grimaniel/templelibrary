@@ -45,8 +45,6 @@ package temple.core.utils
 	 */
 	public class CoreTimer extends Timer implements ICoreEventDispatcher, ICoreObject
 	{
-		include "../includes/Version.as.inc";
-		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['delay', 'repeatCount']);

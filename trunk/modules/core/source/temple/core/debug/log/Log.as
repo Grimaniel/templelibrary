@@ -72,8 +72,6 @@ package temple.core.debug.log
 	 */
 	public final class Log extends EventDispatcher 
 	{
-		include "../../includes/Version.as.inc";
-		
 		private static const _instance:Log = new Log();
 		
 		private static var _showTrace:Boolean = true;

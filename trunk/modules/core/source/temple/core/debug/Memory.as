@@ -33,8 +33,6 @@ package temple.core.debug
 	 */
 	public final class Memory
 	{
-		include "../includes/Version.as.inc";
-		
 		private static var _registry:Dictionary;
 		private static var _debug:Boolean; 
 

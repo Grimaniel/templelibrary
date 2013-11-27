@@ -28,8 +28,6 @@ package temple.core
 	 */
 	dynamic public class CoreObject extends Object implements ICoreObject
 	{
-		include "./includes/Version.as.inc";
-		
 		include "./includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = new Vector.<String>();

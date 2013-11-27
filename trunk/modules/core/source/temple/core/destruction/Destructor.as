@@ -4,9 +4,8 @@ include "../includes/License.as.inc";
 
 package temple.core.destruction 
 {
-	import temple.core.templelibrary;
-	
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
@@ -23,8 +22,6 @@ package temple.core.destruction
 	 */
 	public final class Destructor 
 	{
-		include "../includes/Version.as.inc";
-		
 		/**
 		 * Recursively destructs the object and all its descendants.
 		 * Note: This method always returns null. Useful if you want to destruct and clear an object in one line of code:
@@ -82,8 +79,14 @@ package temple.core.destruction
 					Destructor.destruct((object as Array).shift());
 				}
 			}
+			else if (object is BitmapData)
+			{
+				BitmapData(object).dispose();
+			}
 			else if (getQualifiedClassName(object).indexOf("__AS3__.vec::Vector.") === 0) // Vector
 			{
+				object.fixed = false;
+				
 				while (object.length)
 				{
 					Destructor.destruct(object.shift());

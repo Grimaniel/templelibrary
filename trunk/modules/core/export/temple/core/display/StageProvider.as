@@ -35,15 +35,15 @@
 
 package temple.core.display 
 {
+	import temple.core.debug.objectToString;
+	import temple.core.errors.TempleArgumentError;
+	import temple.core.errors.throwError;
+
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	import temple.core.debug.objectToString;
-	import temple.core.errors.TempleArgumentError;
-	import temple.core.errors.throwError;
-	import temple.core.templelibrary;
 
 
 	/**
@@ -55,11 +55,6 @@ package temple.core.display
 	 */
 	public final class StageProvider 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private static var _stage:Stage;
 		
 		/**

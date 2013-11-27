@@ -4,13 +4,12 @@ include "../includes/License.as.inc";
 
 package temple.core.debug
 {
+	import temple.core.debug.log.Log;
+	import temple.core.events.CoreEventDispatcher;
+
 	import flash.display.LoaderInfo;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
-	import temple.core.debug.log.Log;
-	import temple.core.events.CoreEventDispatcher;
-	import temple.core.templelibrary;
-
 
 	/**
 	 * Class for catching unhandled (global) errors.
@@ -49,8 +48,6 @@ package temple.core.debug
 	 */
 	public class GlobalErrorHandler extends CoreEventDispatcher implements IDebuggable
 	{
-		include "../includes/Version.as.inc";
-		
 		private var _preventDefault:Boolean;
 		private var _debug:Boolean;
 		

@@ -35,9 +35,9 @@
 
 package temple.core.destruction 
 {
-	import flash.events.Event;
 	import temple.core.events.CoreEvent;
-	import temple.core.templelibrary;
+	
+	import flash.events.Event;
 
 	/**
 	 * Event for destruction. Just before an object is destructed it will dispatch a DestructEvent.destruct event.
@@ -46,11 +46,6 @@ package temple.core.destruction
 	 */
 	public class DestructEvent extends CoreEvent 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		/**
 		 * Dispatched just before the object is destructed.
 		 */

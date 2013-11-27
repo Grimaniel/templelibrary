@@ -51,8 +51,6 @@ package temple.core.display
 	 */
 	public class CoreSprite extends Sprite implements ICoreDisplayObjectContainer, ISprite
 	{
-		include "../includes/Version.as.inc";
-		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);

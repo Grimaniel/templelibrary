@@ -4,15 +4,15 @@ include "../includes/License.as.inc";
 
 package temple.core.display 
 {
+	import temple.core.debug.objectToString;
+	import temple.core.errors.TempleArgumentError;
+	import temple.core.errors.throwError;
+
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	import temple.core.debug.objectToString;
-	import temple.core.errors.TempleArgumentError;
-	import temple.core.errors.throwError;
-	import temple.core.templelibrary;
 
 
 	/**
@@ -24,8 +24,6 @@ package temple.core.display
 	 */
 	public final class StageProvider 
 	{
-		include "../includes/Version.as.inc";
-		
 		private static var _stage:Stage;
 		
 		/**

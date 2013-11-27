@@ -36,7 +36,6 @@
 package temple.core.errors 
 {
 	import temple.core.debug.log.Log;
-	import temple.core.templelibrary;
 
 	/**
 	 * Error thrown when a method argument is invalid.
@@ -46,11 +45,6 @@ package temple.core.errors
 	 */
 	public class TempleArgumentError extends ArgumentError implements ITempleError
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private var _sender:Object;
 		
 		/**

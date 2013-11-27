@@ -60,11 +60,6 @@ package temple.core
 	dynamic public class CoreObject extends Object implements ICoreObject
 	{
 		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
-		/**
 		 * @private
 		 * 
 		 * Protected namespace for construct method. This makes overriding of constructor possible.

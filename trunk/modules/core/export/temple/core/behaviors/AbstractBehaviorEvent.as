@@ -36,7 +36,6 @@
 package temple.core.behaviors 
 {
 	import temple.core.events.CoreEvent;
-	import temple.core.templelibrary;
 
 	/**
 	 * Abstract implementation of a BehaviorEvent. This class is used as super class for other BehaviorEvents.
@@ -47,11 +46,6 @@ package temple.core.behaviors
 	 */
 	public class AbstractBehaviorEvent extends CoreEvent implements IBehaviorEvent
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private var _behavior:IBehavior;
 
 		/**

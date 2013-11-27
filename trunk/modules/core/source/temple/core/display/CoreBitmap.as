@@ -53,8 +53,6 @@ package temple.core.display
 	 */
 	public class CoreBitmap extends Bitmap implements ICoreDisplayObject
 	{
-		include "../includes/Version.as.inc";
-		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);

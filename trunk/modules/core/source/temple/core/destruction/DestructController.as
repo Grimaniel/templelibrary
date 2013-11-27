@@ -5,7 +5,6 @@ include "../includes/License.as.inc";
 package temple.core.destruction 
 {
 	import temple.core.CoreObject;
-	import temple.core.templelibrary;
 
 	import flash.utils.Dictionary;
 
@@ -20,8 +19,6 @@ package temple.core.destruction
 	 */
 	public class DestructController extends CoreObject
 	{
-		include "../includes/Version.as.inc";
-		
 		protected static var _instance:DestructController;
 
 		private var _list:Dictionary;

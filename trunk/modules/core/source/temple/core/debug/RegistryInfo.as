@@ -5,7 +5,6 @@ include "../includes/License.as.inc";
 package temple.core.debug 
 {
 	import flash.utils.getTimer;
-	import temple.core.templelibrary;
 
 	/**
 	 * Internal class to store information about an object registration.
@@ -14,8 +13,6 @@ package temple.core.debug
 	 */
 	internal final class RegistryInfo 
 	{
-		include "../includes/Version.as.inc";
-		
 		private static const _TO_STRING_PROPS:Vector.<String> = Vector.<String>(['objectId', 'timestamp']);
 		
 		private var _stack:String;

@@ -4,9 +4,9 @@ include "../includes/License.as.inc";
 
 package temple.core.debug
 {
-	import flash.events.Event;
 	import temple.core.events.CoreEvent;
-	import temple.core.templelibrary;
+	
+	import flash.events.Event;
 	
 	/**
 	 * Event dispatched by the GlobalErrorHandler when a global error has occurred.
@@ -17,8 +17,6 @@ package temple.core.debug
 	 */
 	public class GlobalErrorEvent extends CoreEvent
 	{
-		include "../includes/Version.as.inc";
-		
 		public static const GLOBAL_ERROR:String = "GlobalErrorEvent.globalError";
 		
 		private var _error:*;

@@ -79,11 +79,6 @@ package temple.core.debug
 	public final class DebugManager extends CoreObject implements IDebuggable
 	{
 		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
-		/**
 		 * Set this key if you want to enable runtime debugging
 		 */
 		templelibrary static var KEY:String;

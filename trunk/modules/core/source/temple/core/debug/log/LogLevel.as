@@ -4,8 +4,6 @@ include "../includes/License.as.inc";
 
 package temple.core.debug.log 
 {
-	import temple.core.templelibrary;
-
 	/**
 	 * This class contains all possible levels of log messages.
 	 * 
@@ -13,8 +11,6 @@ package temple.core.debug.log
 	 */
 	public final class LogLevel 
 	{
-		include "../../includes/Version.as.inc";
-		
 		/**
 		 * The information is only useful when debugging the application.
 		 */

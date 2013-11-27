@@ -35,11 +35,11 @@
 
 package temple.core.debug 
 {
-	import flash.utils.Dictionary;
 	import temple.core.Temple;
 	import temple.core.debug.log.Log;
 	import temple.core.destruction.Destructor;
-	import temple.core.templelibrary;
+
+	import flash.utils.Dictionary;
 
 	/**
 	 * This class holds objects with their unique id to identify them when needed.
@@ -62,11 +62,6 @@ package temple.core.debug
 	 */
 	public final class Registry 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private static const _objectList:Dictionary = new Dictionary(true);
 		
 		private static var _objectId:uint;

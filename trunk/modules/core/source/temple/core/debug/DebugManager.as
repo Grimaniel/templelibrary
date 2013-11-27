@@ -47,8 +47,6 @@ package temple.core.debug
 	 */
 	public final class DebugManager extends CoreObject implements IDebuggable
 	{
-		include "../includes/Version.as.inc";
-		
 		/**
 		 * Set this key if you want to enable runtime debugging
 		 */

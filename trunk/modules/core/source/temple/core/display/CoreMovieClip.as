@@ -16,6 +16,7 @@ package temple.core.display
 	import temple.core.events.EventListenerManager;
 	import temple.core.templelibrary;
 	import flash.display.DisplayObject;
+	import flash.display.FrameLabel;
 	import flash.display.Loader;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
@@ -53,8 +54,6 @@ package temple.core.display
 	 */
 	public class CoreMovieClip extends MovieClip implements ICoreMovieClip
 	{
-		include "../includes/Version.as.inc";
-		
 		include "../includes/ConstructNamespace.as.inc";
 		
 		private const _toStringProps:Vector.<String> = Vector.<String>(['name']);
@@ -66,6 +65,7 @@ package temple.core.display
 		private var _destructOnUnload:Boolean = true;
 		private var _emptyPropsInToString:Boolean = true;
 		private var _frameScripts:Vector.<Function>;
+		private var _frameLabels:Object;
 		private var _debug:Boolean;
 
 		public function CoreMovieClip()
@@ -95,32 +95,36 @@ package temple.core.display
 		 */
 		override public function addFrameScript(...args):void
 		{
-			super.addFrameScript.apply(null, args);
-			
 			_frameScripts ||= new Vector.<Function>(totalFrames, true);
 			
 			for (var i:int = 0, leni:int = args.length; i < leni; i += 2)
 			{
+				if (!(args[i] is int))
+				{
+					args[i] = getFrame(args[i]);
+					if (args[i])
+					{
+						args[i]--;
+					}
+					else
+					{
+						continue;
+					}
+				}
+				
 				_frameScripts[args[i]] = args[i+1];
 				
 				if (_debug) logDebug("FrameScript " + (args[i+1] == null ? "cleared" : "set") + " on frame " + (args[i] + 1));
 			}
+			super.addFrameScript.apply(null, args);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function hasFrameScript(frame:uint):Boolean
+		public function hasFrameScript(frame:Object):Boolean
 		{
-			if (frame == 0)
-			{
-				return throwError(new TempleArgumentError(this, "frame cannot be 0"));
-			}
-			else if (frame > totalFrames)
-			{
-				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + totalFrames));
-			}
-			return _frameScripts &&  _frameScripts[frame - 1] != null;
+			return _frameScripts && (frame = getFrame(frame)) &&  _frameScripts[int(frame) - 1] != null;
 		}
 
 		/**
@@ -134,43 +138,27 @@ package temple.core.display
 		/**
 		 * @inheritDoc
 		 */
-		public function getFrameScript(frame:uint):Function
+		public function getFrameScript(frame:Object):Function
 		{
-			if (frame == 0)
-			{
-				return throwError(new TempleArgumentError(this, "frame cannot be 0"));
-			}
-			else if (frame > totalFrames)
-			{
-				return throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + totalFrames));
-			}
-			return _frameScripts[frame - 1];
+			return (frame = getFrame(frame)) && _frameScripts ? _frameScripts[int(frame) - 1] : null;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function setFrameScript(frame:uint, script:Function):void
+		public function setFrameScript(frame:Object, script:Function):void
 		{
-			if (frame == 0)
-			{
-				throwError(new TempleArgumentError(this, "frame cannot be 0"));
-				return;
-			}
-			else if (frame > totalFrames)
-			{
-				throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + totalFrames));
-				return;
-			}
-			addFrameScript(frame - 1, script);
+			frame = getFrame(frame);
+			if (frame) addFrameScript(int(frame) - 1, script);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function clearFrameScript(frame:uint):void
+		public function clearFrameScript(frame:Object):void
 		{
-			addFrameScript(frame - 1, null);
+			frame = getFrame(frame);
+			if (frame) addFrameScript(int(frame) - 1, null);
 		}
 
 		/**
@@ -194,6 +182,77 @@ package temple.core.display
 		templelibrary function get frameScripts():Vector.<Function>
 		{
 			return _frameScripts;
+		}
+		
+		/**
+		 * Returns a hash with all the FrameLabels with the name and frame as index
+		 */
+		public function get frameLabels():Object
+		{
+			if (!_frameLabels)
+			{
+				_frameLabels = {};
+				for each (var frameLabel:FrameLabel in currentLabels)
+				{
+					if (frameLabel.name in _frameLabels) logWarn("Duplicate label '" + frameLabel.name + "' on frame " + frameLabel.frame);
+					_frameLabels[frameLabel.frame] = _frameLabels[frameLabel.name] = frameLabel;
+				}
+			}
+			return _frameLabels;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getFrameLabel(frame:Object):FrameLabel
+		{
+			return frameLabels[frame is int ? frame : String(frame)];
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getFrame(frame:Object):int
+		{
+			if (frame is int)
+			{
+				if (frame < 1)
+				{
+					throwError(new TempleArgumentError(this, "frame cannot lower then 1"));
+					return 0;
+				}
+				else if (frame > totalFrames)
+				{
+					throwError(new TempleArgumentError(this, "frame " + frame + " doesn't exists, totalFrame is " + totalFrames));
+					return 0;
+				}
+				else
+				{
+					return int(frame);
+				}
+			}
+			else
+			{
+				if (hasFrameLabel(frame))
+				{
+					return getFrameLabel(frame).frame;
+				}
+				else
+				{
+					throwError(new TempleArgumentError(this, "frame '" + frame + "' not found"));
+				}
+			}
+			return 0;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function hasFrameLabel(frame:Object):Boolean
+		{
+			if (!(frame is int)) frame = String(frame);
+			
+			return frame in frameLabels;
 		}
 
 		include "../includes/CoreObjectMethods.as.inc";

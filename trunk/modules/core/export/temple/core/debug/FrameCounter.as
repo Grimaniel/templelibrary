@@ -35,8 +35,6 @@
 
 package temple.core.debug
 {
-	import temple.core.templelibrary;
-	
 	import flash.display.Shape;
 	import flash.events.Event;
 	
@@ -47,11 +45,6 @@ package temple.core.debug
 	 */
 	public final class FrameCounter
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		/**
 		 * DisplayObject for EnterFrame events
 		 */

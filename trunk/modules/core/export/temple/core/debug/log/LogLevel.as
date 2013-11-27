@@ -35,8 +35,6 @@
 
 package temple.core.debug.log 
 {
-	import temple.core.templelibrary;
-
 	/**
 	 * This class contains all possible levels of log messages.
 	 * 
@@ -44,11 +42,6 @@ package temple.core.debug.log
 	 */
 	public final class LogLevel 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		/**
 		 * The information is only useful when debugging the application.
 		 */

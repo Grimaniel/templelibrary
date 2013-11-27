@@ -36,7 +36,6 @@
 package temple.core.debug 
 {
 	import flash.utils.getTimer;
-	import temple.core.templelibrary;
 
 	/**
 	 * Internal class to store information about an object registration.
@@ -45,11 +44,6 @@ package temple.core.debug
 	 */
 	internal final class RegistryInfo 
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private static const _TO_STRING_PROPS:Vector.<String> = Vector.<String>(['objectId', 'timestamp']);
 		
 		private var _stack:String;

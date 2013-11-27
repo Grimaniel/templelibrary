@@ -36,7 +36,6 @@
 package temple.core.errors 
 {
 	import temple.core.debug.log.Log;
-	import temple.core.templelibrary;
 
 	/**
 	 * Error thrown when an index is out of range.
@@ -46,11 +45,6 @@ package temple.core.errors
 	 */
 	public class TempleRangeError extends RangeError implements ITempleError
 	{
-		/**
-		 * The current version of the Temple Library
-		 */
-		templelibrary static const VERSION:String = "3.6.0";
-		
 		private var _sender:Object;
 		
 		/**
