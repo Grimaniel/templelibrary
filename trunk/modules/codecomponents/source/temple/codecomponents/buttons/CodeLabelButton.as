@@ -35,12 +35,12 @@
 
 package temple.codecomponents.buttons 
 {
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
 	import temple.codecomponents.style.CodeStyle;
 	import temple.ui.buttons.LiquidLabelButton;
 	import temple.ui.buttons.behaviors.ButtonTweenBehavior;
 	import temple.ui.layout.liquid.LiquidBehavior;
+
+	import flash.text.TextField;
 
 
 	/**
@@ -50,17 +50,17 @@ package temple.codecomponents.buttons
 	 */
 	public class CodeLabelButton extends LiquidLabelButton 
 	{
-		public function CodeLabelButton(label:String = "", multiline:Boolean = false, autoSize:String = TextFieldAutoSize.LEFT)
+		public function CodeLabelButton(text:String = "", multiline:Boolean = false, autoSize:Boolean = true)
 		{
 			super(new TextField());
 			
 			padding = 2;
 			
-			this.label = label;
+			this.text = text;
 			textField.multiline = multiline;
 			this.autoSize = autoSize;
 			
-			if (autoSize == TextFieldAutoSize.NONE || autoSize == null)
+			if (!autoSize)
 			{
 				textField.width = 100;
 				textField.height = 20;

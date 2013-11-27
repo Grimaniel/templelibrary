@@ -82,7 +82,7 @@ package temple.codecomponents.windows
 			{
 				var window:IWindow = IWindow(event.target);
 				
-				var button:CodeLabelButton = new CodeLabelButton(window.label);
+				var button:CodeLabelButton = new CodeLabelButton(window.text);
 				button.top = 3;
 				addChild(button);
 				button.addEventListener(MouseEvent.CLICK, handleClick);
@@ -107,7 +107,7 @@ package temple.codecomponents.windows
 		
 		private function handleWindowChange(event:Event):void
 		{
-			CodeLabelButton(_taskBarDictionary[event.target]).label = IWindow(event.target).label;
+			CodeLabelButton(_taskBarDictionary[event.target]).text = IWindow(event.target).text;
 		}
 		
 		private function handleWindowDestruct(event:DestructEvent):void

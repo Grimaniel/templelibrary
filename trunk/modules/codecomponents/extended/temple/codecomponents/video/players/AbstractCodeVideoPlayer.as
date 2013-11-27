@@ -371,6 +371,30 @@ package temple.codecomponents.video.players
 		}
 		
 		/**
+		 * returns a reference to the actual player
+		 */
+		public function get videoPlayer():IVideoPlayer
+		{
+			return _videoPlayer;
+		}
+		
+		/***
+		 * @inheritDoc
+		 */
+		override public function get scaleMode():String
+		{
+			return _videoPlayer.scaleMode;
+		}
+		
+		/***
+		 * @inheritDoc
+		 */
+		override public function set scaleMode(value:String):void
+		{
+			_videoPlayer.scaleMode = value;
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function get debug():Boolean

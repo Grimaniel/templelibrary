@@ -60,7 +60,7 @@ package temple.codecomponents.form.components
 			
 			createUI();
 			
-			if (label) this.label = label;
+			if (label) this.text = label;
 			this.selectedValue = selectedValue == null ? (label ? label : true) : selectedValue;
 			this.unselectedValue = unselectedValue;
 			this.selected = selected;

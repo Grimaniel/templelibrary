@@ -62,6 +62,10 @@ package temple.codecomponents.style
 			{
 				text-decoration: underline;
 			}
+			h1
+			{
+				font-size: 20px;
+			}
 		]]>
 		</css>;
 		public static const styleSheet:StyleSheet = new StyleSheet();
@@ -84,6 +88,8 @@ package temple.codecomponents.style
 		public static const buttonDownFilters:Array = [new BevelFilter(1, 225, 0xffffff, 1, 0x000000, 1, 1, 1, 1, 1)];
 		public static var buttonDownstateColor:uint = 0xaaaaaa;
 		public static var buttonDownstateAlpha:Number = 1;
+		public static var buttonSelectstateColor:uint = 0xeeeeee;
+		public static var buttonSelectstateAlpha:Number = .5;
 		
 		/**
 		 * Focus

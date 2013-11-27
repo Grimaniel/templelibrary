@@ -35,6 +35,7 @@
 
 package temple.codecomponents.form.components 
 {
+	import temple.ui.states.error.ErrorFadeState;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import temple.codecomponents.style.CodeStyle;
@@ -58,7 +59,7 @@ package temple.codecomponents.form.components
 			
 			createUI();
 			
-			if (label) this.label = label;
+			if (label) this.text = label;
 			selectedValue = value == null ? (label ? label : true) : value;
 			this.selected = selected;
 		}
@@ -96,6 +97,14 @@ package temple.codecomponents.form.components
 			textField.x = 12;
 			textField.defaultTextFormat = CodeStyle.textFormat;
 			textField.textColor = CodeStyle.textColor;
+			
+			// error
+			var error:ErrorFadeState = new ErrorFadeState();
+			error.graphics.beginFill(CodeStyle.errorColor, CodeStyle.errorAlpha);
+			error.graphics.drawCircle(7, 7, 7);
+			error.graphics.endFill();
+			addChild(error);
+			error.y = 1;
 		}
 	}
 }

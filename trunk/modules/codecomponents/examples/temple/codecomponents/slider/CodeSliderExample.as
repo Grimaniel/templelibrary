@@ -12,7 +12,7 @@
  */
 package
 {
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	import temple.codecomponents.slider.CodeSlider;
 
 	import flash.events.Event;
@@ -40,12 +40,12 @@ package
 			
 			_slider.addEventListener(Event.CHANGE, handleChange);
 			
-			_label.label = _slider.value;
+			_label.text = _slider.value;
 		}
 
 		private function handleChange(event:Event):void
 		{
-			_label.label = _slider.value;
+			_label.text = _slider.value;
 		}
 	}
 }

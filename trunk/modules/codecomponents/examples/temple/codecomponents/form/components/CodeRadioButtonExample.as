@@ -13,7 +13,7 @@
 package
 {
 	import temple.codecomponents.form.components.CodeRadioButton;
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	import temple.ui.form.components.RadioGroup;
 	import temple.ui.layout.VBox;
 	import temple.utils.ValueBinder;
@@ -42,7 +42,7 @@ package
 			// Use a ValueBinder to set the selected value in a label
 			var replacer:ReplaceTextPropertyProxy = new ReplaceTextPropertyProxy("You selected value {value}");
 			replacer.setTextForValue(null, "Nothing selected");
-			new ValueBinder(group, output, "label", replacer);
+			new ValueBinder(group, output, "text", replacer);
 		}
 	}
 }

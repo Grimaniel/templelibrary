@@ -35,6 +35,7 @@
 
 package temple.codecomponents.video.players
 {
+	import flash.media.Video;
 	import temple.common.enum.ScaleMode;
 	import temple.core.debug.IDebuggable;
 	import temple.mediaplayers.video.players.IVideoPlayer;
@@ -50,6 +51,11 @@ package temple.codecomponents.video.players
 			super(new VideoPlayer(width, height, smoothing, scaleMode, debug), width, height);
 			
 			background = true;
+		}
+
+		public function get video():Video
+		{
+			return VideoPlayer(videoPlayer).video;
 		}
 	}
 }

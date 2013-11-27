@@ -17,7 +17,7 @@
  * <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/doc/temple/codecomponents/form/components/CodeInputField.html">CodeInputField</a>,
  * <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/doc/temple/codecomponents/form/components/CodeList.html">CodeList</a>,
  * <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/doc/temple/codecomponents/form/components/CodeRadioButton.html">CodeRadioButton</a>,
- * <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/doc/temple/codecomponents/label/CodeLabel.html">CodeLabel</a>,
+ * <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/doc/temple/codecomponents/labels/CodeLabel.html">CodeLabel</a>,
  * <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/doc/temple/codecomponents/scroll/CodeScrollBar.html">CodeScrollBar</a>,
  * <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/doc/temple/codecomponents/slider/CodeSlider.html">CodeSlider</a>,
  * <a href="http://templelibrary.googlecode.com/svn/trunk/modules/codecomponents/doc/temple/codecomponents/slider/CodeStepSlider.html">CodeStepSlider</a>,
@@ -52,7 +52,7 @@ package
 	import temple.codecomponents.form.components.CodeInputField;
 	import temple.codecomponents.form.components.CodeList;
 	import temple.codecomponents.form.components.CodeRadioButton;
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	import temple.codecomponents.scroll.CodeScrollBar;
 	import temple.codecomponents.slider.CodeSlider;
 	import temple.codecomponents.slider.CodeStepSlider;

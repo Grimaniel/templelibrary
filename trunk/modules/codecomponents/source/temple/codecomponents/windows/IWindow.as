@@ -37,7 +37,7 @@ package temple.codecomponents.windows
 {
 	import temple.common.interfaces.IFocusable;
 	import temple.core.display.IDisplayObject;
-	import temple.ui.label.ILabel;
+	import temple.ui.labels.ILabel;
 
 	/**
 	 * @author Thijs Broerse

@@ -12,9 +12,10 @@
  */
 package
 {
+	import temple.utils.localization.DateLabelFormat;
 	import temple.utils.ValueBinder;
 	import temple.codecomponents.form.components.CodeDateSelector;
-	import temple.codecomponents.label.CodeLabel;
+	import temple.codecomponents.labels.CodeLabel;
 	
 	[SWF(backgroundColor="#BBBBBB", frameRate="31", width="640", height="480")]
 	public class CodeDateSelectorExample extends DocumentClassExample
@@ -33,6 +34,7 @@ package
 			selector.y = 10;
 			// set a format to the date output
 			selector.format = "d / m / Y";
+			selector.monthFormat = DateLabelFormat.SHORT;
 			
 			// Create a label for displaying the output of the CodeDateSelector
 			output = new CodeLabel();
@@ -41,7 +43,7 @@ package
 			output.y = 10;
 
 			// Use a ValueBinder to set the date in the output
-			new ValueBinder(selector, output, "label");
+			new ValueBinder(selector, output, "text");
 
 
 			// CodeDateSelector with only dates in the future
@@ -59,7 +61,7 @@ package
 			output.y = 40;
 
 			// Use a ValueBinder to set the date in the output
-			new ValueBinder(selector, output, "label");
+			new ValueBinder(selector, output, "text");
 
 
 			// CodeDateSelector with only dates in the past
@@ -80,7 +82,7 @@ package
 			output.y = 70;
 
 			// Use a ValueBinder to set the date in the output
-			new ValueBinder(selector, output, "label");
+			new ValueBinder(selector, output, "text");
 
 		}
 	}

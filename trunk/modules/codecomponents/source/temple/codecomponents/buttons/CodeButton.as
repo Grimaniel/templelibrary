@@ -54,6 +54,7 @@ package temple.codecomponents.buttons
 			this.y = y;
 			
 			addChild(new ButtonOverState(width, height));
+			addChild(new ButtonSelectState(width, height));
 			addChild(new ButtonDownState(width, height));
 		}
 
@@ -71,6 +72,7 @@ package temple.codecomponents.buttons
 import temple.codecomponents.style.CodeStyle;
 import temple.ui.states.down.DownFadeState;
 import temple.ui.states.over.OverFadeState;
+import temple.ui.states.select.SelectFadeState;
 
 class ButtonOverState extends OverFadeState
 {
@@ -128,5 +130,34 @@ class ButtonDownState extends DownFadeState
 		graphics.drawRect(0, 0, width, height);
 		graphics.endFill();
 		filters = CodeStyle.buttonDownFilters;
+	}
+}
+
+class ButtonSelectState extends SelectFadeState
+{
+	public function ButtonSelectState(width:Number, height:Number) 
+	{
+		super(0, .25);
+		
+		draw(width, height);
+	}
+
+	override public function set width(value:Number):void
+	{
+		draw(value, height);
+	}
+	
+	override public function set height(value:Number):void
+	{
+		draw(width, value);
+	}
+
+	private function draw(width:Number, height:Number):void
+	{
+		graphics.clear();
+		graphics.beginFill(CodeStyle.buttonSelectstateColor, CodeStyle.buttonSelectstateAlpha);
+		graphics.drawRect(0, 0, width, height);
+		graphics.endFill();
+		filters = CodeStyle.buttonFilters;
 	}
 }
