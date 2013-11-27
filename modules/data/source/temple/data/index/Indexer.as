@@ -45,7 +45,7 @@ package temple.data.index
 	import flash.utils.getQualifiedClassName;
 
 	/**
-	 * The Indexer stores IIndexable object based on there type (Class) and id, so this combination must be unique.
+	 * The Indexer stores objects based on there type (Class) and id, so this combination must be unique.
 	 * The Indexer is used for easy retrieve objects based on there id. Specially useful when parsing data (from the backend)
 	 * and map id's to the real objects.
 	 * 
@@ -56,20 +56,31 @@ package temple.data.index
 	public class Indexer 
 	{
 		/**
-		 * Static getter on the class of the IIndexable object which returns the type of the object. This method is used by the 'add()' method to define the type when no type is passed."
+		 * Static getter on the class of the object which returns the type of the object. This method is used by the 'add()' method to define the type when no type is passed."
 		 */
 		public static const INDEX_CLASS:String = "indexClass";
 		
 		private static const _INDEX:Dictionary = new Dictionary();
 
 		/**
-		 * Add an object to the Indexer.
+		 * Add an object to the Indexer. If the object is an <code>IIndexable</code> it can retrieve the <code>id</code>
+		 * from the object, otherwise you must provide an <code>id</code>.
+		 * 
+		 * @param object the object which must be indexed
+		 * @param id the key on which the object is indexed. If the object is <code>IIndexable</code> it can retrieve
+		 *  the <code>id</code> from the object, otherwise you must provide an <code>id</code>.
+		 * @param type the class on which this object must be indexed, this can also be an interface. If null, the class
+		 *  of the object (using <code>getQualifiedClassName</code>) is used.
+		 *  
+		 * @return the object
 		 */
-		public static function add(object:IIndexable, type:Class = null):void 
+		public static function add(object:*, type:Class = null, id:String = null):* 
 		{
-			if (!object.id)
+			if (!id && object is IIndexable) id = IIndexable(object).id;
+			
+			if (!id)
 			{
-				throwError(new TempleError(Indexer, "Object does not have an id"));
+				throwError(new TempleArgumentError(Indexer, "Id cannot be empty"));
 			}
 			else
 			{
@@ -88,25 +99,36 @@ package temple.data.index
 				}
 				if (!Indexer._INDEX[type]) Indexer._INDEX[type] = {};
 				
-				if (Indexer._INDEX[type][object.id] && Indexer._INDEX[type][object.id] != object)
+				if (Indexer._INDEX[type][id] && Indexer._INDEX[type][id] != object)
 				{
-					throwError(new TempleError(Indexer, "Indexer already has a \"" + getQualifiedClassName(type) + "\" with the same id: " + Indexer._INDEX[type][object.id] + ".\n" + object + " can not be added."));
+					throwError(new TempleError(Indexer, "Indexer already has a \"" + getQualifiedClassName(type) + "\" with the same id: " + Indexer._INDEX[type][id] + ".\n" + object + " can not be added."));
 				}
 				else
 				{
-					Indexer._INDEX[type][object.id] = object;
+					Indexer._INDEX[type][id] = object;
 				}
 			}
+			return object;
 		}
 		
 		/**
 		 * Removes an object from the Indexer.
+		 * 
+		 * @param object the object which must be removed
+		 * @param id the key on which the object is indexed. If the object is <code>IIndexable</code> it can retrieve
+		 *  the <code>id</code> from the object, otherwise you must provide an <code>id</code>.
+		 * @param type the class on which this object is indexed, this can also be an interface. If null, the class
+		 *  of the object (using <code>getQualifiedClassName</code>) is used.
+		 *  
+		 * @return the object
 		 */
-		public static function remove(object:IIndexable, type:Class = null):void 
+		public static function remove(object:*, type:Class = null, id:String = null):* 
 		{
-			if (!object.id)
+			if (!id && object is IIndexable) id = IIndexable(object).id;
+			
+			if (!id)
 			{
-				throwError(new TempleError(Indexer, "Object does not have an id"));
+				throwError(new TempleArgumentError(Indexer, "Id cannot be empty"));
 			}
 			else
 			{
@@ -120,16 +142,16 @@ package temple.data.index
 				}
 				if (Indexer._INDEX[type])
 				{
-					delete Indexer._INDEX[type][object.id];
+					delete Indexer._INDEX[type][id];
 				}
-				
 			}
+			return object;
 		}
 		
 		/**
 		 * Get an object based on his type (Class) and id.
 		 */
-		public static function get(type:Class, id:String):IIndexable 
+		public static function get(type:Class, id:String):* 
 		{
 			return Indexer._INDEX[type] && Indexer._INDEX[type][id] ? Indexer._INDEX[type][id] : null;
 		}
@@ -166,7 +188,9 @@ package temple.data.index
 			}
 		}
 
-		
+		/**
+		 * @private
+		 */
 		public static function toString():String
 		{
 			return objectToString(Indexer);

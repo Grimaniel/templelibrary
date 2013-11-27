@@ -35,8 +35,7 @@
 
 package temple.data.url 
 {
-	import temple.utils.types.ArrayUtils;
-	import flash.net.URLLoaderDataFormat;
+	import temple.utils.URLUtils;
 	import temple.core.debug.IDebuggable;
 	import temple.core.debug.addToDebugManager;
 	import temple.core.errors.TempleArgumentError;
@@ -46,6 +45,7 @@ package temple.data.url
 	import temple.core.net.CoreURLLoader;
 	import temple.data.xml.XMLParser;
 	import temple.utils.TraceUtils;
+	import temple.utils.types.ArrayUtils;
 	import temple.utils.types.ObjectUtils;
 	import temple.utils.types.StringUtils;
 
@@ -54,6 +54,7 @@ package temple.data.url
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.external.ExternalInterface;
+	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.utils.escapeMultiByte;
@@ -127,6 +128,7 @@ package temple.data.url
 		private var _rawData:XML;
 		private var _loader:CoreURLLoader;
 		private var _debug:Boolean;
+		private var _base:String;
 
 		public function URLManager() 
 		{
@@ -296,6 +298,10 @@ package temple.data.url
 				if (features)
 				{
 					if (debug) logDebug("openURL using JavaScript, with features=\"" + features + "\"");
+					
+					// Add base url if url is relative
+					if (!URLUtils.isAbsolute(url)) url = getBase() + url;
+					
 					ExternalInterface.call(<script><![CDATA[window.open]]></script>, url, target, features);
 				}
 				else
@@ -304,10 +310,16 @@ package temple.data.url
 					
 					/**
 					 * Use JavaScript to open the URL when the browser is FireFox or Internet Explorer 7 or higher
+					 * 
+					 * TODO: check safari
 					 */
-					if (userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7))
+					if (userAgent.indexOf("chrome") != -1 || userAgent.indexOf("firefox") != -1 || (userAgent.indexOf("msie") != -1 && uint(userAgent.substr(userAgent.indexOf("msie") + 5, 3)) >= 7))
 					{
 						if (debug) logDebug("openURL using JavaScript, userAgent=\"" + userAgent + "\"");
+						
+						// Add base url if url is relative
+						if (!URLUtils.isAbsolute(url)) url = getBase() + url;
+						
 						// window.open call must be wrapped inside an anonymous function to prevent a "too much recursion" error
 						ExternalInterface.call(<script><![CDATA[function (url, target) {window.open(url, target); }]]></script>, url, target);
 					}
@@ -395,6 +407,27 @@ package temple.data.url
 		{
 			_variables[name] = value;
 			if (isLoaded) processXml();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getBase():String
+		{
+			if (!_base && ExternalInterface.available)
+			{
+				_base = ExternalInterface.call(<script><![CDATA[function (id)
+				{
+					var params = document.getElementById(id).getElementsByTagName("param");
+					for (var i = 0, len = params.length; i < len; i++)
+					{
+						if (params[i].getAttribute('name') == "base") return params[i].getAttribute('value')
+					}
+				}
+				]]></script>, ExternalInterface.objectID);
+			}
+			
+			return _base;
 		}
 		
 		/**

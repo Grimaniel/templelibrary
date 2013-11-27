@@ -35,6 +35,9 @@
 
 package temple.data.flashvars 
 {
+	import temple.common.enum.Enumerator;
+	import flash.utils.getQualifiedClassName;
+	import flash.utils.getQualifiedSuperclassName;
 	import temple.core.CoreObject;
 	import temple.core.errors.TempleArgumentError;
 	import temple.core.errors.throwError;
@@ -86,6 +89,17 @@ package temple.data.flashvars
 			switch (_type)
 			{
 				default:
+				{
+					if (getQualifiedSuperclassName(_type) == getQualifiedClassName(Enumerator))
+					{
+						return _type(Enumerator.get(_type, _value || _defaultValue));
+					}
+					else
+					{
+						return _type((_value == '' || _value == undefined || _value == null) && _defaultValue != null ? _defaultValue : _value);
+					}
+					break;
+				}
 				case null:
 				case String:
 				{
