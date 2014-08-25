@@ -1,0 +1,426 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../override.css" type="text/css"><meta name="keywords" content="TweenNano,com.greensock.TweenNano,defaultEase,defaultEase,defaultOverwrite,target,target,ticker,ticker,ticker,vars,add,addCallback,addEventListener,addEventListener,addLabel,addPause,call,clear,currentLabel,delayedCall,delayedCall,delayedCall,duration,duration,exportRoot,from,from,from,from,fromTo,fromTo,fromTo,getActive,getAllTweens,getChildren,getLabelAfter,getLabelBefore,getLabelTime,getLabelsArray,getTweensOf,getTweensOf,getTweensOf,invalidate,invalidate,invalidate,invalidate,isTweening,kill,killAll,killChildTweensOf,killDelayedCallsTo,killDelayedCallsTo,killTweensOf,killTweensOf,killTweensOf,pauseAll,progress,progress,remove,removeCallback,removeEventListener,removeEventListener,removeLabel,repeat,repeat,repeatDelay,repeatDelay,resumeAll,seek,set,set,set,shiftChildren,staggerFrom,staggerFrom,staggerFromTo,staggerFromTo,staggerTo,staggerTo,stop,time,time,to,to,to,to,totalDuration,totalDuration,totalDuration,totalProgress,totalProgress,tweenFromTo,tweenTo,updateTo,usesFrames,yoyo,yoyo"><title>com.greensock.TweenNano</title></head><body><script language="javascript" type="text/javascript" src="../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../help.js"></script><script language="javascript" type="text/javascript" src="../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'TweenNano - Temple API Documentation';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Temple API Documentation - 3.7.0</td><td class="titleTableTopNav" align="right"><a href="../../package-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../class-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../all-index-A.html" onclick="loadClassListFrame('../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../index.html?com/greensock/TweenNano.html&amp;com/greensock/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">TweenNano</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("TweenNano"); titleBar_setSubNav(false,true,false,false,false,false,false,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">com.greensock</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  TweenNano</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">TweenNano  <img src="../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr></table><p></p><p></p>
+ [AS3/AS2 only] TweenNano is a super-lightweight (2k in AS3 and 2.6k in AS2) version of <a href="http://www.greensock.com/tweenlite/" target="">TweenLite</a> 
+ and is only recommended for situations where you absolutely cannot afford the extra 4.7k that the normal 
+ TweenLite engine would cost and your project doesn't require any plugins. Normally, it is much better to 
+ use TweenLite because of the additional flexibility it provides via plugins and its compatibility with 
+ TimelineLite and TimelineMax. TweenNano can do everything TweenLite can do with the following exceptions:
+ <ul>
+ 		               <li>
+                     <b> No Plugins </b>- One of the great things about TweenLite is that you can activate
+ 			plugins in order to add features (like autoAlpha, tint, blurFilter, etc.). TweenNano, however, 
+ 			doesn't work with plugins. </li>
+ 		  
+ 		               <li>
+                     <b> Incompatible with TimelineLite and TimelineMax </b>- Complex sequencing and management 
+ 			of groups of tweens is much easier with TimelineLite and TimelineMax, but TweenNano instances cannot 
+ 			be inserted into TimelineLite or TimelineMax instances.</li>
+ 		  
+ 		  
+ 		               <li>
+                     <b> Limited overwrite modes </b>- By default, TweenNano doesn't overwrite any tweens
+ 			but you can pass <code>overwrite:"all"</code> in the <code>vars</code> parameter to have it kill
+ 			all tweens of the same target immediately. TweenLite, however, offers much more robust overwrite
+ 			management, recognizing advanced modes like <code>"auto"</code> (which only overwrites individual 
+ 			tweening properties that overlap), <code>"concurrent"</code>, <code>"allOnStart"</code>, 
+ 			and <code>"preexisting"</code>. See TweenLite's documentation for details.</li>
+ 
+ 		               <li>
+                     <b> Fewer methods and properties</b> TweenNano instances aren't meant to be altered 
+ 			on-the-fly, so they don't have methods like <code>pause(), resume(), reverse(), seek(), restart()</code>, etc. 
+ 			The essentials are covered, though, like <code>to(), from(), delayedCall(), killTweensOf()</code>, 
+ 			and <code>kill()</code>.</li>
+ 	             </ul>
+ 
+ 
+               <p>
+                  <b>USAGE</b>
+               </p>
+               <p>The most common type of tween is a <a href="TweenNano.html#to()" target="">to()</a> tween which allows you 
+ to define the destination values:</p>
+ 
+               <p>
+                  <code>
+ TweenNano.to(myObject, 2, {x:100, y:200});
+ </code>
+               </p>
+ 
+               <p>The above code will tween <code>myObject.x</code> from whatever it currently is to 100 and 
+ <code>myObject.y</code> property to 200 over the course of 2 seconds. Notice the x and y values are 
+ defined inside a generic object (between curly braces). Put as many properties there as you want.</p>
+ 
+               <p>Tweens begin immediately.</p>
+ 
+               <p>The <code>target</code> can also be an array of objects. For example, the following tween will
+ tween the alpha property to 0.5 and y property to 100 for obj1, obj2, and obj3:</p>
+ 
+               <p>
+                  <code>
+ TweenNano.to([obj1, obj2, obj3], 1, {alpha:0.5, y:100});
+ </code>
+               </p>
+ 
+               <p>You can also use a <a href="TweenNano.html#from()" target="">from()</a> tween if you want to define the 
+ <b>starting</b> values instead of the ending values so that the target tweens <i>from</i> 
+ the defined values to wherever they currently are.</p>
+ 
+               <p>Although the <code>to()</code> and <code>from()</code> static methods
+ are popular because they're quick and can avoid some garbage collection hassles, you can also
+ use the more object-oriented syntax like this:</p>
+ 
+               <p>
+                  <code>
+ var tween = new TweenNano(myObject, 2, {x:100, y:200});
+ </code>
+               </p>
+ 
+               <p>or even:</p>
+ 
+               <p>
+                  <code>
+ var tween = TweenNano.to(myObject, 2, {x:100, y:200});
+ </code>
+               </p>
+ 
+ 
+ 
+               <p>
+                  <b>EXAMPLES:</b>
+               </p>
+ 
+               <p>Please see <a href="http://www.greensock.com/tweennano/" target="">http://www.greensock.com/tweennano/</a> for examples, tutorials, and interactive demos. </p>
+ 
+ 
+               <p>
+                  <b>SPECIAL PROPERTIES:</b>
+               </p>
+               <p>Typically the <code>vars</code> parameter is used to define ending values for tweening 
+ properties of the <code>target</code> (or beginning values for <code>from()</code> tweens) 
+ like <code>{x:100, y:200, alpha:0}</code>, but the following optional special properties 
+ serve other purposes:</p>
+ 
+               <ul>
+ 	                <li>
+                     <b> delay </b>:<i> Number</i> -
+ 				 Amount of delay in seconds (or frames for frames-based tweens) before the tween should begin.</li>
+ 	
+ 	                <li>
+                     <b> ease </b>:<i> Ease (or Function)</i> -
+ 				 You can choose from various eases to control the rate of change during 
+ 				 the animation, giving it a specific "feel". For example, <code>ElasticOut.ease</code> 
+ 				 or <code>StrongInOut.ease</code>. TweenNano works with not only the easing equations
+ 				 in the com.greensock.easing package, but also standard easing equation that uses the 
+ 				 typical 4 parameters (<code>time, start, change, duration</code>) like Adobe's 
+ 				 <code>fl.motion.easing</code> eases. The default is <code>QuadOut.ease</code>. 
+ 				 For linear animation, use the GreenSock <code>Linear.ease</code> ease.</li>
+ 	
+ 	                <li>
+                     <b> onComplete </b>:<i> Function</i> -
+ 				 A function that should be called when the tween has completed</li>
+ 	
+ 	                <li>
+                     <b> onCompleteParams </b>:<i> Array</i> -
+ 				 An Array of parameters to pass the <code>onComplete</code> function. For example,
+ 				 <code>TweenNano.to(mc, 1, {x:100, onComplete:myFunction, onCompleteParams:[mc, "param2"]});</code>
+                  </li>
+ 	
+ 	                <li>
+                     <b> useFrames </b>:<i> Boolean</i> -
+ 				 If <code>useFrames</code> is <code>true</code>, the tweens's timing will be 
+ 				 based on frames instead of seconds. This causes both its <code>duration</code>
+ 				 and <code>delay</code> to be based on frames.</li>
+ 	
+ 	                <li>
+                     <b> immediateRender </b>:<i> Boolean</i> -
+ 				 Normally when you create a tween, it begins rendering on the very next frame (update cycle) 
+ 				 unless you specify a <code>delay</code>. However, if you prefer to force the tween to 
+ 				 render immediately when it is created, set <code>immediateRender</code> to <code>true</code>. 
+ 				 Or to prevent a <code>from()</code> from rendering immediately, set <code>immediateRender</code> 
+ 				 to <code>false</code>.</li>
+ 	
+ 	                <li>
+                     <b> onUpdate </b>:<i> Function</i> -
+ 				 A function that should be called every time the tween updates  
+ 				 (on every frame while the tween is active)</li>
+ 	
+ 	                <li>
+                     <b> onUpdateParams </b>:<i> Array</i> -
+ 				 An Array of parameters to pass the <code>onUpdate</code> function. For example,
+ 				 <code>TweenNano.to(mc, 1, {x:100, onUpdate:myFunction, onUpdateParams:[mc, "param2"]});</code>
+                  </li>
+ 	
+ 	                <li>
+                     <b> overwrite </b>:<i> String</i> -
+ 				 Controls how (and if) other tweens of the same target are overwritten. 
+ 				 By default, no tweens are overwritten, but if you'd like to immediately overwrite
+ 				 other tweens of the same target, use <code>overwrite:"all"</code>
+                  </li>
+ 	             </ul>
+ 
+ 
+               <b>NOTES:</b>
+               <ul>
+ 	                <li> The base TweenNano class adds about 2k to your Flash file.</li>
+ 	  
+ 	                <li> Passing values as Strings and a preceding "+=" or "-=" will make the tween relative to the 
+ 		current value. For example, if you do <code>TweenNano.to(mc, 2, {x:"-=20"});</code> it'll 
+ 		tween <code>mc.x</code> to the left 20 pixels. <code>{x:"+=20"}</code> would move it to the right.</li>
+ 	  
+ 	                <li> You can change the <code>TweenNano.defaultEase</code> if you prefer something other 
+ 		than <code>QuadOut.ease</code>.</li>
+ 	
+ 	                <li> Kill all tweens of a particular object anytime with <code>TweenNano.killTweensOf(myObject);</code>
+                  </li>
+ 	  
+ 	                <li> You can kill all delayedCalls to a particular function using <code>TweenNano.killTweensOf(myFunction);</code>
+                  </li>
+ 	  
+ 	                <li> Use the <code>TweenNano.from()</code> method to animate things into place. For example, 
+ 		if you have things set up on the stage in the spot where they should end up, and you 
+ 		just want to animate them into place, you can pass in the beginning x and/or y and/or 
+ 		alpha (or whatever properties you want).</li>
+ 	  
+ 	                <li> If you find this class useful, please consider joining <a href="http://www.greensock.com/club/" target="">Club GreenSock</a>
+ 		which not only helps to sustain ongoing development, but also gets you bonus plugins, classes 
+ 		and other benefits that are ONLY available to members. Learn more at 
+ 		<a href="http://www.greensock.com/club/" target="">http://www.greensock.com/club/</a>
+                  </li>
+               </ul>
+ 
+               <p>
+                  <b>Copyright 2008-2013, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html" target="">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/" target="">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
+ 
+            <p></p><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#defaultEase" class="signatureLink">defaultEase</a> : Object<div class="summaryTableDescription">[static]  Provides An easy way to change the default easing equation.</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#target" class="signatureLink">target</a> : Object<div class="summaryTableDescription"> Target object whose properties this tween affects.</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#ticker" class="signatureLink">ticker</a> : Shape<div class="summaryTableDescription">[static] 
+		 The object that dispatches a "tick" event each time the engine updates, making it easy for 
+		 you to add your own listener(s) to run custom logic after each update (great for game developers).</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#vars" class="signatureLink">vars</a> : Object<div class="summaryTableDescription"> Stores variables (things like "alpha", "y" or whatever we're tweening, as well as special properties like "onComplete").</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#TweenNano()" class="signatureLink">TweenNano</a>(target:Object, duration:Number, vars:Object)</div><div class="summaryTableDescription">
+		 Constructor
+		  
+		 </div></td><td class="summaryTableOwnerCol">TweenNano</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#delayedCall()" class="signatureLink">delayedCall</a>(delay:Number, callback:Function, params:Array = null, useFrames:Boolean = false):<a href="../../com/greensock/TweenNano.html">TweenNano</a></div><div class="summaryTableDescription">[static] 
+		 Provides a simple way to call a function after a set amount of time (or frames).</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#from()" class="signatureLink">from</a>(target:Object, duration:Number, vars:Object):<a href="../../com/greensock/TweenNano.html">TweenNano</a></div><div class="summaryTableDescription">[static] 
+		 Static method for creating a TweenNano instance that tweens backwards - 
+		 you define the BEGINNING values and the current values are used
+		 as the destination values which is great for doing things like animating objects
+		 onto the screen because you can set them up initially the way you want them to look 
+		 at the end of the tween and then animate in from elsewhere.</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#kill()" class="signatureLink">kill</a>(target:* = null):void</div><div class="summaryTableDescription"> 
+		 Kills the tween, stopping it immediately.</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#killTweensOf()" class="signatureLink">killTweensOf</a>(target:Object):void</div><div class="summaryTableDescription">[static] 
+		 Kills all the tweens of a particular object or the delayedCalls to a particular function.</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#to()" class="signatureLink">to</a>(target:Object, duration:Number, vars:Object):<a href="../../com/greensock/TweenNano.html">TweenNano</a></div><div class="summaryTableDescription">[static] 
+		 Static method for creating a TweenNano instance that animates to the specified destination values
+		 (from the current values).</div></td><td class="summaryTableOwnerCol">TweenNano</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="defaultEase"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">defaultEase</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>public static var defaultEase:Object</code><p></p><p> Provides An easy way to change the default easing equation. Choose from any of the GreenSock eases in the <code>com.greensock.easing</code> package or any standard easing function like the ones in Adobe's <code>fl.motion.easing</code> package. </p><p> The default value is <code>QuadOut.ease</code>.</p></div><a name="propertyDetail"></a><a name="target"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">target</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public var target:Object</code><p></p><p> Target object whose properties this tween affects. This can be ANY object or even an array. </p></div><a name="propertyDetail"></a><a name="ticker"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">ticker</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static var ticker:Shape</code><p></p><p>
+		 The object that dispatches a <code>"tick"</code> event each time the engine updates, making it easy for 
+		 you to add your own listener(s) to run custom logic after each update (great for game developers).
+		 Add as many listeners as you want. The basic syntax is the same for all versions (AS2, AS3, and Javascript):
+		 
+		 <p><b>Basic example (AS2, AS3, and Javascript):</b></p><div class="listing" version="3.0"><pre>
+//add listener
+TweenNano.ticker.addEventListener("tick", myFunction);
+ 
+function myFunction(event) {
+     //executes on every tick after the core engine updates
+}
+ 
+//to remove the listener later...
+TweenNano.ticker.removeEventListener("tick", myFunction);
+</pre></div>
+		 
+		 <p>Due to differences in the core languages (and to maximize efficiency), the advanced syntax is slightly different
+		 for the AS3 version compared to AS2 and Javascript. The parameters beyond the first 2 in the addEventListener() 
+		 method are outlined below:</p>
+		 
+		 <p><b>Javascript and AS2</b></p>
+		 <p><code>addEventListener(type, callback, scope, useParam, priority)</code></p>
+		 <p>Parameters:
+		 <ol>
+		 		<li><b>type</b> <i>: String</i> - type of listener, should always be <code>"tick"</code></li>
+		 		<li><b>callback</b> <i>: Function</i> - the function to call when the event occurs</li>
+		 		<li><b>scope</b> <i>: Object</i> - binds the scope to a particular object (scope is basically what "<code>this</code>" refers to in your function). This can be very useful in Javascript and AS2 because scope isn't generally maintained. </li>
+		 		<li><b>useParam</b> <i>: Boolean</i> - if <code>true</code>, an event object will be generated and fed to the callback each time the event occurs. The event is a generic object and has two properties: <code>type</code> (always <code>"tick"</code>) and <code>target</code> which refers to the ticker instance. The default for <code>useParam</code> is <code>false</code> because it improves performance.</li>
+		 		<li><b>priority</b> <i>: Integer</i> - influences the order in which the listeners are called. Listeners with lower priorities are called after ones with higher priorities.</li>
+		 </ol>
+		 </p>
+		 
+		 <p><b>Advanced example (Javascript and AS2):</b></p><div class="listing" version="3.0"><pre>
+//add listener that requests an event object parameter, binds scope to the current scope (this), and sets priority to 1 so that it is called before any other listeners that had a priority lower than 1...
+TweenNano.ticker.addEventListener("tick", myFunction, this, true, 1);
+ 
+function myFunction(event) {
+    //executes on every tick after the core engine updates
+}
+ 
+//to remove the listener later...
+TweenNano.ticker.removeEventListener("tick", myFunction);
+</pre></div>
+		 
+		 <p><b>AS3</b></p>
+		 <p>The AS3 version uses the standard <code>EventDispatcher.addEventListener()</code> syntax which 
+		 basically allows you to define a priority and whether or not to use weak references (see Adobe's 
+		 docs for details).</p>
+		 
+		 <p><b>Advanced example [AS3 only]:</b></p><div class="listing" version="3.0"><pre>
+import flash.events.Event;
+         
+//add listener with weak reference (standard syntax - notice the 5th parameter is true)
+TweenNano.ticker.addEventListener("tick", myFunction, false, 0, true);
+         
+function myFunction(event:Event):void {
+    //executes on every tick after the core engine updates
+}
+         
+//to remove the listener later...
+TweenNano.ticker.removeEventListener("tick", myFunction);
+</pre></div>
+		 </p></div><a name="propertyDetail"></a><a name="vars"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">vars</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public var vars:Object</code><p></p><p> Stores variables (things like "alpha", "y" or whatever we're tweening, as well as special properties like "onComplete"). </p></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="TweenNano()"></a><a name="TweenNano(Object,Number,Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">TweenNano</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function TweenNano(target:Object, duration:Number, vars:Object)</code><p>
+		 Constructor
+		  
+		 </p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object (or array of objects) whose properties this tween affects 
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or frames if <code>useFrames:true</code> is set in the <code>vars</code> parameter)
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object defining the end value for each property that should be tweened as well as any special properties like <code>onComplete</code>, <code>ease</code>, etc. For example, to tween <code>mc.x</code> to 100 and <code>mc.y</code> to 200 and then call <code>myFunction</code>, do this: <code>new TweenNano(mc, 1, {x:100, y:200, onComplete:myFunction})</code>.
+		 </td></tr></table></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="delayedCall()"></a><a name="delayedCall(Number,Function,Array,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">delayedCall</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public static function delayedCall(delay:Number, callback:Function, params:Array = null, useFrames:Boolean = false):<a href="../../com/greensock/TweenNano.html">TweenNano</a></code><p></p><p>
+		 Provides a simple way to call a function after a set amount of time (or frames). You can
+		 optionally pass any number of parameters to the function too.
+		 
+		 <p><b>Javascript and AS2 note:</b> - Due to the way Javascript and AS2 don't 
+		 maintain scope (what "<code>this</code>" refers to, or the context) in function calls, 
+		 it can be useful to define the scope specifically. Therefore, in the Javascript and AS2 
+		 versions the 4th parameter is <code>scope</code>, bumping <code>useFrames</code> 
+		 back to the 5th parameter:</p>
+		 
+		 <p><code>TweenNano.delayedCall(delay, callback, params, scope, useFrames)</code> <i>[Javascript and AS2 only]</i></p>
+		 
+		 <div class="listing" version="3.0"><pre>
+//calls myFunction after 1 second and passes 2 parameters:
+TweenNano.delayedCall(1, myFunction, ["param1", 2]);
+         
+function myFunction(param1, param2) {
+    //do stuff
+}
+</pre></div>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">delay</span>:Number</code> &mdash; Delay in seconds (or frames if <code>useFrames</code> is <code>true</code>) before the function should be called
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">callback</span>:Function</code> &mdash; Function to call
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">params</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; An Array of parameters to pass the function (optional).
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">useFrames</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If the delay should be measured in frames instead of seconds, set <code>useFrames</code> to <code>true</code> (default is <code>false</code>)
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../com/greensock/TweenNano.html">TweenNano</a></code> &mdash; TweenNano instance
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="TimelineLite.html#call()" target="">com.greensock.TimelineLite.call()</a></div></div><a name="from()"></a><a name="from(Object,Number,Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">from</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function from(target:Object, duration:Number, vars:Object):<a href="../../com/greensock/TweenNano.html">TweenNano</a></code><p></p><p>
+		 Static method for creating a TweenNano instance that tweens backwards - 
+		 you define the <b>BEGINNING</b> values and the current values are used
+		 as the destination values which is great for doing things like animating objects
+		 onto the screen because you can set them up initially the way you want them to look 
+		 at the end of the tween and then animate in from elsewhere.
+		 
+		 <p><b>NOTE:</b> By default, <code>immediateRender</code> is <code>true</code> in 
+		 <code>from()</code> tweens, meaning that they immediately render their starting state 
+		 regardless of any delay that is specified. You can override this behavior by passing 
+		 <code>immediateRender:false</code> in the <code>vars</code> parameter so that it will 
+		 wait to render until the tween actually begins. To illustrate the default behavior, the 
+		 following code will immediately set the <code>alpha</code> of <code>mc</code> 
+		 to 0 and then wait 2 seconds before tweening the <code>alpha</code> back to 1 over
+		 the course of 1.5 seconds:</p>
+		 
+		 <p><code>
+		 TweenNano.from(mc, 1.5, {alpha:0, delay:2});
+		 </code></p>
+		 
+		 <p>Since the <code>target</code> parameter can also be an array of objects, the following 
+		 code will tween the alpha property of mc1, mc2, and mc3 from a value of 0 simultaneously:</p>
+		 
+		 <div class="listing" version="3.0"><pre>
+TweenNano.from([mc1, mc2, mc3], 1.5, {alpha:0});
+</pre></div>
+		 <p>Even though 3 objects are animating, there is still only one tween created.</p>
+		 
+		 <p>For simple sequencing, you can use the <code>delay</code> special property
+		 (like <code>TweenNano.from(mc, 1, {alpha:0, delay:0.5})</code>), 
+		 but it is highly recommended that you consider using TimelineLite (or TimelineMax) 
+		 for all but the simplest sequencing tasks. It has an identical <code>from()</code> method
+		 that allows you to append tweens one-after-the-other and then control the entire sequence 
+		 as a whole. You can even have the tweens overlap as much as you want.</p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object (or array of objects) whose properties this tween affects.  
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or frames if <code>useFrames:true</code> is set in the <code>vars</code> parameter)
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object defining the starting value for each property that should be tweened as well as any special properties like <code>onComplete</code>, <code>ease</code>, etc. For example, to tween <code>mc.x</code> from 100 and <code>mc.y</code> from 200 and then call <code>myFunction</code>, do this: <code>TweenNano.from(mc, 1, {x:100, y:200, onComplete:myFunction});</code>
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../com/greensock/TweenNano.html">TweenNano</a></code> &mdash; TweenNano instance
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="TweenNano.html#to()" target="">to()</a><br/><a href="TimelineLite.html#from()" target="">com.greensock.TimelineLite.from()</a><br/><a href="TimelineLite.html#staggerFrom()" target="">com.greensock.TimelineLite.staggerFrom()</a></div></div><a name="kill()"></a><a name="kill(any)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">kill</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function kill(target:* = null):void</code><p></p><p> 
+		 Kills the tween, stopping it immediately. You can optionally define a particular target 
+		 to isolate (or an array of targets) which is only useful in tweens whose target is 
+		 an array. For example, let's say we have a tween like this:
+		 
+		 <p><code>
+		 var tween = TweenNan.to([mc1, mc2, mc3], 2, {x:100});
+		 </code></p>
+		 
+		 <p>Later, we could kill <b>only</b> the mc2 portion of the tween like this:</p>
+		 
+		 <p><code>
+		 tween.kill(mc2);
+		 </code></p>
+		 
+		 <p>To kill the entire tween, simply omit the <code>target</code> parameter, like <code>tween.kill()</code></p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">target</span>:*</code> (default = <code>null</code>)<code></code> &mdash; [optional] To kill only aspects of the animation related to a particular target (or targets), reference it here. It can be an array or a single object. For example, to kill only parts having to do with <code>myObject</code>, do <code>kill(myObject)</code> or to kill only parts having to do with <code>myObject1</code> and <code>myObject2</code>, do <code>kill([myObject1, myObject2])</code>. If no target is defined, <b>ALL</b> targets will be affected. 
+		 </td></tr></table></p></div><a name="killTweensOf()"></a><a name="killTweensOf(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">killTweensOf</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function killTweensOf(target:Object):void</code><p></p><p>
+		 Kills all the tweens of a particular object or the delayedCalls to a particular function. 
+		 If, for example, you want to kill all tweens of <code>myObject</code>, you'd do this:
+		 
+		 <p><code>
+		 TweenNano.killTweensOf(myObject);
+		 </code></p>
+		 
+		 <p>To kill all the delayedCalls that were created like <code>TweenNano.delayedCall(5, myFunction);</code>, 
+		 you can simply call <code>TweenNano.killTweensOf(myFunction);</code> because delayedCalls 
+		 are simply tweens that have their <code>target</code> and <code>onComplete</code> set to 
+		 the same function (as well as a <code>delay</code> of course).</p>
+		 
+		 <p><code>killTweensOf()</code> affects tweens that haven't begun yet too. If, for example, 
+		 a tween of <code>myObject</code> has a <code>delay</code> of 5 seconds and 
+		 <code>TweenNano.killTweensOf(mc)</code> is called 2 seconds after the tween was created, 
+		 it will still be killed even though it hasn't started yet. </p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Object whose tweens should be killed immediately
+		 </td></tr></table></p></div><a name="to()"></a><a name="to(Object,Number,Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">to</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function to(target:Object, duration:Number, vars:Object):<a href="../../com/greensock/TweenNano.html">TweenNano</a></code><p></p><p>
+		 Static method for creating a TweenNano instance that animates to the specified destination values
+		 (from the current values). The following lines of code all produce identical results: 
+		 
+		 <div class="listing" version="3.0"><pre>
+TweenNano.to(mc, 1, {x:100});
+var myTween = new TweenNano(mc, 1, {x:100});
+var myTween = TweenNano.to(mc, 1, {x:100});
+</pre></div>
+		 
+		 <p>Each line above will tween the <code>"x"</code> property of the <code>mc</code> object 
+		 to a value of 100 over the coarse of 1 second. They each use a slightly different syntax,
+		 all of which are valid. If you don't need to store a reference of the tween, just use the 
+		 static <code>TweenNano.to( )</code> call.</p>
+		 
+		 <p>Since the <code>target</code> parameter can also be an array of objects, the following 
+		 code will tween the x property of mc1, mc2, and mc3 to a value of 100 simultaneously:</p>
+		 
+		 <div class="listing" version="3.0"><pre>
+TweenNano.to([mc1, mc2, mc3], 1, {x:100});
+</pre></div>
+		 <p>Even though 3 objects are animating, there is still only one tween created.</p>
+		 
+		 <p>For simple sequencing, you can use the <code>delay</code> special property
+		 (like <code>TweenNano.to(mc, 1, {x:100, delay:0.5})</code>), 
+		 but it is highly recommended that you consider using TimelineLite (or TimelineMax) 
+		 for all but the simplest sequencing tasks. It has an identical <code>to()</code> method
+		 that allows you to append tweens one-after-the-other and then control the entire sequence 
+		 as a whole. You can even have the tweens overlap as much as you want.</p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object (or array of objects) whose properties this tween affects. 
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or frames if <code>useFrames:true</code> is set in the <code>vars</code> parameter)
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object defining the end value for each property that should be tweened as well as any special properties like <code>onComplete</code>, <code>ease</code>, etc. For example, to tween <code>mc.x</code> to 100 and <code>mc.y</code> to 200 and then call <code>myFunction</code>, do this: <code>TweenNano.to(mc, 1, {x:100, y:200, onComplete:myFunction});</code>
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../com/greensock/TweenNano.html">TweenNano</a></code> &mdash; TweenNano instance
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="TimelineLite.html#to()" target="">com.greensock.TimelineLite.to()</a><br/><a href="TweenNano.html#from()" target="">from()</a></div></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>by MediaMonks | http://www.mediamonks.com</footer><br/> </center></div></body></html><!--by MediaMonks | http://www.mediamonks.com<br/> -->

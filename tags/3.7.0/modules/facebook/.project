@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Temple-Facebook</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.powerflasher.fdt.core.FlashBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.powerflasher.fdt.core.FlashNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Temple</name>
+			<type>2</type>
+			<locationURI>Temple</locationURI>
+		</link>
+		<link>
+			<name>TempleCodeComponents</name>
+			<type>2</type>
+			<locationURI>TempleCodeComponents</locationURI>
+		</link>
+		<link>
+			<name>TempleCodeComponentsExtended</name>
+			<type>2</type>
+			<locationURI>TempleCodeComponentsExtended</locationURI>
+		</link>
+		<link>
+			<name>TempleExtended</name>
+			<type>2</type>
+			<locationURI>TempleExtended</locationURI>
+		</link>
+		<link>
+			<name>TempleReflection</name>
+			<type>2</type>
+			<locationURI>TempleReflection</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Full Build" basedir="../../../../tools/ant" name="Temple-Facebook">
+
+	<property name="module" value="facebook" />
+	<property name="name" value="Temple Facebook Module" />
+	<property name="dependencies" value="core,common,utils,data,reflection" />
+	<property name="extended-dependencies" value="control,ui,net" />
+
+	<import file="../../../../tools/ant/build.xml" />
+</project>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Build" name="FriendsExample">
+	<property name="extra-dependencies" value="ui,codecomponents,tweenlite" />
+	<property name="startswf" value="false"/>
+	<import file="../../../../tools/ant/build-facebook.xml" />
+</project>
