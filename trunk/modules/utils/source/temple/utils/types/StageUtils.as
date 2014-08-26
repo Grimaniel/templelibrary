@@ -36,14 +36,12 @@
 package temple.utils.types 
 {
 	import temple.core.debug.objectToString;
-	import temple.core.errors.TempleArgumentError;
-	import temple.core.errors.TempleError;
-	import temple.core.errors.throwError;
 
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
+	import flash.events.Event;
+	import flash.geom.Rectangle;
 
 	/**
 	 * This class contains some functions for the Stage.
@@ -52,193 +50,221 @@ package temple.utils.types
 	 */
 	public final class StageUtils 
 	{
+		private static var _buildWidth:Number;
+		private static var _buildHeight:Number;
+
 		/**
-		 * Returns the most left x value of the stage, whatever the stageAlign is.
+		 * Returns the position and size of the stage in the SWF 
 		 */
-		public static function getStageLeft(stage:Stage):Number
+		public static function getRect(stage:Stage):Rectangle
 		{
-			if (stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
+			var rect:Rectangle = new Rectangle();
 			
-			var originalWidth:Number;
+			stage.addEventListener(Event.RESIZE, handleStageResize, true, int.MAX_VALUE, true);
 			
-			if (stage.numChildren)
+			rect.width = stage.stageWidth;
+			rect.height = stage.stageHeight;
+			
+			if (stage.scaleMode == StageScaleMode.NO_SCALE)
 			{
-				originalWidth = DisplayObject(stage.getChildAt(0)).loaderInfo.width;
+				switch (stage.align)
+				{
+					case "":
+					case StageAlign.TOP:
+					case StageAlign.BOTTOM:
+					{
+						rect.x = .5 * (getBuildWidth(stage) - stage.stageWidth);
+						break;
+					}
+					case StageAlign.RIGHT:
+					case StageAlign.TOP_RIGHT:
+					case StageAlign.BOTTOM_RIGHT:
+					{
+						rect.x = getBuildWidth(stage) - stage.stageWidth;
+						break;
+					}
+				}
+				switch (stage.align)
+				{
+					case "":
+					case StageAlign.LEFT:
+					case StageAlign.RIGHT:
+					{
+						rect.y = .5 * (getBuildHeight(stage) - stage.stageHeight);
+						break;
+					}
+					case StageAlign.BOTTOM:
+					case StageAlign.BOTTOM_LEFT:
+					case StageAlign.BOTTOM_RIGHT:
+					{
+						rect.y = (getBuildHeight(stage) - stage.stageHeight);
+						break;
+					}
+				}
 			}
-			else
+			
+			if (stage.scaleMode == StageScaleMode.NO_BORDER || stage.scaleMode == StageScaleMode.SHOW_ALL)
 			{
-				var s:Sprite = new Sprite();
-				stage.addChild(s);
-				originalWidth = s.loaderInfo.width;
-				stage.removeChild(s);
+				var originalRatio:Number = stage.stageWidth / stage.stageHeight;
+				 
+				var scaleMode:String = stage.scaleMode;
+				stage.scaleMode = StageScaleMode.NO_SCALE;
+				var currentRatio:Number = stage.stageWidth / stage.stageHeight;
+				stage.scaleMode = scaleMode;
+				
+				if (currentRatio > originalRatio)
+				{
+					// wider
+					if (scaleMode == StageScaleMode.SHOW_ALL)
+					{
+						rect.width = stage.stageHeight * currentRatio;
+						
+						switch (stage.align)
+						{
+							case "":
+							case StageAlign.TOP:
+							case StageAlign.BOTTOM:
+							{
+								rect.x = .5 * (stage.stageWidth - rect.width);
+								break;
+							}
+							case StageAlign.RIGHT:
+							case StageAlign.TOP_RIGHT:
+							case StageAlign.BOTTOM_RIGHT:
+							{
+								rect.x = stage.stageWidth - rect.width;
+								break;
+							}
+						}
+					}
+					else
+					{
+						rect.height = stage.stageWidth / currentRatio;
+						
+						switch (stage.align)
+						{
+							case "":
+							case StageAlign.LEFT:
+							case StageAlign.RIGHT:
+							{
+								rect.y = .5 * (stage.stageHeight - rect.height);
+								break;
+							}
+							case StageAlign.BOTTOM:
+							case StageAlign.BOTTOM_LEFT:
+							case StageAlign.BOTTOM_RIGHT:
+							{
+								rect.y = stage.stageHeight - rect.height;
+								break;
+							}
+						}
+					}
+				}
+				else
+				{
+					// higher
+					if (scaleMode == StageScaleMode.SHOW_ALL)
+					{
+						rect.height = stage.stageWidth / currentRatio;
+						
+						switch (stage.align)
+						{
+							case "":
+							case StageAlign.LEFT:
+							case StageAlign.RIGHT:
+							{
+								rect.y = .5 * (stage.stageHeight - rect.height);
+								break;
+							}
+							case StageAlign.BOTTOM:
+							case StageAlign.BOTTOM_LEFT:
+							case StageAlign.BOTTOM_RIGHT:
+							{
+								rect.y = stage.stageHeight - rect.height;
+								break;
+							}
+						}
+					}
+					else
+					{
+						rect.width = stage.stageHeight * currentRatio;
+						
+						switch (stage.align)
+						{
+							case "":
+							case StageAlign.TOP:
+							case StageAlign.BOTTOM:
+							{
+								rect.x = .5 * (stage.stageWidth - rect.width);
+								break;
+							}
+							case StageAlign.RIGHT:
+							case StageAlign.TOP_RIGHT:
+							case StageAlign.BOTTOM_RIGHT:
+							{
+								rect.x = stage.stageWidth - rect.width;
+								break;
+							}
+						}
+					}
+				}
 			}
-			switch (stage.align)
+			
+			stage.removeEventListener(Event.RESIZE, handleStageResize, true);
+			
+			return rect;
+		}
+
+		/**
+		 * Returns the original build width of the SWF
+		 */
+		public static function getBuildWidth(stage:Stage):Number
+		{
+			if (isNaN(_buildWidth))
 			{
-				case '':
-				case StageAlign.TOP:
-				case StageAlign.BOTTOM:
-					return (stage.stageWidth - originalWidth) * -.5;
-					break;
-				
-				case StageAlign.TOP_LEFT:
-				case StageAlign.LEFT:
-				case StageAlign.BOTTOM_LEFT:
-					return 0;
-					break;
-				
-				case StageAlign.TOP_RIGHT:
-				case StageAlign.RIGHT:
-				case StageAlign.BOTTOM_RIGHT:
-					return originalWidth - stage.stageWidth;
-					break;
-				
-				default:
-					throwError(new TempleError(StageUtils, "unknow stageAlign '" + stage.align + "'"));
-					break;
+				if (stage.scaleMode == StageScaleMode.NO_SCALE)
+				{
+					stage.addEventListener(Event.RESIZE, handleStageResize, true, int.MAX_VALUE, true);
+					stage.scaleMode = StageScaleMode.EXACT_FIT;
+					_buildWidth = stage.stageWidth; 
+					stage.scaleMode = StageScaleMode.NO_SCALE;
+					stage.removeEventListener(Event.RESIZE, handleStageResize, true);
+				}
+				else
+				{
+					_buildWidth = stage.stageWidth;
+				}
 			}
-			return NaN;
+			return _buildWidth;
 		}
 		
 		/**
-		 * Returns the most right x value of the stage, whatever the stageAlign is.
+		 * Returns the original build height of the SWF
 		 */
-		public static function getStageRight(stage:Stage):Number
+		public static function getBuildHeight(stage:Stage):Number
 		{
-			if (stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
-			
-			var originalWidth:Number;
-			
-			if (stage.numChildren)
+			if (isNaN(_buildHeight))
 			{
-				originalWidth = DisplayObject(stage.getChildAt(0)).loaderInfo.width;
+				if (stage.scaleMode == StageScaleMode.NO_SCALE)
+				{
+					stage.addEventListener(Event.RESIZE, handleStageResize, true, int.MAX_VALUE, true);
+					stage.scaleMode = StageScaleMode.EXACT_FIT;
+					_buildHeight = stage.stageHeight; 
+					stage.scaleMode = StageScaleMode.NO_SCALE;
+					stage.removeEventListener(Event.RESIZE, handleStageResize, true);
+				}
+				else
+				{
+					_buildHeight = stage.stageHeight;
+				}
 			}
-			else
-			{
-				var s:Sprite = new Sprite();
-				stage.addChild(s);
-				originalWidth = s.loaderInfo.width;
-				stage.removeChild(s);
-			}
-			switch (stage.align)
-			{
-				case '':
-				case StageAlign.TOP:
-				case StageAlign.BOTTOM:
-					return stage.stageWidth - (stage.stageWidth - originalWidth) * .5;
-					break;
-				
-				case StageAlign.TOP_LEFT:
-				case StageAlign.LEFT:
-				case StageAlign.BOTTOM_LEFT:
-					return stage.stageWidth;
-					break;
-				
-				
-				case StageAlign.TOP_RIGHT:
-				case StageAlign.RIGHT:
-				case StageAlign.BOTTOM_RIGHT:
-					return originalWidth;
-					break;
-				
-				default:
-					throwError(new TempleError(StageUtils, "unknow stageAlign '" + stage.align + "'"));
-					break;
-			}
-			return NaN;
-		}
-
-		/**
-		 * Returns the most top y value of the stage, whatever the stageAlign is.
-		 */
-		public static function getStageTop(stage:Stage):Number
-		{
-			if (stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
-			
-			var originalHeight:Number;
-			
-			if (stage.numChildren)
-			{
-				originalHeight = DisplayObject(stage.getChildAt(0)).loaderInfo.height;
-			}
-			else
-			{
-				var s:Sprite = new Sprite();
-				stage.addChild(s);
-				originalHeight = s.loaderInfo.width;
-				stage.removeChild(s);
-			}
-			switch (stage.align)
-			{
-				case '':
-				case StageAlign.LEFT:
-				case StageAlign.RIGHT:
-					return (stage.stageHeight - originalHeight) * -.5;
-					break;
-
-				case StageAlign.TOP_LEFT:
-				case StageAlign.TOP:
-				case StageAlign.TOP_RIGHT:
-					return 0;
-					break;
-				
-				case StageAlign.BOTTOM_LEFT:
-				case StageAlign.BOTTOM:
-				case StageAlign.BOTTOM_RIGHT:
-					return originalHeight - stage.stageHeight;
-					break;
-				
-				default:
-					throwError(new TempleError(StageUtils, "unknow stageAlign '" + stage.align + "'"));
-					break;
-			}
-			return NaN;
+			return _buildHeight;
 		}
 		
-		/**
-		 * Returns the most bottom y value of the stage, whatever the stageAlign is.
-		 */
-		public static function getStageBottom(stage:Stage):Number
+		private static function handleStageResize(event:Event):void
 		{
-			if (stage == null) throwError(new TempleArgumentError(StageUtils.toString(), "Stage can't be null"));
-			
-			var originalHeight:Number;
-			
-			if (stage.numChildren)
-			{
-				originalHeight = DisplayObject(stage.getChildAt(0)).loaderInfo.height;
-			}
-			else
-			{
-				var s:Sprite = new Sprite();
-				stage.addChild(s);
-				originalHeight = s.loaderInfo.width;
-				stage.removeChild(s);
-			}
-			switch (stage.align)
-			{
-				case '':
-				case StageAlign.LEFT:
-				case StageAlign.RIGHT:
-					return stage.stageHeight - (stage.stageHeight - originalHeight) * .5;
-					break;
-
-				case StageAlign.TOP_LEFT:
-				case StageAlign.TOP:
-				case StageAlign.TOP_RIGHT:
-					return stage.stageHeight;
-					break;
-				
-				case StageAlign.BOTTOM_LEFT:
-				case StageAlign.BOTTOM:
-				case StageAlign.BOTTOM_RIGHT:
-					return originalHeight;
-					break;
-				
-				default:
-					throwError(new TempleError(StageUtils, "unknow stageAlign '" + stage.align + "'"));
-					break;
-			}
-			return NaN;
+			event.stopImmediatePropagation();
+			event.stopPropagation();
 		}
 		
 		/**

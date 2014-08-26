@@ -71,7 +71,7 @@ package temple.utils
 		}
 
 		/**
-		 * The maximum frames per seconds of the SWF. Value must be hight then 0.
+		 * The maximum frames per seconds of the SWF. Value must be greater then 0.
 		 */
 		public function get fps():Number 
 		{

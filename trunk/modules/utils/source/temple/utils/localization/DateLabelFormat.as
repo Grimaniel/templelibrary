@@ -40,12 +40,17 @@ package temple.utils.localization
 	/**
 	 * @author Thijs Broerse
 	 */
-	public class DateLabelFormat extends Enumerator
+	public final class DateLabelFormat extends Enumerator
 	{
 		/**
 		 * For displaying months or weekdays as numeric values
 		 */
-		public static const NUMERIC:DateLabelFormat = new DateLabelFormat("numerieke");
+		public static const NUMERIC:DateLabelFormat = new DateLabelFormat("numeric");
+		
+		/**
+		 * For displaying months or weekdays as numeric values, with a leading zero if the value is lower than 10
+		 */
+		public static const NUMERIC_LEADING_ZERO:DateLabelFormat = new DateLabelFormat("numeric_leading_zero");
 		
 		/**
 		 * For displaying months or weekdays as full String, like 'January', 'February' for months or 'Sunday', 'Monday'

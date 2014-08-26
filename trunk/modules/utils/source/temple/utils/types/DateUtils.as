@@ -118,7 +118,16 @@ package temple.utils.types
 		 */
 		public static function convertToDate(value:*):Date
 		{
-			if (value is Number)
+			if (value == null)
+			{
+				return null;
+			}
+			else if (value is Date)
+			{
+				// If it is a Date, just return it (for internal use).
+				return value as Date;
+			}
+			else if (value is Number)
 			{
 				// The backend value is based in seconds
 				return new Date((value as Number) * 1000);
@@ -132,15 +141,15 @@ package temple.utils.types
 				}
 				else
 				{
-					return DateUtils.parseFromSqlDateTime(value);
+					// Try to parse a Sql Date time
+					var date:Date = DateUtils.parseFromSqlDateTime(value);
+					if (date) return date;
+					
+					// Try regular parse
+					var time:Number = Date.parse(value);
+					if (time) return new Date(time);
 				}
 			}
-			else if (value is Date)
-			{
-				// If it is a Date, just return it (for internal use).
-				return value as Date;
-			}
-			
 			return null;
 		}
 		
@@ -320,7 +329,7 @@ package temple.utils.types
 		 *
 		 * @see http://www.w3.org/TR/NOTE-datetime
 		 */		     
-		public static function toW3CDTF(d:Date,includeMilliseconds:Boolean = false):String
+		public static function toW3CDTF(d:Date, includeMilliseconds:Boolean = false):String
 		{
 			var date:Number = d.getUTCDate();
 			var month:Number = d.getUTCMonth();

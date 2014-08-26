@@ -378,9 +378,11 @@ package temple.utils.types
 		public static function getAbsoluteScaleX(displayObject:DisplayObject):Number
 		{
 			var scaleX:Number = displayObject.scaleX;
-			while (displayObject = displayObject.parent)
+			displayObject = displayObject.parent;
+			while (displayObject)
 			{
 				scaleX *= displayObject.scaleX;
+				displayObject = displayObject.parent;
 			}
 			return scaleX;
 		}
@@ -391,9 +393,11 @@ package temple.utils.types
 		public static function getAbsoluteScaleY(displayObject:DisplayObject):Number
 		{
 			var scaleY:Number = displayObject.scaleY;
-			while (displayObject = displayObject.parent)
+			displayObject = displayObject.parent;
+			while (displayObject)
 			{
 				scaleY *= displayObject.scaleY;
+				displayObject = displayObject.parent;
 			}
 			return scaleY;
 		}
@@ -413,6 +417,30 @@ package temple.utils.types
 			return null;
 		}
 
+		/**
+		 * Checks if the displayObject can be seen on a specific point on the stage.
+		 */
+		public static function isAbsoluteVisible(displayObject:DisplayObject, offset:Point = null):Boolean
+		{
+			if (displayObject.stage)
+			{
+				var objects:Array = displayObject.stage.getObjectsUnderPoint(displayObject.localToGlobal(offset || new Point(displayObject.width * .5, displayObject.height * .5)));
+				
+				if (objects.length)
+				{
+					var object:DisplayObject = objects[objects.length - 1];
+					if (object == displayObject)
+					{
+						return true;
+					}
+					else if (displayObject is DisplayObjectContainer)
+					{
+						return DisplayObjectContainer(displayObject).contains(object);
+					}
+				}
+			}
+			return false;
+		}
 
 		/**
 		 * @private

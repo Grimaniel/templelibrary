@@ -51,8 +51,9 @@ package temple.utils.eventbinding
 		private var _callback:Function;
 		private var _params:Array;
 		private var _useCapture:Boolean;
+		private var _once:Boolean;
 
-		public function EventBinder(target:IEventDispatcher, type:String, callback:Function, params:Array = null, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false)
+		public function EventBinder(target:IEventDispatcher, type:String, callback:Function, params:Array = null, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false, once:Boolean = false)
 		{
 			super(target);
 
@@ -60,6 +61,7 @@ package temple.utils.eventbinding
 			_callback = callback;
 			_params = params;
 			_useCapture = useCapture;
+			_once = once;
 			target.addEventListener(_type, handleEvent, _useCapture, priority, useWeakReference);
 			
 			toStringProps.push("type");
@@ -85,9 +87,26 @@ package temple.utils.eventbinding
 			return _params;
 		}
 		
+		/**
+		 * Indicates if the <code>EventBinder</code> should be destructed after the first event
+		 */
+		public function get once():Boolean
+		{
+			return _once;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set once(value:Boolean):void
+		{
+			_once = value;
+		}
+		
 		private function handleEvent(event:Event):void
 		{
 			_callback.apply(null, _params);
+			if (_once) destruct();
 		}
 
 		override public function destruct():void

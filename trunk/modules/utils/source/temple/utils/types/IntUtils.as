@@ -67,7 +67,7 @@ package temple.utils.types
 
 		/**
 		 * Outputs the hex value of a int, allowing the developer to specify
-		 * the endinaness in the process.  Hex output is lowercase.
+		 * the endinaness in the process. Hex output is lowercase.
 		 *
 		 * @param n The int value to output as hex
 		 * @param bigEndian Flag to output the int as big or little endian

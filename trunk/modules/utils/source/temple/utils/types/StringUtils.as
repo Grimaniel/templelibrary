@@ -665,15 +665,12 @@ package temple.utils.types
 				case "textformat":
 				case "ul":
 					return tag;
-					break;
 				
 				// tags to be replaced
 				case "strong":
 					return tag.replace("strong", "b");
-					break;
 				case "em":
 					return tag.replace("em", "i");
-					break;
 			}
 			
 			return '';
