@@ -1,6 +1,6 @@
 /**
- * VERSION: 12.1.0
- * DATE: 2013-10-21
+ * VERSION: 12.1.1
+ * DATE: 2013-12-07
  * AS3 (AS2 version is also available)
  * UPDATES AND DOCS AT: http://www.greensock.com
  **/
@@ -42,13 +42,13 @@ tl.add( animateIn() );
 tl.add( animateOut(), 3);
 </listing>
  * 
- * <p><strong>Copyright 2008-2013, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
+ * <p><strong>Copyright 2008-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */
 	public class Animation implements IDestructible{
 		/** @private **/
-		public static const version:String = "12.1.0";
+		public static const version:String = "12.1.1";
 		
 		/**
 		 * The object that dispatches a <code>"tick"</code> event each time the engine updates, making it easy for 
@@ -246,7 +246,7 @@ myAnimation.play(2, false);
 		 * @return self (makes chaining easier)
 		 */
 		public function play(from:*=null, suppressEvents:Boolean=true):* {
-			if (arguments.length) {
+			if (from != null) {
 				seek(from, suppressEvents);
 			}
 			reversed(false);
@@ -280,7 +280,7 @@ myAnimation.play(2, false);
 		 * @return self (makes chaining easier)
 		 */
 		public function pause(atTime:*=null, suppressEvents:Boolean=true):* {
-			if (arguments.length) {
+			if (atTime != null) {
 				seek(atTime, suppressEvents);
 			}
 			return paused(true);
@@ -313,7 +313,7 @@ myAnimation.play(2, false);
 		 * @return self (makes chaining easier)
 		 */
 		public function resume(from:*=null, suppressEvents:Boolean=true):* {
-			if (arguments.length) {
+			if (from != null) {
 				seek(from, suppressEvents);
 			}
 			return paused(false);
@@ -419,7 +419,7 @@ myAnimation.play(2, false);
 		 * @return self (makes chaining easier)
 		 */
 		public function reverse(from:*=null, suppressEvents:Boolean=true):* {
-			if (arguments.length) {
+			if (from != null) {
 				seek((from || totalDuration()), suppressEvents);
 			}
 			reversed(true);
@@ -1030,7 +1030,7 @@ myAnimation.reversed( !myAnimation.reversed() ); //toggles the orientation
 			}
 			if (value != _reversed) {
 				_reversed = value;
-				totalTime(_totalTime, true);
+				totalTime(((_timeline && !_timeline.smoothChildTiming) ? totalDuration() - _totalTime : _totalTime), true);
 			}
 			return this;
 		}
@@ -1091,7 +1091,7 @@ myAnimation.reversed( !myAnimation.reversed() ); //toggles the orientation
 			}
 			return this;
 		}
-		
+
 		public function destruct():void
 		{
 			kill();
