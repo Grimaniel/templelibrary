@@ -104,18 +104,19 @@ package temple.utils.localization
 				case DateLabelFormat.NUMERIC:
 				{
 					return index.toString();
-					break;
+				}
+				case DateLabelFormat.NUMERIC_LEADING_ZERO:
+				{
+					return (index < 10 ? "0" : "") + index.toString();
 				}
 				case DateLabelFormat.FULL:
 				case null:
 				{
 					return getFullDay(index);
-					break;
 				}
 				case DateLabelFormat.SHORT:
 				{
 					return getShortDay(index);
-					break;
 				}
 				default:
 				{
@@ -178,19 +179,20 @@ package temple.utils.localization
 			{
 				case DateLabelFormat.NUMERIC:
 				{
-					return index.toString();
-					break;
+					return (index + 1).toString();
+				}
+				case DateLabelFormat.NUMERIC_LEADING_ZERO:
+				{
+					return (index < 9 ? "0" : "") + (index + 1).toString();
 				}
 				case DateLabelFormat.FULL:
 				case null:
 				{
 					return getFullMonth(index);
-					break;
 				}
 				case DateLabelFormat.SHORT:
 				{
 					return getShortMonth(index);
-					break;
 				}
 				default:
 				{

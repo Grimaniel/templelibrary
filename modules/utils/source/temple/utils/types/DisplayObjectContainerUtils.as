@@ -85,7 +85,7 @@ package temple.utils.types
 					}
 					else if (recursive && child is DisplayObjectContainer)
 					{
-						queue.push(child);
+						queue.push(DisplayObjectContainer(child));
 					}
 				}
 				container = recursive && queue.length ? queue.shift() : null;
@@ -154,7 +154,7 @@ package temple.utils.types
 					}
 					else if (child is DisplayObjectContainer)
 					{
-						queue.push(child);
+						queue.push(DisplayObjectContainer(child));
 					}
 				}
 				container = queue.length ? queue.shift() : null;

@@ -43,6 +43,8 @@ package temple.utils.types
 	 */
 	public final class RegExpUtils 
 	{
+		private static const _ESCAPER:RegExp = new RegExp("[" + ("\\.+*?^$[]()|{}/'#".split('').join("\\")) + "]", "g");
+		
 		/**
 		 * Searches text for all matches to the regular expression given in pattern and return the result.
 		 * @param regExp the regular expression
@@ -59,15 +61,8 @@ package temple.utils.types
 			{
 				for (var i:int = 0; i < result.length; ++i)
 				{
-					if (true)
-					{
-						if (resultList[i] == null) resultList[i] = new Array();
-						resultList[i].push(result[i] != undefined ? result[i] : '');
-					}
-					else
-					{
-						// PREG_SET_ORDER implementatie
-					}
+					if (resultList[i] == null) resultList[i] = new Array();
+					resultList[i].push(result[i] != undefined ? result[i] : '');
 				}
 				index = result.index;
 				result = regExp.exec(text);
@@ -93,6 +88,29 @@ package temple.utils.types
 				}
 			}
 			return resultList;
+		}
+
+		public static function create(string:String, wholeWord:Boolean = false, escape:Boolean = true, global:Boolean = false, ignoreCase:Boolean = false, extended:Boolean = false, dotall:Boolean = false, multiline:Boolean = false):RegExp
+		{
+			var vlags:String = "";
+			if (global) vlags += "g";
+			if (ignoreCase) vlags += "i";
+			if (extended) vlags += "x";
+			if (dotall) vlags += "s";
+			if (multiline) vlags += "m";
+			
+			if (escape) string = RegExpUtils.escape(string);
+			if (wholeWord) string = "(^|(?<=\\W))" + string + "($|(?=\\W))";
+			
+			return new RegExp(string, vlags);
+		}
+
+		/**
+		 * Escapes all special characters in a string so it can be used in a RegExp
+		 */
+		public static function escape(string:String):String
+		{
+			return string.replace(RegExpUtils._ESCAPER, "\\$&");
 		}
 	}
 }
