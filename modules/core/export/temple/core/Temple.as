@@ -47,7 +47,7 @@ package temple.core
 	 * 
 	 * @includeExample ../templates/DocumentClassExample.as
 	 * 
-	 * @author MediaMonks: Thijs Broerse, Arjan van Wijk, Quinten Beek, Bart van der Schoor
+	 * @author MediaMonks: Thijs Broerse, Arjan van Wijk, Quinten Beek, Bart van der Schoor, Stephan Bezoen, Mark Knol
 	 */
 	public final class Temple 
 	{
@@ -59,7 +59,7 @@ package temple.core
 		/**
 		 * The current version of the Temple Library.
 		 */
-		public static const VERSION:String = "3.7.0";
+		public static const VERSION:String = "3.7.1";
 		
 		/**
 		 * The Authors of the Temple.
@@ -71,13 +71,13 @@ package temple.core
 		 * (Format: 'yyyy-mm-dd')
 		 * 
 		 */
-		public static const DATE:String = "2013-11-27";
+		public static const DATE:String = "2014-08-25";
 
 		/**
 		 * The official website of the Temple.
-		 * <a href="http://code.google.com/p/templelibrary/" target="_blank">http://code.google.com/p/templelibrary/</a>
+		 * <a href="http://www.temple.as" target="_blank">http://www.temple.as</a>
 		 */
-		public static const WEBSITE:String = "http://code.google.com/p/templelibrary/";
+		public static const WEBSITE:String = "http://www.temple.as";
 		
 		/**
 		 * When set to true, all Temple objects are registered in the <code>Memory</code> class with a weak reference.
