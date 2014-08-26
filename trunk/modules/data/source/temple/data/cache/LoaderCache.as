@@ -55,7 +55,7 @@ package temple.data.cache
 	 */
 	public final class LoaderCache
 	{
-		private static const _cache:HashMap = new HashMap("LoaderCache");
+		private static const _cache:HashMap = new HashMap();
 		private static const _dispatcher:CoreEventDispatcher = new CoreEventDispatcher();
 
 		private static var _maxSeconds:Number;

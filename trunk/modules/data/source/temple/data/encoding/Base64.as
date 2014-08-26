@@ -33,161 +33,264 @@
  *	repository with their own license!
  */
 
-/*
- * Base64 - 1.1.0
- * 
- * Copyright (c) 2006 Steve Webster
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- * the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions: 
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+/* 
+ * Copyright (C) 2012 Jean-Philippe Auclair 
+ * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php 
+ * Base64 library for ActionScript 3.0. 
+ * By: Jean-Philippe Auclair : http://jpauclair.net 
+ * Based on article: http://jpauclair.net/2010/01/09/base64-optimized-as3-lib/ 
+ */  
 
 package temple.data.encoding 
 {
-	import temple.core.errors.TempleError;
-	import temple.core.errors.throwError;
 
 	import flash.utils.ByteArray;
-
+	
 	/**
 	 * Base64 is a group of similar encoding schemes that represent binary data in an ASCII string format by translating
 	 * it into a radix-64 representation.
 	 * 
 	 * @see http://en.wikipedia.org/wiki/Base64
 	 * 
-	 * @author Steve Webster
+	 * @author Jean-Philippe Auclair
 	 */
 	public class Base64 
 	{
-		private static const BASE64_CHARS:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-
-		public static const version:String = "1.1.0";
-
-		public static function encode(data:String):String 
+		/**
+		 * A Boolean flag to control whether the sequence of characters specified for Base64Encoder.newLine are inserted
+		 * every 76 characters to wrap the encoded output.
+		 */
+		public static var insertNewLines:Boolean = true;
+		
+		/**
+		 * The character codepoint to be inserted into the encoded output to denote a new line if insertNewLines is true.
+		 */
+		public static var newLine:int = 10;
+		
+		private static const _ENCODE_CHARS:Vector.<int> = encoreChars();  
+		private static const _DECODE_CHARS:Vector.<int> = decodeChars();
+		
+		/**
+		 * This value represents a safe number of characters (i.e. arguments) that can be passed to
+		 * String.fromCharCode.apply() without exceeding the AVM+ stack limit.
+		 */
+		private static const _MAX_BUFFER_SIZE:uint = 32767;
+		
+		/**
+		 * The '=' char
+		 */
+		private static const _ESCAPE_CHAR_CODE:Number = 61;
+		
+		/**
+		 * Encodes a ByteArray in Base64.
+		 * 
+		 * @param data The ByteArray to encode.
+		 */
+		public static function encode(data:ByteArray):String
 		{
-			// Convert string to ByteArray
-			var bytes:ByteArray = new ByteArray();
-			bytes.writeUTFBytes(data);
-			
-			// Return encoded ByteArray
-			return encodeByteArray(bytes);
+			var out:ByteArray = new ByteArray();
+			// Presetting the length keep the memory smaller and optimize speed since there is no "grow" needed
+			out.length = (2 + data.length - ((data.length + 2) % 3)) * 4 / 3;
+			// Preset length // 1.6 to 1.5 ms
+			var i:int = 0;
+			var r:int = data.length % 3;
+			var len:int = data.length - r;
+			var c:uint;
+			// read (3) character AND write (4) characters
+			var outPos:int = 0;
+			while (i < len)
+			{
+				// Read 3 Characters (8bit * 3 = 24 bits)
+				c = data[int(i++)] << 16 | data[int(i++)] << 8 | data[int(i++)];
+
+				out[int(outPos++)] = _ENCODE_CHARS[int(c >>> 18)];
+				out[int(outPos++)] = _ENCODE_CHARS[int(c >>> 12 & 0x3f)];
+				out[int(outPos++)] = _ENCODE_CHARS[int(c >>> 6 & 0x3f)];
+				out[int(outPos++)] = _ENCODE_CHARS[int(c & 0x3f)];
+			}
+
+			if (r == 1) // Need two "=" padding
+			{
+				// Read one char, write two chars, write padding
+				c = data[int(i)];
+
+				out[int(outPos++)] = _ENCODE_CHARS[int(c >>> 2)];
+				out[int(outPos++)] = _ENCODE_CHARS[int((c & 0x03) << 4)];
+				out[int(outPos++)] = 61;
+				out[int(outPos++)] = 61;
+			}
+			else if (r == 2) // Need one "=" padding
+			{
+				c = data[int(i++)] << 8 | data[int(i)];
+
+				out[int(outPos++)] = _ENCODE_CHARS[int(c >>> 10)];
+				out[int(outPos++)] = _ENCODE_CHARS[int(c >>> 4 & 0x3f)];
+				out[int(outPos++)] = _ENCODE_CHARS[int((c & 0x0f) << 2)];
+				out[int(outPos++)] = 61;
+			}
+
+			return out.readUTFBytes(out.length);
 		}
 
-		public static function encodeByteArray(data:ByteArray):String 
+		/**
+		 * Decodes a Base64 string to a ByteArray
+		 */
+		public static function decode(string:String):ByteArray
 		{
-			// Initialise output
-			var output:String = "";
-			
-			// Create data and output buffers
-			var dataBuffer:Array;
-			var outputBuffer:Array = new Array(4);
-			
-			// Rewind ByteArray
-			data.position = 0;
-			
-			// while there are still bytes to be processed
-			while (data.bytesAvailable > 0) 
+			var c1:int;
+			var c2:int;
+			var c3:int;
+			var c4:int;
+			var i:int = 0;
+			var len:int = string.length;
+
+			var byteString:ByteArray = new ByteArray();
+			byteString.writeUTFBytes(string);
+			var outPos:int = 0;
+			while (i < len)
 			{
-				// Create new data buffer and populate next 3 bytes from data
-				dataBuffer = new Array();
-				for (var i:uint = 0;i < 3 && data.bytesAvailable > 0;i++) 
+				// c1
+				c1 = _DECODE_CHARS[int(byteString[i++])];
+				if (c1 == -1)
+					break;
+
+				// c2
+				c2 = _DECODE_CHARS[int(byteString[i++])];
+				if (c2 == -1)
+					break;
+
+				byteString[int(outPos++)] = (c1 << 2) | ((c2 & 0x30) >> 4);
+
+				// c3
+				c3 = byteString[int(i++)];
+				if (c3 == 61)
 				{
-					dataBuffer[i] = data.readUnsignedByte();
+					byteString.length = outPos;
+					return byteString;
 				}
-				
-				// Convert to data buffer Base64 character positions and 
-				// store in output buffer
-				outputBuffer[0] = (dataBuffer[0] & 0xfc) >> 2;
-				outputBuffer[1] = ((dataBuffer[0] & 0x03) << 4) | ((dataBuffer[1]) >> 4);
-				outputBuffer[2] = ((dataBuffer[1] & 0x0f) << 2) | ((dataBuffer[2]) >> 6);
-				outputBuffer[3] = dataBuffer[2] & 0x3f;
-				
-				// If data buffer was short (i.e not 3 characters) then set
-				// end character indexes in data buffer to index of '=' symbol.
-				// This is necessary because Base64 data is always a multiple of
-				// 4 bytes and is basses with '=' symbols.
-				for (var j:uint = dataBuffer.length;j < 3;j++) 
+
+				c3 = _DECODE_CHARS[int(c3)];
+				if (c3 == -1)
+					break;
+
+				byteString[int(outPos++)] = ((c2 & 0x0f) << 4) | ((c3 & 0x3c) >> 2);
+
+				// c4
+				c4 = byteString[int(i++)];
+				if (c4 == 61)
 				{
-					outputBuffer[j + 1] = 64;
+					byteString.length = outPos;
+					return byteString;
 				}
-				
-				// Loop through output buffer and add Base64 characters to 
-				// encoded data string for each character.
-				for (var k:uint = 0;k < outputBuffer.length;k++) 
+
+				c4 = _DECODE_CHARS[int(c4)];
+				if (c4 == -1)
+					break;
+
+				byteString[int(outPos++)] = ((c3 & 0x03) << 6) | c4;
+			}
+			byteString.length = outPos;
+			return byteString;
+		}
+		
+		/**
+		 * Encodes the characters of a String in Base64.
+		 * 
+		 * @param data The String to encode.
+		 */
+		public static function encodeString(string:String):String
+		{
+			var i:uint;
+
+			var length:uint = string.length;
+			
+			var buffers:Array = [[]];
+    		var count:uint;
+    		var line:uint;
+    		var work:Vector.<uint> = new <uint>[0, 0, 0];
+
+			while (i < length)
+			{
+				work[count] = string.charCodeAt(i);
+				count++;
+
+				if (count == work.length || length - i == 1)
 				{
-					output += BASE64_CHARS.charAt(outputBuffer[k]);
+					encodeBlock(buffers, count, line, work);
+					count = 0;
+					work[0] = 0;
+					work[1] = 0;
+					work[2] = 0;
+				}
+				i++;
+			}
+			if (count > 0) encodeBlock(buffers, count, line, work);
+
+			var result:String = "";
+
+			for (i = 0, length = buffers.length; i < length; i++)
+			{
+				var buffer:Array = buffers[i] as Array;
+				result += String.fromCharCode.apply(null, buffer);
+			}
+
+			return result;
+		}
+
+		/**
+		 * @private
+		 */
+		private static function encodeBlock(buffers:Array, count:uint, line:uint, work:Vector.<uint>):void
+		{
+			var currentBuffer:Array = buffers[buffers.length - 1] as Array;
+			if (currentBuffer.length >= _MAX_BUFFER_SIZE)
+			{
+				currentBuffer = [];
+				buffers.push(currentBuffer);
+			}
+
+			currentBuffer.push(_ENCODE_CHARS[(work[0] & 0xFF) >> 2]);
+			currentBuffer.push(_ENCODE_CHARS[((work[0] & 0x03) << 4) | ((work[1] & 0xF0) >> 4)]);
+
+			if (count > 1)
+			{
+				currentBuffer.push(_ENCODE_CHARS[((work[1] & 0x0F) << 2) | ((work[2] & 0xC0) >> 6)]);
+			}
+			else
+			{
+				currentBuffer.push(_ESCAPE_CHAR_CODE);
+			}
+
+			if (count > 2)
+			{
+				currentBuffer.push(_ENCODE_CHARS[work[2] & 0x3F]);
+			}
+			else
+			{
+				currentBuffer.push(_ESCAPE_CHAR_CODE);
+			}
+
+			if (insertNewLines)
+			{
+				if ((line += 4) == 76)
+				{
+					currentBuffer.push(newLine);
+					line = 0;
 				}
 			}
-			
-			// Return encoded data
-			return output;
 		}
 
-		public static function decode(data:String):String 
+		private static function encoreChars():Vector.<int>
 		{
-			// Decode data to ByteArray
-			var bytes:ByteArray = decodeToByteArray(data);
-			
-			// Convert to string and return
-			return bytes.readUTFBytes(bytes.length);
+			var encodeChars:Vector.<int> = new Vector.<int>(64, true);
+			const chars:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+			for (var i:int = 0; i < 64; i++) encodeChars[i] = chars.charCodeAt(i);
+			return encodeChars;
 		}
 
-		public static function decodeToByteArray(data:String):ByteArray 
+		private static function decodeChars():Vector.<int>
 		{
-			// Initialise output ByteArray for decoded data
-			var output:ByteArray = new ByteArray();
-			
-			// Create data and output buffers
-			var dataBuffer:Array = new Array(4);
-			var outputBuffer:Array = new Array(3);
-
-			// While there are data bytes left to be processed
-			for (var i:uint = 0;i < data.length;i += 4) 
-			{
-				// Populate data buffer with position of Base64 characters for
-				// next 4 bytes from encoded data
-				for (var j:uint = 0;j < 4 && i + j < data.length;j++) 
-				{
-					dataBuffer[j] = BASE64_CHARS.indexOf(data.charAt(i + j));
-				}
-      			
-				// Decode data buffer back into bytes
-				outputBuffer[0] = (dataBuffer[0] << 2) + ((dataBuffer[1] & 0x30) >> 4);
-				outputBuffer[1] = ((dataBuffer[1] & 0x0f) << 4) + ((dataBuffer[2] & 0x3c) >> 2);		
-				outputBuffer[2] = ((dataBuffer[2] & 0x03) << 6) + dataBuffer[3];
-				
-				// Add all non-padded bytes in output buffer to decoded data
-				for (var k:uint = 0;k < outputBuffer.length;k++) 
-				{
-					if (dataBuffer[k + 1] == 64) break;
-					output.writeByte(outputBuffer[k]);
-				}
-			}
-			
-			// Rewind decoded data ByteArray
-			output.position = 0;
-			
-			// Return decoded data
-			return output;
-		}
-
-		public function Base64() 
-		{
-			throwError(new TempleError(this, "Base64 class is static container only"));
-		}
+			return new <int>[-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+		} 
 	}
 }

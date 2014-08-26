@@ -166,7 +166,7 @@ package temple.data.encoding.json
 			}
 			else if (getQualifiedClassName(value).indexOf("__AS3__.vec::Vector.") === 0) // Vector 
 			{
-				// call the helper method to convert an array
+				// call the helper method to convert a vector
 				return vectorToString(value);
 			}
 			else if (value is Enumerator) 
@@ -191,7 +191,7 @@ package temple.data.encoding.json
 		 */
 		public function setExplicitEncoder(type:Class, encoder:IStringifier):void
 		{
-			_explicitEncoders ||= new HashMap("expicitEncoders");
+			_explicitEncoders ||= new HashMap();
 			_explicitEncoders[getQualifiedClassName(type)] = encoder;
 		}
 		

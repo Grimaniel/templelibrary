@@ -45,15 +45,6 @@ package temple.data.collections
 	dynamic public class HashMap extends CoreObject 
 	{
 		/**
-		 * Creates a new HashMap.
-		 * @param name used in toString for identifying the HashMap
-		 */
-		public function HashMap(name:String)
-		{
-			toStringProps.push(name);
-		}
-
-		/**
 		 * Removes all values from the HashMap
 		 */
 		public function clear():void

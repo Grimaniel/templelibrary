@@ -78,7 +78,7 @@ package temple.data.flashvars
 		 */
 		public static function initialize(parameters:Object):void
 		{
-			FlashVars._flashvars ||= new HashMap("FlashVars");
+			FlashVars._flashvars ||= new HashMap();
 			
 			for (var i:String in parameters)
 			{

@@ -350,7 +350,7 @@ package temple.data.xml
 			super();
 
 			if (_instance) throwError(new TempleError(this, "Singleton, use XMLManager.getInstance() or use static functions"));
-			_xmlLoadDataList = new HashMap("XMLManager xmlLoadDataList");
+			_xmlLoadDataList = new HashMap();
 			
 			addToDebugManager(this);
 		}
@@ -675,17 +675,14 @@ package temple.data.xml
 				case XMLManager.DEFAULT_CACHE_SETTING:
 				{
 					return defaultSetting;
-					break;
 				}
 				case XMLManager.CACHE:
 				{
 					return true;
-					break;
 				}
 				case XMLManager.NO_CACHE:
 				{
 					return true;
-					break;
 				}
 				default:
 				{

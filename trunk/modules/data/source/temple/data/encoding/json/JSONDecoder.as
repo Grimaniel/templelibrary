@@ -114,6 +114,7 @@ package temple.data.encoding.json
 		private var _skipNulls:Boolean;
 		
 		private var _explicitDecoders:HashMap;
+		private var _useIObjectParsable:Boolean;
 
 		/**
 		 * Constructs a new JSONDecoder to parse a JSON string into a native object.
@@ -159,7 +160,7 @@ package temple.data.encoding.json
 		}
 		
 		/**
-		 * Let's you define how to handle a specific type of object.
+		 * Defines how to handle a specific type of object.
 		 * @param type the class that must be handled specific
 		 * @param decoder the object that converts the String to the correct object.
 		 * 
@@ -167,8 +168,24 @@ package temple.data.encoding.json
 		 */
 		public function setExplicitDecoder(type:Class, decoder:IParser):void
 		{
-			_explicitDecoders ||= new HashMap("expicitDecoders");
+			_explicitDecoders ||= new HashMap();
 			_explicitDecoders[getQualifiedClassName(type)] = decoder;
+		}
+		
+		/**
+		 * 
+		 */
+		public function get useIObjectParsable():Boolean
+		{
+			return _useIObjectParsable;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set useIObjectParsable(value:Boolean):void
+		{
+			_useIObjectParsable = value;
 		}
 
 		/**
@@ -382,7 +399,7 @@ package temple.data.encoding.json
 					
 					obj ||= new (classRef)();
 					
-					if (obj is IObjectParsable)
+					if (_useIObjectParsable && (obj is IObjectParsable))
 					{
 						if (!IObjectParsable(obj).parseObject(o))
 						{
@@ -550,6 +567,5 @@ package temple.data.encoding.json
 			
 			super.destruct();
 		}
-
 	}
 }

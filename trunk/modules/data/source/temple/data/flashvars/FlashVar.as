@@ -98,7 +98,6 @@ package temple.data.flashvars
 					{
 						return _type((_value == '' || _value == undefined || _value == null) && _defaultValue != null ? _defaultValue : _value);
 					}
-					break;
 				}
 				case null:
 				case String:
