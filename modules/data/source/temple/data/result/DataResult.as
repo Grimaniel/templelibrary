@@ -71,7 +71,7 @@ package temple.data.result
 		{
 			if (!object || !object.hasOwnProperty('success')) return false;
 			
-			success = object.success;
+			success = Boolean(object.success);
 			message = object.message;
 			code = object.code;
 			_data = object.data;

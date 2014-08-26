@@ -115,7 +115,10 @@ package temple.data.cache
 			
 			_owner = false;
 			clearCacheData();
-			if (_cache && (_cacheData = LoaderCache.get(request.url)))
+			
+			if (_cache) _cacheData = LoaderCache.get(request.url);
+			
+			if (_cache && _cacheData)
 			{
 				if (_cacheData.isLoaded)
 				{
