@@ -1,6 +1,6 @@
 ﻿/**
- * VERSION: 12.0.3
- * DATE: 2013-02-28
+ * VERSION: 12.0.4
+ * DATE: 2014-07-08
  * AS3 (AS2 version is also available)
  * UPDATES AND DOCS AT: http://www.greensock.com
  **/
@@ -10,7 +10,7 @@ package com.greensock.core {
  * most basic timeline functionality and it is used for the root timelines in TweenLite but is only
  * intended for internal use in the GreenSock tweening platform. It is meant to be very fast and lightweight.
  * 
- * <p><strong>Copyright 2008-2013, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
+ * <p><strong>Copyright 2008-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -135,7 +135,6 @@ package com.greensock.core {
 				if (!skipDisable) {
 					tween._enabled(false, true);
 				}
-				tween.timeline = null;
 				
 				if (tween._prev) {
 					tween._prev._next = tween._next;
@@ -147,6 +146,7 @@ package com.greensock.core {
 				} else if (_last === tween) {
 					_last = tween._prev;
 				}
+				tween._next = tween._prev = tween.timeline = null;
 				
 				if (_timeline) {
 					_uncache(true);
