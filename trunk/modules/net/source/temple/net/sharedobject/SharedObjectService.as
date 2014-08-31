@@ -76,7 +76,7 @@ package temple.net.sharedobject
 		 */
 		public static function getInstance(name:String = 'default'):ISharedObjectService
 		{
-			if (SharedObjectService._instances == null) SharedObjectService._instances = new HashMap("SharedObjectService instances");
+			if (SharedObjectService._instances == null) SharedObjectService._instances = new HashMap();
 			if (SharedObjectService._instances[name] == null) SharedObjectService._instances[name] = new SharedObjectService(name);
 			
 			return SharedObjectService._instances[name];
