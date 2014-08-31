@@ -172,7 +172,7 @@ package temple.ui.form
 	{
 		private var _validator:Validator;
 		private var _service:IFormService;
-		private var _dataModel:Object;
+		private var _data:Object;
 		private var _elements:HashMap;
 		private var _names:Dictionary;
 		private var _tabFocusManager:TabFocusManager;
@@ -197,8 +197,8 @@ package temple.ui.form
 			_validator = new Validator();
 			_tabFocusManager = new TabFocusManager();
 			
-			_dataModel = new Object();
-			_elements = new HashMap("Form Elements");
+			_data = new Object();
+			_elements = new HashMap();
 			_names = new Dictionary(true);
 			
 			_submitButtons = new Dictionary(true);
@@ -245,17 +245,17 @@ package temple.ui.form
 		 * @param submit (optional) indicates if this value should be submitted to the service (true) or should be ignored (false), default: true
 		 * @return the element
 		 */
-		public function addElement(element:IHasValue, name:String = null, validationRule:Class = null, errorMessage:String = null, tabIndex:int = -1, submit:Boolean = true):IHasValue 
+		public function add(element:IHasValue, name:String = null, validationRule:Class = null, errorMessage:String = null, tabIndex:int = -1, submit:Boolean = true):IHasValue 
 		{
 			if (_debug)
 			{
 				if (submit && name != null)
 				{
-					logDebug("addFormElement: " + element + (name ? " '" + name + "'" : ""));
+					logDebug("add: " + element + (name ? " '" + name + "'" : ""));
 				}
 				else
 				{
-					logWarn("addFormElement: " + element + " '" + name + "', value will not be submit to service");
+					logWarn("add: " + element + " '" + name + "', value will not be submit to service");
 				}
 			}
 			
@@ -308,9 +308,9 @@ package temple.ui.form
 		 * Remove an input, checkbox or radiogroup from the form
 		 * @element the element to remove
 		 */
-		public function removeElement(element:IHasValue):void 
+		public function remove(element:IHasValue):void 
 		{
-			if (_debug) logDebug("removeFormElement: " + element);
+			if (_debug) logDebug("remove: " + element);
 			
 			// remove from _componentsList
 			for each (var fed:FormElementData in _elements)
@@ -336,7 +336,7 @@ package temple.ui.form
 		/**
 		 * Checks if the Form has an element with a specific name
 		 */
-		public function hasElement(name:String):Boolean
+		public function has(name:String):Boolean
 		{
 			return (_elements[name]) ? true : false;
 		}
@@ -344,7 +344,7 @@ package temple.ui.form
 		/**
 		 * Returns the element with the specific name
 		 */
-		public function getElement(name:String):IHasValue
+		public function get(name:String):IHasValue
 		{
 			return _elements[name] ? FormElementData(_elements[name]).element : null;
 		}
@@ -352,7 +352,7 @@ package temple.ui.form
 		/**
 		 * Returns the name of element in this form
 		 */
-		public function getNameForElement(element:IHasValue):String
+		public function getNameFor(element:IHasValue):String
 		{
 			return _names[element];
 		}
@@ -360,9 +360,9 @@ package temple.ui.form
 		/**
 		 * Set if an element with a specific name should be send on submit
 		 */
-		public function updateElement(name:String, submit:Boolean):void 
+		public function update(name:String, submit:Boolean):void 
 		{
-			if (hasElement(name))
+			if (has(name))
 			{
 				FormElementData(_elements[name]).submit = submit;
 			}
@@ -375,13 +375,13 @@ package temple.ui.form
 		/**
 		 * Removes all elements of the form
 		 */
-		public function removeAllElements():void 
+		public function removeAll():void 
 		{
-			if (_debug) logDebug("removeAllFormElements: ");
+			if (_debug) logDebug("removeAll");
 			
 			var elements:Array = [];
 			for each (var fed:FormElementData in _elements) elements.push(fed.element);
-			while (elements.length) removeElement(elements.shift());
+			while (elements.length) remove(elements.shift());
 
 		}
 
@@ -446,7 +446,7 @@ package temple.ui.form
 			{
 				if (validate().length == 0)
 				{
-					if (_debug) logDebug(dump(getModelData()));
+					if (_debug) logDebug(dump(getData()));
 					send();
 				}
 			}
@@ -459,11 +459,11 @@ package temple.ui.form
 		/**
 		 * Insert data in the send object, for hidden form fields
 		 */
-		public function insertModelData(name:String, data:*):void 
+		public function insertData(name:String, data:*):void 
 		{
-			if (_debug) logDebug("insertModelData: " + name + "=" + data);
+			if (_debug) logDebug("insertData: " + name + "=" + data);
 			
-			_dataModel[name] = data;
+			_data[name] = data;
 		}
 
 		/**
@@ -524,7 +524,7 @@ package temple.ui.form
 			{
 				var element:IHasValue = errors[i].rule.target;
 				
-				fields.push(new FormFieldError(getNameForElement(element), element, errors[i].message));
+				fields.push(new FormFieldError(getNameFor(element), element, errors[i].message));
 			}
 			
 			dispatchEvent(new FormEvent(FormEvent.VALIDATE_ERROR, new FormResult(false, "Form is not valid", null, null, fields)));
@@ -532,24 +532,24 @@ package temple.ui.form
 		}
 
 		/**
-		 * Gets the ModelData of the Form
+		 * Gets the data of the Form
 		 * NOTE: This function does not validate the Form. For validation for call validate()
 		 */
-		public function getModelData():Object
+		public function getData():Object
 		{
 			for each (var fed:FormElementData in _elements)
 			{
-				if (fed.submit) _dataModel[fed.name] = fed.element.value;
+				if (fed.submit) _data[fed.name] = fed.element.value;
 			}
 			
 			if (_debug)
 			{
-				for (var key : String in _dataModel) 
+				for (var key : String in _data) 
 				{
-					logDebug("ModelData: [" + key + "] : " + _dataModel[key]);
+					logDebug("ModelData: [" + key + "] : " + _data[key]);
 				}
 			}
-			return _dataModel;
+			return _data;
 		}
 
 		/**
@@ -558,7 +558,7 @@ package temple.ui.form
 		 * Form can only prefill elements who implements IPrefillable
 		 * @param data The data object (name - value pair) with the prefill data
 		 */
-		public function prefillData(data:Object):void
+		public function prefill(data:Object):void
 		{
 			_prefillData = data;
 			
@@ -734,7 +734,7 @@ package temple.ui.form
 				_service.addEventListener(FormServiceEvent.RESULT, handleFormServiceEvent);
 				_service.addEventListener(FormServiceEvent.ERROR, handleFormServiceEvent);
 
-				var result:IFormResult = _service.submit(getModelData());
+				var result:IFormResult = _service.submit(getData());
 				
 				if (result && !enabled)
 				{
@@ -812,11 +812,11 @@ package temple.ui.form
 					
 			if (result.success)
 			{
-				if (_debug) logDebug("onResult: success " + (result.message ? "\"" + result.message + "\"" : ""));
+				if (_debug) logDebug("Success " + (result.message ? "\"" + result.message + "\"" : ""));
 			}
 			else
 			{
-				if (_debug) logError("onResult: error " + (result.message ? "\"" + result.message + "\"" : ""));
+				if (_debug) logError("Error " + (result.message ? "\"" + result.message + "\"" : ""));
 				
 				var data:FormElementData;
 				var focussed:Boolean;
@@ -837,9 +837,9 @@ package temple.ui.form
 							}
 						}
 					}
-					else if (_debug) logWarn("handleFormServiceEvent: no field with name '" + error.field + "' found");
+					else if (_debug) logWarn("No field with name '" + error.field + "' found");
 					
-					if (_debug) logError("handleFormServiceEvent: Error: " + error.field + " '" + error.message + "' (" + error.code + ")");
+					if (_debug) logError("Error: " + error.field + " '" + error.message + "' (" + error.code + ")");
 				}
 			}
 			dispatchEvent(new FormEvent(result.success ? FormEvent.SUBMIT_SUCCESS : FormEvent.SUBMIT_ERROR, result));
@@ -900,7 +900,7 @@ package temple.ui.form
 			// Destruct elements
 			if (_elements)
 			{
-				removeAllElements();
+				removeAll();
 				_elements = null;
 			}
 			_prefillData = null;

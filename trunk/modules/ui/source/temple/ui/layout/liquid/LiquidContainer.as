@@ -252,7 +252,6 @@ package temple.ui.layout.liquid
 					}
 				}
 			}
-			return null;
 		}
 		
 		/**
@@ -327,7 +326,6 @@ package temple.ui.layout.liquid
 				{
 					throwError(new TempleArgumentError(this, "Invalid value for align: '" + value + "'"));
 					return;
-					break;
 				}
 			}
 			layout();

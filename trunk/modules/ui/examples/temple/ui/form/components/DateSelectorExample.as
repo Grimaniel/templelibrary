@@ -34,10 +34,10 @@ package
 			// put elements in form to test tabbing
 			
 			var form:Form = new Form();
-			form.addElement(mcDateSelector1);
-			form.addElement(mcDateSelector2);
-			form.addElement(mcDateSelector3);
-			form.addElement(mcDateSelector4);
+			form.add(mcDateSelector1);
+			form.add(mcDateSelector2);
+			form.add(mcDateSelector3);
+			form.add(mcDateSelector4);
 			form.reset();
 			
 			mcDateSelector2.monthFormat = DateLabelFormat.FULL;

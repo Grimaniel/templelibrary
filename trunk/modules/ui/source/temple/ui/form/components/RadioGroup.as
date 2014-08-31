@@ -103,7 +103,7 @@ package temple.ui.form.components
 			}
 			else if (createIfNull)
 			{
-				RadioGroup._instances ||= new HashMap("RadioGroups");
+				RadioGroup._instances ||= new HashMap();
 				
 				var radioGroup:RadioGroup = RadioGroup._instances[name] = new RadioGroup();
 				radioGroup._name = name;

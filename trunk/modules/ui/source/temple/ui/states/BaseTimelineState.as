@@ -68,7 +68,7 @@ package temple.ui.states
 		public function BaseTimelineState()
 		{
 			// init labels
-			_labels = new HashMap("TimelineState Labels");
+			_labels = new HashMap();
 			currentScene.labels.map(addLabelHashEntry);
 			addFrameScript(totalFrames - 1, onLastFrame);
 			if (_labels[BaseTimelineState._LABEL_HIDE])

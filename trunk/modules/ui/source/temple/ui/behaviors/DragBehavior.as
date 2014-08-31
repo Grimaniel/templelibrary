@@ -120,14 +120,14 @@ package temple.ui.behaviors
 		 * @param bounds limits the dragging
 		 * @param dragButton an InteractiveObject that does the dragging, if there is no dragButton, the target does the dragging
 		 */
-		public function DragBehavior(target:InteractiveObject, bounds:Rectangle = null, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true, useCursorKeys:Boolean = false) 
+		public function DragBehavior(target:InteractiveObject, bounds:Rectangle = null, dragButton:InteractiveObject = null, dragHorizontal:Boolean = true, dragVertical:Boolean = true, useCursorKeys:Boolean = false, objectBounds:Rectangle = null) 
 		{
-			super(target, bounds);
+			super(target, bounds, objectBounds);
 			
-			construct::dragBehavior(target, bounds, dragButton, dragHorizontal, dragVertical, useCursorKeys);
+			construct::dragBehavior(target, bounds, dragButton, dragHorizontal, dragVertical, useCursorKeys, objectBounds);
 		}
 
-		construct function dragBehavior(target:InteractiveObject, bounds:Rectangle, dragButton:InteractiveObject, dragHorizontal:Boolean, dragVertical:Boolean, useCursorKeys:Boolean):void
+		construct function dragBehavior(target:InteractiveObject, bounds:Rectangle, dragButton:InteractiveObject, dragHorizontal:Boolean, dragVertical:Boolean, useCursorKeys:Boolean, objectBounds:Rectangle):void
 		{
 			_dragButton = dragButton || target;
 			enabled = true;
@@ -142,6 +142,7 @@ package temple.ui.behaviors
 			this.useCursorKeys = useCursorKeys;
 			
 			bounds;
+			objectBounds;
 		}
 
 		/**

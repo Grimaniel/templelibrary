@@ -58,16 +58,18 @@ package temple.ui.behaviors
 		public static const LEFT:String = "left";
 		
 		private var _bounds:Rectangle;
+		private var _objectBounds:Rectangle;
 
-		public function BoundsBehavior(target:DisplayObject, bounds:Rectangle = null)
+		public function BoundsBehavior(target:DisplayObject, bounds:Rectangle = null, objectBounds:Rectangle = null)
 		{
 			super(target);
 			
-			construct::boundsBehavior(target, bounds);
+			construct::boundsBehavior(target, bounds, objectBounds);
 		}
 
-		construct function boundsBehavior(target:DisplayObject, bounds:Rectangle):void
+		construct function boundsBehavior(target:DisplayObject, bounds:Rectangle, objectBounds:Rectangle):void
 		{
+			_objectBounds = objectBounds;
 			if (bounds) this.bounds = bounds;
 			
 			// dispath BoundsBehaviorEvent on target
@@ -92,6 +94,23 @@ package temple.ui.behaviors
 			
 			keepInBounds();
 		}
+		
+		/**
+		 * The bounds of the object (not the BoundsBehavior). Set this if value if you don't want the behavior to
+		 * calculate the dimensions of the object
+		 */
+		public function get objectBounds():Rectangle
+		{
+			return _objectBounds;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set objectBounds(value:Rectangle):void
+		{
+			_objectBounds = value;
+		}
 
 		/**
 		 * Checks if the DisplayObject is still in bounds, if not if will be moved to put it in bounds
@@ -103,7 +122,16 @@ package temple.ui.behaviors
 			{
 				var target:DisplayObject = displayObject;
 				
-				var objectbounds:Rectangle = target.getBounds(target.parent);
+				var objectbounds:Rectangle;
+				
+				if (_objectBounds)
+				{
+					objectbounds = new Rectangle(target.x + _objectBounds.x, target.y + _objectBounds.y, _objectBounds.width, _objectBounds.height);
+				}
+				else
+				{
+					objectbounds = target.getBounds(target.parent);
+				}
 				
 				// check x
 				// check smaller

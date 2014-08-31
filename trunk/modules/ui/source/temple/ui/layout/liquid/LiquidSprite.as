@@ -192,7 +192,7 @@ package temple.ui.layout.liquid
 		 */
 		public function set minimalWidth(value:Number):void
 		{
-			if (liquidBehavior) liquidBehavior.minimalWidth = value;
+			liquidBehavior.minimalWidth = value;
 		}
 		
 		/**

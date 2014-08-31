@@ -75,7 +75,7 @@ package temple.ui.focus
 	 */
 	public class TabFocusManager extends CoreEventDispatcher implements IFocusable, IDebuggable, IEnableable
 	{
-		private var _items:Array;
+		private var _items:Vector.<ItemData>;
 		private var _loop:Boolean;
 		private var _debug:Boolean;
 		private var _enabled:Boolean = true;
@@ -86,7 +86,7 @@ package temple.ui.focus
 		public function TabFocusManager(loop:Boolean = true) 
 		{
 			_loop = loop;
-			_items = new Array();
+			_items = new Vector.<ItemData>();
 			addToDebugManager(this);
 		}
 
@@ -115,6 +115,8 @@ package temple.ui.focus
 		 */
 		public function add(item:IFocusable, tabIndex:int = -1):Boolean 
 		{
+			if (debug) logDebug("add: " + item);
+			
 			// check if element exists
 			if (item == null) 
 			{
@@ -158,6 +160,8 @@ package temple.ui.focus
 					}
 				}
 			}
+			if (debug) logDebug("items: " + _items);
+			
 			return true;
 		}
 
@@ -349,7 +353,7 @@ package temple.ui.focus
 				index++;
 				if (index > _items.length - 1) index = 0;
 				
-				if (item == prev)
+				if (index == prev)
 				{
 					// we checked all items, no next item found
 					return;
@@ -388,7 +392,7 @@ package temple.ui.focus
 				index--;
 				if (index < 0) index = _items.length - 1;
 				
-				if (item == prev)
+				if (index == prev)
 				{
 					// we checked all items, no next item found
 					return;

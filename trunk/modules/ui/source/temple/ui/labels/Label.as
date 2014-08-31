@@ -70,7 +70,7 @@ package temple.ui.labels
 		 */
 		public function Label(textField:TextField = null)
 		{
-			toStringProps.push('label');
+			toStringProps.push('text');
 			init(textField);
 		}
 		

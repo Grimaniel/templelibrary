@@ -68,7 +68,7 @@ package temple.ui.buttons.behaviors
 		{
 			super(target);
 			
-			_states = new HashMap("ButtonTweenBehaviorStates");
+			_states = new HashMap();
 			
 			this.upDuration = upDuration;
 			this.upVars = upVars;

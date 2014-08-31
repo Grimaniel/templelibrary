@@ -665,7 +665,7 @@ package temple.ui.buttons.behaviors
 
 		private function initLabels():void
 		{
-			_labels = new HashMap("ButtonTimelineBehavior labels");
+			_labels = new HashMap();
 			
 			if (movieClip.totalFrames < 2)
 			{
@@ -736,7 +736,6 @@ package temple.ui.buttons.behaviors
 						{
 							logWarn("initLabels: found invalid label '" + frameLabelData.name + "' at frame " + frameLabelData.startframe);
 							continue;
-							break;
 						}
 					}
 					_labels[frameLabelData.startframe] = _labels[frameLabelData.name] = frameLabelData;

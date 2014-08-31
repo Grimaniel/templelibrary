@@ -49,8 +49,10 @@ package temple.ui.form.components
 	 */
 	public class DateSelector extends DateInputField implements IHasValue, IHasError, IResettable 
 	{
+		private var _dayFormat:DateLabelFormat;
 		private var _monthFormat:DateLabelFormat = DateLabelFormat.NUMERIC;
 		private var _monthLabels:IDateLabels = EnglishDateLabels;
+		private var _yearFormat:DateLabelFormat;
 		
 		public function DateSelector(begin:Date = null, end:Date = null, day:InputField = null, month:InputField = null, year:InputField = null)
 		{
@@ -101,6 +103,33 @@ package temple.ui.form.components
 				setDateRange(begin, end);
 			}
 		}
+		
+		/**
+		 * The format of the day in de day selector. If this value is set to DateLabelFormat.FULL or
+		 * DateLabelFormat.NUMERIC_LEADING_ZERO a leading zero will be added for labels lower than 10. 
+		 */
+		public function get dayFormat():DateLabelFormat
+		{
+			return _dayFormat;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set dayFormat(value:DateLabelFormat):void
+		{
+			_dayFormat = value;
+			
+			if (day is ComboBox)
+			{
+				var leadingZero:Boolean = _dayFormat == DateLabelFormat.FULL || DateLabelFormat.NUMERIC_LEADING_ZERO;
+				
+				for (var i:int = 30; i >= 0 ; --i)
+				{
+					ComboBox(day).setLabelAt(i, (leadingZero && i < 9 ? "0" : "") + (i + 1).toString());
+				}
+			}
+		}
 
 		/**
 		 * The format of the month in de month selector
@@ -121,7 +150,7 @@ package temple.ui.form.components
 			{
 				for (var i:int = 11; i >= 0 ; --i)
 				{
-					ComboBox(month).setLabelAt(i, _monthLabels ? _monthLabels.getMonth(i, _monthFormat) : i.toString());
+					ComboBox(month).setLabelAt(i, _monthLabels ? _monthLabels.getMonth(i, _monthFormat) : (i + 1).toString());
 				}
 			}
 		}
@@ -142,6 +171,32 @@ package temple.ui.form.components
 			_monthLabels = value;
 			if (_monthLabels && (_monthFormat == DateLabelFormat.FULL || _monthFormat == DateLabelFormat.SHORT)) monthFormat = _monthFormat;
 		}
+		
+		/**
+		 * The format of the year in de year selector. If this value is set to DateLabelFormat.FULL or
+		 * DateLabelFormat.NUMERIC_LEADING_ZERO a leading zero will be added for labels lower than 10. 
+		 */
+		public function get yearFormat():DateLabelFormat
+		{
+			return _yearFormat;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set yearFormat(value:DateLabelFormat):void
+		{
+			_yearFormat = value;
+			
+			if (year is ComboBox)
+			{
+				for (var i:int = ComboBox(year).length - 1; i >= 0 ; --i)
+				{
+					ComboBox(year).setLabelAt(i, getYearLabel(ComboBox(year).getItemAt(i)));
+				}
+			}
+		}
+		
 		
 		/**
 		 * @private
@@ -175,15 +230,31 @@ package temple.ui.form.components
 				
 				if (begin < end)
 				{
-					for (i = begin.fullYear; i <= end.fullYear; i++) ComboBox(year).addItem(i);
+					for (i = begin.fullYear; i <= end.fullYear; i++) ComboBox(year).addItem(i, getYearLabel(i));
 				}
 				else
 				{
-					for (i = begin.fullYear; i >= end.fullYear; i--) ComboBox(year).addItem(i);
+					for (i = begin.fullYear; i >= end.fullYear; i--) ComboBox(year).addItem(i, getYearLabel(i));
 				}
 				if (date) year.value = date.getFullYear();
 			}
 		}
+		
+		private function getYearLabel(year:int):String
+		{
+			switch (_yearFormat)
+			{
+				case DateLabelFormat.SHORT:
+				{
+					return year.toString().substr(2);
+				}
+				default:
+				{
+					return year.toString();
+				}
+			}
+		}
+
 
 		/**
 		 * The number of rows that are at least partially visible in the list.

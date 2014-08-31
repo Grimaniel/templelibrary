@@ -807,7 +807,7 @@ package temple.ui.form.components
 		 */
 		override public function get contentHeight():Number 
 		{
-			return _items ? _items.length * _rowHeight : 1;
+			return (_items ? _items.length * _rowHeight : 1) + (!isNaN(marginTop) ? marginTop : 0) + (!isNaN(marginBottom) ? marginBottom : 0);
 		}
 
 		override public function set height(value:Number):void 
