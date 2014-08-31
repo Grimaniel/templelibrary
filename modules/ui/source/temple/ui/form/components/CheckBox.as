@@ -364,7 +364,7 @@ package temple.ui.form.components
 		/**
 		 * @inheritDoc
 		 */
-		[Inspectable(name="Label", type="String")]
+		[Inspectable(name="Text", type="String")]
 		public function set text(value:String):void
 		{
 			if (_label)
@@ -376,6 +376,14 @@ package temple.ui.form.components
 				logError("label: Label TextField is not specified or found on DisplayList");
 			}
 			dispatchEvent(new Event(Event.CHANGE));
+		}
+		
+		/**
+		 * Returns a reference to the label
+		 */
+		public function get label():ILabel
+		{
+			return _label;
 		}
 		
 		/**

@@ -84,7 +84,7 @@ package temple.ui.labels
 		public function LiquidLabel(textField:TextField = null)
 		{
 			init(textField);
-			toStringProps.push('label');
+			toStringProps.push('text');
 		}
 		
 		/**

@@ -245,6 +245,9 @@ package temple.ui.form.components
 			if (_textField.text == _hintText)
 			{
 				_textField.text = value;
+				_textField.removeEventListener(Event.CHANGE, handleTextFieldChange);
+				_textField.dispatchEvent(new Event(Event.CHANGE));
+				_textField.addEventListener(Event.CHANGE, handleTextFieldChange, false, 0, true);
 			}
 			_hintText = value;
 			
@@ -619,7 +622,7 @@ package temple.ui.form.components
 			_debug = value;
 			if (_debug && _debugValue)
 			{
-				value = _debugValue;
+				this.value = _debugValue;
 			}
 		}
 		
@@ -889,12 +892,18 @@ package temple.ui.form.components
 				if (_textField.textWidth > _textField.width)
 				{
 					_textField.text = _previousText;
+					_textField.removeEventListener(Event.CHANGE, handleTextFieldChange);
+					_textField.dispatchEvent(new Event(Event.CHANGE));
+					_textField.addEventListener(Event.CHANGE, handleTextFieldChange, false, 0, true);
 				}
 				_textField.scrollH = 0;
 
 				if (_textField.textHeight > _textField.height)
 				{
 					_textField.text = _previousText;
+					_textField.removeEventListener(Event.CHANGE, handleTextFieldChange);
+					_textField.dispatchEvent(new Event(Event.CHANGE));
+					_textField.addEventListener(Event.CHANGE, handleTextFieldChange, false, 0, true);
 				}
 				_textField.scrollV = 0;
 			}
@@ -918,12 +927,15 @@ package temple.ui.form.components
 				_textField.text = "";
 				setTextFormat(_defaultTextFormat);
 				_textField.displayAsPassword = _displayAsPassword;
+				_textField.removeEventListener(Event.CHANGE, handleTextFieldChange);
+				_textField.dispatchEvent(new Event(Event.CHANGE));
+				_textField.addEventListener(Event.CHANGE, handleTextFieldChange, false, 0, true);
 			}
 			else if (!focus && !_showsHint && (_textField.text == "")) 
 			{
 				showHint();
 			}
-			else if (_showsHint && _textField.text != _hintText && !hasError)
+			else if (_textField.text != _hintText && !hasError)
 			{
 				_showsHint = false;
 				setTextFormat(_defaultTextFormat);
@@ -939,6 +951,9 @@ package temple.ui.form.components
 				_textField.text = _hintText;
 				setTextFormat(_hintTextFormat);
 				_textField.displayAsPassword = false;
+				_textField.removeEventListener(Event.CHANGE, handleTextFieldChange);
+				_textField.dispatchEvent(new Event(Event.CHANGE));
+				_textField.addEventListener(Event.CHANGE, handleTextFieldChange, false, 0, true);
 			}
 		}
 

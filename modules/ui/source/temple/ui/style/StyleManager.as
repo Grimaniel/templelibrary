@@ -75,7 +75,7 @@ package temple.ui.style
 		 */
 		public function StyleManager()
 		{
-			_styleSheets = new HashMap("StyleManager StyleSheets");
+			_styleSheets = new HashMap();
 			_styleSheets[StyleManager.DEFAULT_STYLESHEET] = new StyleSheet();
 			
 			_textFields = new Dictionary(true);

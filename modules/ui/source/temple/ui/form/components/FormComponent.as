@@ -91,7 +91,7 @@ package temple.ui.form.components
 		 */
 		public function addComponent(component:IFormElementComponent):void
 		{
-			_form.addElement(component, component.dataName, component.validationRule, component.errorMessage, component.tabIndex, component.submit);
+			_form.add(component, component.dataName, component.validationRule, component.errorMessage, component.tabIndex, component.submit);
 		}
 		
 		/**

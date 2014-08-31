@@ -129,7 +129,7 @@ package temple.ui.scroll
 		 */
 		public function get contentWidth():Number
 		{
-			return transform.pixelBounds.width + (!isNaN(marginLeft) ? marginLeft : 0) + (!isNaN(marginRight) ? marginRight : 0);;
+			return transform.pixelBounds.width + (!isNaN(marginLeft) ? marginLeft : 0) + (!isNaN(marginRight) ? marginRight : 0);
 		}
 
 		/**

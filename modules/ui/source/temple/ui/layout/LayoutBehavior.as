@@ -150,7 +150,6 @@ package temple.ui.layout
 				{
 					throwError(new TempleArgumentError(this, "invalid value for orientation: '" + value + "'"));
 					return;
-					break;
 				}
 			}
 		}
@@ -185,7 +184,6 @@ package temple.ui.layout
 					throwError(new TempleArgumentError(this, "invalid value for orientation: '" + value + "'"));
 					return;
 				}
-					break;
 			}
 		}
 		

@@ -75,7 +75,7 @@ package
 			addChild(emailInput);
 			
 			// Add field to the form
-			form.addElement(emailInput, "email", EmailValidationRule, "This is not a valid email address");
+			form.add(emailInput, "email", EmailValidationRule, "This is not a valid email address");
 
 			// Create a field for the password
 			var passwordInput:Input = new Input();
@@ -86,7 +86,7 @@ package
 			addChild(passwordInput);
 
 			// Add field to the form
-			form.addElement(passwordInput, "password", EmptyStringValidationRule, "Please fill in your password");
+			form.add(passwordInput, "password", EmptyStringValidationRule, "Please fill in your password");
 			
 			// Create a submit button
 			var button:Button = new Button();

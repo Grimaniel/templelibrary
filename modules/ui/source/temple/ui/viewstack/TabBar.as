@@ -115,8 +115,8 @@ package temple.ui.viewstack
 		{
 			var selectedIndex:uint = selectedIndex;
 			if (index < numChildren && getChildAt(index) is ISelectable) radioGroup.remove(ISelectable(getChildAt(index)));
-			resetIndex(child, selectedIndex);
 			var child:DisplayObject = super.removeChildAt(index);
+			resetIndex(child, selectedIndex);
 			return child;
 		}
 		
@@ -160,7 +160,7 @@ package temple.ui.viewstack
 		 */
 		public function get orientation():String
 		{
-			return _layoutBehavior ? _layoutBehavior.orientation : null;;
+			return _layoutBehavior ? _layoutBehavior.orientation : null;
 		}
 		
 		/**

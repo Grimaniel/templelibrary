@@ -109,8 +109,6 @@ package temple.ui.behaviors.textfield
 		{
 			textField.textColor = 0xff0000;
 			
-			ColorUtils.getARGB(_selectionColor);
-
 			var o:Object = ColorUtils.getRGB(_selectionColor);
 			var r:Object = ColorUtils.getRGB(_textColor);
 			var g:Object = ColorUtils.getRGB(_selectedColor);

@@ -35,14 +35,14 @@
 
 package temple.ui.labels 
 {
-	import temple.core.destruction.IDestructible;
+	import temple.core.events.ICoreEventDispatcher;
 
 	/**
 	 * Interface for objects which have a <code>label</code> (text) property.
 	 * 
 	 * @author Thijs Broerse
 	 */
-	public interface ILabel extends IDestructible
+	public interface ILabel extends ICoreEventDispatcher
 	{
 		/**
 		 * The text for the label

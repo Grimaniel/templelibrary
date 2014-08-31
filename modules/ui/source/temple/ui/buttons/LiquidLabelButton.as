@@ -105,7 +105,7 @@ package temple.ui.buttons
 		 */
 		public function get enabled():Boolean
 		{
-			return mouseChildren;
+			return mouseEnabled;
 		}
 		
 		/**

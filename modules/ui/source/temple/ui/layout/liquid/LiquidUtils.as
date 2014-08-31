@@ -54,42 +54,34 @@ package temple.ui.layout.liquid
 				case LiquidProperties.LEFT:
 				{
 					return LiquidUtils.getLeft(liquidObject);
-					break;
 				}
 				case LiquidProperties.RIGHT:
 				{
 					return LiquidUtils.getRight(liquidObject);
-					break;
 				}
 				case LiquidProperties.HORIZONTAL_CENTER:
 				{
 					return LiquidUtils.getHorizontalCenter(liquidObject);
-					break;
 				}
 				case LiquidProperties.RELATIVE_X:
 				{
 					return LiquidUtils.getRelativeX(liquidObject);
-					break;
 				}
 				case LiquidProperties.TOP:
 				{
 					return LiquidUtils.getTop(liquidObject);
-					break;
 				}
 				case LiquidProperties.BOTTOM:
 				{
 					return LiquidUtils.getBottom(liquidObject);
-					break;
 				}
 				case LiquidProperties.VERTICAL_CENTER:
 				{
 					return LiquidUtils.getVerticalCenter(liquidObject);
-					break;
 				}
 				case LiquidProperties.RELATIVE_Y:
 				{
 					return LiquidUtils.getRelativeY(liquidObject);
-					break;
 				}
 			}
 			throwError(new TempleArgumentError(LiquidUtils, "Unvalid value for property '" + property + "'"));

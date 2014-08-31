@@ -76,10 +76,10 @@ package
 			_form.debug = true;
 			
 			// add InputFields to the Form. Note: the 'name' property (2nd parameter) must match the corresponding property value of the PersonData object, since we want to store the data in that object.
-			_form.addElement(mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
-			_form.addElement(mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
-			_form.addElement(mcCompanyField, "company");
-			_form.addElement(mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
+			_form.add(mcNameField, "name", EmptyStringValidationRule, "Please fill in your name"); // EmptyStringValidationRule means: this field can not be empty. 
+			_form.add(mcEmailField, "email", EmailValidationRule, "Please fill in a correct e-mailaddress"); // EmailValidationRule means: this field must contain an emailaddress.
+			_form.add(mcCompanyField, "company");
+			_form.add(mcCountryField, "country", NullValidationRule, "Please select your country"); // NullValidationRule: a ComboBox returns null when no item is selected.
 			
 			// fill country ComboBox with some countries. We use the ISO code as data. (For this case we don't add all countries of the world, since the example would be too large. But ofcourse you can add all the countries you want.)
 			mcCountryField.addItem("BEL","Belgium");
@@ -125,11 +125,11 @@ package
 			radiogroup.add(mcGenderFemaleRadioButton, "female");
 			
 			// add RadioGroup to the Form
-			_form.addElement(radiogroup, "gender", NullValidationRule, "select your gender");
+			_form.add(radiogroup, "gender", NullValidationRule, "select your gender");
 			
 			// add CheckBoxes to the Form
-			_form.addElement(mcNewsletterCheckBox, "newsletter");
-			_form.addElement(mcTermsCheckBox, "terms", BooleanValidationRule, "You must agree to the terms", -1, false); // Must agree to terms, but we don't want to submit this value
+			_form.add(mcNewsletterCheckBox, "newsletter");
+			_form.add(mcTermsCheckBox, "terms", BooleanValidationRule, "You must agree to the terms", -1, false); // Must agree to terms, but we don't want to submit this value
 			
 			// set some restrictions
 			mcEmailField.restrict = Restrictions.EMAIL;
@@ -213,7 +213,7 @@ package
 			_data.newsletter = true;
 			_data.gender = "male";
 			
-			_form.prefillData(_data);
+			_form.prefill(_data);
 		}
 
 		private function handleFormEvent(event:FormEvent):void
