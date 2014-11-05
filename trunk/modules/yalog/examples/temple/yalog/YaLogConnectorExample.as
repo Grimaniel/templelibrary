@@ -4,7 +4,7 @@
  * <a name="YaLogConnector"></a>
  * <h1>YaLogConnector</h1>
  * 
- * <p>This is an example of the usage of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/yalog/doc/nl/acidcats/yalog/util/YaLogConnector.html">YaLogConnector</a> class.</p>
+ * <p>This is an example of the usage of the <a href="http://templelibrary.googlecode.com/svn/trunk/modules/yalog/doc/temple/yalog/util/YaLogConnector.html">YaLogConnector</a> class.</p>
  * 
  * <p>Go to <a href="http://yalala.tyz.nl/" target="_blank">http://yalala.tyz.nl/</a> to view the output of Yalog.</p>
  * 
@@ -14,9 +14,8 @@
  */
 package
 {
-	import nl.acidcats.yalog.util.YaLogConnector;
-
 	import temple.core.debug.log.Log;
+	import temple.yalog.util.YaLogConnector;
 
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
