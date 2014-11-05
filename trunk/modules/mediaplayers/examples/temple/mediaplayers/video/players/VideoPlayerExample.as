@@ -23,7 +23,6 @@ package
 	{
 		public function VideoPlayerExample()
 		{
-			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
 			super("Temple - VideoPlayerExample");
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -40,7 +39,7 @@ package
 			// set debug mode to show and log debug information from the VideoPlayer
 			videoPlayer.debug = true;
 			
-			videoPlayer.playUrl('http://www.mediamonks.com/video/reel_en.flv');
+			videoPlayer.playUrl('complete_intro.f4v');
 		}
 	}
 }

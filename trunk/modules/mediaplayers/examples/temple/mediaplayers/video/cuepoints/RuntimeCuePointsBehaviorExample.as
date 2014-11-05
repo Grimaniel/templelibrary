@@ -31,7 +31,6 @@ package
 
 		public function RuntimeCuePointsBehaviorExample()
 		{
-			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
 			super("Temple - RuntimeCuePointsBehaviorExample");
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -41,7 +40,7 @@ package
 			
 			// add listener to receive cue point messages
 			_videoPlayer.addEventListener(CuePointEvent.CUEPOINT, handleCuePoint);
-			_videoPlayer.playUrl('http://www.mediamonks.com/video/reel_en.flv');
+			_videoPlayer.playUrl('../players/complete_intro.f4v');
 			
 			// create RuntimeCuePointsBehavior, assign the _videoPlayer as target
 			var runtimeCuepoints:RuntimeCuePointsBehavior = new RuntimeCuePointsBehavior(_videoPlayer);

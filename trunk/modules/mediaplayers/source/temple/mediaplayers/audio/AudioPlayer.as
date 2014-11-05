@@ -240,11 +240,10 @@ package temple.mediaplayers.audio
 			{
 				case PlayerStatus.PLAYING:
 					return _soundChannel ? _soundChannel.position * 0.001 : 0;
-					break;
 				
 				case PlayerStatus.PAUSED:
 					return _position * 0.001;
-					break;
+					
 				default:
 					return 0;
 			}
