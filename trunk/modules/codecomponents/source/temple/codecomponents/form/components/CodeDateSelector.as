@@ -43,9 +43,9 @@ package temple.codecomponents.form.components
 	 */
 	public class CodeDateSelector extends DateSelector
 	{
-		public function CodeDateSelector(begin:Date = null, end:Date = null, rowCount:uint = 10)
+		public function CodeDateSelector(begin:Date = null, end:Date = null, rowCount:uint = 10, dayWidth:Number = 40, monthWidth:Number = 50, yearWidth:Number = 60)
 		{
-			super(begin, end, addChild(new CodeComboBox(40)) as InputField, addChild(new CodeComboBox(40)) as InputField, addChild(new CodeComboBox(60)) as InputField);
+			super(begin, end, addChild(new CodeComboBox(dayWidth)) as InputField, addChild(new CodeComboBox(monthWidth)) as InputField, addChild(new CodeComboBox(yearWidth)) as InputField);
 			
 			month.x = day.x + day.width + 8;
 			year.x = month.x + month.width + 8;

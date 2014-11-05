@@ -39,6 +39,10 @@ package
 			inputField.hintText = "hintText";
 			inputField.updateHintOnChange = true;
 			
+			inputField.reset();
+			
+			inputField.text = "TEST";
+			
 			addChild(inputField);
 		}
 	}

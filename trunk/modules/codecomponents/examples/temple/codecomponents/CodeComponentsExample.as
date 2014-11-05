@@ -100,7 +100,7 @@ package
 			line += _LINE_HEIGHT;
 			
 			add(new CodeLabel("CodeAutoCompleteInputField"), _COLUMN1, line + 2);
-			add(new CodeAutoCompleteInputField(160, 18, ["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada", "venenatis", "Aliquam", "tincidunt", "tellus nec", "blandit porttitor", "neque"], true), _COLUMN2, line);
+			CodeAutoCompleteInputField(add(new CodeAutoCompleteInputField(160, 18, ["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada", "venenatis", "Aliquam", "tincidunt", "tellus nec", "blandit porttitor", "neque"], true), _COLUMN2, line)).hintText = "hint";
 			line += _LINE_HEIGHT;
 			
 			add(new CodeLabel("CodeCheckBox"), _COLUMN1, line + 2);
@@ -108,7 +108,7 @@ package
 			line += _LINE_HEIGHT;
 			
 			add(new CodeLabel("CodeComboBox"), _COLUMN1, line + 2);
-			add(new CodeComboBox(160, 18, ["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada", "venenatis", "Aliquam", "tincidunt", "tellus nec", "blandit porttitor", "neque"]), _COLUMN2, line);
+			CodeComboBox(add(new CodeComboBox(160, 18, ["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada", "venenatis", "Aliquam", "tincidunt", "tellus nec", "blandit porttitor", "neque"]), _COLUMN2, line)).hintText = "hint";
 			line += _LINE_HEIGHT;
 			
 			add(new CodeLabel("CodeDateSelector"), _COLUMN1, line + 2);
@@ -116,7 +116,7 @@ package
 			line += _LINE_HEIGHT;
 			
 			add(new CodeLabel("CodeInputField"), _COLUMN1, line + 2);
-			add(new CodeInputField(), _COLUMN2, line);
+			CodeInputField(add(new CodeInputField(), _COLUMN2, line)).hintText = "hint";
 			line += _LINE_HEIGHT;
 			
 			add(new CodeLabel("CodeList"), _COLUMN1, line + 2);

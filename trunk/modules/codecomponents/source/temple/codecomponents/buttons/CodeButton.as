@@ -38,6 +38,7 @@ package temple.codecomponents.buttons
 	import temple.codecomponents.graphics.CodeGraphicsRectangle;
 	import temple.codecomponents.style.CodeStyle;
 	import temple.ui.buttons.MultiStateButton;
+	import temple.ui.states.focus.FocusFadeState;
 
 	/**
 	 * @includeExample CodeButtonExample.as
@@ -56,6 +57,15 @@ package temple.codecomponents.buttons
 			addChild(new ButtonOverState(width, height));
 			addChild(new ButtonSelectState(width, height));
 			addChild(new ButtonDownState(width, height));
+			
+			// focus state
+			var focus:FocusFadeState = new FocusFadeState(.2, .2);
+			focus.graphics.beginFill(0xff0000, 1);
+			focus.graphics.drawRect(0, 0, width, height);
+			focus.graphics.endFill();
+			addChildAt(focus, 0);
+			focus.filters = CodeStyle.focusFilters;
+			focus.y = 1;
 		}
 
 		override public function set width(value:Number):void
