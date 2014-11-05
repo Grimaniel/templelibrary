@@ -205,9 +205,8 @@ package temple.facebook.data.vo
 			{
 				return Vector.<String>([FacebookPermission.READ_STREAM]);
 			}
-			return null;
-			
 			me;
+			return null;
 		}
 	}
 }

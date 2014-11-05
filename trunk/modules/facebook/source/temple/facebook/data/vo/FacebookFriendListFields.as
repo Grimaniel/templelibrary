@@ -90,8 +90,8 @@ package temple.facebook.data.vo
 		 */
 		override public function getPermissions(me:Boolean = true):Vector.<String>
 		{
-			return Vector.<String>([FacebookPermission.READ_FRIENDLISTS]);
 			me;
+			return Vector.<String>([FacebookPermission.READ_FRIENDLISTS]);
 		}
 
 	}
