@@ -27,12 +27,12 @@ package
 		{
 			super();
 			
-			this.mcScaleModeGroupGroup.addEventListener(Event.CHANGE, handleScaleModeChange);
+			mcScaleModeGroupGroup.addEventListener(Event.CHANGE, handleScaleModeChange);
 		}
 
 		private function handleScaleModeChange(event:Event):void
 		{
-			this.mcVideoPlayer.scaleMode = mcScaleModeGroupGroup.value;
+			mcVideoPlayer.scaleMode = mcScaleModeGroupGroup.value;
 		}
 	}
 }

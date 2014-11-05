@@ -24,7 +24,6 @@ package
 		
 		public function F4VPlayerExample()
 		{
-			// The super class connects to Yalog, so you can see all log message at: http://yalala.tyz.nl/
 			super('Temple - F4VPlayerExample');
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
