@@ -38,7 +38,7 @@ package temple.reflection.description
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IVariable extends IMember
+	public interface IVariable extends IField
 	{
 	}
 }

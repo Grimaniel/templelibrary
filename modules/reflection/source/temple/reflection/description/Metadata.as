@@ -72,7 +72,7 @@ package temple.reflection.description
 		
 		public function getArg(key:String):String
 		{
-			return _args[key];
+			return args[key];
 		}
 	}
 }
