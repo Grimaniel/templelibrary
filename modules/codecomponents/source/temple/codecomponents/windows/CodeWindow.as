@@ -35,11 +35,6 @@
 
 package temple.codecomponents.windows
 {
-	import flash.display.DisplayObject;
-	import flash.events.Event;
-	import flash.events.FocusEvent;
-	import flash.events.MouseEvent;
-	import flash.geom.Point;
 	import temple.codecomponents.buttons.CodeButton;
 	import temple.codecomponents.buttons.CodeCloseButton;
 	import temple.codecomponents.buttons.CodeCollapseButton;
@@ -60,6 +55,7 @@ package temple.codecomponents.windows
 	import temple.ui.behaviors.MoveBehaviorEvent;
 	import temple.ui.behaviors.ScaleBehavior;
 	import temple.ui.behaviors.ScaleBehaviorEvent;
+	import temple.ui.behaviors.show.IShowBehavior;
 	import temple.ui.buttons.BaseButton;
 	import temple.ui.focus.FocusManager;
 	import temple.ui.layout.LayoutContainer;
@@ -67,6 +63,12 @@ package temple.codecomponents.windows
 	import temple.ui.layout.liquid.LiquidContainer;
 	import temple.ui.scroll.ScrollBehavior;
 	import temple.ui.tooltip.ToolTip;
+
+	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.events.FocusEvent;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
 
 
 
@@ -103,6 +105,8 @@ package temple.codecomponents.windows
 		private var _scrollBehavior:ScrollBehavior;
 		private var _verticalScrollBar:CodeScrollBar;
 		private var _horizontalScrollBar:CodeScrollBar;
+		private var _destructOnClose:Boolean = true;
+		private var _showBehavior:IShowBehavior;
 
 		public function CodeWindow(width:Number = 200, height:Number = 100, label:String = null, closable:Boolean = true, setInnerSize:Boolean = false)
 		{
@@ -290,7 +294,14 @@ package temple.codecomponents.windows
 
 		public function close():void
 		{
-			destruct();
+			if (_destructOnClose)
+			{
+				destruct();
+			}
+			else
+			{
+				hide();
+			}
 		}
 		
 		public function get content():LiquidContainer
@@ -438,6 +449,57 @@ package temple.codecomponents.windows
 				_verticalScrollBar.visible = false;
 				_horizontalScrollBar.visible = false;
 			}
+		}
+		
+		public function get destructOnClose():Boolean
+		{
+			return _destructOnClose;
+		}
+
+		public function set destructOnClose(value:Boolean):void
+		{
+			_destructOnClose = value;
+		}
+		
+		public function show(instant:Boolean = false, onComplete:Function = null):void
+		{
+			if (_showBehavior)
+			{
+				_showBehavior.show(instant, onComplete);
+			}
+			else
+			{
+				visible = true;
+				if (onComplete != null) onComplete();
+			}
+		}
+
+		public function hide(instant:Boolean = false, onComplete:Function = null):void
+		{
+			if (_showBehavior)
+			{
+				_showBehavior.hide(instant, onComplete);
+			}
+			else
+			{
+				visible = false;
+				if (onComplete != null) onComplete();
+			}
+		}
+
+		public function get shown():Boolean
+		{
+			return _showBehavior ? _showBehavior.shown : visible;
+		}
+		
+		public function get showBehavior():IShowBehavior
+		{
+			return _showBehavior;
+		}
+
+		public function set showBehavior(value:IShowBehavior):void
+		{
+			_showBehavior = value;
 		}
 		
 		private function handleClick(event:MouseEvent):void

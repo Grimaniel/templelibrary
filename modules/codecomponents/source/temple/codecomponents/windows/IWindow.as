@@ -35,6 +35,7 @@
 
 package temple.codecomponents.windows
 {
+	import temple.common.interfaces.IShowable;
 	import temple.common.interfaces.IFocusable;
 	import temple.core.display.IDisplayObject;
 	import temple.ui.labels.ILabel;
@@ -42,7 +43,7 @@ package temple.codecomponents.windows
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IWindow extends IDisplayObject, ILabel, IFocusable
+	public interface IWindow extends IDisplayObject, ILabel, IFocusable, IShowable
 	{
 		/**
 		 * The overflow declaration tells the window what to do with content that doesn't fit in a box.

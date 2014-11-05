@@ -26,8 +26,10 @@ package
 			comboBox.x = 20;
 			comboBox.y = 20;
 			
+			comboBox.hintText = "hint text";
+			
 			comboBox.addItems(["Lorem ipsum", "dolor sit amet", "consectetur", "adipiscing", "elit", "Ut rhoncus", "malesuada", "venenatis", "Aliquam", "tincidunt", "tellus nec", "blandit porttitor", "neque"]);
-
+			
 			comboBox = new CodeComboBox(100);
 			addChild(comboBox);
 			comboBox.x = 220;

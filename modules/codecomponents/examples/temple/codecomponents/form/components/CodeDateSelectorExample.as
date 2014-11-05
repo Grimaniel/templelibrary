@@ -12,6 +12,7 @@
  */
 package
 {
+	import temple.utils.localization.DutchDateLabels;
 	import temple.utils.localization.DateLabelFormat;
 	import temple.utils.ValueBinder;
 	import temple.codecomponents.form.components.CodeDateSelector;
@@ -23,6 +24,7 @@ package
 		public function CodeDateSelectorExample()
 		{
 			super("Temple - CodeDateSelectorExample");
+			
 			
 			var selector:CodeDateSelector;
 			var output:CodeLabel;
@@ -40,49 +42,75 @@ package
 			output = new CodeLabel();
 			addChild(output);
 			output.x = 200;
-			output.y = 10;
+			output.y = 12;
 
 			// Use a ValueBinder to set the date in the output
 			new ValueBinder(selector, output, "text");
-
-
+			
+			
 			// CodeDateSelector with only dates in the future
 			selector = new CodeDateSelector(new Date());
 			addChild(selector);
 			selector.x = 10;
 			selector.y = 40;
 			// set a format to the date output
-			selector.format = "d / m / Y";
+			selector.format = "d - m - Y";
 			
 			// Create a label for displaying the output of the CodeDateSelector
 			output = new CodeLabel();
 			addChild(output);
 			output.x = 200;
-			output.y = 40;
+			output.y = 42;
 
 			// Use a ValueBinder to set the date in the output
 			new ValueBinder(selector, output, "text");
-
+			
 
 			// CodeDateSelector with only dates in the past
-			selector = new CodeDateSelector(null, new Date());
+			selector = new CodeDateSelector(null, new Date(), 12, 40, 40, 40);
 			addChild(selector);
 			selector.x = 10;
 			selector.y = 70;
 			// set a format to the date output
 			selector.format = "d / m / Y";
-			
-			// select today as current date
-			selector.value = new Date();
+			selector.dayFormat = DateLabelFormat.NUMERIC_LEADING_ZERO;
+			selector.monthFormat = DateLabelFormat.NUMERIC_LEADING_ZERO;
+			selector.yearFormat = DateLabelFormat.SHORT;
 			
 			// Create a label for displaying the output of the CodeDateSelector
 			output = new CodeLabel();
 			addChild(output);
 			output.x = 200;
-			output.y = 70;
+			output.y = 72;
 
 			// Use a ValueBinder to set the date in the output
 			new ValueBinder(selector, output, "text");
+			
+			// select today as current date
+			selector.value = new Date();
+			
+			
+			// CodeDateSelector with only reversed years in year ComboBox and Dutch month labels
+			selector = new CodeDateSelector(new Date(2020, 0, 1), new Date(1980, 0, 1), 10, 40, 70);
+			addChild(selector);
+			selector.x = 10;
+			selector.y = 100;
+			// set a format to the date output
+			selector.format = "d / m / Y";
+			selector.monthLabels = DutchDateLabels;
+			selector.monthFormat = DateLabelFormat.FULL;
+			
+			// Create a label for displaying the output of the CodeDateSelector
+			output = new CodeLabel();
+			addChild(output);
+			output.x = 200;
+			output.y = 102;
+
+			// Use a ValueBinder to set the date in the output
+			new ValueBinder(selector, output, "text");
+			
+			// select today as current date
+			selector.value = new Date();
 
 		}
 	}
