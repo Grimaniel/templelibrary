@@ -39,7 +39,7 @@ package temple.reflection.description
 	/**
 	 * @author Thijs Broerse
 	 */
-	public interface IProperty extends IMember
+	public interface IProperty extends IField
 	{
 		/**
 		 * 

@@ -50,52 +50,52 @@ package temple.reflection.description
 		{
 			if (description == null) return throwError(new TempleArgumentError(DescriptionUtils, "description cannot be null"));
 			
-			var variables:Vector.<IVariable> = new Vector.<IVariable>(), metadata:IMetadata;
-			
-			variables: for (var i:int = 0, leni:int = description.variables.length; i < leni; i++)
-			{
-				metadata = description.variables[i].getMetadata(name);
-				
-				if (metadata)
-				{
-					if (!value && !key || key && metadata.args[key] == value || !value && key && key in metadata.args)
-					{
-						variables.push(description.variables[i]);
-					}
-					else if (!key && value)
-					{
-						for each (var v:String in metadata.args)
-						{
-							if (v == value)
-							{
-								variables.push(description.variables[i]);
-								break variables;
-							}
-						}
-					}
-				}
-			}
-			return variables;
+			return Vector.<IVariable>(findWithMetadata(Vector.<IMember>(description.variables), name, value, key));
 		}
 		
 		/**
 		 * 
 		 */
-		public static function findMembersWithMetadata(description:IDescription, name:String, value:String = null, key:String = null):Vector.<IMember>
+		public static function findMethodsWithMetadata(description:IDescription, name:String, value:String = null, key:String = null):Vector.<IMethod>
 		{
 			if (description == null) return throwError(new TempleArgumentError(DescriptionUtils, "description cannot be null"));
 			
-			var members:Vector.<IMember> = new Vector.<IMember>(), metadata:IMetadata;
+			return Vector.<IMethod>(findWithMetadata(Vector.<IMember>(description.methods), name, value, key));
+		}
+		
+		/**
+		 * 
+		 */
+		public static function findFieldsWithMetadata(description:IDescription, name:String, value:String = null, key:String = null):Vector.<IField>
+		{
+			if (description == null) return throwError(new TempleArgumentError(DescriptionUtils, "description cannot be null"));
 			
-			members: for (var i:int = 0, leni:int = description.members.length; i < leni; i++)
+			return Vector.<IField>(findWithMetadata(Vector.<IMember>(description.fields), name, value, key));
+		}
+		
+		/**
+		 * 
+		 */
+		public static function findMembersWithMetadata(description:IDescription, name:String,value:String = null, key:String = null):Vector.<IMember>
+		{
+			if (description == null) return throwError(new TempleArgumentError(DescriptionUtils, "description cannot be null"));
+			
+			return findWithMetadata(description.members, name, value, key);
+		}
+		
+		public static function findWithMetadata(members:Vector.<IMember>, name:String, value:String, key:String):Vector.<IMember>
+		{
+			var found:Vector.<IMember> = new Vector.<IMember>(), metadata:IMetadata;
+			
+			members: for (var i:int = 0, leni:int = members.length; i < leni; i++)
 			{
-				metadata = description.members[i].getMetadata(name);
+				metadata = members[i].getMetadata(name);
 				
 				if (metadata)
 				{
 					if (!value && !key || key && metadata.args[key] == value || !value && key && key in metadata.args)
 					{
-						members.push(description.members[i]);
+						found.push(members[i]);
 					}
 					else if (!key && value)
 					{
@@ -103,14 +103,14 @@ package temple.reflection.description
 						{
 							if (v == value)
 							{
-								members.push(description.members[i]);
+								found.push(members[i]);
 								break members;
 							}
 						}
 					}
 				}
 			}
-			return members;
+			return found;
 		}
 		
 		/**

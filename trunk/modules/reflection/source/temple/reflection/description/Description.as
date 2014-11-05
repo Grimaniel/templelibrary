@@ -50,6 +50,7 @@ package temple.reflection.description
 	public class Description extends CoreObject implements IDescription	{
 		private var _xml:XML;
 		private var _name:String;
+		private var _type:Class;
 		private var _extendsClass:Vector.<Class>;
 		private var _interfaces:Vector.<Class>;
 		private var _constructor:Method;
@@ -57,8 +58,10 @@ package temple.reflection.description
 		private var _variablesMap:Dictionary;
 		private var _properties:Vector.<IProperty>;
 		private var _propertiesMap:Dictionary;
-		private var _members:Vector.<IMember>;
+		private var _fields:Vector.<IField>;
 		private var _methods:Vector.<IMethod>;
+		private var _methodsMap:Dictionary;
+		private var _members:Vector.<IMember>;
 		private var _metadata:Vector.<IMetadata>;
 		private var _metadataMap:Object;
 		
@@ -87,8 +90,7 @@ package temple.reflection.description
 		 */
 		public function get type():Class
 		{
-			// TODO:
-			return null;
+			return (_type ||= getDefinitionByName(name) as Class);
 		}
 
 		/**
@@ -105,7 +107,6 @@ package temple.reflection.description
 					_extendsClass[i] = getDefinitionByName(_xml..extendsClass[i].@type) as Class;
 				}
 			}
-			
 			return _extendsClass;
 		}
 		
@@ -123,7 +124,6 @@ package temple.reflection.description
 					_interfaces[i] = getDefinitionByName(_xml..implementsInterface[i].@type) as Class;
 				}
 			}
-			
 			return _interfaces;
 		}
 
@@ -135,6 +135,123 @@ package temple.reflection.description
 			return _constructor ||= new Method(_xml..constructor[0]);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
+		public function get variables():Vector.<IVariable>
+		{
+			if (!_variables)
+			{
+				var len:int = _xml..variable.length();
+				_variables = new Vector.<IVariable>(len, true);
+				for (var i:int = 0; i < len; i++)
+				{
+					_variables[i] = new Variable(_xml..variable[i]);
+				}
+			}
+			return _variables;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function getVariable(name:String, namespace:Namespace = null):IVariable
+		{
+			return getFromMap(_variablesMap ||= createMap(Vector.<IMember>(variables)), name, namespace) as IVariable;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get properties():Vector.<IProperty>
+		{
+			if (!_properties)
+			{
+				var len:int = _xml..accessor.length();
+				_properties = new Vector.<IProperty>(len, true);
+				for (var i:int = 0; i < len; i++)
+				{
+					_properties[i] = new Property(_xml..accessor[i]);
+				}
+			}
+			return _properties;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getProperty(name:String, namespace:Namespace = null):IProperty
+		{
+			return getFromMap(_propertiesMap ||= createMap(Vector.<IMember>(properties)), name, namespace) as IProperty;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get fields():Vector.<IField>
+		{
+			if (!_fields)
+			{
+				_fields = Vector.<IField>(properties).concat(Vector.<IField>(variables));
+				_fields.fixed = true;
+			}
+			return _fields;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getField(name:String, namespace:Namespace = null):IField
+		{
+			return getVariable(name, namespace) || getProperty(name, namespace);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get methods():Vector.<IMethod>
+		{
+			if (!_methods)
+			{
+				var len:int = _xml..method.length();
+				_methods = new Vector.<IMethod>(len, true);
+				for (var i:int = 0; i < len; i++)
+				{
+					_methods[i] = new Method(_xml..method[i]);
+				}
+			}
+			return _methods;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getMethod(name:String, namespace:Namespace = null):IMethod
+		{
+			return getFromMap(_methodsMap ||= createMap(Vector.<IMember>(methods)), name, namespace) as IMethod;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get members():Vector.<IMember>
+		{
+			if (!_members)
+			{
+				_members = Vector.<IMember>(properties).concat(Vector.<IMember>(variables)).concat(Vector.<IMember>(methods));
+				_members.fixed = true;
+			}
+			return _members;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getMember(name:String, namespace:Namespace = null):IMember
+		{
+			return getVariable(name, namespace) || getProperty(name, namespace) || getMethod(name, namespace);
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -171,138 +288,35 @@ package temple.reflection.description
 			return _metadataMap[name];
 		}
 
-		/**
-		 * @inheritDoc
-		 */
-		public function get variables():Vector.<IVariable>
+		private function createMap(members:Vector.<IMember>):Dictionary
 		{
-			if (!_variables)
+			var member:IMember, map:Dictionary = new Dictionary();
+			for (var i:int = 0, leni:int = members.length; i < leni; i++)
 			{
-				var len:int = _xml..variable.length();
-				_variables = new Vector.<IVariable>(len, true);
-				for (var i:int = 0; i < len; i++)
+				member = members[i];
+				if (member.namespace)
 				{
-					_variables[i] = new Variable(_xml..variable[i]);
+					(map[member.namespace] ||= {})[member.name] = member;
+				}
+				else
+				{
+					map[member.name] = member;
 				}
 			}
-			return _variables;
+			return map;
 		}
 
-		/**
-		 * @inheritDoc
-		 */
-		public function getVariable(name:String, namespace:Namespace = null):IVariable
+		private function getFromMap(map:Dictionary, name:String, namespace:Namespace):IMember
 		{
-			if (!_variablesMap)
+			if (namespace && namespace in map)
 			{
-				var variable:IVariable;
-				_variablesMap = new Dictionary();
-				for (var i:int = 0, leni:int = variables.length; i < leni; i++)
-				{
-					variable = _variables[i];
-					if (variable.namespace)
-					{
-						(_variablesMap[variable.namespace] ||= {})[variable.name] = variable;
-					}
-					else
-					{
-						_variablesMap[variable.name] = variable;
-					}
-				}
-			}
-			
-			if (namespace && namespace in _variablesMap)
-			{
-				return _variablesMap[namespace][name];
+				return map[namespace][name];
 			}
 			else if (!namespace)
 			{
-				return _variablesMap[name];
+				return map[name];
 			}
 			return null;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get properties():Vector.<IProperty>
-		{
-			if (!_properties)
-			{
-				var len:int = _xml..accessor.length();
-				_properties = new Vector.<IProperty>(len, true);
-				for (var i:int = 0; i < len; i++)
-				{
-					_properties[i] = new Property(_xml..accessor[i]);
-				}
-			}
-			return _properties;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function getProperty(name:String, namespace:Namespace = null):IProperty
-		{
-			if (!_propertiesMap)
-			{
-				var property:IProperty;
-				_propertiesMap = new Dictionary();
-				for (var i:int = 0, leni:int = properties.length; i < leni; i++)
-				{
-					property = _properties[i];
-					if (property.namespace)
-					{
-						(_propertiesMap[property.namespace] ||= {})[property.name] = property;
-					}
-					else
-					{
-						_propertiesMap[property.name] = property;
-					}
-				}
-			}
-			
-			return namespace && namespace in _propertiesMap ? _propertiesMap[namespace][name] : _propertiesMap[name];
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get members():Vector.<IMember>
-		{
-			if (!_members)
-			{
-				_members = Vector.<IMember>(properties).concat(variables).concat(methods);
-				_members.fixed = true;
-			}
-			
-			return _members;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function getMember(name:String, namespace:Namespace = null):IMember
-		{
-			return getVariable(name, namespace) || getProperty(name, namespace);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get methods():Vector.<IMethod>
-		{
-			if (!_methods)
-			{
-				var len:int = _xml..method.length();
-				_methods = new Vector.<IMethod>(len, true);
-				for (var i:int = 0; i < len; i++)
-				{
-					_methods[i] = new Method(_xml..method[i]);
-				}
-			}
-			
-			return _methods;
 		}
 	}
 }
