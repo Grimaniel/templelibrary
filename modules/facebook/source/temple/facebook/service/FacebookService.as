@@ -170,7 +170,7 @@ package temple.facebook.service
 		private var _optionalPermissions:Vector.<String>;
 		private var _autoPermissions:Boolean;
 		private var _initialized:Boolean;
-		private var _queue:Vector.<IFacebookCall>;
+		private var _queue:Vector.<FacebookCall>;
 		private var _allowed:Object;
 		private var _synchronous:Boolean;
 		private var _currentCall:IFacebookCall;
@@ -199,11 +199,11 @@ package temple.facebook.service
 			_autoPermissions = autoPermissions;
 			_permissions = new Vector.<String>();
 			_optionalPermissions = new Vector.<String>();
-			_queue = new Vector.<IFacebookCall>();
+			_queue = new Vector.<FacebookCall>();
 			_parseMap = new Dictionary(true);
 			this.cache = cache;
 			this.secure = secure;
-			_voRegistry = new HashMap("FacebookAPIVORegistery");
+			_voRegistry = new HashMap();
 			_parser = new FacebookParser(this);
 		}
 		
@@ -405,7 +405,7 @@ package temple.facebook.service
 			}
 			else
 			{
-				var permissions:Vector.<String> = call.params as Vector.<String> || new Vector.<String>;
+				var permissions:Vector.<String> = call.params as Vector.<String> || new Vector.<String>();
 				
 				for each (var permission:String in _permissions)
 				{
@@ -619,7 +619,6 @@ package temple.facebook.service
 		 */
 		private function _checkPermissions(callback:Function = null):void
 		{
-			// Add random element to FQL to block caching
 			_adapter.api(FacebookConstant.ME + "/" + FacebookConnection.PERMISSIONS, function (success:Object, fail:Object):void
 			{
 				if (success && success is Array)
@@ -932,7 +931,7 @@ package temple.facebook.service
 				{
 					case FacebookUIMethod.FEED_DIALOG:
 					{
-						success = response && response.post_id;
+						success = Boolean(response && response.post_id);
 						if (success)
 						{
 							data = parser.parse(response.post_id, FacebookPostData);
@@ -941,7 +940,7 @@ package temple.facebook.service
 					}
 					case FacebookUIMethod.REQUESTS_DIALOG:
 					{
-						success = response && response.request_ids;
+						success = Boolean(response && response.request_ids);
 						if (success)
 						{
 							data = parser.parse(response.request_ids, FacebookAppRequestData);
@@ -950,22 +949,22 @@ package temple.facebook.service
 					}
 					case FacebookUIMethod.FRIENDS_DIALOG:
 					{
-						success = response && response.action;
+						success = Boolean(response && response.action);
 						break;
 					}
 					case FacebookUIMethod.PAY_DIALOG:
 					{
-						success = response && response.order_id;
+						success = Boolean(response && response.order_id);
 						break;
 					}
 					case FacebookUIMethod.OAUTH_DIALOG:
 					{
-						success = response && !response.error;
+						success = Boolean(response && !response.error);
 						break;
 					}
 					case FacebookUIMethod.SEND_DIALOG:
 					{
-						success = response && response.success;
+						success = Boolean(response && response.success);
 						break;
 					}
 					default:
@@ -1162,7 +1161,7 @@ package temple.facebook.service
 		{
 			if (value)
 			{
-				_cacheMap ||= new HashMap("FacebookAPICache");
+				_cacheMap ||= new HashMap();
 			}
 			else if (_cacheMap)
 			{

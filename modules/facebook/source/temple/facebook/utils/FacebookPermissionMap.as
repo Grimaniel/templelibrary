@@ -263,7 +263,6 @@ package temple.facebook.utils
 							return null;
 						}
 					}
-					break;
 				}
 				case FacebookRequestMethod.FQL:
 				case FacebookRequestMethod.FQL_MULTI_QUERY:

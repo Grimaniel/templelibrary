@@ -84,7 +84,7 @@ package temple.facebook.adapters
 			_sender = new LocalConnection();
 			_sender.addEventListener(StatusEvent.STATUS, handleLocalConnectionStatus, false, 0, true);
 			
-			_callbacks = new HashMap("FacebookLocalConnectionAdapterCallbacks");
+			_callbacks = new HashMap();
 		}
 
 		/**

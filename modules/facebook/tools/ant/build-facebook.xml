@@ -7,4 +7,7 @@
 	<property name="extended-dependencies" value="control,ui,net" />
 
 	<import file="../../../../tools/ant/build.xml" />
+	
+	<property name="skip-examples" value="true" />
+	
 </project>
